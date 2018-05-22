@@ -328,3 +328,9 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+
+
+# service fabric local config
+**/ApplicationParameters/Local.1Node.xml
+**/ApplicationParameters/Local.5Node.xml

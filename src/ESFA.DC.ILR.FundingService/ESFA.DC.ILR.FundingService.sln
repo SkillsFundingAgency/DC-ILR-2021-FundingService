@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2043
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "ESFA.DC.ILR.FundingService", "ESFA.DC.ILR.FundingService\ESFA.DC.ILR.FundingService.sfproj", "{D2248984-0D7D-4D77-AFBF-5116C252615C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.FundingService.Stateless", "ESFA.DC.ILR.FundingService.Stateless\ESFA.DC.ILR.FundingService.Stateless.csproj", "{1478B042-E0E2-459A-841A-D0014C51CFBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.FundingService.Stateless.Models", "ESFA.DC.ILR.FundingService.Stateless.Models\ESFA.DC.ILR.FundingService.Stateless.Models.csproj", "{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.FundingService.Modules", "ESFA.DC.ILR.FundingService.Modules\ESFA.DC.ILR.FundingService.Modules.csproj", "{79748ECD-E5D4-4D1E-BE10-32588B2F625C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D2248984-0D7D-4D77-AFBF-5116C252615C}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{D2248984-0D7D-4D77-AFBF-5116C252615C}.Debug|x64.ActiveCfg = Debug|x64
+		{D2248984-0D7D-4D77-AFBF-5116C252615C}.Debug|x64.Build.0 = Debug|x64
+		{D2248984-0D7D-4D77-AFBF-5116C252615C}.Debug|x64.Deploy.0 = Debug|x64
+		{D2248984-0D7D-4D77-AFBF-5116C252615C}.Release|Any CPU.ActiveCfg = Release|x64
+		{D2248984-0D7D-4D77-AFBF-5116C252615C}.Release|x64.ActiveCfg = Release|x64
+		{D2248984-0D7D-4D77-AFBF-5116C252615C}.Release|x64.Build.0 = Release|x64
+		{D2248984-0D7D-4D77-AFBF-5116C252615C}.Release|x64.Deploy.0 = Release|x64
+		{1478B042-E0E2-459A-841A-D0014C51CFBD}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{1478B042-E0E2-459A-841A-D0014C51CFBD}.Debug|x64.ActiveCfg = Debug|x64
+		{1478B042-E0E2-459A-841A-D0014C51CFBD}.Debug|x64.Build.0 = Debug|x64
+		{1478B042-E0E2-459A-841A-D0014C51CFBD}.Release|Any CPU.ActiveCfg = Release|x64
+		{1478B042-E0E2-459A-841A-D0014C51CFBD}.Release|x64.ActiveCfg = Release|x64
+		{1478B042-E0E2-459A-841A-D0014C51CFBD}.Release|x64.Build.0 = Release|x64
+		{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}.Debug|x64.Build.0 = Debug|Any CPU
+		{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}.Release|x64.ActiveCfg = Release|Any CPU
+		{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}.Release|x64.Build.0 = Release|Any CPU
+		{79748ECD-E5D4-4D1E-BE10-32588B2F625C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79748ECD-E5D4-4D1E-BE10-32588B2F625C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79748ECD-E5D4-4D1E-BE10-32588B2F625C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{79748ECD-E5D4-4D1E-BE10-32588B2F625C}.Debug|x64.Build.0 = Debug|Any CPU
+		{79748ECD-E5D4-4D1E-BE10-32588B2F625C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79748ECD-E5D4-4D1E-BE10-32588B2F625C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79748ECD-E5D4-4D1E-BE10-32588B2F625C}.Release|x64.ActiveCfg = Release|Any CPU
+		{79748ECD-E5D4-4D1E-BE10-32588B2F625C}.Release|x64.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8F325B57-5297-4CB2-8B35-5827E7E30C7E}
+	EndGlobalSection
+EndGlobal
