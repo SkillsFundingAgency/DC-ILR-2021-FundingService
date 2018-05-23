@@ -7,5 +7,7 @@
     <Parameter Name="TopicName" Value="##TopicName##" />
     <Parameter Name="FundingCalcSubscriptionName" Value="##FundingCalcSubscriptionName##" />
     <Parameter Name="LoggerConnectionstring" Value="##LoggerConnectionstring##" />
+    <Parameter Name="CosmosEndpointUrl" Value="##EndpointUrl##" />
+    <Parameter Name="CosmosAuthKeyOrResourceToken" Value="##AuthKeyOrResourceToken##" />
   </Parameters>
 </Application>

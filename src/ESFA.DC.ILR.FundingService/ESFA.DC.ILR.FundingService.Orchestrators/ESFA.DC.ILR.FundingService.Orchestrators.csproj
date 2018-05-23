@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ESFA.DC.ILR.FundingService.ALB.Modules" Version="1.0.0-beta" />
+    <PackageReference Include="ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface" Version="1.0.0-beta" />
+    <PackageReference Include="ESFA.DC.JobContext.Interface" Version="0.1.7-beta0001" />
+    <PackageReference Include="ESFA.DC.Logging" Version="0.1.1-beta0001" />
+    <PackageReference Include="ESFA.DC.OPA.Model.Interface" Version="0.1.0-beta0001" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta007" />
+  </ItemGroup>
+
+</Project>

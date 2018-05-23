@@ -10,11 +10,15 @@ using DC.JobContextManager.Interface;
 using ESFA.DC.Auditing;
 using ESFA.DC.Auditing.Dto;
 using ESFA.DC.Auditing.Interface;
+using ESFA.DC.ILR.FundingService.ALB.Modules;
 using ESFA.DC.ILR.FundingService.Modules;
 using ESFA.DC.ILR.FundingService.Stateless.Configuration;
 using ESFA.DC.ILR.FundingService.Stateless.Handlers;
 using ESFA.DC.ILR.FundingService.Stateless.Mappers;
 using ESFA.DC.ILR.FundingService.Stateless.Models;
+using ESFA.DC.IO.AzureCosmos;
+using ESFA.DC.IO.AzureCosmos.Config.Interfaces;
+using ESFA.DC.IO.Interfaces;
 using ESFA.DC.JobContext;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Mapping.Interface;
@@ -68,13 +72,25 @@ namespace ESFA.DC.ILR.FundingService.Stateless
         private static ContainerBuilder BuildContainer()
         {
             var containerBuilder = new ContainerBuilder();
+            var configHelper = new ConfigurationHelper();
+
+            // register Cosmos config
+            var azureCosmosOptions = configHelper.GetSectionValues<AzureCosmosOptions>("AzureCosmosSection");
+            containerBuilder.Register(c => new AzureCosmosKeyValuePersistenceConfig(
+                    azureCosmosOptions.CosmosEndpointUrl,
+                    azureCosmosOptions.CosmosAuthKeyOrResourceToken))
+                .As<IAzureCosmosKeyValuePersistenceServiceConfig>().SingleInstance();
+
+            containerBuilder.RegisterType<AzureCosmosKeyValuePersistenceService>().As<IKeyValuePersistenceService>()
+                .InstancePerLifetimeScope();
+
+            containerBuilder.RegisterModule<PreFundingALBModule>();
 
             // register serialization
             containerBuilder.RegisterType<JsonSerializationService>()
                 .Keyed<ISerializationService>(SerializationTypes.Json);
 
             // get ServiceBus, Azurestorage config values and register container
-            var configHelper = new ConfigurationHelper();
             var serviceBusOptions =
                 configHelper.GetSectionValues<ServiceBusOptions>("ServiceBusSettings");
             containerBuilder.RegisterInstance(serviceBusOptions).As<ServiceBusOptions>().SingleInstance();

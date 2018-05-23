@@ -8,10 +8,15 @@
     <Parameter Name="FundingCalcSubscriptionName" DefaultValue="fundingcalc-init" />
     <Parameter Name="MaxMessageSize" DefaultValue="1073741824" />
     <Parameter Name="LoggerConnectionstring" DefaultValue="Server=localhost;Database=logs;User Id=loguser;Password=password1;" />
+    <Parameter Name="EndpointUrl" DefaultValue="" />
+    <Parameter Name="AuthKeyOrResourceToken" DefaultValue="" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="ESFA.DC.ILR.FundingService.ALBActorPkg" ServiceManifestVersion="1.0.0" />
+  </ServiceManifestImport>
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="ESFA.DC.ILR.FundingService.StatelessPkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides>
@@ -28,6 +33,10 @@
           </Section>
           <Section Name="LoggerSection">
             <Parameter Name="LoggerConnectionstring" Value="[LoggerConnectionstring]" />
+          </Section>
+          <Section  Name="AzureCosmosSection">
+            <Parameter Name="CosmosEndpointUrl" Value="[EndpointUrl]" />
+            <Parameter Name="CosmosAuthKeyOrResourceToken" Value="[AuthKeyOrResourceToken]" />
           </Section>
         </Settings>
       </ConfigOverride>

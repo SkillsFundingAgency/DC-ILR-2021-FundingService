@@ -23,7 +23,13 @@
     <Parameter Name="AzureBlobConnectionString" Value="" />
   </Section>
 
+  <Section  Name="AzureCosmosSection">
+    <Parameter Name="CosmosEndpointUrl" Value="" />
+    <Parameter Name="CosmosAuthKeyOrResourceToken" Value="" />
+  </Section>
 
+
+  
 
   <Section Name="DataTransportSettings">
     <Parameter Name="MaxMessageSize" Value="1073741824" MustOverride="true"/>
