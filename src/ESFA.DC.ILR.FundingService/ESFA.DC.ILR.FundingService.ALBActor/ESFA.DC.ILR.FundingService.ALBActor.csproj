@@ -68,34 +68,40 @@
       <HintPath>..\packages\ESFA.DC.Data.Postcodes.Model.0.1.2-beta0001\lib\net461\ESFA.DC.Data.Postcodes.Model.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.FundingService.ALB.Contexts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.2-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Contexts.dll</HintPath>
+      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.9-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Contexts.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.FundingService.ALB.ExternalData, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.2-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.ExternalData.dll</HintPath>
+      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.9-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.ExternalData.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.FundingService.ALB.Modules, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.2-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Modules.dll</HintPath>
+      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.9-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Modules.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.FundingService.ALB.OrchestrationService, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.2-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.OrchestrationService.dll</HintPath>
+      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.9-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.OrchestrationService.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.2-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface.dll</HintPath>
+      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.9-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.FundingService.ALB.Service, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.2-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Service.dll</HintPath>
+      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.9-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Service.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.FundingService.ALB.Service.Interface, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.2-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Service.Interface.dll</HintPath>
+      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.9-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Service.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.FundingService.ALB.Stubs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.2-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Stubs.dll</HintPath>
+      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.9-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Stubs.dll</HintPath>
+    </Reference>
+    <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR.1819.Model.Interface.0.1.3-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.IO.Dictionary, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.IO.Dictionary.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.IO.Dictionary.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.IO.Interfaces, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.IO.Interfaces.0.1.2-beta0001\lib\netstandard2.0\ESFA.DC.IO.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ESFA.DC.Logging, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.Logging.0.1.1-beta0001\lib\netstandard2.0\ESFA.DC.Logging.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.OPA.Model, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.OPA.Model.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.OPA.Model.dll</HintPath>
@@ -109,8 +115,8 @@
     <Reference Include="ESFA.DC.OPA.Service.Interface, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.OPA.Service.Interface.0.1.2-beta0001\lib\netstandard2.0\ESFA.DC.OPA.Service.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.Serialization.Interfaces, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Serialization.Interfaces.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Interfaces.dll</HintPath>
+    <Reference Include="ESFA.DC.Serialization.Interfaces, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.Serialization.Interfaces.0.1.2-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.Serialization.Json, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Serialization.Json.0.1.2-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Json.dll</HintPath>
@@ -167,6 +173,27 @@
     </Reference>
     <Reference Include="Oracle.Determinations.Masquerade, Version=10.4.0.0, Culture=neutral, PublicKeyToken=863065c849b9b316, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.OPA.RunTime.DLLs.0.1.1-beta0001\lib\Oracle.Determinations.Masquerade.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.2.6.0\lib\net46\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Enrichers.Environment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Enrichers.Environment.2.1.2\lib\net45\Serilog.Enrichers.Environment.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Enrichers.Process, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Enrichers.Process.2.0.1\lib\net45\Serilog.Enrichers.Process.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Enrichers.Thread, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Enrichers.Thread.3.0.0\lib\net45\Serilog.Enrichers.Thread.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.Console, Version=3.1.1.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.Console.3.1.1\lib\net45\Serilog.Sinks.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.MSSqlServer, Version=5.1.1.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.MSSqlServer.5.1.1\lib\net452\Serilog.Sinks.MSSqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.PeriodicBatching, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.PeriodicBatching.2.1.1\lib\net45\Serilog.Sinks.PeriodicBatching.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />

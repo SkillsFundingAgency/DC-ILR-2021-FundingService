@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Integration.ServiceFabric;
 using ESFA.DC.ILR.FundingService.ALB.Modules;
+using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
 using ESFA.DC.ILR.FundingService.Modules;
 using ESFA.DC.ILR.FundingService.Stateless.Models;
+using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.Serialization.Json;
 using ESFA.DC.ServiceFabric.Helpers;
@@ -32,10 +34,11 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                 // Register the actor service.
                 builder.RegisterActor<ALBActor>();
 
-                ActorRuntime.RegisterActorAsync<ALBActor>(
-                   (context, actorType) => new ActorService(context, actorType)).GetAwaiter().GetResult();
-
-                Thread.Sleep(Timeout.Infinite);
+                using (var container = builder.Build())
+                {
+                    var ss = container.Resolve<IActorALBOrchestrationService>();
+                    Thread.Sleep(Timeout.Infinite);
+                }
             }
             catch (Exception e)
             {

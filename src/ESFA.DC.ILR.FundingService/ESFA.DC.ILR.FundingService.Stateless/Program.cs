@@ -4,6 +4,7 @@ using System.Fabric;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
+using Autofac.Features.AttributeFilters;
 using Autofac.Integration.ServiceFabric;
 using DC.JobContextManager;
 using DC.JobContextManager.Interface;
@@ -11,7 +12,10 @@ using ESFA.DC.Auditing;
 using ESFA.DC.Auditing.Dto;
 using ESFA.DC.Auditing.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Modules;
+using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
 using ESFA.DC.ILR.FundingService.Modules;
+using ESFA.DC.ILR.FundingService.Orchestrators.Implementations;
+using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.ILR.FundingService.Stateless.Configuration;
 using ESFA.DC.ILR.FundingService.Stateless.Handlers;
 using ESFA.DC.ILR.FundingService.Stateless.Mappers;
@@ -20,6 +24,7 @@ using ESFA.DC.IO.AzureCosmos;
 using ESFA.DC.IO.AzureCosmos.Config.Interfaces;
 using ESFA.DC.IO.Interfaces;
 using ESFA.DC.JobContext;
+using ESFA.DC.JobContext.Interface;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Mapping.Interface;
 using ESFA.DC.Queueing;
@@ -84,11 +89,9 @@ namespace ESFA.DC.ILR.FundingService.Stateless
             containerBuilder.RegisterType<AzureCosmosKeyValuePersistenceService>().As<IKeyValuePersistenceService>()
                 .InstancePerLifetimeScope();
 
-            containerBuilder.RegisterModule<PreFundingALBModule>();
-
             // register serialization
             containerBuilder.RegisterType<JsonSerializationService>()
-                .Keyed<ISerializationService>(SerializationTypes.Json);
+                .As<ISerializationService>();
 
             // get ServiceBus, Azurestorage config values and register container
             var serviceBusOptions =
@@ -108,7 +111,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless
                 Environment.ProcessorCount);
             containerBuilder.Register(c => new QueuePublishService<AuditingDto>(
                     auditPublishConfig,
-                    c.ResolveKeyed<ISerializationService>(SerializationTypes.Json)))
+                    c.Resolve<ISerializationService>()))
                 .As<IQueuePublishService<AuditingDto>>();
             containerBuilder.RegisterType<Auditor>().As<IAuditor>();
 
@@ -119,12 +122,14 @@ namespace ESFA.DC.ILR.FundingService.Stateless
                 serviceBusOptions.FundingCalcSubscriptionName,
                 Environment.ProcessorCount);
 
+            containerBuilder.RegisterModule<PreFundingALBModule>();
+
             containerBuilder.Register(c =>
             {
                 var topicSubscriptionSevice =
                     new TopicSubscriptionSevice<JobContextMessage>(
                         topicConfig,
-                        c.ResolveKeyed<ISerializationService>(SerializationTypes.Json),
+                        c.Resolve<ISerializationService>(),
                         c.Resolve<ILogger>());
                 return topicSubscriptionSevice;
             }).As<ITopicSubscriptionService<JobContextMessage>>();
@@ -134,7 +139,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless
                 var topicPublishSevice =
                     new TopicPublishService<JobContextMessage>(
                         topicConfig,
-                        c.ResolveKeyed<ISerializationService>(SerializationTypes.Json));
+                        c.Resolve<ISerializationService>());
                 return topicPublishSevice;
             }).As<ITopicPublishService<JobContextMessage>>();
 
@@ -143,13 +148,20 @@ namespace ESFA.DC.ILR.FundingService.Stateless
                 .As<IMapper<JobContextMessage, JobContextMessage>>();
 
             // register MessageHandler
-            containerBuilder.RegisterType<MessageHandler>().As<IMessageHandler>();
+            containerBuilder.RegisterType<MessageHandler>().As<IMessageHandler>().InstancePerLifetimeScope();
 
             // register the  callback handle when a new message is received from ServiceBus
             containerBuilder.Register<Func<JobContextMessage, CancellationToken, Task<bool>>>(c =>
-                c.Resolve<IMessageHandler>().Handle);
+                c.Resolve<IMessageHandler>().Handle).InstancePerLifetimeScope();
 
-            containerBuilder.RegisterType<JobContextManagerForTopics<JobContextMessage>>().As<IJobContextManager>();
+            containerBuilder.RegisterType<JobContextManagerForTopics<JobContextMessage>>().As<IJobContextManager>()
+                .InstancePerLifetimeScope();
+
+            containerBuilder.RegisterType<JobContextMessage>().As<IJobContextMessage>()
+                .InstancePerLifetimeScope();
+
+            containerBuilder.RegisterType<PreFundingSFOrchestrationService>().As<IPreFundingSFOrchestrationService>()
+                .InstancePerLifetimeScope();
 
             return containerBuilder;
         }

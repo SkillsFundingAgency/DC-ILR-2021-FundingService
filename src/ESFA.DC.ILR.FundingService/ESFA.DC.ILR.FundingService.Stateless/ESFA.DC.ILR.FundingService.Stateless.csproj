@@ -81,28 +81,31 @@
       <HintPath>..\packages\ESFA.DC.Data.Postcodes.Model.0.1.2-beta0001\lib\net461\ESFA.DC.Data.Postcodes.Model.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.FundingService.ALB.Contexts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.2-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Contexts.dll</HintPath>
+      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.8-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Contexts.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.FundingService.ALB.ExternalData, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.2-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.ExternalData.dll</HintPath>
+      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.8-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.ExternalData.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.FundingService.ALB.Modules, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.2-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Modules.dll</HintPath>
+      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.8-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Modules.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.FundingService.ALB.OrchestrationService, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.2-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.OrchestrationService.dll</HintPath>
+      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.8-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.OrchestrationService.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.2-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface.dll</HintPath>
+      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.8-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.FundingService.ALB.Service, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.2-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Service.dll</HintPath>
+      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.8-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Service.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.FundingService.ALB.Service.Interface, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.2-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Service.Interface.dll</HintPath>
+      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.8-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Service.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.FundingService.ALB.Stubs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.2-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Stubs.dll</HintPath>
+      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.1.0.8-beta\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Stubs.dll</HintPath>
+    </Reference>
+    <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR.1819.Model.Interface.0.1.3-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.IO.AzureCosmos, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.IO.AzureCosmos.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.IO.AzureCosmos.dll</HintPath>
@@ -421,6 +424,10 @@
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Modules\ESFA.DC.ILR.FundingService.Modules.csproj">
       <Project>{79748ecd-e5d4-4d1e-be10-32588b2f625c}</Project>
       <Name>ESFA.DC.ILR.FundingService.Modules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Orchestrators\ESFA.DC.ILR.FundingService.Orchestrators.csproj">
+      <Project>{c72db578-ecfd-4281-936e-26c6f4d2b3db}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Orchestrators</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Stateless.Models\ESFA.DC.ILR.FundingService.Stateless.Models.csproj">
       <Project>{0faaaab8-443b-47bf-9e96-c3069e8789f9}</Project>

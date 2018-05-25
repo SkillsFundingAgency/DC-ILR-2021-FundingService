@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.FundingService.Stateless.Models;
 using ESFA.DC.OPA.Model.Interface;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Remoting.FabricTransport;
@@ -17,6 +18,6 @@ namespace ESFA.DC.ILR.FundingService.ALBActor.Interfaces
     /// </summary>
     public interface IALBActor : IActor
     {
-        IEnumerable<IDataEntity> Process();
+       Task<IEnumerable<IDataEntity>> Process(ALBActorModel albActorModel);
     }
 }

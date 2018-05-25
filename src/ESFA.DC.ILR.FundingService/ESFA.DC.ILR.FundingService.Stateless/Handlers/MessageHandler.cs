@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
+using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
+using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.IO.Interfaces;
 using ESFA.DC.JobContext;
 using ESFA.DC.JobContext.Interface;
@@ -37,9 +39,12 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Handlers
                     var logger = childLifeTimeScope.Resolve<ILogger>();
 
                     logger.LogDebug("started funding calc");
+                    var preFundingSfOrchestrationService =
+                        childLifeTimeScope.Resolve<IPreFundingSFOrchestrationService>();
+
+                    preFundingSfOrchestrationService.Execute(jobContextMessage);
                 }
 
-                // TODO: do something with the errors
                 ServiceEventSource.Current.ServiceMessage(_context, "Job complete");
                 return Task.FromResult(true);
             }

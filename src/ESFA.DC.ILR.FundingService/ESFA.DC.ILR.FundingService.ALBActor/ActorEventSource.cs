@@ -10,7 +10,7 @@ using Microsoft.ServiceFabric.Actors.Runtime;
 
 namespace ESFA.DC.ILR.FundingService.ALBActor
 {
-    [EventSource(Name = "MyCompany-ESFA.DC.ILR.FundingService-ESFA.DC.ILR.FundingService.ALBActor")]
+    [EventSource(Name = "ESFA.DC.ILR.FundingService-ESFA.DC.ILR.FundingService.ALBActor")]
     internal sealed class ActorEventSource : EventSource
     {
         public static readonly ActorEventSource Current = new ActorEventSource();
