@@ -13,6 +13,8 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Models
         public string TopicName { get; set; }
 
         public string FundingCalcSubscriptionName { get; set; }
+
+        public string DataStoreSubscriptionName { get; set; }
        
     }
 }

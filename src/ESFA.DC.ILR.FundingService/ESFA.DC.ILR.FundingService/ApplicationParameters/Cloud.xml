@@ -3,9 +3,10 @@
   <Parameters>
     <Parameter Name="ESFA.DC.ILR.FundingService.Stateless_InstanceCount" Value="-1" />
     <Parameter Name="AuditQueueName" Value="##AuditQueueName##" />
-    <Parameter Name="ServiceBusConnectionString" Value="##ServiceFabricServiceBusConnectionString##" />
-    <Parameter Name="TopicName" Value="##TopicName##" />
-    <Parameter Name="FundingCalcSubscriptionName" Value="##FundingCalcSubscriptionName##" />
-    <Parameter Name="LoggerConnectionstring" Value="##LoggerConnectionstring##" />
+    <Parameter Name="ServiceBusConnectionString" Value="__ServiceBusConnectionString__" />
+    <Parameter Name="TopicName" Value="__TopicName__" />
+    <Parameter Name="FundingCalcSubscriptionName" Value="__FundingCalcSubscriptionName__" />
+    <Parameter Name="LoggerConnectionstring" Value="__LoggerConnectionString__" />
+    <Parameter Name="DataStoreSubscriptionName" Value="__DataStoreSubscriptionName__" />
   </Parameters>
 </Application>

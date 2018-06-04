@@ -116,10 +116,17 @@ namespace ESFA.DC.ILR.FundingService.Stateless
             containerBuilder.RegisterType<Auditor>().As<IAuditor>();
 
             // register Jobcontext services
-            var topicConfig = new ServiceBusTopicConfig(
+            var topicSubscribeConfig = new ServiceBusTopicConfig(
                 serviceBusOptions.ServiceBusConnectionString,
                 serviceBusOptions.TopicName,
                 serviceBusOptions.FundingCalcSubscriptionName,
+                Environment.ProcessorCount);
+
+            // register Jobcontext services
+            var topicPublishConfig = new ServiceBusTopicConfig(
+                serviceBusOptions.ServiceBusConnectionString,
+                serviceBusOptions.TopicName,
+                serviceBusOptions.DataStoreSubscriptionName,
                 Environment.ProcessorCount);
 
             containerBuilder.RegisterModule<PreFundingALBModule>();
@@ -128,7 +135,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless
             {
                 var topicSubscriptionSevice =
                     new TopicSubscriptionSevice<JobContextMessage>(
-                        topicConfig,
+                        topicSubscribeConfig,
                         c.Resolve<ISerializationService>(),
                         c.Resolve<ILogger>());
                 return topicSubscriptionSevice;
@@ -138,7 +145,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless
             {
                 var topicPublishSevice =
                     new TopicPublishService<JobContextMessage>(
-                        topicConfig,
+                        topicPublishConfig,
                         c.Resolve<ISerializationService>());
                 return topicPublishSevice;
             }).As<ITopicPublishService<JobContextMessage>>();

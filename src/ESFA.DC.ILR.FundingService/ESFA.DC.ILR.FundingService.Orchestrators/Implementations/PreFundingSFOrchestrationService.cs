@@ -48,6 +48,8 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         {
             var tasks = jobContextMessage.Topics[jobContextMessage.TopicPointer].Tasks;
 
+            // TODO: read the valid learners from Azurecosmos. Or is this already done by fundingcontext
+
             // loop through list of all the tasks and execute them.
 //            foreach (var taskItem in tasks.Where(x => x.SupportsParallelExecution))
 //            {
