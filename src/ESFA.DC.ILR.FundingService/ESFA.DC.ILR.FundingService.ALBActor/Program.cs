@@ -36,7 +36,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
 
                 using (var container = builder.Build())
                 {
-                    var ss = container.Resolve<IActorALBOrchestrationService>();
+                    var ss = container.Resolve<IALBOrchestrationService>();
                     Thread.Sleep(Timeout.Infinite);
                 }
             }

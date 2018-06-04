@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
 using ESFA.DC.ILR.Model.Interface;
 
@@ -46,7 +47,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
             _actorId = actorId;
         }
 
-        public Task<IEnumerable<IDataEntity>> Process(ALBActorModel albActorModel)
+        public Task<IEnumerable<IFundingOutputs>> Process(ALBActorModel albActorModel)
         {
             var jsonSerializationService = _parentLifetimeScope.Resolve<ISerializationService>();
             var referenceDataCache = jsonSerializationService.Deserialize<ReferenceDataCache>(
@@ -65,7 +66,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                 try
                 {
                     logger.LogDebug("ALB Actor started processing");
-                    var albActorOrchestrationService = childLifetimeScope.Resolve<IActorALBOrchestrationService>();
+                    var albActorOrchestrationService = childLifetimeScope.Resolve<IALBOrchestrationService>();
                     var results = albActorOrchestrationService.Execute(
                         albActorModel.Ukprn,
                         jsonSerializationService.Deserialize<IList<ILearner>>(

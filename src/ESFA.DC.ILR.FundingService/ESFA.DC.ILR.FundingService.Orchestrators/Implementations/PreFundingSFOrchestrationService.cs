@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Autofac.Features.AttributeFilters;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
 using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
@@ -58,7 +59,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             _logger.LogDebug("completed prefunding ALB service");
 
             // create actors for processing
-            var actorTasks = new List<Task<IEnumerable<IDataEntity>>>();
+            var actorTasks = new List<Task<IEnumerable<IFundingOutputs>>>();
             var ukprn = Convert.ToInt32(jobContextMessage.KeyValuePairs[JobContextMessageKey.UkPrn]);
             var jobId = Convert.ToInt32(jobContextMessage.JobId);
 
@@ -86,7 +87,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             _logger.LogDebug("completed Actors ALB service");
 
             // get results from actor tasks
-            var results = new List<IDataEntity>();
+            var results = new List<IFundingOutputs>();
             foreach (var actorTask in actorTasks)
             {
                 results.AddRange(actorTask.Result);

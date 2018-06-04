@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.Stateless.Models;
 using ESFA.DC.OPA.Model.Interface;
 using Microsoft.ServiceFabric.Actors;
@@ -18,6 +19,6 @@ namespace ESFA.DC.ILR.FundingService.ALBActor.Interfaces
     /// </summary>
     public interface IALBActor : IActor
     {
-       Task<IEnumerable<IDataEntity>> Process(ALBActorModel albActorModel);
+       Task<IEnumerable<IFundingOutputs>> Process(ALBActorModel albActorModel);
     }
 }
