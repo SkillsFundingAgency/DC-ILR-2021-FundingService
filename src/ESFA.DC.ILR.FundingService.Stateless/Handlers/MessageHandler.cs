@@ -26,7 +26,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Handlers
             _context = context;
         }
 
-        public Task<bool> Handle(JobContextMessage jobContextMessage, CancellationToken cancellationToken)
+        public async Task<bool> Handle(JobContextMessage jobContextMessage, CancellationToken cancellationToken)
         {
             try
             {
@@ -42,11 +42,11 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Handlers
                     var preFundingSfOrchestrationService =
                         childLifeTimeScope.Resolve<IPreFundingSFOrchestrationService>();
 
-                    preFundingSfOrchestrationService.Execute(jobContextMessage);
+                    await preFundingSfOrchestrationService.Execute(jobContextMessage);
                 }
 
                 ServiceEventSource.Current.ServiceMessage(_context, "Job complete");
-                return Task.FromResult(true);
+                return true;
             }
             catch (Exception ex)
             {

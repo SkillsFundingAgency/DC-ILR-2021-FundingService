@@ -2,9 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.Orchestrators.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.Orchestrators.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
@@ -12,18 +17,25 @@
     <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.Orchestrators.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.Orchestrators.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="ESFA.DC.ILR.FundingService.ALB.Modules" Version="0.1.2-beta0001" />
-    <PackageReference Include="ESFA.DC.JobContext.Interface" Version="0.1.7-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model" Version="0.1.2-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.FundingService.ALB.Modules" Version="0.1.4-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.FundingService.Dto" Version="0.1.1-beta0001" />
+    <PackageReference Include="ESFA.DC.JobContext.Interface" Version="0.1.10-beta0001" />
     <PackageReference Include="ESFA.DC.Logging" Version="0.1.1-beta0001" />
     <PackageReference Include="ESFA.DC.OPA.Model.Interface" Version="0.1.0-beta0001" />
-    <PackageReference Include="ESFA.DC.Serialization.Json" Version="0.1.2-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Json" Version="0.1.4-beta0001" />
     <PackageReference Include="Microsoft.ServiceFabric.Actors" Version="3.1.274" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta007" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALBActor.Interfaces\ESFA.DC.ILR.FundingService.ALBActor.Interfaces.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Providers\ESFA.DC.ILR.FundingService.Providers.csproj" />
   </ItemGroup>
 
 </Project>

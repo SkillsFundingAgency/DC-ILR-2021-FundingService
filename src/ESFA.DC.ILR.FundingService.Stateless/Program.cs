@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Fabric;
+using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
@@ -11,18 +12,27 @@ using DC.JobContextManager.Interface;
 using ESFA.DC.Auditing;
 using ESFA.DC.Auditing.Dto;
 using ESFA.DC.Auditing.Interface;
+using ESFA.DC.ILR.FundingService.ALB.Contexts;
+using ESFA.DC.ILR.FundingService.ALB.Contexts.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Modules;
 using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
+using ESFA.DC.ILR.FundingService.ALB.Service.Interface;
+using ESFA.DC.ILR.FundingService.Dto;
+using ESFA.DC.ILR.FundingService.Dto.Interfaces;
 using ESFA.DC.ILR.FundingService.Modules;
 using ESFA.DC.ILR.FundingService.Orchestrators.Implementations;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
+using ESFA.DC.ILR.FundingService.Providers;
+using ESFA.DC.ILR.FundingService.Providers.Interfaces;
 using ESFA.DC.ILR.FundingService.Stateless.Configuration;
 using ESFA.DC.ILR.FundingService.Stateless.Handlers;
 using ESFA.DC.ILR.FundingService.Stateless.Mappers;
 using ESFA.DC.ILR.FundingService.Stateless.Models;
-using ESFA.DC.IO.AzureCosmos;
-using ESFA.DC.IO.AzureCosmos.Config.Interfaces;
+using ESFA.DC.IO.AzureStorage;
+using ESFA.DC.IO.AzureStorage.Config.Interfaces;
 using ESFA.DC.IO.Interfaces;
+using ESFA.DC.IO.Redis;
+using ESFA.DC.IO.Redis.Config.Interfaces;
 using ESFA.DC.JobContext;
 using ESFA.DC.JobContext.Interface;
 using ESFA.DC.Logging.Interfaces;
@@ -31,17 +41,12 @@ using ESFA.DC.Queueing;
 using ESFA.DC.Queueing.Interface;
 using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.Serialization.Json;
+using ESFA.DC.Serialization.Xml;
 using ESFA.DC.ServiceFabric.Helpers;
 using Microsoft.ServiceFabric.Services.Runtime;
 
 namespace ESFA.DC.ILR.FundingService.Stateless
 {
-    enum SerializationTypes
-    {
-        Json,
-        Xml
-    }
-
     internal static class Program
     {
         /// <summary>
@@ -57,10 +62,12 @@ namespace ESFA.DC.ILR.FundingService.Stateless
                 builder.RegisterServiceFabricSupport();
 
                 // Register the stateless service.
-                builder.RegisterStatelessService<Stateless>("ESFA.DC.ILR.FundingService.StatelessType");
+                builder.RegisterStatelessService<Stateless>("ESFA.DC.ILR.1819.FundingService.StatelessType");
 
                 using (var container = builder.Build())
                 {
+                    var sss = container.Resolve<ReferenceDataConfig>();
+                    var ss = container.Resolve<IPreFundingSFOrchestrationService>();
                     ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(Stateless).Name);
 
                     // Prevents this host process from terminating so services keep running.
@@ -80,18 +87,28 @@ namespace ESFA.DC.ILR.FundingService.Stateless
             var configHelper = new ConfigurationHelper();
 
             // register Cosmos config
-            var azureCosmosOptions = configHelper.GetSectionValues<AzureCosmosOptions>("AzureCosmosSection");
-            containerBuilder.Register(c => new AzureCosmosKeyValuePersistenceConfig(
-                    azureCosmosOptions.CosmosEndpointUrl,
-                    azureCosmosOptions.CosmosAuthKeyOrResourceToken))
-                .As<IAzureCosmosKeyValuePersistenceServiceConfig>().SingleInstance();
+            var azureRedisCacheOptions = configHelper.GetSectionValues<AzureRedisCacheOptions>("AzureRedisSection");
+            containerBuilder.Register(c => new AzureRedisKeyValuePersistenceConfig(
+                    azureRedisCacheOptions.RedisCacheConnectionString))
+                .As<IRedisKeyValuePersistenceServiceConfig>().SingleInstance();
 
-            containerBuilder.RegisterType<AzureCosmosKeyValuePersistenceService>().As<IKeyValuePersistenceService>()
+            containerBuilder.RegisterType<RedisKeyValuePersistenceService>().As<IKeyValuePersistenceService>()
+                .InstancePerLifetimeScope();
+            containerBuilder.RegisterType<AzureStorageKeyValuePersistenceService>().Keyed<IKeyValuePersistenceService>(IOPersistenceKeys.Blob)
                 .InstancePerLifetimeScope();
 
             // register serialization
             containerBuilder.RegisterType<JsonSerializationService>()
                 .As<ISerializationService>();
+            containerBuilder.RegisterType<JsonSerializationService>()
+                .As<IJsonSerializationService>();
+            containerBuilder.RegisterType<XmlSerializationService>()
+                .As<IXmlSerializationService>();
+
+            // register reference data configs
+            var referenceDataConfig =
+                configHelper.GetSectionValues<ReferenceDataConfig>("ReferenceDataSection");
+            containerBuilder.RegisterInstance(referenceDataConfig).As<ReferenceDataConfig>().SingleInstance();
 
             // get ServiceBus, Azurestorage config values and register container
             var serviceBusOptions =
@@ -134,21 +151,21 @@ namespace ESFA.DC.ILR.FundingService.Stateless
             containerBuilder.Register(c =>
             {
                 var topicSubscriptionSevice =
-                    new TopicSubscriptionSevice<JobContextMessage>(
+                    new TopicSubscriptionSevice<JobContextDto>(
                         topicSubscribeConfig,
                         c.Resolve<ISerializationService>(),
                         c.Resolve<ILogger>());
                 return topicSubscriptionSevice;
-            }).As<ITopicSubscriptionService<JobContextMessage>>();
+            }).As<ITopicSubscriptionService<JobContextDto>>();
 
             containerBuilder.Register(c =>
             {
                 var topicPublishSevice =
-                    new TopicPublishService<JobContextMessage>(
+                    new TopicPublishService<JobContextDto>(
                         topicPublishConfig,
                         c.Resolve<ISerializationService>());
                 return topicPublishSevice;
-            }).As<ITopicPublishService<JobContextMessage>>();
+            }).As<ITopicPublishService<JobContextDto>>();
 
             // register message mapper
             containerBuilder.RegisterType<JobContextMessageMapper>()
@@ -169,6 +186,24 @@ namespace ESFA.DC.ILR.FundingService.Stateless
 
             containerBuilder.RegisterType<PreFundingSFOrchestrationService>().As<IPreFundingSFOrchestrationService>()
                 .InstancePerLifetimeScope();
+
+            // register funding service dto
+            containerBuilder.RegisterType<FundingServiceDto>().As<IFundingServiceDto>()
+                .InstancePerLifetimeScope();
+
+            // register Azure blob storage config
+            var azureStorageConfig =
+                configHelper.GetSectionValues<AzureStorageOptions>("AzureStorageSection");
+            containerBuilder.Register(c =>
+                    new AzureStorageKeyValuePersistenceServiceConfig(
+                        azureStorageConfig.AzureBlobConnectionString,
+                        azureStorageConfig.AzureBlobContainerName))
+                .As<IAzureStorageKeyValuePersistenceServiceConfig>().SingleInstance();
+
+            // register ilrfile provider service
+            containerBuilder.Register(c => new IlrFileProviderService(
+                c.ResolveKeyed<IKeyValuePersistenceService>(IOPersistenceKeys.Blob),
+                c.Resolve<IXmlSerializationService>())).As<IIlrFileProviderService>().InstancePerLifetimeScope();
 
             return containerBuilder;
         }

@@ -2,7 +2,7 @@
     [string]$ProjDirectory = ""
 )
 
-$privateFilesPath =  [io.path]::combine($(get-item $ProjDirectory).parent.parent.parent.parent.FullName,"DC-Configs","ServiceFabricSettings",$env:UserName,"FundingService")
+$privateFilesPath =  [io.path]::combine($(get-item $ProjDirectory).parent.parent.parent.FullName,"DC-Configs","ServiceFabricSettings",$env:UserName,"FundingService")
 Write-Host $privateFilesPath 
  
 $destination = [io.path]::combine($(get-item $ProjDirectory).parent.FullName,"ESFA.DC.ILR.FundingService","ApplicationParameters")

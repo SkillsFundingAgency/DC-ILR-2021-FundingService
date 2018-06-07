@@ -14,6 +14,11 @@
     <Parameter Name="ALBActorService_MinReplicaSetSize" DefaultValue="1" />
     <Parameter Name="ALBActorService_PartitionCount" DefaultValue="10" />
     <Parameter Name="DataStoreSubscriptionName" DefaultValue="" />
+    <Parameter Name="LARSConnectionString" DefaultValue="metadata=res://*/LARS.csdl|res://*/LARS.ssdl|res://*/LARS.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(local);initial catalog=ESFA.DC.Data.LARS.Database;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
+    <Parameter Name="PostcodesConnectionString" DefaultValue="metadata=res://*/Postcodes.csdl|res://*/Postcodes.ssdl|res://*/Postcodes.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(local);initial catalog=ESFA.DC.Data.Postcodes.Database;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
+    <Parameter Name="RedisCacheConnectionString" DefaultValue="" />
+    <Parameter Name="AzureBlobConnectionString" DefaultValue="UseDevelopmentStorage=true" />
+    <Parameter Name="AzureBlobContainerName" DefaultValue="ilr-files" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
@@ -48,9 +53,16 @@
           <Section Name="LoggerSection">
             <Parameter Name="LoggerConnectionstring" Value="[LoggerConnectionstring]" />
           </Section>
-          <Section Name="AzureCosmosSection">
-            <Parameter Name="CosmosEndpointUrl" Value="[EndpointUrl]" />
-            <Parameter Name="CosmosAuthKeyOrResourceToken" Value="[AuthKeyOrResourceToken]" />
+          <Section Name="AzureRedisSection">
+            <Parameter Name="RedisCacheConnectionString" Value="[RedisCacheConnectionString]" />
+          </Section>
+          <Section Name="ReferenceDataSection">
+            <Parameter Name="LARSConnectionString" Value="[LARSConnectionString]" />
+            <Parameter Name="PostCodeConnectionString" Value="[PostcodesConnectionString]" />
+          </Section>
+          <Section Name="AzureStorageSection">
+            <Parameter Name="AzureBlobConnectionString" Value="[AzureBlobConnectionString]" />
+            <Parameter Name="AzureBlobContainerName" Value="[AzureBlobContainerName]" />
           </Section>
         </Settings>
       </ConfigOverride>
@@ -62,8 +74,8 @@
          ServiceFabric PowerShell module.
          
          The attribute ServiceTypeName below must match the name defined in the imported ServiceManifest.xml file. -->
-    <Service Name="ESFA.DC.ILR.FundingService.Stateless" ServicePackageActivationMode="ExclusiveProcess">
-      <StatelessService ServiceTypeName="ESFA.DC.ILR.FundingService.StatelessType" InstanceCount="[ESFA.DC.ILR.FundingService.Stateless_InstanceCount]">
+    <Service Name="ESFA.DC.ILR.1819.FundingService.Stateless" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="ESFA.DC.ILR.1819.FundingService.StatelessType" InstanceCount="[ESFA.DC.ILR.FundingService.Stateless_InstanceCount]">
         <SingletonPartition />
       </StatelessService>
     </Service>

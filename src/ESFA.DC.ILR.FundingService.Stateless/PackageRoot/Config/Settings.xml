@@ -15,21 +15,24 @@
     <Parameter Name="DataStoreSubscriptionName" Value="" />
   </Section>
 
-
   <Section Name="LoggerSection">
     <Parameter Name="LoggerConnectionstring" Value="" />
   </Section>
 
   <Section  Name="AzureStorageSection">
     <Parameter Name="AzureBlobConnectionString" Value="" />
+    <Parameter Name="AzureBlobContainerName" Value="" />
   </Section>
 
-  <Section  Name="AzureCosmosSection">
-    <Parameter Name="CosmosEndpointUrl" Value="" />
-    <Parameter Name="CosmosAuthKeyOrResourceToken" Value="" />
+  <Section Name="AzureRedisSection">
+    <Parameter Name="RedisCacheConnectionString" Value="" />
   </Section>
 
 
+  <Section  Name="ReferenceDataSection">
+    <Parameter Name="LARSConnectionString" Value="" />
+    <Parameter Name="PostCodeConnectionString" Value="" />
+  </Section>
   
 
   <Section Name="DataTransportSettings">

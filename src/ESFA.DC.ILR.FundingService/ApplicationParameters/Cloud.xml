@@ -8,5 +8,10 @@
     <Parameter Name="FundingCalcSubscriptionName" Value="__FundingCalcSubscriptionName__" />
     <Parameter Name="LoggerConnectionstring" Value="__LoggerConnectionString__" />
     <Parameter Name="DataStoreSubscriptionName" Value="__DataStoreSubscriptionName__" />
+    <Parameter Name="LARSConnectionString" Value="__LARSConnectionString__" />
+    <Parameter Name="PostcodesConnectionString" Value="__PostcodesConnectionString__" />
+    <Parameter Name="RedisCacheConnectionString" Value="__RedisCacheConnectionString__" />
+    <Parameter Name="AzureBlobConnectionString" Value="__AzureBlobConnectionString__" />
+    <Parameter Name="AzureBlobContainerName" Value="__AzureBlobContainerName__" />
   </Parameters>
 </Application>

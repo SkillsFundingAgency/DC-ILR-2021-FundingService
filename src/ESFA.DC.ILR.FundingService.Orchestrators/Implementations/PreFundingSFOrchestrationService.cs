@@ -6,11 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Autofac.Features.AttributeFilters;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
+using ESFA.DC.ILR.FundingService.ALB.Stubs.Persistance.Model.Output;
 using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
+using ESFA.DC.ILR.FundingService.Dto;
+using ESFA.DC.ILR.FundingService.Dto.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
+using ESFA.DC.ILR.FundingService.Providers.Interfaces;
 using ESFA.DC.ILR.FundingService.Stateless.Models;
+using ESFA.DC.IO.Interfaces;
 using ESFA.DC.JobContext.Interface;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.OPA.Model.Interface;
@@ -20,36 +26,47 @@ using Microsoft.ServiceFabric.Actors.Client;
 
 namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
 {
-    enum SerializationTypes
-    {
-        Json,
-        Xml
-    }
-
     public class PreFundingSFOrchestrationService : IPreFundingSFOrchestrationService
     {
         private readonly IPreFundingALBOrchestrationService _preFundingALBOrchestrationService;
         private readonly IReferenceDataCache _referenceDataCache;
-        private readonly ISerializationService _serializationService;
+        private readonly ISerializationService _jsonSerializationService;
+        private readonly IIlrFileProviderService _ilrFileProviderService;
+        private readonly IFundingServiceDto _fundingServiceDto;
+        private readonly IKeyValuePersistenceService _keyValuePersistenceService;
         private readonly ILogger _logger;
 
         public PreFundingSFOrchestrationService(
             IPreFundingALBOrchestrationService preFundingALBOrchestrationService,
             IReferenceDataCache referenceDataCache,
-            ISerializationService serializationService,
+            IJsonSerializationService jsonSerializationService,
+            IIlrFileProviderService ilrFileProviderService,
+            IFundingServiceDto fundingServiceDto,
+            IKeyValuePersistenceService keyValuePersistenceService,
             ILogger logger)
         {
             _preFundingALBOrchestrationService = preFundingALBOrchestrationService;
             _referenceDataCache = referenceDataCache;
-            _serializationService = serializationService;
+            _jsonSerializationService = jsonSerializationService;
+            _ilrFileProviderService = ilrFileProviderService;
+            _fundingServiceDto = fundingServiceDto;
+            _keyValuePersistenceService = keyValuePersistenceService;
             _logger = logger;
         }
 
-        public void Execute(IJobContextMessage jobContextMessage)
+        public async Task Execute(IJobContextMessage jobContextMessage)
         {
             var tasks = jobContextMessage.Topics[jobContextMessage.TopicPointer].Tasks;
 
-            // TODO: read the valid learners from Azurecosmos. Or is this already done by fundingcontext
+            // Get the ilr object from file
+            var ilrMessage = await _ilrFileProviderService.Provide(jobContextMessage.KeyValuePairs[JobContextMessageKey.Filename].ToString());
+            var fundingServiceDto = (FundingServiceDto)_fundingServiceDto;
+            fundingServiceDto.Message = ilrMessage;
+
+            // get valid learners from intermediate storage and store it in the dto for rulebases
+            fundingServiceDto.ValidLearners = _jsonSerializationService.Deserialize<string[]>(
+                await _keyValuePersistenceService.GetAsync(
+                    jobContextMessage.KeyValuePairs[JobContextMessageKey.ValidLearnRefNumbers].ToString()));
 
             // loop through list of all the tasks and execute them.
 //            foreach (var taskItem in tasks.Where(x => x.SupportsParallelExecution))
@@ -59,7 +76,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             _logger.LogDebug("completed prefunding ALB service");
 
             // create actors for processing
-            var actorTasks = new List<Task<IEnumerable<IFundingOutputs>>>();
+            var actorTasks = new List<Task<string>>();
             var ukprn = Convert.ToInt32(jobContextMessage.KeyValuePairs[JobContextMessageKey.UkPrn]);
             var jobId = Convert.ToInt32(jobContextMessage.JobId);
 
@@ -69,9 +86,9 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
                 var actor = GetFundingServiceActor();
 
                 var referenceDataInBytes =
-                    Encoding.UTF8.GetBytes(_serializationService.Serialize(_referenceDataCache));
+                    Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(_referenceDataCache));
                 var albValidLearnersShardInBytes =
-                    Encoding.UTF8.GetBytes(_serializationService.Serialize(albValidLearnersShard));
+                    Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(albValidLearnersShard));
                 var albActorModel = new ALBActorModel()
                 {
                     ReferenceDataCache = referenceDataInBytes,
@@ -90,7 +107,9 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             var results = new List<IFundingOutputs>();
             foreach (var actorTask in actorTasks)
             {
-                results.AddRange(actorTask.Result);
+                IEnumerable<IFundingOutputs> fundingOutputs =
+                    _jsonSerializationService.Deserialize<List<FundingOutputs>>(actorTask.Result);
+                results.AddRange(fundingOutputs);
             }
 
             // TODO: do something with results

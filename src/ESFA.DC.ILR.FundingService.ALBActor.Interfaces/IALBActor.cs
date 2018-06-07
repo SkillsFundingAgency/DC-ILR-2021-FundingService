@@ -19,6 +19,6 @@ namespace ESFA.DC.ILR.FundingService.ALBActor.Interfaces
     /// </summary>
     public interface IALBActor : IActor
     {
-       Task<IEnumerable<IFundingOutputs>> Process(ALBActorModel albActorModel);
+       Task<string> Process(ALBActorModel albActorModel);
     }
 }
