@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Fabric;
 using System.Linq;
 using System.Text;
@@ -34,6 +35,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         private readonly IIlrFileProviderService _ilrFileProviderService;
         private readonly IFundingServiceDto _fundingServiceDto;
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
+        private readonly IFundingOutputPersistenceService<IEnumerable<IFundingOutputs>> _fundingOutputPersistenceService;
         private readonly ILogger _logger;
 
         public PreFundingSFOrchestrationService(
@@ -43,6 +45,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             IIlrFileProviderService ilrFileProviderService,
             IFundingServiceDto fundingServiceDto,
             IKeyValuePersistenceService keyValuePersistenceService,
+            IFundingOutputPersistenceService<IEnumerable<IFundingOutputs>> fundingOutputPersistenceService,
             ILogger logger)
         {
             _preFundingALBOrchestrationService = preFundingALBOrchestrationService;
@@ -51,11 +54,13 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             _ilrFileProviderService = ilrFileProviderService;
             _fundingServiceDto = fundingServiceDto;
             _keyValuePersistenceService = keyValuePersistenceService;
+            _fundingOutputPersistenceService = fundingOutputPersistenceService;
             _logger = logger;
         }
 
         public async Task Execute(IJobContextMessage jobContextMessage)
         {
+            var stopWatch = new Stopwatch();
             var tasks = jobContextMessage.Topics[jobContextMessage.TopicPointer].Tasks;
 
             // Get the ilr object from file
@@ -112,9 +117,15 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
                 results.AddRange(fundingOutputs);
             }
 
-            // TODO: do something with results
+            stopWatch.Start();
+
+            // persis results
+            await _fundingOutputPersistenceService.Process(
+                results,
+                jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString());
 
             // }
+            _logger.LogDebug($"Persisted Funding results in: {stopWatch.ElapsedMilliseconds}");
         }
 
         private IALBActor GetFundingServiceActor()

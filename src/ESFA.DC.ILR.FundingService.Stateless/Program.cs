@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Fabric;
 using System.Runtime.Serialization;
@@ -14,6 +15,7 @@ using ESFA.DC.Auditing.Dto;
 using ESFA.DC.Auditing.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Contexts;
 using ESFA.DC.ILR.FundingService.ALB.Contexts.Interface;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Modules;
 using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Service.Interface;
@@ -24,6 +26,7 @@ using ESFA.DC.ILR.FundingService.Orchestrators.Implementations;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers;
 using ESFA.DC.ILR.FundingService.Providers.Interfaces;
+using ESFA.DC.ILR.FundingService.Providers.Output;
 using ESFA.DC.ILR.FundingService.Stateless.Configuration;
 using ESFA.DC.ILR.FundingService.Stateless.Handlers;
 using ESFA.DC.ILR.FundingService.Stateless.Mappers;
@@ -35,6 +38,7 @@ using ESFA.DC.IO.Redis;
 using ESFA.DC.IO.Redis.Config.Interfaces;
 using ESFA.DC.JobContext;
 using ESFA.DC.JobContext.Interface;
+using ESFA.DC.KeyGenerator.Interface;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Mapping.Interface;
 using ESFA.DC.Queueing;
@@ -204,6 +208,14 @@ namespace ESFA.DC.ILR.FundingService.Stateless
             containerBuilder.Register(c => new IlrFileProviderService(
                 c.ResolveKeyed<IKeyValuePersistenceService>(IOPersistenceKeys.Blob),
                 c.Resolve<IXmlSerializationService>())).As<IIlrFileProviderService>().InstancePerLifetimeScope();
+
+            // register fundingoutput persistence service
+            containerBuilder.RegisterType<FundingOutputPersistenceSfService<IEnumerable<IFundingOutputs>>>()
+                .As<IFundingOutputPersistenceService<IEnumerable<IFundingOutputs>>>()
+                .InstancePerLifetimeScope();
+
+            // register key generator
+            containerBuilder.RegisterType<KeyGenerator.KeyGenerator>().As<IKeyGenerator>().SingleInstance();
 
             return containerBuilder;
         }

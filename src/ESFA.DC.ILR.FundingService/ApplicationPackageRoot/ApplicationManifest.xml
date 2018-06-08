@@ -19,6 +19,7 @@
     <Parameter Name="RedisCacheConnectionString" DefaultValue="" />
     <Parameter Name="AzureBlobConnectionString" DefaultValue="UseDevelopmentStorage=true" />
     <Parameter Name="AzureBlobContainerName" DefaultValue="ilr-files" />
+    <Parameter Name="ProcessingServicePlacementConstraints" DefaultValue="" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
@@ -77,11 +78,13 @@
     <Service Name="ESFA.DC.ILR.1819.FundingService.Stateless" ServicePackageActivationMode="ExclusiveProcess">
       <StatelessService ServiceTypeName="ESFA.DC.ILR.1819.FundingService.StatelessType" InstanceCount="[ESFA.DC.ILR.FundingService.Stateless_InstanceCount]">
         <SingletonPartition />
+        <PlacementConstraints>[ProcessingServicePlacementConstraints]</PlacementConstraints>
       </StatelessService>
     </Service>
     <Service Name="ALBActorService" GeneratedIdRef="ab9246fd-cded-4e68-ae71-eb380770407c|None">
       <StatefulService ServiceTypeName="ALBActorServiceType" TargetReplicaSetSize="[ALBActorService_TargetReplicaSetSize]" MinReplicaSetSize="[ALBActorService_MinReplicaSetSize]">
         <UniformInt64Partition PartitionCount="[ALBActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+        <PlacementConstraints>[ProcessingServicePlacementConstraints]</PlacementConstraints>
       </StatefulService>
     </Service>
   </DefaultServices>
