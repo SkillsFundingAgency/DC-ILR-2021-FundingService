@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 using Autofac.Features.AttributeFilters;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Attribute;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface.Attribute;
 using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Stubs.Persistance.Model.Output;
 using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
@@ -109,13 +111,20 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             _logger.LogDebug("completed Actors ALB service");
 
             // get results from actor tasks
-            var results = new FundingOutputs();
+            var collatedFundingOuputputLearners = new List<ILearnerAttribute>();
+            var globalFundingOutput = new GlobalAttribute();
             foreach (var actorTask in actorTasks)
             {
                 IFundingOutputs fundingOutputs =
                     _jsonSerializationService.Deserialize<FundingOutputs>(actorTask.Result);
-                results.Learners.ToList().AddRange(fundingOutputs.Learners);
+                collatedFundingOuputputLearners.AddRange(fundingOutputs.Learners);
             }
+
+            var results = new FundingOutputs()
+            {
+                Global = globalFundingOutput,
+                Learners = collatedFundingOuputputLearners.ToArray(),
+            };
 
             stopWatch.Start();
 
