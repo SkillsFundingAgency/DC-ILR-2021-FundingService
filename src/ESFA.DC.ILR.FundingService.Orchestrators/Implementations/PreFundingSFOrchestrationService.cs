@@ -35,7 +35,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         private readonly IIlrFileProviderService _ilrFileProviderService;
         private readonly IFundingServiceDto _fundingServiceDto;
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
-        private readonly IFundingOutputPersistenceService<IEnumerable<IFundingOutputs>> _fundingOutputPersistenceService;
+        private readonly IFundingOutputPersistenceService<IFundingOutputs> _fundingOutputPersistenceService;
         private readonly ILogger _logger;
 
         public PreFundingSFOrchestrationService(
@@ -45,7 +45,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             IIlrFileProviderService ilrFileProviderService,
             IFundingServiceDto fundingServiceDto,
             IKeyValuePersistenceService keyValuePersistenceService,
-            IFundingOutputPersistenceService<IEnumerable<IFundingOutputs>> fundingOutputPersistenceService,
+            IFundingOutputPersistenceService<IFundingOutputs> fundingOutputPersistenceService,
             ILogger logger)
         {
             _preFundingALBOrchestrationService = preFundingALBOrchestrationService;
@@ -109,12 +109,12 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             _logger.LogDebug("completed Actors ALB service");
 
             // get results from actor tasks
-            var results = new List<IFundingOutputs>();
+            var results = new FundingOutputs();
             foreach (var actorTask in actorTasks)
             {
-                IEnumerable<IFundingOutputs> fundingOutputs =
-                    _jsonSerializationService.Deserialize<List<FundingOutputs>>(actorTask.Result);
-                results.AddRange(fundingOutputs);
+                IFundingOutputs fundingOutputs =
+                    _jsonSerializationService.Deserialize<FundingOutputs>(actorTask.Result);
+                results.Learners.ToList().AddRange(fundingOutputs.Learners);
             }
 
             stopWatch.Start();

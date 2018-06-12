@@ -210,8 +210,8 @@ namespace ESFA.DC.ILR.FundingService.Stateless
                 c.Resolve<IXmlSerializationService>())).As<IIlrFileProviderService>().InstancePerLifetimeScope();
 
             // register fundingoutput persistence service
-            containerBuilder.RegisterType<FundingOutputPersistenceSfService<IEnumerable<IFundingOutputs>>>()
-                .As<IFundingOutputPersistenceService<IEnumerable<IFundingOutputs>>>()
+            containerBuilder.RegisterType<FundingOutputPersistenceSfService<IFundingOutputs>>()
+                .As<IFundingOutputPersistenceService<IFundingOutputs>>()
                 .InstancePerLifetimeScope();
 
             // register key generator
