@@ -24,6 +24,7 @@ using ESFA.DC.ILR.FundingService.Dto.Interfaces;
 using ESFA.DC.ILR.FundingService.Modules;
 using ESFA.DC.ILR.FundingService.Orchestrators.Implementations;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
+using ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks;
 using ESFA.DC.ILR.FundingService.Providers;
 using ESFA.DC.ILR.FundingService.Providers.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers.Output;
@@ -216,6 +217,9 @@ namespace ESFA.DC.ILR.FundingService.Stateless
 
             // register key generator
             containerBuilder.RegisterType<KeyGenerator.KeyGenerator>().As<IKeyGenerator>().SingleInstance();
+
+            // register ALB SF orchestrator Task
+            containerBuilder.RegisterType<ALBOrchestrationSFTask>().As<IALBOrchestrationSFTask>().InstancePerLifetimeScope();
 
             return containerBuilder;
         }
