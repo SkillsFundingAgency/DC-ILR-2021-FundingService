@@ -37,9 +37,6 @@
     </CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ESFA.DC.ILR.FundingService.Dto, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.ILR.FundingService.Dto.0.1.1-beta0001\lib\netstandard2.0\ESFA.DC.ILR.FundingService.Dto.dll</HintPath>
-    </Reference>
     <Reference Include="ESFA.DC.ILR.Model, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ESFA.DC.ILR.1819.Model.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.dll</HintPath>
     </Reference>
@@ -112,6 +109,10 @@
     <Analyzer Include="..\..\packages\xunit.analyzers.0.7.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Dto\ESFA.DC.ILR.FundingService.Dto.csproj">
+      <Project>{0021C0BF-4592-40C8-9272-82AC3A1339FA}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Dto</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.Contexts\ESFA.DC.ILR.FundingService.ALB.Contexts.csproj">
       <Project>{253eacde-e617-4a4f-bb83-075170e65211}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.Contexts</Name>

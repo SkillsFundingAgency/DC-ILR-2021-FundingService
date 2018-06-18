@@ -22,7 +22,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ESFA.DC.ILR.FundingService.Dto" Version="0.1.1-beta0001" />
     <PackageReference Include="ESFA.DC.JobContext.Interface" Version="0.1.10-beta0001" />
     <PackageReference Include="ESFA.DC.Logging" Version="0.1.1-beta0001" />
     <PackageReference Include="ESFA.DC.OPA.Model.Interface" Version="0.1.0-beta0001" />
@@ -36,6 +35,7 @@
     <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.csproj" />
     <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface\ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALBActor.Interfaces\ESFA.DC.ILR.FundingService.ALBActor.Interfaces.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Dto\ESFA.DC.ILR.FundingService.Dto.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Providers\ESFA.DC.ILR.FundingService.Providers.csproj" />
   </ItemGroup>
 
