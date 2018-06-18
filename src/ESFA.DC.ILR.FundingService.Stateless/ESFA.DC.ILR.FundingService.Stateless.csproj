@@ -80,51 +80,6 @@
     <Reference Include="ESFA.DC.Data.Postcodes.Model, Version=0.1.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Data.Postcodes.Model.0.1.3-beta0001\lib\net461\ESFA.DC.Data.Postcodes.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ILR.FundingService.ALB.Contexts, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Contexts.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.ILR.FundingService.ALB.ExternalData, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.ExternalData.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.Interface, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.Interface.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.ILR.FundingService.ALB.InternalData, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.InternalData.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.ILR.FundingService.ALB.InternalData.Interface, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.InternalData.Interface.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.ILR.FundingService.ALB.Modules, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Modules.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.ILR.FundingService.ALB.OrchestrationService, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.OrchestrationService.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.ILR.FundingService.ALB.Service, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Service.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.ILR.FundingService.ALB.Service.Interface, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Service.Interface.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.ILR.FundingService.ALB.Stubs, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.Stubs.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.ILR.FundingService.ALB.TaskProvider, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.FundingService.ALB.Modules.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.ILR.FundingService.ALB.TaskProvider.dll</HintPath>
-    </Reference>
     <Reference Include="ESFA.DC.ILR.FundingService.Dto, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.FundingService.Dto.0.1.1-beta0001\lib\netstandard2.0\ESFA.DC.ILR.FundingService.Dto.dll</HintPath>
     </Reference>
@@ -470,6 +425,14 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface.csproj">
+      <Project>{2C2E187E-4770-4550-A90D-5B7730294A8C}</Project>
+      <Name>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALB.Modules\ESFA.DC.ILR.FundingService.ALB.Modules.csproj">
+      <Project>{BE335AA0-40B7-47D3-BFB3-AAF1565DF6A9}</Project>
+      <Name>ESFA.DC.ILR.FundingService.ALB.Modules</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Modules\ESFA.DC.ILR.FundingService.Modules.csproj">
       <Project>{79748ecd-e5d4-4d1e-be10-32588b2f625c}</Project>
       <Name>ESFA.DC.ILR.FundingService.Modules</Name>

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using Autofac;
 using ESFA.DC.Data.LARS.Model;
 using ESFA.DC.Data.LARS.Model.Interfaces;
@@ -24,7 +22,6 @@ using ESFA.DC.ILR.FundingService.ALB.Service.Rulebase;
 using ESFA.DC.ILR.FundingService.ALB.Stubs;
 using ESFA.DC.ILR.FundingService.ALB.TaskProvider.Interface;
 using ESFA.DC.ILR.FundingService.ALB.TaskProvider.Service;
-using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.IO.Dictionary;
 using ESFA.DC.IO.Interfaces;

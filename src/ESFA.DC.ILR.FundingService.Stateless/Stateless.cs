@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Fabric;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Autofac;
 using DC.JobContextManager.Interface;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;

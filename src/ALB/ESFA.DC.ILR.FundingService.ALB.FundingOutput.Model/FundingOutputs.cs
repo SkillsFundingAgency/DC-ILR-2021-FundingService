@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
+﻿using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface.Attribute;
 
 namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model

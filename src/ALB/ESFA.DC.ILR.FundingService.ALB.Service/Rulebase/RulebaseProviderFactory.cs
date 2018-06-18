@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using ESFA.DC.OPA.Service.Interface.Rulebase;
 using ESFA.DC.OPA.Service.Rulebase;

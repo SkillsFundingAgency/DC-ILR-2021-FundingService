@@ -4,7 +4,6 @@ using FluentAssertions;
 using ESFA.DC.OPA.Service.Interface.Rulebase;
 using ESFA.DC.OPA.Service.Rulebase;
 using System.Reflection;
-using System.IO;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Rulebase
 {

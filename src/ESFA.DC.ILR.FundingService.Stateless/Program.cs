@@ -1,24 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Fabric;
-using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
-using Autofac.Features.AttributeFilters;
 using Autofac.Integration.ServiceFabric;
 using DC.JobContextManager;
 using DC.JobContextManager.Interface;
 using ESFA.DC.Auditing;
 using ESFA.DC.Auditing.Dto;
 using ESFA.DC.Auditing.Interface;
-using ESFA.DC.ILR.FundingService.ALB.Contexts;
-using ESFA.DC.ILR.FundingService.ALB.Contexts.Interface;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Modules;
-using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
-using ESFA.DC.ILR.FundingService.ALB.Service.Interface;
 using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Dto.Interfaces;
 using ESFA.DC.ILR.FundingService.Modules;
@@ -48,7 +40,6 @@ using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.Serialization.Json;
 using ESFA.DC.Serialization.Xml;
 using ESFA.DC.ServiceFabric.Helpers;
-using Microsoft.ServiceFabric.Services.Runtime;
 
 namespace ESFA.DC.ILR.FundingService.Stateless
 {

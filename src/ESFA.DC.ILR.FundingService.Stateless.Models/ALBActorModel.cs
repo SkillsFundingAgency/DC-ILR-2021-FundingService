@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ESFA.DC.ILR.Model.Interface;
-
-namespace ESFA.DC.ILR.FundingService.Stateless.Models
+﻿namespace ESFA.DC.ILR.FundingService.Stateless.Models
 {
     public class ALBActorModel
     {

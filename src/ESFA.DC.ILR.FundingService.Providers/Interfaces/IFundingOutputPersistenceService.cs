@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
+﻿using System.Threading.Tasks;
 
 namespace ESFA.DC.ILR.FundingService.Providers.Interfaces
 {

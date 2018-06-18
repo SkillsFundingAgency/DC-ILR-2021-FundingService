@@ -1,6 +1,4 @@
 ﻿using System.IO;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
-using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 
@@ -13,11 +11,11 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
     using Autofac;
     using ESFA.DC.ILR.FundingService.ALB.ExternalData;
     using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
+    using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
     using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
     using ESFA.DC.ILR.FundingService.Stateless.Models;
     using ESFA.DC.Logging;
     using ESFA.DC.Logging.Interfaces;
-    using ESFA.DC.OPA.Model.Interface;
     using ESFA.DC.Serialization.Interfaces;
     using Microsoft.ServiceFabric.Actors;
     using Microsoft.ServiceFabric.Actors.Runtime;
