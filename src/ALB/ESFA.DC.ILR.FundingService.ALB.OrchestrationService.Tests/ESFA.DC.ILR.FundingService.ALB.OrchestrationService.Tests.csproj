@@ -158,6 +158,10 @@
       <Project>{0021C0BF-4592-40C8-9272-82AC3A1339FA}</Project>
       <Name>ESFA.DC.ILR.FundingService.Dto</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Tests.Common\ESFA.DC.ILR.FundingService.Tests.Common.csproj">
+      <Project>{12B2CB23-3369-4720-8E41-C2DEDAA787CF}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Tests.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.FundingService.ALB.Stubs\ESFA.DC.ILR.FundingService.ALB.Stubs.csproj">
       <Project>{24948e52-67e6-404c-bcd0-0ec5b468b86e}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.Stubs</Name>
@@ -209,10 +213,6 @@
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.Service\ESFA.DC.ILR.FundingService.ALB.Service.csproj">
       <Project>{6cb11e3a-7270-410b-98de-ba4880213768}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.Service</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.TestHelpers.Mock\ESFA.DC.TestHelpers.Mock.csproj">
-      <Project>{2f41d425-9302-40cf-b848-9ac4f08243f7}</Project>
-      <Name>ESFA.DC.TestHelpers.Mock</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

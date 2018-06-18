@@ -182,10 +182,6 @@
       <Project>{6cb11e3a-7270-410b-98de-ba4880213768}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.Service</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.TestHelpers.Mock\ESFA.DC.TestHelpers.Mock.csproj">
-      <Project>{2f41d425-9302-40cf-b848-9ac4f08243f7}</Project>
-      <Name>ESFA.DC.TestHelpers.Mock</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

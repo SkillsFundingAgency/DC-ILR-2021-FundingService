@@ -23,10 +23,10 @@ using ESFA.DC.OPA.XSRC.Model.Interface.XSRC;
 using ESFA.DC.OPA.XSRC.Model.XSRC;
 using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.Serialization.Xml;
-using ESFA.DC.TestHelpers.Mocks;
 using FluentAssertions;
 using Moq;
 using Xunit;
+using ESFA.DC.ILR.FundingService.Tests.Common;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Rulebase
 {
@@ -596,9 +596,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Rulebase
 
         private Mock<ILARS> LARSMock()
         {
-            var larsVersionMock = MockDBSetHelper.GetQueryableMockDbSet(MockLARSVersionArray());
-            var larsLearningDeliveryMock = MockDBSetHelper.GetQueryableMockDbSet(MockLARSLearningDeliveryArray());
-            var larsFundingMock = MockDBSetHelper.GetQueryableMockDbSet(MockLARSFundingArray());
+            var larsVersionMock = MockLARSVersionArray().AsMockDbSet();
+            var larsLearningDeliveryMock = MockLARSLearningDeliveryArray().AsMockDbSet();
+            var larsFundingMock = MockLARSFundingArray().AsMockDbSet();
 
             larsContextMock.Setup(x => x.LARS_Version).Returns(larsVersionMock);
             larsContextMock.Setup(x => x.LARS_LearningDelivery).Returns(larsLearningDeliveryMock);
@@ -609,8 +609,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Rulebase
 
         private Mock<IPostcodes> PostcodesMock()
         {
-            var postcodesVersionMock = MockDBSetHelper.GetQueryableMockDbSet(MockPostcodesVersionArray());
-            var sfaAreaCostMock = MockDBSetHelper.GetQueryableMockDbSet(MockSFAAreaCostArray());
+            var postcodesVersionMock = MockPostcodesVersionArray().AsMockDbSet();
+            var sfaAreaCostMock = MockSFAAreaCostArray().AsMockDbSet();
 
             postcodesContextMock.Setup(x => x.SFA_PostcodeAreaCost).Returns(sfaAreaCostMock);
             postcodesContextMock.Setup(x => x.VersionInfos).Returns(postcodesVersionMock);

@@ -9,7 +9,7 @@ using ESFA.DC.Data.Postcodes.Model.Interfaces;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Model;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.Postcodes.Model;
-using ESFA.DC.TestHelpers.Mocks;
+using ESFA.DC.ILR.FundingService.Tests.Common;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -490,12 +490,12 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
 
         private IReferenceDataCache MockDBOutput(IList<string> learnAimRefs, IList<string> postcodes)
         {
-            var larsVersionMock = MockDBSetHelper.GetQueryableMockDbSet(MockLARSVersionArray());
-            var larsLearningDeliveryMock = MockDBSetHelper.GetQueryableMockDbSet(MockLARSLearningDeliveryArray());
-            var larsFundingMock = MockDBSetHelper.GetQueryableMockDbSet(MockLARSFundingArray());
+            var larsVersionMock = MockLARSVersionArray().AsMockDbSet();
+            var larsLearningDeliveryMock = MockLARSLearningDeliveryArray().AsMockDbSet();
+            var larsFundingMock = MockLARSFundingArray().AsMockDbSet();
 
-            var postcodesVersionMock = MockDBSetHelper.GetQueryableMockDbSet(MockPostcodesVersionArray());
-            var sfaAreaCostMock = MockDBSetHelper.GetQueryableMockDbSet(MockSFAAreaCostArray());
+            var postcodesVersionMock = MockPostcodesVersionArray().AsMockDbSet();
+            var sfaAreaCostMock = MockSFAAreaCostArray().AsMockDbSet();
 
             IReferenceDataCache referenceDataCache = new ReferenceDataCache();
 

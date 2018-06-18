@@ -104,13 +104,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Tests.Common\ESFA.DC.ILR.FundingService.Tests.Common.csproj">
+      <Project>{12B2CB23-3369-4720-8E41-C2DEDAA787CF}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Tests.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.ExternalData\ESFA.DC.ILR.FundingService.ALB.ExternalData.csproj">
       <Project>{91E3D0C6-1258-48E3-B1BC-695C46DD302D}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.ExternalData</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.TestHelpers.Mock\ESFA.DC.TestHelpers.Mock.csproj">
-      <Project>{2f41d425-9302-40cf-b848-9ac4f08243f7}</Project>
-      <Name>ESFA.DC.TestHelpers.Mock</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
