@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet>ESFA.DC.OPA.XSRC.Service.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet>ESFA.DC.OPA.XSRC.Service.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.1-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.1-beta0001" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ESFA.DC.OPA.XSRC.Model.Interface\ESFA.DC.OPA.XSRC.Model.Interface.csproj" />
+    <ProjectReference Include="..\ESFA.DC.OPA.XSRC.Model\ESFA.DC.OPA.XSRC.Model.csproj" />
+    <ProjectReference Include="..\ESFA.DC.OPA.XSRC.Service.Interface\ESFA.DC.OPA.XSRC.Service.Interface.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ESFA.DC.OPA.XSRC.Model">
+      <HintPath>..\ESFA.DC.OPA.XSRC.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="ESFA.DC.OPA.XSRC.Model.Interface">
+      <HintPath>..\ESFA.DC.OPA.XSRC.Model.Interface.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

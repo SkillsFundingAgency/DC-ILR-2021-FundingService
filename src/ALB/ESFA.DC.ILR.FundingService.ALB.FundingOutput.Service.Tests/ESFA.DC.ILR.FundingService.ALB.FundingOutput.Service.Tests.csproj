@@ -73,18 +73,6 @@
     <Reference Include="ESFA.DC.Mapping.Interface, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ESFA.DC.Mapping.Interface.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.Mapping.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.OPA.Model, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.OPA.Model.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.OPA.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.OPA.Model.Interface, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.OPA.Model.Interface.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.OPA.Model.Interface.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.OPA.Service, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.OPA.Service.0.1.2-beta0001\lib\netstandard2.0\ESFA.DC.OPA.Service.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.OPA.Service.Interface, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.OPA.Service.Interface.0.1.2-beta0001\lib\netstandard2.0\ESFA.DC.OPA.Service.Interface.dll</HintPath>
-    </Reference>
     <Reference Include="ESFA.DC.Serialization.Interfaces, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ESFA.DC.Serialization.Interfaces.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Interfaces.dll</HintPath>
     </Reference>
@@ -142,6 +130,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model.Interface\ESFA.DC.OPA.Model.Interface.csproj">
+      <Project>{7C69290E-B03C-490B-9821-04E2B0B9CDF7}</Project>
+      <Name>ESFA.DC.OPA.Model.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model\ESFA.DC.OPA.Model.csproj">
+      <Project>{b8b8d031-851c-427b-9dea-9f87a2f1b642}</Project>
+      <Name>ESFA.DC.OPA.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.Contexts\ESFA.DC.ILR.FundingService.ALB.Contexts.csproj">
       <Project>{253eacde-e617-4a4f-bb83-075170e65211}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.Contexts</Name>

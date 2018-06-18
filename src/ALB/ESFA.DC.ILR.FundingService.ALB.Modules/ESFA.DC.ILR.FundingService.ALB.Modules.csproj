@@ -29,10 +29,12 @@
     <PackageReference Include="Autofac" Version="4.8.1" />
     <PackageReference Include="ESFA.DC.IO.Dictionary" Version="0.1.7-beta0001" />
     <PackageReference Include="ESFA.DC.IO.Interfaces" Version="0.1.2-beta0001" />
-    <PackageReference Include="ESFA.DC.OPA.Service" Version="0.1.2-beta0001" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model.Interface\ESFA.DC.OPA.Model.Interface.csproj" />
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service.Interface\ESFA.DC.OPA.Service.Interface.csproj" />
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service\ESFA.DC.OPA.Service.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.Interface\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.Interface.csproj">
       <PrivateAssets>all</PrivateAssets>
     </ProjectReference>

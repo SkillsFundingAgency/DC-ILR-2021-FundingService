@@ -74,32 +74,6 @@
     <Reference Include="ESFA.DC.Mapping.Interface, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ESFA.DC.Mapping.Interface.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.Mapping.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.OPA.Model, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.OPA.Model.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.OPA.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.OPA.Model.Interface, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.OPA.Model.Interface.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.OPA.Model.Interface.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.OPA.Service, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ESFA.DC.OPA.Service.0.1.2-beta0001\lib\netstandard2.0\ESFA.DC.OPA.Service.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.OPA.Service.Interface, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ESFA.DC.OPA.Service.Interface.0.1.2-beta0001\lib\netstandard2.0\ESFA.DC.OPA.Service.Interface.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.OPA.XSRC.Model, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.OPA.XSRC.Model.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.OPA.XSRC.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.OPA.XSRC.Model.Interface, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.OPA.XSRC.Model.Interface.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.OPA.XSRC.Model.Interface.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.OPA.XSRC.Service, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.OPA.XSRC.Service.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.OPA.XSRC.Service.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.OPA.XSRC.Service.Interface, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.OPA.XSRC.Service.Interface.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.OPA.XSRC.Service.Interface.dll</HintPath>
-    </Reference>
     <Reference Include="ESFA.DC.Serialization.Interfaces, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ESFA.DC.Serialization.Interfaces.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Interfaces.dll</HintPath>
     </Reference>
@@ -196,6 +170,38 @@
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Tests.Common\ESFA.DC.ILR.FundingService.Tests.Common.csproj">
       <Project>{12B2CB23-3369-4720-8E41-C2DEDAA787CF}</Project>
       <Name>ESFA.DC.ILR.FundingService.Tests.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model.Interface\ESFA.DC.OPA.Model.Interface.csproj">
+      <Project>{7C69290E-B03C-490B-9821-04E2B0B9CDF7}</Project>
+      <Name>ESFA.DC.OPA.Model.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model\ESFA.DC.OPA.Model.csproj">
+      <Project>{B8B8D031-851C-427B-9DEA-9F87A2F1B642}</Project>
+      <Name>ESFA.DC.OPA.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service.Interface\ESFA.DC.OPA.Service.Interface.csproj">
+      <Project>{BBA05279-51DA-427B-8708-CA7AF3A228F5}</Project>
+      <Name>ESFA.DC.OPA.Service.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service\ESFA.DC.OPA.Service.csproj">
+      <Project>{FC137929-D3E2-41C2-9C9A-ADC8B32D009A}</Project>
+      <Name>ESFA.DC.OPA.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.XSRC.Model.Interface\ESFA.DC.OPA.XSRC.Model.Interface.csproj">
+      <Project>{2A30BC1F-122E-46BD-95A1-F2F98C3F8B1F}</Project>
+      <Name>ESFA.DC.OPA.XSRC.Model.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.XSRC.Model\ESFA.DC.OPA.XSRC.Model.csproj">
+      <Project>{76638927-C08F-450E-9BFD-3B19AA19BF3F}</Project>
+      <Name>ESFA.DC.OPA.XSRC.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.XSRC.Service.Interface\ESFA.DC.OPA.XSRC.Service.Interface.csproj">
+      <Project>{DC64FBC1-95F2-420D-AE91-7E439026C1FA}</Project>
+      <Name>ESFA.DC.OPA.XSRC.Service.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.XSRC.Service\ESFA.DC.OPA.XSRC.Service.csproj">
+      <Project>{d1476198-dc54-475f-b392-cec5e138a9ff}</Project>
+      <Name>ESFA.DC.OPA.XSRC.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.FundingService.ALB.Stubs\ESFA.DC.ILR.FundingService.ALB.Stubs.csproj">
       <Project>{24948e52-67e6-404c-bcd0-0ec5b468b86e}</Project>
