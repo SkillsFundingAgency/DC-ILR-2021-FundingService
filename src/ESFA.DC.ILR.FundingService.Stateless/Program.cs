@@ -11,8 +11,6 @@ using ESFA.DC.Auditing.Dto;
 using ESFA.DC.Auditing.Interface;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Modules;
-using ESFA.DC.ILR.FundingService.Dto;
-using ESFA.DC.ILR.FundingService.Dto.Interfaces;
 using ESFA.DC.ILR.FundingService.Modules;
 using ESFA.DC.ILR.FundingService.Orchestrators.Implementations;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;

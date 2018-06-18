@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ESFA.DC.ILR.FundingService.Dto
+﻿namespace ESFA.DC.ILR.FundingService.Dto
 {
     public class ReferenceDataConfig
     {
