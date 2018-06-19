@@ -37,6 +37,5 @@ namespace ESFA.DC.ILR.FundingService.Modules
             builder.RegisterType<SerilogLoggerFactory>().As<ISerilogLoggerFactory>().InstancePerLifetimeScope();
             builder.RegisterType<SeriLogger>().As<ILogger>().InstancePerLifetimeScope();
         }
-
     }
 }

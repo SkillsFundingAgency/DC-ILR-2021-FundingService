@@ -5,7 +5,8 @@ using ESFA.DC.Serialization.Interfaces;
 
 namespace ESFA.DC.ILR.FundingService.Providers.Output
 {
-    public class FundingOutputPersistenceSfService<T> : IFundingOutputPersistenceService<T> where T : class
+    public class FundingOutputPersistenceSfService<T> : IFundingOutputPersistenceService<T>
+        where T : class
     {
         private readonly IJsonSerializationService _jsonSerializationService;
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
@@ -17,10 +18,10 @@ namespace ESFA.DC.ILR.FundingService.Providers.Output
             _jsonSerializationService = jsonSerializationService;
             _keyValuePersistenceService = keyValuePersistenceService;
         }
+
         public async Task Process(T fundingOutputs, string fundingOutputKey)
         {
-            await _keyValuePersistenceService.SaveAsync(fundingOutputKey,
-                _jsonSerializationService.Serialize(fundingOutputs));
+            await _keyValuePersistenceService.SaveAsync(fundingOutputKey, _jsonSerializationService.Serialize(fundingOutputs));
         }
     }
 }

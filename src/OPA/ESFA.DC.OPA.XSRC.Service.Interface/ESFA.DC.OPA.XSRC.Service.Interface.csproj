@@ -14,6 +14,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ESFA.DC.OPA.XSRC.Model\ESFA.DC.OPA.XSRC.Model.csproj" />
   </ItemGroup>
 

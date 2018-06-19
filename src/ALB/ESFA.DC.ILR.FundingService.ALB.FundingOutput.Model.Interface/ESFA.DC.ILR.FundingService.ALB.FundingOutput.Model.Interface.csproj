@@ -6,11 +6,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Interface.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Interface.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>

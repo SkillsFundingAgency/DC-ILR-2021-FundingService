@@ -416,8 +416,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Rulebase
                 "LARSFundWeightedRate",
                 "LARSFundWeightingFactor",
             };
-
-        IList<string> linqEntityList = new List<string>();
+        private IList<string> linqEntityList = new List<string>();
 
         private IList<string> GetLinqEntityList(IDataEntity entity)
         {
@@ -431,7 +430,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Rulebase
             return linqEntityList;
         }
 
-        IList<string> xsrcEntityList = new List<string>();
+        private IList<string> xsrcEntityList = new List<string>();
 
         private IList<string> GetXSRCEntityList(IXsrcEntity entity)
         {
@@ -445,7 +444,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Rulebase
             return xsrcEntityList;
         }
 
-        IList<string> linqAttributeList = new List<string>();
+        private IList<string> linqAttributeList = new List<string>();
 
         private IList<string> GetLinqAttributeList(IDataEntity entity)
         {
@@ -462,7 +461,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Rulebase
             return linqAttributeList;
         }
 
-        IList<string> xsrcAttributeList = new List<string>();
+        private IList<string> xsrcAttributeList = new List<string>();
 
         private IList<string> GetXSRCAttributeList(IXsrcEntity entity)
         {
@@ -626,7 +625,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Rulebase
             };
         }
 
-        readonly static LARS_Version larsVersionTestValue =
+        private static readonly LARS_Version larsVersionTestValue =
             new LARS_Version()
             {
                 MajorNumber = 5,
@@ -653,7 +652,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Rulebase
             };
         }
 
-        readonly static LARS_LearningDelivery larsLearningDeliveryTestValue1 =
+        private static readonly LARS_LearningDelivery larsLearningDeliveryTestValue1 =
             new LARS_LearningDelivery()
             {
                 LearnAimRef = "50094488",
@@ -672,8 +671,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Rulebase
                 Modified_On = DateTime.Parse("2018-01-01"),
                 Modified_By = "TestUser"
             };
-
-        readonly static LARS_LearningDelivery larsLearningDeliveryTestValue2 =
+        private static readonly LARS_LearningDelivery larsLearningDeliveryTestValue2 =
            new LARS_LearningDelivery()
            {
                LearnAimRef = "60005415",
@@ -702,7 +700,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Rulebase
             };
         }
 
-        readonly static LARS_Funding larsFundingTestValue1 =
+        private static readonly LARS_Funding larsFundingTestValue1 =
             new LARS_Funding()
             {
                 LearnAimRef = "50094488",
@@ -717,8 +715,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Rulebase
                 Modified_On = DateTime.Parse("2018-01-01"),
                 Modified_By = "TestUser"
             };
-
-        readonly static LARS_Funding larsFundingTestValue2 =
+        private static readonly LARS_Funding larsFundingTestValue2 =
           new LARS_Funding()
           {
               LearnAimRef = "60005415",
@@ -742,7 +739,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Rulebase
             };
         }
 
-        readonly static VersionInfo PostcodesVersionTestValue =
+        private static readonly VersionInfo PostcodesVersionTestValue =
             new VersionInfo
             {
                 VersionNumber = "Version_002",
@@ -760,7 +757,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Rulebase
             };
         }
 
-        readonly static SFA_PostcodeAreaCost SFAAreaCostTestValue1 =
+        private static readonly SFA_PostcodeAreaCost SFAAreaCostTestValue1 =
           new SFA_PostcodeAreaCost()
           {
               MasterPostcode = new MasterPostcode { Postcode = "CV1 2WT" },

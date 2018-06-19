@@ -11,6 +11,5 @@
         public string FundingCalcSubscriptionName { get; set; }
 
         public string DataStoreSubscriptionName { get; set; }
-       
     }
 }

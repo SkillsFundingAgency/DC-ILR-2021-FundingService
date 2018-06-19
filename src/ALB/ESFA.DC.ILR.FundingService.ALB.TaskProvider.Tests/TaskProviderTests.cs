@@ -326,7 +326,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.TaskProvider.Tests
             };
         }
 
-        readonly static LARS_Version larsVersionTestValue =
+        private static readonly LARS_Version larsVersionTestValue =
             new LARS_Version()
             {
                 MajorNumber = 5,
@@ -353,7 +353,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.TaskProvider.Tests
             };
         }
 
-        readonly static LARS_LearningDelivery larsLearningDeliveryTestValue1 =
+        private static readonly LARS_LearningDelivery larsLearningDeliveryTestValue1 =
             new LARS_LearningDelivery()
             {
                 LearnAimRef = "50094488",
@@ -373,7 +373,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.TaskProvider.Tests
                 Modified_By = "TestUser"
             };
 
-        readonly static LARS_LearningDelivery larsLearningDeliveryTestValue2 =
+        private static readonly LARS_LearningDelivery larsLearningDeliveryTestValue2 =
            new LARS_LearningDelivery()
            {
                LearnAimRef = "60005415",
@@ -402,7 +402,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.TaskProvider.Tests
             };
         }
 
-        readonly static LARS_Funding larsFundingTestValue1 =
+        private static readonly LARS_Funding larsFundingTestValue1 =
             new LARS_Funding()
             {
                 LearnAimRef = "50094488",
@@ -418,7 +418,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.TaskProvider.Tests
                 Modified_By = "TestUser"
             };
 
-        readonly static LARS_Funding larsFundingTestValue2 =
+        private static readonly LARS_Funding larsFundingTestValue2 =
           new LARS_Funding()
           {
               LearnAimRef = "60005415",
@@ -442,7 +442,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.TaskProvider.Tests
             };
         }
 
-        readonly static VersionInfo PostcodesVersionTestValue =
+        private static readonly VersionInfo PostcodesVersionTestValue =
             new VersionInfo
             {
                 VersionNumber = "Version_002",
@@ -460,7 +460,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.TaskProvider.Tests
             };
         }
 
-        readonly static SFA_PostcodeAreaCost SFAAreaCostTestValue1 =
+        private static readonly SFA_PostcodeAreaCost SFAAreaCostTestValue1 =
           new SFA_PostcodeAreaCost()
           {
               MasterPostcode = new MasterPostcode { Postcode = "CV1 2WT" },

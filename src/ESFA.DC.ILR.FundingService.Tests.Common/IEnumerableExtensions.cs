@@ -1,13 +1,14 @@
-﻿using Moq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using Moq;
 
 namespace ESFA.DC.ILR.FundingService.Tests.Common
 {
     public static class IEnumerableExtensions
     {
-        public static DbSet<T> AsMockDbSet<T>(this IEnumerable<T> sourceList) where T : class
+        public static DbSet<T> AsMockDbSet<T>(this IEnumerable<T> sourceList)
+            where T : class
         {
             var mockData = sourceList.AsQueryable();
 
