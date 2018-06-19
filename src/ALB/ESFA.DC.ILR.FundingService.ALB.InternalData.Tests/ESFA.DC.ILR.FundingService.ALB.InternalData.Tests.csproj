@@ -76,12 +76,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.InternalData\ESFA.DC.ILR.FundingService.ALB.InternalData.csproj">
-      <Project>{271a2328-7c9b-4982-bf94-f2a01650360a}</Project>
-      <Name>ESFA.DC.ILR.FundingService.ALB.InternalData</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="ESFA.DC.ILR.FundingService.ALB.InternalData.Tests.ruleset" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -92,6 +86,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Data\ESFA.DC.ILR.FundingService.Data.csproj">
+      <Project>{69B93B19-4FD0-4205-AFFA-8B71122A3C65}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

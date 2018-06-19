@@ -24,41 +24,15 @@ namespace ESFA.DC.ILR.FundingService.ALB.OrchestrationService
 
         public void PopulateData()
         {
-            var learners = _fundingContext.ValidLearners;
-            IList<ILearner> learnerList = new List<ILearner>();
-            HashSet<string> postcodesList = new HashSet<string>();
-            HashSet<string> learnAimRefsList = new HashSet<string>();
-            bool added = false;
-
-            foreach (var learner in learners)
-            {
-                foreach (var learningDelivery in learner.LearningDeliveries.Where(ld => ld.FundModel == 99).ToList())
-                {
-                    if (!added)
-                    {
-                        learnerList.Add(learner);
-                        added = true;
-                    }
-                    else
-                    {
-                        break;
-                    }
-
-                    if (added)
-                    {
-                        postcodesList.Add(learningDelivery.DelLocPostCode);
-                        learnAimRefsList.Add(learningDelivery.LearnAimRef);
-                    }
-                }
-
-                added = false;
-            }
-
-            _referenceDataCachePopulationService.Populate(learnAimRefsList.ToList(), postcodesList.ToList());
-
             var internalDataCache = (InternalDataCache)_internalDataCache;
             internalDataCache.UKPRN = _fundingContext.UKPRN;
-            internalDataCache.ValidLearners = learnerList;
+
+            internalDataCache.ValidLearners = _fundingContext.ValidLearners.Where(l => l.LearningDeliveries.Any(ld => ld.FundModel == 99)).ToList();
+
+            var postcodesList = _fundingContext.ValidLearners.SelectMany(l => l.LearningDeliveries).Select(ld => ld.DelLocPostCode).Distinct();
+            var learnAimRefsList = _fundingContext.ValidLearners.SelectMany(l => l.LearningDeliveries).Select(ld => ld.LearnAimRef).Distinct();
+
+            _referenceDataCachePopulationService.Populate(learnAimRefsList, postcodesList);
         }
     }
 }
