@@ -76,10 +76,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.InternalData.Interface\ESFA.DC.ILR.FundingService.ALB.InternalData.Interface.csproj">
-      <Project>{c4719022-4d3b-4e70-954b-12879b228d5a}</Project>
-      <Name>ESFA.DC.ILR.FundingService.ALB.InternalData.Interface</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.InternalData\ESFA.DC.ILR.FundingService.ALB.InternalData.csproj">
       <Project>{271a2328-7c9b-4982-bf94-f2a01650360a}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.InternalData</Name>

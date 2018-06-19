@@ -18,8 +18,4 @@
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.InternalData.Interface\ESFA.DC.ILR.FundingService.ALB.InternalData.Interface.csproj" />
-  </ItemGroup>
-
 </Project>
