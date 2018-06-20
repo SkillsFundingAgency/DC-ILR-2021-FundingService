@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -24,6 +23,7 @@ using ESFA.DC.ILR.FundingService.FM35.ExternalData.Postcodes;
 using ESFA.DC.ILR.FundingService.FM35.ExternalData.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.FM35.Service.Builders;
 using ESFA.DC.ILR.FundingService.FM35.Service.Interface.Builders;
+using ESFA.DC.ILR.FundingService.Tests.Common;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model.Interface;
@@ -35,7 +35,6 @@ using ESFA.DC.OPA.XSRC.Service;
 using ESFA.DC.OPA.XSRC.Service.Interface;
 using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.Serialization.Xml;
-using ESFA.DC.TestHelpers.Mock.Mocks;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -675,12 +674,12 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests.Rulebase
 
         private Mock<ILARS> LARSMock()
         {
-            var larsVersionMock = MockDBSetHelper.GetQueryableMockDbSet(MockLARSVersionArray());
-            var larsLearningDeliveryMock = MockDBSetHelper.GetQueryableMockDbSet(MockLARSLearningDeliveryArray());
-            var larsFundingMock = MockDBSetHelper.GetQueryableMockDbSet(MockLARSFundingArray());
-            var larsAnnualValueMock = MockDBSetHelper.GetQueryableMockDbSet(MockLARSAnnualValueArray());
-            var larsCategoryMock = MockDBSetHelper.GetQueryableMockDbSet(MockLARSCategoryArray());
-            var larsFrameworkAimsMock = MockDBSetHelper.GetQueryableMockDbSet(MockLARSFrameworkAimsArray());
+            var larsVersionMock = MockLARSVersionArray().AsMockDbSet();
+            var larsLearningDeliveryMock = MockLARSLearningDeliveryArray().AsMockDbSet();
+            var larsFundingMock = MockLARSFundingArray().AsMockDbSet();
+            var larsAnnualValueMock = MockLARSAnnualValueArray().AsMockDbSet();
+            var larsCategoryMock = MockLARSCategoryArray().AsMockDbSet();
+            var larsFrameworkAimsMock = MockLARSFrameworkAimsArray().AsMockDbSet();
 
             larsContextMock.Setup(x => x.LARS_Version).Returns(larsVersionMock);
             larsContextMock.Setup(x => x.LARS_LearningDelivery).Returns(larsLearningDeliveryMock);
@@ -694,9 +693,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests.Rulebase
 
         private Mock<IPostcodes> PostcodesMock()
         {
-            var postcodesVersionMock = MockDBSetHelper.GetQueryableMockDbSet(MockPostcodesVersionArray());
-            var sfaAreaCostMock = MockDBSetHelper.GetQueryableMockDbSet(MockSFAAreaCostArray());
-            var sfaDisadvantageMock = MockDBSetHelper.GetQueryableMockDbSet(MockSFADisadvantageArray());
+            var postcodesVersionMock = MockPostcodesVersionArray().AsMockDbSet();
+            var sfaAreaCostMock = MockSFAAreaCostArray().AsMockDbSet();
+            var sfaDisadvantageMock = MockSFADisadvantageArray().AsMockDbSet();
 
             postcodesContextMock.Setup(x => x.SFA_PostcodeAreaCost).Returns(sfaAreaCostMock);
             postcodesContextMock.Setup(x => x.VersionInfos).Returns(postcodesVersionMock);
@@ -707,8 +706,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests.Rulebase
 
         private Mock<IOrganisations> OrganisationMock()
         {
-            var orgVersionMock = MockDBSetHelper.GetQueryableMockDbSet(MockOrgVersionArray());
-            var orgFundingMock = MockDBSetHelper.GetQueryableMockDbSet(MockOrgFundingArray());
+            var orgVersionMock = MockOrgVersionArray().AsMockDbSet();
+            var orgFundingMock = MockOrgFundingArray().AsMockDbSet();
 
             organisationContextMock.Setup(x => x.Org_Version).Returns(orgVersionMock);
             organisationContextMock.Setup(x => x.Org_Funding).Returns(orgFundingMock);
@@ -718,7 +717,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests.Rulebase
 
         private Mock<ILargeEmployer> LargeEmployersMock()
         {
-            var largeEmployerMock = MockDBSetHelper.GetQueryableMockDbSet(MockLargeEmployerArray());
+            var largeEmployerMock = MockLargeEmployerArray().AsMockDbSet();
 
             largeEmployersContextMock.Setup(x => x.LEMP_Employers).Returns(largeEmployerMock);
 

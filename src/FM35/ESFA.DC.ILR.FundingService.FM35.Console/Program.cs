@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Autofac;
 using ESFA.DC.ILR.FundingService.FM35.Modules;
 using ESFA.DC.ILR.FundingService.FM35.TaskProvider.Interface;

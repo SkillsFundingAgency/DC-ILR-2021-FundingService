@@ -1,9 +1,5 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Attribute;
+﻿using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Attribute;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface;
-using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface.Attribute;
 using FluentAssertions;
 using Xunit;
 

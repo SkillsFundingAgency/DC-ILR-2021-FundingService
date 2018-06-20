@@ -173,6 +173,10 @@
     <Compile Include="Rulebase\RulebaseProviderFactoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Tests.Common\ESFA.DC.ILR.FundingService.Tests.Common.csproj">
+      <Project>{12B2CB23-3369-4720-8E41-C2DEDAA787CF}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Tests.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.Contexts\ESFA.DC.ILR.FundingService.FM35.Contexts.csproj">
       <Project>{B004E60E-82E4-4044-8DB2-4E48F30E07C6}</Project>
       <Name>ESFA.DC.ILR.FundingService.FM35.Contexts</Name>
@@ -216,10 +220,6 @@
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.Stubs\ESFA.DC.ILR.FundingService.FM35.Stubs.csproj">
       <Project>{3a05ee91-3a8b-4ea2-9f26-ac766cf465fc}</Project>
       <Name>ESFA.DC.ILR.FundingService.FM35.Stubs</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.TestHelpers.Mock\ESFA.DC.TestHelpers.Mock.csproj">
-      <Project>{2cf23289-3b39-4364-a9e3-0c39a9b99e05}</Project>
-      <Name>ESFA.DC.TestHelpers.Mock</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

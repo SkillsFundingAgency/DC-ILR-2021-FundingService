@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ESFA.DC.ILR.FundingService.FM35.ExternalData.LARS.Model
+﻿namespace ESFA.DC.ILR.FundingService.FM35.ExternalData.LARS.Model
 {
     public class LARSVersion
     {

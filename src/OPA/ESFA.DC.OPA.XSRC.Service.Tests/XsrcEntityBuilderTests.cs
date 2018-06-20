@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using ESFA.DC.OPA.XSRC.Service;
 using ESFA.DC.OPA.XSRC.Service.Interface;
 using FluentAssertions;
 using Xunit;
