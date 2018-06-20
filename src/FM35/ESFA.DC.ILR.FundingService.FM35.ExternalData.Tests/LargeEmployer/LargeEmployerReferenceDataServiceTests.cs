@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData.Interface;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData.LargeEmployer;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData.LargeEmployer.Interface;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData.LargeEmployer.Model;
 using FluentAssertions;
 using Moq;
 using Xunit;

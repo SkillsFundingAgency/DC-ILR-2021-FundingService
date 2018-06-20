@@ -13,23 +13,24 @@ using ESFA.DC.Data.Postcodes.Model;
 using ESFA.DC.Data.Postcodes.Model.Interfaces;
 using ESFA.DC.DateTime.Provider;
 using ESFA.DC.DateTime.Provider.Interface;
+using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS;
+using ESFA.DC.ILR.FundingService.Data.External;
+using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer;
+using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Interface;
+using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
+using ESFA.DC.ILR.FundingService.Data.External.Organisation;
+using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
+using ESFA.DC.ILR.FundingService.Data.External.Postcodes;
+using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
+using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Data.Internal;
+using ESFA.DC.ILR.FundingService.Data.Population;
+using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.FM35.Contexts;
 using ESFA.DC.ILR.FundingService.FM35.Contexts.Interface;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData.Interface;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData.LargeEmployer;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData.LargeEmployer.Interface;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData.LARS;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData.LARS.Interface;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData.Organisation;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData.Organisation.Interface;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData.Postcodes;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Interface;
-using ESFA.DC.ILR.FundingService.FM35.InternalData;
-using ESFA.DC.ILR.FundingService.FM35.InternalData.Interface;
 using ESFA.DC.ILR.FundingService.FM35.OrchestrationService;
 using ESFA.DC.ILR.FundingService.FM35.Service.Builders;
 using ESFA.DC.ILR.FundingService.FM35.Service.Interface.Builders;
@@ -52,6 +53,7 @@ using ESFA.DC.Serialization.Xml;
 using FluentAssertions;
 using Moq;
 using Xunit;
+using IReferenceDataCache = ESFA.DC.ILR.FundingService.Data.Interface.IReferenceDataCache;
 
 namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
 {
@@ -466,16 +468,16 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
               EffectiveTo = null,
           };
 
-        private static Data.Postcodes.Model.VersionInfo[] MockPostcodesVersionArray()
+        private static VersionInfo[] MockPostcodesVersionArray()
         {
-            return new Data.Postcodes.Model.VersionInfo[]
+            return new VersionInfo[]
             {
                 PostcodesVersionTestValue,
             };
         }
 
-        private static readonly Data.Postcodes.Model.VersionInfo PostcodesVersionTestValue =
-            new Data.Postcodes.Model.VersionInfo
+        private static readonly VersionInfo PostcodesVersionTestValue =
+            new VersionInfo
             {
                 VersionNumber = "Version_002",
                 DataSource = "Source",

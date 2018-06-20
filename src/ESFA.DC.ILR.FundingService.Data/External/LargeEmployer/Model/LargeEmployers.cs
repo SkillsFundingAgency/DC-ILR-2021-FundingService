@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ESFA.DC.ILR.FundingService.FM35.ExternalData.LargeEmployer.Model
+namespace ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Model
 {
     public class LargeEmployers
     {

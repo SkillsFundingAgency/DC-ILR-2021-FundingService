@@ -22,7 +22,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.csproj" />
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.InternalData.Interface\ESFA.DC.ILR.FundingService.FM35.InternalData.Interface.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.OrchestrationService.Interface\ESFA.DC.ILR.FundingService.FM35.OrchestrationService.Interface.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.Stubs\ESFA.DC.ILR.FundingService.FM35.Stubs.csproj" />
   </ItemGroup>

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using ESFA.DC.ILR.FundingService.ALB.InternalData;
-using ESFA.DC.ILR.FundingService.ALB.InternalData.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Service.Interface;
+using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Data.Internal;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Stubs
 {

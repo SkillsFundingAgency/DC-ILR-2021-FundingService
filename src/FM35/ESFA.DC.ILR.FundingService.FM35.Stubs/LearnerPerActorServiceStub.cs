@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using ESFA.DC.ILR.FundingService.FM35.InternalData;
-using ESFA.DC.ILR.FundingService.FM35.InternalData.Interface;
+using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Data.Internal;
 using ESFA.DC.ILR.FundingService.FM35.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM35.Stubs

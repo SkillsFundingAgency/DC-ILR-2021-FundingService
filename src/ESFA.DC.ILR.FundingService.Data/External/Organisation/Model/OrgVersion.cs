@@ -1,4 +1,4 @@
-﻿namespace ESFA.DC.ILR.FundingService.FM35.ExternalData.Organisation.Model
+﻿namespace ESFA.DC.ILR.FundingService.Data.External.Organisation.Model
 {
     public class OrgVersion
     {

@@ -1,4 +1,4 @@
-﻿namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Postcodes.Model
+﻿namespace ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model
 {
     public class PostCodeVersion
     {

@@ -6,9 +6,11 @@ using ESFA.DC.Data.LARS.Model;
 using ESFA.DC.Data.LARS.Model.Interfaces;
 using ESFA.DC.Data.Postcodes.Model;
 using ESFA.DC.Data.Postcodes.Model.Interfaces;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Model;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.Postcodes.Model;
+using ESFA.DC.ILR.FundingService.Data.External;
+using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
+using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
+using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
+using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Tests.Common;
 using FluentAssertions;
 using Moq;
@@ -718,5 +720,14 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
         #endregion
 
         #endregion
+
+        private ReferenceDataCachePopulationService NewReferenceDataCachePopulationService(
+            IReferenceDataCache referenceDataCache = null,
+            ILARS lars = null,
+            IPostcodes postcodes = null,
+            IOrganisations)
+        {
+
+        }
     }
 }

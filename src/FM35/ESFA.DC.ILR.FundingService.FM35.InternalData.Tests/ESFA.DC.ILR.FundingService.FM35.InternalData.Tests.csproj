@@ -83,16 +83,6 @@
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
     <Analyzer Include="..\..\packages\xunit.analyzers.0.9.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.InternalData.Interface\ESFA.DC.ILR.FundingService.FM35.InternalData.Interface.csproj">
-      <Project>{6822FB5C-7792-444E-93DC-11254C9E6BF5}</Project>
-      <Name>ESFA.DC.ILR.FundingService.FM35.InternalData.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.InternalData\ESFA.DC.ILR.FundingService.FM35.InternalData.csproj">
-      <Project>{abf1bd70-dd79-44d9-8573-dae4a4383c2a}</Project>
-      <Name>ESFA.DC.ILR.FundingService.FM35.InternalData</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

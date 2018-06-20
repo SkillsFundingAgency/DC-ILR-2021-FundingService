@@ -1,9 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using ESFA.DC.ILR.FundingService.ALB.Contexts.Interface;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
-using ESFA.DC.ILR.FundingService.ALB.InternalData;
-using ESFA.DC.ILR.FundingService.ALB.InternalData.Interface;
 using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
+using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Data.Internal;
+using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.OrchestrationService
 {
@@ -30,7 +31,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OrchestrationService
             var postcodesList = _fundingContext.ValidLearners.SelectMany(l => l.LearningDeliveries).Select(ld => ld.DelLocPostCode).Distinct();
             var learnAimRefsList = _fundingContext.ValidLearners.SelectMany(l => l.LearningDeliveries).Select(ld => ld.LearnAimRef).Distinct();
 
-            _referenceDataCachePopulationService.Populate(learnAimRefsList, postcodesList);
+            _referenceDataCachePopulationService.Populate(learnAimRefsList, postcodesList, new List<long>(), new List<int>());
         }
     }
 }

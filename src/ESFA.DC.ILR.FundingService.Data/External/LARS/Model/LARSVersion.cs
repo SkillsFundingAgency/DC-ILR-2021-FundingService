@@ -1,4 +1,4 @@
-﻿namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Model
+﻿namespace ESFA.DC.ILR.FundingService.Data.External.LARS.Model
 {
     public partial class LARSVersion
     {

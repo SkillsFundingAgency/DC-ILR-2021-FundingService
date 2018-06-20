@@ -19,10 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Data.Population\ESFA.DC.ILR.FundingService.Data.Population.csproj" />
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Data\ESFA.DC.ILR.FundingService.Data.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.Contexts\ESFA.DC.ILR.FundingService.FM35.Contexts.csproj" />
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.ExternalData\ESFA.DC.ILR.FundingService.FM35.ExternalData.csproj" />
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.InternalData.Interface\ESFA.DC.ILR.FundingService.FM35.InternalData.Interface.csproj" />
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.InternalData\ESFA.DC.ILR.FundingService.FM35.InternalData.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.OrchestrationService.Interface\ESFA.DC.ILR.FundingService.FM35.OrchestrationService.Interface.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.Service.Interface\ESFA.DC.ILR.FundingService.FM35.Service.Interface.csproj" />
   </ItemGroup>

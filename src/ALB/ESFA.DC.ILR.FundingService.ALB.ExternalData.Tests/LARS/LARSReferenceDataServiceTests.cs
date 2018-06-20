@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Interface;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Model;
+using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
+using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
+using ESFA.DC.ILR.FundingService.Data.Interface;
 using FluentAssertions;
 using Moq;
 using Xunit;

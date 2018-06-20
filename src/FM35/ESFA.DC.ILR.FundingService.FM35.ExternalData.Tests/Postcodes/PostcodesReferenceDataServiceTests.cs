@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData.Interface;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData.Postcodes;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData.Postcodes.Interface;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData.Postcodes.Model;
 using FluentAssertions;
 using Moq;
 using Xunit;

@@ -4,11 +4,12 @@ using ESFA.DC.Data.LargeEmployer.Model.Interface;
 using ESFA.DC.Data.LARS.Model.Interfaces;
 using ESFA.DC.Data.Organisatons.Model.Interface;
 using ESFA.DC.Data.Postcodes.Model.Interfaces;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData.Interface;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData.LargeEmployer.Model;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData.LARS.Model;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData.Organisation.Model;
-using ESFA.DC.ILR.FundingService.FM35.ExternalData.Postcodes.Model;
+using ESFA.DC.ILR.FundingService.Data.External;
+using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Model;
+using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
+using ESFA.DC.ILR.FundingService.Data.External.Organisation.Model;
+using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
+using IReferenceDataCache = ESFA.DC.ILR.FundingService.Data.Interface.IReferenceDataCache;
 
 namespace ESFA.DC.ILR.FundingService.FM35.ExternalData
 {

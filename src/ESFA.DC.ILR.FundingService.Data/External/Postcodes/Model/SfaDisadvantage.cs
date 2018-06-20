@@ -2,11 +2,11 @@
 
 namespace ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model
 {
-    public class SfaAreaCost
+    public class SfaDisadvantage
     {
         public string Postcode { get; set; }
 
-        public decimal AreaCostFactor { get; set; }
+        public decimal? Uplift { get; set; }
 
         public DateTime EffectiveFrom { get; set; }
 

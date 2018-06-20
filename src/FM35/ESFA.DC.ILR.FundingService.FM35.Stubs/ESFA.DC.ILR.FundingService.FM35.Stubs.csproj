@@ -18,8 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.InternalData.Interface\ESFA.DC.ILR.FundingService.FM35.InternalData.Interface.csproj" />
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.InternalData\ESFA.DC.ILR.FundingService.FM35.InternalData.csproj" />
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Data\ESFA.DC.ILR.FundingService.Data.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.Service.Interface\ESFA.DC.ILR.FundingService.FM35.Service.Interface.csproj" />
   </ItemGroup>
 

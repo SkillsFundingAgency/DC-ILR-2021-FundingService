@@ -1,4 +1,6 @@
 ﻿using System.IO;
+using ESFA.DC.ILR.FundingService.Data.External;
+using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 
@@ -9,8 +11,6 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
     using System.Text;
     using System.Threading.Tasks;
     using Autofac;
-    using ESFA.DC.ILR.FundingService.ALB.ExternalData;
-    using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
     using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
     using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
     using ESFA.DC.ILR.FundingService.Stateless.Models;

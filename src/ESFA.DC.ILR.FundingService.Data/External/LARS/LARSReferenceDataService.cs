@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Interface;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Model;
+using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
+using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
+using ESFA.DC.ILR.FundingService.Data.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS
 {
@@ -42,6 +42,27 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS
             {
                 throw new KeyNotFoundException(string.Format("Cannot find LARS Learning Delivery data for LearnAimRef: " + learnAimRef + " in the Dictionary. Exception details: " + ex));
             }
+        }
+
+        public IEnumerable<LARSAnnualValue> LARSAnnualValuesForLearnAimRef(string learnAimRef)
+        {
+            _referenceDataCache.LARSAnnualValue.TryGetValue(learnAimRef, out IEnumerable<LARSAnnualValue> larsAnnualValue);
+
+            return larsAnnualValue;
+        }
+
+        public IEnumerable<LARSFrameworkAims> LARSFFrameworkAimsForLearnAimRef(string learnAimRef)
+        {
+            _referenceDataCache.LARSFrameworkAims.TryGetValue(learnAimRef, out IEnumerable<LARSFrameworkAims> larsFrameworkAims);
+
+            return larsFrameworkAims;
+        }
+
+        public IEnumerable<LARSLearningDeliveryCategory> LARSLearningDeliveryCategoriesForLearnAimRef(string learnAimRef)
+        {
+            _referenceDataCache.LARSLearningDeliveryCatgeory.TryGetValue(learnAimRef, out IEnumerable<LARSLearningDeliveryCategory> larsLearningDeliveryCategory);
+
+            return larsLearningDeliveryCategory;
         }
     }
 }

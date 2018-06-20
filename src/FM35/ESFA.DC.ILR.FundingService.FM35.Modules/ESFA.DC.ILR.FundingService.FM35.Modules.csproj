@@ -30,8 +30,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Data.Population\ESFA.DC.ILR.FundingService.Data.Population.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.csproj" />
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.InternalData\ESFA.DC.ILR.FundingService.FM35.InternalData.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.OrchestrationService\ESFA.DC.ILR.FundingService.FM35.OrchestrationService.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.Service\ESFA.DC.ILR.FundingService.FM35.Service.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.TaskProvider\ESFA.DC.ILR.FundingService.FM35.TaskProvider.csproj" />

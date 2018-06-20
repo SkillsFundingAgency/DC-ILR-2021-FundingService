@@ -134,10 +134,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.ExternalData\ESFA.DC.ILR.FundingService.FM35.ExternalData.csproj">
-      <Project>{e5627e4c-80bc-4fba-8eea-fbe3f8358dea}</Project>
-      <Name>ESFA.DC.ILR.FundingService.FM35.ExternalData</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.Modules\ESFA.DC.ILR.FundingService.FM35.Modules.csproj">
       <Project>{155DA4C7-2D6B-49B8-8FEC-CA24555B72A0}</Project>
       <Name>ESFA.DC.ILR.FundingService.FM35.Modules</Name>

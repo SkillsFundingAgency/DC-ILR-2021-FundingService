@@ -169,6 +169,10 @@
     <Analyzer Include="..\..\packages\xunit.analyzers.0.9.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Data\ESFA.DC.ILR.FundingService.Data.csproj">
+      <Project>{69B93B19-4FD0-4205-AFFA-8B71122A3C65}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Tests.Common\ESFA.DC.ILR.FundingService.Tests.Common.csproj">
       <Project>{12B2CB23-3369-4720-8E41-C2DEDAA787CF}</Project>
       <Name>ESFA.DC.ILR.FundingService.Tests.Common</Name>
@@ -192,14 +196,6 @@
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.csproj">
       <Project>{5FE52B2F-B11A-41AC-83B1-026BB53C8D82}</Project>
       <Name>ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.InternalData.Interface\ESFA.DC.ILR.FundingService.FM35.InternalData.Interface.csproj">
-      <Project>{6822FB5C-7792-444E-93DC-11254C9E6BF5}</Project>
-      <Name>ESFA.DC.ILR.FundingService.FM35.InternalData.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.InternalData\ESFA.DC.ILR.FundingService.FM35.InternalData.csproj">
-      <Project>{ABF1BD70-DD79-44D9-8573-DAE4A4383C2A}</Project>
-      <Name>ESFA.DC.ILR.FundingService.FM35.InternalData</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.OrchestrationService.Interface\ESFA.DC.ILR.FundingService.FM35.OrchestrationService.Interface.csproj">
       <Project>{6a38694d-d362-4a64-84ef-4ff639819aa4}</Project>

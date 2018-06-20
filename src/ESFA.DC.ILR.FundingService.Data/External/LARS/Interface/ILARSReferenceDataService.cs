@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Model;
+using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 
-namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Interface
+namespace ESFA.DC.ILR.FundingService.Data.External.LARS.Interface
 {
     public interface ILARSReferenceDataService
     {
@@ -10,5 +10,12 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Interface
         IEnumerable<LARSFunding> LARSFundingsForLearnAimRef(string learnAimRef);
 
         LARSLearningDelivery LARSLearningDeliveriesForLearnAimRef(string learnAimRef);
+
+        IEnumerable<LARSFrameworkAims> LARSFFrameworkAimsForLearnAimRef(string learnAimRef);
+
+        IEnumerable<LARSAnnualValue> LARSAnnualValuesForLearnAimRef(string learnAimRef);
+
+        IEnumerable<LARSLearningDeliveryCategory> LARSLearningDeliveryCategoriesForLearnAimRef(string learnAimRef);
+
     }
 }

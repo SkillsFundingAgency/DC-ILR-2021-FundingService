@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.Postcodes.Interface;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.Postcodes.Model;
+﻿using System.Collections.Generic;
+using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
+using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
+using ESFA.DC.ILR.FundingService.Data.Interface;
 
-namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Postcodes
+namespace ESFA.DC.ILR.FundingService.Data.External.Postcodes
 {
     public class PostcodesReferenceDataService : IPostcodesReferenceDataService
     {
@@ -22,14 +21,16 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Postcodes
 
         public IEnumerable<SfaAreaCost> SFAAreaCostsForPostcode(string postcode)
         {
-            try
-            {
-                return _referenceDataCache.SfaAreaCost[postcode];
-            }
-            catch (Exception ex)
-            {
-                throw new KeyNotFoundException(string.Format("Cannot find Postcode: " + postcode + " in the Dictionary. Exception details: " + ex));
-            }
+            _referenceDataCache.SfaAreaCost.TryGetValue(postcode, out IEnumerable<SfaAreaCost> sfaAreaCost);
+
+            return sfaAreaCost;
+        }
+
+        public IEnumerable<SfaDisadvantage> SFADisadvantagesForPostcode(string postcode)
+        {
+            _referenceDataCache.SfaDisadvantage.TryGetValue(postcode, out IEnumerable<SfaDisadvantage> sfaDisadvantage);
+
+            return sfaDisadvantage;
         }
     }
 }
