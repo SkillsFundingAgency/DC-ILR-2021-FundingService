@@ -48,11 +48,11 @@
     <Reference Include="ESFA.DC.IO.Interfaces, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ESFA.DC.IO.Interfaces.0.1.2-beta0001\lib\netstandard2.0\ESFA.DC.IO.Interfaces.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.JobContext, Version=0.1.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.JobContext.0.1.8-beta0001\lib\netstandard2.0\ESFA.DC.JobContext.dll</HintPath>
+    <Reference Include="ESFA.DC.JobContext, Version=0.1.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ESFA.DC.JobContext.0.1.11-beta0001\lib\netstandard2.0\ESFA.DC.JobContext.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.JobContext.Interface, Version=0.1.10.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.JobContext.Interface.0.1.10-beta0001\lib\netstandard2.0\ESFA.DC.JobContext.Interface.dll</HintPath>
+    <Reference Include="ESFA.DC.JobContext.Interface, Version=0.1.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ESFA.DC.JobContext.Interface.0.1.12-beta0001\lib\netstandard2.0\ESFA.DC.JobContext.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.Mapping.Interface, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ESFA.DC.Mapping.Interface.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.Mapping.Interface.dll</HintPath>
@@ -66,16 +66,16 @@
     <Reference Include="ESFA.DC.Serialization.Xml, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ESFA.DC.Serialization.Xml.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Xml.dll</HintPath>
     </Reference>
-    <Reference Include="FluentAssertions, Version=5.4.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FluentAssertions.5.4.0\lib\net45\FluentAssertions.dll</HintPath>
+    <Reference Include="FluentAssertions, Version=5.4.1.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentAssertions.5.4.1\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -102,13 +102,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="ESFA.DC.ILR.FundingService.FM35.Contexts.Tests.ruleset" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
-    <Analyzer Include="..\..\packages\xunit.analyzers.0.7.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
+    <Analyzer Include="..\..\packages\xunit.analyzers.0.9.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.Contexts\ESFA.DC.ILR.FundingService.FM35.Contexts.csproj">
