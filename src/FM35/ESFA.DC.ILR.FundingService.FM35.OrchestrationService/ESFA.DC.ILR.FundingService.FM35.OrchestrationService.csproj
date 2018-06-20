@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.FM35.OrchestrationService.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.FM35.OrchestrationService.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ESFA.DC.ILR.1819.Model" Version="0.1.4-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.1819.Model.Interface" Version="0.1.4-beta0001" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.Contexts\ESFA.DC.ILR.FundingService.FM35.Contexts.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.ExternalData\ESFA.DC.ILR.FundingService.FM35.ExternalData.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.InternalData.Interface\ESFA.DC.ILR.FundingService.FM35.InternalData.Interface.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.InternalData\ESFA.DC.ILR.FundingService.FM35.InternalData.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.OrchestrationService.Interface\ESFA.DC.ILR.FundingService.FM35.OrchestrationService.Interface.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.Service.Interface\ESFA.DC.ILR.FundingService.FM35.Service.Interface.csproj" />
+  </ItemGroup>
+
+</Project>
