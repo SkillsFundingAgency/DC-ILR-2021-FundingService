@@ -66,7 +66,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
 
                 foreach (var learningDelivery in learner.LearningDeliveries)
                 {
-                    var larsLearningDelivery = _larsReferenceDataService.LARSLearningDeliveriesForLearnAimRef(learningDelivery.LearnAimRef);
+                    var larsLearningDelivery = _larsReferenceDataService.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef);
                     var larsFrameworkAims = _larsReferenceDataService.LARSFFrameworkAimsForLearnAimRef(learningDelivery.LearnAimRef);
 
                     var larsFwkAims = larsFrameworkAims == null ? null : larsFrameworkAims.ToList();

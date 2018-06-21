@@ -9,7 +9,7 @@ namespace ESFA.DC.ILR.FundingService.Data.External.LARS.Interface
 
         IEnumerable<LARSFunding> LARSFundingsForLearnAimRef(string learnAimRef);
 
-        LARSLearningDelivery LARSLearningDeliveriesForLearnAimRef(string learnAimRef);
+        LARSLearningDelivery LARSLearningDeliveryForLearnAimRef(string learnAimRef);
 
         IEnumerable<LARSFrameworkAims> LARSFFrameworkAimsForLearnAimRef(string learnAimRef);
 

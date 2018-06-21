@@ -4,7 +4,7 @@ using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 
-namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS
+namespace ESFA.DC.ILR.FundingService.Data.External.LARS
 {
     public class LARSReferenceDataService : ILARSReferenceDataService
     {
@@ -22,26 +22,16 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS
 
         public IEnumerable<LARSFunding> LARSFundingsForLearnAimRef(string learnAimRef)
         {
-            try
-            {
-                return _referenceDataCache.LARSFunding[learnAimRef];
-            }
-            catch (Exception ex)
-            {
-                throw new KeyNotFoundException(string.Format("Cannot find LARS Funding data for LearnAimRef: " + learnAimRef + " in the Dictionary. Exception details: " + ex));
-            }
+            _referenceDataCache.LARSFunding.TryGetValue(learnAimRef, out IEnumerable<LARSFunding> larsFundings);
+
+            return larsFundings;
         }
 
-        public LARSLearningDelivery LARSLearningDeliveriesForLearnAimRef(string learnAimRef)
+        public LARSLearningDelivery LARSLearningDeliveryForLearnAimRef(string learnAimRef)
         {
-            try
-            {
-                return _referenceDataCache.LARSLearningDelivery[learnAimRef];
-            }
-            catch (Exception ex)
-            {
-                throw new KeyNotFoundException(string.Format("Cannot find LARS Learning Delivery data for LearnAimRef: " + learnAimRef + " in the Dictionary. Exception details: " + ex));
-            }
+            _referenceDataCache.LARSLearningDelivery.TryGetValue(learnAimRef, out LARSLearningDelivery learningDelivery);
+
+            return learningDelivery;
         }
 
         public IEnumerable<LARSAnnualValue> LARSAnnualValuesForLearnAimRef(string learnAimRef)
