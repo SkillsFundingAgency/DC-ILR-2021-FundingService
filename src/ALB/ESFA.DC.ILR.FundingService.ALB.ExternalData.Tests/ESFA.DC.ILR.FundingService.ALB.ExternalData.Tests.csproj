@@ -93,11 +93,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LARS\LARSReferenceDataServiceIntegrationTests.cs" />
     <Compile Include="LARS\LARSReferenceDataServiceTests.cs" />
     <Compile Include="Postcodes\PostcodeFactorsReferenceDataServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReferenceDataCachePopulationServiceTests.cs" />
     <Compile Include="ReferenceDataCacheTests.cs" />
   </ItemGroup>
   <ItemGroup>
