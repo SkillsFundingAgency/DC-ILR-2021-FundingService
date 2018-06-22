@@ -77,6 +77,7 @@
   <ItemGroup>
     <Compile Include="LargeEmployerReferenceDataServiceTests.cs" />
     <Compile Include="LARSReferenceDataServiceTests.cs" />
+    <Compile Include="OrganisationReferenceDataServiceTests.cs" />
     <Compile Include="PostcodeFactorsReferenceDataServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

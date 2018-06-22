@@ -54,7 +54,38 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
 
             NewService(referenceDataCacheMock.Object).SFAAreaCostsForPostcode("notPostcode").Should().BeNull();
         }
-        
+
+        [Fact]
+        public void SfaDisadvantageCost()
+        {
+            var postcode = "postcode";
+            var sfaDisadvantages = new List<SfaDisadvantage>();
+
+            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.SfaDisadvantage)
+                .Returns(new Dictionary<string, IEnumerable<SfaDisadvantage>>()
+                {
+                    { postcode, sfaDisadvantages }
+                });
+
+            NewService(referenceDataCacheMock.Object).SFADisadvantagesForPostcode(postcode).Should().BeSameAs(sfaDisadvantages);
+        }
+
+        [Fact]
+        public void SfaDisadvantageCost_NotExists()
+        {
+            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.SfaDisadvantage)
+                .Returns(new Dictionary<string, IEnumerable<SfaDisadvantage>>()
+                {
+                    { "postcode", null }
+                });
+
+            NewService(referenceDataCacheMock.Object).SFADisadvantagesForPostcode("notPostcode").Should().BeNull();
+        }
+
         private PostcodesReferenceDataService NewService(IReferenceDataCache referenceDataCache = null)
         {
             return new PostcodesReferenceDataService(referenceDataCache);

@@ -88,6 +88,97 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             NewService(referenceDataCacheMock.Object).LARSFundingsForLearnAimRef("notLearnAimRef").Should().BeNull();
         }
 
+        [Fact]
+        public void LARSAnnualValues()
+        {
+            var learnAimRef = "learnAimRef";
+            var larsAnnualValues = new List<LARSAnnualValue>();
+
+            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSAnnualValue)
+                .Returns(new Dictionary<string, IEnumerable<LARSAnnualValue>>()
+                {
+                    { learnAimRef, larsAnnualValues },
+                });
+
+            NewService(referenceDataCacheMock.Object).LARSAnnualValuesForLearnAimRef(learnAimRef).Should().BeSameAs(larsAnnualValues);
+        }
+
+        [Fact]
+        public void LARSAnnualValues_NotExists()
+        {
+            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSAnnualValue)
+                .Returns(new Dictionary<string, IEnumerable<LARSAnnualValue>>()
+                {
+                    { "learnAimRef", null },
+                });
+
+            NewService(referenceDataCacheMock.Object).LARSAnnualValuesForLearnAimRef("notLearnAimRef").Should().BeNull();
+        }
+
+        [Fact]
+        public void LARSLearningDeliveryCategory()
+        {
+            var learnAimRef = "learnAimRef";
+            var learningDeliveryCategories = new List<LARSLearningDeliveryCategory>();
+
+            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSLearningDeliveryCatgeory)
+                .Returns(new Dictionary<string, IEnumerable<LARSLearningDeliveryCategory>>()
+                {
+                    { learnAimRef, learningDeliveryCategories },
+                });
+
+            NewService(referenceDataCacheMock.Object).LARSLearningDeliveryCategoriesForLearnAimRef(learnAimRef).Should().BeSameAs(learningDeliveryCategories);
+        }
+
+        [Fact]
+        public void LARSLearningDeliveryCategory_NotExists()
+        {
+            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSLearningDeliveryCatgeory)
+                .Returns(new Dictionary<string, IEnumerable<LARSLearningDeliveryCategory>>()
+                {
+                    { "learnAimRef", null },
+                });
+
+            NewService(referenceDataCacheMock.Object).LARSLearningDeliveryCategoriesForLearnAimRef("notLearnAimRef").Should().BeNull();
+        }
+
+        [Fact]
+        public void LARSFrameworkAims()
+        {
+            var learnAimRef = "learnAimRef";
+            var frameworkAims = new List<LARSFrameworkAims>();
+
+            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSFrameworkAims).Returns(new Dictionary<string, IEnumerable<LARSFrameworkAims>>()
+            {
+                { learnAimRef, frameworkAims },
+            });
+
+            NewService(referenceDataCacheMock.Object).LARSFFrameworkAimsForLearnAimRef(learnAimRef).Should().BeSameAs(frameworkAims);
+        }
+        
+        [Fact]
+        public void LARSFrameworkAims_Correct()
+        {
+            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSFrameworkAims).Returns(new Dictionary<string, IEnumerable<LARSFrameworkAims>>()
+            {
+                { "learnAimRef", null },
+            });
+
+            NewService(referenceDataCacheMock.Object).LARSFFrameworkAimsForLearnAimRef("notLearnAimRef").Should().BeNull();
+        }
+
         private LARSReferenceDataService NewService(IReferenceDataCache referenceDataCache = null)
         {
             return new LARSReferenceDataService(referenceDataCache);
