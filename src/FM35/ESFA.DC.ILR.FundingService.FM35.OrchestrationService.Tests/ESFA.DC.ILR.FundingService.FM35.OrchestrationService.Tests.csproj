@@ -154,8 +154,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PreFundingFM35PopulationServiceTests.cs.cs" />
-    <Compile Include="PreFundingFM35OrchestrationServiceTests.cs" />
-    <Compile Include="FM35OrchestrationServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
