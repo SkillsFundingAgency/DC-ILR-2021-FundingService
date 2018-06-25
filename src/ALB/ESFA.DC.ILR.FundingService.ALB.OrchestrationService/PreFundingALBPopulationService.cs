@@ -22,7 +22,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.OrchestrationService
         public void Populate()
         {
             var internalDataCache = (InternalDataCache)_internalDataCache;
-            internalDataCache.UKPRN = _fundingContext.UKPRN;
 
             internalDataCache.ValidLearners = _fundingContext.ValidLearners.Where(l => l.LearningDeliveries.Any(ld => ld.FundModel == 99)).ToList();
 

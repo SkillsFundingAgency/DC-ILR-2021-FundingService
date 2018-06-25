@@ -5,8 +5,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Interface
 {
     public interface IFundingContext
     {
-        int UKPRN { get; }
-
         IEnumerable<ILearner> ValidLearners { get; }
     }
 }

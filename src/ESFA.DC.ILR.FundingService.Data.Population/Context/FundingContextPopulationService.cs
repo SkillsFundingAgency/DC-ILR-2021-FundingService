@@ -7,13 +7,11 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Context
     public class FundingContextPopulationService : IFundingContextPopulationService
     {
         private readonly IFundingContext _fundingContext;
-        private readonly IUKPRNDataRetrievalService _ukprnDataRetrievalService;
         private readonly IValidLearnersDataRetrievalService _validLearnersDataRetrievalService;
 
-        public FundingContextPopulationService(IFundingContext fundingContext, IUKPRNDataRetrievalService ukrpnDataRetrievalService, IValidLearnersDataRetrievalService validLearnersDataRetrievalService)
+        public FundingContextPopulationService(IFundingContext fundingContext, IValidLearnersDataRetrievalService validLearnersDataRetrievalService)
         {
             _fundingContext = fundingContext;
-            _ukprnDataRetrievalService = ukrpnDataRetrievalService;
             _validLearnersDataRetrievalService = validLearnersDataRetrievalService;
         }
 
@@ -21,7 +19,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Context
         {
             var fundingContext = (FundingContext)_fundingContext;
 
-            fundingContext.UKPRN = _ukprnDataRetrievalService.Retrieve();
             fundingContext.ValidLearners = _validLearnersDataRetrievalService.Retrieve();
         }
     }

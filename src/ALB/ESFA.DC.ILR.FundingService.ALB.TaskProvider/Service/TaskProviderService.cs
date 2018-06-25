@@ -17,14 +17,14 @@ namespace ESFA.DC.ILR.FundingService.ALB.TaskProvider.Service
     public class TaskProviderService : ITaskProviderService
     {
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
-        private readonly IInternalDataCache _internalDataCache;
+        private readonly IFileDataCache _fileDataCache;
         private readonly IPreFundingALBOrchestrationService _preFundingALBOrchestrationService;
         private readonly IALBOrchestrationService _albOrchestrationService;
 
-        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IInternalDataCache internalDataCache, IPreFundingALBOrchestrationService preFundingALBOrchestrationService, IALBOrchestrationService albOrchestrationService)
+        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IFileDataCache fileDataCache, IPreFundingALBOrchestrationService preFundingALBOrchestrationService, IALBOrchestrationService albOrchestrationService)
         {
             _keyValuePersistenceService = keyValuePersistenceService;
-            _internalDataCache = internalDataCache;
+            _fileDataCache = fileDataCache;
             _preFundingALBOrchestrationService = preFundingALBOrchestrationService;
             _albOrchestrationService = albOrchestrationService;
         }
@@ -60,12 +60,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.TaskProvider.Service
 
         private IList<IFundingOutputs> ProcessFunding(IEnumerable<IList<ILearner>> learnersList)
         {
-            int ukprn = _internalDataCache.UKPRN;
             IList<IFundingOutputs> fundingOutputsList = new List<IFundingOutputs>();
 
             foreach (var list in learnersList)
             {
-                fundingOutputsList.Add(_albOrchestrationService.Execute(ukprn, list));
+                fundingOutputsList.Add(_albOrchestrationService.Execute(_fileDataCache.UKPRN, list));
             }
 
             return fundingOutputsList;

@@ -66,8 +66,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\FundingContextPopulationService.cs" />
-    <Compile Include="Context\UKPRNDataRetrievalService.cs" />
+    <Compile Include="File\UKPRNDataRetrievalService.cs" />
     <Compile Include="Context\ValidLearnersDataRetrievalService.cs" />
+    <Compile Include="File\FileDataCachePopulationService.cs" />
+    <Compile Include="Interface\IFileDataCachePopulationService.cs" />
     <Compile Include="Interface\IFundingContextPopulationService.cs" />
     <Compile Include="Interface\IPopulationService.cs" />
     <Compile Include="Interface\IReferenceDataCachePopulationService.cs" />

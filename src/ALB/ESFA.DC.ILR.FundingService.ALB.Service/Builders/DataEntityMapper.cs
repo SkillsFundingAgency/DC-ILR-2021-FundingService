@@ -23,13 +23,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
         private const string LearningDeliveryFAMTypeRES = "RES";
 
         private readonly IReferenceDataCache _referenceDataCache;
-        private readonly IFundingContext _fundingContext;
+        private readonly IFileDataCache _fileDataCache;
         private readonly IAttributeBuilder<IAttributeData> _attributeBuilder;
 
-        public DataEntityMapper(IReferenceDataCache referenceDataCache, IFundingContext fundingContext, IAttributeBuilder<IAttributeData> attributeBuilder)
+        public DataEntityMapper(IReferenceDataCache referenceDataCache, IFileDataCache fileDataCache, IAttributeBuilder<IAttributeData> attributeBuilder)
         {
             _referenceDataCache = referenceDataCache;
-            _fundingContext = fundingContext;
+            _fileDataCache = fileDataCache;
             _attributeBuilder = attributeBuilder;
         }
 
@@ -38,7 +38,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
             var globalEntities = learners.Select(learner =>
             {
                 // Global Entity
-                IDataEntity globalEntity = GlobalEntity(_fundingContext.UKPRN);
+                IDataEntity globalEntity = GlobalEntity(_fileDataCache.UKPRN);
 
                 // Learner Entity
                 IDataEntity learnerEntity = LearnerEntity(learner.LearnRefNumber);

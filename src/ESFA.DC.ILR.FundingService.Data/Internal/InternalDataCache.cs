@@ -6,8 +6,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Internal
 {
     public class InternalDataCache : IInternalDataCache
     {
-        public int UKPRN { get; set; }
-
         public IList<ILearner> ValidLearners { get; set; }
     }
 }

@@ -11,12 +11,14 @@ namespace ESFA.DC.ILR.FundingService.FM35.OrchestrationService
     public class PreFundingFM35PopulationService : IPopulationService
     {
         private readonly IReferenceDataCachePopulationService _referenceDataCachePopulationService;
+        private readonly IFileDataCachePopulationService _fileDataCachePopulationService;
         private readonly IFundingContext _fundingContext;
         private readonly IInternalDataCache _internalDataCache;
 
-        public PreFundingFM35PopulationService(IReferenceDataCachePopulationService referenceDataCachePopulationService, IFundingContext fundingContext, IInternalDataCache internalDataCache)
+        public PreFundingFM35PopulationService(IReferenceDataCachePopulationService referenceDataCachePopulationService, IFundingContext fundingContext, IInternalDataCache internalDataCache, IFileDataCachePopulationService fileDataCachePopulationService)
         {
             _referenceDataCachePopulationService = referenceDataCachePopulationService;
+            _fileDataCachePopulationService = fileDataCachePopulationService;
             _fundingContext = fundingContext;
             _internalDataCache = internalDataCache;
         }
@@ -31,7 +33,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.OrchestrationService
             HashSet<int?> lEmpIdTempList = new HashSet<int?>();
             bool added = false;
 
-            orgUKPRNList.Add(_fundingContext.UKPRN);
+            // orgUKPRNList.Add(_fundingContext.UKPRN);
 
             foreach (var learner in learners)
             {
@@ -66,8 +68,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.OrchestrationService
             _referenceDataCachePopulationService.Populate(learnAimRefsList.ToList(), postcodesList, orgUKPRNList.ToList(), empIdList);
 
             var internalDataCache = (InternalDataCache)_internalDataCache;
-            internalDataCache.UKPRN = _fundingContext.UKPRN;
             internalDataCache.ValidLearners = learnerList;
+
+            _fileDataCachePopulationService.Populate();
         }
     }
 }

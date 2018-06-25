@@ -1,11 +1,11 @@
-﻿using ESFA.DC.ILR.FundingService.Data.Population.Context;
+﻿using ESFA.DC.ILR.FundingService.Data.Population.File;
 using ESFA.DC.ILR.FundingService.Dto.Interfaces;
 using ESFA.DC.ILR.Tests.Model;
 using FluentAssertions;
 using Moq;
 using Xunit;
 
-namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.Context
+namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.File
 {
     public class UKPRNDataRetrievalServiceTests
     {

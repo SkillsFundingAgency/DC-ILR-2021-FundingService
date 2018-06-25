@@ -42,15 +42,17 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
         private const string LearningDeliveryFAMTypeLDM4 = "LDM4";
 
         private readonly IFundingContext _fundingContext;
+        private readonly IFileDataCache _fileDataCache;
         private readonly ILargeEmployersReferenceDataService _largeEmployersReferenceDataService;
         private readonly ILARSReferenceDataService _larsReferenceDataService;
         private readonly IOrganisationReferenceDataService _organisationReferenceDataService;
         private readonly IPostcodesReferenceDataService _postcodesReferenceDataService;
         private readonly IAttributeBuilder<IAttributeData> _attributeBuilder;
 
-        public DataEntityMapper(IFundingContext fundingContext, ILargeEmployersReferenceDataService largeEmployersReferenceDataService, ILARSReferenceDataService larsReferenceDataService, IOrganisationReferenceDataService organisationReferenceDataService, IPostcodesReferenceDataService postcodesReferenceDataService, IAttributeBuilder<IAttributeData> attributeBuilder)
+        public DataEntityMapper(IFundingContext fundingContext, IFileDataCache fileDataCache, ILargeEmployersReferenceDataService largeEmployersReferenceDataService, ILARSReferenceDataService larsReferenceDataService, IOrganisationReferenceDataService organisationReferenceDataService, IPostcodesReferenceDataService postcodesReferenceDataService, IAttributeBuilder<IAttributeData> attributeBuilder)
         {
             _fundingContext = fundingContext;
+            _fileDataCache = fileDataCache;
             _largeEmployersReferenceDataService = largeEmployersReferenceDataService;
             _larsReferenceDataService = larsReferenceDataService;
             _organisationReferenceDataService = organisationReferenceDataService;
@@ -63,7 +65,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
             var globalEntities = learners.Select(learner =>
             {
                 // Global Entity
-                IDataEntity globalEntity = GlobalEntity(_fundingContext.UKPRN);
+                IDataEntity globalEntity = GlobalEntity(_fileDataCache.UKPRN);
 
                 // Learner Entity
                 IDataEntity learnerEntity = LearnerEntity(learner);

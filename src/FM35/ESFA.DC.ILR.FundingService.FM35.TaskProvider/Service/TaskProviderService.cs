@@ -19,13 +19,15 @@ namespace ESFA.DC.ILR.FundingService.FM35.TaskProvider.Service
     public class TaskProviderService : ITaskProviderService
     {
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
+        private readonly IFileDataCache _fileDataCache;
         private readonly IInternalDataCache _internalDataCache;
         private readonly IPreFundingFM35OrchestrationService _preFundingFM35OrchestrationService;
         private readonly IFM35OrchestrationService _fm35OrchestrationService;
 
-        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IInternalDataCache internalDataCache, IPreFundingFM35OrchestrationService preFundingFM35OrchestrationService, IFM35OrchestrationService fm35OrchestrationService)
+        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IFileDataCache fileDataCache, IInternalDataCache internalDataCache, IPreFundingFM35OrchestrationService preFundingFM35OrchestrationService, IFM35OrchestrationService fm35OrchestrationService)
         {
             _keyValuePersistenceService = keyValuePersistenceService;
+            _fileDataCache = fileDataCache;
             _internalDataCache = internalDataCache;
             _preFundingFM35OrchestrationService = preFundingFM35OrchestrationService;
             _fm35OrchestrationService = fm35OrchestrationService;
@@ -59,7 +61,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.TaskProvider.Service
 
         private IFM35FundingOutputs ProcessFunding(IEnumerable<IList<ILearner>> learnersList)
         {
-            int ukprn = _internalDataCache.UKPRN;
+            int ukprn = _fileDataCache.UKPRN;
             ConcurrentBag<IFM35FundingOutputs> fundingOutputsList = new ConcurrentBag<IFM35FundingOutputs>();
 
             Parallel.ForEach(learnersList, ll =>
