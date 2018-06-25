@@ -20,6 +20,7 @@ using ESFA.DC.ILR.FundingService.FM35.Service.Builders;
 using ESFA.DC.ILR.FundingService.FM35.Service.Interface.Builders;
 using ESFA.DC.ILR.FundingService.FM35.Service.Rulebase;
 using ESFA.DC.ILR.FundingService.Interfaces;
+using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service;
 using ESFA.DC.OPA.Service.Builders;
@@ -38,7 +39,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Modules
             builder.RegisterType<RulebaseProviderFactory>().As<IRulebaseProviderFactory>().InstancePerLifetimeScope();
             builder.RegisterType<OPAService>().As<IOPAService>().InstancePerLifetimeScope();
             builder.RegisterType<AttributeBuilder>().As<IAttributeBuilder<IAttributeData>>().InstancePerLifetimeScope();
-            builder.RegisterType<DataEntityBuilder>().As<IDataEntityBuilder>().InstancePerLifetimeScope();
+            builder.RegisterType<DataEntityMapper>().As<IDataEntityMapper<ILearner>>().InstancePerLifetimeScope();
             builder.RegisterType<LargeEmployersReferenceDataService>().As<ILargeEmployersReferenceDataService>().InstancePerLifetimeScope();
             builder.RegisterType<LARSReferenceDataService>().As<ILARSReferenceDataService>().InstancePerLifetimeScope();
             builder.RegisterType<OrganisationReferenceDataService>().As<IOrganisationReferenceDataService>().InstancePerLifetimeScope();

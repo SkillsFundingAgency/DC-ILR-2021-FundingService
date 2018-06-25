@@ -9,15 +9,17 @@ using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Organisation.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
+using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.FM35.Service.Interface.Builders;
 using ESFA.DC.ILR.FundingService.FM35.Service.Models;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
+using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
 {
-    public class DataEntityBuilder : IDataEntityBuilder
+    public class DataEntityMapper : IDataEntityMapper<ILearner>
     {
         private const string Entityglobal = "global";
         private const string EntityOrgFunding = "OrgFunding";
@@ -39,14 +41,16 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
         private const string LearningDeliveryFAMTypeLDM3 = "LDM3";
         private const string LearningDeliveryFAMTypeLDM4 = "LDM4";
 
+        private readonly IFundingContext _fundingContext;
         private readonly ILargeEmployersReferenceDataService _largeEmployersReferenceDataService;
         private readonly ILARSReferenceDataService _larsReferenceDataService;
         private readonly IOrganisationReferenceDataService _organisationReferenceDataService;
         private readonly IPostcodesReferenceDataService _postcodesReferenceDataService;
         private readonly IAttributeBuilder<IAttributeData> _attributeBuilder;
 
-        public DataEntityBuilder(ILargeEmployersReferenceDataService largeEmployersReferenceDataService, ILARSReferenceDataService larsReferenceDataService, IOrganisationReferenceDataService organisationReferenceDataService, IPostcodesReferenceDataService postcodesReferenceDataService, IAttributeBuilder<IAttributeData> attributeBuilder)
+        public DataEntityMapper(IFundingContext fundingContext, ILargeEmployersReferenceDataService largeEmployersReferenceDataService, ILARSReferenceDataService larsReferenceDataService, IOrganisationReferenceDataService organisationReferenceDataService, IPostcodesReferenceDataService postcodesReferenceDataService, IAttributeBuilder<IAttributeData> attributeBuilder)
         {
+            _fundingContext = fundingContext;
             _largeEmployersReferenceDataService = largeEmployersReferenceDataService;
             _larsReferenceDataService = larsReferenceDataService;
             _organisationReferenceDataService = organisationReferenceDataService;
@@ -54,12 +58,12 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
             _attributeBuilder = attributeBuilder;
         }
 
-        public IEnumerable<IDataEntity> EntityBuilder(int ukprn, IEnumerable<ILearner> learners)
+        public IEnumerable<IDataEntity> Map(IEnumerable<ILearner> learners)
         {
             var globalEntities = learners.Select(learner =>
             {
                 // Global Entity
-                IDataEntity globalEntity = GlobalEntity(ukprn);
+                IDataEntity globalEntity = GlobalEntity(_fundingContext.UKPRN);
 
                 // Learner Entity
                 IDataEntity learnerEntity = LearnerEntity(learner);
