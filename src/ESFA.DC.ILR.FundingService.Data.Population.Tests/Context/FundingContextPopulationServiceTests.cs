@@ -3,10 +3,7 @@ using ESFA.DC.ILR.FundingService.Data.Context;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Context;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
-using ESFA.DC.ILR.FundingService.Dto.Interfaces;
 using ESFA.DC.ILR.Model.Interface;
-using ESFA.DC.ILR.Tests.Model;
-using FluentAssertions;
 using Moq;
 using Xunit;
 

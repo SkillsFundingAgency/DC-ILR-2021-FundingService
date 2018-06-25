@@ -6,8 +6,9 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Attribute;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface.Attribute;
-using ESFA.DC.ILR.FundingService.ALB.Service.Interface;
+using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model;
@@ -467,7 +468,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.Tests
 
         private static readonly IFormatProvider culture = new CultureInfo("en-GB", true);
 
-        private static readonly Mock<IFundingService> FundingServiceContextMock = new Mock<IFundingService>();
+        private static readonly Mock<IFundingService<IFundingOutputs>> FundingServiceContextMock = new Mock<IFundingService<IFundingOutputs>>();
 
         private IEnumerable<IDataEntity> TestEntities()
         {

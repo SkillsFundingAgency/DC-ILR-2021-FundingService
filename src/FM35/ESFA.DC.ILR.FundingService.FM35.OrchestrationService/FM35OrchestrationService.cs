@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.FM35.OrchestrationService.Interface;
-using ESFA.DC.ILR.FundingService.FM35.Service.Interface;
+using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM35.OrchestrationService
 {
     public class FM35OrchestrationService : IFM35OrchestrationService
     {
-        private readonly IFundingService _fundingService;
+        private readonly IFundingService<IFM35FundingOutputs> _fundingService;
 
-        public FM35OrchestrationService(IFundingService fundingService)
+        public FM35OrchestrationService(IFundingService<IFM35FundingOutputs> fundingService)
         {
             _fundingService = fundingService;
         }

@@ -7,13 +7,12 @@ using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
+using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
 {
-    public class DataEntityBuilder : IDataEntityBuilder
+    public class DataEntityMapper : IDataEntityMapper<ILearner>
     {
-        #region Constants
-
         private const string Entityglobal = "global";
         private const string EntityLearner = "Learner";
         private const string EntityLearningDelivery = "LearningDelivery";
@@ -23,23 +22,23 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
         private const string LearningDeliveryFAMTypeADL = "ADL";
         private const string LearningDeliveryFAMTypeRES = "RES";
 
-        #endregion
-
         private readonly IReferenceDataCache _referenceDataCache;
+        private readonly IFundingContext _fundingContext;
         private readonly IAttributeBuilder<IAttributeData> _attributeBuilder;
 
-        public DataEntityBuilder(IReferenceDataCache referenceDataCache, IAttributeBuilder<IAttributeData> attributeBuilder)
+        public DataEntityMapper(IReferenceDataCache referenceDataCache, IFundingContext fundingContext, IAttributeBuilder<IAttributeData> attributeBuilder)
         {
             _referenceDataCache = referenceDataCache;
+            _fundingContext = fundingContext;
             _attributeBuilder = attributeBuilder;
         }
 
-        public IEnumerable<IDataEntity> EntityBuilder(int ukprn, IEnumerable<ILearner> learners)
+        public IEnumerable<IDataEntity> Map(IEnumerable<ILearner> learners)
         {
             var globalEntities = learners.Select(learner =>
             {
                 // Global Entity
-                IDataEntity globalEntity = GlobalEntity(ukprn);
+                IDataEntity globalEntity = GlobalEntity(_fundingContext.UKPRN);
 
                 // Learner Entity
                 IDataEntity learnerEntity = LearnerEntity(learner.LearnRefNumber);

@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
-using ESFA.DC.ILR.FundingService.ALB.Service.Interface;
+using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service
 {
-    public class FundingService : IFundingService
+    public class FundingService : IFundingService<IFundingOutputs>
     {
-        private readonly IDataEntityBuilder _dataEntityBuilder;
+        private readonly IDataEntityMapper<ILearner> _dataEntityBuilder;
         private readonly IOPAService _opaService;
         private readonly IFundingOutputService _fundingOutputService;
 
-        public FundingService(IDataEntityBuilder dataEntityBuilder, IOPAService opaService, IFundingOutputService fundingOutputService)
+        public FundingService(IDataEntityMapper<ILearner> dataEntityBuilder, IOPAService opaService, IFundingOutputService fundingOutputService)
         {
             _dataEntityBuilder = dataEntityBuilder;
             _opaService = opaService;
@@ -26,18 +26,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
         public IFundingOutputs ProcessFunding(int ukprn, IList<ILearner> learnerList)
         {
             // Generate Funding Inputs
-            var inputDataEntities = BuildInputEntities(ukprn, learnerList);
+            var inputDataEntities = _dataEntityBuilder.Map(learnerList);
 
             // Execute OPA
             var outputDataEntities = ExecuteSessions(inputDataEntities);
 
             // Transform to FundingOutput Model and return
-            return DataEntitytoFundingOutput(outputDataEntities);
-        }
-
-        protected internal IEnumerable<IDataEntity> BuildInputEntities(int ukprn, IList<ILearner> learnerList)
-        {
-            return _dataEntityBuilder.EntityBuilder(ukprn, learnerList);
+            return _fundingOutputService.ProcessFundingOutputs(outputDataEntities);
         }
 
         protected internal ConcurrentBag<IDataEntity> ExecuteSessions(IEnumerable<IDataEntity> inputDataEntities)
@@ -52,11 +47,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
             }
 
             return outputDataEntities;
-        }
-
-        protected internal IFundingOutputs DataEntitytoFundingOutput(ConcurrentBag<IDataEntity> dataEntities)
-        {
-            return _fundingOutputService.ProcessFundingOutputs(dataEntities);
         }
     }
 }

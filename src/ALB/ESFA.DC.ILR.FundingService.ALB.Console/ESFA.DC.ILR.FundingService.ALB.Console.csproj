@@ -111,10 +111,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ESFA.DC.FundingService.ALB.Stubs\ESFA.DC.ILR.FundingService.ALB.Stubs.csproj">
-      <Project>{24948e52-67e6-404c-bcd0-0ec5b468b86e}</Project>
-      <Name>ESFA.DC.ILR.FundingService.ALB.Stubs</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface.csproj">
       <Project>{F348A08B-D84B-497A-860C-BB37025F8CCD}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface</Name>

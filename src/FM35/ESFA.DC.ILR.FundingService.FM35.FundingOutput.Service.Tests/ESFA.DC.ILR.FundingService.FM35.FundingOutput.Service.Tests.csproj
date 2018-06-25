@@ -121,6 +121,10 @@
     <Analyzer Include="..\..\packages\xunit.analyzers.0.9.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Interfaces\ESFA.DC.ILR.FundingService.Interfaces.csproj">
+      <Project>{81fa550d-dd5e-4f5b-ac66-1dca51824e9c}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface.csproj">
       <Project>{9a01f8ef-6c64-424c-9de3-a697631e4004}</Project>
       <Name>ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface</Name>

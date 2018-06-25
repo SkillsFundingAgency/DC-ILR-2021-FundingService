@@ -11,14 +11,15 @@ using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Interface;
 using ESFA.DC.ILR.FundingService.FM35.OrchestrationService;
 using ESFA.DC.ILR.FundingService.FM35.OrchestrationService.Interface;
 using ESFA.DC.ILR.FundingService.FM35.Service.Builders;
-using ESFA.DC.ILR.FundingService.FM35.Service.Interface;
 using ESFA.DC.ILR.FundingService.FM35.Service.Interface.Builders;
 using ESFA.DC.ILR.FundingService.FM35.Service.Rulebase;
+using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service;
 using ESFA.DC.OPA.Service.Builders;
@@ -45,7 +46,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Modules
             builder.RegisterType<ReferenceDataCache>().As<IReferenceDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<DateTimeProvider>().As<IDateTimeProvider>().InstancePerLifetimeScope();
             builder.RegisterType<FundingOutputService>().As<IFundingOutputService>().InstancePerLifetimeScope();
-            builder.RegisterType<FM35.Service.FundingService>().As<IFundingService>().InstancePerLifetimeScope();
+            builder.RegisterType<Service.FundingService>().As<IFundingService<IFM35FundingOutputs>>().InstancePerLifetimeScope();
             builder.RegisterType<FM35OrchestrationService>().As<IFM35OrchestrationService>().InstancePerLifetimeScope();
         }
     }

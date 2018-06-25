@@ -3,9 +3,9 @@ using System.Linq;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
-using ESFA.DC.ILR.FundingService.ALB.Stubs.Persistance;
 using ESFA.DC.ILR.FundingService.ALB.TaskProvider.Interface;
 using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Stubs;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.IO.Dictionary;
@@ -44,8 +44,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.TaskProvider.Service
             var fundingOutputsToPersist = TransformFundingOutput(fundingOutputs);
 
             // persist
-            DataPersister dataPersister = new DataPersister();
-            dataPersister.PersistData(fundingOutputsToPersist);
+            var dataPersister = new DataPersister();
+            dataPersister.PersistData(fundingOutputsToPersist, @"C:\Code\temp\ALBFundingService\Json_Output.json");
         }
 
         private void BuildKeyValueDictionary(Message message)

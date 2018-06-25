@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ESFA.DC.ILR.FundingService.FM35.Service.Interface
+namespace ESFA.DC.ILR.FundingService.Interfaces
 {
     public interface ILearnerPerActorService<T, out U>
        where T : class

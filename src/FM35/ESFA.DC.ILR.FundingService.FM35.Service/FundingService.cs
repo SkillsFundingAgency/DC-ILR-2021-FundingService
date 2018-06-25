@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Interface;
-using ESFA.DC.ILR.FundingService.FM35.Service.Interface;
 using ESFA.DC.ILR.FundingService.FM35.Service.Interface.Builders;
+using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM35.Service
 {
-    public class FundingService : IFundingService
+    public class FundingService : IFundingService<IFM35FundingOutputs>
     {
         private readonly IDataEntityBuilder _dataEntityBuilder;
         private readonly IOPAService _opaService;

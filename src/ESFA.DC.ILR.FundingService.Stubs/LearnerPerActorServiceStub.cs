@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Internal;
-using ESFA.DC.ILR.FundingService.FM35.Service.Interface;
+using ESFA.DC.ILR.FundingService.Interfaces;
 
-namespace ESFA.DC.ILR.FundingService.FM35.Stubs
+namespace ESFA.DC.ILR.FundingService.Stubs
 {
     public class LearnerPerActorServiceStub<T, U> : ILearnerPerActorService<T, List<T>>
         where T : class

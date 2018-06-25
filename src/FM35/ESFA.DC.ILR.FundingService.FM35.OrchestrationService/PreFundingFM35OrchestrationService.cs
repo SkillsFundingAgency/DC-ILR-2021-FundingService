@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using ESFA.DC.ILR.FundingService.FM35.OrchestrationService.Interface;
-using ESFA.DC.ILR.FundingService.FM35.Service.Interface;
+using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM35.OrchestrationService

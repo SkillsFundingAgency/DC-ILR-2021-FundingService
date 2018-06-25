@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using ESFA.DC.Data.LargeEmployer.Model;
 using ESFA.DC.Data.LargeEmployer.Model.Interface;

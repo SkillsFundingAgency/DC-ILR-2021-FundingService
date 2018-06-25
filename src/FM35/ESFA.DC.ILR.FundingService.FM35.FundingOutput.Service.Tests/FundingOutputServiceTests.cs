@@ -7,8 +7,9 @@ using System.Xml;
 using System.Xml.Serialization;
 using ESFA.DC.DateTime.Provider;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Attribute;
+using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface.Attribute;
-using ESFA.DC.ILR.FundingService.FM35.Service.Interface;
+using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model;
@@ -387,7 +388,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
 
         private static readonly IFormatProvider culture = new CultureInfo("en-GB", true);
 
-        private static readonly Mock<IFundingService> FundingServiceContextMock = new Mock<IFundingService>();
+        private static readonly Mock<IFundingService<IFM35FundingOutputs>> FundingServiceContextMock = new Mock<IFundingService<IFM35FundingOutputs>>();
 
         private IEnumerable<IDataEntity> TestEntities()
         {

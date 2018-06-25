@@ -20,7 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ESFA.DC.FundingService.ALB.Stubs\ESFA.DC.ILR.FundingService.ALB.Stubs.csproj" />
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Stubs\ESFA.DC.ILR.FundingService.Stubs.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface\ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.OrchestrationService\ESFA.DC.ILR.FundingService.ALB.OrchestrationService.csproj" />
   </ItemGroup>

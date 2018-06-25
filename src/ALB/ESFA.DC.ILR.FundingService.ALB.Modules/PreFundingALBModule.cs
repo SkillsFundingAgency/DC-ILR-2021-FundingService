@@ -6,8 +6,6 @@ using ESFA.DC.Data.Postcodes.Model;
 using ESFA.DC.Data.Postcodes.Model.Interfaces;
 using ESFA.DC.ILR.FundingService.ALB.OrchestrationService;
 using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
-using ESFA.DC.ILR.FundingService.ALB.Service.Interface;
-using ESFA.DC.ILR.FundingService.ALB.Stubs;
 using ESFA.DC.ILR.FundingService.Data.Context;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.Interface;
@@ -17,6 +15,7 @@ using ESFA.DC.ILR.FundingService.Data.Population.Context;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Interfaces;
+using ESFA.DC.ILR.FundingService.Stubs;
 using ESFA.DC.ILR.Model.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Modules

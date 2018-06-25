@@ -6,8 +6,8 @@ using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.FM35.OrchestrationService.Interface;
-using ESFA.DC.ILR.FundingService.FM35.Stubs.Persistance;
 using ESFA.DC.ILR.FundingService.FM35.TaskProvider.Interface;
+using ESFA.DC.ILR.FundingService.Stubs;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.IO.Dictionary;
@@ -43,8 +43,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.TaskProvider.Service
             var fundingOutputs = ProcessFunding(learnersToProcess);
 
             // persist
-            DataPersister dataPersister = new DataPersister();
-            dataPersister.PersistData(fundingOutputs);
+            var dataPersister = new DataPersister();
+            dataPersister.PersistData(fundingOutputs, @"C:\Code\temp\FM35FundingService\Json_Output.json");
         }
 
         private void BuildKeyValueDictionary(Message message)

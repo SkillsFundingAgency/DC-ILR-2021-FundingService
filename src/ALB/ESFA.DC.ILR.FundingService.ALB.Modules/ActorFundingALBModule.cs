@@ -1,15 +1,17 @@
 ﻿using System;
 using Autofac;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.Interface;
 using ESFA.DC.ILR.FundingService.ALB.OrchestrationService;
 using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
-using ESFA.DC.ILR.FundingService.ALB.Service.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Service.Rulebase;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Interfaces;
+using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service;
 using ESFA.DC.OPA.Service.Builders;
@@ -28,10 +30,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.Modules
             builder.RegisterType<RulebaseProviderFactory>().As<IRulebaseProviderFactory>().InstancePerLifetimeScope();
             builder.RegisterType<OPAService>().As<IOPAService>().InstancePerLifetimeScope();
             builder.RegisterType<AttributeBuilder>().As<IAttributeBuilder<IAttributeData>>().InstancePerLifetimeScope();
-            builder.RegisterType<DataEntityBuilder>().As<IDataEntityBuilder>().InstancePerLifetimeScope();
+            builder.RegisterType<DataEntityMapper>().As<IDataEntityMapper<ILearner>>().InstancePerLifetimeScope();
             builder.RegisterType<ReferenceDataCache>().As<IReferenceDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<FundingOutputService>().As<IFundingOutputService>().InstancePerLifetimeScope();
-            builder.RegisterType<Service.FundingService>().As<IFundingService>().InstancePerLifetimeScope();
+            builder.RegisterType<Service.FundingService>().As<IFundingService<IFundingOutputs>>().InstancePerLifetimeScope();
             builder.RegisterType<ALBOrchestrationService>().As<IALBOrchestrationService>().InstancePerLifetimeScope();
         }
     }
