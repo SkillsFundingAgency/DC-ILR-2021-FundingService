@@ -413,6 +413,10 @@
       <Project>{BE335AA0-40B7-47D3-BFB3-AAF1565DF6A9}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.Modules</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Dto\ESFA.DC.ILR.FundingService.Dto.csproj">
+      <Project>{0021C0BF-4592-40C8-9272-82AC3A1339FA}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Dto</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Modules\ESFA.DC.ILR.FundingService.Modules.csproj">
       <Project>{79748ecd-e5d4-4d1e-be10-32588b2f625c}</Project>
       <Name>ESFA.DC.ILR.FundingService.Modules</Name>

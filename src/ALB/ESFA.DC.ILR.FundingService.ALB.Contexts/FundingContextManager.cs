@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ESFA.DC.ILR.FundingService.ALB.Contexts.Interface;
 using ESFA.DC.ILR.FundingService.Dto.Interfaces;
+using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.JobContext.Interface;
 using ESFA.DC.Mapping.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Contexts
 {
-    public class FundingContextManager : IFundingContextManager, IMapper<IJobContextMessage, IList<ILearner>>
+    public class FundingContextManager : IFundingContextManager
     {
         private const string ValidLearnRefNumberKey = "ValidLearnRefNumbers";
         private const string UKPRNKey = "UkPrn";

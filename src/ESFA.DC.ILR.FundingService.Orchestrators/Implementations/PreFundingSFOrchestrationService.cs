@@ -56,6 +56,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
 
             // loop through list of all the tasks and execute them.
             var fundingTasks = new List<Task>();
+
             foreach (var taskItem in tasks.Where(x => x.SupportsParallelExecution))
             {
                 // populate data
