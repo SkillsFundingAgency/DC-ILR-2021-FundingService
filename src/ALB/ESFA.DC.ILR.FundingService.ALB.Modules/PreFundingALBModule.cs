@@ -37,7 +37,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Modules
             }).As<IPostcodes>().InstancePerLifetimeScope();
 
             builder.RegisterType<PreFundingALBOrchestrationService>().As<IPreFundingALBOrchestrationService>().InstancePerLifetimeScope();
-            builder.RegisterType<PreFundingALBPopulationService>().As<IPreFundingALBPopulationService>().InstancePerLifetimeScope();
+            builder.RegisterType<PreFundingALBPopulationService>().As<IPopulationService>().InstancePerLifetimeScope();
             builder.RegisterType<ReferenceDataCachePopulationService>().As<IReferenceDataCachePopulationService>().InstancePerLifetimeScope();
             builder.RegisterType<InternalDataCache>().As<IInternalDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<LearnerPerActorServiceStub<ILearner, IList<ILearner>>>().As<ILearnerPerActorService<ILearner, IList<ILearner>>>().InstancePerLifetimeScope();

@@ -69,6 +69,7 @@
     <Compile Include="Context\UKPRNDataRetrievalService.cs" />
     <Compile Include="Context\ValidLearnersDataRetrievalService.cs" />
     <Compile Include="Interface\IFundingContextPopulationService.cs" />
+    <Compile Include="Interface\IPopulationService.cs" />
     <Compile Include="Interface\IReferenceDataCachePopulationService.cs" />
     <Compile Include="Interface\IUKPRNDataRetrievalService.cs" />
     <Compile Include="Interface\IValidLearnersDataRetrievalService.cs" />

@@ -8,7 +8,7 @@ using ESFA.DC.ILR.Model.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM35.OrchestrationService
 {
-    public class PreFundingFM35PopulationService : IPreFundingFM35PopulationService
+    public class PreFundingFM35PopulationService : IPopulationService
     {
         private readonly IReferenceDataCachePopulationService _referenceDataCachePopulationService;
         private readonly IFundingContext _fundingContext;
@@ -21,7 +21,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.OrchestrationService
             _internalDataCache = internalDataCache;
         }
 
-        public void PopulateData()
+        public void Populate()
         {
             var learners = _fundingContext.ValidLearners;
             IList<ILearner> learnerList = new List<ILearner>();

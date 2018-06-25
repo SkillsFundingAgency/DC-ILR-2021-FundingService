@@ -60,7 +60,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Modules
             builder.RegisterType<ReferenceDataCache>().As<IReferenceDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<ReferenceDataCachePopulationService>().As<IReferenceDataCachePopulationService>().InstancePerLifetimeScope();
             builder.RegisterType<PreFundingALBOrchestrationService>().As<IPreFundingALBOrchestrationService>().InstancePerLifetimeScope();
-            builder.RegisterType<PreFundingALBPopulationService>().As<IPreFundingALBPopulationService>().InstancePerLifetimeScope();
+            builder.RegisterType<PreFundingALBPopulationService>().As<IPopulationService>().InstancePerLifetimeScope();
             builder.RegisterType<XmlSerializationService>().As<ISerializationService>().InstancePerLifetimeScope();
             builder.RegisterType<FundingContext>().As<IFundingContext>().InstancePerLifetimeScope();
             builder.RegisterType<FundingContextPopulationService>().As<IFundingContextPopulationService>().InstancePerLifetimeScope();

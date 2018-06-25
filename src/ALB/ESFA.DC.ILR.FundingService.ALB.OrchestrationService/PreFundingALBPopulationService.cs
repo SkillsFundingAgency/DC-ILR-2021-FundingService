@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Internal;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.OrchestrationService
 {
-    public class PreFundingALBPopulationService : IPreFundingALBPopulationService
+    public class PreFundingALBPopulationService : IPopulationService
     {
         private readonly IReferenceDataCachePopulationService _referenceDataCachePopulationService;
         private readonly IFundingContext _fundingContext;
@@ -20,7 +19,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OrchestrationService
             _internalDataCache = internalDataCache;
         }
 
-        public void PopulateData()
+        public void Populate()
         {
             var internalDataCache = (InternalDataCache)_internalDataCache;
             internalDataCache.UKPRN = _fundingContext.UKPRN;

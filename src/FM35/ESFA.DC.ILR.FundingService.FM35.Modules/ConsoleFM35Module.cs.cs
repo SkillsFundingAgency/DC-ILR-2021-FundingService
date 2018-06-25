@@ -80,7 +80,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Modules
             builder.RegisterType<ReferenceDataCache>().As<IReferenceDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<ReferenceDataCachePopulationService>().As<IReferenceDataCachePopulationService>().InstancePerLifetimeScope();
             builder.RegisterType<PreFundingFM35OrchestrationService>().As<IPreFundingFM35OrchestrationService>().InstancePerLifetimeScope();
-            builder.RegisterType<PreFundingFM35PopulationService>().As<IPreFundingFM35PopulationService>().InstancePerLifetimeScope();
+            builder.RegisterType<PreFundingFM35PopulationService>().As<IPopulationService>().InstancePerLifetimeScope();
             builder.RegisterType<XmlSerializationService>().As<IXmlSerializationService>().InstancePerLifetimeScope();
             builder.RegisterType<FundingContext>().As<IFundingContext>().InstancePerLifetimeScope();
             builder.RegisterType<FundingContextPopulationService>().As<IFundingContextPopulationService>().InstancePerLifetimeScope();

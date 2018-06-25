@@ -26,7 +26,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Modules
             builder.RegisterType<LARS>().As<ILARS>().InstancePerLifetimeScope();
             builder.RegisterType<Postcodes>().As<IPostcodes>().InstancePerLifetimeScope();
             builder.RegisterType<PreFundingFM35OrchestrationService>().As<IPreFundingFM35OrchestrationService>().InstancePerLifetimeScope();
-            builder.RegisterType<PreFundingFM35PopulationService>().As<IPreFundingFM35PopulationService>().InstancePerLifetimeScope();
+            builder.RegisterType<PreFundingFM35PopulationService>().As<IPopulationService>().InstancePerLifetimeScope();
             builder.RegisterType<ReferenceDataCachePopulationService>().As<IReferenceDataCachePopulationService>().InstancePerLifetimeScope();
             builder.RegisterType<InternalDataCache>().As<IInternalDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<LearnerPerActorServiceStub<ILearner, IList<ILearner>>>().As<ILearnerPerActorService<ILearner, IList<ILearner>>>().InstancePerLifetimeScope();
