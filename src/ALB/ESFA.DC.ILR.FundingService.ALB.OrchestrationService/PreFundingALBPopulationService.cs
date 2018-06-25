@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.Interface;
-using ESFA.DC.ILR.FundingService.Data.Internal;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.OrchestrationService
@@ -10,21 +9,15 @@ namespace ESFA.DC.ILR.FundingService.ALB.OrchestrationService
     {
         private readonly IReferenceDataCachePopulationService _referenceDataCachePopulationService;
         private readonly IFundingContext _fundingContext;
-        private readonly IInternalDataCache _internalDataCache;
 
-        public PreFundingALBPopulationService(IReferenceDataCachePopulationService referenceDataCachePopulationService, IFundingContext fundingContext, IInternalDataCache internalDataCache)
+        public PreFundingALBPopulationService(IReferenceDataCachePopulationService referenceDataCachePopulationService, IFundingContext fundingContext)
         {
             _referenceDataCachePopulationService = referenceDataCachePopulationService;
             _fundingContext = fundingContext;
-            _internalDataCache = internalDataCache;
         }
 
         public void Populate()
         {
-            var internalDataCache = (InternalDataCache)_internalDataCache;
-
-            internalDataCache.ValidLearners = _fundingContext.ValidLearners.Where(l => l.LearningDeliveries.Any(ld => ld.FundModel == 99)).ToList();
-
             var postcodesList = _fundingContext.ValidLearners.SelectMany(l => l.LearningDeliveries).Select(ld => ld.DelLocPostCode).Distinct();
             var learnAimRefsList = _fundingContext.ValidLearners.SelectMany(l => l.LearningDeliveries).Select(ld => ld.LearnAimRef).Distinct();
 

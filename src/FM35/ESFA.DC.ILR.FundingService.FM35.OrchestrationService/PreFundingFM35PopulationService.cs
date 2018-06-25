@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.Interface;
-using ESFA.DC.ILR.FundingService.Data.Internal;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
-using ESFA.DC.ILR.FundingService.FM35.OrchestrationService.Interface;
 using ESFA.DC.ILR.Model.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM35.OrchestrationService
@@ -13,14 +11,12 @@ namespace ESFA.DC.ILR.FundingService.FM35.OrchestrationService
         private readonly IReferenceDataCachePopulationService _referenceDataCachePopulationService;
         private readonly IFileDataCachePopulationService _fileDataCachePopulationService;
         private readonly IFundingContext _fundingContext;
-        private readonly IInternalDataCache _internalDataCache;
 
-        public PreFundingFM35PopulationService(IReferenceDataCachePopulationService referenceDataCachePopulationService, IFundingContext fundingContext, IInternalDataCache internalDataCache, IFileDataCachePopulationService fileDataCachePopulationService)
+        public PreFundingFM35PopulationService(IReferenceDataCachePopulationService referenceDataCachePopulationService, IFundingContext fundingContext, IFileDataCachePopulationService fileDataCachePopulationService)
         {
             _referenceDataCachePopulationService = referenceDataCachePopulationService;
             _fileDataCachePopulationService = fileDataCachePopulationService;
             _fundingContext = fundingContext;
-            _internalDataCache = internalDataCache;
         }
 
         public void Populate()
@@ -66,9 +62,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.OrchestrationService
             var postcodesList = postcodesTempList.Select(p => p).Distinct().ToList();
 
             _referenceDataCachePopulationService.Populate(learnAimRefsList.ToList(), postcodesList, orgUKPRNList.ToList(), empIdList);
-
-            var internalDataCache = (InternalDataCache)_internalDataCache;
-            internalDataCache.ValidLearners = learnerList;
 
             _fileDataCachePopulationService.Populate();
         }

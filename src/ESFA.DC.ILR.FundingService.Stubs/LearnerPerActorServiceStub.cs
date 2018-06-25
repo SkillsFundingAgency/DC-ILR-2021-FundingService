@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.Interface;
-using ESFA.DC.ILR.FundingService.Data.Internal;
 using ESFA.DC.ILR.FundingService.Interfaces;
 
 namespace ESFA.DC.ILR.FundingService.Stubs
@@ -9,19 +9,20 @@ namespace ESFA.DC.ILR.FundingService.Stubs
     public class LearnerPerActorServiceStub<T, U> : ILearnerPerActorService<T, List<T>>
         where T : class
     {
-        private readonly IInternalDataCache _validALBLearnersCache;
+        private readonly IFundingContext _fundingContext;
 
-        public LearnerPerActorServiceStub(IInternalDataCache validALBLearnersCache)
+        public LearnerPerActorServiceStub(IFundingContext fundingContext)
         {
-            _validALBLearnersCache = validALBLearnersCache;
+            _fundingContext = fundingContext;
         }
 
         public IEnumerable<List<T>> Process()
         {
-            var learnersCache = (InternalDataCache)_validALBLearnersCache;
-            var learnersPerActors = CalculateLearnersPerActor(learnersCache.ValidLearners.Count);
+            var validLearners = _fundingContext.ValidLearners.Cast<T>().ToList();
 
-            return SplitList((List<T>)learnersCache.ValidLearners, learnersPerActors);
+            var learnersPerActors = CalculateLearnersPerActor(validLearners.Count);
+
+            return SplitList(validLearners, learnersPerActors);
         }
 
         private int CalculateLearnersPerActor(int totalMessagesCount)

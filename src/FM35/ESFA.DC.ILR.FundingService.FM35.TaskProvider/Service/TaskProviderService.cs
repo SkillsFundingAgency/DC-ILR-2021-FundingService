@@ -20,15 +20,13 @@ namespace ESFA.DC.ILR.FundingService.FM35.TaskProvider.Service
     {
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
         private readonly IFileDataCache _fileDataCache;
-        private readonly IInternalDataCache _internalDataCache;
         private readonly IPreFundingFM35OrchestrationService _preFundingFM35OrchestrationService;
         private readonly IFM35OrchestrationService _fm35OrchestrationService;
 
-        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IFileDataCache fileDataCache, IInternalDataCache internalDataCache, IPreFundingFM35OrchestrationService preFundingFM35OrchestrationService, IFM35OrchestrationService fm35OrchestrationService)
+        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IFileDataCache fileDataCache, IPreFundingFM35OrchestrationService preFundingFM35OrchestrationService, IFM35OrchestrationService fm35OrchestrationService)
         {
             _keyValuePersistenceService = keyValuePersistenceService;
             _fileDataCache = fileDataCache;
-            _internalDataCache = internalDataCache;
             _preFundingFM35OrchestrationService = preFundingFM35OrchestrationService;
             _fm35OrchestrationService = fm35OrchestrationService;
         }
