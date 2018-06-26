@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface;
-using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Interface;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model.Interface;
@@ -14,9 +13,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
     {
         private readonly IDataEntityMapper<ILearner> _dataEntityBuilder;
         private readonly IOPAService _opaService;
-        private readonly IFundingOutputService _fundingOutputService;
+        private readonly IOutputService<IFM35FundingOutputs> _fundingOutputService;
 
-        public FundingService(IDataEntityMapper<ILearner> dataEntityBuilder, IOPAService opaService, IFundingOutputService fundingOutputService)
+        public FundingService(IDataEntityMapper<ILearner> dataEntityBuilder, IOPAService opaService, IOutputService<IFM35FundingOutputs> fundingOutputService)
         {
             _dataEntityBuilder = dataEntityBuilder;
             _opaService = opaService;

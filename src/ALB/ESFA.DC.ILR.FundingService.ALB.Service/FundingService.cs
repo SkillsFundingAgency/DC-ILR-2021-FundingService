@@ -1,7 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.Interface;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model.Interface;
@@ -13,13 +12,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
     {
         private readonly IDataEntityMapper<ILearner> _dataEntityBuilder;
         private readonly IOPAService _opaService;
-        private readonly IFundingOutputService _fundingOutputService;
+        private readonly IOutputService<IFundingOutputs> _outputService;
 
-        public FundingService(IDataEntityMapper<ILearner> dataEntityBuilder, IOPAService opaService, IFundingOutputService fundingOutputService)
+        public FundingService(IDataEntityMapper<ILearner> dataEntityBuilder, IOPAService opaService, IOutputService<IFundingOutputs> fundingOutputService)
         {
             _dataEntityBuilder = dataEntityBuilder;
             _opaService = opaService;
-            _fundingOutputService = fundingOutputService;
+            _outputService = fundingOutputService;
         }
 
         public IFundingOutputs ProcessFunding(int ukprn, IList<ILearner> learnerList)
@@ -31,7 +30,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
             var outputDataEntities = ExecuteSessions(inputDataEntities);
 
             // Transform to FundingOutput Model and return
-            return _fundingOutputService.ProcessFundingOutputs(outputDataEntities);
+            return _outputService.ProcessFundingOutputs(outputDataEntities);
         }
 
         protected internal ConcurrentBag<IDataEntity> ExecuteSessions(IEnumerable<IDataEntity> inputDataEntities)

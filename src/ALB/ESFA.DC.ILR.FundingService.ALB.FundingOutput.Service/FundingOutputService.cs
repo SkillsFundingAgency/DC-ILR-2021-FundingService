@@ -6,13 +6,13 @@ using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Attribute;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface.Attribute;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.Interface;
+using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service
 {
-    public class FundingOutputService : IFundingOutputService
+    public class FundingOutputService : IOutputService<IFundingOutputs>
     {
         private static readonly IFormatProvider culture = new CultureInfo("en-GB", true);
 

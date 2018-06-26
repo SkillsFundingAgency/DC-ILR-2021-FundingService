@@ -151,10 +151,6 @@
       <Project>{4ca652f1-49f4-4e80-9113-125489413525}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.Interface\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.Interface.csproj">
-      <Project>{edd71615-9be3-4a54-9e93-1faa4ed3be77}</Project>
-      <Name>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.Interface</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.csproj">
       <Project>{f8a7b96e-3775-409e-9329-e04bffbd2e4f}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service</Name>

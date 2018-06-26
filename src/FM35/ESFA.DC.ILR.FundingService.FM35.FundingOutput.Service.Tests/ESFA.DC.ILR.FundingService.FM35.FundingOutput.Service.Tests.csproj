@@ -133,10 +133,6 @@
       <Project>{7541eb49-ddcd-46b9-8919-80909d0c1a5c}</Project>
       <Name>ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Interface\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Interface.csproj">
-      <Project>{720f5da0-59f8-4833-86ca-c1725250e1ca}</Project>
-      <Name>ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Interface</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.csproj">
       <Project>{5fe52b2f-b11a-41ac-83b1-026bb53c8d82}</Project>
       <Name>ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service</Name>

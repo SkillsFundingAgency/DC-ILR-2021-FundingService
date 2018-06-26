@@ -5,13 +5,13 @@ using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Attribute;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface.Attribute;
-using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Interface;
+using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service
 {
-    public class FundingOutputService : IFundingOutputService
+    public class FundingOutputService : IOutputService<IFM35FundingOutputs>
     {
         private readonly IDateTimeProvider _dateTimeProvider;
 

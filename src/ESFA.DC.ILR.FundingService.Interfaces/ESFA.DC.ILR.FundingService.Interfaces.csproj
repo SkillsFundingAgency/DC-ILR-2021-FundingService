@@ -8,4 +8,8 @@
     <PackageReference Include="ESFA.DC.ILR.1819.Model.Interface" Version="0.1.4-beta0001" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OPA\ESFA.DC.OPA.Model.Interface\ESFA.DC.OPA.Model.Interface.csproj" />
+  </ItemGroup>
+
 </Project>
