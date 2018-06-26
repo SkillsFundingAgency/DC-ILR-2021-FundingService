@@ -76,8 +76,9 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
                 actorTasks.Add(Task.Run(() => actor.Process(albActorModel)));
             }
 
+            _logger.LogDebug($"Starting {actorTasks.Count} Actors for ALB service");
             Task.WaitAll(actorTasks.ToArray());
-            _logger.LogDebug("completed Actors ALB service");
+            _logger.LogDebug("Completed Actors for ALB service");
 
             // get results from actor tasks
             var collatedFundingOuputputLearners = new List<ILearnerAttribute>();
