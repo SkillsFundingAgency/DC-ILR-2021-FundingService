@@ -13,7 +13,8 @@ using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
-using ESFA.DC.ILR.FundingService.Data.Population;
+using ESFA.DC.ILR.FundingService.Data.Population.External;
+using ESFA.DC.ILR.FundingService.Dto.Interfaces;
 using ESFA.DC.ILR.FundingService.Tests.Common;
 using FluentAssertions;
 using Moq;
@@ -436,8 +437,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
 
             largeEmployersMock.Setup(x => x.LEMP_Employers).Returns(new List<LEMP_Employers>().AsMockDbSet());
 
-            var service = NewReferenceDataCachePopulationService(referenceDataCache, larsMock.Object, postcodesMock.Object, organisationsMock.Object, largeEmployersMock.Object);
-            service.Populate(learnAimRefs, postcodes, orgUkprns, lEmpIDs);
+            var service = NewService(referenceDataCache, larsMock.Object, postcodesMock.Object, organisationsMock.Object, largeEmployersMock.Object);
+            service.Populate();
 
             return referenceDataCache;
         }
@@ -649,14 +650,15 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
 
         #endregion
 
-        private ReferenceDataCachePopulationService NewReferenceDataCachePopulationService(
+        private ExternalDataCachePopulationService NewService(
             IExternalDataCache referenceDataCache = null,
             ILARS lars = null,
             IPostcodes postcodes = null,
             IOrganisations organisations = null,
-            ILargeEmployer largeEmployers = null)
+            ILargeEmployer largeEmployers = null,
+            IFundingServiceDto fundingServiceDto = null)
         {
-            return new ReferenceDataCachePopulationService(referenceDataCache, lars, postcodes, organisations, largeEmployers);
+            return new ExternalDataCachePopulationService(referenceDataCache, lars, postcodes, organisations, largeEmployers, fundingServiceDto);
         }
     }
 }

@@ -8,11 +8,11 @@ namespace ESFA.DC.ILR.FundingService.FM35.OrchestrationService
 {
     public class PreFundingFM35PopulationService : IPopulationService
     {
-        private readonly IReferenceDataCachePopulationService _referenceDataCachePopulationService;
+        private readonly IExternalDataCachePopulationService _referenceDataCachePopulationService;
         private readonly IFileDataCachePopulationService _fileDataCachePopulationService;
         private readonly IFundingContext _fundingContext;
 
-        public PreFundingFM35PopulationService(IReferenceDataCachePopulationService referenceDataCachePopulationService, IFundingContext fundingContext, IFileDataCachePopulationService fileDataCachePopulationService)
+        public PreFundingFM35PopulationService(IExternalDataCachePopulationService referenceDataCachePopulationService, IFundingContext fundingContext, IFileDataCachePopulationService fileDataCachePopulationService)
         {
             _referenceDataCachePopulationService = referenceDataCachePopulationService;
             _fileDataCachePopulationService = fileDataCachePopulationService;

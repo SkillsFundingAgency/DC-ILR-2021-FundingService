@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface;
-using ESFA.DC.ILR.FundingService.FM35.OrchestrationService.Interface;
 using ESFA.DC.ILR.FundingService.FM35.TaskProvider.Interface;
+using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Stubs;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
@@ -19,16 +20,18 @@ namespace ESFA.DC.ILR.FundingService.FM35.TaskProvider.Service
     public class TaskProviderService : ITaskProviderService
     {
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
+        private readonly IPopulationService _populationService;
         private readonly IFileDataCache _fileDataCache;
-        private readonly IPreFundingFM35OrchestrationService _preFundingFM35OrchestrationService;
-        private readonly IFM35OrchestrationService _fm35OrchestrationService;
+        private readonly ILearnerPerActorService<ILearner, IList<ILearner>> _learnerPerActorService;
+        private readonly IFundingService<IFM35FundingOutputs> _fundingService;
 
-        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IFileDataCache fileDataCache, IPreFundingFM35OrchestrationService preFundingFM35OrchestrationService, IFM35OrchestrationService fm35OrchestrationService)
+        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IPopulationService populationService, IFileDataCache fileDataCache, ILearnerPerActorService<ILearner, IList<ILearner>> learnerPerActorService, IFundingService<IFM35FundingOutputs> fundingService)
         {
             _keyValuePersistenceService = keyValuePersistenceService;
+            _populationService = populationService;
             _fileDataCache = fileDataCache;
-            _preFundingFM35OrchestrationService = preFundingFM35OrchestrationService;
-            _fm35OrchestrationService = fm35OrchestrationService;
+            _learnerPerActorService = learnerPerActorService;
+            _fundingService = fundingService;
         }
 
         public void ExecuteTasks(Message message)
@@ -36,8 +39,10 @@ namespace ESFA.DC.ILR.FundingService.FM35.TaskProvider.Service
             // Build Persistance Dictionary
             BuildKeyValueDictionary(message);
 
+            _populationService.Populate();
+
             // pre funding
-            var learnersToProcess = _preFundingFM35OrchestrationService.Execute();
+            var learnersToProcess = _learnerPerActorService.Process();
 
             // process funding
             var fundingOutputs = ProcessFunding(learnersToProcess);
@@ -64,7 +69,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.TaskProvider.Service
 
             Parallel.ForEach(learnersList, ll =>
             {
-                fundingOutputsList.Add(_fm35OrchestrationService.Execute(ukprn, ll));
+                fundingOutputsList.Add(_fundingService.ProcessFunding(ukprn, ll));
             });
 
             //foreach (var list in learnersList)

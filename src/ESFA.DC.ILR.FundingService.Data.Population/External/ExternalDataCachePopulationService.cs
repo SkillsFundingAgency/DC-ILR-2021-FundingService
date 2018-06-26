@@ -11,28 +11,38 @@ using ESFA.DC.ILR.FundingService.Data.External.Organisation.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
+using ESFA.DC.ILR.FundingService.Dto.Interfaces;
 
-namespace ESFA.DC.ILR.FundingService.Data.Population
+namespace ESFA.DC.ILR.FundingService.Data.Population.External
 {
-    public class ReferenceDataCachePopulationService : IReferenceDataCachePopulationService
+    public class ExternalDataCachePopulationService : IExternalDataCachePopulationService
     {
         private readonly IExternalDataCache _referenceDataCache;
         private readonly ILARS _LARSContext;
         private readonly IPostcodes _postcodesContext;
         private readonly IOrganisations _organisationContext;
         private readonly ILargeEmployer _largeEmployerContext;
+        private readonly IFundingServiceDto _fundingServiceDto;
 
-        public ReferenceDataCachePopulationService(IExternalDataCache referenceDataCache, ILARS LARSContext, IPostcodes postcodesContext, IOrganisations organisationContext, ILargeEmployer largeEmployerContext)
+        public ExternalDataCachePopulationService(IExternalDataCache referenceDataCache, ILARS LARSContext, IPostcodes postcodesContext, IOrganisations organisationContext, ILargeEmployer largeEmployerContext, IFundingServiceDto fundingServiceDto)
         {
             _referenceDataCache = referenceDataCache;
             _LARSContext = LARSContext;
             _postcodesContext = postcodesContext;
             _organisationContext = organisationContext;
             _largeEmployerContext = largeEmployerContext;
+            _fundingServiceDto = fundingServiceDto;
         }
         
-        public void Populate(IEnumerable<string> learnAimRefs, IEnumerable<string> postcodes, IEnumerable<long> orgUkprns, IEnumerable<int> lEmpIDs)
+        public void Populate()
         {
+            var learners = _fundingServiceDto.Message.Learners;
+            
+            var postcodes = learners.SelectMany(l => l.LearningDeliveries).Select(ld => ld.DelLocPostCode).Distinct().ToList();
+            var learnAimRefs = learners.SelectMany(l => l.LearningDeliveries).Select(ld => ld.LearnAimRef).Distinct().ToList();
+            var employerIds = learners.SelectMany(l => l.LearnerEmploymentStatuses).Select(les => les.EmpIdNullable).Where(e => e.HasValue).Select(e => e.Value).Distinct().ToList();
+            var orgUkprns = new List<long>() { _fundingServiceDto.Message.LearningProviderEntity.UKPRN };
+
             var referenceDataCache = (ExternalDataCache)_referenceDataCache;
 
             referenceDataCache.LARSCurrentVersion = LARSCurrentVersion();
@@ -49,7 +59,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population
             referenceDataCache.OrgVersion = OrgVersion();
             referenceDataCache.OrgFunding = OrgFunding(orgUkprns);
 
-            referenceDataCache.LargeEmployers = LargeEmployers(lEmpIDs);
+            referenceDataCache.LargeEmployers = LargeEmployers(employerIds);
         }
 
         #region LARS

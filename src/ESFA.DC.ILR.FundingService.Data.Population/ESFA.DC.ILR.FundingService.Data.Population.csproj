@@ -72,11 +72,12 @@
     <Compile Include="Interface\IFileDataCachePopulationService.cs" />
     <Compile Include="Interface\IFundingContextPopulationService.cs" />
     <Compile Include="Interface\IPopulationService.cs" />
-    <Compile Include="Interface\IReferenceDataCachePopulationService.cs" />
+    <Compile Include="Interface\IExternalDataCachePopulationService.cs" />
     <Compile Include="Interface\IUKPRNDataRetrievalService.cs" />
     <Compile Include="Interface\IValidLearnersDataRetrievalService.cs" />
+    <Compile Include="PopulationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReferenceDataCachePopulationService.cs" />
+    <Compile Include="External\ExternalDataCachePopulationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
