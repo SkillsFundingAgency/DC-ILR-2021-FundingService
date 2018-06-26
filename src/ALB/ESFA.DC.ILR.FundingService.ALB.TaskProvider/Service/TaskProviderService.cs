@@ -2,9 +2,10 @@
 using System.Linq;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
-using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
 using ESFA.DC.ILR.FundingService.ALB.TaskProvider.Interface;
 using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Data.Population.Interface;
+using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Stubs;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
@@ -18,15 +19,17 @@ namespace ESFA.DC.ILR.FundingService.ALB.TaskProvider.Service
     {
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
         private readonly IFileDataCache _fileDataCache;
-        private readonly IPreFundingALBOrchestrationService _preFundingALBOrchestrationService;
-        private readonly IALBOrchestrationService _albOrchestrationService;
+        private readonly IFundingService<IFundingOutputs> _fundingService;
+        private readonly IPopulationService _populationService;
+        private readonly ILearnerPerActorService<ILearner, IList<ILearner>> _learnerPerActorService;
 
-        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IFileDataCache fileDataCache, IPreFundingALBOrchestrationService preFundingALBOrchestrationService, IALBOrchestrationService albOrchestrationService)
+        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IFileDataCache fileDataCache, IFundingService<IFundingOutputs> fundingService, IPopulationService populationService, ILearnerPerActorService<ILearner, IList<ILearner>> learnerPerActorService)
         {
             _keyValuePersistenceService = keyValuePersistenceService;
             _fileDataCache = fileDataCache;
-            _preFundingALBOrchestrationService = preFundingALBOrchestrationService;
-            _albOrchestrationService = albOrchestrationService;
+            _fundingService = fundingService;
+            _populationService = populationService;
+            _learnerPerActorService = learnerPerActorService;
         }
 
         public void ExecuteTasks(Message message)
@@ -35,7 +38,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.TaskProvider.Service
             BuildKeyValueDictionary(message);
 
             // pre funding
-            var learnersToProcess = _preFundingALBOrchestrationService.Execute();
+            _populationService.Populate();
+            var learnersToProcess = _learnerPerActorService.Process();
 
             // process funding
             var fundingOutputs = ProcessFunding(learnersToProcess);
@@ -64,7 +68,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.TaskProvider.Service
 
             foreach (var list in learnersList)
             {
-                fundingOutputsList.Add(_albOrchestrationService.Execute(_fileDataCache.UKPRN, list));
+                fundingOutputsList.Add(_fundingService.ProcessFunding(_fileDataCache.UKPRN, list));
             }
 
             return fundingOutputsList;

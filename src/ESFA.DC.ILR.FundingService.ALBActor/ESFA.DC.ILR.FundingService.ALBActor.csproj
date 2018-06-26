@@ -203,10 +203,6 @@
       <Project>{2c2e187e-4770-4550-a90d-5b7730294a8c}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface\ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface.csproj">
-      <Project>{E901AC20-3DDA-4B8B-89A5-1C9F05A9BF4F}</Project>
-      <Name>ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALBActor.Interfaces\ESFA.DC.ILR.FundingService.ALBActor.Interfaces.csproj">
       <Project>{14944B1C-9717-4CBB-B756-37502DDB5E0B}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALBActor.Interfaces</Name>
@@ -214,6 +210,10 @@
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Data\ESFA.DC.ILR.FundingService.Data.csproj">
       <Project>{69B93B19-4FD0-4205-AFFA-8B71122A3C65}</Project>
       <Name>ESFA.DC.ILR.FundingService.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Interfaces\ESFA.DC.ILR.FundingService.Interfaces.csproj">
+      <Project>{81FA550D-DD5E-4F5B-AC66-1DCA51824E9C}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Modules\ESFA.DC.ILR.FundingService.Modules.csproj">
       <Project>{79748ecd-e5d4-4d1e-be10-32588b2f625c}</Project>

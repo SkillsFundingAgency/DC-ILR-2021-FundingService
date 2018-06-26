@@ -8,12 +8,14 @@ using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Attribute;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface.Attribute;
-using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
 using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Data.Population.Interface;
+using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers.Interfaces;
 using ESFA.DC.ILR.FundingService.Stateless.Models;
+using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.JobContext.Interface;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
@@ -24,23 +26,26 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
 {
     public class ALBOrchestrationSFTask : IALBOrchestrationSFTask
     {
-        private readonly IPreFundingALBOrchestrationService _preFundingALBOrchestrationService;
         private readonly IFundingOutputPersistenceService<IFundingOutputs> _fundingOutputPersistenceService;
         private readonly IExternalDataCache _referenceDataCache;
         private readonly IJsonSerializationService _jsonSerializationService;
         private readonly ILogger _logger;
+        private readonly ILearnerPerActorService<ILearner, IList<ILearner>> _learnerPerActorService;
+        private readonly IPopulationService _populationService;
 
         public ALBOrchestrationSFTask(
-            IPreFundingALBOrchestrationService preFundingALBOrchestrationService,
             IFundingOutputPersistenceService<IFundingOutputs> fundingOutputPersistenceService,
             IExternalDataCache referenceDataCache,
             IJsonSerializationService jsonSerializationService,
+            ILearnerPerActorService<ILearner, IList<ILearner>> learnerPerActorService,
+            IPopulationService populationService,
             ILogger logger)
         {
-            _preFundingALBOrchestrationService = preFundingALBOrchestrationService;
             _fundingOutputPersistenceService = fundingOutputPersistenceService;
             _referenceDataCache = referenceDataCache;
             _jsonSerializationService = jsonSerializationService;
+            _populationService = populationService;
+            _learnerPerActorService = learnerPerActorService;
             _logger = logger;
         }
 
@@ -48,7 +53,9 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
         {
             var stopWatch = new Stopwatch();
 
-            var albValidLearnersShards = _preFundingALBOrchestrationService.Execute();
+            _populationService.Populate();
+
+            var albValidLearnersShards = _learnerPerActorService.Process();
             _logger.LogDebug("completed prefunding ALB service");
 
             // create actors for processing

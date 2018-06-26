@@ -1,6 +1,8 @@
 ﻿using System.IO;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 
@@ -11,7 +13,6 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
     using System.Text;
     using System.Threading.Tasks;
     using Autofac;
-    using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
     using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
     using ESFA.DC.ILR.FundingService.Stateless.Models;
     using ESFA.DC.Logging;
@@ -65,12 +66,12 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                 try
                 {
                     logger.LogDebug("ALB Actor started processing");
-                    var albActorOrchestrationService = childLifetimeScope.Resolve<IALBOrchestrationService>();
+                    var fundingService = childLifetimeScope.Resolve<IFundingService<IFundingOutputs>>();
                     IList<ILearner> validLearners = jsonSerializationService.Deserialize<List<MessageLearner>>(
                         new MemoryStream(albActorModel.AlbValidLearners)).ToArray();
 
-                    var results = albActorOrchestrationService.Execute(
-                        albActorModel.Ukprn, validLearners);
+                    var results = fundingService.ProcessFunding(albActorModel.Ukprn, validLearners);
+
                     logger.LogDebug("ALB Actor completed processing");
                     return Task.FromResult(jsonSerializationService.Serialize(results));
                 }
