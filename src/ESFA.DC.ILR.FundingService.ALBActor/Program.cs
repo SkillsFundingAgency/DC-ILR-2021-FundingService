@@ -2,6 +2,9 @@
 using System.Threading;
 using Autofac;
 using Autofac.Integration.ServiceFabric;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
+using ESFA.DC.ILR.FundingService.ALB.Modules;
+using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Modules;
 using ESFA.DC.ILR.FundingService.Stateless.Models;
 using ESFA.DC.Serialization.Interfaces;
@@ -29,7 +32,8 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
 
                 using (var container = builder.Build())
                 {
-                    var ss = container.Resolve<IALBOrchestrationService>();
+                    // Not sure why this is being resolved here, to review
+                    var ss = container.Resolve<IFundingService<IFundingOutputs>>();
                     Thread.Sleep(Timeout.Infinite);
                 }
             }
