@@ -31,7 +31,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Modules
             builder.RegisterType<OPAService>().As<IOPAService>().InstancePerLifetimeScope();
             builder.RegisterType<AttributeBuilder>().As<IAttributeBuilder<IAttributeData>>().InstancePerLifetimeScope();
             builder.RegisterType<DataEntityMapper>().As<IDataEntityMapper<ILearner>>().InstancePerLifetimeScope();
-            builder.RegisterType<ReferenceDataCache>().As<IReferenceDataCache>().InstancePerLifetimeScope();
+            builder.RegisterType<ExternalDataCache>().As<IExternalDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<FundingOutputService>().As<IFundingOutputService>().InstancePerLifetimeScope();
             builder.RegisterType<Service.FundingService>().As<IFundingService<IFundingOutputs>>().InstancePerLifetimeScope();
             builder.RegisterType<ALBOrchestrationService>().As<IALBOrchestrationService>().InstancePerLifetimeScope();

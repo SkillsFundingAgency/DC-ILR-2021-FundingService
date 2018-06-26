@@ -16,13 +16,13 @@ namespace ESFA.DC.ILR.FundingService.Data.Population
 {
     public class ReferenceDataCachePopulationService : IReferenceDataCachePopulationService
     {
-        private readonly IReferenceDataCache _referenceDataCache;
+        private readonly IExternalDataCache _referenceDataCache;
         private readonly ILARS _LARSContext;
         private readonly IPostcodes _postcodesContext;
         private readonly IOrganisations _organisationContext;
         private readonly ILargeEmployer _largeEmployerContext;
 
-        public ReferenceDataCachePopulationService(IReferenceDataCache referenceDataCache, ILARS LARSContext, IPostcodes postcodesContext, IOrganisations organisationContext, ILargeEmployer largeEmployerContext)
+        public ReferenceDataCachePopulationService(IExternalDataCache referenceDataCache, ILARS LARSContext, IPostcodes postcodesContext, IOrganisations organisationContext, ILargeEmployer largeEmployerContext)
         {
             _referenceDataCache = referenceDataCache;
             _LARSContext = LARSContext;
@@ -33,7 +33,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population
         
         public void Populate(IEnumerable<string> learnAimRefs, IEnumerable<string> postcodes, IEnumerable<long> orgUkprns, IEnumerable<int> lEmpIDs)
         {
-            var referenceDataCache = (ReferenceDataCache)_referenceDataCache;
+            var referenceDataCache = (ExternalDataCache)_referenceDataCache;
 
             referenceDataCache.LARSCurrentVersion = LARSCurrentVersion();
             referenceDataCache.LARSAnnualValue = LARSAnnualValue(learnAimRefs);

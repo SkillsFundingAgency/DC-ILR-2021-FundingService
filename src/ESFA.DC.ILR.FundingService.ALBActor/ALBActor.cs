@@ -49,12 +49,12 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
         public Task<string> Process(ALBActorModel albActorModel)
         {
             var jsonSerializationService = _parentLifetimeScope.Resolve<ISerializationService>();
-            var referenceDataCache = jsonSerializationService.Deserialize<ReferenceDataCache>(
+            var referenceDataCache = jsonSerializationService.Deserialize<ExternalDataCache>(
                 Encoding.UTF8.GetString(albActorModel.ReferenceDataCache));
 
             using (var childLifetimeScope = _parentLifetimeScope.BeginLifetimeScope(c =>
             {
-                c.RegisterInstance(referenceDataCache).As<IReferenceDataCache>();
+                c.RegisterInstance(referenceDataCache).As<IExternalDataCache>();
             }))
             {
                 var executionContext = (ExecutionContext)childLifetimeScope.Resolve<IExecutionContext>();

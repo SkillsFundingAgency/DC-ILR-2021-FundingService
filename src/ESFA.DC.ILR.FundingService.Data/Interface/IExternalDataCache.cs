@@ -6,7 +6,7 @@ using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 
 namespace ESFA.DC.ILR.FundingService.Data.Interface
 {
-    public interface IReferenceDataCache
+    public interface IExternalDataCache
     {
         IDictionary<string, IEnumerable<LARSFunding>> LARSFunding { get; }
 

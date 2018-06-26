@@ -7,9 +7,9 @@ namespace ESFA.DC.ILR.FundingService.Data.External.LARS
 {
     public class LARSReferenceDataService : ILARSReferenceDataService
     {
-        private readonly IReferenceDataCache _referenceDataCache;
+        private readonly IExternalDataCache _referenceDataCache;
 
-        public LARSReferenceDataService(IReferenceDataCache referenceDataCache)
+        public LARSReferenceDataService(IExternalDataCache referenceDataCache)
         {
             _referenceDataCache = referenceDataCache;
         }

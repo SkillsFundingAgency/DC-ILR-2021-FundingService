@@ -22,11 +22,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
         private const string LearningDeliveryFAMTypeADL = "ADL";
         private const string LearningDeliveryFAMTypeRES = "RES";
 
-        private readonly IReferenceDataCache _referenceDataCache;
+        private readonly IExternalDataCache _referenceDataCache;
         private readonly IFileDataCache _fileDataCache;
         private readonly IAttributeBuilder<IAttributeData> _attributeBuilder;
 
-        public DataEntityMapper(IReferenceDataCache referenceDataCache, IFileDataCache fileDataCache, IAttributeBuilder<IAttributeData> attributeBuilder)
+        public DataEntityMapper(IExternalDataCache referenceDataCache, IFileDataCache fileDataCache, IAttributeBuilder<IAttributeData> attributeBuilder)
         {
             _referenceDataCache = referenceDataCache;
             _fileDataCache = fileDataCache;

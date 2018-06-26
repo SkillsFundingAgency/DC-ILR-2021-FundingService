@@ -7,9 +7,9 @@ namespace ESFA.DC.ILR.FundingService.Data.External.LargeEmployer
 {
     public class LargeEmployersReferenceDataService : ILargeEmployersReferenceDataService
     {
-        private readonly IReferenceDataCache _referenceDataCache;
+        private readonly IExternalDataCache _referenceDataCache;
 
-        public LargeEmployersReferenceDataService(IReferenceDataCache referenceDataCache)
+        public LargeEmployersReferenceDataService(IExternalDataCache referenceDataCache)
         {
             _referenceDataCache = referenceDataCache;
         }

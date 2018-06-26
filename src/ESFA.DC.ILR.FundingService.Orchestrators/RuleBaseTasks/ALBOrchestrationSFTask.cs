@@ -26,14 +26,14 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
     {
         private readonly IPreFundingALBOrchestrationService _preFundingALBOrchestrationService;
         private readonly IFundingOutputPersistenceService<IFundingOutputs> _fundingOutputPersistenceService;
-        private readonly IReferenceDataCache _referenceDataCache;
+        private readonly IExternalDataCache _referenceDataCache;
         private readonly IJsonSerializationService _jsonSerializationService;
         private readonly ILogger _logger;
 
         public ALBOrchestrationSFTask(
             IPreFundingALBOrchestrationService preFundingALBOrchestrationService,
             IFundingOutputPersistenceService<IFundingOutputs> fundingOutputPersistenceService,
-            IReferenceDataCache referenceDataCache,
+            IExternalDataCache referenceDataCache,
             IJsonSerializationService jsonSerializationService,
             ILogger logger)
         {

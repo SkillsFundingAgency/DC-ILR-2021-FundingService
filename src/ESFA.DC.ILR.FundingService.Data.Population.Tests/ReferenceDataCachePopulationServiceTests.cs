@@ -406,7 +406,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
         
         #region Test Helpers
 
-        private IReferenceDataCache MockDBOutput(IEnumerable<string> learnAimRefs = null, IEnumerable<string> postcodes = null, IEnumerable<long> orgUkprns = null, IEnumerable<int> lEmpIDs = null)
+        private IExternalDataCache MockDBOutput(IEnumerable<string> learnAimRefs = null, IEnumerable<string> postcodes = null, IEnumerable<long> orgUkprns = null, IEnumerable<int> lEmpIDs = null)
         {
             var larsMock = new Mock<ILARS>();
             var postcodesMock = new Mock<IPostcodes>();
@@ -418,7 +418,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
             orgUkprns = orgUkprns ?? new List<long>();
             lEmpIDs = lEmpIDs ?? new List<int>();
             
-            IReferenceDataCache referenceDataCache = new ReferenceDataCache();
+            IExternalDataCache referenceDataCache = new ExternalDataCache();
 
             larsMock.Setup(x => x.LARS_Version).Returns(MockLARSVersionArray().AsMockDbSet());
             larsMock.Setup(x => x.LARS_LearningDelivery).Returns(MockLARSLearningDeliveryArray().AsMockDbSet());
@@ -650,7 +650,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
         #endregion
 
         private ReferenceDataCachePopulationService NewReferenceDataCachePopulationService(
-            IReferenceDataCache referenceDataCache = null,
+            IExternalDataCache referenceDataCache = null,
             ILARS lars = null,
             IPostcodes postcodes = null,
             IOrganisations organisations = null,

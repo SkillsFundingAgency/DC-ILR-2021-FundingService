@@ -15,7 +15,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         {
             var version = "version";
 
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.OrgVersion).Returns(version);
 
@@ -29,7 +29,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
 
             var orgFundings = new List<OrgFunding>();
 
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.OrgFunding)
                 .Returns(new Dictionary<long, IEnumerable<OrgFunding>>
@@ -43,7 +43,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         [Fact]
         public void OrgFundingForUKPRN_NotExists()
         {
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.OrgFunding).Returns(new Dictionary<long, IEnumerable<OrgFunding>>
             {
@@ -53,7 +53,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             NewService(referenceDataCacheMock.Object).OrganisationFundingForUKPRN(5678).Should().BeNull();
         }
         
-        private OrganisationReferenceDataService NewService(IReferenceDataCache referenceDataCache = null)
+        private OrganisationReferenceDataService NewService(IExternalDataCache referenceDataCache = null)
         {
             return new OrganisationReferenceDataService(referenceDataCache);
         }

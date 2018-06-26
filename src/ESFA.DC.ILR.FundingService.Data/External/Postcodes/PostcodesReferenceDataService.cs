@@ -7,9 +7,9 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Postcodes
 {
     public class PostcodesReferenceDataService : IPostcodesReferenceDataService
     {
-        private readonly IReferenceDataCache _referenceDataCache;
+        private readonly IExternalDataCache _referenceDataCache;
 
-        public PostcodesReferenceDataService(IReferenceDataCache referenceDataCache)
+        public PostcodesReferenceDataService(IExternalDataCache referenceDataCache)
         {
             _referenceDataCache = referenceDataCache;
         }

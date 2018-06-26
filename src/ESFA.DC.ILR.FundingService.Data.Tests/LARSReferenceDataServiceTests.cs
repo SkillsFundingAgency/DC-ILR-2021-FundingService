@@ -15,7 +15,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         {
             var currentVersion = "version";
 
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.LARSCurrentVersion).Returns(currentVersion);
 
@@ -28,7 +28,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             var learnAimRef = "learnAimRef";
             var learningDelivery = new LARSLearningDelivery();
 
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.LARSLearningDelivery)
                 .Returns(
@@ -43,7 +43,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         [Fact]
         public void LARSLearningDelivery_NotExist()
         {
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.LARSLearningDelivery)
                 .Returns(
@@ -61,7 +61,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             var learnAimRef = "learnAimRef";
             var larsFundings = new List<LARSFunding>();
 
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.LARSFunding)
                 .Returns(new Dictionary<string, IEnumerable<LARSFunding>>()
@@ -75,7 +75,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         [Fact]
         public void LARSFunding_NotExists()
         {
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.LARSFunding)
                 .Returns(new Dictionary<string, IEnumerable<LARSFunding>>()
@@ -92,7 +92,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             var learnAimRef = "learnAimRef";
             var larsAnnualValues = new List<LARSAnnualValue>();
 
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.LARSAnnualValue)
                 .Returns(new Dictionary<string, IEnumerable<LARSAnnualValue>>()
@@ -106,7 +106,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         [Fact]
         public void LARSAnnualValues_NotExists()
         {
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.LARSAnnualValue)
                 .Returns(new Dictionary<string, IEnumerable<LARSAnnualValue>>()
@@ -123,7 +123,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             var learnAimRef = "learnAimRef";
             var learningDeliveryCategories = new List<LARSLearningDeliveryCategory>();
 
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.LARSLearningDeliveryCatgeory)
                 .Returns(new Dictionary<string, IEnumerable<LARSLearningDeliveryCategory>>()
@@ -137,7 +137,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         [Fact]
         public void LARSLearningDeliveryCategory_NotExists()
         {
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.LARSLearningDeliveryCatgeory)
                 .Returns(new Dictionary<string, IEnumerable<LARSLearningDeliveryCategory>>()
@@ -154,7 +154,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             var learnAimRef = "learnAimRef";
             var frameworkAims = new List<LARSFrameworkAims>();
 
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.LARSFrameworkAims).Returns(new Dictionary<string, IEnumerable<LARSFrameworkAims>>()
             {
@@ -167,7 +167,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         [Fact]
         public void LARSFrameworkAims_Correct()
         {
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.LARSFrameworkAims).Returns(new Dictionary<string, IEnumerable<LARSFrameworkAims>>()
             {
@@ -177,7 +177,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             NewService(referenceDataCacheMock.Object).LARSFFrameworkAimsForLearnAimRef("notLearnAimRef").Should().BeNull();
         }
 
-        private LARSReferenceDataService NewService(IReferenceDataCache referenceDataCache = null)
+        private LARSReferenceDataService NewService(IExternalDataCache referenceDataCache = null)
         {
             return new LARSReferenceDataService(referenceDataCache);
         }

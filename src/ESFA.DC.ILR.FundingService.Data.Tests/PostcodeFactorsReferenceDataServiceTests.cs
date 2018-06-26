@@ -15,7 +15,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         {
             var postcodeFactorsVersion = "version";
 
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeCurrentVersion).Returns(postcodeFactorsVersion);
 
@@ -28,7 +28,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             var postcode = "postcode";
             var sfaAreaCosts = new List<SfaAreaCost>();
 
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.SfaAreaCost)
                 .Returns(new Dictionary<string, IEnumerable<SfaAreaCost>>()
@@ -42,7 +42,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         [Fact]
         public void SFA_AreaCost_NotExists()
         {
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.SfaAreaCost)
                 .Returns(new Dictionary<string, IEnumerable<SfaAreaCost>>()
@@ -59,7 +59,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             var postcode = "postcode";
             var sfaDisadvantages = new List<SfaDisadvantage>();
 
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.SfaDisadvantage)
                 .Returns(new Dictionary<string, IEnumerable<SfaDisadvantage>>()
@@ -73,7 +73,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         [Fact]
         public void SfaDisadvantageCost_NotExists()
         {
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.SfaDisadvantage)
                 .Returns(new Dictionary<string, IEnumerable<SfaDisadvantage>>()
@@ -84,7 +84,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             NewService(referenceDataCacheMock.Object).SFADisadvantagesForPostcode("notPostcode").Should().BeNull();
         }
 
-        private PostcodesReferenceDataService NewService(IReferenceDataCache referenceDataCache = null)
+        private PostcodesReferenceDataService NewService(IExternalDataCache referenceDataCache = null)
         {
             return new PostcodesReferenceDataService(referenceDataCache);
         }

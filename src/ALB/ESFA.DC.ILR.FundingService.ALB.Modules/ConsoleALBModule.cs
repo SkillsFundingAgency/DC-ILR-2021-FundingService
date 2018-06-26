@@ -55,7 +55,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Modules
             builder.RegisterType<Service.FundingService>().As<IFundingService<IFundingOutputs>>().InstancePerLifetimeScope();
             builder.RegisterType<LearnerPerActorServiceStub<ILearner, IList<ILearner>>>().As<ILearnerPerActorService<ILearner, IList<ILearner>>>().InstancePerLifetimeScope();
             builder.RegisterType<ALBOrchestrationService>().As<IALBOrchestrationService>().InstancePerLifetimeScope();
-            builder.RegisterType<ReferenceDataCache>().As<IReferenceDataCache>().InstancePerLifetimeScope();
+            builder.RegisterType<ExternalDataCache>().As<IExternalDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<ReferenceDataCachePopulationService>().As<IReferenceDataCachePopulationService>().InstancePerLifetimeScope();
             builder.RegisterType<PreFundingALBOrchestrationService>().As<IPreFundingALBOrchestrationService>().InstancePerLifetimeScope();
             builder.RegisterType<PreFundingALBPopulationService>().As<IPopulationService>().InstancePerLifetimeScope();

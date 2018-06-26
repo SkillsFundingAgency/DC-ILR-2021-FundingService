@@ -16,7 +16,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             var ern = 123;
             var largeEmployers = new List<LargeEmployers>();
 
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.LargeEmployers).Returns(new Dictionary<int, IEnumerable<LargeEmployers>>
             {
@@ -29,7 +29,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         [Fact]
         public void LargeEmployers_NotExists()
         {
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.LargeEmployers).Returns(new Dictionary<int, IEnumerable<LargeEmployers>>
             {
@@ -39,7 +39,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             NewService(referenceDataCacheMock.Object).LargeEmployersforEmpID(2).Should().BeNull();
         }
         
-        private LargeEmployersReferenceDataService NewService(IReferenceDataCache referenceDataCache = null)
+        private LargeEmployersReferenceDataService NewService(IExternalDataCache referenceDataCache = null)
         {
             return new LargeEmployersReferenceDataService(referenceDataCache);
         }
