@@ -4,7 +4,7 @@ using ESFA.DC.OPA.Model.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface
 {
-    public interface IAttributeBuilder<T>
+    public interface IALBAttributeBuilder
     {
         IDictionary<string, IAttributeData> BuildGlobalAttributes(int ukprn, string larsVersion, string postcodeAreaCostVersion);
 

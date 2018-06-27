@@ -10,6 +10,7 @@ using ESFA.DC.ILR.FundingService.Data.External.Organisation.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.FM35.Service.Interface.Builders;
 using ESFA.DC.ILR.FundingService.FM35.Service.Models;
 using ESFA.DC.ILR.Model.Interface;
@@ -19,7 +20,7 @@ using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
 {
-    public class DataEntityMapper : IDataEntityMapper<ILearner>
+    public class DataEntityMapper : IDataEntityMapper<ILearner, IFM35FundingOutputs>
     {
         private const string Entityglobal = "global";
         private const string EntityOrgFunding = "OrgFunding";
@@ -60,7 +61,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
             _attributeBuilder = attributeBuilder;
         }
 
-        public IEnumerable<IDataEntity> Map(IEnumerable<ILearner> learners)
+        public IEnumerable<IDataEntity> MapTo(IEnumerable<ILearner> learners)
         {
             var globalEntities = learners.Select(learner =>
             {
@@ -87,6 +88,11 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
             });
 
             return globalEntities;
+        }
+
+        public IFM35FundingOutputs MapFrom(IEnumerable<IDataEntity> inputModels)
+        {
+            throw new NotImplementedException();
         }
 
         protected internal IDataEntity GlobalEntity(int ukprn)

@@ -11,13 +11,13 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
 {
     public class FundingService : IFundingService<IFM35FundingOutputs>
     {
-        private readonly IDataEntityMapper<ILearner> _dataEntityBuilder;
+        private readonly IDataEntityMapper<ILearner, IFM35FundingOutputs> _dataEntityMapper;
         private readonly IOPAService _opaService;
         private readonly IOutputService<IFM35FundingOutputs> _fundingOutputService;
 
-        public FundingService(IDataEntityMapper<ILearner> dataEntityBuilder, IOPAService opaService, IOutputService<IFM35FundingOutputs> fundingOutputService)
+        public FundingService(IDataEntityMapper<ILearner, IFM35FundingOutputs> dataEntityMapper, IOPAService opaService, IOutputService<IFM35FundingOutputs> fundingOutputService)
         {
-            _dataEntityBuilder = dataEntityBuilder;
+            _dataEntityMapper = dataEntityMapper;
             _opaService = opaService;
             _fundingOutputService = fundingOutputService;
         }
@@ -25,7 +25,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
         public IFM35FundingOutputs ProcessFunding(int ukprn, IList<ILearner> learnerList)
         {
             // Generate Funding Inputs
-            var inputDataEntities = _dataEntityBuilder.Map(learnerList).AsParallel().ToList();
+            var inputDataEntities = _dataEntityMapper.MapTo(learnerList).AsParallel().ToList();
 
             // Execute OPA
             var outputDataEntities = ExecuteSessions(inputDataEntities);

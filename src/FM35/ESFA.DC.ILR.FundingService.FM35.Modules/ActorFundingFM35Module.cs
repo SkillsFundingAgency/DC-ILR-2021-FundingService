@@ -36,7 +36,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Modules
             builder.RegisterType<RulebaseProviderFactory>().As<IRulebaseProviderFactory>().InstancePerLifetimeScope();
             builder.RegisterType<OPAService>().As<IOPAService>().InstancePerLifetimeScope();
             builder.RegisterType<AttributeBuilder>().As<IAttributeBuilder<IAttributeData>>().InstancePerLifetimeScope();
-            builder.RegisterType<DataEntityMapper>().As<IDataEntityMapper<ILearner>>().InstancePerLifetimeScope();
+            builder.RegisterType<DataEntityMapper>().As<IDataEntityMapper<ILearner, IFM35FundingOutputs>>().InstancePerLifetimeScope();
             builder.RegisterType<LargeEmployersReferenceDataService>().As<ILargeEmployersReferenceDataService>().InstancePerLifetimeScope();
             builder.RegisterType<LARSReferenceDataService>().As<ILARSReferenceDataService>().InstancePerLifetimeScope();
             builder.RegisterType<OrganisationReferenceDataService>().As<IOrganisationReferenceDataService>().InstancePerLifetimeScope();

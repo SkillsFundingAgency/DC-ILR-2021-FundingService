@@ -47,8 +47,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Modules
             builder.RegisterType<OPADataEntityBuilder>().As<IOPADataEntityBuilder>().WithParameter("yearStartDate", new DateTime(2017, 8, 1)).InstancePerLifetimeScope();
             builder.RegisterType<RulebaseProviderFactory>().As<IRulebaseProviderFactory>().InstancePerLifetimeScope();
             builder.RegisterType<OPAService>().As<IOPAService>().InstancePerLifetimeScope();
-            builder.RegisterType<AttributeBuilder>().As<IAttributeBuilder<IAttributeData>>().InstancePerLifetimeScope();
-            builder.RegisterType<DataEntityMapper>().As<IDataEntityMapper<ILearner>>().InstancePerLifetimeScope();
+            builder.RegisterType<ALBAttributeBuilder>().As<IALBAttributeBuilder>().InstancePerLifetimeScope();
+            builder.RegisterType<DataEntityMapper>().As<IDataEntityMapper<ILearner, IFundingOutputs>>().InstancePerLifetimeScope();
             builder.RegisterType<FundingOutputService>().As<IOutputService<IFundingOutputs>>().InstancePerLifetimeScope();
             builder.RegisterType<Service.FundingService>().As<IFundingService<IFundingOutputs>>().InstancePerLifetimeScope();
             builder.RegisterType<LearnerPerActorServiceStub<ILearner, IList<ILearner>>>().As<ILearnerPerActorService<ILearner, IList<ILearner>>>().InstancePerLifetimeScope();

@@ -104,8 +104,9 @@
     <Compile Include="Context\ValidLearnersDataRetrievalServiceTests.cs" />
     <Compile Include="File\FundingContextPopulationServiceTests.cs" />
     <Compile Include="File\UKPRNDataRetrievalServiceTests.cs" />
+    <Compile Include="PopulationServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReferenceDataCachePopulationServiceTests.cs" />
+    <Compile Include="ExternalDataCachePopulationServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

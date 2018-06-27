@@ -32,8 +32,12 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALBActor\ESFA.DC.ILR.FundingService.ALBActor.csproj" />
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Stateless\ESFA.DC.ILR.FundingService.Stateless.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALBActor\ESFA.DC.ILR.FundingService.ALBActor.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Stateless\ESFA.DC.ILR.FundingService.Stateless.csproj">
+      <Private>true</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
   <PropertyGroup>

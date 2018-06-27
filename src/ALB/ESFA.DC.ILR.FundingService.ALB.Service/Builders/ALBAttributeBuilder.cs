@@ -6,10 +6,8 @@ using ESFA.DC.OPA.Model.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
 {
-    public class AttributeBuilder : IAttributeBuilder<IAttributeData>
+    public class ALBAttributeBuilder : IALBAttributeBuilder
     {
-        #region Constants
-
         // Global
         private const string LARSVersion = "LARSVersion";
         private const string UKPRN = "UKPRN";
@@ -51,8 +49,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
         private const string LARSFundEffectiveTo = "LARSFundEffectiveTo";
         private const string LARSFundWeightedRate = "LARSFundWeightedRate";
         private const string LARSFundWeightingFactor = "LARSFundWeightingFactor";
-
-        #endregion
 
         public IDictionary<string, IAttributeData> BuildGlobalAttributes(int ukprn, string larsVersion, string postcodeAreaCostVersion)
         {

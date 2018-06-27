@@ -6,6 +6,7 @@ using ESFA.DC.ILR.FundingService.ALB.Service.Builders;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Service.Rulebase;
 using ESFA.DC.ILR.FundingService.Data.External;
+using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model.Interface;
@@ -26,9 +27,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.Modules
             builder.RegisterType<OPADataEntityBuilder>().As<IOPADataEntityBuilder>().WithParameter("yearStartDate", new DateTime(2017, 8, 1)).InstancePerLifetimeScope();
             builder.RegisterType<RulebaseProviderFactory>().As<IRulebaseProviderFactory>().InstancePerLifetimeScope();
             builder.RegisterType<OPAService>().As<IOPAService>().InstancePerLifetimeScope();
-            builder.RegisterType<AttributeBuilder>().As<IAttributeBuilder<IAttributeData>>().InstancePerLifetimeScope();
-            builder.RegisterType<DataEntityMapper>().As<IDataEntityMapper<ILearner>>().InstancePerLifetimeScope();
+            builder.RegisterType<ALBAttributeBuilder>().As<IALBAttributeBuilder>().InstancePerLifetimeScope();
+            builder.RegisterType<DataEntityMapper>().As<IDataEntityMapper<ILearner, IFundingOutputs>>().InstancePerLifetimeScope();
             builder.RegisterType<ExternalDataCache>().As<IExternalDataCache>().InstancePerLifetimeScope();
+            builder.RegisterType<FileDataCache>().As<IFileDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<FundingOutputService>().As<IOutputService<IFundingOutputs>>().InstancePerLifetimeScope();
             builder.RegisterType<Service.FundingService>().As<IFundingService<IFundingOutputs>>().InstancePerLifetimeScope();
         }

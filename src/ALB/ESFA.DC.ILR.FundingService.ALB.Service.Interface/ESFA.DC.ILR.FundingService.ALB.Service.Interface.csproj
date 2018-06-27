@@ -23,4 +23,8 @@
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Builders\" />
+  </ItemGroup>
+
 </Project>

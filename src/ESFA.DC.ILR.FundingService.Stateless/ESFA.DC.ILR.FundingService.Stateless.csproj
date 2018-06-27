@@ -380,7 +380,6 @@
     <Compile Include="Handlers\IMessageHandler.cs" />
     <Compile Include="Handlers\MessageHandler.cs" />
     <Compile Include="Mappers\JobContextMessageMapper.cs" />
-    <Compile Include="Orchestrators\FundingCalcOrchestrationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stateless.cs" />
     <Compile Include="Program.cs" />
@@ -434,9 +433,7 @@
       <Name>ESFA.DC.ILR.FundingService.Stateless.Models</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>powershell -NoProfile -ExecutionPolicy RemoteSigned -file $(ProjectDir)Scripts\Settings.ps1 $(ProjectDir)</PreBuildEvent>

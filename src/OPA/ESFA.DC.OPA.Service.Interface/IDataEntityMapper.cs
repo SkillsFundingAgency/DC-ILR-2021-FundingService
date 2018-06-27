@@ -3,8 +3,10 @@ using ESFA.DC.OPA.Model.Interface;
 
 namespace ESFA.DC.OPA.Service.Interface
 {
-    public interface IDataEntityMapper<T>
+    public interface IDataEntityMapper<T, U>
     {
-        IEnumerable<IDataEntity> Map(IEnumerable<T> inputModels);
+        IEnumerable<IDataEntity> MapTo(IEnumerable<T> inputModels);
+
+        U MapFrom(IEnumerable<IDataEntity> inputModels);
     }
 }

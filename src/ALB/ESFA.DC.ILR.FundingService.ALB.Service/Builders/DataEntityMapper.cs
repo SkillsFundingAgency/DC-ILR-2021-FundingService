@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
@@ -11,9 +12,9 @@ using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
 {
-    public class DataEntityMapper : IDataEntityMapper<ILearner>
+    public class DataEntityMapper : IDataEntityMapper<ILearner, IFundingOutputs>
     {
-        private const string Entityglobal = "global";
+        private const string EntityGlobal = "global";
         private const string EntityLearner = "Learner";
         private const string EntityLearningDelivery = "LearningDelivery";
         private const string EntityLearningDeliveryFAM = "LearningDeliveryFAM";
@@ -24,16 +25,16 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
 
         private readonly IExternalDataCache _referenceDataCache;
         private readonly IFileDataCache _fileDataCache;
-        private readonly IAttributeBuilder<IAttributeData> _attributeBuilder;
+        private readonly IALBAttributeBuilder _attributeBuilder;
 
-        public DataEntityMapper(IExternalDataCache referenceDataCache, IFileDataCache fileDataCache, IAttributeBuilder<IAttributeData> attributeBuilder)
+        public DataEntityMapper(IExternalDataCache referenceDataCache, IFileDataCache fileDataCache, IALBAttributeBuilder attributeBuilder)
         {
             _referenceDataCache = referenceDataCache;
             _fileDataCache = fileDataCache;
             _attributeBuilder = attributeBuilder;
         }
 
-        public IEnumerable<IDataEntity> Map(IEnumerable<ILearner> learners)
+        public IEnumerable<IDataEntity> MapTo(IEnumerable<ILearner> learners)
         {
             var globalEntities = learners.Select(learner =>
             {
@@ -87,11 +88,16 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
             return globalEntities;
         }
 
+        public IFundingOutputs MapFrom(IEnumerable<IDataEntity> inputModels)
+        {
+            throw new System.NotImplementedException();
+        }
+
         #region Entity Builders
 
         protected internal IDataEntity GlobalEntity(int ukprn)
         {
-            IDataEntity globalDataEntity = new DataEntity(Entityglobal)
+            IDataEntity globalDataEntity = new DataEntity(EntityGlobal)
             {
                 Attributes =
                     _attributeBuilder.BuildGlobalAttributes(ukprn, _referenceDataCache.LARSCurrentVersion, _referenceDataCache.PostcodeCurrentVersion),
@@ -182,8 +188,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
 
         #endregion
 
-        #region Helpers
-
         private static string GetLDFAM(ILearningDelivery learningDelivery, string famType)
         {
             string famCodeValue = learningDelivery.LearningDeliveryFAMs?.Where(w => w.LearnDelFAMType.Contains(famType))
@@ -191,8 +195,5 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
 
             return famCodeValue;
         }
-
-        #endregion
-
     }
 }
