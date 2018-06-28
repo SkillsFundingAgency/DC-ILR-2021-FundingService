@@ -50,24 +50,35 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
 
         public Task<string> Process(ALBActorModel albActorModel)
         {
-            var jsonSerializationService = _parentLifetimeScope.Resolve<ISerializationService>();
-            var referenceDataCache = jsonSerializationService.Deserialize<ReferenceDataCache>(
-                Encoding.UTF8.GetString(albActorModel.ReferenceDataCache));
+            ISerializationService jsonSerializationService = null;
+            ReferenceDataCache referenceDataCache = null;
+            using (var childLifetimeScope = _parentLifetimeScope.BeginLifetimeScope(c =>
+            {
+            }))
+            {
+                var logger = childLifetimeScope.Resolve<ILogger>();
+                logger.LogDebug("ALB Actor started processing");
+                logger.LogDebug("Getting ALB ref data cache");
+                jsonSerializationService = _parentLifetimeScope.Resolve<ISerializationService>();
+                referenceDataCache = jsonSerializationService.Deserialize<ReferenceDataCache>(
+                    Encoding.UTF8.GetString(albActorModel.ReferenceDataCache));
+            }
 
             using (var childLifetimeScope = _parentLifetimeScope.BeginLifetimeScope(c =>
             {
                 c.RegisterInstance(referenceDataCache).As<IReferenceDataCache>();
             }))
             {
+                var logger = childLifetimeScope.Resolve<ILogger>();
+                logger.LogDebug("Creating ALB execution context");
                 var executionContext = (ExecutionContext)childLifetimeScope.Resolve<IExecutionContext>();
                 executionContext.JobId = albActorModel.JobId.ToString();
                 executionContext.TaskKey = _actorId.ToString();
-                var logger = childLifetimeScope.Resolve<ILogger>();
 
                 try
                 {
-                    logger.LogDebug("ALB Actor started processing");
                     var albActorOrchestrationService = childLifetimeScope.Resolve<IALBOrchestrationService>();
+                    logger.LogDebug("deserializing to ALBValidLearners");
                     IList<ILearner> validLearners = jsonSerializationService.Deserialize<List<MessageLearner>>(
                         new MemoryStream(albActorModel.AlbValidLearners)).ToArray();
 
