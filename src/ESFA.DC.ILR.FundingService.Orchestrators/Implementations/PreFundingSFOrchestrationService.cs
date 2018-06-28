@@ -56,19 +56,25 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
 
         public async Task Execute(IJobContextMessage jobContextMessage)
         {
+            _logger.LogDebug("PreFundingSF started");
             var stopWatch = new Stopwatch();
             stopWatch.Start();
             var tasks = jobContextMessage.Topics[jobContextMessage.TopicPointer].Tasks;
+            _logger.LogDebug("PreFundingSF got tasks");
 
             // Get the ilr object from file
             var ilrMessage = await _ilrFileProviderService.Provide(jobContextMessage.KeyValuePairs[JobContextMessageKey.Filename].ToString());
             var fundingServiceDto = (FundingServiceDto)_fundingServiceDto;
             fundingServiceDto.Message = ilrMessage;
 
+            _logger.LogDebug("PreFundingSF got ILR");
+
             // get valid learners from intermediate storage and store it in the dto for rulebases
             fundingServiceDto.ValidLearners = _jsonSerializationService.Deserialize<string[]>(
                 await _keyValuePersistenceService.GetAsync(
                     jobContextMessage.KeyValuePairs[JobContextMessageKey.ValidLearnRefNumbers].ToString()));
+
+            _logger.LogDebug("PreFundingSF got valid learners");
 
             // loop through list of all the tasks and execute them.
             var fundingTasks = new List<Task>();

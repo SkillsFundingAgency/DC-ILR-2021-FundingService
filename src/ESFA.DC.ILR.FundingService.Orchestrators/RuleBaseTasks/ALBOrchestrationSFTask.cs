@@ -48,6 +48,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
         {
             var stopWatch = new Stopwatch();
 
+            _logger.LogDebug("starting prefunding ALB service");
             var albValidLearnersShards = _preFundingALBOrchestrationService.Execute();
             _logger.LogDebug("completed prefunding ALB service");
 
