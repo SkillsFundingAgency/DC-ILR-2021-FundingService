@@ -2,16 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface;
-using ESFA.DC.ILR.FundingService.FM35.TaskProvider.Interface;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Stubs;
-using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
-using ESFA.DC.IO.Dictionary;
 using ESFA.DC.IO.Interfaces;
 using ESFA.DC.Serialization.Xml;
 
@@ -21,20 +17,18 @@ namespace ESFA.DC.ILR.FundingService.FM35.TaskProvider.Service
     {
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
         private readonly IPopulationService _populationService;
-        private readonly IFileDataCache _fileDataCache;
         private readonly ILearnerPerActorService<ILearner, IList<ILearner>> _learnerPerActorService;
         private readonly IFundingService<IFM35FundingOutputs> _fundingService;
 
-        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IPopulationService populationService, IFileDataCache fileDataCache, ILearnerPerActorService<ILearner, IList<ILearner>> learnerPerActorService, IFundingService<IFM35FundingOutputs> fundingService)
+        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IPopulationService populationService, ILearnerPerActorService<ILearner, IList<ILearner>> learnerPerActorService, IFundingService<IFM35FundingOutputs> fundingService)
         {
             _keyValuePersistenceService = keyValuePersistenceService;
             _populationService = populationService;
-            _fileDataCache = fileDataCache;
             _learnerPerActorService = learnerPerActorService;
             _fundingService = fundingService;
         }
 
-        public void ExecuteTasks(Message message)
+        public void ExecuteTasks(IMessage message)
         {
             // Build Persistance Dictionary
             BuildKeyValueDictionary(message);
@@ -52,11 +46,10 @@ namespace ESFA.DC.ILR.FundingService.FM35.TaskProvider.Service
             dataPersister.PersistData(fundingOutputs, @"C:\Code\temp\FM35FundingService\Json_Output.json");
         }
 
-        private void BuildKeyValueDictionary(Message message)
+        private void BuildKeyValueDictionary(IMessage message)
         {
-            var learners = message.Learner.ToList();
+            var learners = message.Learners.ToList();
 
-            var list = new DictionaryKeyValuePersistenceService();
             var serializer = new XmlSerializationService();
 
             _keyValuePersistenceService.SaveAsync("ValidLearnRefNumbers", serializer.Serialize(learners)).Wait();
@@ -64,7 +57,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.TaskProvider.Service
 
         private IFM35FundingOutputs ProcessFunding(IEnumerable<IList<ILearner>> learnersList)
         {
-            int ukprn = _fileDataCache.UKPRN;
             ConcurrentBag<IFM35FundingOutputs> fundingOutputsList = new ConcurrentBag<IFM35FundingOutputs>();
 
             Parallel.ForEach(learnersList, ll =>

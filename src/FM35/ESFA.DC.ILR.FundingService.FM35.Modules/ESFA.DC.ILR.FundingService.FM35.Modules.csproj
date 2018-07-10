@@ -34,7 +34,6 @@
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service.Interface\ESFA.DC.OPA.Service.Interface.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.Service\ESFA.DC.ILR.FundingService.FM35.Service.csproj" />
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.TaskProvider\ESFA.DC.ILR.FundingService.FM35.TaskProvider.csproj" />
   </ItemGroup>
 
 </Project>

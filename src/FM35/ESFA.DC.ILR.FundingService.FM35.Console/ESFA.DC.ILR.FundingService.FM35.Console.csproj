@@ -134,6 +134,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Interfaces\ESFA.DC.ILR.FundingService.Interfaces.csproj">
+      <Project>{81FA550D-DD5E-4F5B-AC66-1DCA51824E9C}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.Modules\ESFA.DC.ILR.FundingService.FM35.Modules.csproj">
       <Project>{155DA4C7-2D6B-49B8-8FEC-CA24555B72A0}</Project>
       <Name>ESFA.DC.ILR.FundingService.FM35.Modules</Name>
@@ -145,10 +149,6 @@
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.Service\ESFA.DC.ILR.FundingService.FM35.Service.csproj">
       <Project>{60ad973d-ef59-476e-b598-15686495720d}</Project>
       <Name>ESFA.DC.ILR.FundingService.FM35.Service</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.TaskProvider\ESFA.DC.ILR.FundingService.FM35.TaskProvider.csproj">
-      <Project>{76370CB7-96CF-4546-B894-61F0000F12E4}</Project>
-      <Name>ESFA.DC.ILR.FundingService.FM35.TaskProvider</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

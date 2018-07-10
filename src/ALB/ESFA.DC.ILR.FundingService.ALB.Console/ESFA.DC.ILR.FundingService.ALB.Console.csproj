@@ -111,6 +111,18 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Data.Population\ESFA.DC.ILR.FundingService.Data.Population.csproj">
+      <Project>{cb179664-339b-4877-b208-1007ae42fd7c}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Data.Population</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Interfaces\ESFA.DC.ILR.FundingService.Interfaces.csproj">
+      <Project>{81FA550D-DD5E-4F5B-AC66-1DCA51824E9C}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Stubs\ESFA.DC.ILR.FundingService.Stubs.csproj">
+      <Project>{d3745d8b-f4d1-47c9-857a-a912516b2559}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Stubs</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface.csproj">
       <Project>{F348A08B-D84B-497A-860C-BB37025F8CCD}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface</Name>
@@ -134,10 +146,6 @@
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.Service\ESFA.DC.ILR.FundingService.ALB.Service.csproj">
       <Project>{6cb11e3a-7270-410b-98de-ba4880213768}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.Service</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.TaskProvider\ESFA.DC.ILR.FundingService.ALB.TaskProvider.csproj">
-      <Project>{9AD5DE52-B4C1-4834-8181-74C01ED2237B}</Project>
-      <Name>ESFA.DC.ILR.FundingService.ALB.TaskProvider</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

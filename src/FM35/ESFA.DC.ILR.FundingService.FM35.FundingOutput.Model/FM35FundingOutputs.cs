@@ -1,12 +1,11 @@
-﻿using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface;
-using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface.Attribute;
+﻿using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Attribute;
 
 namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model
 {
-    public class FM35FundingOutputs : IFM35FundingOutputs
+    public class FM35FundingOutputs
     {
-        public IGlobalAttribute Global { get; set; }
+        public GlobalAttribute Global { get; set; }
 
-        public ILearnerAttribute[] Learners { get; set; }
+        public LearnerAttribute[] Learners { get; set; }
     }
 }

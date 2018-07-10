@@ -1,13 +1,11 @@
-﻿using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface.Attribute;
-
-namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Attribute
+﻿namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Attribute
 {
-    public class LearningDeliveryAttribute : ILearningDeliveryAttribute
+    public class LearningDeliveryAttribute
     {
         public int AimSeqNumber { get; set; }
 
-        public ILearningDeliveryAttributeData LearningDeliveryAttributeDatas { get; set; }
+        public LearningDeliveryAttributeData LearningDeliveryAttributeDatas { get; set; }
 
-        public ILearningDeliveryPeriodisedAttribute[] LearningDeliveryPeriodisedAttributes { get; set; }
+        public LearningDeliveryPeriodisedAttribute[] LearningDeliveryPeriodisedAttributes { get; set; }
     }
 }

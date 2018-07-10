@@ -2,14 +2,11 @@
 using System.Linq;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
-using ESFA.DC.ILR.FundingService.ALB.TaskProvider.Interface;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Stubs;
-using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
-using ESFA.DC.IO.Dictionary;
 using ESFA.DC.IO.Interfaces;
 using ESFA.DC.Serialization.Xml;
 
@@ -18,21 +15,19 @@ namespace ESFA.DC.ILR.FundingService.ALB.TaskProvider.Service
     public class TaskProviderService : ITaskProviderService
     {
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
-        private readonly IFileDataCache _fileDataCache;
         private readonly IFundingService<IFundingOutputs> _fundingService;
         private readonly IPopulationService _populationService;
         private readonly ILearnerPerActorService<ILearner, IList<ILearner>> _learnerPerActorService;
 
-        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IFileDataCache fileDataCache, IFundingService<IFundingOutputs> fundingService, IPopulationService populationService, ILearnerPerActorService<ILearner, IList<ILearner>> learnerPerActorService)
+        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IFundingService<IFundingOutputs> fundingService, IPopulationService populationService, ILearnerPerActorService<ILearner, IList<ILearner>> learnerPerActorService)
         {
             _keyValuePersistenceService = keyValuePersistenceService;
-            _fileDataCache = fileDataCache;
             _fundingService = fundingService;
             _populationService = populationService;
             _learnerPerActorService = learnerPerActorService;
         }
 
-        public void ExecuteTasks(Message message)
+        public void ExecuteTasks(IMessage message)
         {
             // Build Persistance Dictionary
             BuildKeyValueDictionary(message);
@@ -52,11 +47,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.TaskProvider.Service
             dataPersister.PersistData(fundingOutputsToPersist, @"C:\Code\temp\ALBFundingService\Json_Output.json");
         }
 
-        private void BuildKeyValueDictionary(Message message)
+        private void BuildKeyValueDictionary(IMessage message)
         {
-            var learners = message.Learner.ToList();
+            var learners = message.Learners.ToList();
 
-            var list = new DictionaryKeyValuePersistenceService();
             var serializer = new XmlSerializationService();
 
             _keyValuePersistenceService.SaveAsync("ValidLearnRefNumbers", serializer.Serialize(learners)).Wait();

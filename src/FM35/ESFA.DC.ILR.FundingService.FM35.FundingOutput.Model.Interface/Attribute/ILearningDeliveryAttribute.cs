@@ -6,6 +6,6 @@
 
         ILearningDeliveryAttributeData LearningDeliveryAttributeDatas { get; }
 
-        ILearningDeliveryPeriodisedAttribute[] LearningDeliveryPeriodisedAttributes { get; }
+        LearningDeliveryPeriodisedAttribute[] LearningDeliveryPeriodisedAttributes { get; }
     }
 }

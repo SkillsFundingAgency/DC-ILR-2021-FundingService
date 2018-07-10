@@ -1,5 +1,4 @@
 ﻿using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Attribute;
-using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface;
 using FluentAssertions;
 using Xunit;
 
@@ -25,7 +24,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Tests
 
         #region Test Helpers
 
-        private static IFM35FundingOutputs TestFundingOutputs()
+        private static FM35FundingOutputs TestFundingOutputs()
         {
             return new FM35FundingOutputs
             {

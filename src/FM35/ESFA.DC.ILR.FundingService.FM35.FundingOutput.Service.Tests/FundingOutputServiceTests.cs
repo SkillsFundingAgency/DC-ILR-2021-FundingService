@@ -6,9 +6,8 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 using ESFA.DC.DateTime.Provider;
+using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Attribute;
-using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface;
-using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface.Attribute;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
@@ -61,7 +60,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
         public void ProcessFundingOutputs_FundingOutput_GlobalCorrect()
         {
             // ARRANGE
-            IGlobalAttribute expectedGlobal = new GlobalAttribute
+            GlobalAttribute expectedGlobal = new GlobalAttribute
             {
                 UKPRN = 12345678,
                 LARSVersion = "Version_005",
@@ -103,7 +102,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
         public void ProcessFundingOutputs_FundingOutput_LearnersCorrect()
         {
             // ARRANGE
-            ILearnerAttribute[] expectedLearners = new LearnerAttribute[]
+            var expectedLearners = new LearnerAttribute[]
             {
                  new LearnerAttribute
                  {
@@ -170,7 +169,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
         public void ProcessFundingOutputs_FundingOutput_LearnerAttributes_LearnerDeliveryAttributes()
         {
             // ARRANGE
-            IList<ILearningDeliveryAttribute[]> expectedLearningDeliveryAttributes = new List<ILearningDeliveryAttribute[]>
+            IList<LearningDeliveryAttribute[]> expectedLearningDeliveryAttributes = new List<LearningDeliveryAttribute[]>
             {
                 TestLearningDeliveryAttributeArray(1),
                 TestLearningDeliveryAttributeArray(1),
@@ -388,7 +387,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
 
         private static readonly IFormatProvider culture = new CultureInfo("en-GB", true);
 
-        private static readonly Mock<IFundingService<IFM35FundingOutputs>> FundingServiceContextMock = new Mock<IFundingService<IFM35FundingOutputs>>();
+        private static readonly Mock<IFundingService<FM35FundingOutputs>> FundingServiceContextMock = new Mock<IFundingService<FM35FundingOutputs>>();
 
         private IEnumerable<IDataEntity> TestEntities()
         {
@@ -752,7 +751,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             }
         };
 
-        private ILearningDeliveryAttribute[] TestLearningDeliveryAttributeArray(int aimSeq)
+        private LearningDeliveryAttribute[] TestLearningDeliveryAttributeArray(int aimSeq)
         {
             return new LearningDeliveryAttribute[]
             {
@@ -770,7 +769,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             };
         }
 
-        private ILearningDeliveryAttributeData TestLearningDeliveryAttributeData()
+        private LearningDeliveryAttributeData TestLearningDeliveryAttributeData()
         {
             return new LearningDeliveryAttributeData
             {
@@ -849,7 +848,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             };
         }
 
-        private ILearningDeliveryPeriodisedAttribute[] TestLearningDeliveryPeriodisedAttributesDataArray()
+        private LearningDeliveryPeriodisedAttribute[] TestLearningDeliveryPeriodisedAttributesDataArray()
         {
             return new LearningDeliveryPeriodisedAttribute[]
             {

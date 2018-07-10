@@ -1,8 +1,6 @@
-﻿using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface.Attribute;
-
-namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Attribute
+﻿namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Attribute
 {
-    public class GlobalAttribute : IGlobalAttribute
+    public class GlobalAttribute
     {
         public int UKPRN { get; set; }
 

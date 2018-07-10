@@ -16,8 +16,4 @@
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface.csproj" />
-  </ItemGroup>
-
 </Project>

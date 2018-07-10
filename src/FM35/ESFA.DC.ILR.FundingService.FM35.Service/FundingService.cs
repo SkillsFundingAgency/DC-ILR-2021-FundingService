@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface;
+using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model.Interface;
@@ -9,20 +9,20 @@ using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM35.Service
 {
-    public class FundingService : IFundingService<IFM35FundingOutputs>
+    public class FundingService : IFundingService<FM35FundingOutputs>
     {
-        private readonly IDataEntityMapper<ILearner, IFM35FundingOutputs> _dataEntityMapper;
+        private readonly IDataEntityMapper<ILearner, FM35FundingOutputs> _dataEntityMapper;
         private readonly IOPAService _opaService;
-        private readonly IOutputService<IFM35FundingOutputs> _fundingOutputService;
+        private readonly IOutputService<FM35FundingOutputs> _fundingOutputService;
 
-        public FundingService(IDataEntityMapper<ILearner, IFM35FundingOutputs> dataEntityMapper, IOPAService opaService, IOutputService<IFM35FundingOutputs> fundingOutputService)
+        public FundingService(IDataEntityMapper<ILearner, FM35FundingOutputs> dataEntityMapper, IOPAService opaService, IOutputService<FM35FundingOutputs> fundingOutputService)
         {
             _dataEntityMapper = dataEntityMapper;
             _opaService = opaService;
             _fundingOutputService = fundingOutputService;
         }
 
-        public IFM35FundingOutputs ProcessFunding(IEnumerable<ILearner> learnerList)
+        public FM35FundingOutputs ProcessFunding(IEnumerable<ILearner> learnerList)
         {
             // Generate Funding Inputs
             var inputDataEntities = _dataEntityMapper.MapTo(learnerList).AsParallel().ToList();

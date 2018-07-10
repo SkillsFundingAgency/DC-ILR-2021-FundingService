@@ -3,15 +3,13 @@ using System.Linq;
 using ESFA.DC.DateTime.Provider.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Attribute;
-using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface;
-using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Interface.Attribute;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service
 {
-    public class FundingOutputService : IOutputService<IFM35FundingOutputs>
+    public class FundingOutputService : IOutputService<FM35FundingOutputs>
     {
         private readonly IDateTimeProvider _dateTimeProvider;
 
@@ -36,7 +34,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service
            { 12, new System.DateTime(2019, 07, 01) },
         };
 
-        public IFM35FundingOutputs ProcessFundingOutputs(IEnumerable<IDataEntity> dataEntities)
+        public FM35FundingOutputs ProcessFundingOutputs(IEnumerable<IDataEntity> dataEntities)
         {
             return new FM35FundingOutputs
             {
@@ -45,7 +43,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service
             };
         }
 
-        protected internal IGlobalAttribute GlobalOutput(IDictionary<string, IAttributeData> attributes)
+        protected internal GlobalAttribute GlobalOutput(IDictionary<string, IAttributeData> attributes)
         {
             return new GlobalAttribute
             {
@@ -58,9 +56,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service
             };
         }
 
-        protected internal ILearnerAttribute[] LearnerOutput(IEnumerable<IDataEntity> learnerEntities)
+        protected internal LearnerAttribute[] LearnerOutput(IEnumerable<IDataEntity> learnerEntities)
         {
-            var learners = new List<ILearnerAttribute>();
+            var learners = new List<LearnerAttribute>();
 
             foreach (var learner in learnerEntities)
             {
@@ -74,9 +72,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service
             return learners.ToArray();
         }
 
-        protected internal ILearningDeliveryAttribute[] LearningDeliveryAttributes(IDataEntity learner)
+        protected internal LearningDeliveryAttribute[] LearningDeliveryAttributes(IDataEntity learner)
         {
-            List<ILearningDeliveryAttribute> list = new List<ILearningDeliveryAttribute>();
+            var list = new List<LearningDeliveryAttribute>();
             string aimSeqNumber = "AimSeqNumber";
 
             var learningdeliveries = learner.Children.Where(e => e.EntityName == "LearningDelivery").ToList();
@@ -94,7 +92,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service
             return list.ToArray();
         }
 
-        protected internal ILearningDeliveryAttributeData LearningDeliveryAttributeData(IDataEntity learningDelivery)
+        protected internal LearningDeliveryAttributeData LearningDeliveryAttributeData(IDataEntity learningDelivery)
         {
             var attributes = learningDelivery.Attributes;
 
@@ -175,7 +173,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service
             };
         }
 
-        protected internal ILearningDeliveryPeriodisedAttribute[] LearningDeliveryPeriodisedAttributeData(IDataEntity learningDelivery)
+        protected internal LearningDeliveryPeriodisedAttribute[] LearningDeliveryPeriodisedAttributeData(IDataEntity learningDelivery)
         {
             List<string> attributeList = new List<string>()
             {
@@ -199,7 +197,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service
                 "TransInstPerPeriod"
             };
 
-            List<ILearningDeliveryPeriodisedAttribute> learningDeliveryPeriodisedAttributesList = new List<ILearningDeliveryPeriodisedAttribute>();
+            List<LearningDeliveryPeriodisedAttribute> learningDeliveryPeriodisedAttributesList = new List<LearningDeliveryPeriodisedAttribute>();
 
             foreach (var attribute in attributeList)
             {

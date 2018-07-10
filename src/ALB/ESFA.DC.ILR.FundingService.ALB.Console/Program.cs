@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using Autofac;
 using ESFA.DC.ILR.FundingService.ALB.Modules;
-using ESFA.DC.ILR.FundingService.ALB.TaskProvider.Interface;
+using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.Serialization.Xml;
