@@ -70,7 +70,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                     IList<ILearner> validLearners = jsonSerializationService.Deserialize<List<MessageLearner>>(
                         new MemoryStream(albActorModel.AlbValidLearners)).ToArray();
 
-                    var results = fundingService.ProcessFunding(albActorModel.Ukprn, validLearners);
+                    var results = fundingService.ProcessFunding(validLearners);
 
                     logger.LogDebug("ALB Actor completed processing");
                     return Task.FromResult(jsonSerializationService.Serialize(results));

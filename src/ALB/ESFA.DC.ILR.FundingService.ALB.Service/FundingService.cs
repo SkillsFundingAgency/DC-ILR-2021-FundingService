@@ -21,7 +21,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
             _outputService = fundingOutputService;
         }
 
-        public IFundingOutputs ProcessFunding(int ukprn, IList<ILearner> learnerList)
+        public IFundingOutputs ProcessFunding(IEnumerable<ILearner> learnerList)
         {
             // Generate Funding Inputs
             var inputDataEntities = _dataEntityBuilder.MapTo(learnerList);

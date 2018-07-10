@@ -69,7 +69,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.TaskProvider.Service
 
             Parallel.ForEach(learnersList, ll =>
             {
-                fundingOutputsList.Add(_fundingService.ProcessFunding(ukprn, ll));
+                fundingOutputsList.Add(_fundingService.ProcessFunding(ll));
             });
 
             //foreach (var list in learnersList)

@@ -68,7 +68,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.TaskProvider.Service
 
             foreach (var list in learnersList)
             {
-                fundingOutputsList.Add(_fundingService.ProcessFunding(_fileDataCache.UKPRN, list));
+                fundingOutputsList.Add(_fundingService.ProcessFunding(list));
             }
 
             return fundingOutputsList;

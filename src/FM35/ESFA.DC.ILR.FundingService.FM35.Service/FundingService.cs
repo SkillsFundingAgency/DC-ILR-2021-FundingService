@@ -22,7 +22,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
             _fundingOutputService = fundingOutputService;
         }
 
-        public IFM35FundingOutputs ProcessFunding(int ukprn, IList<ILearner> learnerList)
+        public IFM35FundingOutputs ProcessFunding(IEnumerable<ILearner> learnerList)
         {
             // Generate Funding Inputs
             var inputDataEntities = _dataEntityMapper.MapTo(learnerList).AsParallel().ToList();
