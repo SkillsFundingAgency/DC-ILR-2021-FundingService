@@ -112,10 +112,6 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface.csproj">
-      <Project>{2c2e187e-4770-4550-a90d-5b7730294a8c}</Project>
-      <Name>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Stateless.Models\ESFA.DC.ILR.FundingService.Stateless.Models.csproj">
       <Project>{0faaaab8-443b-47bf-9e96-c3069e8789f9}</Project>
       <Name>ESFA.DC.ILR.FundingService.Stateless.Models</Name>

@@ -433,9 +433,9 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface.csproj">
-      <Project>{2C2E187E-4770-4550-A90D-5B7730294A8C}</Project>
-      <Name>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface</Name>
+    <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.csproj">
+      <Project>{7D044D8C-64BE-48A0-A2F2-1284FC7395F5}</Project>
+      <Name>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALB.Modules\ESFA.DC.ILR.FundingService.ALB.Modules.csproj">
       <Project>{BE335AA0-40B7-47D3-BFB3-AAF1565DF6A9}</Project>

@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Interfaces;
@@ -66,7 +66,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                 try
                 {
                     logger.LogDebug("ALB Actor started processing");
-                    var fundingService = childLifetimeScope.Resolve<IFundingService<IFundingOutputs>>();
+                    var fundingService = childLifetimeScope.Resolve<IFundingService<FundingOutputs>>();
                     IList<ILearner> validLearners = jsonSerializationService.Deserialize<List<MessageLearner>>(
                         new MemoryStream(albActorModel.AlbValidLearners)).ToArray();
 

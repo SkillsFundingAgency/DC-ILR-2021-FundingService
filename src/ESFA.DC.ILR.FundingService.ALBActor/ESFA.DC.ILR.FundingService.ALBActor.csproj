@@ -199,9 +199,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface.csproj">
-      <Project>{2c2e187e-4770-4550-a90d-5b7730294a8c}</Project>
-      <Name>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface</Name>
+    <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.csproj">
+      <Project>{7D044D8C-64BE-48A0-A2F2-1284FC7395F5}</Project>
+      <Name>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALB.Modules\ESFA.DC.ILR.FundingService.ALB.Modules.csproj">
       <Project>{be335aa0-40b7-47d3-bfb3-aaf1565df6a9}</Project>

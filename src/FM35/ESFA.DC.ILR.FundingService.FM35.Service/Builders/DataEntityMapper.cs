@@ -76,7 +76,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
                     var larsLearningDelivery = _larsReferenceDataService.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef);
                     var larsFrameworkAims = _larsReferenceDataService.LARSFFrameworkAimsForLearnAimRef(learningDelivery.LearnAimRef);
 
-                    var larsFwkAims = larsFrameworkAims == null ? null : larsFrameworkAims.ToList();
+                    var larsFwkAims = larsFrameworkAims?.ToList();
                     IDataEntity learningDeliveryEntity = LearningDeliveryEntity(learningDelivery, larsLearningDelivery, larsFwkAims);
 
                     learnerEntity.AddChild(learningDeliveryEntity);

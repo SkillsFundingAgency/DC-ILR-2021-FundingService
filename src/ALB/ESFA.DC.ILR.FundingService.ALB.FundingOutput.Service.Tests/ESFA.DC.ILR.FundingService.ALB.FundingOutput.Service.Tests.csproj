@@ -143,10 +143,6 @@
       <Project>{b8b8d031-851c-427b-9dea-9f87a2f1b642}</Project>
       <Name>ESFA.DC.OPA.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface.csproj">
-      <Project>{F348A08B-D84B-497A-860C-BB37025F8CCD}</Project>
-      <Name>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.csproj">
       <Project>{4ca652f1-49f4-4e80-9113-125489413525}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model</Name>

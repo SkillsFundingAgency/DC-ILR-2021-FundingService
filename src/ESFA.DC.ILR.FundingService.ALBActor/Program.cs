@@ -2,7 +2,7 @@
 using System.Threading;
 using Autofac;
 using Autofac.Integration.ServiceFabric;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALB.Modules;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Modules;
@@ -33,7 +33,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                 using (var container = builder.Build())
                 {
                     // Not sure why this is being resolved here, to review
-                    var ss = container.Resolve<IFundingService<IFundingOutputs>>();
+                    var ss = container.Resolve<IFundingService<FundingOutputs>>();
                     Thread.Sleep(Timeout.Infinite);
                 }
             }

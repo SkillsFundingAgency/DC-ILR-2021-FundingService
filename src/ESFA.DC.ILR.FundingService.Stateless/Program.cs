@@ -9,7 +9,7 @@ using DC.JobContextManager.Interface;
 using ESFA.DC.Auditing;
 using ESFA.DC.Auditing.Dto;
 using ESFA.DC.Auditing.Interface;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALB.Modules;
 using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Dto.Interfaces;
@@ -202,8 +202,8 @@ namespace ESFA.DC.ILR.FundingService.Stateless
                 c.Resolve<IXmlSerializationService>())).As<IIlrFileProviderService>().InstancePerLifetimeScope();
 
             // register fundingoutput persistence service
-            containerBuilder.RegisterType<FundingOutputPersistenceSfService<IFundingOutputs>>()
-                .As<IFundingOutputPersistenceService<IFundingOutputs>>()
+            containerBuilder.RegisterType<FundingOutputPersistenceSfService<FundingOutputs>>()
+                .As<IFundingOutputPersistenceService<FundingOutputs>>()
                 .InstancePerLifetimeScope();
 
             // register key generator

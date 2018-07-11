@@ -6,8 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Attribute;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface.Attribute;
 using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
@@ -26,7 +24,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
 {
     public class ALBOrchestrationSFTask : IALBOrchestrationSFTask
     {
-        private readonly IFundingOutputPersistenceService<IFundingOutputs> _fundingOutputPersistenceService;
+        private readonly IFundingOutputPersistenceService<FundingOutputs> _fundingOutputPersistenceService;
         private readonly IExternalDataCache _referenceDataCache;
         private readonly IJsonSerializationService _jsonSerializationService;
         private readonly ILogger _logger;
@@ -34,7 +32,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
         private readonly IPopulationService _populationService;
 
         public ALBOrchestrationSFTask(
-            IFundingOutputPersistenceService<IFundingOutputs> fundingOutputPersistenceService,
+            IFundingOutputPersistenceService<FundingOutputs> fundingOutputPersistenceService,
             IExternalDataCache referenceDataCache,
             IJsonSerializationService jsonSerializationService,
             ILearnerPerActorService<ILearner, IList<ILearner>> learnerPerActorService,
@@ -87,11 +85,11 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
             _logger.LogDebug("completed Actors ALB service");
 
             // get results from actor tasks
-            var collatedFundingOuputputLearners = new List<ILearnerAttribute>();
+            var collatedFundingOuputputLearners = new List<LearnerAttribute>();
             var globalFundingOutput = new GlobalAttribute();
             foreach (var actorTask in actorTasks)
             {
-                IFundingOutputs fundingOutputs =
+                FundingOutputs fundingOutputs =
                     _jsonSerializationService.Deserialize<FundingOutputs>(actorTask.Result);
                 collatedFundingOuputputLearners.AddRange(fundingOutputs.Learners);
             }

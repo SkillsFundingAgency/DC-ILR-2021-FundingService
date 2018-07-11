@@ -20,7 +20,6 @@
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Interfaces\ESFA.DC.ILR.FundingService.Interfaces.csproj" />
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model.Interface\ESFA.DC.OPA.Model.Interface.csproj" />
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model\ESFA.DC.OPA.Model.csproj" />
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.csproj" />
   </ItemGroup>
 

@@ -1,13 +1,11 @@
-﻿using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface.Attribute;
-
-namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Attribute
+﻿namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Attribute
 {
-    public class LearnerAttribute : ILearnerAttribute
+    public class LearnerAttribute
     {
         public string LearnRefNumber { get; set; }
 
-        public ILearnerPeriodisedAttribute[] LearnerPeriodisedAttributes { get; set; }
+        public LearnerPeriodisedAttribute[] LearnerPeriodisedAttributes { get; set; }
 
-        public ILearningDeliveryAttribute[] LearningDeliveryAttributes { get; set; }
+        public LearningDeliveryAttribute[] LearningDeliveryAttributes { get; set; }
     }
 }

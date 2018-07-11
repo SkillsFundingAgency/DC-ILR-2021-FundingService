@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Stubs;
@@ -14,11 +13,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
     public class TaskProviderService : ITaskProviderService
     {
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
-        private readonly IFundingService<IFundingOutputs> _fundingService;
+        private readonly IFundingService<FundingOutputs> _fundingService;
         private readonly IPopulationService _populationService;
         private readonly ILearnerPerActorService<ILearner, IList<ILearner>> _learnerPerActorService;
 
-        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IFundingService<IFundingOutputs> fundingService, IPopulationService populationService, ILearnerPerActorService<ILearner, IList<ILearner>> learnerPerActorService)
+        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IFundingService<FundingOutputs> fundingService, IPopulationService populationService, ILearnerPerActorService<ILearner, IList<ILearner>> learnerPerActorService)
         {
             _keyValuePersistenceService = keyValuePersistenceService;
             _fundingService = fundingService;
@@ -55,9 +54,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
             _keyValuePersistenceService.SaveAsync("ValidLearnRefNumbers", serializer.Serialize(learners)).Wait();
         }
 
-        private IList<IFundingOutputs> ProcessFunding(IEnumerable<IList<ILearner>> learnersList)
+        private IEnumerable<FundingOutputs> ProcessFunding(IEnumerable<IList<ILearner>> learnersList)
         {
-            IList<IFundingOutputs> fundingOutputsList = new List<IFundingOutputs>();
+            var fundingOutputsList = new List<FundingOutputs>();
 
             foreach (var list in learnersList)
             {
@@ -67,9 +66,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
             return fundingOutputsList;
         }
 
-        private IFundingOutputs TransformFundingOutput(IList<IFundingOutputs> fundingOutputsList)
+        private FundingOutputs TransformFundingOutput(IEnumerable<FundingOutputs> fundingOutputsList)
         {
-            var global = fundingOutputsList[0].Global;
+            var global = fundingOutputsList.First().Global;
 
             var learnerAttributes = fundingOutputsList.SelectMany(l => l.Learners).ToArray();
 

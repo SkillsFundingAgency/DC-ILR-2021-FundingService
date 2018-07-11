@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
@@ -12,7 +12,7 @@ using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
 {
-    public class DataEntityMapper : IDataEntityMapper<ILearner, IFundingOutputs>
+    public class DataEntityMapper : IDataEntityMapper<ILearner, FundingOutputs>
     {
         private const string EntityGlobal = "global";
         private const string EntityLearner = "Learner";
@@ -88,7 +88,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
             return globalEntities;
         }
 
-        public IFundingOutputs MapFrom(IEnumerable<IDataEntity> inputModels)
+        public FundingOutputs MapFrom(IEnumerable<IDataEntity> inputModels)
         {
             throw new System.NotImplementedException();
         }

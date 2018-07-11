@@ -1,12 +1,11 @@
-﻿using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface.Attribute;
+﻿using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Attribute;
 
 namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model
 {
-    public class FundingOutputs : IFundingOutputs
+    public class FundingOutputs
     {
-        public IGlobalAttribute Global { get; set; }
+        public GlobalAttribute Global { get; set; }
 
-        public ILearnerAttribute[] Learners { get; set; }
+        public LearnerAttribute[] Learners { get; set; }
     }
 }

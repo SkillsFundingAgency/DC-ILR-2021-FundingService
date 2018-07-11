@@ -5,9 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Attribute;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface.Attribute;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
@@ -60,7 +59,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.Tests
         public void ProcessFundingOutputs_FundingOutput_GlobalCorrect()
         {
             // ARRANGE
-            IGlobalAttribute expectedGlobal = new GlobalAttribute
+            var expectedGlobal = new GlobalAttribute
             {
                 UKPRN = 12345678,
                 LARSVersion = "Version_005",
@@ -100,7 +99,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.Tests
         public void ProcessFundingOutputs_FundingOutput_LearnersCorrect()
         {
             // ARRANGE
-            ILearnerAttribute[] expectedLearners = new LearnerAttribute[]
+            var expectedLearners = new LearnerAttribute[]
             {
                  new LearnerAttribute
                  {
@@ -170,7 +169,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.Tests
         public void ProcessFundingOutputs_FundingOutput_LearnerAttributes_LearnerPeriodAttributes()
         {
             // ARRANGE
-            IList<ILearnerPeriodisedAttribute[]> expectedLearnerPeriodisedAttributes = new List<ILearnerPeriodisedAttribute[]>
+            IList<LearnerPeriodisedAttribute[]> expectedLearnerPeriodisedAttributes = new List<LearnerPeriodisedAttribute[]>
             {
                 TestLearnerPeriodisedValuesArray(0.0m),
                 TestLearnerPeriodisedValuesArray(1.0m),
@@ -194,7 +193,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.Tests
         public void ProcessFundingOutputs_FundingOutput_LearnerAttributes_LearnerDeliveryAttributes()
         {
             // ARRANGE
-            IList<ILearningDeliveryAttribute[]> expectedLearningDeliveryAttributes = new List<ILearningDeliveryAttribute[]>
+            var expectedLearningDeliveryAttributes = new List<LearningDeliveryAttribute[]>
             {
                 TestLearningDeliveryAttributeArray(1),
                 TestLearningDeliveryAttributeArray(1),
@@ -468,7 +467,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.Tests
 
         private static readonly IFormatProvider culture = new CultureInfo("en-GB", true);
 
-        private static readonly Mock<IFundingService<IFundingOutputs>> FundingServiceContextMock = new Mock<IFundingService<IFundingOutputs>>();
+        private static readonly Mock<IFundingService<FundingOutputs>> FundingServiceContextMock = new Mock<IFundingService<FundingOutputs>>();
 
         private IEnumerable<IDataEntity> TestEntities()
         {
@@ -759,7 +758,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.Tests
             }
         };
 
-        private ILearnerPeriodisedAttribute[] TestLearnerPeriodisedValuesArray(decimal value)
+        private LearnerPeriodisedAttribute[] TestLearnerPeriodisedValuesArray(decimal value)
         {
             return new LearnerPeriodisedAttribute[]
             {
@@ -787,7 +786,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.Tests
             };
         }
 
-        private ILearningDeliveryAttribute[] TestLearningDeliveryAttributeArray(int aimSeq)
+        private LearningDeliveryAttribute[] TestLearningDeliveryAttributeArray(int aimSeq)
         {
             return new LearningDeliveryAttribute[]
             {
@@ -805,7 +804,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.Tests
             };
         }
 
-        private ILearningDeliveryAttributeData TestLearningDeliveryAttributeData()
+        private LearningDeliveryAttributeData TestLearningDeliveryAttributeData()
         {
             return new LearningDeliveryAttributeData
             {
@@ -827,7 +826,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.Tests
             };
         }
 
-        private ILearningDeliveryPeriodisedAttribute[] TestLearningDeliveryPeriodisedAttributesDataArray()
+        private LearningDeliveryPeriodisedAttribute[] TestLearningDeliveryPeriodisedAttributesDataArray()
         {
             return new LearningDeliveryPeriodisedAttribute[]
             {
