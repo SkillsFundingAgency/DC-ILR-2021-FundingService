@@ -30,6 +30,7 @@ using ESFA.DC.IO.AzureStorage;
 using ESFA.DC.IO.AzureStorage.Config.Interfaces;
 using ESFA.DC.IO.Interfaces;
 using ESFA.DC.IO.Redis;
+using ESFA.DC.IO.Redis.Config;
 using ESFA.DC.IO.Redis.Config.Interfaces;
 using ESFA.DC.JobContext;
 using ESFA.DC.JobContext.Interface;
@@ -84,10 +85,8 @@ namespace ESFA.DC.ILR.FundingService.Stateless
             var containerBuilder = new ContainerBuilder();
             var configHelper = new ConfigurationHelper();
 
-            // register Cosmos config
             var azureRedisCacheOptions = configHelper.GetSectionValues<AzureRedisCacheOptions>("AzureRedisSection");
-            containerBuilder.Register(c => new AzureRedisKeyValuePersistenceConfig(
-                    azureRedisCacheOptions.RedisCacheConnectionString))
+            containerBuilder.Register(c => new RedisKeyValuePersistenceServiceConfig() { ConnectionString = azureRedisCacheOptions.RedisCacheConnectionString })
                 .As<IRedisKeyValuePersistenceServiceConfig>().SingleInstance();
 
             containerBuilder.RegisterType<RedisKeyValuePersistenceService>().As<IKeyValuePersistenceService>()
@@ -104,13 +103,12 @@ namespace ESFA.DC.ILR.FundingService.Stateless
                 .As<IXmlSerializationService>();
 
             // register reference data configs
-            var referenceDataConfig =
-                configHelper.GetSectionValues<ReferenceDataConfig>("ReferenceDataSection");
+            var referenceDataConfig = configHelper.GetSectionValues<ReferenceDataConfig>("ReferenceDataSection");
             containerBuilder.RegisterInstance(referenceDataConfig).As<IReferenceDataConfig>().SingleInstance();
 
             // get ServiceBus, Azurestorage config values and register container
-            var serviceBusOptions = configHelper.GetSectionValues<ServiceBusOptions>("ServiceBusSettings");
-            containerBuilder.RegisterInstance(serviceBusOptions).As<ServiceBusOptions>().SingleInstance();
+            var serviceBusOptions = configHelper.GetSectionValues<ServiceBusConfig>("ServiceBusSettings");
+            containerBuilder.RegisterInstance(serviceBusOptions).As<IServiceBusConfig>().SingleInstance();
 
             // register logger
             var loggerOptions = configHelper.GetSectionValues<LoggerConfig>("LoggerSection");

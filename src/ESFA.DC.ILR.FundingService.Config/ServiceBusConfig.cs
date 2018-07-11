@@ -1,6 +1,8 @@
-﻿namespace ESFA.DC.ILR.FundingService.Stateless.Models
+﻿using ESFA.DC.ILR.FundingService.Config.Interfaces;
+
+namespace ESFA.DC.ILR.FundingService.Config
 {
-    public class ServiceBusOptions
+    public class ServiceBusConfig : IServiceBusConfig
     {
         public string AuditQueueName { get; set; }
 
