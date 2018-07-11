@@ -31,7 +31,9 @@
 
   <Section  Name="ReferenceDataSection">
     <Parameter Name="LARSConnectionString" Value="" />
-    <Parameter Name="PostCodeConnectionString" Value="" />
+    <Parameter Name="PostCodesConnectionString" Value="" />
+    <Parameter Name="OrganisationConnectionString" Value=""/>
+    <Parameter Name="LargeEmployersConnectionString" Value=""/>
   </Section>
   
 

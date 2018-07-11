@@ -4,6 +4,8 @@ using Autofac;
 using Autofac.Integration.ServiceFabric;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALB.Modules;
+using ESFA.DC.ILR.FundingService.Config;
+using ESFA.DC.ILR.FundingService.Config.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Modules;
 using ESFA.DC.ILR.FundingService.Stateless.Models;
@@ -52,14 +54,13 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
             // register actor ALB funding module
             containerBuilder.RegisterModule<ActorFundingALBModule>();
 
-            var loggerOptions =
-                configHelper.GetSectionValues<LoggerOptions>("LoggerSection");
-            containerBuilder.RegisterInstance(loggerOptions).As<LoggerOptions>().SingleInstance();
+            var loggerConfig = configHelper.GetSectionValues<LoggerConfig>("LoggerSection");
+
+            containerBuilder.RegisterInstance(loggerConfig).As<ILoggerConfig>().SingleInstance();
             containerBuilder.RegisterModule<LoggerModule>();
 
             // register serialization
-            containerBuilder.RegisterType<JsonSerializationService>()
-                .As<ISerializationService>();
+            containerBuilder.RegisterType<JsonSerializationService>().As<ISerializationService>();
 
             return containerBuilder;
         }

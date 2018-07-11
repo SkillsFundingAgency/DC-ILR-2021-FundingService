@@ -211,6 +211,10 @@
       <Project>{14944B1C-9717-4CBB-B756-37502DDB5E0B}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALBActor.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Config\ESFA.DC.ILR.FundingService.Config.csproj">
+      <Project>{29C28BC1-23E2-4FAD-AB74-83CD2D33E7D8}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Config</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Data\ESFA.DC.ILR.FundingService.Data.csproj">
       <Project>{69B93B19-4FD0-4205-AFFA-8B71122A3C65}</Project>
       <Name>ESFA.DC.ILR.FundingService.Data</Name>

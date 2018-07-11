@@ -11,6 +11,8 @@ using ESFA.DC.Auditing.Dto;
 using ESFA.DC.Auditing.Interface;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALB.Modules;
+using ESFA.DC.ILR.FundingService.Config;
+using ESFA.DC.ILR.FundingService.Config.Interfaces;
 using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Dto.Interfaces;
 using ESFA.DC.ILR.FundingService.Modules;
@@ -62,7 +64,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless
 
                 using (var container = builder.Build())
                 {
-                    var sss = container.Resolve<ReferenceDataConfig>();
+                    var sss = container.Resolve<IReferenceDataConfig>();
                     var ss = container.Resolve<IPreFundingSFOrchestrationService>();
                     ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(Stateless).Name);
 
@@ -104,17 +106,15 @@ namespace ESFA.DC.ILR.FundingService.Stateless
             // register reference data configs
             var referenceDataConfig =
                 configHelper.GetSectionValues<ReferenceDataConfig>("ReferenceDataSection");
-            containerBuilder.RegisterInstance(referenceDataConfig).As<ReferenceDataConfig>().SingleInstance();
+            containerBuilder.RegisterInstance(referenceDataConfig).As<IReferenceDataConfig>().SingleInstance();
 
             // get ServiceBus, Azurestorage config values and register container
-            var serviceBusOptions =
-                configHelper.GetSectionValues<ServiceBusOptions>("ServiceBusSettings");
+            var serviceBusOptions = configHelper.GetSectionValues<ServiceBusOptions>("ServiceBusSettings");
             containerBuilder.RegisterInstance(serviceBusOptions).As<ServiceBusOptions>().SingleInstance();
 
             // register logger
-            var loggerOptions =
-                configHelper.GetSectionValues<LoggerOptions>("LoggerSection");
-            containerBuilder.RegisterInstance(loggerOptions).As<LoggerOptions>().SingleInstance();
+            var loggerOptions = configHelper.GetSectionValues<LoggerConfig>("LoggerSection");
+            containerBuilder.RegisterInstance(loggerOptions).As<ILoggerConfig>().SingleInstance();
             containerBuilder.RegisterModule<LoggerModule>();
 
             // auditing

@@ -8,6 +8,7 @@ using ESFA.DC.Data.Organisatons.Model;
 using ESFA.DC.Data.Organisatons.Model.Interface;
 using ESFA.DC.Data.Postcodes.Model;
 using ESFA.DC.Data.Postcodes.Model.Interfaces;
+using ESFA.DC.ILR.FundingService.Config.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.Context;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.File;
@@ -30,26 +31,26 @@ namespace ESFA.DC.ILR.FundingService.ALB.Modules
         {
             builder.Register(c =>
             {
-                var referenceDataConfig = c.Resolve<ReferenceDataConfig>();
+                var referenceDataConfig = c.Resolve<IReferenceDataConfig>();
                 return new LARS(referenceDataConfig.LARSConnectionString);
             }).As<ILARS>().InstancePerLifetimeScope();
 
             builder.Register(c =>
             {
-                var referenceDataConfig = c.Resolve<ReferenceDataConfig>();
-                return new Postcodes(referenceDataConfig.PostCodeConnectionString);
+                var referenceDataConfig = c.Resolve<IReferenceDataConfig>();
+                return new Postcodes(referenceDataConfig.PostcodesConnectionString);
             }).As<IPostcodes>().InstancePerLifetimeScope();
 
             builder.Register(c =>
             {
-                var referenceDataConfig = c.Resolve<ReferenceDataConfig>();
-                return new Organisations();
+                var referenceDataConfig = c.Resolve<IReferenceDataConfig>();
+                return new Organisations(referenceDataConfig.OrganisationConnectionString);
             }).As<IOrganisations>().InstancePerLifetimeScope();
 
             builder.Register(c =>
             {
-                var referenceDataConfig = c.Resolve<ReferenceDataConfig>();
-                return new LargeEmployer();
+                var referenceDataConfig = c.Resolve<IReferenceDataConfig>();
+                return new LargeEmployer(referenceDataConfig.LargeEmployersConnectionString);
             }).As<ILargeEmployer>().InstancePerLifetimeScope();
 
             builder.RegisterType<PopulationService>().As<IPopulationService>().InstancePerLifetimeScope();

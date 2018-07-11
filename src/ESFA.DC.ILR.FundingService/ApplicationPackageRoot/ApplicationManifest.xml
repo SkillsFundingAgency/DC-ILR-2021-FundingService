@@ -59,7 +59,9 @@
           </Section>
           <Section Name="ReferenceDataSection">
             <Parameter Name="LARSConnectionString" Value="[LARSConnectionString]" />
-            <Parameter Name="PostCodeConnectionString" Value="[PostcodesConnectionString]" />
+            <Parameter Name="PostcodesConnectionString" Value="[PostcodesConnectionString]" />
+            <Parameter Name="OrganisationConnectionString" Value="[OrganisationConnectionString]" />
+            <Parameter Name="LargeEmployersConnectionString" Value="[LargeEmployersConnectionString]" />
           </Section>
           <Section Name="AzureStorageSection">
             <Parameter Name="AzureBlobConnectionString" Value="[AzureBlobConnectionString]" />
