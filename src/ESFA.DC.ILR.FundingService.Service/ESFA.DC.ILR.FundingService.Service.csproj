@@ -44,6 +44,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Data\ESFA.DC.ILR.FundingService.Data.csproj">
+      <Project>{69B93B19-4FD0-4205-AFFA-8B71122A3C65}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Interfaces\ESFA.DC.ILR.FundingService.Interfaces.csproj">
       <Project>{81FA550D-DD5E-4F5B-AC66-1DCA51824E9C}</Project>
       <Name>ESFA.DC.ILR.FundingService.Interfaces</Name>

@@ -28,14 +28,14 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
         private readonly IExternalDataCache _referenceDataCache;
         private readonly IJsonSerializationService _jsonSerializationService;
         private readonly ILogger _logger;
-        private readonly ILearnerPerActorService<ILearner, IList<ILearner>> _learnerPerActorService;
+        private readonly IPagingService<ILearner> _learnerPerActorService;
         private readonly IPopulationService _populationService;
 
         public ALBOrchestrationSFTask(
             IFundingOutputPersistenceService<FundingOutputs> fundingOutputPersistenceService,
             IExternalDataCache referenceDataCache,
             IJsonSerializationService jsonSerializationService,
-            ILearnerPerActorService<ILearner, IList<ILearner>> learnerPerActorService,
+            IPagingService<ILearner> learnerPerActorService,
             IPopulationService populationService,
             ILogger logger)
         {
@@ -53,7 +53,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
 
             _populationService.Populate();
 
-            var albValidLearnersShards = _learnerPerActorService.Process();
+            var albValidLearnersShards = _learnerPerActorService.BuildPages();
             _logger.LogDebug("completed prefunding ALB service");
 
             // create actors for processing

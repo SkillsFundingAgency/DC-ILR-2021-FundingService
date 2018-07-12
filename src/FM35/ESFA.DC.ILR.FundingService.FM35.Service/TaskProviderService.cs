@@ -16,10 +16,10 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
     {
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
         private readonly IPopulationService _populationService;
-        private readonly ILearnerPerActorService<ILearner, IList<ILearner>> _learnerPerActorService;
+        private readonly IPagingService<ILearner> _learnerPerActorService;
         private readonly IFundingService<ILearner, FM35FundingOutputs> _fundingService;
 
-        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IPopulationService populationService, ILearnerPerActorService<ILearner, IList<ILearner>> learnerPerActorService, IFundingService<ILearner, FM35FundingOutputs> fundingService)
+        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IPopulationService populationService, IPagingService<ILearner> learnerPerActorService, IFundingService<ILearner, FM35FundingOutputs> fundingService)
         {
             _keyValuePersistenceService = keyValuePersistenceService;
             _populationService = populationService;
@@ -35,7 +35,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
             _populationService.Populate();
 
             // pre funding
-            var learnersToProcess = _learnerPerActorService.Process();
+            var learnersToProcess = _learnerPerActorService.BuildPages();
 
             // process funding
             var fundingOutputs = ProcessFunding(learnersToProcess);
@@ -54,7 +54,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
             _keyValuePersistenceService.SaveAsync("ValidLearnRefNumbers", serializer.Serialize(learners)).Wait();
         }
 
-        private FM35FundingOutputs ProcessFunding(IEnumerable<IList<ILearner>> learnersList)
+        private FM35FundingOutputs ProcessFunding(IEnumerable<IEnumerable<ILearner>> learnersList)
         {
             ConcurrentBag<FM35FundingOutputs> fundingOutputsList = new ConcurrentBag<FM35FundingOutputs>();
 
