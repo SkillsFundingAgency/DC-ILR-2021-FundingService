@@ -12,7 +12,7 @@ using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
 {
-    public class DataEntityMapper : IDataEntityMapper<ILearner, FundingOutputs>
+    public class DataEntityMapper : IDataEntityMapper<ILearner>
     {
         private const string EntityGlobal = "global";
         private const string EntityLearner = "Learner";
@@ -86,11 +86,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
             }).AsParallel();
 
             return globalEntities;
-        }
-
-        public FundingOutputs MapFrom(IEnumerable<IDataEntity> inputModels)
-        {
-            throw new System.NotImplementedException();
         }
 
         #region Entity Builders

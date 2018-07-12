@@ -11,7 +11,6 @@ using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
-using ESFA.DC.ILR.FundingService.FM35.Service.Interface.Builders;
 using ESFA.DC.ILR.FundingService.FM35.Service.Models;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model;
@@ -20,7 +19,7 @@ using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
 {
-    public class DataEntityMapper : IDataEntityMapper<ILearner, FM35FundingOutputs>
+    public class DataEntityMapper : IDataEntityMapper<ILearner>
     {
         private const string Entityglobal = "global";
         private const string EntityOrgFunding = "OrgFunding";
@@ -48,9 +47,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
         private readonly ILARSReferenceDataService _larsReferenceDataService;
         private readonly IOrganisationReferenceDataService _organisationReferenceDataService;
         private readonly IPostcodesReferenceDataService _postcodesReferenceDataService;
-        private readonly IAttributeBuilder<IAttributeData> _attributeBuilder;
+        private readonly Interfaces.IAttributeBuilder<IAttributeData> _attributeBuilder;
 
-        public DataEntityMapper(IFundingContext fundingContext, IFileDataCache fileDataCache, ILargeEmployersReferenceDataService largeEmployersReferenceDataService, ILARSReferenceDataService larsReferenceDataService, IOrganisationReferenceDataService organisationReferenceDataService, IPostcodesReferenceDataService postcodesReferenceDataService, IAttributeBuilder<IAttributeData> attributeBuilder)
+        public DataEntityMapper(IFundingContext fundingContext, IFileDataCache fileDataCache, ILargeEmployersReferenceDataService largeEmployersReferenceDataService, ILARSReferenceDataService larsReferenceDataService, IOrganisationReferenceDataService organisationReferenceDataService, IPostcodesReferenceDataService postcodesReferenceDataService, Interfaces.IAttributeBuilder<IAttributeData> attributeBuilder)
         {
             _fundingContext = fundingContext;
             _fileDataCache = fileDataCache;
@@ -88,11 +87,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
             });
 
             return globalEntities;
-        }
-
-        public FM35FundingOutputs MapFrom(IEnumerable<IDataEntity> inputModels)
-        {
-            throw new NotImplementedException();
         }
 
         protected internal IDataEntity GlobalEntity(int ukprn)

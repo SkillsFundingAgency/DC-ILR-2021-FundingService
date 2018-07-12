@@ -11,11 +11,11 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
 {
     public class FundingService : IFundingService<FM35FundingOutputs>
     {
-        private readonly IDataEntityMapper<ILearner, FM35FundingOutputs> _dataEntityMapper;
+        private readonly IDataEntityMapper<ILearner> _dataEntityMapper;
         private readonly IOPAService _opaService;
         private readonly IOutputService<FM35FundingOutputs> _fundingOutputService;
 
-        public FundingService(IDataEntityMapper<ILearner, FM35FundingOutputs> dataEntityMapper, IOPAService opaService, IOutputService<FM35FundingOutputs> fundingOutputService)
+        public FundingService(IDataEntityMapper<ILearner> dataEntityMapper, IOPAService opaService, IOutputService<FM35FundingOutputs> fundingOutputService)
         {
             _dataEntityMapper = dataEntityMapper;
             _opaService = opaService;

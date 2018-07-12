@@ -10,11 +10,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
 {
     public class FundingService : IFundingService<FundingOutputs>
     {
-        private readonly IDataEntityMapper<ILearner, FundingOutputs> _dataEntityBuilder;
+        private readonly IDataEntityMapper<ILearner> _dataEntityBuilder;
         private readonly IOPAService _opaService;
         private readonly IOutputService<FundingOutputs> _outputService;
 
-        public FundingService(IDataEntityMapper<ILearner, FundingOutputs> dataEntityBuilder, IOPAService opaService, IOutputService<FundingOutputs> fundingOutputService)
+        public FundingService(IDataEntityMapper<ILearner> dataEntityBuilder, IOPAService opaService, IOutputService<FundingOutputs> fundingOutputService)
         {
             _dataEntityBuilder = dataEntityBuilder;
             _opaService = opaService;

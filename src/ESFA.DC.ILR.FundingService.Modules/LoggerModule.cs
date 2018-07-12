@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Autofac;
 using ESFA.DC.ILR.FundingService.Config.Interfaces;
-using ESFA.DC.ILR.FundingService.Stateless.Models;
 using ESFA.DC.Logging;
 using ESFA.DC.Logging.Config;
 using ESFA.DC.Logging.Config.Interfaces;
