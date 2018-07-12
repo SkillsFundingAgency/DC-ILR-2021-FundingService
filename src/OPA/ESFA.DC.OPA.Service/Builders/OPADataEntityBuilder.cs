@@ -65,11 +65,11 @@ namespace ESFA.DC.OPA.Service.Builders
 
         protected internal IAttributeData MapOpaAttributeToDataEntity(EntityInstance entityInstance, RBAttr attr)
         {
-            object value = attr.GetValue(entityInstance);
-            if (value is TemporalValue)
+            var value = attr.GetValue(entityInstance);
+            var temporalValue = value as TemporalValue;
+            if (temporalValue != null)
             {
                 IAttributeData attributeData = new AttributeData(attr.GetName(), null);
-                var temporalValue = value as TemporalValue;
                 for (int period = 0; period < 12; period++)
                 {
                     var date = _yearStartDate.AddMonths(period);

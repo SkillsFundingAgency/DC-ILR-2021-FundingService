@@ -38,6 +38,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Config\ESFA.DC.ILR.FundingService.Config.csproj" />
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Providers\ESFA.DC.ILR.FundingService.Providers.csproj" />
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model.Interface\ESFA.DC.OPA.Model.Interface.csproj" />
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service.Interface\ESFA.DC.OPA.Service.Interface.csproj" />
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service\ESFA.DC.OPA.Service.csproj" />

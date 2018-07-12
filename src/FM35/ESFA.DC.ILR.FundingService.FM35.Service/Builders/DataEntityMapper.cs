@@ -10,7 +10,6 @@ using ESFA.DC.ILR.FundingService.Data.External.Organisation.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
-using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.FM35.Service.Models;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model;

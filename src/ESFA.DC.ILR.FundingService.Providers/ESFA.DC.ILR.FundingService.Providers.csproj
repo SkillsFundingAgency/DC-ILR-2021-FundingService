@@ -28,4 +28,9 @@
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OPA\ESFA.DC.OPA.Service.Interface\ESFA.DC.OPA.Service.Interface.csproj" />
+    <ProjectReference Include="..\OPA\ESFA.DC.OPA.Service\ESFA.DC.OPA.Service.csproj" />
+  </ItemGroup>
+
 </Project>
