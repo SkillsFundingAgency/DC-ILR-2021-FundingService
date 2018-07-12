@@ -17,9 +17,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
         private readonly IPopulationService _populationService;
         private readonly ILearnerPerActorService<ILearner, IList<ILearner>> _learnerPerActorService;
-        private readonly IFundingService<FM35FundingOutputs> _fundingService;
+        private readonly IFundingService<ILearner, FM35FundingOutputs> _fundingService;
 
-        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IPopulationService populationService, ILearnerPerActorService<ILearner, IList<ILearner>> learnerPerActorService, IFundingService<FM35FundingOutputs> fundingService)
+        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IPopulationService populationService, ILearnerPerActorService<ILearner, IList<ILearner>> learnerPerActorService, IFundingService<ILearner, FM35FundingOutputs> fundingService)
         {
             _keyValuePersistenceService = keyValuePersistenceService;
             _populationService = populationService;

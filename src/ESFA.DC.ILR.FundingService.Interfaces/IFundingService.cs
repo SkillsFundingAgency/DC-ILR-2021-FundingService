@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using ESFA.DC.ILR.Model.Interface;
 
 namespace ESFA.DC.ILR.FundingService.Interfaces
 {
-    public interface IFundingService<out T>
+    public interface IFundingService<in TIn, out TOut>
     {
-        T ProcessFunding(IEnumerable<ILearner> learnerList);
+        TOut ProcessFunding(IEnumerable<TIn> inputList);
     }
 }

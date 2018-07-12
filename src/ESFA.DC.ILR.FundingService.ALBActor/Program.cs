@@ -8,6 +8,7 @@ using ESFA.DC.ILR.FundingService.Config;
 using ESFA.DC.ILR.FundingService.Config.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Modules;
+using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.Serialization.Json;
 using ESFA.DC.ServiceFabric.Helpers;
@@ -34,7 +35,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                 using (var container = builder.Build())
                 {
                     // Not sure why this is being resolved here, to review
-                    var ss = container.Resolve<IFundingService<FundingOutputs>>();
+                    var ss = container.Resolve<IFundingService<ILearner, FundingOutputs>>();
                     Thread.Sleep(Timeout.Infinite);
                 }
             }

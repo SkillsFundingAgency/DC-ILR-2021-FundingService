@@ -9,6 +9,7 @@ using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers.Factory;
+using ESFA.DC.ILR.FundingService.Service;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Service;
 using ESFA.DC.OPA.Service.Builders;
@@ -31,7 +32,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Modules
             builder.RegisterType<ExternalDataCache>().As<IExternalDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<FileDataCache>().As<IFileDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<FundingOutputService>().As<IOutputService<FundingOutputs>>().InstancePerLifetimeScope();
-            builder.RegisterType<Service.FundingService>().As<IFundingService<FundingOutputs>>().InstancePerLifetimeScope();
+            builder.RegisterType<FundingService<ILearner, FundingOutputs>>().As<IFundingService<ILearner, FundingOutputs>>().InstancePerLifetimeScope();
         }
     }
 }

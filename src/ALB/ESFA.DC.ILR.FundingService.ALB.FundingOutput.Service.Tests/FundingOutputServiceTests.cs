@@ -468,7 +468,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service.Tests
 
         private static readonly IFormatProvider culture = new CultureInfo("en-GB", true);
 
-        private static readonly Mock<IFundingService<FundingOutputs>> FundingServiceContextMock = new Mock<IFundingService<FundingOutputs>>();
+        private static readonly Mock<IFundingService<ILearner, FundingOutputs>> FundingServiceContextMock = new Mock<IFundingService<ILearner, FundingOutputs>>();
 
         private IEnumerable<IDataEntity> TestEntities()
         {

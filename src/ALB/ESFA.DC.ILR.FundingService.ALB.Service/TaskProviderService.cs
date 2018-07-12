@@ -13,11 +13,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
     public class TaskProviderService : ITaskProviderService
     {
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
-        private readonly IFundingService<FundingOutputs> _fundingService;
+        private readonly IFundingService<ILearner, FundingOutputs> _fundingService;
         private readonly IPopulationService _populationService;
         private readonly ILearnerPerActorService<ILearner, IList<ILearner>> _learnerPerActorService;
 
-        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IFundingService<FundingOutputs> fundingService, IPopulationService populationService, ILearnerPerActorService<ILearner, IList<ILearner>> learnerPerActorService)
+        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IFundingService<ILearner, FundingOutputs> fundingService, IPopulationService populationService, ILearnerPerActorService<ILearner, IList<ILearner>> learnerPerActorService)
         {
             _keyValuePersistenceService = keyValuePersistenceService;
             _fundingService = fundingService;

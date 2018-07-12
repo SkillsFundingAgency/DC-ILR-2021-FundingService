@@ -18,6 +18,7 @@ using ESFA.DC.ILR.FundingService.Data.Population.External;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers.Factory;
+using ESFA.DC.ILR.FundingService.Service;
 using ESFA.DC.ILR.FundingService.Stubs;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.IO.Dictionary;
@@ -47,7 +48,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Modules
             builder.RegisterType<ALBAttributeBuilder>().As<IALBAttributeBuilder>().InstancePerLifetimeScope();
             builder.RegisterType<DataEntityMapper>().As<IDataEntityMapper<ILearner>>().InstancePerLifetimeScope();
             builder.RegisterType<FundingOutputService>().As<IOutputService<FundingOutputs>>().InstancePerLifetimeScope();
-            builder.RegisterType<Service.FundingService>().As<IFundingService<FundingOutputs>>().InstancePerLifetimeScope();
+            builder.RegisterType<FundingService<ILearner, FundingOutputs>>().As<IFundingService<ILearner, FundingOutputs>>().InstancePerLifetimeScope();
             builder.RegisterType<LearnerPerActorServiceStub<ILearner, IList<ILearner>>>().As<ILearnerPerActorService<ILearner, IList<ILearner>>>().InstancePerLifetimeScope();
             builder.RegisterType<ExternalDataCache>().As<IExternalDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<ExternalDataCachePopulationService>().As<IExternalDataCachePopulationService>().InstancePerLifetimeScope();
