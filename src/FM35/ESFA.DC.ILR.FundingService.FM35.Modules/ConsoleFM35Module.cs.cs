@@ -24,7 +24,6 @@ using ESFA.DC.ILR.FundingService.Data.Population.Context;
 using ESFA.DC.ILR.FundingService.Data.Population.External;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
-using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service;
 using ESFA.DC.ILR.FundingService.FM35.Service;
 using ESFA.DC.ILR.FundingService.FM35.Service.Builders;
 using ESFA.DC.ILR.FundingService.FM35.Service.Interface.Builders;

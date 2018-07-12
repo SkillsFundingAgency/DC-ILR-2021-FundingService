@@ -39,12 +39,6 @@
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Castle.Core.4.3.1\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.DateTime.Provider, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.DateTime.Provider.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.DateTime.Provider.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.DateTime.Provider.Interface, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.DateTime.Provider.Interface.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.DateTime.Provider.Interface.dll</HintPath>
-    </Reference>
     <Reference Include="ESFA.DC.ILR.Model, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ESFA.DC.ILR.1819.Model.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.dll</HintPath>
     </Reference>
@@ -129,13 +123,13 @@
       <Project>{7541eb49-ddcd-46b9-8919-80909d0c1a5c}</Project>
       <Name>ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.csproj">
-      <Project>{5fe52b2f-b11a-41ac-83b1-026bb53c8d82}</Project>
-      <Name>ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.Service.Interface\ESFA.DC.ILR.FundingService.FM35.Service.Interface.csproj">
       <Project>{AFECB0F1-AC81-4AD4-9754-54EDC7F3B9C9}</Project>
       <Name>ESFA.DC.ILR.FundingService.FM35.Service.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.Service\ESFA.DC.ILR.FundingService.FM35.Service.csproj">
+      <Project>{30B47144-2B10-418A-8DEA-8F99D83F0412}</Project>
+      <Name>ESFA.DC.ILR.FundingService.FM35.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

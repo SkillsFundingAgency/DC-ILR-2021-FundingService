@@ -7,7 +7,7 @@ using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using Oracle.Determinations.Masquerade.Util;
 
-namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service
+namespace ESFA.DC.ILR.FundingService.FM35.Service
 {
     public class FundingOutputService : IOutputService<FM35FundingOutputs>
     {

@@ -7,6 +7,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Attribute;
+using ESFA.DC.ILR.FundingService.ALB.Service;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;

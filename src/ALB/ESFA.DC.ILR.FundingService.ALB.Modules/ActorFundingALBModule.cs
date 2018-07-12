@@ -1,7 +1,7 @@
 ﻿using System;
 using Autofac;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service;
+using ESFA.DC.ILR.FundingService.ALB.Service;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Service.Rulebase;

@@ -8,7 +8,7 @@ using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 
-namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service
+namespace ESFA.DC.ILR.FundingService.ALB.Service
 {
     public class FundingOutputService : IOutputService<FundingOutputs>
     {
@@ -39,7 +39,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service
             };
         }
 
-        protected internal GlobalAttribute GlobalOutput(IDictionary<string, IAttributeData> attributes)
+        public GlobalAttribute GlobalOutput(IDictionary<string, IAttributeData> attributes)
         {
            return new GlobalAttribute
            {
@@ -50,7 +50,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service
            };
         }
 
-        protected internal LearnerAttribute[] LearnerOutput(IEnumerable<IDataEntity> learnerEntities)
+        public LearnerAttribute[] LearnerOutput(IEnumerable<IDataEntity> learnerEntities)
         {
             var learners = new List<LearnerAttribute>();
 
@@ -67,7 +67,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service
             return learners.ToArray();
         }
 
-        protected internal LearnerPeriodisedAttribute[] LearnerPeriodisedAttributes(IDataEntity learner)
+        public LearnerPeriodisedAttribute[] LearnerPeriodisedAttributes(IDataEntity learner)
         {
             var attributeList = new List<string> { "ALBSeqNum" };
             var learnerPeriodisedAttributesList = new List<LearnerPeriodisedAttribute>();
@@ -124,7 +124,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service
             return learnerPeriodisedAttributesList.ToArray();
         }
 
-        protected internal LearningDeliveryAttribute[] LearningDeliveryAttributes(IDataEntity learner)
+        public LearningDeliveryAttribute[] LearningDeliveryAttributes(IDataEntity learner)
         {
             var list = new List<LearningDeliveryAttribute>();
             string aimSeqNumber = "AimSeqNumber";
@@ -144,7 +144,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service
             return list.ToArray();
         }
 
-        protected internal LearningDeliveryAttributeData LearningDeliveryAttributeData(IDataEntity learningDelivery)
+        public LearningDeliveryAttributeData LearningDeliveryAttributeData(IDataEntity learningDelivery)
         {
             var attributes = learningDelivery.Attributes;
 
@@ -168,7 +168,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service
             };
         }
 
-        protected internal LearningDeliveryPeriodisedAttribute[] LearningDeliveryPeriodisedAttributeData(IDataEntity learningDelivery)
+        public LearningDeliveryPeriodisedAttribute[] LearningDeliveryPeriodisedAttributeData(IDataEntity learningDelivery)
         {
             var attributeList = new List<string>() { "ALBCode", "ALBSupportPayment", "AreaUpliftBalPayment", "AreaUpliftOnProgPayment" };
             var learningDeliveryPeriodisedAttributesList = new List<LearningDeliveryPeriodisedAttribute>();
@@ -259,7 +259,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Service
         {
             return value == "true";
         }
-        
+
         private DateTime GetPeriodDate(int periodNumber)
         {
             return Periods.Where(p => p.Key == periodNumber).Select(v => v.Value).First();
