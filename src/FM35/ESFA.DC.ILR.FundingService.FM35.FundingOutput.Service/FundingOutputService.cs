@@ -1,23 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ESFA.DC.DateTime.Provider.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Attribute;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
+using Oracle.Determinations.Masquerade.Util;
 
 namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service
 {
     public class FundingOutputService : IOutputService<FM35FundingOutputs>
     {
-        private readonly IDateTimeProvider _dateTimeProvider;
-
-        public FundingOutputService(IDateTimeProvider dateTimeProvider)
-        {
-            _dateTimeProvider = dateTimeProvider;
-        }
-
         private static Dictionary<int, System.DateTime> Periods => new Dictionary<int, System.DateTime>
         {
            { 1, new System.DateTime(2018, 08, 01) },
@@ -276,9 +269,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service
 
             if (attributeValue != null && attributeValue.ToString() != "uncertain")
             {
-                System.DateTime attributeDateValue = _dateTimeProvider.ConvertOpaToDateTime(attributeValue.ToString());
-
-                return attributeDateValue;
+                return ((Date)attributeValue).GetDateTime();
             }
 
             return null;

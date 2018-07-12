@@ -8,8 +8,6 @@ using ESFA.DC.Data.Organisatons.Model;
 using ESFA.DC.Data.Organisatons.Model.Interface;
 using ESFA.DC.Data.Postcodes.Model;
 using ESFA.DC.Data.Postcodes.Model.Interfaces;
-using ESFA.DC.DateTime.Provider;
-using ESFA.DC.DateTime.Provider.Interface;
 using ESFA.DC.ILR.FundingService.Data.Context;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer;
@@ -62,7 +60,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.Modules
             builder.RegisterType<RulebaseProviderFactory>().As<IRulebaseProviderFactory>().InstancePerLifetimeScope();
             builder.RegisterType<OPAService>().As<IOPAService>().InstancePerLifetimeScope();
             builder.RegisterType<AttributeBuilder>().As<IAttributeBuilder<IAttributeData>>().InstancePerLifetimeScope();
-            builder.RegisterType<DateTimeProvider>().As<IDateTimeProvider>().InstancePerLifetimeScope();
             builder.RegisterType<DataEntityMapper>().As<IDataEntityMapper<ILearner, FM35FundingOutputs>>().InstancePerLifetimeScope();
             builder.RegisterType<FundingOutputService>().As<IOutputService<FM35FundingOutputs>>().InstancePerLifetimeScope();
             builder.RegisterType<Service.FundingService>().As<IFundingService<FM35FundingOutputs>>().InstancePerLifetimeScope();

@@ -1,6 +1,4 @@
 ﻿using Autofac;
-using ESFA.DC.DateTime.Provider;
-using ESFA.DC.DateTime.Provider.Interface;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Interface;
@@ -42,7 +40,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.Modules
             builder.RegisterType<OrganisationReferenceDataService>().As<IOrganisationReferenceDataService>().InstancePerLifetimeScope();
             builder.RegisterType<PostcodesReferenceDataService>().As<IPostcodesReferenceDataService>().InstancePerLifetimeScope();
             builder.RegisterType<ExternalDataCache>().As<IExternalDataCache>().InstancePerLifetimeScope();
-            builder.RegisterType<DateTimeProvider>().As<IDateTimeProvider>().InstancePerLifetimeScope();
             builder.RegisterType<FundingOutputService>().As<IOutputService<FM35FundingOutputs>>().InstancePerLifetimeScope();
             builder.RegisterType<Service.FundingService>().As<IFundingService<FM35FundingOutputs>>().InstancePerLifetimeScope();
         }

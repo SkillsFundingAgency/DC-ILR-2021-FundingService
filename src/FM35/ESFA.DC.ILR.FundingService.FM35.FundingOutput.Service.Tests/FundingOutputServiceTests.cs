@@ -15,6 +15,7 @@ using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using FluentAssertions;
 using Moq;
+using Oracle.Determinations.Masquerade.Util;
 using Xunit;
 
 namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
@@ -24,27 +25,11 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
         /// <summary>
         /// Return FundingOutputs from the FundingOutput
         /// </summary>
-        [Fact(DisplayName = "ProcessFundingOutputs - FundingOutput - Exists"), Trait("FundingOutput Service", "Unit")]
-        public void ProcessFundingOutputs_FundingOutput_Exists()
-        {
-            // ARRANGE
-            // Use Test Helpers
-
-            // ACT
-            var fundingOutputService = new FundingOutputService(new DateTimeProvider());
-
-            // ASSERT
-            fundingOutputService.Should().NotBeNull();
-        }
-
-        /// <summary>
-        /// Return FundingOutputs from the FundingOutput
-        /// </summary>
         [Fact(DisplayName = "ProcessFundingOutputs - FundingOutput - Global Exists"), Trait("FundingOutput Service", "Unit")]
         public void ProcessFundingOutputs_FundingOutput_GlobalExists()
         {
             // ARRANGE
-            var fundingOutputService = new FundingOutputService(new DateTimeProvider());
+            var fundingOutputService = NewService();
 
             // ACT
             var fundingOutput = fundingOutputService.ProcessFundingOutputs(TestEntities());
@@ -70,7 +55,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
                 RulebaseVersion = "1718.5.10",
             };
 
-            var fundingOutputService = new FundingOutputService(new DateTimeProvider());
+            var fundingOutputService = NewService();
 
             // ACT
             var fundingOutput = fundingOutputService.ProcessFundingOutputs(TestEntities());
@@ -86,7 +71,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
         public void ProcessFundingOutputs_FundingOutput_LearnersExist()
         {
             // ARRANGE
-            var fundingOutputService = new FundingOutputService(new DateTimeProvider());
+            var fundingOutputService = NewService();
 
             // ACT
             var fundingOutput = fundingOutputService.ProcessFundingOutputs(TestEntities());
@@ -116,7 +101,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
                  }
             };
 
-            var fundingOutputService = new FundingOutputService(new DateTimeProvider());
+            var fundingOutputService = NewService();
 
             // ACT
             var fundingOutput = fundingOutputService.ProcessFundingOutputs(TestEntities());
@@ -132,7 +117,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
         public void ProcessFundingOutputs_FundingOutput_LearnerAttributesExist()
         {
             // ARRANGE
-            var fundingOutputService = new FundingOutputService(new DateTimeProvider());
+            var fundingOutputService = NewService();
 
             // ACT
             var fundingOutput = fundingOutputService.ProcessFundingOutputs(TestEntities());
@@ -151,7 +136,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             // ARRANGE
             var expectedLearnRefNumbers = new List<string> { "TestLearner1", "TestLearner2" };
 
-            var fundingOutputService = new FundingOutputService(new DateTimeProvider());
+            var fundingOutputService = NewService();
 
             // ACT
             var fundingOutput = fundingOutputService.ProcessFundingOutputs(TestEntities());
@@ -175,7 +160,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
                 TestLearningDeliveryAttributeArray(1),
             };
 
-            var fundingOutputService = new FundingOutputService(new DateTimeProvider());
+            var fundingOutputService = NewService();
 
             // ACT
             var fundingOutput = fundingOutputService.ProcessFundingOutputs(TestEntities());
@@ -193,7 +178,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
         public void FundingOutput_GlobalOutput_Exists()
         {
             // ARRANGE
-            var fundingOutputService = new FundingOutputService(new DateTimeProvider());
+            var fundingOutputService = NewService();
 
             // ACT
             var globalOutput = fundingOutputService.GlobalOutput(GlobalAttributes());
@@ -209,7 +194,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
         public void FundingOutput_GlobalOutput_Correct()
         {
             // ARRANGE
-            var fundingOutputService = new FundingOutputService(new DateTimeProvider());
+            var fundingOutputService = NewService();
 
             // ACT
             var globalOutput = fundingOutputService.GlobalOutput(GlobalAttributes());
@@ -235,7 +220,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
         public void FundingOutput_LearnerOutput_Exists()
         {
             // ARRANGE
-            var fundingOutputService = new FundingOutputService(new DateTimeProvider());
+            var fundingOutputService = NewService();
 
             // ACT
             var learnerOutput = fundingOutputService.LearnerOutput(TestLearnerEntity(null, "TestLearner", true));
@@ -251,7 +236,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
         public void FundingOutput_LearnerOutput_Correct()
         {
             // ARRANGE
-            var fundingOutputService = new FundingOutputService(new DateTimeProvider());
+            var fundingOutputService = NewService();
 
             // ACT
             var learnerOutput = fundingOutputService.LearnerOutput(TestLearnerEntity(null, "TestLearner", true));
@@ -278,7 +263,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
         public void FundingOutput_LearningDeliveryAttributes_Exists()
         {
             // ARRANGE
-            var fundingOutputService = new FundingOutputService(new DateTimeProvider());
+            var fundingOutputService = NewService();
 
             // ACT
             var learningDeliveryAttributes = fundingOutputService.LearningDeliveryAttributes(TestLearnerEntity(null, "TestLearner", true).SingleOrDefault());
@@ -294,7 +279,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
         public void FundingOutput_LearningDeliveryAttributes_Correct()
         {
             // ARRANGE
-            var fundingOutputService = new FundingOutputService(new DateTimeProvider());
+            var fundingOutputService = NewService();
 
             // ACT
             var learningDeliveryAttributes = fundingOutputService.LearningDeliveryAttributes(TestLearnerEntity(null, "TestLearner", true).SingleOrDefault());
@@ -320,7 +305,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
         public void FundingOutput_LearningDeliveryAttributeDatas_Exists()
         {
             // ARRANGE
-            var fundingOutputService = new FundingOutputService(new DateTimeProvider());
+            var fundingOutputService = NewService();
 
             // ACT
             var learningDeliveryAttributeDatas =
@@ -337,7 +322,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
         public void FundingOutput_LearningDeliveryAttributeDatas_Correct()
         {
             // ARRANGE
-            var fundingOutputService = new FundingOutputService(new DateTimeProvider());
+            var fundingOutputService = NewService();
 
             // ACT
             var learningDeliveryAttributeDatas =
@@ -356,7 +341,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
         public void FundingOutput_LearningDeliveryPeriodisedAttributeData_Exists()
         {
             // ARRANGE
-            var fundingOutputService = new FundingOutputService(new DateTimeProvider());
+            var fundingOutputService = NewService();
 
             // ACT
             var learningDeliveryPeriodisedAttributeData =
@@ -373,7 +358,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
         public void FundingOutput_LearningDeliveryPeriodisedAttributeData_Correct()
         {
             // ARRANGE
-            var fundingOutputService = new FundingOutputService(new DateTimeProvider());
+            var fundingOutputService = NewService();
 
             // ACT
             var learningDeliveryPeriodisedAttributeData =
@@ -431,7 +416,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
                     Attributes = new Dictionary<string, IAttributeData>
                     {
                         { "LearnRefNumber", new AttributeData("LearnRefNumber", learnRefNumber) },
-                        { "DateOfBirth", new AttributeData("DateOfBirth", new System.DateTime(2000, 01, 01)) },
+                        { "DateOfBirth", new AttributeData("DateOfBirth", new Date(2000, 01, 01)) },
                     },
                     Parent = parent
                 };
@@ -449,7 +434,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
                 Attributes = new Dictionary<string, IAttributeData>
                 {
                     { "LearnRefNumber", new AttributeData("LearnRefNumber", learnRefNumber) },
-                    { "DateOfBirth", new AttributeData("DateOfBirth", new System.DateTime(2000, 01, 01)) },
+                    { "DateOfBirth", new AttributeData("DateOfBirth", new Date(2000, 01, 01)) },
                 },
                 Parent = parent
             };
@@ -471,7 +456,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
                 Attributes = new Dictionary<string, IAttributeData>
                 {
                     { "AimSeqNumber", Attribute("AimSeqNumber", false, "1.0") },
-                    { "AchApplicDate", Attribute("AchApplicDate", false, new System.DateTime(2018, 09, 01)) },
+                    { "AchApplicDate", Attribute("AchApplicDate", false, new Date(new System.DateTime(2018, 09, 01))) },
                     { "Achieved", Attribute("Achieved", false, "1.0") },
                     { "AchieveElement", Attribute("AchieveElement", false, "1.0") },
                     { "AchievePayElig", Attribute("AchievePayElig", false, "1.0") },
@@ -481,21 +466,21 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
                     { "ActualNumInstalm", Attribute("ActualNumInstalm", false, "1.0") },
                     { "ActualNumInstalmPreTrans", Attribute("ActualNumInstalmPreTrans", false, "1.0") },
                     { "ActualNumInstalmTrans", Attribute("ActualNumInstalmTrans", false, "1.0") },
-                    { "AdjLearnStartDate", Attribute("AdjLearnStartDate", false, new System.DateTime(2018, 09, 01)) },
+                    { "AdjLearnStartDate", Attribute("AdjLearnStartDate", false, new Date(new System.DateTime(2018, 09, 01))) },
                     { "AdltLearnResp", Attribute("AdltLearnResp", false, "1.0") },
                     { "AgeAimStart", Attribute("AgeAimStart", false, "1.0") },
                     { "AimValue", Attribute("AimValue", false, "1.0") },
-                    { "AppAdjLearnStartDate", Attribute("AppAdjLearnStartDate", false, new System.DateTime(2018, 09, 01)) },
+                    { "AppAdjLearnStartDate", Attribute("AppAdjLearnStartDate", false, new Date(new System.DateTime(2018, 09, 01))) },
                     { "AppAgeFact", Attribute("AppAgeFact", false, "1.0") },
                     { "AppATAGTA", Attribute("AppATAGTA", false, "1.0") },
                     { "AppCompetency", Attribute("AppCompetency", false, "1.0") },
                     { "AppFuncSkill", Attribute("AppFuncSkill", false, "1.0") },
                     { "AppFuncSkill1618AdjFact", Attribute("AppFuncSkill1618AdjFact", false, "1.0") },
                     { "AppKnowl", Attribute("AppKnowl", false, "1.0") },
-                    { "AppLearnStartDate", Attribute("AppLearnStartDate", false, new System.DateTime(2018, 09, 01)) },
-                    { "ApplicEmpFactDate", Attribute("ApplicEmpFactDate", false, new System.DateTime(2018, 09, 01)) },
-                    { "ApplicFactDate", Attribute("ApplicFactDate", false, new System.DateTime(2018, 09, 01)) },
-                    { "ApplicFundRateDate", Attribute("ApplicFundRateDate", false, new System.DateTime(2018, 09, 01)) },
+                    { "AppLearnStartDate", Attribute("AppLearnStartDate", false, new Date(new System.DateTime(2018, 09, 01))) },
+                    { "ApplicEmpFactDate", Attribute("ApplicEmpFactDate", false, new Date(new System.DateTime(2018, 09, 01))) },
+                    { "ApplicFactDate", Attribute("ApplicFactDate", false, new Date(new System.DateTime(2018, 09, 01))) },
+                    { "ApplicFundRateDate", Attribute("ApplicFundRateDate", false, new Date(new System.DateTime(2018, 09, 01))) },
                     { "ApplicProgWeightFact", Attribute("ApplicProgWeightFact", false, "1.0") },
                     { "ApplicUnweightFundRate", Attribute("ApplicUnweightFundRate", false, "1.0") },
                     { "ApplicWeightFundRate", Attribute("ApplicWeightFundRate", false, "1.0") },
@@ -515,7 +500,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
                     { "FundStart", Attribute("FundStart", false, "1.0") },
                     { "LargeEmployerFM35Fctr", Attribute("LargeEmployerFM35Fctr", false, "1.0") },
                     { "LargeEmployerID", Attribute("LargeEmployerID", false, "1.0") },
-                    { "LargeEmployerStatusDate", Attribute("LargeEmployerStatusDate", false, new System.DateTime(2018, 09, 01)) },
+                    { "LargeEmployerStatusDate", Attribute("LargeEmployerStatusDate", false, new Date(new System.DateTime(2018, 09, 01))) },
                     { "LTRCUpliftFctr", Attribute("LTRCUpliftFctr", false, "1.0") },
                     { "NonGovCont", Attribute("NonGovCont", false, "1.0") },
                     { "OLASSCustody", Attribute("OLASSCustody", false, "1.0") },
@@ -536,7 +521,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
                     { "ThresholdDays", Attribute("ThresholdDays", false, "1.0") },
                     { "Traineeship", Attribute("Traineeship", false, "1.0") },
                     { "Trans", Attribute("Trans", false, "1.0") },
-                    { "TrnAdjLearnStartDate", Attribute("TrnAdjLearnStartDate", false, new System.DateTime(2018, 09, 01)) },
+                    { "TrnAdjLearnStartDate", Attribute("TrnAdjLearnStartDate", false, new Date(new System.DateTime(2018, 09, 01))) },
                     { "TrnWorkPlaceAim", Attribute("TrnWorkPlaceAim", false, "1.0") },
                     { "TrnWorkPrepAim", Attribute("TrnWorkPrepAim", false, "1.0") },
                     { "UnWeightedRateFromESOL", Attribute("UnWeightedRateFromESOL", false, "1.0") },
@@ -891,6 +876,11 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
                 Period11 = value,
                 Period12 = value,
             };
+        }
+
+        private FundingOutputService NewService()
+        {
+            return new FundingOutputService();
         }
     }
 }
