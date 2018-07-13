@@ -22,10 +22,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ESFA.DC.JobContext.Interface" Version="0.1.12-beta0001" />
+    <PackageReference Include="ESFA.DC.JobContext.Interface" Version="0.1.13-beta0001" />
     <PackageReference Include="ESFA.DC.Logging" Version="0.1.1-beta0001" />
     <PackageReference Include="ESFA.DC.Serialization.Json" Version="0.1.4-beta0001" />
-    <PackageReference Include="Microsoft.ServiceFabric.Actors" Version="3.1.301" />
+    <PackageReference Include="Microsoft.ServiceFabric.Actors" Version="3.1.306" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
   </ItemGroup>
 

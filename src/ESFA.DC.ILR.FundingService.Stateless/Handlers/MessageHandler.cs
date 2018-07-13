@@ -3,6 +3,7 @@ using System.Fabric;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
+using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.JobContext;
 using ESFA.DC.JobContext.Interface;

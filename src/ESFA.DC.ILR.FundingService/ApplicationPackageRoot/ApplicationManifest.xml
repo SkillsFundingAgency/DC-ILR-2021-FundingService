@@ -16,6 +16,8 @@
     <Parameter Name="DataStoreSubscriptionName" DefaultValue="" />
     <Parameter Name="LARSConnectionString" DefaultValue="metadata=res://*/LARS.csdl|res://*/LARS.ssdl|res://*/LARS.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(local);initial catalog=ESFA.DC.Data.LARS.Database;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
     <Parameter Name="PostcodesConnectionString" DefaultValue="metadata=res://*/Postcodes.csdl|res://*/Postcodes.ssdl|res://*/Postcodes.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(local);initial catalog=ESFA.DC.Data.Postcodes.Database;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
+    <Parameter Name="OrganisationConnectionString" DefaultValue="__OrganisationConnectionString__" />
+    <Parameter Name="LargeEmployersConnectionString" DefaultValue="__LargeEmployersConnectionString__" />
     <Parameter Name="RedisCacheConnectionString" DefaultValue="" />
     <Parameter Name="AzureBlobConnectionString" DefaultValue="UseDevelopmentStorage=true" />
     <Parameter Name="AzureBlobContainerName" DefaultValue="ilr-files" />

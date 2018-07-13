@@ -47,7 +47,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
 
         private void BuildKeyValueDictionary(IMessage message)
         {
-            var learners = message.Learners.ToList();
+            var learners = message.Learners.Select(l => l.LearnRefNumber).ToList();
 
             var serializer = new XmlSerializationService();
 

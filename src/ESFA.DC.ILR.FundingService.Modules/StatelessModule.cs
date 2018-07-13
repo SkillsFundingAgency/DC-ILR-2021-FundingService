@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Autofac;
 using ESFA.DC.Data.LargeEmployer.Model;
 using ESFA.DC.Data.LargeEmployer.Model.Interface;
@@ -8,6 +10,7 @@ using ESFA.DC.Data.Organisatons.Model;
 using ESFA.DC.Data.Organisatons.Model.Interface;
 using ESFA.DC.Data.Postcodes.Model;
 using ESFA.DC.Data.Postcodes.Model.Interfaces;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.Config.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.Context;
 using ESFA.DC.ILR.FundingService.Data.External;
@@ -18,13 +21,28 @@ using ESFA.DC.ILR.FundingService.Data.Population.Context;
 using ESFA.DC.ILR.FundingService.Data.Population.External;
 using ESFA.DC.ILR.FundingService.Data.Population.File;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
+using ESFA.DC.ILR.FundingService.Dto;
+using ESFA.DC.ILR.FundingService.Dto.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
+using ESFA.DC.ILR.FundingService.Orchestrators.Implementations;
+using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
+using ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks;
+using ESFA.DC.ILR.FundingService.Providers.Interfaces;
+using ESFA.DC.ILR.FundingService.Providers.Output;
 using ESFA.DC.ILR.FundingService.Stubs;
 using ESFA.DC.ILR.Model.Interface;
+using ESFA.DC.JobContext;
+using ESFA.DC.JobContext.Interface;
+using ESFA.DC.JobContextManager;
+using ESFA.DC.JobContextManager.Interface;
+using ESFA.DC.KeyGenerator.Interface;
+using ESFA.DC.Serialization.Interfaces;
+using ESFA.DC.Serialization.Json;
+using ESFA.DC.Serialization.Xml;
 
-namespace ESFA.DC.ILR.FundingService.ALB.Modules
+namespace ESFA.DC.ILR.FundingService.Modules
 {
-    public class PreFundingALBModule : Module
+    public class StatelessModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
@@ -62,6 +80,25 @@ namespace ESFA.DC.ILR.FundingService.ALB.Modules
             builder.RegisterType<FileDataCache>().As<IFileDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<ValidLearnersDataRetrievalService>().As<IValidLearnersDataRetrievalService>().InstancePerLifetimeScope();
             builder.RegisterType<UKPRNDataRetrievalService>().As<IUKPRNDataRetrievalService>().InstancePerLifetimeScope();
+
+            builder.RegisterType<JsonSerializationService>().As<ISerializationService>();
+            builder.RegisterType<JsonSerializationService>().As<IJsonSerializationService>();
+            builder.RegisterType<XmlSerializationService>().As<IXmlSerializationService>();
+
+            // register the  callback handle when a new message is received from ServiceBus
+            builder.Register<Func<JobContextMessage, CancellationToken, Task<bool>>>(c => c.Resolve<IMessageHandler>().Handle).InstancePerLifetimeScope();
+            builder.RegisterType<JobContextManagerForTopics<JobContextMessage>>().As<IJobContextManager<JobContextMessage>>().InstancePerLifetimeScope();
+            builder.RegisterType<JobContextMessage>().As<IJobContextMessage>().InstancePerLifetimeScope();
+
+            builder.RegisterType<PreFundingSFOrchestrationService>().As<IPreFundingSFOrchestrationService>().InstancePerLifetimeScope();
+
+            builder.RegisterType<FundingServiceDto>().As<IFundingServiceDto>().InstancePerLifetimeScope();
+
+            builder.RegisterType<FundingOutputPersistenceSfService<FundingOutputs>>().As<IFundingOutputPersistenceService<FundingOutputs>>().InstancePerLifetimeScope();
+
+            builder.RegisterType<KeyGenerator.KeyGenerator>().As<IKeyGenerator>().SingleInstance();
+
+            builder.RegisterType<ALBOrchestrationSFTask>().As<IALBOrchestrationSFTask>().InstancePerLifetimeScope();
         }
     }
 }

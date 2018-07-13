@@ -13,5 +13,7 @@ namespace ESFA.DC.ILR.FundingService.Config
         public string FundingCalcSubscriptionName { get; set; }
 
         public string DataStoreSubscriptionName { get; set; }
+
+        public string JobStatusQueueName { get; set; }
     }
 }
