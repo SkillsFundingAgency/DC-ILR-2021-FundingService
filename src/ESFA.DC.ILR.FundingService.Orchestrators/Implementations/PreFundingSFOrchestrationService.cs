@@ -19,6 +19,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         private readonly IIlrFileProviderService _ilrFileProviderService;
         private readonly IFundingServiceDto _fundingServiceDto;
         private readonly IALBOrchestrationSFTask _ALBOrchestrationSfTask;
+        private readonly IFM35OrchestrationSFTask _fm35OrchestrationSfTask;
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
         private readonly ILogger _logger;
 
@@ -27,6 +28,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             IIlrFileProviderService ilrFileProviderService,
             IFundingServiceDto fundingServiceDto,
             IALBOrchestrationSFTask ALBOrchestrationSfTask,
+            IFM35OrchestrationSFTask fm35OrchestrationSfTask,
             IKeyValuePersistenceService keyValuePersistenceService,
             ILogger logger)
         {
@@ -34,6 +36,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             _ilrFileProviderService = ilrFileProviderService;
             _fundingServiceDto = fundingServiceDto;
             _ALBOrchestrationSfTask = ALBOrchestrationSfTask;
+            _fm35OrchestrationSfTask = fm35OrchestrationSfTask;
             _keyValuePersistenceService = keyValuePersistenceService;
             _logger = logger;
         }
@@ -65,7 +68,8 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
                     case "ALB":
                         fundingTasks.Add(_ALBOrchestrationSfTask.Execute(jobContextMessage));
                         break;
-                    case "FAM35":
+                    case "FM35":
+                        fundingTasks.Add(_fm35OrchestrationSfTask.Execute(jobContextMessage));
                         break;
                 }
             }

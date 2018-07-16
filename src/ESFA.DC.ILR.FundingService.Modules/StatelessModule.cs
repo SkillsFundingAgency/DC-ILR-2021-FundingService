@@ -23,6 +23,7 @@ using ESFA.DC.ILR.FundingService.Data.Population.File;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Dto.Interfaces;
+using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Implementations;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
@@ -94,8 +95,10 @@ namespace ESFA.DC.ILR.FundingService.Modules
             builder.RegisterType<FundingServiceDto>().As<IFundingServiceDto>().InstancePerLifetimeScope();
 
             builder.RegisterType<FundingOutputPersistenceSfService<FundingOutputs>>().As<IFundingOutputPersistenceService<FundingOutputs>>().InstancePerLifetimeScope();
+            builder.RegisterType<FundingOutputPersistenceSfService<FM35FundingOutputs>>().As<IFundingOutputPersistenceService<FM35FundingOutputs>>().InstancePerLifetimeScope();
 
             builder.RegisterType<ALBOrchestrationSFTask>().As<IALBOrchestrationSFTask>().InstancePerLifetimeScope();
+            builder.RegisterType<FM35OrchestrationSFTask>().As<IFM35OrchestrationSFTask>().InstancePerLifetimeScope();
         }
     }
 }

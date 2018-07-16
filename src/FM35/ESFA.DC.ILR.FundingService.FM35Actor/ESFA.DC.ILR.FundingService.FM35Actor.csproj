@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
-    <ProjectGuid>{1AF8930F-8F7E-46FD-92C0-F31451512492}</ProjectGuid>
+    <ProjectGuid>{20E27C18-85B3-4936-AE10-F52B6C49840B}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ESFA.DC.ILR.FundingService.ALBActor</RootNamespace>
-    <AssemblyName>ESFA.DC.ILR.FundingService.ALBActor</AssemblyName>
+    <RootNamespace>ESFA.DC.ILR.FundingService.FM35Actor</RootNamespace>
+    <AssemblyName>ESFA.DC.ILR.FundingService.FM35Actor</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -28,7 +28,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <PlatformTarget>x64</PlatformTarget>
-    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.ALBActor.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <DebugType>pdbonly</DebugType>
@@ -37,144 +37,119 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <PlatformTarget>x64</PlatformTarget>
-    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.ALBActor.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
     <IsServiceFabricServiceProject>true</IsServiceFabricServiceProject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
+      <HintPath>..\..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Autofac.Extras.DynamicProxy, Version=4.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.Extras.DynamicProxy.4.4.0\lib\net45\Autofac.Extras.DynamicProxy.dll</HintPath>
+      <HintPath>..\..\packages\Autofac.Extras.DynamicProxy.4.4.0\lib\net45\Autofac.Extras.DynamicProxy.dll</HintPath>
     </Reference>
     <Reference Include="Autofac.Integration.ServiceFabric, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=AMD64">
-      <HintPath>..\packages\Autofac.ServiceFabric.2.0.0\lib\net452\Autofac.Integration.ServiceFabric.dll</HintPath>
+      <HintPath>..\..\packages\Autofac.ServiceFabric.2.0.0\lib\net452\Autofac.Integration.ServiceFabric.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Castle.Core.4.3.1\lib\net45\Castle.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.Data.LARS.Model, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Data.LARS.Model.0.1.2-beta0001\lib\net461\ESFA.DC.Data.LARS.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.Data.Postcodes.Model, Version=0.1.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Data.Postcodes.Model.0.1.3-beta0001\lib\net461\ESFA.DC.Data.Postcodes.Model.dll</HintPath>
+      <HintPath>..\..\packages\Castle.Core.4.3.1\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.Model, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.1819.Model.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.dll</HintPath>
+      <HintPath>..\..\packages\ESFA.DC.ILR.1819.Model.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.1819.Model.Interface.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.IO.Dictionary, Version=0.1.10.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.IO.Dictionary.0.1.10-beta0001\lib\netstandard2.0\ESFA.DC.IO.Dictionary.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.IO.Interfaces, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.IO.Interfaces.0.1.2-beta0001\lib\netstandard2.0\ESFA.DC.IO.Interfaces.dll</HintPath>
+      <HintPath>..\..\packages\ESFA.DC.ILR.1819.Model.Interface.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.Logging, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Logging.0.1.1-beta0001\lib\netstandard2.0\ESFA.DC.Logging.dll</HintPath>
+      <HintPath>..\..\packages\ESFA.DC.Logging.0.1.1-beta0001\lib\netstandard2.0\ESFA.DC.Logging.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.Serialization.Interfaces, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Serialization.Interfaces.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Interfaces.dll</HintPath>
+      <HintPath>..\..\packages\ESFA.DC.Serialization.Interfaces.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.Serialization.Json, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Serialization.Json.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Json.dll</HintPath>
+      <HintPath>..\..\packages\ESFA.DC.Serialization.Json.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Json.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ServiceFabric.Helpers, Version=0.1.3.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\ESFA.DC.ServiceFabric.Helpers.0.1.3-beta0001\lib\netstandard2.0\ESFA.DC.ServiceFabric.Helpers.dll</HintPath>
+      <HintPath>..\..\packages\ESFA.DC.ServiceFabric.Helpers.0.1.3-beta0001\lib\netstandard2.0\ESFA.DC.ServiceFabric.Helpers.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.ServiceFabric.Actors, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>..\packages\Microsoft.ServiceFabric.Actors.3.1.306\lib\net461\Microsoft.ServiceFabric.Actors.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.Actors.3.1.306\lib\net461\Microsoft.ServiceFabric.Actors.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ServiceFabric.Data, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>..\packages\Microsoft.ServiceFabric.Data.3.1.306\lib\net461\Microsoft.ServiceFabric.Data.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.Data.3.1.306\lib\net461\Microsoft.ServiceFabric.Data.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ServiceFabric.Data.Extensions, Version=1.3.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ServiceFabric.Data.Extensions.1.3.306\lib\net461\Microsoft.ServiceFabric.Data.Extensions.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.Data.Extensions.1.3.306\lib\net461\Microsoft.ServiceFabric.Data.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ServiceFabric.Data.Interfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>..\packages\Microsoft.ServiceFabric.Data.Interfaces.3.1.306\lib\net461\Microsoft.ServiceFabric.Data.Interfaces.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.Data.Interfaces.3.1.306\lib\net461\Microsoft.ServiceFabric.Data.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ServiceFabric.Diagnostics, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>..\packages\Microsoft.ServiceFabric.Diagnostics.Internal.3.1.306\lib\net461\Microsoft.ServiceFabric.Diagnostics.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.Diagnostics.Internal.3.1.306\lib\net461\Microsoft.ServiceFabric.Diagnostics.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ServiceFabric.FabricTransport, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>..\packages\Microsoft.ServiceFabric.FabricTransport.Internal.3.1.306\lib\net461\Microsoft.ServiceFabric.FabricTransport.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.FabricTransport.Internal.3.1.306\lib\net461\Microsoft.ServiceFabric.FabricTransport.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ServiceFabric.FabricTransport.V2, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>..\packages\Microsoft.ServiceFabric.FabricTransport.Internal.3.1.306\lib\net461\Microsoft.ServiceFabric.FabricTransport.V2.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.FabricTransport.Internal.3.1.306\lib\net461\Microsoft.ServiceFabric.FabricTransport.V2.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ServiceFabric.Internal, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>..\packages\Microsoft.ServiceFabric.6.2.306\lib\net461\Microsoft.ServiceFabric.Internal.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.6.2.306\lib\net461\Microsoft.ServiceFabric.Internal.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ServiceFabric.Internal.Strings, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>..\packages\Microsoft.ServiceFabric.6.2.306\lib\net461\Microsoft.ServiceFabric.Internal.Strings.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.6.2.306\lib\net461\Microsoft.ServiceFabric.Internal.Strings.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ServiceFabric.Preview, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>..\packages\Microsoft.ServiceFabric.6.2.306\lib\net461\Microsoft.ServiceFabric.Preview.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.6.2.306\lib\net461\Microsoft.ServiceFabric.Preview.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ServiceFabric.ReliableCollection.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ServiceFabric.Data.Extensions.1.3.306\lib\net461\Microsoft.ServiceFabric.ReliableCollection.Interop.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.Data.Extensions.1.3.306\lib\net461\Microsoft.ServiceFabric.ReliableCollection.Interop.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ServiceFabric.Services, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>..\packages\Microsoft.ServiceFabric.Services.3.1.306\lib\net461\Microsoft.ServiceFabric.Services.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.Services.3.1.306\lib\net461\Microsoft.ServiceFabric.Services.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ServiceFabric.Services.Remoting, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>..\packages\Microsoft.ServiceFabric.Services.Remoting.3.1.306\lib\net461\Microsoft.ServiceFabric.Services.Remoting.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.Services.Remoting.3.1.306\lib\net461\Microsoft.ServiceFabric.Services.Remoting.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Oracle.Determinations.Engine, Version=10.4.0.0, Culture=neutral, PublicKeyToken=863065c849b9b316, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.OPA.RunTime.DLLs.0.1.1-beta0001\lib\Oracle.Determinations.Engine.dll</HintPath>
-    </Reference>
-    <Reference Include="Oracle.Determinations.Masquerade, Version=10.4.0.0, Culture=neutral, PublicKeyToken=863065c849b9b316, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.OPA.RunTime.DLLs.0.1.1-beta0001\lib\Oracle.Determinations.Masquerade.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.2.6.0\lib\net46\Serilog.dll</HintPath>
+      <HintPath>..\..\packages\Serilog.2.6.0\lib\net46\Serilog.dll</HintPath>
     </Reference>
     <Reference Include="Serilog.Enrichers.Environment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.Enrichers.Environment.2.1.2\lib\net45\Serilog.Enrichers.Environment.dll</HintPath>
+      <HintPath>..\..\packages\Serilog.Enrichers.Environment.2.1.2\lib\net45\Serilog.Enrichers.Environment.dll</HintPath>
     </Reference>
     <Reference Include="Serilog.Enrichers.Process, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.Enrichers.Process.2.0.1\lib\net45\Serilog.Enrichers.Process.dll</HintPath>
+      <HintPath>..\..\packages\Serilog.Enrichers.Process.2.0.1\lib\net45\Serilog.Enrichers.Process.dll</HintPath>
     </Reference>
     <Reference Include="Serilog.Enrichers.Thread, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.Enrichers.Thread.3.0.0\lib\net45\Serilog.Enrichers.Thread.dll</HintPath>
+      <HintPath>..\..\packages\Serilog.Enrichers.Thread.3.0.0\lib\net45\Serilog.Enrichers.Thread.dll</HintPath>
     </Reference>
     <Reference Include="Serilog.Sinks.Console, Version=3.1.1.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.Sinks.Console.3.1.1\lib\net45\Serilog.Sinks.Console.dll</HintPath>
+      <HintPath>..\..\packages\Serilog.Sinks.Console.3.1.1\lib\net45\Serilog.Sinks.Console.dll</HintPath>
     </Reference>
     <Reference Include="Serilog.Sinks.MSSqlServer, Version=5.1.1.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.Sinks.MSSqlServer.5.1.1\lib\net452\Serilog.Sinks.MSSqlServer.dll</HintPath>
+      <HintPath>..\..\packages\Serilog.Sinks.MSSqlServer.5.1.1\lib\net452\Serilog.Sinks.MSSqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Serilog.Sinks.PeriodicBatching, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.Sinks.PeriodicBatching.2.1.1\lib\net45\Serilog.Sinks.PeriodicBatching.dll</HintPath>
+      <HintPath>..\..\packages\Serilog.Sinks.PeriodicBatching.2.1.1\lib\net45\Serilog.Sinks.PeriodicBatching.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Fabric, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>..\packages\Microsoft.ServiceFabric.6.2.306\lib\net461\System.Fabric.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.6.2.306\lib\net461\System.Fabric.dll</HintPath>
     </Reference>
     <Reference Include="System.Fabric.Management.ServiceModel, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>..\packages\Microsoft.ServiceFabric.6.2.306\lib\net461\System.Fabric.Management.ServiceModel.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.6.2.306\lib\net461\System.Fabric.Management.ServiceModel.dll</HintPath>
     </Reference>
     <Reference Include="System.Fabric.Strings, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>..\packages\Microsoft.ServiceFabric.6.2.306\lib\net461\System.Fabric.Strings.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.6.2.306\lib\net461\System.Fabric.Strings.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Numerics" />
@@ -185,63 +160,56 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ALBActor.cs" />
+    <Compile Include="FM35Actor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ActorEventSource.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ESFA.DC.ILR.FundingService.ALBActor.ruleset">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="PackageRoot\ServiceManifest.xml" />
     <None Include="PackageRoot\Config\Settings.xml" />
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.csproj">
-      <Project>{7D044D8C-64BE-48A0-A2F2-1284FC7395F5}</Project>
-      <Name>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALB.Modules\ESFA.DC.ILR.FundingService.ALB.Modules.csproj">
-      <Project>{be335aa0-40b7-47d3-bfb3-aaf1565df6a9}</Project>
-      <Name>ESFA.DC.ILR.FundingService.ALB.Modules</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALBActor.Interfaces\ESFA.DC.ILR.FundingService.ALBActor.Interfaces.csproj">
-      <Project>{14944B1C-9717-4CBB-B756-37502DDB5E0B}</Project>
-      <Name>ESFA.DC.ILR.FundingService.ALBActor.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Config\ESFA.DC.ILR.FundingService.Config.csproj">
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Config\ESFA.DC.ILR.FundingService.Config.csproj">
       <Project>{29C28BC1-23E2-4FAD-AB74-83CD2D33E7D8}</Project>
       <Name>ESFA.DC.ILR.FundingService.Config</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Data\ESFA.DC.ILR.FundingService.Data.csproj">
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Data\ESFA.DC.ILR.FundingService.Data.csproj">
       <Project>{69B93B19-4FD0-4205-AFFA-8B71122A3C65}</Project>
       <Name>ESFA.DC.ILR.FundingService.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Interfaces\ESFA.DC.ILR.FundingService.Interfaces.csproj">
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Interfaces\ESFA.DC.ILR.FundingService.Interfaces.csproj">
       <Project>{81FA550D-DD5E-4F5B-AC66-1DCA51824E9C}</Project>
       <Name>ESFA.DC.ILR.FundingService.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Modules\ESFA.DC.ILR.FundingService.Modules.csproj">
-      <Project>{79748ecd-e5d4-4d1e-be10-32588b2f625c}</Project>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Modules\ESFA.DC.ILR.FundingService.Modules.csproj">
+      <Project>{79748ECD-E5D4-4D1E-BE10-32588B2F625C}</Project>
       <Name>ESFA.DC.ILR.FundingService.Modules</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Stateless.Models\ESFA.DC.ILR.FundingService.Stateless.Models.csproj">
-      <Project>{0faaaab8-443b-47bf-9e96-c3069e8789f9}</Project>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Stateless.Models\ESFA.DC.ILR.FundingService.Stateless.Models.csproj">
+      <Project>{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}</Project>
       <Name>ESFA.DC.ILR.FundingService.Stateless.Models</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.csproj">
+      <Project>{4470C1A0-91D9-4411-9F30-51F69E39C11D}</Project>
+      <Name>ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.Modules\ESFA.DC.ILR.FundingService.FM35.Modules.csproj">
+      <Project>{A4D6D1CA-B823-4D79-A5CE-48FAE1529BA3}</Project>
+      <Name>ESFA.DC.ILR.FundingService.FM35.Modules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35Actor.Interfaces\ESFA.DC.ILR.FundingService.FM35Actor.Interfaces.csproj">
+      <Project>{479E2521-1924-41DB-9CB7-CF8EA6DECD18}</Project>
+      <Name>ESFA.DC.ILR.FundingService.FM35Actor.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Microsoft.ServiceFabric.Actors.3.1.306\build\net45\Microsoft.ServiceFabric.Actors.targets" Condition="Exists('..\packages\Microsoft.ServiceFabric.Actors.3.1.306\build\net45\Microsoft.ServiceFabric.Actors.targets')" />
+  <Import Project="..\..\packages\Microsoft.ServiceFabric.Actors.3.1.306\build\net45\Microsoft.ServiceFabric.Actors.targets" Condition="Exists('..\..\packages\Microsoft.ServiceFabric.Actors.3.1.306\build\net45\Microsoft.ServiceFabric.Actors.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.ServiceFabric.Actors.3.1.306\build\net45\Microsoft.ServiceFabric.Actors.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.ServiceFabric.Actors.3.1.306\build\net45\Microsoft.ServiceFabric.Actors.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.ServiceFabric.Actors.3.1.306\build\net45\Microsoft.ServiceFabric.Actors.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.ServiceFabric.Actors.3.1.306\build\net45\Microsoft.ServiceFabric.Actors.targets'))" />
   </Target>
 </Project>

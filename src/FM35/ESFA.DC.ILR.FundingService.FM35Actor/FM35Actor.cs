@@ -1,0 +1,88 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Autofac;
+using Microsoft.ServiceFabric.Actors;
+using Microsoft.ServiceFabric.Actors.Runtime;
+using Microsoft.ServiceFabric.Actors.Client;
+using ESFA.DC.ILR.FundingService.FM35Actor.Interfaces;
+using ESFA.DC.ILR.FundingService.Interfaces;
+using ESFA.DC.ILR.FundingService.Stateless.Models;
+using ESFA.DC.ILR.Model.Interface;
+using ESFA.DC.Logging.Interfaces;
+using ESFA.DC.Serialization.Interfaces;
+using ESFA.DC.ILR.FundingService.Data.External;
+using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
+using ESFA.DC.ILR.Model;
+using ESFA.DC.Logging;
+
+namespace ESFA.DC.ILR.FundingService.FM35Actor
+{
+    /// <remarks>
+    /// This class represents an actor.
+    /// Every ActorID maps to an instance of this class.
+    /// The StatePersistence attribute determines persistence and replication of actor state:
+    ///  - Persisted: State is written to disk and replicated.
+    ///  - Volatile: State is kept in memory only and replicated.
+    ///  - None: State is kept in memory only and not replicated.
+    /// </remarks>
+    [StatePersistence(StatePersistence.None)]
+    internal class FM35Actor : Actor, IFM35Actor
+    {
+        private readonly ActorId _actorId;
+        private readonly ILifetimeScope _lifetimeScope;
+
+        /// <summary>
+        /// Initializes a new instance of FM35Actor
+        /// </summary>
+        /// <param name="actorService">The Microsoft.ServiceFabric.Actors.Runtime.ActorService that will host this actor instance.</param>
+        /// <param name="actorId">The Microsoft.ServiceFabric.Actors.ActorId for this actor instance.</param>
+        public FM35Actor(ActorService actorService, ActorId actorId, ILifetimeScope lifetimeScope)
+            : base(actorService, actorId)
+        {
+            _lifetimeScope = lifetimeScope;
+            _actorId = actorId;
+        }
+
+        public Task<string> Process(FM35ActorModel albActorModel)
+        {
+            var jsonSerializationService = _lifetimeScope.Resolve<ISerializationService>();
+            var referenceDataCache = jsonSerializationService.Deserialize<ExternalDataCache>(
+                Encoding.UTF8.GetString(albActorModel.ReferenceDataCache));
+
+            using (var childLifetimeScope = _lifetimeScope.BeginLifetimeScope(c =>
+            {
+                c.RegisterInstance(referenceDataCache).As<IExternalDataCache>();
+            }))
+            {
+                var executionContext = (ExecutionContext)childLifetimeScope.Resolve<IExecutionContext>();
+                executionContext.JobId = albActorModel.JobId.ToString();
+                executionContext.TaskKey = _actorId.ToString();
+                var logger = childLifetimeScope.Resolve<ILogger>();
+
+                try
+                {
+                    logger.LogDebug("FM35 Actor started processing");
+                    var fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, FM35FundingOutputs>>();
+                    IList<ILearner> validLearners = jsonSerializationService.Deserialize<List<MessageLearner>>(
+                        new MemoryStream(albActorModel.ValidLearners)).ToArray();
+
+                    var results = fundingService.ProcessFunding(validLearners);
+
+                    logger.LogDebug("FM35 Actor completed processing");
+                    return Task.FromResult(jsonSerializationService.Serialize(results));
+                }
+                catch (Exception ex)
+                {
+                    ActorEventSource.Current.ActorMessage(this, "Exception-{0}", ex.ToString());
+                    logger.LogError("Error while processing Actor job", ex);
+                    throw;
+                }
+            }
+        }
+    }
+}

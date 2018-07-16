@@ -22,10 +22,16 @@
     <Parameter Name="AzureBlobConnectionString" DefaultValue="UseDevelopmentStorage=true" />
     <Parameter Name="AzureBlobContainerName" DefaultValue="ilr-files" />
     <Parameter Name="ProcessingServicePlacementConstraints" DefaultValue="" />
+    <Parameter Name="FM35ActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="FM35ActorService_MinReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="FM35ActorService_TargetReplicaSetSize" DefaultValue="3" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="ESFA.DC.ILR.FundingService.FM35ActorPkg" ServiceManifestVersion="1.0.0" />
+  </ServiceManifestImport>
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="ESFA.DC.ILR.FundingService.ALBActorPkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides>
@@ -89,6 +95,11 @@
       <StatefulService ServiceTypeName="ALBActorServiceType" TargetReplicaSetSize="[ALBActorService_TargetReplicaSetSize]" MinReplicaSetSize="[ALBActorService_MinReplicaSetSize]">
         <UniformInt64Partition PartitionCount="[ALBActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
         <PlacementConstraints>[ProcessingServicePlacementConstraints]</PlacementConstraints>
+      </StatefulService>
+    </Service>
+    <Service Name="FM35ActorService" GeneratedIdRef="e7540cad-ea7a-4b60-bd36-ce919a817221|Persisted">
+      <StatefulService ServiceTypeName="FM35ActorServiceType" TargetReplicaSetSize="[FM35ActorService_TargetReplicaSetSize]" MinReplicaSetSize="[FM35ActorService_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[FM35ActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
       </StatefulService>
     </Service>
   </DefaultServices>
