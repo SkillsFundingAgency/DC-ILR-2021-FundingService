@@ -35,7 +35,6 @@ using ESFA.DC.JobContext;
 using ESFA.DC.JobContext.Interface;
 using ESFA.DC.JobContextManager;
 using ESFA.DC.JobContextManager.Interface;
-using ESFA.DC.KeyGenerator.Interface;
 using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.Serialization.Json;
 using ESFA.DC.Serialization.Xml;
@@ -95,8 +94,6 @@ namespace ESFA.DC.ILR.FundingService.Modules
             builder.RegisterType<FundingServiceDto>().As<IFundingServiceDto>().InstancePerLifetimeScope();
 
             builder.RegisterType<FundingOutputPersistenceSfService<FundingOutputs>>().As<IFundingOutputPersistenceService<FundingOutputs>>().InstancePerLifetimeScope();
-
-            builder.RegisterType<KeyGenerator.KeyGenerator>().As<IKeyGenerator>().SingleInstance();
 
             builder.RegisterType<ALBOrchestrationSFTask>().As<IALBOrchestrationSFTask>().InstancePerLifetimeScope();
         }
