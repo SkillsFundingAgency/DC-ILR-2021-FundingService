@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
-using Microsoft.ServiceFabric.Actors.Client;
 using ESFA.DC.ILR.FundingService.FM35Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Stateless.Models;
@@ -17,6 +15,7 @@ using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
+using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.Logging;
 
@@ -31,37 +30,27 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
     ///  - None: State is kept in memory only and not replicated.
     /// </remarks>
     [StatePersistence(StatePersistence.None)]
-    internal class FM35Actor : Actor, IFM35Actor
+    internal class FM35Actor : AbstractFundingActor, IFM35Actor
     {
-        private readonly ActorId _actorId;
-        private readonly ILifetimeScope _lifetimeScope;
-
-        /// <summary>
-        /// Initializes a new instance of FM35Actor
-        /// </summary>
-        /// <param name="actorService">The Microsoft.ServiceFabric.Actors.Runtime.ActorService that will host this actor instance.</param>
-        /// <param name="actorId">The Microsoft.ServiceFabric.Actors.ActorId for this actor instance.</param>
         public FM35Actor(ActorService actorService, ActorId actorId, ILifetimeScope lifetimeScope)
-            : base(actorService, actorId)
+            : base(actorService, actorId, lifetimeScope)
         {
-            _lifetimeScope = lifetimeScope;
-            _actorId = actorId;
         }
 
         public Task<string> Process(FM35ActorModel albActorModel)
         {
-            var jsonSerializationService = _lifetimeScope.Resolve<ISerializationService>();
+            var jsonSerializationService = LifetimeScope.Resolve<ISerializationService>();
             var referenceDataCache = jsonSerializationService.Deserialize<ExternalDataCache>(
                 Encoding.UTF8.GetString(albActorModel.ReferenceDataCache));
 
-            using (var childLifetimeScope = _lifetimeScope.BeginLifetimeScope(c =>
+            using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
                 c.RegisterInstance(referenceDataCache).As<IExternalDataCache>();
             }))
             {
                 var executionContext = (ExecutionContext)childLifetimeScope.Resolve<IExecutionContext>();
                 executionContext.JobId = albActorModel.JobId.ToString();
-                executionContext.TaskKey = _actorId.ToString();
+                executionContext.TaskKey = ActorId.ToString();
                 var logger = childLifetimeScope.Resolve<ILogger>();
 
                 try

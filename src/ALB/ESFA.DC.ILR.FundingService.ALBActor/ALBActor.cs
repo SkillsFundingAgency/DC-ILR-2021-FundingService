@@ -1,66 +1,48 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
+using Autofac;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
+using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Interfaces;
+using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
+using ESFA.DC.ILR.FundingService.Stateless.Models;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
+using ESFA.DC.Logging;
+using ESFA.DC.Logging.Interfaces;
+using ESFA.DC.Serialization.Interfaces;
+using Microsoft.ServiceFabric.Actors;
+using Microsoft.ServiceFabric.Actors.Runtime;
 
 namespace ESFA.DC.ILR.FundingService.ALBActor
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Threading.Tasks;
-    using Autofac;
-    using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
-    using ESFA.DC.ILR.FundingService.Stateless.Models;
-    using ESFA.DC.Logging;
-    using ESFA.DC.Logging.Interfaces;
-    using ESFA.DC.Serialization.Interfaces;
-    using Microsoft.ServiceFabric.Actors;
-    using Microsoft.ServiceFabric.Actors.Runtime;
-
-    /// <remarks>
-    /// This class represents an actor.
-    /// Every ActorID maps to an instance of this class.
-    /// The StatePersistence attribute determines persistence and replication of actor state:
-    ///  - Persisted: State is written to disk and replicated.
-    ///  - Volatile: State is kept in memory only and replicated.
-    ///  - None: State is kept in memory only and not replicated.
-    /// </remarks>
     [StatePersistence(StatePersistence.None)]
-    public class ALBActor : Actor, IALBActor
+    public class ALBActor : AbstractFundingActor, IALBActor
     {
-        private readonly ILifetimeScope _parentLifetimeScope;
-        private ActorId _actorId;
-
-        /// <summary>
-        /// Initializes a new instance of ALBActor
-        /// </summary>
-        /// <param name="actorService">The Microsoft.ServiceFabric.Actors.Runtime.ActorService that will host this actor instance.</param>
-        /// <param name="actorId">The Microsoft.ServiceFabric.Actors.ActorId for this actor instance.</param>
-        public ALBActor(ActorService actorService, ActorId actorId, ILifetimeScope parentLifetimeScope)
-            : base(actorService, actorId)
+        public ALBActor(ActorService actorService, ActorId actorId, ILifetimeScope lifetimeScope)
+            : base(actorService, actorId, lifetimeScope)
         {
-            _parentLifetimeScope = parentLifetimeScope;
-            _actorId = actorId;
         }
 
         public Task<string> Process(ALBActorModel albActorModel)
         {
-            var jsonSerializationService = _parentLifetimeScope.Resolve<ISerializationService>();
+            var jsonSerializationService = LifetimeScope.Resolve<ISerializationService>();
             var referenceDataCache = jsonSerializationService.Deserialize<ExternalDataCache>(
                 Encoding.UTF8.GetString(albActorModel.ReferenceDataCache));
 
-            using (var childLifetimeScope = _parentLifetimeScope.BeginLifetimeScope(c =>
+            using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
                 c.RegisterInstance(referenceDataCache).As<IExternalDataCache>();
             }))
             {
                 var executionContext = (ExecutionContext)childLifetimeScope.Resolve<IExecutionContext>();
                 executionContext.JobId = albActorModel.JobId.ToString();
-                executionContext.TaskKey = _actorId.ToString();
+                executionContext.TaskKey = ActorId.ToString();
                 var logger = childLifetimeScope.Resolve<ILogger>();
 
                 try

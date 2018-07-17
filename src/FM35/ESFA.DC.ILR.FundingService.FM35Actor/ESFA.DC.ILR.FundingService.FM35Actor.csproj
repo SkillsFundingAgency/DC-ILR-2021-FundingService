@@ -187,6 +187,10 @@
       <Project>{79748ECD-E5D4-4D1E-BE10-32588B2F625C}</Project>
       <Name>ESFA.DC.ILR.FundingService.Modules</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.ServiceFabric.Common\ESFA.DC.ILR.FundingService.ServiceFabric.Common.csproj">
+      <Project>{21ba0741-5975-4902-8d7a-567a50873cfa}</Project>
+      <Name>ESFA.DC.ILR.FundingService.ServiceFabric.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Stateless.Models\ESFA.DC.ILR.FundingService.Stateless.Models.csproj">
       <Project>{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}</Project>
       <Name>ESFA.DC.ILR.FundingService.Stateless.Models</Name>
