@@ -60,22 +60,27 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             // loop through list of all the tasks and execute them.
             var fundingTasks = new List<Task>();
 
-            foreach (var taskItem in tasks.Where(x => x.SupportsParallelExecution))
+            var taskList = jobContextMessage.Topics[jobContextMessage.TopicPointer].Tasks;
+
+            foreach (var task in taskList)
             {
-                // populate data
-                switch (taskItem.Tasks[0])
+                foreach (var taskString in task.Tasks)
                 {
-                    case "ALB":
-                        fundingTasks.Add(_ALBOrchestrationSfTask.Execute(jobContextMessage));
-                        break;
-                    case "FM35":
-                        fundingTasks.Add(_fm35OrchestrationSfTask.Execute(jobContextMessage));
-                        break;
+                    switch (taskString)
+                    {
+                        case "ALB":
+                            fundingTasks.Add(_ALBOrchestrationSfTask.Execute(jobContextMessage));
+                            break;
+                        case "FM35":
+                            fundingTasks.Add(_fm35OrchestrationSfTask.Execute(jobContextMessage));
+                            break;
+                    }
                 }
             }
 
             // execute all fundingtasks
             await Task.WhenAll(fundingTasks);
+
             _logger.LogDebug($"Completed Funding Service for given Rulebases in: {stopWatch.ElapsedMilliseconds}");
         }
     }
