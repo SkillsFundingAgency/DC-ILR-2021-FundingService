@@ -37,11 +37,11 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
         {
         }
 
-        public Task<string> Process(FM35ActorModel albActorModel)
+        public Task<string> Process(FM35ActorModel fm35ActorModel)
         {
             var jsonSerializationService = LifetimeScope.Resolve<ISerializationService>();
             var referenceDataCache = jsonSerializationService.Deserialize<ExternalDataCache>(
-                Encoding.UTF8.GetString(albActorModel.ReferenceDataCache));
+                Encoding.UTF8.GetString(fm35ActorModel.ReferenceDataCache));
 
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
@@ -49,7 +49,7 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
             }))
             {
                 var executionContext = (ExecutionContext)childLifetimeScope.Resolve<IExecutionContext>();
-                executionContext.JobId = albActorModel.JobId.ToString();
+                executionContext.JobId = fm35ActorModel.JobId.ToString();
                 executionContext.TaskKey = ActorId.ToString();
                 var logger = childLifetimeScope.Resolve<ILogger>();
 
@@ -58,7 +58,7 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
                     logger.LogDebug("FM35 Actor started processing");
                     var fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, FM35FundingOutputs>>();
                     IList<ILearner> validLearners = jsonSerializationService.Deserialize<List<MessageLearner>>(
-                        new MemoryStream(albActorModel.ValidLearners)).ToArray();
+                        new MemoryStream(fm35ActorModel.ValidLearners)).ToArray();
 
                     var results = fundingService.ProcessFunding(validLearners);
 

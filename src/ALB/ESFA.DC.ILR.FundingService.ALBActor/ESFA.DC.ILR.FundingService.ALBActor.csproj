@@ -197,6 +197,7 @@
     <None Include="PackageRoot\Config\Settings.xml" />
     <None Include="App.config" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="Resources\Rulebase.zip" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.ServiceFabric.Common\ESFA.DC.ILR.FundingService.ServiceFabric.Common.csproj">

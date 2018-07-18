@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Fabric;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
@@ -53,7 +54,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
 
             _populationService.Populate();
 
-            var albValidLearnersShards = _learnerPerActorService.BuildPages();
+            var albValidLearnersShards = _learnerPerActorService.BuildPages().ToList();
             _logger.LogDebug("completed prefunding ALB service");
 
             // create actors for processing

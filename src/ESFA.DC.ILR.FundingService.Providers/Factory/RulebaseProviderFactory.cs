@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 using ESFA.DC.OPA.Service.Interface.Rulebase;
 using ESFA.DC.OPA.Service.Rulebase;
@@ -9,10 +10,9 @@ namespace ESFA.DC.ILR.FundingService.Providers.Factory
     {
         public IRulebaseProvider Build()
         {
-            var rulebaseZipPath =
-                Assembly.GetExecutingAssembly().GetManifestResourceNames()
-                .Where(n => n.Contains("Rulebase"))
-                .Select(r => r).SingleOrDefault();
+            var assembly = AppDomain.CurrentDomain.GetAssemblies().First(a => a.FullName.Contains("Actor"));
+            var manifestResourceNames = assembly.GetManifestResourceNames();
+            var rulebaseZipPath = manifestResourceNames.First(n => n.Contains("Rulebase"));
 
             return new RulebaseProvider(rulebaseZipPath);
         }

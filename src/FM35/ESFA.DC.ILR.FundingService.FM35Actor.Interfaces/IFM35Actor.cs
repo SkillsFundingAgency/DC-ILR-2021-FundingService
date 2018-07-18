@@ -17,6 +17,6 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor.Interfaces
     /// </summary>
     public interface IFM35Actor : IActor
     {
-        Task<string> Process(FM35ActorModel albActorModel);
+        Task<string> Process(FM35ActorModel fm35ActorModel);
     }
 }
