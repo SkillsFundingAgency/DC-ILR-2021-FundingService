@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Dto.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
@@ -18,6 +18,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         private readonly ISerializationService _jsonSerializationService;
         private readonly IIlrFileProviderService _ilrFileProviderService;
         private readonly IFundingServiceDto _fundingServiceDto;
+        private readonly IPopulationService _populationService;
         private readonly IALBOrchestrationSFTask _ALBOrchestrationSfTask;
         private readonly IFM35OrchestrationSFTask _fm35OrchestrationSfTask;
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
@@ -27,6 +28,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             IJsonSerializationService jsonSerializationService,
             IIlrFileProviderService ilrFileProviderService,
             IFundingServiceDto fundingServiceDto,
+            IPopulationService populationService,
             IALBOrchestrationSFTask ALBOrchestrationSfTask,
             IFM35OrchestrationSFTask fm35OrchestrationSfTask,
             IKeyValuePersistenceService keyValuePersistenceService,
@@ -35,6 +37,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             _jsonSerializationService = jsonSerializationService;
             _ilrFileProviderService = ilrFileProviderService;
             _fundingServiceDto = fundingServiceDto;
+            _populationService = populationService;
             _ALBOrchestrationSfTask = ALBOrchestrationSfTask;
             _fm35OrchestrationSfTask = fm35OrchestrationSfTask;
             _keyValuePersistenceService = keyValuePersistenceService;
@@ -45,7 +48,6 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         {
             var stopWatch = new Stopwatch();
             stopWatch.Start();
-            var tasks = jobContextMessage.Topics[jobContextMessage.TopicPointer].Tasks;
 
             // Get the ilr object from file
             var ilrMessage = await _ilrFileProviderService.Provide(jobContextMessage.KeyValuePairs[JobContextMessageKey.Filename].ToString());
@@ -61,6 +63,8 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             var fundingTasks = new List<Task>();
 
             var taskList = jobContextMessage.Topics[jobContextMessage.TopicPointer].Tasks;
+
+            _populationService.Populate();
 
             foreach (var task in taskList)
             {

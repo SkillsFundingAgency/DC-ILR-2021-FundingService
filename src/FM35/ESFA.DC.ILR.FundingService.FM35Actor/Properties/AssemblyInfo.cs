@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Microsoft.ServiceFabric.Actors.Remoting.FabricTransport;
 using Microsoft.ServiceFabric.Services.Remoting;
@@ -38,5 +37,5 @@ using Microsoft.ServiceFabric.Services.Remoting.FabricTransport;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
-[assembly: FabricTransportServiceRemotingProvider(MaxMessageSize = 1073741824, RemotingListener = RemotingListener.V2Listener, RemotingClient = RemotingClient.V2Client)]
-[assembly: FabricTransportActorRemotingProvider(MaxMessageSize = 1073741824, RemotingListener = RemotingListener.V2Listener, RemotingClient = RemotingClient.V2Client)]
+[assembly: FabricTransportServiceRemotingProvider(MaxMessageSize = 1073741824, RemotingListenerVersion = RemotingListenerVersion.V2, RemotingClientVersion = RemotingClientVersion.V2)]
+[assembly: FabricTransportActorRemotingProvider(MaxMessageSize = 1073741824, RemotingListenerVersion = RemotingListenerVersion.V2, RemotingClientVersion = RemotingClientVersion.V2)]

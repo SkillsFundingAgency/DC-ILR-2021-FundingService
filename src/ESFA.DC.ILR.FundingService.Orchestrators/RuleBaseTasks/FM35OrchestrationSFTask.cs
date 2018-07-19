@@ -6,20 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.Data.Interface;
-using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Attribute;
 using ESFA.DC.ILR.FundingService.FM35Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers.Interfaces;
+using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
+using ESFA.DC.ILR.FundingService.ServiceFabric.Common.Interfaces;
 using ESFA.DC.ILR.FundingService.Stateless.Models;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.JobContext.Interface;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
-using Microsoft.ServiceFabric.Actors;
-using Microsoft.ServiceFabric.Actors.Client;
 
 namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
 {
@@ -28,31 +27,29 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
         private readonly IFundingOutputPersistenceService<FM35FundingOutputs> _fundingOutputPersistenceService;
         private readonly IExternalDataCache _referenceDataCache;
         private readonly IJsonSerializationService _jsonSerializationService;
+        private readonly IActorProvider<IFM35Actor> _fundingActorProvider;
         private readonly ILogger _logger;
         private readonly IPagingService<ILearner> _learnerPerActorService;
-        private readonly IPopulationService _populationService;
 
         public FM35OrchestrationSFTask(
             IFundingOutputPersistenceService<FM35FundingOutputs> fundingOutputPersistenceService,
             IExternalDataCache referenceDataCache,
             IJsonSerializationService jsonSerializationService,
             IPagingService<ILearner> learnerPerActorService,
-            IPopulationService populationService,
+            IActorProvider<IFM35Actor> fundingActorProvider,
             ILogger logger)
         {
             _fundingOutputPersistenceService = fundingOutputPersistenceService;
             _referenceDataCache = referenceDataCache;
             _jsonSerializationService = jsonSerializationService;
-            _populationService = populationService;
             _learnerPerActorService = learnerPerActorService;
+            _fundingActorProvider = fundingActorProvider;
             _logger = logger;
         }
 
         public async Task Execute(IJobContextMessage jobContextMessage)
         {
             var stopWatch = new Stopwatch();
-
-            _populationService.Populate();
 
             var learnersShards = _learnerPerActorService.BuildPages().ToList();
             _logger.LogDebug("completed prefunding FM35 service");
@@ -62,16 +59,13 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
             var ukprn = Convert.ToInt32(jobContextMessage.KeyValuePairs[JobContextMessageKey.UkPrn]);
             var jobId = Convert.ToInt32(jobContextMessage.JobId);
 
+            var referenceDataInBytes = Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(_referenceDataCache));
+
             // loop through the shards to create actors for processing
             foreach (var learnersShard in learnersShards)
             {
-                var actor = GetFundingServiceActor();
-
-                var referenceDataInBytes =
-                    Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(_referenceDataCache));
-                var albValidLearnersShardInBytes =
-                    Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(learnersShard));
-                var actorModel = new FM35ActorModel()
+                var albValidLearnersShardInBytes = Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(learnersShard));
+                var actorModel = new FundingActorDto()
                 {
                     ReferenceDataCache = referenceDataInBytes,
                     Ukprn = ukprn,
@@ -79,10 +73,10 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
                     ValidLearners = albValidLearnersShardInBytes
                 };
 
-                actorTasks.Add(Task.Run(() => actor.Process(actorModel)));
+                actorTasks.Add(Task.Run(() => _fundingActorProvider.Provide().Process(actorModel)));
             }
 
-            Task.WaitAll(actorTasks.ToArray());
+            await Task.WhenAll(actorTasks.ToArray());
             _logger.LogDebug("completed Actors FM35 service");
 
             // get results from actor tasks
@@ -107,13 +101,6 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
                 results,
                 jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString());
             _logger.LogDebug($"Persisted FM35 Funding results in: {stopWatch.ElapsedMilliseconds}");
-        }
-
-        private IFM35Actor GetFundingServiceActor()
-        {
-            return ActorProxy.Create<IFM35Actor>(
-                ActorId.CreateRandom(),
-                new Uri($"{FabricRuntime.GetActivationContext().ApplicationName}/FM35ActorService"));
         }
     }
 }

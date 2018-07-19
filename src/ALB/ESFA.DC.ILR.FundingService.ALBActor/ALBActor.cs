@@ -29,7 +29,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
         {
         }
 
-        public Task<string> Process(ALBActorModel albActorModel)
+        public Task<string> Process(FundingActorDto albActorModel)
         {
             var jsonSerializationService = LifetimeScope.Resolve<ISerializationService>();
             var referenceDataCache = jsonSerializationService.Deserialize<ExternalDataCache>(
@@ -50,7 +50,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                     logger.LogDebug("ALB Actor started processing");
                     var fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, FundingOutputs>>();
                     IList<ILearner> validLearners = jsonSerializationService.Deserialize<List<MessageLearner>>(
-                        new MemoryStream(albActorModel.AlbValidLearners)).ToArray();
+                        new MemoryStream(albActorModel.ValidLearners)).ToArray();
 
                     var results = fundingService.ProcessFunding(validLearners);
 

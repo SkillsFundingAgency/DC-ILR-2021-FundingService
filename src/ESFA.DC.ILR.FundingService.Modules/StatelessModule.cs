@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Fabric;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
@@ -11,6 +12,7 @@ using ESFA.DC.Data.Organisatons.Model.Interface;
 using ESFA.DC.Data.Postcodes.Model;
 using ESFA.DC.Data.Postcodes.Model.Interfaces;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
+using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Config.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.Context;
 using ESFA.DC.ILR.FundingService.Data.External;
@@ -24,12 +26,15 @@ using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Dto.Interfaces;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
+using ESFA.DC.ILR.FundingService.FM35Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Implementations;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks;
 using ESFA.DC.ILR.FundingService.Providers.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers.Output;
+using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
+using ESFA.DC.ILR.FundingService.ServiceFabric.Common.Interfaces;
 using ESFA.DC.ILR.FundingService.Stubs;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.JobContext;
@@ -99,6 +104,9 @@ namespace ESFA.DC.ILR.FundingService.Modules
 
             builder.RegisterType<ALBOrchestrationSFTask>().As<IALBOrchestrationSFTask>().InstancePerLifetimeScope();
             builder.RegisterType<FM35OrchestrationSFTask>().As<IFM35OrchestrationSFTask>().InstancePerLifetimeScope();
+
+            builder.RegisterInstance(new ActorProvider<IFM35Actor>(new Uri($"{FabricRuntime.GetActivationContext().ApplicationName}/FM35ActorService"))).As<IActorProvider<IFM35Actor>>();
+            builder.RegisterInstance(new ActorProvider<IALBActor>(new Uri($"{FabricRuntime.GetActivationContext().ApplicationName}/ALBActorService"))).As<IActorProvider<IALBActor>>();
         }
     }
 }

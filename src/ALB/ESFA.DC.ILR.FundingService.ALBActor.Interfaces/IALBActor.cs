@@ -4,7 +4,7 @@ using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Remoting.FabricTransport;
 using Microsoft.ServiceFabric.Services.Remoting;
 
-[assembly: FabricTransportActorRemotingProvider(RemotingListener = RemotingListener.V2Listener, RemotingClient = RemotingClient.V2Client)]
+[assembly: FabricTransportActorRemotingProvider(RemotingListenerVersion = RemotingListenerVersion.V2, RemotingClientVersion = RemotingClientVersion.V2)]
 namespace ESFA.DC.ILR.FundingService.ALBActor.Interfaces
 {
     /// <summary>
@@ -13,6 +13,6 @@ namespace ESFA.DC.ILR.FundingService.ALBActor.Interfaces
     /// </summary>
     public interface IALBActor : IActor
     {
-       Task<string> Process(ALBActorModel albActorModel);
+       Task<string> Process(FundingActorDto albActorModel);
     }
 }

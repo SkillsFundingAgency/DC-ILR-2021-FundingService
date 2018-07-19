@@ -37,7 +37,7 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
         {
         }
 
-        public Task<string> Process(FM35ActorModel fm35ActorModel)
+        public Task<string> Process(FundingActorDto fm35ActorModel)
         {
             var jsonSerializationService = LifetimeScope.Resolve<ISerializationService>();
             var referenceDataCache = jsonSerializationService.Deserialize<ExternalDataCache>(

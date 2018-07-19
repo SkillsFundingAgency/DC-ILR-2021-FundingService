@@ -9,10 +9,10 @@ using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Attribute;
 using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.Interface;
-using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers.Interfaces;
+using ESFA.DC.ILR.FundingService.ServiceFabric.Common.Interfaces;
 using ESFA.DC.ILR.FundingService.Stateless.Models;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.JobContext.Interface;
@@ -29,30 +29,28 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
         private readonly IExternalDataCache _referenceDataCache;
         private readonly IJsonSerializationService _jsonSerializationService;
         private readonly ILogger _logger;
+        private readonly IActorProvider<IALBActor> _fundingActorProvider;
         private readonly IPagingService<ILearner> _learnerPerActorService;
-        private readonly IPopulationService _populationService;
 
         public ALBOrchestrationSFTask(
             IFundingOutputPersistenceService<FundingOutputs> fundingOutputPersistenceService,
             IExternalDataCache referenceDataCache,
             IJsonSerializationService jsonSerializationService,
             IPagingService<ILearner> learnerPerActorService,
-            IPopulationService populationService,
+            IActorProvider<IALBActor> fundingActorProvider,
             ILogger logger)
         {
             _fundingOutputPersistenceService = fundingOutputPersistenceService;
             _referenceDataCache = referenceDataCache;
             _jsonSerializationService = jsonSerializationService;
-            _populationService = populationService;
             _learnerPerActorService = learnerPerActorService;
+            _fundingActorProvider = fundingActorProvider;
             _logger = logger;
         }
 
         public async Task Execute(IJobContextMessage jobContextMessage)
         {
             var stopWatch = new Stopwatch();
-
-            _populationService.Populate();
 
             var albValidLearnersShards = _learnerPerActorService.BuildPages().ToList();
             _logger.LogDebug("completed prefunding ALB service");
@@ -62,27 +60,24 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
             var ukprn = Convert.ToInt32(jobContextMessage.KeyValuePairs[JobContextMessageKey.UkPrn]);
             var jobId = Convert.ToInt32(jobContextMessage.JobId);
 
+            var referenceDataInBytes = Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(_referenceDataCache));
+
             // loop through the shards to create actors for processing
             foreach (var albValidLearnersShard in albValidLearnersShards)
             {
-                var actor = GetFundingServiceActor();
-
-                var referenceDataInBytes =
-                    Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(_referenceDataCache));
-                var albValidLearnersShardInBytes =
-                    Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(albValidLearnersShard));
-                var albActorModel = new ALBActorModel()
+                var albValidLearnersShardInBytes = Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(albValidLearnersShard));
+                var albActorModel = new FundingActorDto()
                 {
                     ReferenceDataCache = referenceDataInBytes,
                     Ukprn = ukprn,
                     JobId = jobId,
-                    AlbValidLearners = albValidLearnersShardInBytes
+                    ValidLearners = albValidLearnersShardInBytes
                 };
 
-                actorTasks.Add(Task.Run(() => actor.Process(albActorModel)));
+                actorTasks.Add(Task.Run(() => _fundingActorProvider.Provide().Process(albActorModel)));
             }
 
-            Task.WaitAll(actorTasks.ToArray());
+            await Task.WhenAll(actorTasks.ToArray());
             _logger.LogDebug("completed Actors ALB service");
 
             // get results from actor tasks
@@ -108,13 +103,6 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
                 results,
                 jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString());
             _logger.LogDebug($"Persisted ALB Funding results in: {stopWatch.ElapsedMilliseconds}");
-        }
-
-        private IALBActor GetFundingServiceActor()
-        {
-            return ActorProxy.Create<IALBActor>(
-                ActorId.CreateRandom(),
-                new Uri($"{FabricRuntime.GetActivationContext().ApplicationName}/ALBActorService"));
         }
     }
 }
