@@ -47,42 +47,20 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
             _logger = logger;
         }
 
-        public async Task Execute(IJobContextMessage jobContextMessage)
+        public async Task Execute(IEnumerable<FundingActorDto> fundingActorDtos, string outputKey)
         {
             var stopWatch = new Stopwatch();
 
-            var learnersShards = _learnerPerActorService.BuildPages().ToList();
-            _logger.LogDebug("completed prefunding FM35 service");
+            var tasks = fundingActorDtos.Select(a => _fundingActorProvider.Provide().Process(a)).ToList();
 
-            // create actors for processing
-            var actorTasks = new List<Task<string>>();
-            var ukprn = Convert.ToInt32(jobContextMessage.KeyValuePairs[JobContextMessageKey.UkPrn]);
-            var jobId = Convert.ToInt32(jobContextMessage.JobId);
+            await Task.WhenAll(tasks);
 
-            var referenceDataInBytes = Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(_referenceDataCache));
-
-            // loop through the shards to create actors for processing
-            foreach (var learnersShard in learnersShards)
-            {
-                var albValidLearnersShardInBytes = Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(learnersShard));
-                var actorModel = new FundingActorDto()
-                {
-                    ReferenceDataCache = referenceDataInBytes,
-                    Ukprn = ukprn,
-                    JobId = jobId,
-                    ValidLearners = albValidLearnersShardInBytes
-                };
-
-                actorTasks.Add(Task.Run(() => _fundingActorProvider.Provide().Process(actorModel)));
-            }
-
-            await Task.WhenAll(actorTasks.ToArray());
             _logger.LogDebug("completed Actors FM35 service");
 
             // get results from actor tasks
             var collatedFundingOuputputLearners = new List<LearnerAttribute>();
             var globalFundingOutput = new GlobalAttribute();
-            foreach (var actorTask in actorTasks)
+            foreach (var actorTask in tasks)
             {
                 var fundingOutputs = _jsonSerializationService.Deserialize<FM35FundingOutputs>(actorTask.Result);
                 collatedFundingOuputputLearners.AddRange(fundingOutputs.Learners);
@@ -97,9 +75,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
             stopWatch.Start();
 
             // persis results
-            await _fundingOutputPersistenceService.Process(
-                results,
-                jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString());
+            await _fundingOutputPersistenceService.Process(results, outputKey);
             _logger.LogDebug($"Persisted FM35 Funding results in: {stopWatch.ElapsedMilliseconds}");
         }
     }

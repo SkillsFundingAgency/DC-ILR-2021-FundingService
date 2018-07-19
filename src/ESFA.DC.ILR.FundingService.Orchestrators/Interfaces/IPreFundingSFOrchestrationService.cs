@@ -1,6 +1,10 @@
-﻿namespace ESFA.DC.ILR.FundingService.Orchestrators.Interfaces
+﻿using System.Threading.Tasks;
+using ESFA.DC.JobContext.Interface;
+
+namespace ESFA.DC.ILR.FundingService.Orchestrators.Interfaces
 {
-    public interface IPreFundingSFOrchestrationService : IJobContextMessageExecutionService
+    public interface IPreFundingSFOrchestrationService
     {
+        Task Execute(IJobContextMessage jobContextMessage);
     }
 }

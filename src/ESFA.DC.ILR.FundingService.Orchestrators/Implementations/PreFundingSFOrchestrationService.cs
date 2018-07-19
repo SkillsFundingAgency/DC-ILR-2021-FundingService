@@ -1,11 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Dto.Interfaces;
+using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers.Interfaces;
+using ESFA.DC.ILR.FundingService.Stateless.Models;
+using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.IO.Interfaces;
 using ESFA.DC.JobContext.Interface;
 using ESFA.DC.Logging.Interfaces;
@@ -22,6 +29,8 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         private readonly IALBOrchestrationSFTask _ALBOrchestrationSfTask;
         private readonly IFM35OrchestrationSFTask _fm35OrchestrationSfTask;
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
+        private readonly IPagingService<ILearner> _learnerPagingService;
+        private readonly IExternalDataCache _externalDataCache;
         private readonly ILogger _logger;
 
         public PreFundingSFOrchestrationService(
@@ -32,6 +41,8 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             IALBOrchestrationSFTask ALBOrchestrationSfTask,
             IFM35OrchestrationSFTask fm35OrchestrationSfTask,
             IKeyValuePersistenceService keyValuePersistenceService,
+            IPagingService<ILearner> learnerPagingService,
+            IExternalDataCache externalDataCache,
             ILogger logger)
         {
             _jsonSerializationService = jsonSerializationService;
@@ -41,6 +52,8 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             _ALBOrchestrationSfTask = ALBOrchestrationSfTask;
             _fm35OrchestrationSfTask = fm35OrchestrationSfTask;
             _keyValuePersistenceService = keyValuePersistenceService;
+            _externalDataCache = externalDataCache;
+            _learnerPagingService = learnerPagingService;
             _logger = logger;
         }
 
@@ -66,6 +79,22 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
 
             _populationService.Populate();
 
+            var ukprn = Convert.ToInt32(jobContextMessage.KeyValuePairs[JobContextMessageKey.UkPrn]);
+            var jobId = Convert.ToInt32(jobContextMessage.JobId);
+
+            var referenceDataInBytes = Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(_externalDataCache));
+
+            var fundingActorDtos = _learnerPagingService
+                .BuildPages()
+                .Select(p =>
+                    new FundingActorDto()
+                    {
+                        JobId = jobId,
+                        Ukprn = ukprn,
+                        ReferenceDataCache = referenceDataInBytes,
+                        ValidLearners = Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(p))
+                    }).ToList();
+
             foreach (var task in taskList)
             {
                 foreach (var taskString in task.Tasks)
@@ -73,10 +102,10 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
                     switch (taskString)
                     {
                         case "ALB":
-                            fundingTasks.Add(_ALBOrchestrationSfTask.Execute(jobContextMessage));
+                            fundingTasks.Add(_ALBOrchestrationSfTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString()));
                             break;
                         case "FM35":
-                            fundingTasks.Add(_fm35OrchestrationSfTask.Execute(jobContextMessage));
+                            fundingTasks.Add(_fm35OrchestrationSfTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString()));
                             break;
                     }
                 }
