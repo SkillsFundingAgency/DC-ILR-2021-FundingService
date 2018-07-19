@@ -30,7 +30,7 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
     ///  - None: State is kept in memory only and not replicated.
     /// </remarks>
     [StatePersistence(StatePersistence.None)]
-    internal class FM35Actor : AbstractFundingActor, IFM35Actor
+    public class FM35Actor : AbstractFundingActor, IFM35Actor
     {
         public FM35Actor(ActorService actorService, ActorId actorId, ILifetimeScope lifetimeScope)
             : base(actorService, actorId, lifetimeScope)

@@ -40,7 +40,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
         private const string LearningDeliveryFAMTypeLDM3 = "LDM3";
         private const string LearningDeliveryFAMTypeLDM4 = "LDM4";
 
-        private readonly IFundingContext _fundingContext;
         private readonly IFileDataCache _fileDataCache;
         private readonly ILargeEmployersReferenceDataService _largeEmployersReferenceDataService;
         private readonly ILARSReferenceDataService _larsReferenceDataService;
@@ -48,9 +47,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
         private readonly IPostcodesReferenceDataService _postcodesReferenceDataService;
         private readonly Interfaces.IAttributeBuilder<IAttributeData> _attributeBuilder;
 
-        public DataEntityMapper(IFundingContext fundingContext, IFileDataCache fileDataCache, ILargeEmployersReferenceDataService largeEmployersReferenceDataService, ILARSReferenceDataService larsReferenceDataService, IOrganisationReferenceDataService organisationReferenceDataService, IPostcodesReferenceDataService postcodesReferenceDataService, Interfaces.IAttributeBuilder<IAttributeData> attributeBuilder)
+        public DataEntityMapper(IFileDataCache fileDataCache, ILargeEmployersReferenceDataService largeEmployersReferenceDataService, ILARSReferenceDataService larsReferenceDataService, IOrganisationReferenceDataService organisationReferenceDataService, IPostcodesReferenceDataService postcodesReferenceDataService, Interfaces.IAttributeBuilder<IAttributeData> attributeBuilder)
         {
-            _fundingContext = fundingContext;
             _fileDataCache = fileDataCache;
             _largeEmployersReferenceDataService = largeEmployersReferenceDataService;
             _larsReferenceDataService = larsReferenceDataService;

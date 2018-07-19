@@ -8,6 +8,7 @@ using ESFA.DC.ILR.FundingService.Data.External.Organisation;
 using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
+using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.FM35.Service;
@@ -41,6 +42,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Modules
             builder.RegisterType<OrganisationReferenceDataService>().As<IOrganisationReferenceDataService>().InstancePerLifetimeScope();
             builder.RegisterType<PostcodesReferenceDataService>().As<IPostcodesReferenceDataService>().InstancePerLifetimeScope();
             builder.RegisterType<ExternalDataCache>().As<IExternalDataCache>().InstancePerLifetimeScope();
+            builder.RegisterType<FileDataCache>().As<IFileDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<FundingOutputService>().As<IOutputService<FM35FundingOutputs>>().InstancePerLifetimeScope();
             builder.RegisterType<FundingService<ILearner, FM35FundingOutputs>>().As<IFundingService<ILearner, FM35FundingOutputs>>().InstancePerLifetimeScope();
         }

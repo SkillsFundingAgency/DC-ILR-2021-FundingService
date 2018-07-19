@@ -8,6 +8,8 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Postcodes
     public class PostcodesReferenceDataService : IPostcodesReferenceDataService
     {
         private readonly IExternalDataCache _referenceDataCache;
+        private readonly IEnumerable<SfaAreaCost> _emptySfaAreaCost = new List<SfaAreaCost>();
+        private readonly IEnumerable<SfaDisadvantage> _emptySfaDisadvantage = new List<SfaDisadvantage>();
 
         public PostcodesReferenceDataService(IExternalDataCache referenceDataCache)
         {
@@ -23,14 +25,14 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Postcodes
         {
             _referenceDataCache.SfaAreaCost.TryGetValue(postcode, out IEnumerable<SfaAreaCost> sfaAreaCost);
 
-            return sfaAreaCost;
+            return sfaAreaCost ?? _emptySfaAreaCost;
         }
 
         public IEnumerable<SfaDisadvantage> SFADisadvantagesForPostcode(string postcode)
         {
             _referenceDataCache.SfaDisadvantage.TryGetValue(postcode, out IEnumerable<SfaDisadvantage> sfaDisadvantage);
 
-            return sfaDisadvantage;
+            return sfaDisadvantage ?? _emptySfaDisadvantage;
         }
     }
 }

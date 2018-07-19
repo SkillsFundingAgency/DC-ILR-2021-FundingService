@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Fabric;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.Data.Interface;
@@ -53,7 +54,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
 
             _populationService.Populate();
 
-            var learnersShards = _learnerPerActorService.BuildPages();
+            var learnersShards = _learnerPerActorService.BuildPages().ToList();
             _logger.LogDebug("completed prefunding FM35 service");
 
             // create actors for processing
@@ -82,7 +83,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
             }
 
             Task.WaitAll(actorTasks.ToArray());
-            _logger.LogDebug("completed Actors ALB service");
+            _logger.LogDebug("completed Actors FM35 service");
 
             // get results from actor tasks
             var collatedFundingOuputputLearners = new List<LearnerAttribute>();
@@ -105,7 +106,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
             await _fundingOutputPersistenceService.Process(
                 results,
                 jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString());
-            _logger.LogDebug($"Persisted ALB Funding results in: {stopWatch.ElapsedMilliseconds}");
+            _logger.LogDebug($"Persisted FM35 Funding results in: {stopWatch.ElapsedMilliseconds}");
         }
 
         private IFM35Actor GetFundingServiceActor()

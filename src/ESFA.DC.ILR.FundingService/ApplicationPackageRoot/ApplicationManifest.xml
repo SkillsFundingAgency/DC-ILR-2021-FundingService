@@ -6,6 +6,7 @@
     <Parameter Name="ServiceBusConnectionString" DefaultValue="" />
     <Parameter Name="TopicName" DefaultValue="" />
     <Parameter Name="FundingCalcSubscriptionName" DefaultValue="fundingcalc-init" />
+    <Parameter Name="JobStatusQueueName" DefaultValue="jobstatusqueue" />
     <Parameter Name="MaxMessageSize" DefaultValue="1073741824" />
     <Parameter Name="LoggerConnectionstring" DefaultValue="Server=localhost;Database=logs;User Id=loguser;Password=password1;" />
     <Parameter Name="EndpointUrl" DefaultValue="" />
@@ -23,14 +24,23 @@
     <Parameter Name="AzureBlobContainerName" DefaultValue="ilr-files" />
     <Parameter Name="ProcessingServicePlacementConstraints" DefaultValue="" />
     <Parameter Name="FM35ActorService_PartitionCount" DefaultValue="10" />
-    <Parameter Name="FM35ActorService_MinReplicaSetSize" DefaultValue="3" />
-    <Parameter Name="FM35ActorService_TargetReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="FM35ActorService_MinReplicaSetSize" DefaultValue="1" />
+    <Parameter Name="FM35ActorService_TargetReplicaSetSize" DefaultValue="1" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="ESFA.DC.ILR.FundingService.FM35ActorPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides>
+      <ConfigOverride Name="Config">
+        <Settings>
+          <Section Name="LoggerSection">
+            <Parameter Name="LoggerConnectionstring" Value="[LoggerConnectionstring]" />
+          </Section>
+        </Settings>
+      </ConfigOverride>
+    </ConfigOverrides>
   </ServiceManifestImport>
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="ESFA.DC.ILR.FundingService.ALBActorPkg" ServiceManifestVersion="1.0.0" />
@@ -55,6 +65,7 @@
             <Parameter Name="TopicName" Value="[TopicName]" />
             <Parameter Name="FundingCalcSubscriptionName" Value="[FundingCalcSubscriptionName]" />
             <Parameter Name="DataStoreSubscriptionName" Value="[DataStoreSubscriptionName]" />
+            <Parameter Name="JobStatusQueueName" Value="[JobStatusQueueName]" />
           </Section>
           <Section Name="DataTransportSettings">
             <Parameter Name="MaxMessageSize" Value="[MaxMessageSize]" />
@@ -97,7 +108,7 @@
         <PlacementConstraints>[ProcessingServicePlacementConstraints]</PlacementConstraints>
       </StatefulService>
     </Service>
-    <Service Name="FM35ActorService" GeneratedIdRef="e7540cad-ea7a-4b60-bd36-ce919a817221|Persisted">
+    <Service Name="FM35ActorService" GeneratedIdRef="b3ba44d0-d5cb-49a5-b557-7caa70d86b99|None">
       <StatefulService ServiceTypeName="FM35ActorServiceType" TargetReplicaSetSize="[FM35ActorService_TargetReplicaSetSize]" MinReplicaSetSize="[FM35ActorService_MinReplicaSetSize]">
         <UniformInt64Partition PartitionCount="[FM35ActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
       </StatefulService>

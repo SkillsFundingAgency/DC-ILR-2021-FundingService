@@ -116,6 +116,12 @@
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Oracle.Determinations.Engine, Version=10.4.0.0, Culture=neutral, PublicKeyToken=863065c849b9b316, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ESFA.DC.OPA.RunTime.DLLs.0.1.1-beta0001\lib\Oracle.Determinations.Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.Determinations.Masquerade, Version=10.4.0.0, Culture=neutral, PublicKeyToken=863065c849b9b316, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ESFA.DC.OPA.RunTime.DLLs.0.1.1-beta0001\lib\Oracle.Determinations.Masquerade.dll</HintPath>
+    </Reference>
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Serilog.2.6.0\lib\net46\Serilog.dll</HintPath>
     </Reference>
@@ -169,6 +175,7 @@
     <None Include="PackageRoot\Config\Settings.xml" />
     <None Include="App.config" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="Resources\Rulebase.zip" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Config\ESFA.DC.ILR.FundingService.Config.csproj">
@@ -194,6 +201,18 @@
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Stateless.Models\ESFA.DC.ILR.FundingService.Stateless.Models.csproj">
       <Project>{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}</Project>
       <Name>ESFA.DC.ILR.FundingService.Stateless.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model.Interface\ESFA.DC.OPA.Model.Interface.csproj">
+      <Project>{7c69290e-b03c-490b-9821-04e2b0b9cdf7}</Project>
+      <Name>ESFA.DC.OPA.Model.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service.Interface\ESFA.DC.OPA.Service.Interface.csproj">
+      <Project>{bba05279-51da-427b-8708-ca7af3a228f5}</Project>
+      <Name>ESFA.DC.OPA.Service.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service\ESFA.DC.OPA.Service.csproj">
+      <Project>{fc137929-d3e2-41c2-9c9a-adc8b32d009a}</Project>
+      <Name>ESFA.DC.OPA.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.csproj">
       <Project>{4470C1A0-91D9-4411-9F30-51F69E39C11D}</Project>
