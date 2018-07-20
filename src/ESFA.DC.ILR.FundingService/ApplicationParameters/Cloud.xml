@@ -14,6 +14,5 @@
     <Parameter Name="AzureBlobConnectionString" Value="__AzureBlobConnectionString__" />
     <Parameter Name="AzureBlobContainerName" Value="__AzureBlobContainerName__" />
     <Parameter Name="ProcessingServicePlacementConstraints" Value="__ProcessingServicePlacementConstraints__" />
-    <Parameter Name="ALBActorService_PartitionCount" Value="__ALBActorService_PartitionCount__" />
   </Parameters>
 </Application>

@@ -3,7 +3,7 @@
   <ServiceTypes>
     <StatefulServiceType ServiceTypeName="ALBActorServiceType">
       <Extensions>
-        <Extension Name="__GeneratedServiceType__" GeneratedId="ab9246fd-cded-4e68-ae71-eb380770407c|None">
+        <Extension Name="__GeneratedServiceType__" GeneratedId="315a37b1-2ec1-4c08-9c37-245fc59f40ca|None">
           <GeneratedNames xmlns="http://schemas.microsoft.com/2015/03/fabact-no-schema">
             <DefaultService Name="ALBActorService" />
             <ReplicatorEndpoint Name="ALBActorServiceReplicatorEndpoint" />
@@ -27,6 +27,7 @@
   <Resources>
     <Endpoints>
       <Endpoint Name="ALBActorServiceEndpointV2" />
+      <Endpoint Name="ALBEndpointV2" />
       <Endpoint Name="ALBActorServiceReplicatorEndpoint" />
     </Endpoints>
   </Resources>

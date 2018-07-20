@@ -3,7 +3,7 @@
   <ServiceTypes>
     <StatefulServiceType ServiceTypeName="FM35ActorServiceType">
       <Extensions>
-        <Extension Name="__GeneratedServiceType__" GeneratedId="b3ba44d0-d5cb-49a5-b557-7caa70d86b99|None">
+        <Extension Name="__GeneratedServiceType__" GeneratedId="eca4f2d5-fcff-4c7a-842f-91b0f984c4c8|None">
           <GeneratedNames xmlns="http://schemas.microsoft.com/2015/03/fabact-no-schema">
             <DefaultService Name="FM35ActorService" />
             <ReplicatorEndpoint Name="FM35ActorServiceReplicatorEndpoint" />
@@ -27,6 +27,7 @@
   <Resources>
     <Endpoints>
       <Endpoint Name="FM35ActorServiceEndpointV2" />
+      <Endpoint Name="FM35EndpointV2" />
       <Endpoint Name="FM35ActorServiceReplicatorEndpoint" />
     </Endpoints>
   </Resources>

@@ -31,8 +31,6 @@ using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Implementations;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks;
-using ESFA.DC.ILR.FundingService.Providers.Interfaces;
-using ESFA.DC.ILR.FundingService.Providers.Output;
 using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
 using ESFA.DC.ILR.FundingService.ServiceFabric.Common.Interfaces;
 using ESFA.DC.ILR.FundingService.Stubs;
@@ -99,14 +97,11 @@ namespace ESFA.DC.ILR.FundingService.Modules
 
             builder.RegisterType<FundingServiceDto>().As<IFundingServiceDto>().InstancePerLifetimeScope();
 
-            builder.RegisterType<FundingOutputPersistenceSfService<FundingOutputs>>().As<IFundingOutputPersistenceService<FundingOutputs>>().InstancePerLifetimeScope();
-            builder.RegisterType<FundingOutputPersistenceSfService<FM35FundingOutputs>>().As<IFundingOutputPersistenceService<FM35FundingOutputs>>().InstancePerLifetimeScope();
+            builder.RegisterType<ALBActorTask>().As<IALBActorTask>().InstancePerLifetimeScope();
+            builder.RegisterType<FM35ActorTask>().As<IFM35ActorTask>().InstancePerLifetimeScope();
 
-            builder.RegisterType<ALBOrchestrationSFTask>().As<IALBOrchestrationSFTask>().InstancePerLifetimeScope();
-            builder.RegisterType<FM35OrchestrationSFTask>().As<IFM35OrchestrationSFTask>().InstancePerLifetimeScope();
-
-            builder.RegisterInstance(new ActorProvider<IFM35Actor>(new Uri($"{FabricRuntime.GetActivationContext().ApplicationName}/FM35ActorService"))).As<IActorProvider<IFM35Actor>>();
-            builder.RegisterInstance(new ActorProvider<IALBActor>(new Uri($"{FabricRuntime.GetActivationContext().ApplicationName}/ALBActorService"))).As<IActorProvider<IALBActor>>();
+            builder.RegisterInstance(new ActorProvider<IFM35Actor>(ActorServiceNameConstants.FM35)).As<IActorProvider<IFM35Actor>>();
+            builder.RegisterInstance(new ActorProvider<IALBActor>(ActorServiceNameConstants.ALB)).As<IActorProvider<IALBActor>>();
         }
     }
 }

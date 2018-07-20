@@ -110,6 +110,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.ServiceFabric.Common\ESFA.DC.ILR.FundingService.ServiceFabric.Common.csproj">
+      <Project>{21BA0741-5975-4902-8D7A-567A50873CFA}</Project>
+      <Name>ESFA.DC.ILR.FundingService.ServiceFabric.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Stateless.Models\ESFA.DC.ILR.FundingService.Stateless.Models.csproj">
       <Project>{0faaaab8-443b-47bf-9e96-c3069e8789f9}</Project>
       <Name>ESFA.DC.ILR.FundingService.Stateless.Models</Name>

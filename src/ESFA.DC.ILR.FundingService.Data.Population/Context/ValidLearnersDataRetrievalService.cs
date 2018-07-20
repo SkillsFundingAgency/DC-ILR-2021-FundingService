@@ -14,6 +14,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Context
             _fundingServiceDto = fundingServiceDto;
         }
 
+        //  TODO : Re-enable Filter
         public IEnumerable<ILearner> Retrieve()
         {
             return _fundingServiceDto.Message.Learners;//.Where(learner => _fundingServiceDto.ValidLearners.Contains(learner.LearnRefNumber));

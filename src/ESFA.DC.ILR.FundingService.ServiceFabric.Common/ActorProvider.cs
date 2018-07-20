@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Fabric;
 using ESFA.DC.ILR.FundingService.ServiceFabric.Common.Interfaces;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Client;
@@ -8,16 +8,16 @@ namespace ESFA.DC.ILR.FundingService.ServiceFabric.Common
     public class ActorProvider<T> : IActorProvider<T>
         where T : IActor
     {
-        private readonly Uri _actorUri;
+        private readonly string _actorServiceName;
 
-        public ActorProvider(Uri actorUri)
+        public ActorProvider(string actorServiceName)
         {
-            _actorUri = actorUri;
+            _actorServiceName = actorServiceName;
         }
 
         public T Provide()
         {
-            return ActorProxy.Create<T>(ActorId.CreateRandom(), _actorUri);
+            return ActorProxy.Create<T>(ActorId.CreateRandom(), FabricRuntime.GetActivationContext().ApplicationName, _actorServiceName);
         }
     }
 }

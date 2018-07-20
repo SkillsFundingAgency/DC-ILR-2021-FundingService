@@ -26,8 +26,8 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         private readonly IIlrFileProviderService _ilrFileProviderService;
         private readonly IFundingServiceDto _fundingServiceDto;
         private readonly IPopulationService _populationService;
-        private readonly IALBOrchestrationSFTask _ALBOrchestrationSfTask;
-        private readonly IFM35OrchestrationSFTask _fm35OrchestrationSfTask;
+        private readonly IALBActorTask _ALBOrchestrationSfTask;
+        private readonly IFM35ActorTask _fm35OrchestrationSfTask;
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
         private readonly IPagingService<ILearner> _learnerPagingService;
         private readonly IExternalDataCache _externalDataCache;
@@ -38,8 +38,8 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             IIlrFileProviderService ilrFileProviderService,
             IFundingServiceDto fundingServiceDto,
             IPopulationService populationService,
-            IALBOrchestrationSFTask ALBOrchestrationSfTask,
-            IFM35OrchestrationSFTask fm35OrchestrationSfTask,
+            IALBActorTask ALBOrchestrationSfTask,
+            IFM35ActorTask fm35OrchestrationSfTask,
             IKeyValuePersistenceService keyValuePersistenceService,
             IPagingService<ILearner> learnerPagingService,
             IExternalDataCache externalDataCache,

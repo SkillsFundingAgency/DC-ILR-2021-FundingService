@@ -22,6 +22,7 @@ using Microsoft.ServiceFabric.Actors.Runtime;
 namespace ESFA.DC.ILR.FundingService.ALBActor
 {
     [StatePersistence(StatePersistence.None)]
+    [ActorService(Name = ActorServiceNameConstants.ALB)]
     public class ALBActor : AbstractFundingActor, IALBActor
     {
         public ALBActor(ActorService actorService, ActorId actorId, ILifetimeScope lifetimeScope)
