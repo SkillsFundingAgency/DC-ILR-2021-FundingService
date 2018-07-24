@@ -24,6 +24,8 @@ using ESFA.DC.OPA.Service.Builders;
 using ESFA.DC.OPA.Service.Interface;
 using ESFA.DC.OPA.Service.Interface.Builders;
 using ESFA.DC.OPA.Service.Interface.Rulebase;
+using ESFA.DC.Serialization.Interfaces;
+using ESFA.DC.Serialization.Json;
 
 namespace ESFA.DC.ILR.FundingService.FM35.Modules
 {
@@ -45,6 +47,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.Modules
             builder.RegisterType<FileDataCache>().As<IFileDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<FundingOutputService>().As<IOutputService<FM35FundingOutputs>>().InstancePerLifetimeScope();
             builder.RegisterType<FundingService<ILearner, FM35FundingOutputs>>().As<IFundingService<ILearner, FM35FundingOutputs>>().InstancePerLifetimeScope();
+            builder.RegisterType<JsonSerializationService>().As<ISerializationService>().InstancePerLifetimeScope();
+            builder.RegisterType<JsonSerializationService>().As<IJsonSerializationService>().InstancePerLifetimeScope();
         }
     }
 }

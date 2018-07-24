@@ -40,31 +40,33 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
 
         public Task<string> Process(FundingActorDto fm35ActorModel)
         {
-            var jsonSerializationService = LifetimeScope.Resolve<ISerializationService>();
-            var referenceDataCache = jsonSerializationService.Deserialize<ExternalDataCache>(
-                Encoding.UTF8.GetString(fm35ActorModel.ReferenceDataCache));
+            string resultString;
 
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
-                c.RegisterInstance(referenceDataCache).As<IExternalDataCache>();
+                c.Register(a => a.Resolve<IJsonSerializationService>().Deserialize<ExternalDataCache>(Encoding.UTF8.GetString(fm35ActorModel.ReferenceDataCache))).As<IExternalDataCache>();
             }))
             {
+                var jsonSerializationService = childLifetimeScope.Resolve<IJsonSerializationService>();
+
                 var executionContext = (ExecutionContext)childLifetimeScope.Resolve<IExecutionContext>();
+
                 executionContext.JobId = fm35ActorModel.JobId.ToString();
                 executionContext.TaskKey = ActorId.ToString();
+
                 var logger = childLifetimeScope.Resolve<ILogger>();
 
                 try
                 {
                     logger.LogDebug("FM35 Actor started processing");
                     var fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, FM35FundingOutputs>>();
-                    IList<ILearner> validLearners = jsonSerializationService.Deserialize<List<MessageLearner>>(
-                        new MemoryStream(fm35ActorModel.ValidLearners)).ToArray();
 
-                    var results = fundingService.ProcessFunding(validLearners);
+                    var learners = jsonSerializationService.Deserialize<List<MessageLearner>>(Encoding.UTF8.GetString(fm35ActorModel.ValidLearners));
+
+                    var results = fundingService.ProcessFunding(learners);
 
                     logger.LogDebug("FM35 Actor completed processing");
-                    return Task.FromResult(jsonSerializationService.Serialize(results));
+                    resultString = jsonSerializationService.Serialize(results);
                 }
                 catch (Exception ex)
                 {
@@ -72,7 +74,10 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
                     logger.LogError("Error while processing Actor job", ex);
                     throw;
                 }
+
             }
+
+            return Task.FromResult(resultString);
         }
     }
 }

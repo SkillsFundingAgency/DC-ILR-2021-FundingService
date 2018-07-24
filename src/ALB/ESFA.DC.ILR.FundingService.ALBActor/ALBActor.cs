@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
@@ -50,10 +51,10 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                 {
                     logger.LogDebug("ALB Actor started processing");
                     var fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, FundingOutputs>>();
-                    IList<ILearner> validLearners = jsonSerializationService.Deserialize<List<MessageLearner>>(
-                        new MemoryStream(albActorModel.ValidLearners)).ToArray();
 
-                    var results = fundingService.ProcessFunding(validLearners);
+                    var learners = jsonSerializationService.Deserialize<List<MessageLearner>>(Encoding.UTF8.GetString(albActorModel.ValidLearners));
+
+                    var results = fundingService.ProcessFunding(learners);
 
                     logger.LogDebug("ALB Actor completed processing");
                     return Task.FromResult(jsonSerializationService.Serialize(results));

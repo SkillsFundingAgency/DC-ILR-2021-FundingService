@@ -28,16 +28,13 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
 
                 builder.RegisterServiceFabricSupport();
                 builder.RegisterActor<FM35Actor>();
-
-
+                
                 using (var container = builder.Build())
                 {
                     // Not sure why this is being resolved here, to review
-                    var ss = container.Resolve<IFundingService<ILearner, FM35FundingOutputs>>();
+                  //  var ss = container.Resolve<IFundingService<ILearner, FM35FundingOutputs>>();
                     Thread.Sleep(Timeout.Infinite);
                 }
-
-                Thread.Sleep(Timeout.Infinite);
             }
             catch (Exception e)
             {
@@ -60,7 +57,6 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
             containerBuilder.RegisterModule<LoggerModule>();
 
             // register serialization
-            containerBuilder.RegisterType<JsonSerializationService>().As<ISerializationService>();
 
             return containerBuilder;
         }
