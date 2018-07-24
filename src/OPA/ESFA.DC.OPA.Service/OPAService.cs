@@ -27,7 +27,7 @@ namespace ESFA.DC.OPA.Service
 
             Session session;
 
-            using (Stream stream = rulebaseProvider.GetStream(Assembly.GetEntryAssembly()))
+            using (Stream stream = rulebaseProvider.GetStream())
             {
                 session = _sessionBuilder.CreateOPASession(stream, globalEntity);
             }

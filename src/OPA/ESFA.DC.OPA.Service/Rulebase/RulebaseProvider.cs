@@ -13,8 +13,9 @@ namespace ESFA.DC.OPA.Service.Rulebase
             _rulebaseZipPath = rulebaseZipPath;
         }
 
-        public Stream GetStream(Assembly assembly)
+        public Stream GetStream()
         {
+            var assembly = Assembly.GetEntryAssembly();
             return assembly.GetManifestResourceStream(_rulebaseZipPath);
         }
     }

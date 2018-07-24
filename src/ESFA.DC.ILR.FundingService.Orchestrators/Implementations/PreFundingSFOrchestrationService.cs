@@ -105,7 +105,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
                             fundingTasks.Add(_ALBOrchestrationSfTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString()));
                             break;
                         case "FM35":
-                            fundingTasks.Add(_fm35OrchestrationSfTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString()));
+                            fundingTasks.Add(_fm35OrchestrationSfTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString()));
                             break;
                     }
                 }

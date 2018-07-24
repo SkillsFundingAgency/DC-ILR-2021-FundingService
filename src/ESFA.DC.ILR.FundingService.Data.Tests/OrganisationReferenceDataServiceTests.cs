@@ -50,7 +50,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
                 { 1234, null },
             });
 
-            NewService(referenceDataCacheMock.Object).OrganisationFundingForUKPRN(5678).Should().BeNull();
+            NewService(referenceDataCacheMock.Object).OrganisationFundingForUKPRN(5678).Should().BeEmpty();
         }
         
         private OrganisationReferenceDataService NewService(IExternalDataCache referenceDataCache = null)

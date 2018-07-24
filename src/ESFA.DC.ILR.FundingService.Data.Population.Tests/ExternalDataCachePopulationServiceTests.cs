@@ -14,8 +14,10 @@ using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.External;
+using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Dto.Interfaces;
 using ESFA.DC.ILR.FundingService.Tests.Common;
+using ESFA.DC.ILR.Tests.Model;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -437,7 +439,21 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
 
             largeEmployersMock.Setup(x => x.LEMP_Employers).Returns(new List<LEMP_Employers>().AsMockDbSet());
 
-            var service = NewService(referenceDataCache, larsMock.Object, postcodesMock.Object, organisationsMock.Object, largeEmployersMock.Object);
+            var fundingServiceDtoMock = new Mock<IFundingServiceDto>();
+
+            fundingServiceDtoMock
+                .SetupGet(m => m.Message)
+                .Returns(
+                    new TestMessage()
+                    {
+                        LearningProviderEntity = new TestLearningProvider()
+                        {
+                            UKPRN = 1
+                        },
+                        Learners = new List<TestLearner>()
+                    });
+
+            var service = NewService(referenceDataCache, larsMock.Object, postcodesMock.Object, organisationsMock.Object, largeEmployersMock.Object, fundingServiceDtoMock.Object);
             service.Populate();
 
             return referenceDataCache;

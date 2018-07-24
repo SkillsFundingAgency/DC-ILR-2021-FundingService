@@ -337,7 +337,11 @@ namespace ESFA.DC.OPA.Service.Tests
                 .Where(n => n.Contains("Rulebase"))
                 .Select(r => r).SingleOrDefault();
 
-            return new RulebaseProvider(rulebaseZipPath);
+            var ruleBaseProviderMock = new Mock<IRulebaseProvider>();
+
+            ruleBaseProviderMock.Setup(m => m.GetStream()).Returns(Assembly.GetExecutingAssembly().GetManifestResourceStream(rulebaseZipPath));
+
+            return ruleBaseProviderMock.Object;
         }
 
         private IRulebaseProviderFactory MockRulebaseProviderFactory()

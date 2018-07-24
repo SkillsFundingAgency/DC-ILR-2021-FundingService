@@ -50,7 +50,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
                     { "postcode", null }
                 });
 
-            NewService(referenceDataCacheMock.Object).SFAAreaCostsForPostcode("notPostcode").Should().BeNull();
+            NewService(referenceDataCacheMock.Object).SFAAreaCostsForPostcode("notPostcode").Should().BeEmpty();
         }
 
         [Fact]
@@ -81,7 +81,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
                     { "postcode", null }
                 });
 
-            NewService(referenceDataCacheMock.Object).SFADisadvantagesForPostcode("notPostcode").Should().BeNull();
+            NewService(referenceDataCacheMock.Object).SFADisadvantagesForPostcode("notPostcode").Should().BeEmpty();
         }
 
         private PostcodesReferenceDataService NewService(IExternalDataCache referenceDataCache = null)
