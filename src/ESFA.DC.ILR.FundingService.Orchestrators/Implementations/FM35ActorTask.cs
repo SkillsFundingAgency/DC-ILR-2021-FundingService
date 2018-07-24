@@ -10,7 +10,7 @@ using ESFA.DC.IO.Interfaces;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
 
-namespace ESFA.DC.ILR.FundingService.Orchestrators.RuleBaseTasks
+namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
 {
     public class FM35ActorTask : AbstractActorTask<IFM35Actor, FM35FundingOutputs>, IFM35ActorTask
     {
