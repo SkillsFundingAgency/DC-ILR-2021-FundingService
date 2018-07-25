@@ -80,6 +80,7 @@ namespace ESFA.DC.ILR.FundingService.Modules
             builder.RegisterType<ValidLearnersDataRetrievalService>().As<IValidLearnersDataRetrievalService>().InstancePerLifetimeScope();
             builder.RegisterType<UKPRNDataRetrievalService>().As<IUKPRNDataRetrievalService>().InstancePerLifetimeScope();
             builder.RegisterType<PostcodesDataRetrievalService>().As<IPostcodesDataRetrievalService>().InstancePerLifetimeScope();
+            builder.RegisterType<LargeEmployersDataRetrievalService>().As<ILargeEmployersDataRetrievalService>().InstancePerLifetimeScope();
 
             builder.RegisterType<JsonSerializationService>().As<ISerializationService>();
             builder.RegisterType<JsonSerializationService>().As<IJsonSerializationService>();

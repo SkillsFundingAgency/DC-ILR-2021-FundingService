@@ -84,12 +84,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\FundingContextPopulationService.cs" />
+    <Compile Include="External\LargeEmployersDataRetrievalService.cs" />
     <Compile Include="External\PostcodesDataRetrievalService.cs" />
     <Compile Include="File\UKPRNDataRetrievalService.cs" />
     <Compile Include="Context\ValidLearnersDataRetrievalService.cs" />
     <Compile Include="File\FileDataCachePopulationService.cs" />
     <Compile Include="Interface\IFileDataCachePopulationService.cs" />
     <Compile Include="Interface\IFundingContextPopulationService.cs" />
+    <Compile Include="Interface\ILargeEmployersDataRetrievalService.cs" />
     <Compile Include="Interface\IPopulationService.cs" />
     <Compile Include="Interface\IExternalDataCachePopulationService.cs" />
     <Compile Include="Interface\IPostcodesDataRetrievalService.cs" />

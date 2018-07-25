@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ESFA.DC.Data.LargeEmployer.Model;
-using ESFA.DC.Data.LargeEmployer.Model.Interface;
 using ESFA.DC.Data.LARS.Model;
 using ESFA.DC.Data.LARS.Model.Interfaces;
 using ESFA.DC.Data.Organisatons.Model;
 using ESFA.DC.Data.Organisatons.Model.Interface;
-using ESFA.DC.Data.Postcodes.Model;
-using ESFA.DC.Data.Postcodes.Model.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
-using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.External;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
-using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Dto.Interfaces;
 using ESFA.DC.ILR.FundingService.Tests.Common;
 using ESFA.DC.ILR.Tests.Model;
@@ -274,29 +268,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
             output3.FirstOrDefault().Should().BeEquivalentTo(expectedOutput3);
         }
 
-        /// <summary>
-        /// Return Postcodes Version Data from Postcodes database
-        /// </summary>
-        [Fact(DisplayName = "MockDB - Postcodes Version Data - Value Correct"), Trait("RefDataCachePopulation", "Unit")]
-        public void MockDB_PostcodesVersionData_ValueCorrect()
-        {
-            // ARRANGE
-            // Use Test Helpers
 
-            // ACT
-            var output = MockDBOutput(LearnAimRefList);
-
-            // ASSERT
-            output.PostcodeCurrentVersion.Should().Be("Version_002");
-        }
-        
         #region Test Helpers
 
         private IExternalDataCache MockDBOutput(IEnumerable<string> learnAimRefs = null,  IEnumerable<long> orgUkprns = null, IEnumerable<int> lEmpIDs = null)
         {
             var larsMock = new Mock<ILARS>();
             var organisationsMock = new Mock<IOrganisations>();
-            var largeEmployersMock = new Mock<ILargeEmployer>();
 
             learnAimRefs = learnAimRefs ?? new List<string>();
             orgUkprns = orgUkprns ?? new List<long>();
@@ -314,7 +292,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
             organisationsMock.Setup(x => x.Org_Version).Returns(new List<Org_Version>() { new Org_Version() { MainDataSchemaName = "test" }}.AsMockDbSet());
             organisationsMock.Setup(x => x.Org_Funding).Returns(new List<Org_Funding>().AsMockDbSet());
 
-            largeEmployersMock.Setup(x => x.LEMP_Employers).Returns(new List<LEMP_Employers>().AsMockDbSet());
 
             var fundingServiceDtoMock = new Mock<IFundingServiceDto>();
 
@@ -331,8 +308,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
                     });
 
             var postcodesDataRetrievalServiceMock = new Mock<IPostcodesDataRetrievalService>();
+            var largeEmployersDataRetrievalServiceMock = new Mock<ILargeEmployersDataRetrievalService>();
 
-            var service = NewService(referenceDataCache, postcodesDataRetrievalServiceMock.Object, larsMock.Object, organisationsMock.Object, largeEmployersMock.Object, fundingServiceDtoMock.Object);
+            var service = NewService(referenceDataCache, postcodesDataRetrievalServiceMock.Object, largeEmployersDataRetrievalServiceMock.Object, larsMock.Object, organisationsMock.Object, fundingServiceDtoMock.Object);
             service.Populate();
 
             return referenceDataCache;
@@ -489,12 +467,12 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
         private ExternalDataCachePopulationService NewService(
             IExternalDataCache referenceDataCache = null,
             IPostcodesDataRetrievalService postcodesDataRetrievalService = null,
+            ILargeEmployersDataRetrievalService largeEmployersDataRetrievalService = null,
             ILARS lars = null,
             IOrganisations organisations = null,
-            ILargeEmployer largeEmployers = null,
             IFundingServiceDto fundingServiceDto = null)
         {
-            return new ExternalDataCachePopulationService(referenceDataCache, postcodesDataRetrievalService, lars, organisations, largeEmployers, fundingServiceDto);
+            return new ExternalDataCachePopulationService(referenceDataCache, postcodesDataRetrievalService, largeEmployersDataRetrievalService, lars, organisations, fundingServiceDto);
         }
     }
 }

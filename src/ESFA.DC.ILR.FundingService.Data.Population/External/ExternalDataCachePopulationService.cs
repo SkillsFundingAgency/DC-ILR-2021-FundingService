@@ -19,18 +19,24 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
     {
         private readonly IExternalDataCache _externalDataCache;
         private readonly IPostcodesDataRetrievalService _postcodesDataRetrievalService;
+        private readonly ILargeEmployersDataRetrievalService _largeEmployersDataRetrievalService;
         private readonly ILARS _LARSContext;
         private readonly IOrganisations _organisationContext;
-        private readonly ILargeEmployer _largeEmployerContext;
         private readonly IFundingServiceDto _fundingServiceDto;
 
-        public ExternalDataCachePopulationService(IExternalDataCache externalDataCache, IPostcodesDataRetrievalService postcodesDataRetrievalService, ILARS LARSContext, IOrganisations organisationContext, ILargeEmployer largeEmployerContext, IFundingServiceDto fundingServiceDto)
+        public ExternalDataCachePopulationService(
+            IExternalDataCache externalDataCache,
+            IPostcodesDataRetrievalService postcodesDataRetrievalService,
+            ILargeEmployersDataRetrievalService largeEmployersDataRetrievalService,
+            ILARS LARSContext,
+            IOrganisations organisationContext,
+            IFundingServiceDto fundingServiceDto)
         {
             _externalDataCache = externalDataCache;
             _postcodesDataRetrievalService = postcodesDataRetrievalService;
+            _largeEmployersDataRetrievalService = largeEmployersDataRetrievalService;
             _LARSContext = LARSContext;
             _organisationContext = organisationContext;
-            _largeEmployerContext = largeEmployerContext;
             _fundingServiceDto = fundingServiceDto;
         }
         
@@ -38,9 +44,9 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         {
             var learners = _fundingServiceDto.Message.Learners;
 
-            var postcodes = _postcodesDataRetrievalService.UniquePostcodes(_fundingServiceDto.Message).ToList();
+            var uniquePostcodes = _postcodesDataRetrievalService.UniquePostcodes(_fundingServiceDto.Message).ToList();
             var learnAimRefs = learners.SelectMany(l => l.LearningDeliveries).Select(ld => ld.LearnAimRef).Distinct().ToList();
-            var employerIds = learners.SelectMany(l => l.LearnerEmploymentStatuses).Select(les => les.EmpIdNullable).Where(e => e.HasValue).Select(e => e.Value).Distinct().ToList();
+            var uniqueEmployerIds = _largeEmployersDataRetrievalService.UniqueEmployerIds(_fundingServiceDto.Message).ToList();
             var orgUkprns = new List<long>() { _fundingServiceDto.Message.LearningProviderEntity.UKPRN };
 
             var referenceDataCache = (ExternalDataCache)_externalDataCache;
@@ -53,13 +59,13 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             referenceDataCache.LARSFunding = LARSFunding(learnAimRefs);
 
             referenceDataCache.PostcodeCurrentVersion = _postcodesDataRetrievalService.VersionNumber();
-            referenceDataCache.SfaAreaCost = _postcodesDataRetrievalService.SfaAreaCostsForPostcodes(postcodes);
-            referenceDataCache.SfaDisadvantage = _postcodesDataRetrievalService.SfaDisadvantagesForPostcodes(postcodes);
+            referenceDataCache.SfaAreaCost = _postcodesDataRetrievalService.SfaAreaCostsForPostcodes(uniquePostcodes);
+            referenceDataCache.SfaDisadvantage = _postcodesDataRetrievalService.SfaDisadvantagesForPostcodes(uniquePostcodes);
 
             referenceDataCache.OrgVersion = OrgVersion();
             referenceDataCache.OrgFunding = OrgFunding(orgUkprns);
 
-            referenceDataCache.LargeEmployers = LargeEmployers(employerIds);
+            referenceDataCache.LargeEmployers = _largeEmployersDataRetrievalService.LargeEmployersForEmployerIds(uniqueEmployerIds);
         }
 
         #region LARS
@@ -169,19 +175,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                     OrgFundEffectiveFrom = of.EffectiveFrom,
                     OrgFundEffectiveTo = of.EffectiveTo,
                 }).ToList() as IEnumerable<OrgFunding>);
-        }
-
-        private IDictionary<int, IEnumerable<LargeEmployers>> LargeEmployers(IEnumerable<int> lEmpIDs)
-        {
-            return
-                _largeEmployerContext.LEMP_Employers
-                .Where(l => lEmpIDs.Contains(l.ERN)).GroupBy(e => e.ERN)
-                .ToDictionary(a => a.Key, a => a.Select(le => new LargeEmployers
-                {
-                    ERN = le.ERN,
-                    EffectiveFrom = le.EffectiveFrom,
-                    EffectiveTo = le.EffectiveTo,
-                }).ToList() as IEnumerable<LargeEmployers>);
         }
     }
 
