@@ -17,18 +17,18 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 {
     public class ExternalDataCachePopulationService : IExternalDataCachePopulationService
     {
-        private readonly IExternalDataCache _referenceDataCache;
+        private readonly IExternalDataCache _externalDataCache;
+        private readonly IPostcodesDataRetrievalService _postcodesDataRetrievalService;
         private readonly ILARS _LARSContext;
-        private readonly IPostcodes _postcodesContext;
         private readonly IOrganisations _organisationContext;
         private readonly ILargeEmployer _largeEmployerContext;
         private readonly IFundingServiceDto _fundingServiceDto;
 
-        public ExternalDataCachePopulationService(IExternalDataCache referenceDataCache, ILARS LARSContext, IPostcodes postcodesContext, IOrganisations organisationContext, ILargeEmployer largeEmployerContext, IFundingServiceDto fundingServiceDto)
+        public ExternalDataCachePopulationService(IExternalDataCache externalDataCache, IPostcodesDataRetrievalService postcodesDataRetrievalService, ILARS LARSContext, IOrganisations organisationContext, ILargeEmployer largeEmployerContext, IFundingServiceDto fundingServiceDto)
         {
-            _referenceDataCache = referenceDataCache;
+            _externalDataCache = externalDataCache;
+            _postcodesDataRetrievalService = postcodesDataRetrievalService;
             _LARSContext = LARSContext;
-            _postcodesContext = postcodesContext;
             _organisationContext = organisationContext;
             _largeEmployerContext = largeEmployerContext;
             _fundingServiceDto = fundingServiceDto;
@@ -37,13 +37,13 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         public void Populate()
         {
             var learners = _fundingServiceDto.Message.Learners;
-            
-            var postcodes = learners.SelectMany(l => l.LearningDeliveries).Select(ld => ld.DelLocPostCode).Distinct().ToList();
+
+            var postcodes = _postcodesDataRetrievalService.UniquePostcodes(_fundingServiceDto.Message).ToList();
             var learnAimRefs = learners.SelectMany(l => l.LearningDeliveries).Select(ld => ld.LearnAimRef).Distinct().ToList();
             var employerIds = learners.SelectMany(l => l.LearnerEmploymentStatuses).Select(les => les.EmpIdNullable).Where(e => e.HasValue).Select(e => e.Value).Distinct().ToList();
             var orgUkprns = new List<long>() { _fundingServiceDto.Message.LearningProviderEntity.UKPRN };
 
-            var referenceDataCache = (ExternalDataCache)_referenceDataCache;
+            var referenceDataCache = (ExternalDataCache)_externalDataCache;
 
             referenceDataCache.LARSCurrentVersion = LARSCurrentVersion();
             referenceDataCache.LARSAnnualValue = LARSAnnualValue(learnAimRefs);
@@ -52,9 +52,9 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             referenceDataCache.LARSFrameworkAims = LARSFrameworkAims(learnAimRefs);
             referenceDataCache.LARSFunding = LARSFunding(learnAimRefs);
 
-            referenceDataCache.PostcodeCurrentVersion = PostcodesVersion();
-            referenceDataCache.SfaAreaCost = SFAAreaCost(postcodes);
-            referenceDataCache.SfaDisadvantage = SfaDisadvantage(postcodes);
+            referenceDataCache.PostcodeCurrentVersion = _postcodesDataRetrievalService.VersionNumber();
+            referenceDataCache.SfaAreaCost = _postcodesDataRetrievalService.SfaAreaCostsForPostcodes(postcodes);
+            referenceDataCache.SfaDisadvantage = _postcodesDataRetrievalService.SfaDisadvantagesForPostcodes(postcodes);
 
             referenceDataCache.OrgVersion = OrgVersion();
             referenceDataCache.OrgFunding = OrgFunding(orgUkprns);
@@ -146,43 +146,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                     EffectiveFrom = lf.EffectiveFrom,
                     EffectiveTo = lf.EffectiveTo,
                 }).ToList() as IEnumerable<LARSFrameworkAims>);
-        }
-
-
-        #endregion
-
-        #region Postcodes
-
-        private string PostcodesVersion()
-        {
-            return _postcodesContext.VersionInfos.Select(p => p.VersionNumber).Max();
-        }
-
-        private IDictionary<string, IEnumerable<SfaAreaCost>> SFAAreaCost(IEnumerable<string> postcodes)
-        {
-            return
-                _postcodesContext.SFA_PostcodeAreaCost
-                .Where(p => postcodes.Contains(p.Postcode)).GroupBy(a => a.Postcode)
-                .ToDictionary(a => a.Key, a => a.Select(sac => new SfaAreaCost
-                {
-                    Postcode = sac.Postcode,
-                    AreaCostFactor = sac.AreaCostFactor,
-                    EffectiveFrom = sac.EffectiveFrom,
-                    EffectiveTo = sac.EffectiveTo,
-                }).ToList() as IEnumerable<SfaAreaCost>);
-        }
-        private IDictionary<string, IEnumerable<SfaDisadvantage>> SfaDisadvantage(IEnumerable<string> postcodes)
-        {
-            return
-                _postcodesContext.SFA_PostcodeDisadvantage
-                .Where(p => postcodes.Contains(p.Postcode)).GroupBy(a => a.Postcode)
-                .ToDictionary(a => a.Key, a => a.Select(sd => new SfaDisadvantage
-                {
-                    Postcode = sd.Postcode,
-                    Uplift = sd.Uplift,
-                    EffectiveFrom = sd.EffectiveFrom,
-                    EffectiveTo = sd.EffectiveTo,
-                }).ToList() as IEnumerable<SfaDisadvantage>);
         }
 
         #endregion

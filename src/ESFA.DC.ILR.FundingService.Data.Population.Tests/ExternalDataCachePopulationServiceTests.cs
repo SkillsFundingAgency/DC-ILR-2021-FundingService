@@ -14,6 +14,7 @@ using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.External;
+using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Dto.Interfaces;
 using ESFA.DC.ILR.FundingService.Tests.Common;
@@ -36,7 +37,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
             // Use Test Helpers
 
             // ACT
-            var output = MockDBOutput(LearnAimRefList, PostcodesList);
+            var output = MockDBOutput(LearnAimRefList);
 
             // ASSERT
             output.LARSCurrentVersion.Should().Be("Version_005");
@@ -52,7 +53,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
             // Use Test Helpers
 
             // ACT
-            var output = MockDBOutput(LearnAimRefList, PostcodesList);
+            var output = MockDBOutput(LearnAimRefList);
 
             // ASSERT
             output.LARSLearningDelivery.Count.Should().Be(2);
@@ -68,7 +69,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
             // Use Test Helpers
 
             // ACT
-            var output = MockDBOutput(LearnAimRefList, PostcodesList);
+            var output = MockDBOutput(LearnAimRefList);
 
             // ASSERT
             output.LARSLearningDelivery.Where(k => k.Key == "123456").Select(o => o.Key).Should().BeEquivalentTo("123456");
@@ -89,7 +90,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
             };
 
             // ACT
-            var output = MockDBOutput(learnAimRef, PostcodesList);
+            var output = MockDBOutput(learnAimRef);
 
             // ASSERT
             output.LARSLearningDelivery.Where(k => k.Key == "123456").Select(o => o.Key).Should().BeNullOrEmpty();
@@ -106,7 +107,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
             // Use Test Helpers
 
             // ACT
-            var output = MockDBOutput(LearnAimRefList, PostcodesList);
+            var output = MockDBOutput(LearnAimRefList);
 
             // ASSERT
             output.LARSLearningDelivery.Where(k => k.Key == "123456").Select(o => o.Value).Count().Should().Be(1);
@@ -123,7 +124,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
             // Use Test Helpers
 
             // ACT
-            var output = MockDBOutput(LearnAimRefList, PostcodesList);
+            var output = MockDBOutput(LearnAimRefList);
 
             // ASSERT
             var expectedOutput1 = new LARSLearningDelivery
@@ -159,7 +160,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
             // Use Test Helpers
 
             // ACT
-            var output = MockDBOutput(LearnAimRefList, PostcodesList);
+            var output = MockDBOutput(LearnAimRefList);
 
             // ASSERT
             output.LARSFunding.Count.Should().Be(2);
@@ -175,7 +176,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
             // Use Test Helpers
 
             // ACT
-            var output = MockDBOutput(LearnAimRefList, PostcodesList);
+            var output = MockDBOutput(LearnAimRefList);
 
             // ASSERT
             output.LARSFunding.Where(k => k.Key == "123456").Select(o => o.Key).Should().BeEquivalentTo("123456");
@@ -196,7 +197,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
             };
 
             // ACT
-            var output = MockDBOutput(learnAimRef, PostcodesList);
+            var output = MockDBOutput(learnAimRef);
 
             // ASSERT
             output.LARSFunding.Where(k => k.Key == "123456").Select(o => o.Key).Should().BeNullOrEmpty();
@@ -213,7 +214,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
             // Use Test Helpers
 
             // ACT
-            var output = MockDBOutput(LearnAimRefList, PostcodesList);
+            var output = MockDBOutput(LearnAimRefList);
 
             // ASSERT
             output.LARSFunding.Where(k => k.Key == "123456").Select(o => o.Value).Count().Should().Be(1);
@@ -232,7 +233,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
             // Use Test Helpers
 
             // ACT
-            var output = MockDBOutput(LearnAimRefList, PostcodesList);
+            var output = MockDBOutput(LearnAimRefList);
 
             // ASSERT
             var expectedOutput1 = new LARSFunding
@@ -283,141 +284,21 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
             // Use Test Helpers
 
             // ACT
-            var output = MockDBOutput(LearnAimRefList, PostcodesList);
+            var output = MockDBOutput(LearnAimRefList);
 
             // ASSERT
             output.PostcodeCurrentVersion.Should().Be("Version_002");
         }
-
-        /// <summary>
-        /// Return Postcodes SFAAreaCost Data from Postcodes database
-        /// </summary>
-        [Fact(DisplayName = "MockDB - Postcodes SFAAreaCost Data - Count Correct"), Trait("RefDataCachePopulation", "Unit")]
-        public void MockDB_SFAAreaCostData_CountCorrect()
-        {
-            // ARRANGE
-            // Use Test Helpers
-
-            // ACT
-            var output = MockDBOutput(LearnAimRefList, PostcodesList);
-
-            // ASSERT
-            output.SfaAreaCost.Count.Should().Be(2);
-        }
-
-        /// <summary>
-        /// Return Postcodes SFAAreaCost Data from Postcodes database
-        /// </summary>
-        [Fact(DisplayName = "MockDB - Postcodes SFAAreaCost Data Keys Correct"), Trait("RefDataCachePopulation", "Unit")]
-        public void MockDB_SFAAreaCostData_KeysCorrect()
-        {
-            // ARRANGE
-            // Use Test Helpers
-
-            // ACT
-            var output = MockDBOutput(LearnAimRefList, PostcodesList);
-
-            // ASSERT
-            output.SfaAreaCost.Where(k => k.Key == "CV1 2WT").Select(o => o.Key).Should().BeEquivalentTo("CV1 2WT");
-            output.SfaAreaCost.Where(k => k.Key == "CV1 2TT").Select(o => o.Key).Should().BeEquivalentTo("CV1 2TT");
-            output.SfaAreaCost.Where(k => k.Key == "CV1 2AA").Select(o => o.Key).Should().BeNullOrEmpty();
-        }
-
-        /// <summary>
-        /// Return Postcodes SFAAreaCost Data from Postcodes database
-        /// </summary>
-        [Fact(DisplayName = "MockDB - Postcodes SFAAreaCost Data Keys Not Found"), Trait("RefDataCachePopulation", "Unit")]
-        public void MockDB_SFAAreaCostData_KeysNotFound()
-        {
-            // ARRANGE
-            var postcode = new List<string>
-            {
-                "CV1 1AA"
-            };
-
-            // ACT
-            var output = MockDBOutput(LearnAimRefList, postcode);
-
-            // ASSERT
-            output.LARSFunding.Where(k => k.Key == "CV1 2WT").Select(o => o.Key).Should().BeNullOrEmpty();
-            output.LARSFunding.Where(k => k.Key == "CV1 2TT").Select(o => o.Key).Should().BeNullOrEmpty();
-        }
-
-        /// <summary>
-        /// Return Postcodes SFAAreaCost Data from Postcodes database
-        /// </summary>
-        [Fact(DisplayName = "MockDB - Postcodes SFAAreaCost Data - Data Count Correct"), Trait("RefDataCachePopulation", "Unit")]
-        public void MockDB_SFAAreaCostData_DataCountCorrect()
-        {
-            // ARRANGE
-            // Use Test Helpers
-
-            // ACT
-            var output = MockDBOutput(LearnAimRefList, PostcodesList);
-
-            // ASSERT
-            output.SfaAreaCost.Where(k => k.Key == "CV1 2WT").Select(o => o.Value).Count().Should().Be(1);
-            output.SfaAreaCost.Where(k => k.Key == "CV1 2WT").SelectMany(o => o.Value).Count().Should().Be(1);
-            output.SfaAreaCost.Where(k => k.Key == "CV1 2TT").Select(o => o.Value).Count().Should().Be(1);
-            output.SfaAreaCost.Where(k => k.Key == "CV1 2TT").SelectMany(o => o.Value).Count().Should().Be(2);
-        }
-
-        /// <summary>
-        /// Return Postcodes SFAAreaCost Data from Postcodes database
-        /// </summary>
-        [Fact(DisplayName = "MockDB - Postcodes SFAAreaCost Data - Data Values Correct"), Trait("RefDataCachePopulation", "Unit")]
-        public void MockDB_SFAAreaCostData_DataValuesCorrect()
-        {
-            // ARRANGE
-            // Use Test Helpers
-
-            // ACT
-            var output = MockDBOutput(LearnAimRefList, PostcodesList);
-
-            // ASSERT
-            var expectedOutput1 = new SfaAreaCost
-            {
-                Postcode = "CV1 2WT",
-                AreaCostFactor = 1.2m,
-                EffectiveFrom = DateTime.Parse("2000-01-01"),
-                EffectiveTo = null,
-            };
-
-            var expectedOutput2 = new SfaAreaCost
-            {
-                Postcode = "CV1 2TT",
-                AreaCostFactor = 1.5m,
-                EffectiveFrom = DateTime.Parse("2000-01-01"),
-                EffectiveTo = DateTime.Parse("2015-12-31")
-            };
-
-            var expectedOutput3 = new SfaAreaCost
-            {
-                Postcode = "CV1 2TT",
-                AreaCostFactor = 2.1m,
-                EffectiveFrom = DateTime.Parse("2016-01-01"),
-                EffectiveTo = null,
-            };
-
-            var output1 = output.SfaAreaCost.Where(k => k.Key == "CV1 2WT").SelectMany(o => o.Value);
-            var output3 = output.SfaAreaCost.Where(k => k.Key == "CV1 2TT").SelectMany(o => o.Value);
-
-            output1.FirstOrDefault().Should().BeEquivalentTo(expectedOutput1);
-            output3.FirstOrDefault().Should().BeEquivalentTo(expectedOutput2);
-            output3.Skip(1).Single().Should().BeEquivalentTo(expectedOutput3);
-        }
         
         #region Test Helpers
 
-        private IExternalDataCache MockDBOutput(IEnumerable<string> learnAimRefs = null, IEnumerable<string> postcodes = null, IEnumerable<long> orgUkprns = null, IEnumerable<int> lEmpIDs = null)
+        private IExternalDataCache MockDBOutput(IEnumerable<string> learnAimRefs = null,  IEnumerable<long> orgUkprns = null, IEnumerable<int> lEmpIDs = null)
         {
             var larsMock = new Mock<ILARS>();
-            var postcodesMock = new Mock<IPostcodes>();
             var organisationsMock = new Mock<IOrganisations>();
             var largeEmployersMock = new Mock<ILargeEmployer>();
 
             learnAimRefs = learnAimRefs ?? new List<string>();
-            postcodes = postcodes ?? new List<string>();
             orgUkprns = orgUkprns ?? new List<long>();
             lEmpIDs = lEmpIDs ?? new List<int>();
             
@@ -429,11 +310,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
             larsMock.Setup(x => x.LARS_AnnualValue).Returns(new List<LARS_AnnualValue>().AsMockDbSet);
             larsMock.Setup(x => x.LARS_LearningDeliveryCategory).Returns(new List<LARS_LearningDeliveryCategory>().AsMockDbSet);
             larsMock.Setup(x => x.LARS_FrameworkAims).Returns(new List<LARS_FrameworkAims>().AsMockDbSet());
-
-            postcodesMock.Setup(x => x.SFA_PostcodeAreaCost).Returns(MockSFAAreaCostArray().AsMockDbSet());
-            postcodesMock.Setup(x => x.VersionInfos).Returns(MockPostcodesVersionArray().AsMockDbSet());
-            postcodesMock.Setup(x => x.SFA_PostcodeDisadvantage).Returns(new List<SFA_PostcodeDisadvantage>().AsMockDbSet());
-
+            
             organisationsMock.Setup(x => x.Org_Version).Returns(new List<Org_Version>() { new Org_Version() { MainDataSchemaName = "test" }}.AsMockDbSet());
             organisationsMock.Setup(x => x.Org_Funding).Returns(new List<Org_Funding>().AsMockDbSet());
 
@@ -453,7 +330,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
                         Learners = new List<TestLearner>()
                     });
 
-            var service = NewService(referenceDataCache, larsMock.Object, postcodesMock.Object, organisationsMock.Object, largeEmployersMock.Object, fundingServiceDtoMock.Object);
+            var postcodesDataRetrievalServiceMock = new Mock<IPostcodesDataRetrievalService>();
+
+            var service = NewService(referenceDataCache, postcodesDataRetrievalServiceMock.Object, larsMock.Object, organisationsMock.Object, largeEmployersMock.Object, fundingServiceDtoMock.Object);
             service.Populate();
 
             return referenceDataCache;
@@ -603,78 +482,19 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
         {
             "CV1 2WT", "CV1 2TT"
         };
-
-        private static VersionInfo[] MockPostcodesVersionArray()
-        {
-            return new VersionInfo[]
-            {
-                PostcodesVersionTestValue,
-            };
-        }
-
-        private static readonly VersionInfo PostcodesVersionTestValue =
-            new VersionInfo
-            {
-                VersionNumber = "Version_002",
-                DataSource = "Source",
-                Comments = "Comments",
-                ModifiedAt = DateTime.Parse("2018-01-01"),
-                ModifiedBy = "System"
-            };
-
-        private static SFA_PostcodeAreaCost[] MockSFAAreaCostArray()
-        {
-            return new SFA_PostcodeAreaCost[]
-            {
-                SFAAreaCostTestValue1,
-                SFAAreaCostTestValue2,
-                SFAAreaCostTestValue3
-            };
-        }
-
-        private static readonly SFA_PostcodeAreaCost SFAAreaCostTestValue1 =
-          new SFA_PostcodeAreaCost()
-          {
-              MasterPostcode = new MasterPostcode { Postcode = "CV1 2WT" },
-              Postcode = "CV1 2WT",
-              AreaCostFactor = 1.2m,
-              EffectiveFrom = DateTime.Parse("2000-01-01"),
-              EffectiveTo = null,
-          };
-
-        private static readonly SFA_PostcodeAreaCost SFAAreaCostTestValue2 =
-         new SFA_PostcodeAreaCost()
-         {
-             MasterPostcode = new MasterPostcode { Postcode = "CV1 2TT" },
-             Postcode = "CV1 2TT",
-             AreaCostFactor = 1.5m,
-             EffectiveFrom = DateTime.Parse("2000-01-01"),
-             EffectiveTo = DateTime.Parse("2015-12-31")
-         };
-
-        private static readonly SFA_PostcodeAreaCost SFAAreaCostTestValue3 =
-        new SFA_PostcodeAreaCost()
-        {
-            MasterPostcode = new MasterPostcode { Postcode = "CV1 2TT" },
-            Postcode = "CV1 2TT",
-            AreaCostFactor = 2.1m,
-            EffectiveFrom = DateTime.Parse("2016-01-01"),
-            EffectiveTo = null,
-        };
-
         #endregion
 
         #endregion
 
         private ExternalDataCachePopulationService NewService(
             IExternalDataCache referenceDataCache = null,
+            IPostcodesDataRetrievalService postcodesDataRetrievalService = null,
             ILARS lars = null,
-            IPostcodes postcodes = null,
             IOrganisations organisations = null,
             ILargeEmployer largeEmployers = null,
             IFundingServiceDto fundingServiceDto = null)
         {
-            return new ExternalDataCachePopulationService(referenceDataCache, lars, postcodes, organisations, largeEmployers, fundingServiceDto);
+            return new ExternalDataCachePopulationService(referenceDataCache, postcodesDataRetrievalService, lars, organisations, largeEmployers, fundingServiceDto);
         }
     }
 }

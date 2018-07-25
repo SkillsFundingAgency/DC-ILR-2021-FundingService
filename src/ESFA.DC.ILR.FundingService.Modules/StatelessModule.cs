@@ -79,6 +79,7 @@ namespace ESFA.DC.ILR.FundingService.Modules
             builder.RegisterType<FileDataCache>().As<IFileDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<ValidLearnersDataRetrievalService>().As<IValidLearnersDataRetrievalService>().InstancePerLifetimeScope();
             builder.RegisterType<UKPRNDataRetrievalService>().As<IUKPRNDataRetrievalService>().InstancePerLifetimeScope();
+            builder.RegisterType<PostcodesDataRetrievalService>().As<IPostcodesDataRetrievalService>().InstancePerLifetimeScope();
 
             builder.RegisterType<JsonSerializationService>().As<ISerializationService>();
             builder.RegisterType<JsonSerializationService>().As<IJsonSerializationService>();

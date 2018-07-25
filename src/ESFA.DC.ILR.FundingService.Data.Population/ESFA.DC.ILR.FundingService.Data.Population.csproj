@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\FundingContextPopulationService.cs" />
+    <Compile Include="External\PostcodesDataRetrievalService.cs" />
     <Compile Include="File\UKPRNDataRetrievalService.cs" />
     <Compile Include="Context\ValidLearnersDataRetrievalService.cs" />
     <Compile Include="File\FileDataCachePopulationService.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Interface\IFundingContextPopulationService.cs" />
     <Compile Include="Interface\IPopulationService.cs" />
     <Compile Include="Interface\IExternalDataCachePopulationService.cs" />
+    <Compile Include="Interface\IPostcodesDataRetrievalService.cs" />
     <Compile Include="Interface\IUKPRNDataRetrievalService.cs" />
     <Compile Include="Interface\IValidLearnersDataRetrievalService.cs" />
     <Compile Include="PopulationService.cs" />
