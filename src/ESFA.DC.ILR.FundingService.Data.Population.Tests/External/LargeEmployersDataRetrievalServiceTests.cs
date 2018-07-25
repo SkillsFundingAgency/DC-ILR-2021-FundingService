@@ -15,6 +15,16 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
     public class LargeEmployersDataRetrievalServiceTests
     {
         [Fact]
+        public void Employers()
+        {
+            var largeEmployersMock = new Mock<ILargeEmployer>();
+
+            var employers = NewService(largeEmployersMock.Object).Employers;
+
+            largeEmployersMock.VerifyGet(l => l.LEMP_Employers);
+        }
+
+        [Fact]
         public void UniqueEmployerIds()
         {
             var message = new TestMessage()

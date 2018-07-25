@@ -24,6 +24,26 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         }
 
         [Fact]
+        public void SfaPostcodeAreaCosts()
+        {
+            var postcodesMock = new Mock<IPostcodes>();
+
+            var sfaPostcodeAreaCosts = NewService(postcodesMock.Object).SfaPostcodeAreaCosts;
+
+            postcodesMock.VerifyGet(p => p.SFA_PostcodeAreaCost);
+        }
+
+        [Fact]
+        public void SfaPostcodeDisadvantages()
+        {
+            var postcodesMock = new Mock<IPostcodes>();
+
+            var sfaPostcodeDisadvantages = NewService(postcodesMock.Object).SfaPostcodeAreaCosts;
+
+            postcodesMock.VerifyGet(p => p.SFA_PostcodeAreaCost);
+        }
+
+        [Fact]
         public void UniquePostcodes()
         {
             var message = new TestMessage()
@@ -76,7 +96,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         }
 
         [Fact]
-        public void SfaPostcodeAreaCosts()
+        public void SfaPostcodeAreaCostsForPostcodes()
         {
             var sfaPostcodeAreaCosts = new List<SFA_PostcodeAreaCost>()
             {
@@ -147,7 +167,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         }
 
         [Fact]
-        public void SfaPostcodeDisadvantages()
+        public void SfaPostcodeDisadvantagesForPostcodes()
         {
             var sfaPostcodeDisadvantages = new List<SFA_PostcodeDisadvantage>()
             {

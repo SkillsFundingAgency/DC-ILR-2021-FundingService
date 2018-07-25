@@ -20,6 +20,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         private readonly IExternalDataCache _externalDataCache;
         private readonly IPostcodesDataRetrievalService _postcodesDataRetrievalService;
         private readonly ILargeEmployersDataRetrievalService _largeEmployersDataRetrievalService;
+        private readonly ILARSDataRetrievalService _larsDataRetrievalService;
         private readonly ILARS _LARSContext;
         private readonly IOrganisations _organisationContext;
         private readonly IFundingServiceDto _fundingServiceDto;
@@ -28,6 +29,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             IExternalDataCache externalDataCache,
             IPostcodesDataRetrievalService postcodesDataRetrievalService,
             ILargeEmployersDataRetrievalService largeEmployersDataRetrievalService,
+            ILARSDataRetrievalService larsDataRetrievalService,
             ILARS LARSContext,
             IOrganisations organisationContext,
             IFundingServiceDto fundingServiceDto)
@@ -35,6 +37,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             _externalDataCache = externalDataCache;
             _postcodesDataRetrievalService = postcodesDataRetrievalService;
             _largeEmployersDataRetrievalService = largeEmployersDataRetrievalService;
+            _larsDataRetrievalService = larsDataRetrievalService;
             _LARSContext = LARSContext;
             _organisationContext = organisationContext;
             _fundingServiceDto = fundingServiceDto;
@@ -42,10 +45,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         
         public void Populate()
         {
-            var learners = _fundingServiceDto.Message.Learners;
-
             var uniquePostcodes = _postcodesDataRetrievalService.UniquePostcodes(_fundingServiceDto.Message).ToList();
-            var learnAimRefs = learners.SelectMany(l => l.LearningDeliveries).Select(ld => ld.LearnAimRef).Distinct().ToList();
+            var learnAimRefs = _larsDataRetrievalService.UniqueLearnAimRefs(_fundingServiceDto.Message).ToList();
             var uniqueEmployerIds = _largeEmployersDataRetrievalService.UniqueEmployerIds(_fundingServiceDto.Message).ToList();
             var orgUkprns = new List<long>() { _fundingServiceDto.Message.LearningProviderEntity.UKPRN };
 
@@ -53,10 +54,10 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
             referenceDataCache.LARSCurrentVersion = LARSCurrentVersion();
             referenceDataCache.LARSAnnualValue = LARSAnnualValue(learnAimRefs);
-            referenceDataCache.LARSLearningDelivery = LARSLearningDelivery(learnAimRefs);
+            referenceDataCache.LARSLearningDelivery = _larsDataRetrievalService.LARSLearningDeliveriesForLearnAimRefs(learnAimRefs);
             referenceDataCache.LARSLearningDeliveryCatgeory = LARSLearningDeliveryCategory(learnAimRefs);
             referenceDataCache.LARSFrameworkAims = LARSFrameworkAims(learnAimRefs);
-            referenceDataCache.LARSFunding = LARSFunding(learnAimRefs);
+            referenceDataCache.LARSFunding = _larsDataRetrievalService.LARSFundingsForLearnAimRefs(learnAimRefs);
 
             referenceDataCache.PostcodeCurrentVersion = _postcodesDataRetrievalService.VersionNumber();
             referenceDataCache.SfaAreaCost = _postcodesDataRetrievalService.SfaAreaCostsForPostcodes(uniquePostcodes);
@@ -74,41 +75,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         {
             return _LARSContext.LARS_Version.Select(lv => lv.MainDataSchemaName).Max();
         }
-
-        private IDictionary<string, LARSLearningDelivery> LARSLearningDelivery(IEnumerable<string> learnAimRefs)
-        {
-            return
-                _LARSContext.LARS_LearningDelivery
-                .Where(ld => learnAimRefs.Contains(ld.LearnAimRef))
-                .ToDictionary(a => a.LearnAimRef, ld => new LARSLearningDelivery
-                {
-                    LearnAimRef = ld.LearnAimRef,
-                    LearnAimRefType = ld.LearnAimRefType,
-                    NotionalNVQLevelv2 = ld.NotionalNVQLevelv2,
-                    RegulatedCreditValue = ld.RegulatedCreditValue,
-                    EnglandFEHEStatus = ld.EnglandFEHEStatus,
-                    EnglPrscID = ld.EnglPrscID,
-                    FrameworkCommonComponent = ld.FrameworkCommonComponent,
-                });
-        }
-
-        private IDictionary<string, IEnumerable<LARSFunding>> LARSFunding(IEnumerable<string> learnAimRefs)
-        {
-            return
-                _LARSContext.LARS_Funding
-                .Where(lf => learnAimRefs.Contains(lf.LearnAimRef)).GroupBy(a => a.LearnAimRef)
-                .ToDictionary(a => a.Key, a => a.Select(lf => new LARSFunding
-                {
-                    LearnAimRef = lf.LearnAimRef,
-                    FundingCategory = lf.FundingCategory,
-                    EffectiveFrom = lf.EffectiveFrom,
-                    EffectiveTo = lf.EffectiveTo,
-                    RateWeighted = lf.RateWeighted,
-                    WeightingFactor = lf.WeightingFactor,
-                    RateUnWeighted = lf.RateUnWeighted,
-                }).ToList() as IEnumerable<LARSFunding>);
-        }
-
+        
         private IDictionary<string, IEnumerable<LARSAnnualValue>> LARSAnnualValue(IEnumerable<string> learnAimRefs)
         {
             return
