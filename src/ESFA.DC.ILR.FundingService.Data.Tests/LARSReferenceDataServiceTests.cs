@@ -125,7 +125,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
 
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
-            referenceDataCacheMock.SetupGet(rdc => rdc.LARSLearningDeliveryCatgeory)
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSLearningDeliveryCategory)
                 .Returns(new Dictionary<string, IEnumerable<LARSLearningDeliveryCategory>>()
                 {
                     { learnAimRef, learningDeliveryCategories },
@@ -139,7 +139,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         {
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
-            referenceDataCacheMock.SetupGet(rdc => rdc.LARSLearningDeliveryCatgeory)
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSLearningDeliveryCategory)
                 .Returns(new Dictionary<string, IEnumerable<LARSLearningDeliveryCategory>>()
                 {
                     { "learnAimRef", null },

@@ -49,7 +49,7 @@ namespace ESFA.DC.ILR.FundingService.Data.External.LARS
 
         public IEnumerable<LARSLearningDeliveryCategory> LARSLearningDeliveryCategoriesForLearnAimRef(string learnAimRef)
         {
-            _referenceDataCache.LARSLearningDeliveryCatgeory.TryGetValue(learnAimRef, out IEnumerable<LARSLearningDeliveryCategory> larsLearningDeliveryCategory);
+            _referenceDataCache.LARSLearningDeliveryCategory.TryGetValue(learnAimRef, out IEnumerable<LARSLearningDeliveryCategory> larsLearningDeliveryCategory);
 
             return larsLearningDeliveryCategory;
         }

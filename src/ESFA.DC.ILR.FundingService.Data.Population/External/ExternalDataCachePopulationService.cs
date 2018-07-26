@@ -44,7 +44,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             referenceDataCache.LARSCurrentVersion = _larsDataRetrievalService.CurrentVersion();
             referenceDataCache.LARSAnnualValue = _larsDataRetrievalService.LARSAnnualValuesForLearnAimRefs(learnAimRefs);
             referenceDataCache.LARSLearningDelivery = _larsDataRetrievalService.LARSLearningDeliveriesForLearnAimRefs(learnAimRefs);
-            referenceDataCache.LARSLearningDeliveryCatgeory = _larsDataRetrievalService.LARSLearningDeliveryCategoriesForLearnAimRefs(learnAimRefs);
+            referenceDataCache.LARSLearningDeliveryCategory = _larsDataRetrievalService.LARSLearningDeliveryCategoriesForLearnAimRefs(learnAimRefs);
             referenceDataCache.LARSFrameworkAims = _larsDataRetrievalService.LARSFrameworkAimsForLearnAimRefs(learnAimRefs);
             referenceDataCache.LARSFunding = _larsDataRetrievalService.LARSFundingsForLearnAimRefs(learnAimRefs);
 

@@ -23,7 +23,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Interface
 
         IDictionary<string, IEnumerable<LARSFrameworkAims>> LARSFrameworkAims { get; }
 
-        IDictionary<string, IEnumerable<LARSLearningDeliveryCategory>> LARSLearningDeliveryCatgeory { get; }
+        IDictionary<string, IEnumerable<LARSLearningDeliveryCategory>> LARSLearningDeliveryCategory { get; }
         
         string OrgVersion { get; }
 

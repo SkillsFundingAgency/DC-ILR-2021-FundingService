@@ -19,7 +19,7 @@ namespace ESFA.DC.ILR.FundingService.Data.External
 
         public IDictionary<string, IEnumerable<LARSFrameworkAims>> LARSFrameworkAims { get; set; }
 
-        public IDictionary<string, IEnumerable<LARSLearningDeliveryCategory>> LARSLearningDeliveryCatgeory { get; set; }
+        public IDictionary<string, IEnumerable<LARSLearningDeliveryCategory>> LARSLearningDeliveryCategory { get; set; }
         
         public string PostcodeCurrentVersion { get; set; }
 
