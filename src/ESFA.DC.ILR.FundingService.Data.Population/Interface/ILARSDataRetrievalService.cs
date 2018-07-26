@@ -6,6 +6,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Interface
 {
     public interface ILARSDataRetrievalService
     {
+        string CurrentVersion();
+
         IEnumerable<string> UniqueLearnAimRefs(IMessage message);
 
         IDictionary<string, IEnumerable<LARSFunding>> LARSFundingsForLearnAimRefs(IEnumerable<string> learnAimRefs);

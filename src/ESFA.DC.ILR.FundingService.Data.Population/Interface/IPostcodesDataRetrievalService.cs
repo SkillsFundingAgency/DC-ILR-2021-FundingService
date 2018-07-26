@@ -8,7 +8,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Interface
     {
         IEnumerable<string> UniquePostcodes(IMessage message);
 
-        string VersionNumber();
+        string CurrentVersion();
 
         IDictionary<string, IEnumerable<SfaAreaCost>> SfaAreaCostsForPostcodes(IEnumerable<string> postcodes);
 

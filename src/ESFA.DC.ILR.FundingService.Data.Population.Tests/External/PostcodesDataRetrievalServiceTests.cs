@@ -92,7 +92,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
 
             postcodesDataRetrievalServiceMock.SetupGet(v => v.VersionInfos).Returns(versionInfos);
 
-            postcodesDataRetrievalServiceMock.Object.VersionNumber().Should().Be("100");
+            postcodesDataRetrievalServiceMock.Object.CurrentVersion().Should().Be("100");
         }
 
         [Fact]

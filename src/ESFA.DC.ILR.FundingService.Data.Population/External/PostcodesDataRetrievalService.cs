@@ -32,7 +32,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             return message.Learners.Where(l => l.LearningDeliveries != null).SelectMany(l => l.LearningDeliveries).Select(ld => ld.DelLocPostCode).Distinct();
         }
 
-        public string VersionNumber()
+        public string CurrentVersion()
         {
             return VersionInfos.OrderByDescending(v => v.VersionNumber).Select(v => v.VersionNumber).First();
         }

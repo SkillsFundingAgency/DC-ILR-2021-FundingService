@@ -86,6 +86,7 @@
     <Compile Include="Context\FundingContextPopulationService.cs" />
     <Compile Include="External\LargeEmployersDataRetrievalService.cs" />
     <Compile Include="External\LARSDataRetrievalService.cs" />
+    <Compile Include="External\OrganisationDataRetrievalService.cs" />
     <Compile Include="External\PostcodesDataRetrievalService.cs" />
     <Compile Include="File\UKPRNDataRetrievalService.cs" />
     <Compile Include="Context\ValidLearnersDataRetrievalService.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Interface\IFundingContextPopulationService.cs" />
     <Compile Include="Interface\ILargeEmployersDataRetrievalService.cs" />
     <Compile Include="Interface\ILARSDataRetrievalService.cs" />
+    <Compile Include="Interface\IOrganisationDataRetrievalService.cs" />
     <Compile Include="Interface\IPopulationService.cs" />
     <Compile Include="Interface\IExternalDataCachePopulationService.cs" />
     <Compile Include="Interface\IPostcodesDataRetrievalService.cs" />

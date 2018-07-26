@@ -34,6 +34,16 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         }
 
         [Fact]
+        public void LarsVersions()
+        {
+            var larsMock = new Mock<ILARS>();
+
+            var larsVersions = NewService(larsMock.Object).LARSVersions;
+
+            larsMock.VerifyGet(l => l.LARS_Version);
+        }
+
+        [Fact]
         public void UniqueLearnAimRefs()
         {
             var message = new TestMessage()
@@ -193,6 +203,23 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             larsLearningDelivery.LearnAimRefType.Should().Be(lars_LearningDelivery.LearnAimRefType);
             larsLearningDelivery.NotionalNVQLevelv2.Should().Be(lars_LearningDelivery.NotionalNVQLevelv2);
             larsLearningDelivery.RegulatedCreditValue.Should().Be(lars_LearningDelivery.RegulatedCreditValue);
+        }
+
+        [Fact]
+        public void CurrentVersion()
+        {
+            var versions = new List<LARS_Version>()
+            {
+                new LARS_Version() { MainDataSchemaName = "001" },
+                new LARS_Version() { MainDataSchemaName = "002" },
+                new LARS_Version() { MainDataSchemaName = "003" }
+            }.AsQueryable();
+
+            var larsDataRetrievalServiceMock = NewMock();
+
+            larsDataRetrievalServiceMock.SetupGet(l => l.LARSVersions).Returns(versions);
+
+            larsDataRetrievalServiceMock.Object.CurrentVersion().Should().Be("003");
         }
 
         private LARSDataRetrievalService NewService(ILARS lars = null)

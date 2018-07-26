@@ -25,6 +25,13 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public virtual IQueryable<LARS_LearningDelivery> LARSLearningDeliveries => _lars.LARS_LearningDelivery;
 
+        public virtual IQueryable<LARS_Version> LARSVersions => _lars.LARS_Version;
+
+        public string CurrentVersion()
+        {
+            return LARSVersions.OrderByDescending(v => v.MainDataSchemaName).Select(lv => lv.MainDataSchemaName).First();
+        }
+
         public IEnumerable<string> UniqueLearnAimRefs(IMessage message)
         {
             return message

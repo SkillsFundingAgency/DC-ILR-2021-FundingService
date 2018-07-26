@@ -123,6 +123,7 @@
     <Compile Include="Context\ValidLearnersDataRetrievalServiceTests.cs" />
     <Compile Include="External\LargeEmployersDataRetrievalServiceTests.cs" />
     <Compile Include="External\LARSDataRetrievalServiceTests.cs" />
+    <Compile Include="External\OrganisationDataRetrievalServiceTests.cs" />
     <Compile Include="External\PostcodesDataRetrievalServiceTests.cs" />
     <Compile Include="File\FundingContextPopulationServiceTests.cs" />
     <Compile Include="File\UKPRNDataRetrievalServiceTests.cs" />
