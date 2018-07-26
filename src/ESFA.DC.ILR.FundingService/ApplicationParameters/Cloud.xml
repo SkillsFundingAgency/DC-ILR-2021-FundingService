@@ -10,8 +10,8 @@
     <Parameter Name="DataStoreSubscriptionName" Value="__DataStoreSubscriptionName__" />
     <Parameter Name="LARSConnectionString" Value="__LARSConnectionString__" />
     <Parameter Name="PostcodesConnectionString" Value="__PostcodesConnectionString__" />
-    <Parameter Name="OrganisationConnectionString" Value="__OrganisationConnectionString__" />
-    <Parameter Name="LargeEmployersConnectionString" Value="__LargeEmployersConnectionString__" />
+    <Parameter Name="OrganisationConnectionString" Value="__OrganisationsConnectionString__" />
+    <Parameter Name="LargeEmployersConnectionString" Value="__LargeEmployerDbConnectionString__" />
     <Parameter Name="RedisCacheConnectionString" Value="__RedisCacheConnectionString__" />
     <Parameter Name="AzureBlobConnectionString" Value="__AzureBlobConnectionString__" />
     <Parameter Name="AzureBlobContainerName" Value="__AzureBlobContainerName__" />
