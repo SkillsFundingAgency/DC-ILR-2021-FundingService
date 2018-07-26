@@ -27,6 +27,12 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public virtual IQueryable<LARS_Version> LARSVersions => _lars.LARS_Version;
 
+        public virtual IQueryable<LARS_AnnualValue> LARSAnnualValues => _lars.LARS_AnnualValue;
+
+        public virtual IQueryable<LARS_LearningDeliveryCategory> LARSLearningDeliveryCategories => _lars.LARS_LearningDeliveryCategory;
+
+        public virtual IQueryable<LARS_FrameworkAims> LARSFrameworkAims => _lars.LARS_FrameworkAims;
+
         public string CurrentVersion()
         {
             return LARSVersions.OrderByDescending(v => v.MainDataSchemaName).Select(lv => lv.MainDataSchemaName).First();
@@ -82,6 +88,66 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 EnglandFEHEStatus = entity.EnglandFEHEStatus,
                 EnglPrscID = entity.EnglPrscID,
                 FrameworkCommonComponent = entity.FrameworkCommonComponent,
+            };
+        }
+
+        public IDictionary<string, IEnumerable<LARSAnnualValue>> LARSAnnualValuesForLearnAimRefs(IEnumerable<string> learnAimRefs)
+        {
+            return LARSAnnualValues
+                .Where(la => learnAimRefs.Contains(la.LearnAimRef))
+                .GroupBy(a => a.LearnAimRef)
+                .ToDictionary(a => a.Key, a => a.Select(LARSAnnualValueFromEntity).ToList() as IEnumerable<LARSAnnualValue>);
+        }
+
+        public LARSAnnualValue LARSAnnualValueFromEntity(LARS_AnnualValue entity)
+        {
+            return new LARSAnnualValue()
+            {
+                LearnAimRef = entity.LearnAimRef,
+                BasicSkillsType = entity.BasicSkillsType,
+                EffectiveFrom = entity.EffectiveFrom,
+                EffectiveTo = entity.EffectiveTo,
+            };
+        }
+
+        public IDictionary<string, IEnumerable<LARSLearningDeliveryCategory>> LARSLearningDeliveryCategoriesForLearnAimRefs(IEnumerable<string> learnAimRefs)
+        {
+            return LARSLearningDeliveryCategories
+                .Where(ld => learnAimRefs.Contains(ld.LearnAimRef))
+                .GroupBy(a => a.LearnAimRef)
+                .ToDictionary(a => a.Key, a => a.Select(LARSLearningDeliveryCategoryFromEntity).ToList() as IEnumerable<LARSLearningDeliveryCategory>);
+        }
+
+        public LARSLearningDeliveryCategory LARSLearningDeliveryCategoryFromEntity(LARS_LearningDeliveryCategory entity)
+        {
+            return new LARSLearningDeliveryCategory()
+            {
+                LearnAimRef = entity.LearnAimRef,
+                CategoryRef = entity.CategoryRef,
+                EffectiveFrom = entity.EffectiveFrom,
+                EffectiveTo = entity.EffectiveTo,
+            };
+        }
+
+        public IDictionary<string, IEnumerable<LARSFrameworkAims>> LARSFrameworkAimsForLearnAimRefs(IEnumerable<string> learnAimRefs)
+        {
+            return LARSFrameworkAims
+                .Where(lf => learnAimRefs.Contains(lf.LearnAimRef))
+                .GroupBy(a => a.LearnAimRef)
+                .ToDictionary(a => a.Key, a => a.Select(LARSFrameworkAimsFromEntity).ToList() as IEnumerable<LARSFrameworkAims>);
+        }
+
+        public LARSFrameworkAims LARSFrameworkAimsFromEntity(LARS_FrameworkAims entity)
+        {
+            return new LARSFrameworkAims()
+            {
+                LearnAimRef = entity.LearnAimRef,
+                FworkCode = entity.FworkCode,
+                ProgType = entity.ProgType,
+                PwayCode = entity.PwayCode,
+                FrameworkComponentType = entity.FrameworkComponentType,
+                EffectiveFrom = entity.EffectiveFrom,
+                EffectiveTo = entity.EffectiveTo,
             };
         }
     }

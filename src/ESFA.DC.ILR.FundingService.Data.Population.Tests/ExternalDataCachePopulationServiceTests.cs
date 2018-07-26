@@ -15,10 +15,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
             ILargeEmployersDataRetrievalService largeEmployersDataRetrievalService = null,
             ILARSDataRetrievalService larsDataRetrievalService = null,
             IOrganisationDataRetrievalService organisationDataRetrievalService = null,
-            ILARS lars = null,
             IFundingServiceDto fundingServiceDto = null)
         {
-            return new ExternalDataCachePopulationService(externalDataCache, postcodesDataRetrievalService, largeEmployersDataRetrievalService, larsDataRetrievalService, organisationDataRetrievalService, lars, fundingServiceDto);
+            return new ExternalDataCachePopulationService(externalDataCache, postcodesDataRetrievalService, largeEmployersDataRetrievalService, larsDataRetrievalService, organisationDataRetrievalService, fundingServiceDto);
         }
     }
 }

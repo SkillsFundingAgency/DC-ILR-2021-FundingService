@@ -44,6 +44,36 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         }
 
         [Fact]
+        public void LarsAnnualValue()
+        {
+            var larsMock = new Mock<ILARS>();
+
+            var larsAnnualValues = NewService(larsMock.Object).LARSAnnualValues;
+
+            larsMock.VerifyGet(l => l.LARS_AnnualValue);
+        }
+
+        [Fact]
+        public void LarsLearningDeliveryCategories()
+        {
+            var larsMock = new Mock<ILARS>();
+
+            var larsLearningDeliveryCategories = NewService(larsMock.Object).LARSLearningDeliveryCategories;
+
+            larsMock.VerifyGet(l => l.LARS_LearningDeliveryCategory);
+        }
+
+        [Fact]
+        public void LarsFrameworkAims()
+        {
+            var larsMock = new Mock<ILARS>();
+
+            var larsFrameworkAims = NewService(larsMock.Object).LARSFrameworkAims;
+
+            larsMock.VerifyGet(l => l.LARS_FrameworkAims);
+        }
+
+        [Fact]
         public void UniqueLearnAimRefs()
         {
             var message = new TestMessage()
@@ -220,6 +250,183 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             larsDataRetrievalServiceMock.SetupGet(l => l.LARSVersions).Returns(versions);
 
             larsDataRetrievalServiceMock.Object.CurrentVersion().Should().Be("003");
+        }
+
+        [Fact]
+        public void LARSAnnualValuesForLearnAimRefs()
+        {
+            var lars_AnnualValues = new List<LARS_AnnualValue>()
+            {
+                new LARS_AnnualValue()
+                {
+                    LearnAimRef = "123",
+                },
+                new LARS_AnnualValue()
+                {
+                    LearnAimRef = "456",
+                },
+                new LARS_AnnualValue()
+                {
+                    LearnAimRef = "123",
+                },
+                new LARS_AnnualValue()
+                {
+                    LearnAimRef = "789",
+                },
+                new LARS_AnnualValue(),
+            }.AsQueryable();
+
+            var larsDataRetrievalServiceMock = NewMock();
+
+            larsDataRetrievalServiceMock.SetupGet(l => l.LARSAnnualValues).Returns(lars_AnnualValues);
+
+            var learnAimRefs = new List<string>() { "123", "456", "234" };
+
+            var larsAnnualValues = larsDataRetrievalServiceMock.Object.LARSAnnualValuesForLearnAimRefs(learnAimRefs);
+
+            larsAnnualValues.Should().HaveCount(2);
+            larsAnnualValues.Should().ContainKeys("123", "456");
+            larsAnnualValues["123"].Should().HaveCount(2);
+            larsAnnualValues["456"].Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void LARSAnnualValueFromEntity()
+        {
+            var entity = new LARS_AnnualValue()
+            {
+                BasicSkillsType = 1,
+                EffectiveFrom = new DateTime(2017, 1, 1),
+                EffectiveTo = new DateTime(2018, 1, 1),
+                LearnAimRef = "learnAimRef",
+            };
+
+            var larsAnnualValues = NewService().LARSAnnualValueFromEntity(entity);
+
+            larsAnnualValues.BasicSkillsType.Should().Be(entity.BasicSkillsType);
+            larsAnnualValues.EffectiveFrom.Should().Be(entity.EffectiveFrom);
+            larsAnnualValues.EffectiveTo.Should().Be(entity.EffectiveTo);
+            larsAnnualValues.LearnAimRef.Should().Be(entity.LearnAimRef);
+        }
+
+        [Fact]
+        public void LARSLearningDeliveryCategoriesForLearnAimRefs()
+        {
+            var lars_LearningDeliveryCategories = new List<LARS_LearningDeliveryCategory>()
+            {
+                new LARS_LearningDeliveryCategory()
+                {
+                    LearnAimRef = "123",
+                },
+                new LARS_LearningDeliveryCategory()
+                {
+                    LearnAimRef = "456",
+                },
+                new LARS_LearningDeliveryCategory()
+                {
+                    LearnAimRef = "123",
+                },
+                new LARS_LearningDeliveryCategory()
+                {
+                    LearnAimRef = "789",
+                },
+                new LARS_LearningDeliveryCategory(),
+            }.AsQueryable();
+
+            var larsDataRetrievalServiceMock = NewMock();
+
+            larsDataRetrievalServiceMock.SetupGet(l => l.LARSLearningDeliveryCategories).Returns(lars_LearningDeliveryCategories);
+
+            var learnAimRefs = new List<string>() { "123", "456", "234" };
+
+            var larsLearningDeliveryCategories = larsDataRetrievalServiceMock.Object.LARSLearningDeliveryCategoriesForLearnAimRefs(learnAimRefs);
+
+            larsLearningDeliveryCategories.Should().HaveCount(2);
+            larsLearningDeliveryCategories.Should().ContainKeys("123", "456");
+            larsLearningDeliveryCategories["123"].Should().HaveCount(2);
+            larsLearningDeliveryCategories["456"].Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void LARSLearningDeliveryCategoryFromEntity()
+        {
+            var entity = new LARS_LearningDeliveryCategory()
+            {
+                CategoryRef = 1,
+                EffectiveFrom = new DateTime(2017, 1, 1),
+                EffectiveTo = new DateTime(2018, 1, 1),
+                LearnAimRef = "learnAimRef",
+            };
+
+            var larsLearningDeliveryCategory = NewService().LARSLearningDeliveryCategoryFromEntity(entity);
+
+            larsLearningDeliveryCategory.CategoryRef.Should().Be(entity.CategoryRef);
+            larsLearningDeliveryCategory.EffectiveFrom.Should().Be(entity.EffectiveFrom);
+            larsLearningDeliveryCategory.EffectiveTo.Should().Be(entity.EffectiveTo);
+            larsLearningDeliveryCategory.LearnAimRef.Should().Be(entity.LearnAimRef);
+        }
+
+        [Fact]
+        public void LARSFrameworkAimsForLearnAimRefs()
+        {
+            var lars_FrameworkAims = new List<LARS_FrameworkAims>()
+            {
+                new LARS_FrameworkAims()
+                {
+                    LearnAimRef = "123",
+                },
+                new LARS_FrameworkAims()
+                {
+                    LearnAimRef = "456",
+                },
+                new LARS_FrameworkAims()
+                {
+                    LearnAimRef = "123",
+                },
+                new LARS_FrameworkAims()
+                {
+                    LearnAimRef = "789",
+                },
+                new LARS_FrameworkAims(),
+            }.AsQueryable();
+
+            var larsDataRetrievalServiceMock = NewMock();
+
+            larsDataRetrievalServiceMock.SetupGet(l => l.LARSFrameworkAims).Returns(lars_FrameworkAims);
+
+            var learnAimRefs = new List<string>() { "123", "456", "234" };
+
+            var larsFrameworkAims = larsDataRetrievalServiceMock.Object.LARSFrameworkAimsForLearnAimRefs(learnAimRefs);
+
+            larsFrameworkAims.Should().HaveCount(2);
+            larsFrameworkAims.Should().ContainKeys("123", "456");
+            larsFrameworkAims["123"].Should().HaveCount(2);
+            larsFrameworkAims["456"].Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void LARSFrameworkAimFromEntity()
+        {
+            var entity = new LARS_FrameworkAims()
+            {
+                EffectiveFrom = new DateTime(2017, 1, 1),
+                EffectiveTo = new DateTime(2018, 1, 1),
+                FrameworkComponentType = 1,
+                FworkCode = 2,
+                LearnAimRef = "learnAimRef",
+                ProgType = 3,
+                PwayCode = 4,
+            };
+
+            var larsFrameworkAims = NewService().LARSFrameworkAimsFromEntity(entity);
+
+            larsFrameworkAims.EffectiveFrom.Should().Be(entity.EffectiveFrom);
+            larsFrameworkAims.EffectiveTo.Should().Be(entity.EffectiveTo);
+            larsFrameworkAims.FrameworkComponentType.Should().Be(entity.FrameworkComponentType);
+            larsFrameworkAims.FworkCode.Should().Be(entity.FworkCode);
+            larsFrameworkAims.LearnAimRef.Should().Be(entity.LearnAimRef);
+            larsFrameworkAims.ProgType.Should().Be(entity.ProgType);
+            larsFrameworkAims.PwayCode.Should().Be(entity.PwayCode);
         }
 
         private LARSDataRetrievalService NewService(ILARS lars = null)
