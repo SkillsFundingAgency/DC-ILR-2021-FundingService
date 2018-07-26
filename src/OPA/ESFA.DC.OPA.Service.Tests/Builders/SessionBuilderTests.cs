@@ -135,22 +135,6 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         /// <summary>
         /// Return Session and check whether the Engine is as expected
         /// </summary>
-        [Fact(DisplayName = "SessionBuilder - Engine Exists"), Trait("OPA Session Builder", "Unit")]
-        public void SessionBuilder_CreateSession_EngineExists()
-        {
-            // ARRANGE
-            SessionBuilder sessionEngineExists = new SessionBuilder();
-
-            // ACT
-            CreateSessionTestSession(sessionEngineExists);
-
-            // ASSERT
-            sessionEngineExists.Engine.Should().NotBeNull();
-        }
-
-        /// <summary>
-        /// Return Session and check whether the Engine is as expected
-        /// </summary>
         [Fact(DisplayName = "SessionBuilder - Engine correct"), Trait("OPA Session Builder", "Unit")]
         public void SessionBuilder_CreateSession_EngineCorrect()
         {
@@ -159,10 +143,8 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
 
             // ACT
             CreateSessionTestSession(sessionEngineCorrect);
-            var engineVersion = sessionEngineCorrect.Engine.GetVersion();
 
-            // ASSERT
-            engineVersion.Should().BeEquivalentTo("10.4.4.21");
+            Engine.INSTANCE.GetVersion().Should().BeEquivalentTo("10.4.4.21");
         }
 
         #endregion

@@ -22,7 +22,7 @@ namespace ESFA.DC.ILR.FundingService.Service
         {
             var inputDataEntities = _dataEntityMapper.MapTo(learnerList);
 
-            var outputDataEntities = inputDataEntities.Select(e => _opaService.ExecuteSession(e)).ToList();
+            var outputDataEntities = inputDataEntities.Select(e => _opaService.ExecuteSession(e));
 
             return _fundingOutputService.ProcessFundingOutputs(outputDataEntities);
         }

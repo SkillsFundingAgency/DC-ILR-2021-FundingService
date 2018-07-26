@@ -4,7 +4,6 @@ using System.Linq;
 using ESFA.DC.Data.LargeEmployer.Model;
 using ESFA.DC.Data.LargeEmployer.Model.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.External;
-using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.ILR.Tests.Model;
 using FluentAssertions;
 using Moq;

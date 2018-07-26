@@ -13,24 +13,20 @@ namespace ESFA.DC.OPA.Service.Builders
 {
     public class SessionBuilder : ISessionBuilder
     {
-        private readonly Engine _engine = Engine.INSTANCE;
-
         internal bool RulebaseInitialised { get; set; }
 
         internal Oracle.Determinations.Engine.Rulebase Rulebase { get; set; }
-
-        internal Engine Engine => _engine;
 
         public Session CreateOPASession(Stream rulebaseStream, IDataEntity globalEntity)
         {
             if (!RulebaseInitialised)
             {
                 InputStream stream = new InputStreamAdapter(rulebaseStream);
-                Rulebase = Engine.GetRulebase(stream);
+                Rulebase = Engine.INSTANCE.GetRulebase(stream);
                 RulebaseInitialised = true;
             }
 
-            Session session = Engine.CreateSession(Rulebase);
+            Session session = Engine.INSTANCE.CreateSession(Rulebase);
 
             var inputGlobalInstance = session.GetGlobalEntityInstance();
 

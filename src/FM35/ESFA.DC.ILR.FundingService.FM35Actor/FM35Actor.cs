@@ -61,7 +61,14 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
                     logger.LogDebug("FM35 Actor started processing");
                     var fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, FM35FundingOutputs>>();
 
-                    var learners = jsonSerializationService.Deserialize<List<MessageLearner>>(Encoding.UTF8.GetString(fm35ActorModel.ValidLearners));
+                    IEnumerable<MessageLearner> learners;
+
+                    using (var memoryStream = new MemoryStream(fm35ActorModel.ValidLearners))
+                    {
+                        learners = jsonSerializationService.Deserialize<List<MessageLearner>>(memoryStream);
+                    }
+
+                    fm35ActorModel = null;
 
                     var results = fundingService.ProcessFunding(learners);
 

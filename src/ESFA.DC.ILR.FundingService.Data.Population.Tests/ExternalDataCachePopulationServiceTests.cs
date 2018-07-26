@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using ESFA.DC.Data.LargeEmployer.Model;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;

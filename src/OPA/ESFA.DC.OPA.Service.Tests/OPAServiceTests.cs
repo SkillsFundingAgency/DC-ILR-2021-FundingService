@@ -7,7 +7,6 @@ using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Builders;
 using ESFA.DC.OPA.Service.Interface;
 using ESFA.DC.OPA.Service.Interface.Rulebase;
-using ESFA.DC.OPA.Service.Rulebase;
 using FluentAssertions;
 using Moq;
 using Xunit;
