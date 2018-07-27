@@ -1,0 +1,67 @@
+<root schema-version="1" product-version="10.4.5.40">
+  <entities>
+    <entity ref="global">
+      <attribute name="g1" type="text" public-name="Version">
+        <text>
+          <base>the current version</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="customer" name="the customer" containment-relationship-id="customer" containment-parent-id="global">
+      <attribute name="b2" type="boolean" public-name="CustomerAlive">
+        <text>
+          <base>the customer is alive</base>
+          <parse>s(ver('10.4.5.40'),v(be,t(simple,present,normal)),sb('the customer',singular),o('alive'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p6" type="date" public-name="CustomerDOB">
+        <text>
+          <base>the customer's date of birth</base>
+        </text>
+      </attribute>
+      <attribute name="p7" type="currency" public-name="CustomerFunds">
+        <text>
+          <base>the customer's funds</base>
+        </text>
+      </attribute>
+      <attribute name="p8" type="number" public-name="CustomerID">
+        <text>
+          <base>the customer's id</base>
+        </text>
+      </attribute>
+      <attribute name="p9" type="text" public-name="CustomerName">
+        <text>
+          <base>the customer's name</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="employer" name="the employer" containment-relationship-id="customersemployers" containment-parent-id="customer">
+      <attribute name="p11" type="text" public-name="EmployerName">
+        <text>
+          <base>the employer's name</base>
+        </text>
+      </attribute>
+      <attribute name="p12" type="date" public-name="EmployerJobEnd">
+        <text>
+          <base>the employer's job end date</base>
+        </text>
+      </attribute>
+      <attribute name="p13" type="date" public-name="EmployerJobStart">
+        <text>
+          <base>the employer's job start date</base>
+        </text>
+      </attribute>
+    </entity>
+  </entities>
+  <relationships>
+    <relationship source="global" target="customer" text="the customer" relationship-id="customer" reverse-relationship-id="global_customer_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="customer" target="employer" text="the customer's employers" relationship-id="customersemployers" reverse-relationship-id="customer_customersemployers_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+  </relationships>
+  <rules />
+  <interactive-items>
+    <folders />
+    <screens />
+    <documents />
+  </interactive-items>
+  <rule-folders />
+</root>

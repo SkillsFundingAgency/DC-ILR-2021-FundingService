@@ -13,6 +13,7 @@
     <Parameter Name="TopicName" Value="" />
     <Parameter Name="FundingCalcSubscriptionName" Value="" />
     <Parameter Name="DataStoreSubscriptionName" Value="" />
+    <Parameter Name="JobStatusQueueName" Value=""/>
   </Section>
 
   <Section Name="LoggerSection">
@@ -31,7 +32,9 @@
 
   <Section  Name="ReferenceDataSection">
     <Parameter Name="LARSConnectionString" Value="" />
-    <Parameter Name="PostCodeConnectionString" Value="" />
+    <Parameter Name="PostCodesConnectionString" Value="" />
+    <Parameter Name="OrganisationConnectionString" Value=""/>
+    <Parameter Name="LargeEmployersConnectionString" Value=""/>
   </Section>
   
 

@@ -1,31 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Fabric;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Autofac.Features.AttributeFilters;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Attribute;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Interface.Attribute;
-using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
-using ESFA.DC.ILR.FundingService.ALB.Stubs.Persistance.Model.Output;
-using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
+using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Dto.Interfaces;
+using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers.Interfaces;
 using ESFA.DC.ILR.FundingService.Stateless.Models;
+using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.IO.Interfaces;
 using ESFA.DC.JobContext.Interface;
 using ESFA.DC.Logging.Interfaces;
-using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.Serialization.Interfaces;
-using Microsoft.ServiceFabric.Actors;
-using Microsoft.ServiceFabric.Actors.Client;
 
 namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
 {
@@ -34,23 +25,35 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         private readonly ISerializationService _jsonSerializationService;
         private readonly IIlrFileProviderService _ilrFileProviderService;
         private readonly IFundingServiceDto _fundingServiceDto;
-        private readonly IALBOrchestrationSFTask _ALBOrchestrationSfTask;
+        private readonly IPopulationService _populationService;
+        private readonly IALBActorTask _ALBOrchestrationSfTask;
+        private readonly IFM35ActorTask _fm35OrchestrationSfTask;
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
+        private readonly IPagingService<ILearner> _learnerPagingService;
+        private readonly IExternalDataCache _externalDataCache;
         private readonly ILogger _logger;
 
         public PreFundingSFOrchestrationService(
             IJsonSerializationService jsonSerializationService,
             IIlrFileProviderService ilrFileProviderService,
             IFundingServiceDto fundingServiceDto,
-            IALBOrchestrationSFTask ALBOrchestrationSfTask,
+            IPopulationService populationService,
+            IALBActorTask ALBOrchestrationSfTask,
+            IFM35ActorTask fm35OrchestrationSfTask,
             IKeyValuePersistenceService keyValuePersistenceService,
+            IPagingService<ILearner> learnerPagingService,
+            IExternalDataCache externalDataCache,
             ILogger logger)
         {
             _jsonSerializationService = jsonSerializationService;
             _ilrFileProviderService = ilrFileProviderService;
             _fundingServiceDto = fundingServiceDto;
+            _populationService = populationService;
             _ALBOrchestrationSfTask = ALBOrchestrationSfTask;
+            _fm35OrchestrationSfTask = fm35OrchestrationSfTask;
             _keyValuePersistenceService = keyValuePersistenceService;
+            _externalDataCache = externalDataCache;
+            _learnerPagingService = learnerPagingService;
             _logger = logger;
         }
 
@@ -58,7 +61,6 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         {
             var stopWatch = new Stopwatch();
             stopWatch.Start();
-            var tasks = jobContextMessage.Topics[jobContextMessage.TopicPointer].Tasks;
 
             // Get the ilr object from file
             var ilrMessage = await _ilrFileProviderService.Provide(jobContextMessage.KeyValuePairs[JobContextMessageKey.Filename].ToString());
@@ -72,21 +74,46 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
 
             // loop through list of all the tasks and execute them.
             var fundingTasks = new List<Task>();
-            foreach (var taskItem in tasks.Where(x => x.SupportsParallelExecution))
+
+            var taskList = jobContextMessage.Topics[jobContextMessage.TopicPointer].Tasks;
+
+            _populationService.Populate();
+
+            var ukprn = Convert.ToInt32(jobContextMessage.KeyValuePairs[JobContextMessageKey.UkPrn]);
+            var jobId = Convert.ToInt32(jobContextMessage.JobId);
+
+            var referenceDataInBytes = Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(_externalDataCache));
+
+            var fundingActorDtos = _learnerPagingService
+                .BuildPages()
+                .Select(p =>
+                    new FundingActorDto()
+                    {
+                        JobId = jobId,
+                        Ukprn = ukprn,
+                        ReferenceDataCache = referenceDataInBytes,
+                        ValidLearners = Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(p))
+                    }).ToList();
+
+            foreach (var task in taskList)
             {
-                // populate data
-                switch (taskItem.Tasks[0])
+                foreach (var taskString in task.Tasks)
                 {
-                    case "ALB":
-                        fundingTasks.Add(_ALBOrchestrationSfTask.Execute(jobContextMessage));
-                        break;
-                    case "FAM35":
-                        break;
+                    switch (taskString)
+                    {
+                        case "ALB":
+                            fundingTasks.Add(_ALBOrchestrationSfTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString()));
+                            break;
+                        case "FM35":
+                            fundingTasks.Add(_fm35OrchestrationSfTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString()));
+                            break;
+                    }
                 }
             }
 
             // execute all fundingtasks
             await Task.WhenAll(fundingTasks);
+
             _logger.LogDebug($"Completed Funding Service for given Rulebases in: {stopWatch.ElapsedMilliseconds}");
         }
     }

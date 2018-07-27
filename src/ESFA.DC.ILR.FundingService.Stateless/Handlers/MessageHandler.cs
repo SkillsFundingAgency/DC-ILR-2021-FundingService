@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Fabric;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
-using ESFA.DC.ILR.FundingService.ALB.OrchestrationService.Interface;
+using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
-using ESFA.DC.IO.Interfaces;
 using ESFA.DC.JobContext;
 using ESFA.DC.JobContext.Interface;
-using ESFA.DC.KeyGenerator.Interface;
 using ESFA.DC.Logging.Interfaces;
 
 namespace ESFA.DC.ILR.FundingService.Stateless.Handlers
@@ -31,12 +26,6 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Handlers
         {
             try
             {
-                var keyGenerator = _parentLifeTimeScope.Resolve<IKeyGenerator>();
-                var ukprn = Convert.ToInt64(jobContextMessage.KeyValuePairs[JobContextMessageKey.UkPrn]);
-
-                jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput] =
-                    keyGenerator.GenerateKey(ukprn, jobContextMessage.JobId, TaskKeys.FundingAlbOutput);
-
                 using (var childLifeTimeScope = _parentLifeTimeScope.BeginLifetimeScope(c =>
                     c.RegisterInstance(jobContextMessage).As<IJobContextMessage>()))
                 {

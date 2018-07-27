@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Autofac;
-using ESFA.DC.ILR.FundingService.Stateless.Models;
+using ESFA.DC.ILR.FundingService.Config.Interfaces;
 using ESFA.DC.Logging;
 using ESFA.DC.Logging.Config;
 using ESFA.DC.Logging.Config.Interfaces;
@@ -17,7 +15,7 @@ namespace ESFA.DC.ILR.FundingService.Modules
         {
             builder.Register(c =>
             {
-                var loggerOptions = c.Resolve<LoggerOptions>();
+                var loggerConfig = c.Resolve<ILoggerConfig>();
                 return new ApplicationLoggerSettings
                 {
                     ApplicationLoggerOutputSettingsCollection = new List<IApplicationLoggerOutputSettings>()
@@ -25,7 +23,7 @@ namespace ESFA.DC.ILR.FundingService.Modules
                         new MsSqlServerApplicationLoggerOutputSettings()
                         {
                             MinimumLogLevel = LogLevel.Verbose,
-                            ConnectionString = loggerOptions.LoggerConnectionstring
+                            ConnectionString = loggerConfig.LoggerConnectionstring
                         },
                         new ConsoleApplicationLoggerOutputSettings()
                         {
@@ -39,6 +37,5 @@ namespace ESFA.DC.ILR.FundingService.Modules
             builder.RegisterType<SerilogLoggerFactory>().As<ISerilogLoggerFactory>().InstancePerLifetimeScope();
             builder.RegisterType<SeriLogger>().As<ILogger>().InstancePerLifetimeScope();
         }
-
     }
 }
