@@ -2,6 +2,10 @@
 {
     public static class OutputAttributeNames
     {
+        // Entities
+        public const string Global = "Global";
+        public const string Learner = "Learner";
+
         // Global
         public const string UKPRN = "UKPRN";
         public const string LARSVersion = "LARSVersion";
