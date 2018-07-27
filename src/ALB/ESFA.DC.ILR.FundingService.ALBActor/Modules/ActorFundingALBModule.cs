@@ -17,7 +17,7 @@ using ESFA.DC.OPA.Service.Interface;
 using ESFA.DC.OPA.Service.Interface.Builders;
 using ESFA.DC.OPA.Service.Interface.Rulebase;
 
-namespace ESFA.DC.ILR.FundingService.ALB.Modules
+namespace ESFA.DC.ILR.FundingService.ALBActor.Modules
 {
     public class ActorFundingALBModule : Module
     {

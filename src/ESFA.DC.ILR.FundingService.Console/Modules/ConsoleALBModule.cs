@@ -33,7 +33,7 @@ using ESFA.DC.OPA.Service.Interface.Rulebase;
 using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.Serialization.Xml;
 
-namespace ESFA.DC.ILR.FundingService.ALB.Modules
+namespace ESFA.DC.ILR.FundingService.Console.Modules
 {
     public class ConsoleALBModule : Module
     {
@@ -42,7 +42,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Modules
             builder.RegisterType<LARS>().As<ILARS>().InstancePerLifetimeScope();
             builder.RegisterType<Postcodes>().As<IPostcodes>().InstancePerLifetimeScope();
             builder.RegisterType<SessionBuilder>().As<ISessionBuilder>().InstancePerLifetimeScope();
-            builder.RegisterType<OPADataEntityBuilder>().As<IOPADataEntityBuilder>().WithParameter("yearStartDate", new DateTime(2017, 8, 1)).InstancePerLifetimeScope();
+            builder.RegisterType<OPADataEntityBuilder>().As<IOPADataEntityBuilder>().WithParameter("yearStartDate", new System.DateTime(2017, 8, 1)).InstancePerLifetimeScope();
             builder.RegisterType<RulebaseProviderFactory>().As<IRulebaseProviderFactory>().InstancePerLifetimeScope();
             builder.RegisterType<OPAService>().As<IOPAService>().InstancePerLifetimeScope();
             builder.RegisterType<ALBAttributeBuilder>().As<IALBAttributeBuilder>().InstancePerLifetimeScope();
@@ -66,7 +66,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Modules
             return new JobContextMessage
             {
                 JobId = 1,
-                SubmissionDateTimeUtc = DateTime.Parse("2018-08-01").ToUniversalTime(),
+                SubmissionDateTimeUtc = System.DateTime.Parse("2018-08-01").ToUniversalTime(),
                 Topics = TopicList,
                 TopicPointer = 1,
                 KeyValuePairs = new Dictionary<JobContextMessageKey, object>

@@ -3,13 +3,13 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Autofac;
-using ESFA.DC.ILR.FundingService.ALB.Modules;
-using ESFA.DC.ILR.FundingService.FM35.Modules;
+using ESFA.DC.ILR.FundingService.Console.Modules;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.Serialization.Xml;
+using ConsoleALBModule = ESFA.DC.ILR.FundingService.Console.Modules.ConsoleALBModule;
 
 namespace ESFA.DC.ILR.FundingService.Console
 {

@@ -463,10 +463,6 @@
       <Project>{7D044D8C-64BE-48A0-A2F2-1284FC7395F5}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALB.Modules\ESFA.DC.ILR.FundingService.ALB.Modules.csproj">
-      <Project>{BE335AA0-40B7-47D3-BFB3-AAF1565DF6A9}</Project>
-      <Name>ESFA.DC.ILR.FundingService.ALB.Modules</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Config\ESFA.DC.ILR.FundingService.Config.csproj">
       <Project>{29C28BC1-23E2-4FAD-AB74-83CD2D33E7D8}</Project>
       <Name>ESFA.DC.ILR.FundingService.Config</Name>

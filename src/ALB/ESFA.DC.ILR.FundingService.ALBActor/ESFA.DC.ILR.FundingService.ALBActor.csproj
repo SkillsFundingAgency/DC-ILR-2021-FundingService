@@ -184,6 +184,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\ActorFundingALBModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ALBActor.cs" />
     <Compile Include="Program.cs" />
@@ -200,17 +201,33 @@
     <EmbeddedResource Include="Resources\Rulebase.zip" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Providers\ESFA.DC.ILR.FundingService.Providers.csproj">
+      <Project>{E6CF1460-4EF0-4579-B022-DC2D3F383568}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Providers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.ServiceFabric.Common\ESFA.DC.ILR.FundingService.ServiceFabric.Common.csproj">
       <Project>{21ba0741-5975-4902-8d7a-567a50873cfa}</Project>
       <Name>ESFA.DC.ILR.FundingService.ServiceFabric.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Service\ESFA.DC.ILR.FundingService.Service.csproj">
+      <Project>{652FF283-3708-4DCA-A45E-81297B8BA8A7}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service.Interface\ESFA.DC.OPA.Service.Interface.csproj">
+      <Project>{BBA05279-51DA-427B-8708-CA7AF3A228F5}</Project>
+      <Name>ESFA.DC.OPA.Service.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service\ESFA.DC.OPA.Service.csproj">
+      <Project>{FC137929-D3E2-41C2-9C9A-ADC8B32D009A}</Project>
+      <Name>ESFA.DC.OPA.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.csproj">
       <Project>{7D044D8C-64BE-48A0-A2F2-1284FC7395F5}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.Modules\ESFA.DC.ILR.FundingService.ALB.Modules.csproj">
-      <Project>{be335aa0-40b7-47d3-bfb3-aaf1565df6a9}</Project>
-      <Name>ESFA.DC.ILR.FundingService.ALB.Modules</Name>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.Service\ESFA.DC.ILR.FundingService.ALB.Service.csproj">
+      <Project>{6D9E7986-7D34-4433-81D2-7C905B621FFD}</Project>
+      <Name>ESFA.DC.ILR.FundingService.ALB.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALBActor.Interfaces\ESFA.DC.ILR.FundingService.ALBActor.Interfaces.csproj">
       <Project>{14944B1C-9717-4CBB-B756-37502DDB5E0B}</Project>

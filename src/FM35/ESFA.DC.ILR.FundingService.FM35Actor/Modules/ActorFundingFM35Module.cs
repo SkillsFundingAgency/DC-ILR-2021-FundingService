@@ -27,7 +27,7 @@ using ESFA.DC.OPA.Service.Interface.Rulebase;
 using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.Serialization.Json;
 
-namespace ESFA.DC.ILR.FundingService.FM35.Modules
+namespace ESFA.DC.ILR.FundingService.FM35Actor.Modules
 {
     public class ActorFundingFM35Module : Module
     {

@@ -4,7 +4,7 @@ using Autofac;
 using Autofac.Integration.ServiceFabric;
 using ESFA.DC.ILR.FundingService.Config;
 using ESFA.DC.ILR.FundingService.Config.Interfaces;
-using ESFA.DC.ILR.FundingService.FM35.Modules;
+using ESFA.DC.ILR.FundingService.FM35Actor.Modules;
 using ESFA.DC.ILR.FundingService.Modules;
 using ESFA.DC.ServiceFabric.Helpers;
 

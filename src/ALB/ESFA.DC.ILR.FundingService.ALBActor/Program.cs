@@ -3,7 +3,6 @@ using System.Threading;
 using Autofac;
 using Autofac.Integration.ServiceFabric;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
-using ESFA.DC.ILR.FundingService.ALB.Modules;
 using ESFA.DC.ILR.FundingService.Config;
 using ESFA.DC.ILR.FundingService.Config.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
@@ -12,6 +11,7 @@ using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.Serialization.Json;
 using ESFA.DC.ServiceFabric.Helpers;
+using ActorFundingALBModule = ESFA.DC.ILR.FundingService.ALBActor.Modules.ActorFundingALBModule;
 
 namespace ESFA.DC.ILR.FundingService.ALBActor
 {
