@@ -38,6 +38,7 @@
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Stateless\ESFA.DC.ILR.FundingService.Stateless.csproj">
       <Private>true</Private>
     </ProjectReference>
+    <ProjectReference Include="..\FM25\ESFA.DC.ILR.FundingService.FM25Actor\ESFA.DC.ILR.FundingService.FM25Actor.csproj" />
     <ProjectReference Include="..\FM35\ESFA.DC.ILR.FundingService.FM35Actor\ESFA.DC.ILR.FundingService.FM35Actor.csproj">
       <Private>true</Private>
     </ProjectReference>

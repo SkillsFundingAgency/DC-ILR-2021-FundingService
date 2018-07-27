@@ -26,10 +26,16 @@
     <Parameter Name="FM35ActorService_PartitionCount" DefaultValue="10" />
     <Parameter Name="FM35ActorService_MinReplicaSetSize" DefaultValue="1" />
     <Parameter Name="FM35ActorService_TargetReplicaSetSize" DefaultValue="1" />
+    <Parameter Name="FM25ActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="FM25ActorService_MinReplicaSetSize" DefaultValue="1" />
+    <Parameter Name="FM25ActorService_TargetReplicaSetSize" DefaultValue="1" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="ESFA.DC.ILR.FundingService.FM25ActorPkg" ServiceManifestVersion="1.0.0" />
+  </ServiceManifestImport>
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="ESFA.DC.ILR.FundingService.FM35ActorPkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides>
@@ -110,6 +116,11 @@
     <Service Name="FM35ActorService" GeneratedIdRef="eca4f2d5-fcff-4c7a-842f-91b0f984c4c8|None">
       <StatefulService ServiceTypeName="FM35ActorServiceType" TargetReplicaSetSize="[FM35ActorService_TargetReplicaSetSize]" MinReplicaSetSize="[FM35ActorService_MinReplicaSetSize]">
         <UniformInt64Partition PartitionCount="[FM35ActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
+    </Service>
+    <Service Name="FM25ActorService" GeneratedIdRef="6f53527f-31c0-4c6e-b98b-c693691a10c4|Persisted">
+      <StatefulService ServiceTypeName="FM25ActorServiceType" TargetReplicaSetSize="[FM25ActorService_TargetReplicaSetSize]" MinReplicaSetSize="[FM25ActorService_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[FM25ActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
       </StatefulService>
     </Service>
   </DefaultServices>
