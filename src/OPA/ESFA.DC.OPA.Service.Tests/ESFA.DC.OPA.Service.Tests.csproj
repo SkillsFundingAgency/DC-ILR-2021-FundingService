@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Builders\OPADataEntityBuilderTests.cs" />
     <Compile Include="Builders\SessionBuilderTests.cs" />
+    <Compile Include="DataEntityAttributeServiceTests.cs" />
     <Compile Include="OPAServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
