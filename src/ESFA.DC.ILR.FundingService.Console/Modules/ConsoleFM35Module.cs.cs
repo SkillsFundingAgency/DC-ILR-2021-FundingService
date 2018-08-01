@@ -84,7 +84,7 @@ namespace ESFA.DC.ILR.FundingService.Console.Modules
             builder.RegisterType<DictionaryKeyValuePersistenceService>().As<IKeyValuePersistenceService>().InstancePerLifetimeScope();
             builder.RegisterType<TaskProviderService>().As<ITaskProviderService>().InstancePerLifetimeScope();
             builder.RegisterType<ValidLearnersDataRetrievalService>().As<IValidLearnersDataRetrievalService>().InstancePerLifetimeScope();
-            builder.RegisterType<UKPRNDataRetrievalService>().As<IUKPRNDataRetrievalService>().InstancePerLifetimeScope();
+            builder.RegisterType<FileDataRetrievalService>().As<IFileDataRetrievalService>().InstancePerLifetimeScope();
             builder.Register(ctx => BuildJobContext()).As<IJobContextMessage>().InstancePerLifetimeScope();
         }
 

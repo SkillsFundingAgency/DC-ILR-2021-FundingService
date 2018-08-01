@@ -7,19 +7,20 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.File
     public class FileDataCachePopulationService : IFileDataCachePopulationService
     {
         private readonly IFileDataCache _fileDataCache;
-        private readonly IUKPRNDataRetrievalService _ukprnDataRetrievalService;
+        private readonly IFileDataRetrievalService _fileDataRetrievalService;
 
-        public FileDataCachePopulationService(IFileDataCache fileDataCache, IUKPRNDataRetrievalService ukprnDataRetrievalService)
+        public FileDataCachePopulationService(IFileDataCache fileDataCache, IFileDataRetrievalService ukprnDataRetrievalService)
         {
             _fileDataCache = fileDataCache;
-            _ukprnDataRetrievalService = ukprnDataRetrievalService;
+            _fileDataRetrievalService = ukprnDataRetrievalService;
         }
 
         public void Populate()
         {
             var fileDataCache = (FileDataCache) _fileDataCache;
 
-            fileDataCache.UKPRN = _ukprnDataRetrievalService.Retrieve();
+            fileDataCache.UKPRN = _fileDataRetrievalService.RetrieveUKPRN();
+            fileDataCache.DPOutcomes = _fileDataRetrievalService.RetrieveDPOutcomes();
         }
     }
 }

@@ -88,6 +88,17 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 EnglandFEHEStatus = entity.EnglandFEHEStatus,
                 EnglPrscID = entity.EnglPrscID,
                 FrameworkCommonComponent = entity.FrameworkCommonComponent,
+                LARSValidities = entity.LARS_Validity.Select(LARSValidityFromEntity).ToList()
+            };
+        }
+
+        public LARSValidity LARSValidityFromEntity(LARS_Validity entity)
+        {
+            return new LARSValidity()
+            {
+                Category = entity.ValidityCategory,
+                LastNewStartDate = entity.LastNewStartDate,
+                StartDate = entity.StartDate,
             };
         }
 

@@ -222,6 +222,11 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                 LearnAimRefType = "learnAimRefType",
                 NotionalNVQLevelv2 = "notionalNVQLevelv2",
                 RegulatedCreditValue = 3,
+                LARS_Validity = new List<LARS_Validity>()
+                {
+                    new LARS_Validity(),
+                    new LARS_Validity(),
+                }
             };
 
             var larsLearningDelivery = NewService().LARSLearningDeliveryFromEntity(lars_LearningDelivery);
@@ -233,6 +238,25 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             larsLearningDelivery.LearnAimRefType.Should().Be(lars_LearningDelivery.LearnAimRefType);
             larsLearningDelivery.NotionalNVQLevelv2.Should().Be(lars_LearningDelivery.NotionalNVQLevelv2);
             larsLearningDelivery.RegulatedCreditValue.Should().Be(lars_LearningDelivery.RegulatedCreditValue);
+
+            larsLearningDelivery.LARSValidities.Should().HaveCount(2);
+        }
+
+        [Fact]
+        public void LarsValidityFromEntity()
+        {
+            var lars_Validity = new LARS_Validity()
+            {
+                ValidityCategory = "Category",
+                LastNewStartDate = new DateTime(2017, 1, 1),
+                StartDate = new DateTime(2018, 1, 1),
+            };
+
+            var larsValidity = NewService().LARSValidityFromEntity(lars_Validity);
+
+            larsValidity.Category.Should().Be(lars_Validity.ValidityCategory);
+            larsValidity.LastNewStartDate.Should().Be(lars_Validity.LastNewStartDate);
+            larsValidity.StartDate.Should().Be(lars_Validity.StartDate);
         }
 
         [Fact]

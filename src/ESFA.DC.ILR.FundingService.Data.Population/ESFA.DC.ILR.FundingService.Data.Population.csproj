@@ -88,7 +88,7 @@
     <Compile Include="External\LARSDataRetrievalService.cs" />
     <Compile Include="External\OrganisationDataRetrievalService.cs" />
     <Compile Include="External\PostcodesDataRetrievalService.cs" />
-    <Compile Include="File\UKPRNDataRetrievalService.cs" />
+    <Compile Include="File\FileDataRetrievalService.cs" />
     <Compile Include="Context\ValidLearnersDataRetrievalService.cs" />
     <Compile Include="File\FileDataCachePopulationService.cs" />
     <Compile Include="Interface\IFileDataCachePopulationService.cs" />
@@ -99,7 +99,7 @@
     <Compile Include="Interface\IPopulationService.cs" />
     <Compile Include="Interface\IExternalDataCachePopulationService.cs" />
     <Compile Include="Interface\IPostcodesDataRetrievalService.cs" />
-    <Compile Include="Interface\IUKPRNDataRetrievalService.cs" />
+    <Compile Include="Interface\IFileDataRetrievalService.cs" />
     <Compile Include="Interface\IValidLearnersDataRetrievalService.cs" />
     <Compile Include="PopulationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

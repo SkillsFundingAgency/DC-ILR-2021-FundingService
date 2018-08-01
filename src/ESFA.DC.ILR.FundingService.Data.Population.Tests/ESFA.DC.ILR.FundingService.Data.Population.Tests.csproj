@@ -125,8 +125,8 @@
     <Compile Include="External\LARSDataRetrievalServiceTests.cs" />
     <Compile Include="External\OrganisationDataRetrievalServiceTests.cs" />
     <Compile Include="External\PostcodesDataRetrievalServiceTests.cs" />
-    <Compile Include="File\FundingContextPopulationServiceTests.cs" />
-    <Compile Include="File\UKPRNDataRetrievalServiceTests.cs" />
+    <Compile Include="File\FileDataCachePopulationServiceTests.cs" />
+    <Compile Include="File\FileDataRetrievalServiceTests.cs" />
     <Compile Include="PopulationServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExternalDataCachePopulationServiceTests.cs" />

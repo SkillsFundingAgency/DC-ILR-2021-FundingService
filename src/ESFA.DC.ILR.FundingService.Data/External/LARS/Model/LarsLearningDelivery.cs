@@ -1,4 +1,6 @@
-﻿namespace ESFA.DC.ILR.FundingService.Data.External.LARS.Model
+﻿using System.Collections.Generic;
+
+namespace ESFA.DC.ILR.FundingService.Data.External.LARS.Model
 {
     public class LARSLearningDelivery
     {
@@ -15,5 +17,7 @@
         public int? EnglPrscID { get; set; }
 
         public int? FrameworkCommonComponent { get; set; }
+
+        public IEnumerable<LARSValidity> LARSValidities { get; set; }
     }
 }
