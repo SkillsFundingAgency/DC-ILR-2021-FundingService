@@ -76,7 +76,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
         {
             return new LearningDeliveryAttribute
                 {
-                    AimSeqNumber = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, "AimSeqNumber").Value,
+                    AimSeqNumber = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, "AimSeqNumber"),
                     LearningDeliveryAttributeDatas = LearningDeliveryAttributeData(dataEntity),
                     LearningDeliveryPeriodisedAttributes = LearningDeliveryPeriodisedAttributeData(dataEntity),
                 };
