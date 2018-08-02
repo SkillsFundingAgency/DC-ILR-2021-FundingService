@@ -2,6 +2,7 @@
 using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.Population.File;
 using ESFA.DC.ILR.FundingService.Dto.Interfaces;
+using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.ILR.Tests.Model;
 using FluentAssertions;
 using Moq;
@@ -86,6 +87,76 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.File
             learnRefNumber1DpOutcome.OutType.Should().Be(outType);
 
             dpOutcomes[learnRefNumber2].Should().HaveCount(2);
+        }
+
+        [Fact]
+        public void RetrieveDPOutcomes_NullMessage()
+        {
+            var fundingServiceDto = new Mock<IFundingServiceDto>();
+
+            fundingServiceDto.SetupGet(fs => fs.Message).Returns(null as IMessage);
+
+            var dpOutcomes = NewService(fundingServiceDto.Object).RetrieveDPOutcomes();
+
+            dpOutcomes.Should().NotBeNull();
+            dpOutcomes.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void RetrieveDPOutcomes_NullLearnerDestinationAndProgressions()
+        {
+            var learnRefNumber1 = "learnRefNumber1";
+            var learnRefNumber2 = "learnRefNumber2";
+            var outCode = 1;
+            var outType = "outType";
+
+            var message = new TestMessage()
+            {
+                LearnerDestinationAndProgressions = null
+            };
+
+            var fundingServiceDto = new Mock<IFundingServiceDto>();
+
+            fundingServiceDto.SetupGet(fs => fs.Message).Returns(message);
+
+            var dpOutcomes = NewService(fundingServiceDto.Object).RetrieveDPOutcomes();
+
+            dpOutcomes.Should().NotBeNull();
+            dpOutcomes.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void RetrieveDPOutcomes_NullDPOutcomes()
+        {
+            var learnRefNumber1 = "learnRefNumber1";
+            var learnRefNumber2 = "learnRefNumber2";
+            var outCode = 1;
+            var outType = "outType";
+
+            var message = new TestMessage()
+            {
+                LearnerDestinationAndProgressions = new List<TestLearnerDestinationAndProgression>()
+                {
+                    new TestLearnerDestinationAndProgression()
+                    {
+                        LearnRefNumber = learnRefNumber1,
+                        DPOutcomes = null
+                    }
+                }
+            };
+
+            var fundingServiceDto = new Mock<IFundingServiceDto>();
+
+            fundingServiceDto.SetupGet(fs => fs.Message).Returns(message);
+
+            var dpOutcomes = NewService(fundingServiceDto.Object).RetrieveDPOutcomes();
+
+            dpOutcomes.Should().HaveCount(1);
+
+            var learnRefNumber1DpOutcomes = dpOutcomes[learnRefNumber1].ToList();
+
+            learnRefNumber1DpOutcomes.Should().NotBeNull();
+            learnRefNumber1DpOutcomes.Should().BeEmpty();
         }
 
         private FileDataRetrievalService NewService(IFundingServiceDto fundingServiceDto = null)

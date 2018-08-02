@@ -18,16 +18,17 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.File
         public IDictionary<string, IEnumerable<DPOutcome>> RetrieveDPOutcomes()
         {
             return _fundingServiceDto
-                .Message
-                .LearnerDestinationAndProgressions
+                .Message?
+                .LearnerDestinationAndProgressions?
                 .ToDictionary(
                     l => l.LearnRefNumber,
-                    l => l.DPOutcomes
+                    l => l.DPOutcomes?
                         .Select(d => new DPOutcome()
                         {
                             OutCode = d.OutCode,
                             OutType = d.OutType,
-                        }).ToList() as IEnumerable<DPOutcome>);
+                        }).ToList() ?? new List<DPOutcome>() as IEnumerable<DPOutcome>)
+                ?? new Dictionary<string, IEnumerable<DPOutcome>>();
         }
 
         public int RetrieveUKPRN()
