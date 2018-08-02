@@ -13,6 +13,7 @@ using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
+using ESFA.DC.OPA.Service.Interface;
 using FluentAssertions;
 using Moq;
 using Oracle.Determinations.Masquerade.Util;
@@ -174,22 +175,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
         /// <summary>
         /// Return FundingOutputs GlobalAttribute
         /// </summary>
-        [Fact(DisplayName = "FundingOutput - GlobalOutput Exists"), Trait("FundingOutput Service", "Unit")]
-        public void FundingOutput_GlobalOutput_Exists()
-        {
-            // ARRANGE
-            var fundingOutputService = NewService();
-
-            // ACT
-            var globalOutput = fundingOutputService.GlobalOutput(GlobalAttributes());
-
-            // ASSERT
-            globalOutput.Should().NotBeNull();
-        }
-
-        /// <summary>
-        /// Return FundingOutputs GlobalAttribute
-        /// </summary>
         [Fact(DisplayName = "FundingOutput - GlobalOutput Correct"), Trait("FundingOutput Service", "Unit")]
         public void FundingOutput_GlobalOutput_Correct()
         {
@@ -197,7 +182,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             var fundingOutputService = NewService();
 
             // ACT
-            var globalOutput = fundingOutputService.GlobalOutput(GlobalAttributes());
+            var globalOutput = fundingOutputService.GlobalOutput(GlobalDataEntity());
 
             // ASSERT
             var expectedGlobalOutput = new GlobalAttribute
@@ -216,32 +201,30 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
         /// <summary>
         /// Return FundingOutputs LearnerOutput
         /// </summary>
-        [Fact(DisplayName = "FundingOutput - LearnerOutput Exists"), Trait("FundingOutput Service", "Unit")]
-        public void FundingOutput_LearnerOutput_Exists()
-        {
-            // ARRANGE
-            var fundingOutputService = NewService();
-
-            // ACT
-            var learnerOutput = fundingOutputService.LearnerOutput(TestLearnerEntity(null, "TestLearner", true));
-
-            // ASSERT
-            learnerOutput.Should().NotBeNull();
-        }
-
-        /// <summary>
-        /// Return FundingOutputs LearnerOutput
-        /// </summary>
         [Fact(DisplayName = "FundingOutput - LearnerOutput Correct"), Trait("FundingOutput Service", "Unit")]
         public void FundingOutput_LearnerOutput_Correct()
         {
             // ARRANGE
             var fundingOutputService = NewService();
 
+            var dataEntity = new DataEntity("Learner")
+            {
+                EntityName = "Learner",
+                Attributes = new Dictionary<string, IAttributeData>
+                {
+                    { "LearnRefNumber", new AttributeData("LearnRefNumber", "TestLearner") },
+                    { "DateOfBirth", new AttributeData("DateOfBirth", new Date(2000, 01, 01)) },
+                },
+            };
+
+            dataEntity.AddChildren(TestLearningDeliveryEntity(dataEntity));
+
             // ACT
-            var learnerOutput = fundingOutputService.LearnerOutput(TestLearnerEntity(null, "TestLearner", true));
+            var learnerOutput = fundingOutputService.LearnerFromDataEntity(dataEntity);
 
             // ASSERT
+            learnerOutput.LearnRefNumber.Should().Be(dataEntity.)
+
             var expectedLearnerOutput = new LearnerAttribute[]
             {
                 new LearnerAttribute
@@ -259,22 +242,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
         /// <summary>
         /// Return FundingOutputs LearningDeliveryAttributes
         /// </summary>
-        [Fact(DisplayName = "FundingOutput - LearningDeliveryAttributes Exists"), Trait("FundingOutput Service", "Unit")]
-        public void FundingOutput_LearningDeliveryAttributes_Exists()
-        {
-            // ARRANGE
-            var fundingOutputService = NewService();
-
-            // ACT
-            var learningDeliveryAttributes = fundingOutputService.LearningDeliveryAttributes(TestLearnerEntity(null, "TestLearner", true).SingleOrDefault());
-
-            // ASSERT
-            learningDeliveryAttributes.Should().NotBeNull();
-        }
-
-        /// <summary>
-        /// Return FundingOutputs LearningDeliveryAttributes
-        /// </summary>
         [Fact(DisplayName = "FundingOutput - LearningDeliveryAttributes Correct"), Trait("FundingOutput Service", "Unit")]
         public void FundingOutput_LearningDeliveryAttributes_Correct()
         {
@@ -282,7 +249,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             var fundingOutputService = NewService();
 
             // ACT
-            var learningDeliveryAttributes = fundingOutputService.LearningDeliveryAttributes(TestLearnerEntity(null, "TestLearner", true).SingleOrDefault());
+            var learningDeliveryAttributes = fundingOutputService.LearningDeliveryFromDataEntity(TestLearnerEntity(null, "TestLearner", true).SingleOrDefault());
 
             // ASSERT
             var expectedLearningDeliveryAttributes = new LearningDeliveryAttribute[]
@@ -296,23 +263,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             };
 
             expectedLearningDeliveryAttributes.Should().BeEquivalentTo(learningDeliveryAttributes);
-        }
-
-        /// <summary>
-        /// Return FundingOutputs LearningDeliveryAttributeDatas
-        /// </summary>
-        [Fact(DisplayName = "FundingOutput - LearningDeliveryAttributeDatas Exists"), Trait("FundingOutput Service", "Unit")]
-        public void FundingOutput_LearningDeliveryAttributeDatas_Exists()
-        {
-            // ARRANGE
-            var fundingOutputService = NewService();
-
-            // ACT
-            var learningDeliveryAttributeDatas =
-                fundingOutputService.LearningDeliveryAttributeData(TestLearnerEntity(null, "TestLearner", true).SingleOrDefault().Children.SingleOrDefault());
-
-            // ASSERT
-            learningDeliveryAttributeDatas.Should().NotBeNull();
         }
 
         /// <summary>
@@ -332,23 +282,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             var expectedlearningDeliveryAttributeDatas = TestLearningDeliveryAttributeData();
 
             expectedlearningDeliveryAttributeDatas.Should().BeEquivalentTo(learningDeliveryAttributeDatas);
-        }
-
-        /// <summary>
-        /// Return FundingOutputs LearningDeliveryPeriodisedAttributeData
-        /// </summary>
-        [Fact(DisplayName = "FundingOutput - LearningDeliveryPeriodisedAttributeData Exists"), Trait("FundingOutput Service", "Unit")]
-        public void FundingOutput_LearningDeliveryPeriodisedAttributeData_Exists()
-        {
-            // ARRANGE
-            var fundingOutputService = NewService();
-
-            // ACT
-            var learningDeliveryPeriodisedAttributeData =
-                fundingOutputService.LearningDeliveryPeriodisedAttributeData(TestLearnerEntity(null, "TestLearner", true).SingleOrDefault().Children.SingleOrDefault());
-
-            // ASSERT
-            learningDeliveryPeriodisedAttributeData.Should().NotBeNull();
         }
 
         /// <summary>
@@ -378,27 +311,15 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
         {
             var entities = new List<DataEntity>();
 
-            var entity1 =
-                new DataEntity("global")
-                {
-                    EntityName = "global",
-                    Attributes = GlobalAttributes(),
-                    Parent = null,
-                };
+            var entity1 = GlobalDataEntity();
 
             entity1.AddChildren(TestLearnerEntity(entity1, "TestLearner1", false));
 
             entities.Add(entity1);
 
-            var entity2 =
-            new DataEntity("global")
-            {
-                EntityName = "global",
-                Attributes = GlobalAttributes(),
-                Parent = null,
-            };
+            var entity2 = GlobalDataEntity();
 
-            entity1.AddChildren(TestLearnerEntity(entity2, "TestLearner2", true));
+            entity2.AddChildren(TestLearnerEntity(entity2, "TestLearner2", true));
 
             entities.Add(entity2);
 
@@ -555,16 +476,21 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             return entities;
         }
 
-        private new Dictionary<string, IAttributeData> GlobalAttributes()
+        private DataEntity GlobalDataEntity()
         {
-            return new Dictionary<string, IAttributeData>
+            return new DataEntity("global")
             {
-                { "UKPRN", new AttributeData("UKPRN", "12345678") },
-                { "OrgVersion", new AttributeData("OrgVersion", "Version_003") },
-                { "LARSVersion", new AttributeData("LARSVersion", "Version_005") },
-                { "CurFundYr", new AttributeData("CurFundYr", "1819") },
-                { "PostcodeDisadvantageVersion", new AttributeData("PostcodeDisadvantageVersion", "Version_002") },
-                { "RulebaseVersion", new AttributeData("RulebaseVersion", "1718.5.10") },
+                EntityName = "global",
+                Attributes = new Dictionary<string, IAttributeData>
+                {
+                    { "UKPRN", new AttributeData("UKPRN", "12345678") },
+                    { "OrgVersion", new AttributeData("OrgVersion", "Version_003") },
+                    { "LARSVersion", new AttributeData("LARSVersion", "Version_005") },
+                    { "CurFundYr", new AttributeData("CurFundYr", "1819") },
+                    { "PostcodeDisadvantageVersion", new AttributeData("PostcodeDisadvantageVersion", "Version_002") },
+                    { "RulebaseVersion", new AttributeData("RulebaseVersion", "1718.5.10") },
+                },
+                Parent = null,
             };
         }
 
@@ -878,9 +804,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             };
         }
 
-        private FundingOutputService NewService()
+        private FundingOutputService NewService(IDataEntityAttributeService dataEntityAttributeService = null)
         {
-            return new FundingOutputService();
+            return new FundingOutputService(dataEntityAttributeService);
         }
     }
 }

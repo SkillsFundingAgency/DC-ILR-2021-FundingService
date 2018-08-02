@@ -108,6 +108,19 @@ namespace ESFA.DC.OPA.Service.Tests
         }
 
         [Fact]
+        public void GetIntAttributeValue_Decimal()
+        {
+            var attributeName = "attribute";
+            var dataEntity = new DataEntity(string.Empty);
+
+            var value = 1.0m;
+
+            dataEntity.Attributes.Add(attributeName, new AttributeData(attributeName, value));
+
+            NewService().GetIntAttributeValue(dataEntity, attributeName).Should().Be(1);
+        }
+
+        [Fact]
         public void GetIntAttributeValue()
         {
             var attributeName = "attribute";

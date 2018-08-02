@@ -1,8 +1,7 @@
 ﻿using System;
+using System.Globalization;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Interface;
-using Oracle.Determinations.Engine.Local;
-using Oracle.Determinations.Masquerade.Lang;
 using Oracle.Determinations.Masquerade.Util;
 
 namespace ESFA.DC.OPA.Service
@@ -56,7 +55,7 @@ namespace ESFA.DC.OPA.Service
 
                 if (attributeString != Uncertain)
                 {
-                    return int.Parse(attributeString);
+                    return int.Parse(attributeString, NumberStyles.AllowDecimalPoint);
                 }
             }
 
