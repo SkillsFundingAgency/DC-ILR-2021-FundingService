@@ -35,7 +35,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public string CurrentVersion()
         {
-            return LARSVersions.OrderByDescending(v => v.MainDataSchemaName).Select(lv => lv.MainDataSchemaName).First();
+            return LARSVersions.OrderByDescending(v => v.MainDataSchemaName).Select(lv => lv.MainDataSchemaName).FirstOrDefault();
         }
 
         public IEnumerable<string> UniqueLearnAimRefs(IMessage message)

@@ -34,7 +34,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public string CurrentVersion()
         {
-            return VersionInfos.OrderByDescending(v => v.VersionNumber).Select(v => v.VersionNumber).First();
+            return VersionInfos.OrderByDescending(v => v.VersionNumber).Select(v => v.VersionNumber).FirstOrDefault();
         }
 
         public IDictionary<string, IEnumerable<SfaAreaCost>> SfaAreaCostsForPostcodes(IEnumerable<string> postcodes)

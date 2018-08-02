@@ -26,7 +26,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public string CurrentVersion()
         {
-            return OrgVersions.OrderByDescending(v => v.MainDataSchemaName).Select(lv => lv.MainDataSchemaName).First();
+            return OrgVersions.OrderByDescending(v => v.MainDataSchemaName).Select(lv => lv.MainDataSchemaName).FirstOrDefault();
         }
 
         public IDictionary<long, IEnumerable<OrgFunding>> OrgFundingsForUkprns(IEnumerable<long> ukprns)
