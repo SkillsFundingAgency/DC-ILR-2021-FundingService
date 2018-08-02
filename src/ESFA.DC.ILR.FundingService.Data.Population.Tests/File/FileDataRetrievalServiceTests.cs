@@ -151,7 +151,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.File
 
             var dpOutcomes = NewService(fundingServiceDto.Object).RetrieveDPOutcomes();
 
-            dpOutcomes.Should().HaveCount(1);
+            dpOutcomes.Should().HaveCount(1); 
 
             var learnRefNumber1DpOutcomes = dpOutcomes[learnRefNumber1].ToList();
 

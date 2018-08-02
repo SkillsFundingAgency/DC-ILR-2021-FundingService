@@ -72,11 +72,6 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
                 await _keyValuePersistenceService.GetAsync(
                     jobContextMessage.KeyValuePairs[JobContextMessageKey.ValidLearnRefNumbers].ToString()));
 
-            // loop through list of all the tasks and execute them.
-            var fundingTasks = new List<Task>();
-
-            var taskList = jobContextMessage.Topics[jobContextMessage.TopicPointer].Tasks;
-
             _populationService.Populate();
 
             var ukprn = Convert.ToInt32(jobContextMessage.KeyValuePairs[JobContextMessageKey.UkPrn]);
@@ -95,21 +90,11 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
                         ValidLearners = Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(p))
                     }).ToList();
 
-            foreach (var task in taskList)
+            var fundingTasks = new List<Task>()
             {
-                foreach (var taskString in task.Tasks)
-                {
-                    switch (taskString)
-                    {
-                        case "ALB":
-                            fundingTasks.Add(_ALBOrchestrationSfTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString()));
-                            break;
-                        case "FM35":
-                            fundingTasks.Add(_fm35OrchestrationSfTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString()));
-                            break;
-                    }
-                }
-            }
+                _ALBOrchestrationSfTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString()),
+                _fm35OrchestrationSfTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString())
+            };
 
             // execute all fundingtasks
             await Task.WhenAll(fundingTasks);
