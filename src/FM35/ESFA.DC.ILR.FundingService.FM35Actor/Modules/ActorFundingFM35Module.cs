@@ -49,6 +49,7 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor.Modules
             builder.RegisterType<FundingService<ILearner, FM35FundingOutputs>>().As<IFundingService<ILearner, FM35FundingOutputs>>().InstancePerLifetimeScope();
             builder.RegisterType<JsonSerializationService>().As<ISerializationService>().InstancePerLifetimeScope();
             builder.RegisterType<JsonSerializationService>().As<IJsonSerializationService>().InstancePerLifetimeScope();
+            builder.RegisterType<DataEntityAttributeService>().As<IDataEntityAttributeService>().InstancePerLifetimeScope();
         }
     }
 }

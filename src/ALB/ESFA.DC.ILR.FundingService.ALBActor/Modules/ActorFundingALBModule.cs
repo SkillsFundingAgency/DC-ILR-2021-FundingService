@@ -33,6 +33,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor.Modules
             builder.RegisterType<FileDataCache>().As<IFileDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<FundingOutputService>().As<IOutputService<FundingOutputs>>().InstancePerLifetimeScope();
             builder.RegisterType<FundingService<ILearner, FundingOutputs>>().As<IFundingService<ILearner, FundingOutputs>>().InstancePerLifetimeScope();
+            builder.RegisterType<DataEntityAttributeService>().As<IDataEntityAttributeService>();
         }
     }
 }
