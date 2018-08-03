@@ -15,26 +15,30 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
     {
         private readonly IDataEntityAttributeService _dataEntityAttributeService;
 
+        private readonly IEnumerable<string> _learnerPeriodisedAttributeList = new List<string> { "ALBSeqNum" };
+
+        private readonly IEnumerable<string> _learningDeliveryPeriodisedAttributeList = new List<string>() { "ALBCode", "ALBSupportPayment", "AreaUpliftBalPayment", "AreaUpliftOnProgPayment" };
+
+        private readonly IReadOnlyDictionary<int, DateTime> _periods = new Dictionary<int, DateTime>
+        {
+            { 1, new DateTime(2017, 08, 01) },
+            { 2, new DateTime(2017, 09, 01) },
+            { 3, new DateTime(2017, 10, 01) },
+            { 4, new DateTime(2017, 11, 01) },
+            { 5, new DateTime(2017, 12, 01) },
+            { 6, new DateTime(2018, 01, 01) },
+            { 7, new DateTime(2018, 02, 01) },
+            { 8, new DateTime(2018, 03, 01) },
+            { 9, new DateTime(2018, 04, 01) },
+            { 10, new DateTime(2018, 05, 01) },
+            { 11, new DateTime(2018, 06, 01) },
+            { 12, new DateTime(2018, 07, 01) },
+        };
+
         public FundingOutputService(IDataEntityAttributeService dataEntityAttributeService)
         {
             _dataEntityAttributeService = dataEntityAttributeService;
         }
-
-        private static Dictionary<int, DateTime> Periods => new Dictionary<int, DateTime>
-        {
-           { 1, new DateTime(2017, 08, 01) },
-           { 2, new DateTime(2017, 09, 01) },
-           { 3, new DateTime(2017, 10, 01) },
-           { 4, new DateTime(2017, 11, 01) },
-           { 5, new DateTime(2017, 12, 01) },
-           { 6, new DateTime(2018, 01, 01) },
-           { 7, new DateTime(2018, 02, 01) },
-           { 8, new DateTime(2018, 03, 01) },
-           { 9, new DateTime(2018, 04, 01) },
-           { 10, new DateTime(2018, 05, 01) },
-           { 11, new DateTime(2018, 06, 01) },
-           { 12, new DateTime(2018, 07, 01) },
-        };
 
         public FundingOutputs ProcessFundingOutputs(IEnumerable<IDataEntity> dataEntities)
         {
@@ -70,29 +74,26 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
             return new LearnerAttribute()
             {
                 LearnRefNumber = dataEntity.LearnRefNumber,
-                LearnerPeriodisedAttributes = LearnerPeriodisedAttributes(dataEntity),
+                LearnerPeriodisedAttributes = LearnerPeriodisedAttributes(dataEntity).ToArray(),
                 LearningDeliveryAttributes = dataEntity.Children.Select(LearningDeliveryFromDataEntity).ToArray()
             };
         }
 
-        public LearnerPeriodisedAttribute[] LearnerPeriodisedAttributes(IDataEntity learner)
+        public IEnumerable<LearnerPeriodisedAttribute> LearnerPeriodisedAttributes(IDataEntity learner)
         {
-            var attributeList = new List<string> { "ALBSeqNum" };
-            var learnerPeriodisedAttributesList = new List<LearnerPeriodisedAttribute>();
-
-            foreach (var attribute in attributeList)
+            foreach (var attribute in _learnerPeriodisedAttributeList)
             {
-                var attributeValue = (AttributeData)learner.Attributes[attribute];
+                var attributeValue = learner.Attributes[attribute];
 
-                var changePoints = attributeValue.Changepoints;
+                LearnerPeriodisedAttribute learnerPeriodisedAttribute;
 
-                if (!changePoints.Any())
+                if (!attributeValue.Changepoints.Any())
                 {
                     var value = decimal.Parse(attributeValue.Value.ToString());
 
-                    learnerPeriodisedAttributesList.Add(new LearnerPeriodisedAttribute
+                    learnerPeriodisedAttribute = new LearnerPeriodisedAttribute
                     {
-                        AttributeName = attributeValue.Name,
+                        AttributeName = attribute,
                         Period1 = value,
                         Period2 = value,
                         Period3 = value,
@@ -105,12 +106,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
                         Period10 = value,
                         Period11 = value,
                         Period12 = value,
-                    });
+                    };
                 }
-
-                if (changePoints.Any())
+                else
                 {
-                    learnerPeriodisedAttributesList.Add(new LearnerPeriodisedAttribute
+                    learnerPeriodisedAttribute = new LearnerPeriodisedAttribute
                     {
                         AttributeName = attributeValue.Name,
                         Period1 = GetPeriodAttributeValue(attributeValue, 1),
@@ -125,11 +125,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
                         Period10 = GetPeriodAttributeValue(attributeValue, 10),
                         Period11 = GetPeriodAttributeValue(attributeValue, 11),
                         Period12 = GetPeriodAttributeValue(attributeValue, 12),
-                    });
+                    };
                 }
-            }
 
-            return learnerPeriodisedAttributesList.ToArray();
+                yield return learnerPeriodisedAttribute;
+            }
         }
 
         public LearningDeliveryAttribute LearningDeliveryFromDataEntity(IDataEntity dataEntity)
@@ -138,7 +138,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
             {
                 AimSeqNumber = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, "AimSeqNumber").Value,
                 LearningDeliveryAttributeDatas = LearningDeliveryAttributeData(dataEntity),
-                LearningDeliveryPeriodisedAttributes = LearningDeliveryPeriodisedAttributeData(dataEntity),
+                LearningDeliveryPeriodisedAttributes = LearningDeliveryPeriodisedAttributeData(dataEntity).ToArray(),
             };
         }
 
@@ -164,22 +164,19 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
             };
         }
 
-        public LearningDeliveryPeriodisedAttribute[] LearningDeliveryPeriodisedAttributeData(IDataEntity learningDelivery)
+        public IEnumerable<LearningDeliveryPeriodisedAttribute> LearningDeliveryPeriodisedAttributeData(IDataEntity learningDelivery)
         {
-            var attributeList = new List<string>() { "ALBCode", "ALBSupportPayment", "AreaUpliftBalPayment", "AreaUpliftOnProgPayment" };
-            var learningDeliveryPeriodisedAttributesList = new List<LearningDeliveryPeriodisedAttribute>();
-
-            foreach (var attribute in attributeList)
+            foreach (var attribute in _learningDeliveryPeriodisedAttributeList)
             {
-                var attributeValue = (AttributeData)learningDelivery.Attributes[attribute];
+                var attributeValue = learningDelivery.Attributes[attribute];
 
-                var changePoints = attributeValue.Changepoints;
+                LearningDeliveryPeriodisedAttribute learningDeliveryPeriodisedAttribute;
 
-                if (!changePoints.Any())
+                if (!attributeValue.Changepoints.Any())
                 {
                     var value = decimal.Parse(attributeValue.Value.ToString());
 
-                    learningDeliveryPeriodisedAttributesList.Add(new LearningDeliveryPeriodisedAttribute
+                    learningDeliveryPeriodisedAttribute = new LearningDeliveryPeriodisedAttribute
                     {
                         AttributeName = attributeValue.Name,
                         Period1 = value,
@@ -194,12 +191,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
                         Period10 = value,
                         Period11 = value,
                         Period12 = value,
-                    });
+                    };
                 }
-
-                if (changePoints.Any())
+                else
                 {
-                    learningDeliveryPeriodisedAttributesList.Add(new LearningDeliveryPeriodisedAttribute
+                    learningDeliveryPeriodisedAttribute = new LearningDeliveryPeriodisedAttribute
                     {
                         AttributeName = attributeValue.Name,
                         Period1 = GetPeriodAttributeValue(attributeValue, 1),
@@ -214,16 +210,16 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
                         Period10 = GetPeriodAttributeValue(attributeValue, 10),
                         Period11 = GetPeriodAttributeValue(attributeValue, 11),
                         Period12 = GetPeriodAttributeValue(attributeValue, 12),
-                    });
+                    };
                 }
-            }
 
-            return learningDeliveryPeriodisedAttributesList.ToArray();
+                yield return learningDeliveryPeriodisedAttribute;
+            }
         }
 
-        private decimal GetPeriodAttributeValue(AttributeData attributes, int period)
+        private decimal GetPeriodAttributeValue(IAttributeData attributes, int period)
         {
-            return decimal.Parse(attributes.Changepoints.Where(cp => cp.ChangePoint == Periods[period]).Select(v => v.Value).SingleOrDefault().ToString());
+            return decimal.Parse(attributes.Changepoints.Where(cp => cp.ChangePoint == _periods[period]).Select(v => v.Value).SingleOrDefault().ToString());
         }
     }
 }
