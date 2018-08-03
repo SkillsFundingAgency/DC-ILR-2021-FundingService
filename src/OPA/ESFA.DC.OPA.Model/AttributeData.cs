@@ -7,7 +7,7 @@ namespace ESFA.DC.OPA.Model
     {
         private readonly List<ITemporalValueItem> _changePoints;
 
-        public AttributeData(string name, object value)
+        public AttributeData(object value)
         {
             Value = value;
             _changePoints = new List<ITemporalValueItem>();

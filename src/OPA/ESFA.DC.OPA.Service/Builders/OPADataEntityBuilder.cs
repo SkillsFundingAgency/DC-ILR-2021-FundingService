@@ -67,7 +67,7 @@ namespace ESFA.DC.OPA.Service.Builders
 
             if (value is TemporalValue temporalValue)
             {
-                IAttributeData attributeData = new AttributeData(attr.GetName(), null);
+                IAttributeData attributeData = new AttributeData(null);
                 for (int period = 0; period < 12; period++)
                 {
                     var date = _yearStartDate.AddMonths(period);
@@ -79,7 +79,7 @@ namespace ESFA.DC.OPA.Service.Builders
                 return attributeData;
             }
 
-            return new AttributeData(attr.GetName(), value is string ? value.ToString().Trim() : value);
+            return new AttributeData(value is string ? value.ToString().Trim() : value);
         }
 
         protected internal void MapEntities(EntityInstance instance, List childEntities, IDataEntity dataEntity)

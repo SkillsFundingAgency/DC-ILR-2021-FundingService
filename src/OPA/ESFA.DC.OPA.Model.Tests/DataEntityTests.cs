@@ -25,7 +25,7 @@ namespace ESFA.DC.OPA.Model.Tests
         {
             DataEntity attributesExistNotEmpty = new DataEntity(null);
 
-            attributesExistNotEmpty.Attributes.Add("name", new AttributeData("name", "value"));
+            attributesExistNotEmpty.Attributes.Add("name", new AttributeData("value"));
 
             attributesExistNotEmpty.Attributes.Should().HaveCount(1);
         }
@@ -48,7 +48,7 @@ namespace ESFA.DC.OPA.Model.Tests
         {
             var dataEntity = new DataEntity(null);
 
-            dataEntity.Attributes.Add("LearnRefNumber", new AttributeData("name", "value"));
+            dataEntity.Attributes.Add("LearnRefNumber", new AttributeData("value"));
 
             dataEntity.LearnRefNumber.Should().Be("value");
         }

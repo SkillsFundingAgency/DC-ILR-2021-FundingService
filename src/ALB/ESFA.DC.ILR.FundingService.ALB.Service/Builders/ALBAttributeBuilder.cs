@@ -54,9 +54,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
         {
             return new Dictionary<string, IAttributeData>
             {
-                { UKPRN,  new AttributeData(UKPRN, ukprn) },
-                { LARSVersion, new AttributeData(LARSVersion, larsVersion) },
-                { PostcodeAreaCostVersion,  new AttributeData(PostcodeAreaCostVersion, postcodeAreaCostVersion) },
+                { UKPRN,  new AttributeData(ukprn) },
+                { LARSVersion, new AttributeData(larsVersion) },
+                { PostcodeAreaCostVersion,  new AttributeData(postcodeAreaCostVersion) },
             };
         }
 
@@ -64,7 +64,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
         {
             return new Dictionary<string, IAttributeData>
             {
-                { LearnRefNumber, new AttributeData(LearnRefNumber, learnRefNumber) },
+                { LearnRefNumber, new AttributeData(learnRefNumber) },
             };
         }
 
@@ -86,20 +86,20 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
         {
             return new Dictionary<string, IAttributeData>
             {
-                { AimSeqNumber, new AttributeData(AimSeqNumber, aimSeqNumber) },
-                { CompStatus, new AttributeData(CompStatus, compStatus) },
-                { LearnActEndDate, new AttributeData(LearnActEndDate, learnActEndDate) },
-                { LearnAimRefType, new AttributeData(LearnAimRefType, learnAimRefType) },
-                { LearnPlanEndDate, new AttributeData(LearnPlanEndDate, learnPlanEndDate) },
-                { LearnStartDate, new AttributeData(LearnStartDate, learnStartDate) },
-                { LrnDelFAM_ADL, new AttributeData(LrnDelFAM_ADL, lrnDelFAM_ADL) },
-                { LrnDelFAM_RES, new AttributeData(LrnDelFAM_RES, lrnDelFAM_RES) },
-                { NotionalNVQLevelv2, new AttributeData(NotionalNVQLevelv2, notionalNVQLevelv2) },
-                { OrigLearnStartDate, new AttributeData(OrigLearnStartDate, origLearnStartDate) },
-                { OtherFundAdj, new AttributeData(OtherFundAdj, otherFundAdj) },
-                { Outcome, new AttributeData(Outcome, outcome) },
-                { PriorLearnFundAdj, new AttributeData(PriorLearnFundAdj, priorLearnFundAdj) },
-                { RegulatedCreditValue, new AttributeData(RegulatedCreditValue, regulatedCreditValue) },
+                { AimSeqNumber, new AttributeData(aimSeqNumber) },
+                { CompStatus, new AttributeData(compStatus) },
+                { LearnActEndDate, new AttributeData(learnActEndDate) },
+                { LearnAimRefType, new AttributeData(learnAimRefType) },
+                { LearnPlanEndDate, new AttributeData(learnPlanEndDate) },
+                { LearnStartDate, new AttributeData(learnStartDate) },
+                { LrnDelFAM_ADL, new AttributeData(lrnDelFAM_ADL) },
+                { LrnDelFAM_RES, new AttributeData(lrnDelFAM_RES) },
+                { NotionalNVQLevelv2, new AttributeData(notionalNVQLevelv2) },
+                { OrigLearnStartDate, new AttributeData(origLearnStartDate) },
+                { OtherFundAdj, new AttributeData(otherFundAdj) },
+                { Outcome, new AttributeData(outcome) },
+                { PriorLearnFundAdj, new AttributeData(priorLearnFundAdj) },
+                { RegulatedCreditValue, new AttributeData(regulatedCreditValue) },
             };
         }
 
@@ -107,10 +107,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
         {
             return new Dictionary<string, IAttributeData>
             {
-                { LearnDelFAMCode, new AttributeData(LearnDelFAMCode, learnDelFAMCode) },
-                { LearnDelFAMDateFrom, new AttributeData(LearnDelFAMDateFrom, learnDelFAMDateFrom) },
-                { LearnDelFAMDateTo, new AttributeData(LearnDelFAMDateTo, learnDelFAMDateTo) },
-                { LearnDelFAMType, new AttributeData(LearnDelFAMType, learnDelFAMType) },
+                { LearnDelFAMCode, new AttributeData(learnDelFAMCode) },
+                { LearnDelFAMDateFrom, new AttributeData(learnDelFAMDateFrom) },
+                { LearnDelFAMDateTo, new AttributeData(learnDelFAMDateTo) },
+                { LearnDelFAMType, new AttributeData(learnDelFAMType) },
             };
         }
 
@@ -118,9 +118,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
         {
             return new Dictionary<string, IAttributeData>
             {
-                { AreaCosEffectiveFrom, new AttributeData(AreaCosEffectiveFrom, areaCosEffectiveFrom) },
-                { AreaCosEffectiveTo, new AttributeData(AreaCosEffectiveTo, areaCosEffectiveTo) },
-                { AreaCosFactor, new AttributeData(AreaCosFactor, areaCosFactor) },
+                { AreaCosEffectiveFrom, new AttributeData(areaCosEffectiveFrom) },
+                { AreaCosEffectiveTo, new AttributeData(areaCosEffectiveTo) },
+                { AreaCosFactor, new AttributeData(areaCosFactor) },
             };
         }
 
@@ -133,11 +133,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
         {
             return new Dictionary<string, IAttributeData>
             {
-                { LARSFundCategory, new AttributeData(LARSFundCategory, larsFundCategory) },
-                { LARSFundEffectiveFrom, new AttributeData(LARSFundEffectiveFrom, larsFundEffectiveFrom) },
-                { LARSFundEffectiveTo, new AttributeData(LARSFundEffectiveTo, larsFundEffectiveTo) },
-                { LARSFundWeightedRate, new AttributeData(LARSFundWeightedRate, larsFundWeightedRate) },
-                { LARSFundWeightingFactor, new AttributeData(LARSFundWeightingFactor, larsFundWeightingFactor) },
+                { LARSFundCategory, new AttributeData(larsFundCategory) },
+                { LARSFundEffectiveFrom, new AttributeData(larsFundEffectiveFrom) },
+                { LARSFundEffectiveTo, new AttributeData(larsFundEffectiveTo) },
+                { LARSFundWeightedRate, new AttributeData(larsFundWeightedRate) },
+                { LARSFundWeightingFactor, new AttributeData(larsFundWeightingFactor) },
             };
         }
     }

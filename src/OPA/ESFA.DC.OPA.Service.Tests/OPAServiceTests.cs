@@ -54,7 +54,7 @@ namespace ESFA.DC.OPA.Service.Tests
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    { "UKPRN", new AttributeData("UKPRN", 12345678) }
+                    { "UKPRN", new AttributeData(12345678) }
                 }
             };
 
@@ -63,7 +63,7 @@ namespace ESFA.DC.OPA.Service.Tests
                 {
                     Attributes = new Dictionary<string, IAttributeData>()
                     {
-                        { "LearnRefNumber", new AttributeData("LearnRefNumber", "Learner1") }
+                        { "LearnRefNumber", new AttributeData("Learner1") }
                     }
                 });
 

@@ -291,8 +291,8 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    { "UKPRN", new AttributeData("UKPRN", 12345678) },
-                    { "LARSVersion", new AttributeData("LARSVersion", "Version_005") }
+                    { "UKPRN", new AttributeData(12345678) },
+                    { "LARSVersion", new AttributeData("Version_005") }
                 }
             };
 
@@ -301,7 +301,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
                 {
                     Attributes = new Dictionary<string, IAttributeData>()
                     {
-                        { "LearnRefNumber", new AttributeData("LearnRefNumber", "TestLearner") }
+                        { "LearnRefNumber", new AttributeData("TestLearner") }
                     }
                 });
 

@@ -28,7 +28,7 @@ namespace ESFA.DC.OPA.Service.Tests
 
             var value = new object();
 
-            dataEntity.Attributes.Add(attributeName, new AttributeData(attributeName, value));
+            dataEntity.Attributes.Add(attributeName, new AttributeData(value));
 
             NewService().GetAttributeValue(dataEntity, attributeName).Should().BeSameAs(value);
         }
@@ -41,7 +41,7 @@ namespace ESFA.DC.OPA.Service.Tests
 
             var value = default(Uncertain);
 
-            dataEntity.Attributes.Add(attributeName, new AttributeData(attributeName, value));
+            dataEntity.Attributes.Add(attributeName, new AttributeData(value));
 
             NewService().GetAttributeValue(dataEntity, attributeName).Should().BeNull();
         }
@@ -64,7 +64,7 @@ namespace ESFA.DC.OPA.Service.Tests
 
             var value = 1;
 
-            dataEntity.Attributes.Add(attributeName, new AttributeData(attributeName, value));
+            dataEntity.Attributes.Add(attributeName, new AttributeData(value));
 
             NewService().GetStringAttributeValue(dataEntity, attributeName).Should().Be("1");
         }
@@ -77,7 +77,7 @@ namespace ESFA.DC.OPA.Service.Tests
 
             var value = default(Uncertain);
 
-            dataEntity.Attributes.Add(attributeName, new AttributeData(attributeName, value));
+            dataEntity.Attributes.Add(attributeName, new AttributeData(value));
 
             NewService().GetStringAttributeValue(dataEntity, attributeName).Should().BeNull();
         }
@@ -100,7 +100,7 @@ namespace ESFA.DC.OPA.Service.Tests
 
             var value = "Not An Integer";
 
-            dataEntity.Attributes.Add(attributeName, new AttributeData(attributeName, value));
+            dataEntity.Attributes.Add(attributeName, new AttributeData(value));
 
             Action action = () => NewService().GetIntAttributeValue(dataEntity, attributeName);
 
@@ -115,7 +115,7 @@ namespace ESFA.DC.OPA.Service.Tests
 
             var value = 1.0m;
 
-            dataEntity.Attributes.Add(attributeName, new AttributeData(attributeName, value));
+            dataEntity.Attributes.Add(attributeName, new AttributeData(value));
 
             NewService().GetIntAttributeValue(dataEntity, attributeName).Should().Be(1);
         }
@@ -128,7 +128,7 @@ namespace ESFA.DC.OPA.Service.Tests
 
             var value = 1;
 
-            dataEntity.Attributes.Add(attributeName, new AttributeData(attributeName, value));
+            dataEntity.Attributes.Add(attributeName, new AttributeData(value));
 
             NewService().GetIntAttributeValue(dataEntity, attributeName).Should().Be(1);
         }
@@ -141,7 +141,7 @@ namespace ESFA.DC.OPA.Service.Tests
 
             long value = 154549452;
 
-            dataEntity.Attributes.Add(attributeName, new AttributeData(attributeName, value));
+            dataEntity.Attributes.Add(attributeName, new AttributeData(value));
 
             NewService().GetIntAttributeValue(dataEntity, attributeName).Should().Be(154549452);
         }
@@ -154,7 +154,7 @@ namespace ESFA.DC.OPA.Service.Tests
 
             var value = default(Uncertain);
 
-            dataEntity.Attributes.Add(attributeName, new AttributeData(attributeName, value));
+            dataEntity.Attributes.Add(attributeName, new AttributeData(value));
 
             NewService().GetIntAttributeValue(dataEntity, attributeName).Should().BeNull();
         }
@@ -177,7 +177,7 @@ namespace ESFA.DC.OPA.Service.Tests
 
             var value = "Not A Decimal";
 
-            dataEntity.Attributes.Add(attributeName, new AttributeData(attributeName, value));
+            dataEntity.Attributes.Add(attributeName, new AttributeData(value));
 
             Action action = () => NewService().GetIntAttributeValue(dataEntity, attributeName);
 
@@ -192,7 +192,7 @@ namespace ESFA.DC.OPA.Service.Tests
 
             var value = 1.2m;
 
-            dataEntity.Attributes.Add(attributeName, new AttributeData(attributeName, value));
+            dataEntity.Attributes.Add(attributeName, new AttributeData(value));
 
             NewService().GetDecimalAttributeValue(dataEntity, attributeName).Should().Be(1.2m);
         }
@@ -205,7 +205,7 @@ namespace ESFA.DC.OPA.Service.Tests
 
             var value = default(Uncertain);
 
-            dataEntity.Attributes.Add(attributeName, new AttributeData(attributeName, value));
+            dataEntity.Attributes.Add(attributeName, new AttributeData(value));
 
             NewService().GetDecimalAttributeValue(dataEntity, attributeName).Should().BeNull();
         }
@@ -228,7 +228,7 @@ namespace ESFA.DC.OPA.Service.Tests
 
             var value = "true";
 
-            dataEntity.Attributes.Add(attributeName, new AttributeData(attributeName, value));
+            dataEntity.Attributes.Add(attributeName, new AttributeData(value));
 
             NewService().GetBoolAttributeValue(dataEntity, attributeName).Should().BeTrue();
         }
@@ -241,7 +241,7 @@ namespace ESFA.DC.OPA.Service.Tests
 
             var value = "Not true";
 
-            dataEntity.Attributes.Add(attributeName, new AttributeData(attributeName, value));
+            dataEntity.Attributes.Add(attributeName, new AttributeData(value));
 
             NewService().GetBoolAttributeValue(dataEntity, attributeName).Should().BeFalse();
         }
@@ -254,7 +254,7 @@ namespace ESFA.DC.OPA.Service.Tests
 
             var value = default(Uncertain);
 
-            dataEntity.Attributes.Add(attributeName, new AttributeData(attributeName, value));
+            dataEntity.Attributes.Add(attributeName, new AttributeData(value));
 
             NewService().GetBoolAttributeValue(dataEntity, attributeName).Should().BeNull();
         }
@@ -277,7 +277,7 @@ namespace ESFA.DC.OPA.Service.Tests
 
             var value = "Not a Date";
 
-            dataEntity.Attributes.Add(attributeName, new AttributeData(attributeName, value));
+            dataEntity.Attributes.Add(attributeName, new AttributeData(value));
 
             Action action = () => NewService().GetDateTimeAttributeValue(dataEntity, attributeName);
 
@@ -292,7 +292,7 @@ namespace ESFA.DC.OPA.Service.Tests
 
             var value = new Date(new DateTime(2017, 1, 1));
 
-            dataEntity.Attributes.Add(attributeName, new AttributeData(attributeName, value));
+            dataEntity.Attributes.Add(attributeName, new AttributeData(value));
 
             NewService().GetDateTimeAttributeValue(dataEntity, attributeName).Should().Be(new DateTime(2017, 1, 1));
         }
@@ -305,7 +305,7 @@ namespace ESFA.DC.OPA.Service.Tests
 
             var value = default(Uncertain);
 
-            dataEntity.Attributes.Add(attributeName, new AttributeData(attributeName, value));
+            dataEntity.Attributes.Add(attributeName, new AttributeData(value));
 
             NewService().GetDateTimeAttributeValue(dataEntity, attributeName).Should().BeNull();
         }

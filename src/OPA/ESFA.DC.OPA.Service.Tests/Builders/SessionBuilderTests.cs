@@ -240,7 +240,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             var session = MapToOPATestSession();
             var instance = session.GetGlobalEntityInstance();
             var entity = instance.GetEntity();
-            var attributeData = new AttributeData("UKPRN", 12345678);
+            var attributeData = new AttributeData(12345678);
 
             // ACT
             sessionBuilder.SetAttribute(entity, instance, "UKPRN", attributeData);
@@ -259,7 +259,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             var session = MapToOPATestSession();
             var instance = session.GetGlobalEntityInstance();
             var entity = instance.GetEntity();
-            var attributeData = new AttributeData("UKPRN", null);
+            var attributeData = new AttributeData(null);
 
             // ACT
             sessionBuilder.SetAttribute(entity, instance, "UKPRN", attributeData);
@@ -279,7 +279,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             var instance = session.GetGlobalEntityInstance();
             var entity = instance.GetEntity();
 
-            var attributeData = new AttributeData("UKPRN", 12345678);
+            var attributeData = new AttributeData(12345678);
             attributeData.AddChangepoints(TestChangePoints());
 
             // ACT
@@ -298,7 +298,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             // ARRANGE
             var sessionBuilder = new SessionBuilder();
 
-            var attributeData = new AttributeData("UKPRN", 12345678);
+            var attributeData = new AttributeData(12345678);
             attributeData.AddChangepoints(TestChangePoints());
 
             // ACT
@@ -314,7 +314,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             // ARRANGE
             var sessionBuilder = new SessionBuilder();
 
-            var attributeData = new AttributeData("UKPRN", 12345678);
+            var attributeData = new AttributeData(12345678);
             attributeData.AddChangepoints(TestChangePoints());
 
             // ACT
@@ -330,7 +330,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             // ARRANGE
             var sessionBuilder = new SessionBuilder();
 
-            var attributeData = new AttributeData("UKPRN", 12345678);
+            var attributeData = new AttributeData(12345678);
             attributeData.AddChangepoints(TestChangePoints());
 
             // ACT
@@ -348,7 +348,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    { "UKPRN", new AttributeData("UKPRN", 12345678) }
+                    { "UKPRN", new AttributeData(12345678) }
                 }
             };
 
@@ -357,7 +357,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
                 {
                     Attributes = new Dictionary<string, IAttributeData>()
                     {
-                        { "LearnRefNumber", new AttributeData("LearnRefNumber", "Learner1") }
+                        { "LearnRefNumber", new AttributeData("Learner1") }
                     }
                 });
 

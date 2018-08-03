@@ -11,10 +11,9 @@ namespace ESFA.DC.OPA.Model.Tests
         [Fact]
         public void Constructor()
         {
-            var name = "Name";
             var value = "Value";
 
-            var attributeDataResult = new AttributeData(name, value);
+            var attributeDataResult = new AttributeData(value);
 
             attributeDataResult.Value.Should().Be(value);
         }
@@ -22,7 +21,7 @@ namespace ESFA.DC.OPA.Model.Tests
         [Fact]
         public void AddChangePoint()
         {
-            var attributeData = new AttributeData(null, null);
+            var attributeData = new AttributeData(null);
             var temporalValueItem = new TemporalValueItem(new DateTime(2017, 1, 1), null, null);
 
             attributeData.AddChangepoint(temporalValueItem);
@@ -34,7 +33,7 @@ namespace ESFA.DC.OPA.Model.Tests
         [Fact]
         public void AddChangePoint_Multiple()
         {
-            var attributeData = new AttributeData(null, null);
+            var attributeData = new AttributeData(null);
             var temporalValueItemOne = new TemporalValueItem(new DateTime(2017, 1, 1), null, null);
             var temporalValueItemTwo = new TemporalValueItem(new DateTime(2017, 1, 1), null, null);
 
@@ -49,7 +48,7 @@ namespace ESFA.DC.OPA.Model.Tests
         [Fact]
         public void ChangePoints_Default()
         {
-            new AttributeData(null, null).Changepoints.Should().BeEmpty();
+            new AttributeData(null).Changepoints.Should().BeEmpty();
         }
 
         [Fact]
@@ -66,7 +65,7 @@ namespace ESFA.DC.OPA.Model.Tests
                 temporalValueItemThree,
             };
 
-            var attributeData = new AttributeData(null, null);
+            var attributeData = new AttributeData(null);
 
             attributeData.AddChangepoints(changePointCountValues);
 
@@ -77,7 +76,7 @@ namespace ESFA.DC.OPA.Model.Tests
         [Fact]
         public void IsTemporal_True_NullValueOneCP()
         {
-            IAttributeData attributeDataIsTemporalTrue = new AttributeData(null, null);
+            IAttributeData attributeDataIsTemporalTrue = new AttributeData(null);
 
             attributeDataIsTemporalTrue.AddChangepoint(new TemporalValueItem(new DateTime(2017, 1, 1), null, null));
 
@@ -87,7 +86,7 @@ namespace ESFA.DC.OPA.Model.Tests
         [Fact]
         public void IsTemporal_False_NullValueZeroCP()
         {
-            IAttributeData attributeData = new AttributeData(null, null);
+            IAttributeData attributeData = new AttributeData(null);
 
             attributeData.IsTemporal.Should().BeFalse();
         }
@@ -95,7 +94,7 @@ namespace ESFA.DC.OPA.Model.Tests
         [Fact]
         public void IsTemporal_False_ValueZeroCP()
         {
-            var attributeData = new AttributeData(null, "Not Null");
+            var attributeData = new AttributeData("Not Null");
 
             attributeData.IsTemporal.Should().BeFalse();
         }
@@ -103,7 +102,7 @@ namespace ESFA.DC.OPA.Model.Tests
         [Fact]
         public void IsTemporal_False_ValueAndCP()
         {
-            IAttributeData attributeData = new AttributeData(null, "Not Null");
+            IAttributeData attributeData = new AttributeData("Not Null");
 
             attributeData.AddChangepoint(new TemporalValueItem(new DateTime(2017, 1, 1), null, null));
 
