@@ -112,7 +112,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
                 {
                     learnerPeriodisedAttribute = new LearnerPeriodisedAttribute
                     {
-                        AttributeName = attributeValue.Name,
+                        AttributeName = attribute,
                         Period1 = GetPeriodAttributeValue(attributeValue, 1),
                         Period2 = GetPeriodAttributeValue(attributeValue, 2),
                         Period3 = GetPeriodAttributeValue(attributeValue, 3),
@@ -178,7 +178,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
 
                     learningDeliveryPeriodisedAttribute = new LearningDeliveryPeriodisedAttribute
                     {
-                        AttributeName = attributeValue.Name,
+                        AttributeName = attribute,
                         Period1 = value,
                         Period2 = value,
                         Period3 = value,
@@ -197,7 +197,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
                 {
                     learningDeliveryPeriodisedAttribute = new LearningDeliveryPeriodisedAttribute
                     {
-                        AttributeName = attributeValue.Name,
+                        AttributeName = attribute,
                         Period1 = GetPeriodAttributeValue(attributeValue, 1),
                         Period2 = GetPeriodAttributeValue(attributeValue, 2),
                         Period3 = GetPeriodAttributeValue(attributeValue, 3),

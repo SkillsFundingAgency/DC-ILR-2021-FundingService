@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Xml.Serialization;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Builders;
@@ -232,24 +233,6 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         }
 
         [Fact]
-        public void SessionBuilder_SetAttribute_AttributeExists()
-        {
-            // ARRANGE
-            var sessionBuilder = new SessionBuilder();
-            var session = MapToOPATestSession();
-            var instance = session.GetGlobalEntityInstance();
-            var entity = instance.GetEntity();
-
-            // ACT
-            sessionBuilder.SetAttribute(entity, instance, TestAttributeData());
-
-            // ASSERT
-            var ukprn = AttributeValue(session, "UKPRN");
-
-            ukprn.Should().NotBeNull();
-        }
-
-        [Fact]
         public void SessionBuilder_SetAttribute_AttributeCorrect()
         {
             // ARRANGE
@@ -257,9 +240,10 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             var session = MapToOPATestSession();
             var instance = session.GetGlobalEntityInstance();
             var entity = instance.GetEntity();
+            var attributeData = new AttributeData("UKPRN", 12345678);
 
             // ACT
-            sessionBuilder.SetAttribute(entity, instance, TestAttributeData());
+            sessionBuilder.SetAttribute(entity, instance, "UKPRN", attributeData);
 
             // ASSERT
             var ukprn = AttributeValue(session, "UKPRN");
@@ -278,7 +262,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             var attributeData = new AttributeData("UKPRN", null);
 
             // ACT
-            sessionBuilder.SetAttribute(entity, instance, attributeData);
+            sessionBuilder.SetAttribute(entity, instance, "UKPRN", attributeData);
 
             // ASSERT
             var ukprn = AttributeValue(session, "UKPRN");
@@ -295,11 +279,11 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             var instance = session.GetGlobalEntityInstance();
             var entity = instance.GetEntity();
 
-            var attributeData = TestAttributeData();
+            var attributeData = new AttributeData("UKPRN", 12345678);
             attributeData.AddChangepoints(TestChangePoints());
 
             // ACT
-            sessionBuilder.SetAttribute(entity, instance, attributeData);
+            sessionBuilder.SetAttribute(entity, instance, "UKPRN", attributeData);
 
             // ASSERT
             var ukprnChangePoint = entity.GetAttribute("UKPRN").GetValue(instance);
@@ -314,7 +298,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             // ARRANGE
             var sessionBuilder = new SessionBuilder();
 
-            var attributeData = TestAttributeData();
+            var attributeData = new AttributeData("UKPRN", 12345678);
             attributeData.AddChangepoints(TestChangePoints());
 
             // ACT
@@ -330,7 +314,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             // ARRANGE
             var sessionBuilder = new SessionBuilder();
 
-            var attributeData = TestAttributeData();
+            var attributeData = new AttributeData("UKPRN", 12345678);
             attributeData.AddChangepoints(TestChangePoints());
 
             // ACT
@@ -346,7 +330,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             // ARRANGE
             var sessionBuilder = new SessionBuilder();
 
-            var attributeData = TestAttributeData();
+            var attributeData = new AttributeData("UKPRN", 12345678);
             attributeData.AddChangepoints(TestChangePoints());
 
             // ACT
@@ -379,8 +363,6 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
 
             return globalEntity;
         }
-
-        private IAttributeData TestAttributeData() => new AttributeData("UKPRN", 12345678);
 
         private IEnumerable<ITemporalValueItem> TestChangePoints() =>
             new List<ITemporalValueItem>()

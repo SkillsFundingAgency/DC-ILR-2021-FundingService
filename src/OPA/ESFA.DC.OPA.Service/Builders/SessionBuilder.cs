@@ -40,7 +40,7 @@ namespace ESFA.DC.OPA.Service.Builders
             Entity globalEntity = parentEntityInstance.GetEntity();
             foreach (var attribute in dataEntity.Attributes)
             {
-                SetAttribute(globalEntity, parentEntityInstance, attribute.Value);
+                SetAttribute(globalEntity, parentEntityInstance, attribute.Key, attribute.Value);
             }
 
             foreach (var childDataEntity in dataEntity.Children)
@@ -71,7 +71,7 @@ namespace ESFA.DC.OPA.Service.Builders
 
             foreach (var attribute in dataEntity.Attributes)
             {
-                SetAttribute(entity, targetInstance, attribute.Value);
+                SetAttribute(entity, targetInstance, attribute.Key, attribute.Value);
             }
 
             var opaChildEntities = entity.GetChildEntities();
@@ -96,14 +96,14 @@ namespace ESFA.DC.OPA.Service.Builders
             return targetInstance;
         }
 
-        protected internal void SetAttribute(Entity entity, EntityInstance targetInstance, IAttributeData attributeData)
+        protected internal void SetAttribute(Entity entity, EntityInstance targetInstance, string attributeName, IAttributeData attributeData)
         {
             if (attributeData.Value == null && attributeData.Changepoints.Count == 0)
             {
                 return;
             }
 
-            RBAttr attribute = entity.GetAttribute(attributeData.Name);
+            RBAttr attribute = entity.GetAttribute(attributeName);
             if (attribute != null)
             {
                 if (attributeData.Changepoints.Count > 0)

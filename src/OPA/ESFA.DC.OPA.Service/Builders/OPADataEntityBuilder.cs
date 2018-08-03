@@ -56,7 +56,7 @@ namespace ESFA.DC.OPA.Service.Builders
 
                 if (attributeData != null)
                 {
-                    dataEntity.Attributes.Add(attributeData.Name, attributeData);
+                    dataEntity.Attributes.Add(attribute.GetName(), attributeData);
                 }
             }
         }
@@ -64,8 +64,8 @@ namespace ESFA.DC.OPA.Service.Builders
         protected internal IAttributeData MapOpaAttributeToDataEntity(EntityInstance entityInstance, RBAttr attr)
         {
             var value = attr.GetValue(entityInstance);
-            var temporalValue = value as TemporalValue;
-            if (temporalValue != null)
+
+            if (value is TemporalValue temporalValue)
             {
                 IAttributeData attributeData = new AttributeData(attr.GetName(), null);
                 for (int period = 0; period < 12; period++)

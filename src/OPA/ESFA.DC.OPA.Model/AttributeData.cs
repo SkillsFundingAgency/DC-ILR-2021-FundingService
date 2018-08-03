@@ -9,12 +9,9 @@ namespace ESFA.DC.OPA.Model
 
         public AttributeData(string name, object value)
         {
-            Name = name;
             Value = value;
             _changePoints = new List<ITemporalValueItem>();
         }
-
-        public string Name { get; set; }
 
         public IList<ITemporalValueItem> Changepoints => _changePoints;
 

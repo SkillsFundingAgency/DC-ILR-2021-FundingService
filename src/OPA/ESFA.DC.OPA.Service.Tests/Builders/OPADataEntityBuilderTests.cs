@@ -51,17 +51,12 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
 
             // ACT
             var outputEntity = GetOutputEntity();
-            var attributes = outputEntity.Attributes.ToArray();
-            var childAtttributes = outputEntity.Children.SelectMany(a => a.Attributes).ToArray();
+            var attributes = outputEntity.Attributes;
 
             // ASSERT
-            var ukprn = DecimalStrToInt(GetAttributeValues(attributes, "UKPRN"));
-            var larsVersion = GetAttributeValues(attributes, "LARSVersion");
-            var learnRefNumber = GetAttributeValues(childAtttributes, "LearnRefNumber");
-
-            ukprn.Should().Be(12345678);
-            larsVersion.Should().Be("Version_005");
-            learnRefNumber.Should().Be("TestLearner");
+            attributes["UKPRN"].Value.Should().Be(12345678);
+            attributes["LARSVersion"].Value.Should().Be("Version_005");
+            outputEntity.Children.First().LearnRefNumber.Should().Be("TestLearner");
         }
 
         [Fact]
@@ -208,27 +203,11 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             var dataEntity = SetupMapAttributes();
 
             // ASSERT
-            var attributes = dataEntity.Attributes.ToArray();
-            var ukprn = DecimalStrToInt(GetAttributeValues(attributes, "UKPRN"));
-
-            ukprn.Should().Be(12345678);
+            dataEntity.Attributes["UKPRN"].Value.Should().Be(12345678);
         }
 
         [Fact]
-        public void DataEntityBuilder_MapOpaAttributesToDataEntity_AttributesExist()
-        {
-            // ARRANGE
-            // Use Test Helpers
-
-            // ACT
-            var attributeList = SetupMapOpaAttribute();
-
-            // ASSERT
-            attributeList.Should().NotBeNull();
-        }
-
-        [Fact]
-        public void DataEntityBuilder_MapOpaAttributesToDataEntity_AttributesCount()
+        public void DataEntityBuilder_MapOpaAttributesToDataEntity_Attributes()
         {
             // ARRANGE
             // Use Test Helpers
@@ -238,33 +217,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
 
             // ASSERT
             attributeList.Count.Should().Be(16);
-        }
-
-        [Fact]
-        public void DataEntityBuilder_MapOpaAttributesToDataEntity_AttributesCorrect()
-        {
-            // ARRANGE
-            // Use Test Helpers
-
-            // ACT
-            var attributeList = SetupMapOpaAttribute();
-
-            // ASSERT
-            var ukprn = DecimalStrToInt(GetAttributeValues(attributeList, "UKPRN"));
-            ukprn.Should().Be(12345678);
-        }
-
-        [Fact]
-        public void DataEntityBuilder_MapEntities_GlobalExists()
-        {
-            // ARRANGE
-            // Use Test Helpers
-
-            // ACT
-            var dataEntity = SetupMapEntities();
-
-            // ASSERT
-            dataEntity.Should().NotBeNull();
+            attributeList["UKPRN"].Value.Should().Be(12345678);
         }
 
         [Fact]
@@ -388,20 +341,20 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             return mapToDataEntity.MapOpaToEntity(entityInstance, null);
         }
 
-        private List<IAttributeData> SetupMapOpaAttribute()
+        private IDictionary<string, IAttributeData> SetupMapOpaAttribute()
         {
             var builder = new OPADataEntityBuilder(new DateTime(2017, 8, 1));
             var instance = TestEntityInstance();
             IDictionary<string, IAttributeData> attributeDictionary = new Dictionary<string, IAttributeData>();
             var rbAttributes = instance.GetEntity().GetAttributes();
 
-            foreach (RBAttr r in rbAttributes)
+            foreach (RBAttr attribute in rbAttributes)
             {
-                var attData = builder.MapOpaAttributeToDataEntity(instance, r);
-                attributeDictionary.Add(attData.Name, attData);
+                var attData = builder.MapOpaAttributeToDataEntity(instance, attribute);
+                attributeDictionary.Add(attribute.GetName(), attData);
             }
 
-            return attributeDictionary.Values.ToList();
+            return attributeDictionary;
         }
 
         private IDataEntity SetupMapAttributes()
@@ -425,22 +378,6 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             mapEntities.MapEntities(instance, childEntities, dataEntity);
 
             return dataEntity;
-        }
-
-        private string GetAttributeValues(KeyValuePair<string, IAttributeData>[] attributes, string attributeName)
-        {
-            var attributeValue = attributes.Where(a => a.Key == attributeName)
-                .Select(v => v.Value.Value).FirstOrDefault().ToString();
-
-            return attributeValue;
-        }
-
-        private string GetAttributeValues(List<IAttributeData> attributes, string attributeName)
-        {
-            var attributeValue = attributes.Where(n => n.Name == attributeName)
-                .Select(v => v.Value).FirstOrDefault().ToString();
-
-            return attributeValue;
         }
 
         private int DecimalStrToInt(string value)

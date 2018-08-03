@@ -13,12 +13,9 @@ namespace ESFA.DC.OPA.Model.Tests
         {
             var name = "Name";
             var value = "Value";
-            var attributeData = new AttributeData(name, value);
 
-            var attributeDataResult = new AttributeData(attributeData.Name, attributeData.Value);
+            var attributeDataResult = new AttributeData(name, value);
 
-            attributeDataResult.Should().BeEquivalentTo(attributeData);
-            attributeDataResult.Name.Should().Be(name);
             attributeDataResult.Value.Should().Be(value);
         }
 
