@@ -17,7 +17,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.File
 
         public void Populate()
         {
-            var fileDataCache = (FileDataCache) _fileDataCache;
+            var fileDataCache = (FileDataCache)_fileDataCache;
 
             fileDataCache.UKPRN = _fileDataRetrievalService.RetrieveUKPRN();
             fileDataCache.DPOutcomes = _fileDataRetrievalService.RetrieveDPOutcomes();

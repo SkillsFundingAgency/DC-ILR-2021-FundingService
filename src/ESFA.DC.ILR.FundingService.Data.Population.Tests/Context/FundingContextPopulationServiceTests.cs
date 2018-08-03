@@ -15,11 +15,11 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.Context
         public void Populate()
         {
             var validLearners = new List<ILearner>();
-            
+
             var validLearnerDataRetrievalServiceMock = new Mock<IValidLearnersDataRetrievalService>();
-            
+
             validLearnerDataRetrievalServiceMock.Setup(rds => rds.Retrieve()).Returns(validLearners).Verifiable();
-            
+
             var fundingContext = new Mock<FundingContext>();
 
             fundingContext.SetupSet(fc => fc.ValidLearners = validLearners).Verifiable();

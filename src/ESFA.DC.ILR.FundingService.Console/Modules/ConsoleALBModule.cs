@@ -37,6 +37,22 @@ namespace ESFA.DC.ILR.FundingService.Console.Modules
 {
     public class ConsoleALBModule : Module
     {
+        private static IReadOnlyList<ITaskItem> TaskItemList => new List<ITaskItem>
+        {
+            new TaskItem
+            {
+                Tasks = new List<string>
+                {
+                    "Task A",
+                },
+                SupportsParallelExecution = true,
+            }
+        };
+
+        private static ITopicItem TopicItem => new TopicItem("Subscription", "SubscriptionFilter", TaskItemList);
+
+        private static IReadOnlyList<ITopicItem> TopicList => new List<ITopicItem> { TopicItem };
+
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<LARS>().As<ILARS>().InstancePerLifetimeScope();
@@ -77,20 +93,5 @@ namespace ESFA.DC.ILR.FundingService.Console.Modules
                 },
             };
         }
-
-        private static ITaskItem TaskItem => new TaskItem
-        {
-            Tasks = new List<string>
-            {
-                "Task A",
-            },
-            SupportsParallelExecution = true,
-        };
-
-        private static IReadOnlyList<ITaskItem> TaskItemList => new List<ITaskItem> { TaskItem };
-
-        private static ITopicItem TopicItem => new TopicItem("Subscription", "SubscriptionFilter", TaskItemList);
-
-        private static IReadOnlyList<ITopicItem> TopicList => new List<ITopicItem> { TopicItem };
     }
 }

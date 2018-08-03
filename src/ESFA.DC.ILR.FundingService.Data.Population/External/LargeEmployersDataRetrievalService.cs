@@ -22,7 +22,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         }
 
         public virtual IQueryable<LEMP_Employers> Employers => _largeEmployers.LEMP_Employers;
-        
+
         public IEnumerable<int> UniqueEmployerIds(IMessage message)
         {
             return message.Learners

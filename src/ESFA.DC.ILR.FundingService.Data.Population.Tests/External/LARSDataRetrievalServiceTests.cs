@@ -97,7 +97,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                                 LearnAimRef = "one",
                             }
                         },
-
                     },
                     new TestLearner()
                     {
@@ -455,7 +454,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
 
         private LARSDataRetrievalService NewService(ILARS lars = null)
         {
-            return  new LARSDataRetrievalService(lars);
+            return new LARSDataRetrievalService(lars);
         }
 
         private Mock<LARSDataRetrievalService> NewMock()

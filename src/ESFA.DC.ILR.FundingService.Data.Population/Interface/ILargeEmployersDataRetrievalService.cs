@@ -1,6 +1,6 @@
-﻿using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Model;
+﻿using System.Collections.Generic;
+using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Model;
 using ESFA.DC.ILR.Model.Interface;
-using System.Collections.Generic;
 
 namespace ESFA.DC.ILR.FundingService.Data.Population.Interface
 {

@@ -23,11 +23,11 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.File
 
             fileDataRetrievalServiceMock.Setup(rds => rds.RetrieveUKPRN()).Returns(ukprn);
             fileDataRetrievalServiceMock.Setup(rds => rds.RetrieveDPOutcomes()).Returns(dpOutcomes);
-            
+
             var fileDataCache = new FileDataCache();
 
             NewService(fileDataCache, fileDataRetrievalServiceMock.Object).Populate();
-            
+
             fileDataCache.UKPRN.Should().Be(ukprn);
             fileDataCache.DPOutcomes.Should().BeSameAs(dpOutcomes);
         }

@@ -72,10 +72,10 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
         private const string LearningDeliveryLARSValidityValidityLastNewStartDate = "ValidityLastNewStartDate";
         private const string LearningDeliveryLARSValidityValidityStartDate = "ValidityStartDate";
 
-        private IAttributeData Todo = null;
-
         private readonly ILARSReferenceDataService _larsReferenceDataService;
         private readonly IFileDataService _fileDataService;
+
+        private readonly IAttributeData todo = null;
 
         public DataEntityMapper(ILARSReferenceDataService larsReferenceDataService, IFileDataService fileDataService)
         {
@@ -94,15 +94,15 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    { GlobalAreaCostFactor1618, Todo },
-                    { GlobalDisadvantageProportion, Todo },
-                    { GlobalHistoricLargeProgrammeProportion, Todo },
-                    { GlobalLARSVersion, Todo },
-                    { GlobalOrgVersion, Todo },
-                    { GlobalProgrammeWeighting, Todo },
-                    { GlobalRetentionFactor, Todo },
-                    { GlobalSpecialistResources, Todo },
-                    { GlobalUKPRN, Todo }
+                    { GlobalAreaCostFactor1618, todo },
+                    { GlobalDisadvantageProportion, todo },
+                    { GlobalHistoricLargeProgrammeProportion, todo },
+                    { GlobalLARSVersion, todo },
+                    { GlobalOrgVersion, todo },
+                    { GlobalProgrammeWeighting, todo },
+                    { GlobalRetentionFactor, todo },
+                    { GlobalSpecialistResources, todo },
+                    { GlobalUKPRN, todo }
                 },
                 Children = { BuildLearnerDataEntity(learner) }
             };
@@ -114,20 +114,20 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    { LearnerDateOfBirth, Todo },
-                    { LearnerEngGrade, Todo },
-                    { LearnerLearnRefNumber, Todo },
-                    { LearnerLrnFAM_ECF, Todo },
-                    { LearnerLrnFAM_EDF1, Todo },
-                    { LearnerLrnFAM_EDF2, Todo },
-                    { LearnerLrnFAM_EHC, Todo },
-                    { LearnerLrnFAM_HNS, Todo },
-                    { LearnerLrnFAM_MCF, Todo },
-                    { LearnerMathGrade, Todo },
-                    { LearnerPlanEEPHours, Todo },
-                    { LearnerPlanLearnHours, Todo },
-                    { LearnerPostcodeDisadvantageUplift, Todo },
-                    { LearnerULN, Todo },
+                    { LearnerDateOfBirth, todo },
+                    { LearnerEngGrade, todo },
+                    { LearnerLearnRefNumber, todo },
+                    { LearnerLrnFAM_ECF, todo },
+                    { LearnerLrnFAM_EDF1, todo },
+                    { LearnerLrnFAM_EDF2, todo },
+                    { LearnerLrnFAM_EHC, todo },
+                    { LearnerLrnFAM_HNS, todo },
+                    { LearnerLrnFAM_MCF, todo },
+                    { LearnerMathGrade, todo },
+                    { LearnerPlanEEPHours, todo },
+                    { LearnerPlanLearnHours, todo },
+                    { LearnerPostcodeDisadvantageUplift, todo },
+                    { LearnerULN, todo },
                 },
                 Children =
                     learner
@@ -146,26 +146,26 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    { LearningDeliveryAimSeqNumber, Todo },
-                    { LearningDeliveryAimType, Todo },
-                    { LearningDeliveryAwardOrgCode, Todo },
-                    { LearningDeliveryCompStatus, Todo },
-                    { LearningDeliveryEFACOFType, Todo },
-                    { LearningDeliveryFundModel, Todo },
-                    { LearningDeliveryLearnActEndDate, Todo },
-                    { LearningDeliveryLearnAimRef, Todo },
-                    { LearningDeliveryLearnAimRefTitle, Todo },
-                    { LearningDeliveryLearnAimRefType, Todo },
-                    { LearningDeliveryLearnPlanEndDate, Todo },
-                    { LearningDeliveryLearnStartDate, Todo },
-                    { LearningDeliveryLrnDelFAM_SOF, Todo },
-                    { LearningDeliveryLearnDelFAM_LDM1, Todo },
-                    { LearningDeliveryLearnDelFAM_LDM2, Todo },
-                    { LearningDeliveryLearnDelFAM_LDM3, Todo },
-                    { LearningDeliveryLearnDelFAM_LDM4, Todo },
-                    { LearningDeliveryProgType, Todo },
-                    { LearningDeliverySectorSubjectAreaTier2, Todo },
-                    { LearningDeliveryWithdrawReason, Todo },
+                    { LearningDeliveryAimSeqNumber, todo },
+                    { LearningDeliveryAimType, todo },
+                    { LearningDeliveryAwardOrgCode, todo },
+                    { LearningDeliveryCompStatus, todo },
+                    { LearningDeliveryEFACOFType, todo },
+                    { LearningDeliveryFundModel, todo },
+                    { LearningDeliveryLearnActEndDate, todo },
+                    { LearningDeliveryLearnAimRef, todo },
+                    { LearningDeliveryLearnAimRefTitle, todo },
+                    { LearningDeliveryLearnAimRefType, todo },
+                    { LearningDeliveryLearnPlanEndDate, todo },
+                    { LearningDeliveryLearnStartDate, todo },
+                    { LearningDeliveryLrnDelFAM_SOF, todo },
+                    { LearningDeliveryLearnDelFAM_LDM1, todo },
+                    { LearningDeliveryLearnDelFAM_LDM2, todo },
+                    { LearningDeliveryLearnDelFAM_LDM3, todo },
+                    { LearningDeliveryLearnDelFAM_LDM4, todo },
+                    { LearningDeliveryProgType, todo },
+                    { LearningDeliverySectorSubjectAreaTier2, todo },
+                    { LearningDeliveryWithdrawReason, todo },
                 },
                 Children =
                     _larsReferenceDataService
@@ -183,8 +183,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    { DPOutcomeOutCode, Todo },
-                    { DPOutcomeOutType, Todo },
+                    { DPOutcomeOutCode, todo },
+                    { DPOutcomeOutType, todo },
                 }
             };
         }
@@ -195,12 +195,11 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    { LearningDeliveryLARSValidityValidityCategory,  Todo },
-                    { LearningDeliveryLARSValidityValidityLastNewStartDate, Todo },
-                    { LearningDeliveryLARSValidityValidityStartDate, Todo },
+                    { LearningDeliveryLARSValidityValidityCategory,  todo },
+                    { LearningDeliveryLARSValidityValidityLastNewStartDate, todo },
+                    { LearningDeliveryLARSValidityValidityStartDate, todo },
                 }
             };
         }
-
     }
 }

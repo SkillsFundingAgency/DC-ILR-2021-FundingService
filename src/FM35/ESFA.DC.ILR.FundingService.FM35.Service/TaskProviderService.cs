@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.ILR.FundingService.Stubs;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.IO.Interfaces;
+using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.Serialization.Xml;
 
 namespace ESFA.DC.ILR.FundingService.FM35.Service
@@ -18,13 +18,15 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
         private readonly IPopulationService _populationService;
         private readonly IPagingService<ILearner> _learnerPerActorService;
         private readonly IFundingService<ILearner, FM35FundingOutputs> _fundingService;
+        private readonly IJsonSerializationService _jsonSerializationService;
 
-        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IPopulationService populationService, IPagingService<ILearner> learnerPerActorService, IFundingService<ILearner, FM35FundingOutputs> fundingService)
+        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IPopulationService populationService, IPagingService<ILearner> learnerPerActorService, IFundingService<ILearner, FM35FundingOutputs> fundingService, IJsonSerializationService jsonSerializationService)
         {
             _keyValuePersistenceService = keyValuePersistenceService;
             _populationService = populationService;
             _learnerPerActorService = learnerPerActorService;
             _fundingService = fundingService;
+            _jsonSerializationService = jsonSerializationService;
         }
 
         public void ExecuteTasks(IMessage message)
@@ -41,8 +43,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
             var fundingOutputs = ProcessFunding(learnersToProcess);
 
             // persist
-            var dataPersister = new DataPersister();
-            dataPersister.PersistData(fundingOutputs, @"C:\Code\temp\FM35FundingService\Json_Output.json");
+            var serializedOutputs = _jsonSerializationService.Serialize(fundingOutputs);
+
+            System.IO.File.WriteAllText(@"C:\Code\temp\FM35FundingService\Json_Output.json", serializedOutputs);
         }
 
         private void BuildKeyValueDictionary(IMessage message)
@@ -63,11 +66,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
                 fundingOutputsList.Add(_fundingService.ProcessFunding(ll));
             });
 
-            //foreach (var list in learnersList)
-            //{
-            //    fundingOutputsList.Add(_fm35OrchestrationService.Execute(ukprn, list));
-            //}
-
             return TransformFundingOutput(fundingOutputsList.ToList());
         }
 
@@ -76,7 +74,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
             var global = fundingOutputs.Select(g => g.Global).FirstOrDefault();
 
             var learnerAttributes = fundingOutputs.SelectMany(l => l.Learners).ToArray();
-                // fundingOutputs.SelectMany(f => f.SelectMany(l => l.Learners)).ToArray();
 
             return new FM35FundingOutputs
             {

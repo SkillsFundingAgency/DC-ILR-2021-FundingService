@@ -7,7 +7,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population
         private readonly IExternalDataCachePopulationService _referenceDataCachePopulationService;
         private readonly IFundingContextPopulationService _fundingContextPopulationService;
         private readonly IFileDataCachePopulationService _fileDataCachePopulationService;
-        
 
         public PopulationService(IExternalDataCachePopulationService referenceDataCachePopulationService, IFundingContextPopulationService fundingContextPopulationService, IFileDataCachePopulationService fileDataCachePopulationService)
         {

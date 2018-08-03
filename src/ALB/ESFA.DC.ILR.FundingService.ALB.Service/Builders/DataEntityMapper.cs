@@ -87,8 +87,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
             return globalEntities;
         }
 
-        #region Entity Builders
-
         protected internal IDataEntity GlobalEntity(int ukprn)
         {
             IDataEntity globalDataEntity = new DataEntity(EntityGlobal)
@@ -179,8 +177,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
 
             return larsFundingDataEntity;
         }
-
-        #endregion
 
         private static string GetLDFAM(ILearningDelivery learningDelivery, string famType)
         {

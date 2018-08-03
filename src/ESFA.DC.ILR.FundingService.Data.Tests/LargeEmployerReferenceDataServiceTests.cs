@@ -38,7 +38,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
 
             NewService(referenceDataCacheMock.Object).LargeEmployersforEmpID(2).Should().BeNull();
         }
-        
+
         private LargeEmployersReferenceDataService NewService(IExternalDataCache referenceDataCache = null)
         {
             return new LargeEmployersReferenceDataService(referenceDataCache);

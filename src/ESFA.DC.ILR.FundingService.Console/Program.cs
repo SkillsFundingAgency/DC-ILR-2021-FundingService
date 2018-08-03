@@ -17,7 +17,7 @@ namespace ESFA.DC.ILR.FundingService.Console
     {
         private const string ALB = "ALB";
         private const string FM35 = "FM35";
-        
+
         // Arg 0 - FileName
         // Args 1+ - Fund Models
         public static void Main(string[] args)
@@ -80,7 +80,7 @@ namespace ESFA.DC.ILR.FundingService.Console
                     containerBuilder.RegisterModule<ConsoleFM35Module>();
                     break;
             }
-            
+
             return containerBuilder.Build();
         }
     }

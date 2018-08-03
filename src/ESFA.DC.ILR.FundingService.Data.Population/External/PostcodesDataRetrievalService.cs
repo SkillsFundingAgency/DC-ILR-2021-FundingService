@@ -26,7 +26,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         public virtual IQueryable<SFA_PostcodeAreaCost> SfaPostcodeAreaCosts => _postcodes.SFA_PostcodeAreaCost;
 
         public virtual IQueryable<SFA_PostcodeDisadvantage> SfaPostcodeDisadvantages => _postcodes.SFA_PostcodeDisadvantage;
-        
+
         public IEnumerable<string> UniquePostcodes(IMessage message)
         {
             return message.Learners.Where(l => l.LearningDeliveries != null).SelectMany(l => l.LearningDeliveries).Select(ld => ld.DelLocPostCode).Distinct();

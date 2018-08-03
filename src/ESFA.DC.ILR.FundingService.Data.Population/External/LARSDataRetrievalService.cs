@@ -55,7 +55,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 .GroupBy(a => a.LearnAimRef)
                 .ToDictionary(a => a.Key, a => a.Select(LARSFundingFromEntity).ToList() as IEnumerable<LARSFunding>);
         }
-        
+
         public LARSFunding LARSFundingFromEntity(LARS_Funding entity)
         {
             return new LARSFunding

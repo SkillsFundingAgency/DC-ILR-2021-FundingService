@@ -209,7 +209,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
                     && learningDelivery.FworkCodeNullable == fwa.FworkCode
                     && learningDelivery.ProgTypeNullable == fwa.ProgType
                     && learningDelivery.PwayCodeNullable == fwa.PwayCode)
-                    //&& fwa.EffectiveTo == null)
+
+                    // && fwa.EffectiveTo == null)
                 .Select(fwct => fwct.FrameworkComponentType).FirstOrDefault();
             }
 

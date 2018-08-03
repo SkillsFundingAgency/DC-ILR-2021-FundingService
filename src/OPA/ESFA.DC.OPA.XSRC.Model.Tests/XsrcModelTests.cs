@@ -7,8 +7,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
 {
     public class XsrcModelTests
     {
-        #region Root
-
         /// <summary>
         /// Return Root
         /// </summary>
@@ -217,10 +215,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.ProductVersion.Should().Be("Version_1");
         }
 
-        #endregion
-
-        #region RootEntity
-
         /// <summary>
         /// Return RootEntity
         /// </summary>
@@ -333,10 +327,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.PublicId.Should().Be("PublicID");
         }
 
-        #endregion
-
-        #region RootEntityAttribute
-
         /// <summary>
         /// Return RootEntityAttribute
         /// </summary>
@@ -433,10 +423,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.PublicName.Should().Be("PublicName");
         }
 
-        #endregion
-
-        #region RootEntityAttributeProp
-
         /// <summary>
         /// Return RootEntityAttributeProp
         /// </summary>
@@ -485,10 +471,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.Values.Should().Be("Value");
         }
 
-        #endregion
-
-        #region RootEntityAttributeText
-
         /// <summary>
         /// Return RootEntityAttributeText
         /// </summary>
@@ -536,10 +518,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             // ASSERT
             entity.Parse.Should().Be("Parse");
         }
-
-        #endregion
-
-        #region RootInteractiveItems
 
         /// <summary>
         /// Return RootInteractiveItems
@@ -604,10 +582,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             // ASSERT
             entity.Documents.Should().Be("Documents");
         }
-
-        #endregion
-
-        #region RootRelationship
 
         /// <summary>
         /// Return RootRelationship
@@ -817,10 +791,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.Values.Should().Be("Value");
         }
 
-        #endregion
-
-        #region Test Helpers
-
         private RootEntity TestRootEntity()
         {
             return new RootEntity
@@ -944,7 +914,5 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
                 productversion = "Version_1"
             };
         }
-
-        #endregion
     }
 }

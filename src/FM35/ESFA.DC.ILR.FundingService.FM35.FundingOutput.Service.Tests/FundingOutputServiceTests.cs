@@ -302,72 +302,12 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
 
             // ACT
             var learningDeliveryPeriodisedAttributeData =
-                fundingOutputService.LearningDeliveryPeriodisedAttributeData(TestLearnerEntity(null, "TestLearner", true).SingleOrDefault().Children.SingleOrDefault());
+                fundingOutputService.LearningDeliveryPeriodisedAttributeData(TestLearningDeliveryEntity(null).Single());
 
             // ASSERT
             var expectedLearningDeliveryPeriodisedAttributeData = TestLearningDeliveryPeriodisedAttributesDataArray();
 
             expectedLearningDeliveryPeriodisedAttributeData.Should().BeEquivalentTo(learningDeliveryPeriodisedAttributeData);
-        }
-
-        private IEnumerable<IDataEntity> TestEntities()
-        {
-            var entities = new List<DataEntity>();
-
-            var entity1 = GlobalDataEntity();
-
-            entity1.AddChildren(TestLearnerEntity(entity1, "TestLearner1", false));
-
-            entities.Add(entity1);
-
-            var entity2 = GlobalDataEntity();
-
-            entity2.AddChildren(TestLearnerEntity(entity2, "TestLearner2", true));
-
-            entities.Add(entity2);
-
-            return entities;
-        }
-
-        private IEnumerable<IDataEntity> TestLearnerEntity(DataEntity parent, string learnRefNumber, bool includeFM35ChangePoint)
-        {
-            var entities = new List<DataEntity>();
-            if (includeFM35ChangePoint)
-            {
-                var entity1 = new DataEntity("Learner")
-                {
-                    EntityName = "Learner",
-                    Attributes = new Dictionary<string, IAttributeData>
-                    {
-                        { "LearnRefNumber", new AttributeData("LearnRefNumber", learnRefNumber) },
-                        { "DateOfBirth", new AttributeData("DateOfBirth", new Date(2000, 01, 01)) },
-                    },
-                    Parent = parent
-                };
-
-                entity1.AddChildren(TestLearningDeliveryEntity(entity1));
-
-                entities.Add(entity1);
-
-                return entities;
-            }
-
-            var entity2 = new DataEntity("Learner")
-            {
-                EntityName = "Learner",
-                Attributes = new Dictionary<string, IAttributeData>
-                {
-                    { "LearnRefNumber", new AttributeData("LearnRefNumber", learnRefNumber) },
-                    { "DateOfBirth", new AttributeData("DateOfBirth", new Date(2000, 01, 01)) },
-                },
-                Parent = parent
-            };
-
-            entity2.AddChildren(TestLearningDeliveryEntity(entity2));
-
-            entities.Add(entity2);
-
-            return entities;
         }
 
         private IEnumerable<IDataEntity> TestLearningDeliveryEntity(DataEntity parent)
@@ -479,24 +419,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             return entities;
         }
 
-        private DataEntity GlobalDataEntity()
-        {
-            return new DataEntity("global")
-            {
-                EntityName = "global",
-                Attributes = new Dictionary<string, IAttributeData>
-                {
-                    { "UKPRN", new AttributeData("UKPRN", "12345678") },
-                    { "OrgVersion", new AttributeData("OrgVersion", "Version_003") },
-                    { "LARSVersion", new AttributeData("LARSVersion", "Version_005") },
-                    { "CurFundYr", new AttributeData("CurFundYr", "1819") },
-                    { "PostcodeDisadvantageVersion", new AttributeData("PostcodeDisadvantageVersion", "Version_002") },
-                    { "RulebaseVersion", new AttributeData("RulebaseVersion", "1718.5.10") },
-                },
-                Parent = null,
-            };
-        }
-
         private IAttributeData Attribute(string attributeName, bool hasChangePoints, object attributeValue)
         {
             if (hasChangePoints)
@@ -533,103 +455,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             changePoints.AddRange(cps);
 
             return changePoints;
-        }
-
-        private LearningDeliveryAttribute[] TestLearningDeliveryAttributeArray(int aimSeq)
-        {
-            return new LearningDeliveryAttribute[]
-            {
-                TestLearningDeliveryAttributeValues(1)
-            };
-        }
-
-        private LearningDeliveryAttribute TestLearningDeliveryAttributeValues(int aimSeq)
-        {
-            return new LearningDeliveryAttribute
-            {
-                AimSeqNumber = aimSeq,
-                LearningDeliveryAttributeDatas = TestLearningDeliveryAttributeData(),
-                LearningDeliveryPeriodisedAttributes = TestLearningDeliveryPeriodisedAttributesDataArray(),
-            };
-        }
-
-        private LearningDeliveryAttributeData TestLearningDeliveryAttributeData()
-        {
-            return new LearningDeliveryAttributeData
-            {
-                AchApplicDate = new DateTime(2018, 09, 01),
-                Achieved = false,
-                AchieveElement = 1,
-                AchievePayElig = false,
-                AchievePayPctPreTrans = 1,
-                AchPayTransHeldBack = 1,
-                ActualDaysIL = 1,
-                ActualNumInstalm = 1,
-                ActualNumInstalmPreTrans = 1,
-                ActualNumInstalmTrans = 1,
-                AdjLearnStartDate = new DateTime(2018, 09, 01),
-                AdltLearnResp = false,
-                AgeAimStart = 1,
-                AimValue = 1,
-                AppAdjLearnStartDate = new DateTime(2018, 09, 01),
-                AppAgeFact = 1.0m,
-                AppATAGTA = false,
-                AppCompetency = false,
-                AppFuncSkill = false,
-                AppFuncSkill1618AdjFact = 1,
-                AppKnowl = false,
-                AppLearnStartDate = new DateTime(2018, 09, 01),
-                ApplicEmpFactDate = new DateTime(2018, 09, 01),
-                ApplicFactDate = new DateTime(2018, 09, 01),
-                ApplicFundRateDate = new DateTime(2018, 09, 01),
-                ApplicProgWeightFact = "1.0",
-                ApplicUnweightFundRate = 1,
-                ApplicWeightFundRate = 1,
-                AppNonFund = false,
-                AreaCostFactAdj = 1,
-                BalInstalmPreTrans = 1,
-                BaseValueUnweight = 1,
-                CapFactor = 1,
-                DisUpFactAdj = 1,
-                EmpOutcomePayElig = false,
-                EmpOutcomePctHeldBackTrans = 1,
-                EmpOutcomePctPreTrans = 1,
-                EmpRespOth = false,
-                ESOL = false,
-                FullyFund = false,
-                FundLine = "1.0",
-                FundStart = false,
-                LargeEmployerFM35Fctr = 1,
-                LargeEmployerID = 1,
-                LargeEmployerStatusDate = new DateTime(2018, 09, 01),
-                LTRCUpliftFctr = 1,
-                NonGovCont = 1,
-                OLASSCustody = false,
-                OnProgPayPctPreTrans = 1,
-                OutstndNumOnProgInstalm = 1,
-                OutstndNumOnProgInstalmTrans = 1,
-                PlannedNumOnProgInstalm = 1,
-                PlannedNumOnProgInstalmTrans = 1,
-                PlannedTotalDaysIL = 1,
-                PlannedTotalDaysILPreTrans = 1,
-                PropFundRemain = 1,
-                PropFundRemainAch = 1,
-                PrscHEAim = false,
-                Residential = false,
-                Restart = false,
-                SpecResUplift = 1,
-                StartPropTrans = 1,
-                ThresholdDays = 1,
-                Traineeship = false,
-                Trans = false,
-                TrnAdjLearnStartDate = new DateTime(2018, 09, 01),
-                TrnWorkPlaceAim = false,
-                TrnWorkPrepAim = false,
-                UnWeightedRateFromESOL = 1,
-                UnweightedRateFromLARS = 1,
-                WeightedRateFromESOL = 1,
-                WeightedRateFromLARS = 1,
-            };
         }
 
         private LearningDeliveryPeriodisedAttribute[] TestLearningDeliveryPeriodisedAttributesDataArray()

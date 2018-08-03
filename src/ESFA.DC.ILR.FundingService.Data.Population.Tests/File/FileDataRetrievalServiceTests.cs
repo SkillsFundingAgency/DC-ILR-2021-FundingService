@@ -82,7 +82,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.File
             learnRefNumber1DpOutcomes.Should().HaveCount(1);
 
             var learnRefNumber1DpOutcome = learnRefNumber1DpOutcomes.First();
-                
+
             learnRefNumber1DpOutcome.OutCode.Should().Be(outCode);
             learnRefNumber1DpOutcome.OutType.Should().Be(outType);
 
@@ -105,11 +105,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.File
         [Fact]
         public void RetrieveDPOutcomes_NullLearnerDestinationAndProgressions()
         {
-            var learnRefNumber1 = "learnRefNumber1";
-            var learnRefNumber2 = "learnRefNumber2";
-            var outCode = 1;
-            var outType = "outType";
-
             var message = new TestMessage()
             {
                 LearnerDestinationAndProgressions = null
@@ -129,9 +124,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.File
         public void RetrieveDPOutcomes_NullDPOutcomes()
         {
             var learnRefNumber1 = "learnRefNumber1";
-            var learnRefNumber2 = "learnRefNumber2";
-            var outCode = 1;
-            var outType = "outType";
 
             var message = new TestMessage()
             {
@@ -151,7 +143,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.File
 
             var dpOutcomes = NewService(fundingServiceDto.Object).RetrieveDPOutcomes();
 
-            dpOutcomes.Should().HaveCount(1); 
+            dpOutcomes.Should().HaveCount(1);
 
             var learnRefNumber1DpOutcomes = dpOutcomes[learnRefNumber1].ToList();
 

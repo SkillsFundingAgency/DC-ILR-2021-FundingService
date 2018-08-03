@@ -24,8 +24,6 @@ namespace ESFA.DC.OPA.Service.Builders
             return globalEntity;
         }
 
-        #region Map OPA Session to Data Entity
-
         protected internal IDataEntity MapOpaToEntity(EntityInstance instance, IDataEntity parentEntity)
         {
             IDataEntity dataEntity = new DataEntity(instance.GetEntity().GetName())
@@ -95,8 +93,5 @@ namespace ESFA.DC.OPA.Service.Builders
                 }
             }
         }
-
-        #endregion
-
     }
 }

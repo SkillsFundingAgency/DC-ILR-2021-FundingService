@@ -20,7 +20,6 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
                 // The contents of your ServiceManifest.xml and ApplicationManifest.xml files
                 // are automatically populated when you build this project.
                 // For more information, see https://aka.ms/servicefabricactorsplatform
-
                 ActorRuntime.RegisterActorAsync<FM25Actor>(
                    (context, actorType) => new ActorService(context, actorType)).GetAwaiter().GetResult();
 

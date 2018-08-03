@@ -35,7 +35,5 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.File
         {
             return _fundingServiceDto.Message.LearningProviderEntity.UKPRN;
         }
-
-       
     }
 }

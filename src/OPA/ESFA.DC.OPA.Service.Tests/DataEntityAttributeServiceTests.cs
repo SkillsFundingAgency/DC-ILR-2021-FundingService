@@ -134,6 +134,19 @@ namespace ESFA.DC.OPA.Service.Tests
         }
 
         [Fact]
+        public void GetIntAttributeValue_Large()
+        {
+            var attributeName = "attribute";
+            var dataEntity = new DataEntity(string.Empty);
+
+            long value = 154549452;
+
+            dataEntity.Attributes.Add(attributeName, new AttributeData(attributeName, value));
+
+            NewService().GetIntAttributeValue(dataEntity, attributeName).Should().Be(154549452);
+        }
+
+        [Fact]
         public void GetIntAttributeValue_Uncertain()
         {
             var attributeName = "attribute";

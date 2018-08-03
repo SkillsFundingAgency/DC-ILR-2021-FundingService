@@ -68,7 +68,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             larsDataRetrievalServiceMock.Setup(l => l.LARSLearningDeliveryCategoriesForLearnAimRefs(It.IsAny<List<string>>())).Returns(larsLearningDeliveryCategories).Verifiable();
             larsDataRetrievalServiceMock.Setup(l => l.LARSFundingsForLearnAimRefs(It.IsAny<List<string>>())).Returns(larsFundings).Verifiable();
             larsDataRetrievalServiceMock.Setup(l => l.LARSLearningDeliveriesForLearnAimRefs(It.IsAny<List<string>>())).Returns(larsLearningDeliveries).Verifiable();
-            
+
             var organisationDataRetrievalServiceMock = new Mock<IOrganisationDataRetrievalService>();
 
             var organisationCurrentVersion = "OrganisationVersion";
@@ -83,14 +83,14 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
                 largeEmployersDataRetrievalServiceMock.Object,
                 larsDataRetrievalServiceMock.Object,
                 organisationDataRetrievalServiceMock.Object,
-                fundingServiceDtoMock.Object
-                ).Populate();
+                fundingServiceDtoMock.Object)
+                .Populate();
 
             postcodesDataRetrievalServiceMock.VerifyAll();
             largeEmployersDataRetrievalServiceMock.VerifyAll();
             larsDataRetrievalServiceMock.VerifyAll();
             organisationDataRetrievalServiceMock.VerifyAll();
-            
+
             externalDataCache.PostcodeCurrentVersion.Should().Be(postcodesCurrentVersion);
             externalDataCache.SfaAreaCost.Should().BeSameAs(sfaAreaCosts);
             externalDataCache.SfaDisadvantage.Should().BeSameAs(sfaDisadvantages);

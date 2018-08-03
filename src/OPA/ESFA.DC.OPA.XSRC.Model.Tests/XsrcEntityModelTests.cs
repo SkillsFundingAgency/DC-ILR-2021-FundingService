@@ -7,8 +7,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
 {
     public class XsrcEntityModelTests
     {
-        #region XsrcGlobal
-
         /// <summary>
         /// Return XsrcGlobal
         /// </summary>
@@ -40,10 +38,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             // ASSERT
             entity.GlobalEntity.Should().BeEquivalentTo(TestXsrcEntity());
         }
-
-        #endregion
-
-        #region XsrcEntity
 
         /// <summary>
         /// Return XsrcEntity
@@ -141,10 +135,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.Children.Should().BeEquivalentTo(TestChildXsrcEntity());
         }
 
-        #endregion
-
-        #region XsrcAttribute
-
         /// <summary>
         /// Return XsrcAttribute
         /// </summary>
@@ -193,10 +183,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.Type.Should().Be("Type");
         }
 
-        #endregion
-
-        #region XsrcAttributeProperty
-
         /// <summary>
         /// Return XsrcAttributeProperty
         /// </summary>
@@ -244,10 +230,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             // ASSERT
             entity.Value.Should().Be("Value");
         }
-
-        #endregion
-
-        #region Test Helpers
 
         private XsrcGlobal TestXsrcGlobal()
         {
@@ -309,7 +291,5 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
                 Value = "Value"
             };
         }
-
-        #endregion
     }
 }

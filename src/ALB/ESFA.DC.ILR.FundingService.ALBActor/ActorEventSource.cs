@@ -21,7 +21,6 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
         // Instance constructor is private to enforce singleton semantics
         private ActorEventSource() : base() { }
 
-        #region Keywords
         // Event keywords can be used to categorize events. 
         // Each keyword is a bit flag. A single event can be associated with multiple keywords (via EventAttribute.Keywords property).
         // Keywords must be defined as a public class named 'Keywords' inside EventSource that uses them.
@@ -29,9 +28,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
         {
             public const EventKeywords HostInitialization = (EventKeywords)0x1L;
         }
-        #endregion
 
-        #region Events
         // Define an instance method for each event you want to record and apply an [Event] attribute to it.
         // The method name is the name of the event.
         // Pass any parameters you want to record with the event (only primitive integer types, DateTime, Guid & string are allowed).
@@ -145,9 +142,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
         {
             WriteEvent(ActorHostInitializationFailedEventId, exception);
         }
-        #endregion
 
-        #region Private Methods
 #if UNSAFE
             private int SizeInBytes(string s)
             {
@@ -161,6 +156,5 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                 }
             }
 #endif
-        #endregion
     }
 }

@@ -31,7 +31,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             _organisationDataRetrievalService = organisationDataRetrievalService;
             _fundingServiceDto = fundingServiceDto;
         }
-        
+
         public void Populate()
         {
             var uniquePostcodes = _postcodesDataRetrievalService.UniquePostcodes(_fundingServiceDto.Message).ToList();

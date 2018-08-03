@@ -82,7 +82,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         public void VersionInfo()
         {
             var postcodesDataRetrievalServiceMock = NewMock();
-            
+
             var versionInfos = new List<VersionInfo>()
             {
                 new VersionInfo() { VersionNumber = "001" },
@@ -102,7 +102,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             {
                 new SFA_PostcodeAreaCost()
                 {
-                    MasterPostcode = new MasterPostcode {Postcode = "CV1 2WT"},
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2WT" },
                     Postcode = "CV1 2WT",
                     AreaCostFactor = 1.2m,
                     EffectiveFrom = new DateTime(2000, 01, 01),
@@ -110,7 +110,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                 },
                 new SFA_PostcodeAreaCost()
                 {
-                    MasterPostcode = new MasterPostcode {Postcode = "CV1 2TT"},
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2TT" },
                     Postcode = "CV1 2TT",
                     AreaCostFactor = 1.5m,
                     EffectiveFrom = new DateTime(2000, 01, 01),
@@ -118,7 +118,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                 },
                 new SFA_PostcodeAreaCost()
                 {
-                    MasterPostcode = new MasterPostcode {Postcode = "CV1 2TT"},
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2TT" },
                     Postcode = "CV1 2TT",
                     AreaCostFactor = 2.1m,
                     EffectiveFrom = new DateTime(2016, 01, 01),
@@ -173,7 +173,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             {
                 new SFA_PostcodeDisadvantage()
                 {
-                    MasterPostcode = new MasterPostcode {Postcode = "CV1 2WT"},
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2WT" },
                     Postcode = "CV1 2WT",
                     Uplift = 1.2m,
                     EffectiveFrom = new DateTime(2000, 01, 01),
@@ -181,7 +181,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                 },
                 new SFA_PostcodeDisadvantage()
                 {
-                    MasterPostcode = new MasterPostcode {Postcode = "CV1 2TT"},
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2TT" },
                     Postcode = "CV1 2TT",
                     Uplift = 1.5m,
                     EffectiveFrom = new DateTime(2000, 01, 01),
@@ -189,7 +189,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                 },
                 new SFA_PostcodeDisadvantage()
                 {
-                    MasterPostcode = new MasterPostcode {Postcode = "CV1 2TT"},
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2TT" },
                     Postcode = "CV1 2TT",
                     Uplift = 2.1m,
                     EffectiveFrom = new DateTime(2016, 01, 01),

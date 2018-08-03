@@ -26,7 +26,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         private readonly IIlrFileProviderService _ilrFileProviderService;
         private readonly IFundingServiceDto _fundingServiceDto;
         private readonly IPopulationService _populationService;
-        private readonly IALBActorTask _ALBOrchestrationSfTask;
+        private readonly IALBActorTask _albOrchestrationSfTask;
         private readonly IFM35ActorTask _fm35OrchestrationSfTask;
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
         private readonly IPagingService<ILearner> _learnerPagingService;
@@ -38,7 +38,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             IIlrFileProviderService ilrFileProviderService,
             IFundingServiceDto fundingServiceDto,
             IPopulationService populationService,
-            IALBActorTask ALBOrchestrationSfTask,
+            IALBActorTask albOrchestrationSfTask,
             IFM35ActorTask fm35OrchestrationSfTask,
             IKeyValuePersistenceService keyValuePersistenceService,
             IPagingService<ILearner> learnerPagingService,
@@ -49,7 +49,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             _ilrFileProviderService = ilrFileProviderService;
             _fundingServiceDto = fundingServiceDto;
             _populationService = populationService;
-            _ALBOrchestrationSfTask = ALBOrchestrationSfTask;
+            _albOrchestrationSfTask = albOrchestrationSfTask;
             _fm35OrchestrationSfTask = fm35OrchestrationSfTask;
             _keyValuePersistenceService = keyValuePersistenceService;
             _externalDataCache = externalDataCache;
@@ -92,7 +92,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
 
             var fundingTasks = new List<Task>()
             {
-                _ALBOrchestrationSfTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString()),
+                _albOrchestrationSfTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString()),
                 _fm35OrchestrationSfTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString())
             };
 

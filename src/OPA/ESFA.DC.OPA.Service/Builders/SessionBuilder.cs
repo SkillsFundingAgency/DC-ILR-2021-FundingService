@@ -35,8 +35,6 @@ namespace ESFA.DC.OPA.Service.Builders
             return session;
         }
 
-        #region MapEntityToOpaSession
-
         protected internal void MapGlobalDataEntityToOpa(IDataEntity dataEntity, Session session, EntityInstance parentEntityInstance)
         {
             Entity globalEntity = parentEntityInstance.GetEntity();
@@ -172,8 +170,5 @@ namespace ESFA.DC.OPA.Service.Builders
 
             return changepoints;
         }
-
-        #endregion
-
     }
 }

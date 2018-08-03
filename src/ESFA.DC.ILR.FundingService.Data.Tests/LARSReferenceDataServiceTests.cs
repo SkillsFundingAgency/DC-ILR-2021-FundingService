@@ -51,7 +51,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
                     {
                         { "learnAimRef", null }
                     });
-            
+
             NewService(referenceDataCacheMock.Object).LARSLearningDeliveryForLearnAimRef("notLearnAimRef").Should().BeNull();
         }
 
@@ -163,7 +163,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
 
             NewService(referenceDataCacheMock.Object).LARSFFrameworkAimsForLearnAimRef(learnAimRef).Should().BeSameAs(frameworkAims);
         }
-        
+
         [Fact]
         public void LARSFrameworkAims_Correct()
         {

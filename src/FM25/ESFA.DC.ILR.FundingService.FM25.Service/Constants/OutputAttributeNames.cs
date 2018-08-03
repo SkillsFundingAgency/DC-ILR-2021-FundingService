@@ -41,6 +41,5 @@
         public const string RetentNew = "RetentNew";
         public const string StartFund = "StartFund";
         public const string ThresholdDays = "ThresholdDays";
-
     }
 }

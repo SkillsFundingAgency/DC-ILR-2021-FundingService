@@ -45,7 +45,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.Context
             fundingServiceDto.SetupGet(fs => fs.Message).Returns(message);
             fundingServiceDto.SetupGet(fs => fs.ValidLearners).Returns(validLearnerReferenceNumbers);
 
-            NewService(fundingServiceDto.Object).Retrieve().Should().Contain(new []{ validLearnerOne, validLearnerTwo });
+            NewService(fundingServiceDto.Object).Retrieve().Should().Contain(new[] { validLearnerOne, validLearnerTwo });
         }
 
         private ValidLearnersDataRetrievalService NewService(IFundingServiceDto fundingServiceDto = null)

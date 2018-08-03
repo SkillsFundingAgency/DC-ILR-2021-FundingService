@@ -3,9 +3,9 @@ using System.Linq;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.ILR.FundingService.Stubs;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.IO.Interfaces;
+using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.Serialization.Xml;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service
@@ -16,13 +16,15 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
         private readonly IFundingService<ILearner, FundingOutputs> _fundingService;
         private readonly IPopulationService _populationService;
         private readonly IPagingService<ILearner> _learnerPerActorService;
+        private readonly IJsonSerializationService _jsonSerializationService;
 
-        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IFundingService<ILearner, FundingOutputs> fundingService, IPopulationService populationService, IPagingService<ILearner> learnerPerActorService)
+        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IFundingService<ILearner, FundingOutputs> fundingService, IPopulationService populationService, IPagingService<ILearner> learnerPerActorService, IJsonSerializationService jsonSerializationService)
         {
             _keyValuePersistenceService = keyValuePersistenceService;
             _fundingService = fundingService;
             _populationService = populationService;
             _learnerPerActorService = learnerPerActorService;
+            _jsonSerializationService = jsonSerializationService;
         }
 
         public void ExecuteTasks(IMessage message)
@@ -41,8 +43,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
             var fundingOutputsToPersist = TransformFundingOutput(fundingOutputs);
 
             // persist
-            var dataPersister = new DataPersister();
-            dataPersister.PersistData(fundingOutputsToPersist, @"C:\Code\temp\ALBFundingService\Json_Output.json");
+            var serializedOutputs = _jsonSerializationService.Serialize(fundingOutputsToPersist);
+
+            System.IO.File.WriteAllText(@"C:\Code\temp\ALBFundingService\Json_Output.json", serializedOutputs);
         }
 
         private void BuildKeyValueDictionary(IMessage message)
