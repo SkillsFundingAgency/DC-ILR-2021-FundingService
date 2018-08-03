@@ -381,16 +381,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
                 };
             }
 
-            return new LearningDeliveryFAMPivot
-            {
-                EEF = null,
-                FFI = null,
-                RES = null,
-                LDM1 = null,
-                LDM2 = null,
-                LDM3 = null,
-                LDM4 = null,
-            };
+            return new LearningDeliveryFAMPivot();
         }
 
         private static int? ToNullableInt(string stringValue)
