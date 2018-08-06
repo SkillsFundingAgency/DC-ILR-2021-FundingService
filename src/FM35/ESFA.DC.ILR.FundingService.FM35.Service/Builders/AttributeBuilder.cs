@@ -100,10 +100,10 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
         {
             return new Dictionary<string, IAttributeData>
             {
-                { UKPRN,  new AttributeData(UKPRN, ukprn) },
-                { LARSVersion, new AttributeData(LARSVersion, larsVersion) },
-                { OrgVersion, new AttributeData(OrgVersion, orgVersion) },
-                { PostcodeDisadvantageVersion,  new AttributeData(PostcodeDisadvantageVersion, postcodeDisadvantageVersion) },
+                { UKPRN,  new AttributeData(ukprn) },
+                { LARSVersion, new AttributeData(larsVersion) },
+                { OrgVersion, new AttributeData(orgVersion) },
+                { PostcodeDisadvantageVersion,  new AttributeData(postcodeDisadvantageVersion) },
             };
         }
 
@@ -111,11 +111,11 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
         {
             return new Dictionary<string, IAttributeData>
             {
-                { OrgFundEffectiveFrom,  new AttributeData(OrgFundEffectiveFrom, orgFundEffectiveFrom) },
-                { OrgFundEffectiveTo, new AttributeData(OrgFundEffectiveTo, orgFundEffectiveTo) },
-                { OrgFundFactor, new AttributeData(OrgFundFactor, orgFundFactor) },
-                { OrgFundFactType,  new AttributeData(OrgFundFactType, orgFundFactType) },
-                { OrgFundFactValue,  new AttributeData(OrgFundFactValue, orgFundFactValue) },
+                { OrgFundEffectiveFrom,  new AttributeData(orgFundEffectiveFrom) },
+                { OrgFundEffectiveTo, new AttributeData(orgFundEffectiveTo) },
+                { OrgFundFactor, new AttributeData(orgFundFactor) },
+                { OrgFundFactType,  new AttributeData(orgFundFactType) },
+                { OrgFundFactValue,  new AttributeData(orgFundFactValue) },
             };
         }
 
@@ -123,8 +123,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
         {
             return new Dictionary<string, IAttributeData>
             {
-                { LearnRefNumber, new AttributeData(LearnRefNumber, learnRefNumber) },
-                { DateOfBirth, new AttributeData(DateOfBirth, dateOfBirth) },
+                { LearnRefNumber, new AttributeData(learnRefNumber) },
+                { DateOfBirth, new AttributeData(dateOfBirth) },
             };
         }
 
@@ -132,8 +132,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
         {
             return new Dictionary<string, IAttributeData>
             {
-                { EmpId, new AttributeData(EmpId, empId) },
-                { DateEmpStatApp, new AttributeData(DateEmpStatApp, dateEmpStatApp) },
+                { EmpId, new AttributeData(empId) },
+                { DateEmpStatApp, new AttributeData(dateEmpStatApp) },
             };
         }
 
@@ -141,8 +141,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
         {
             return new Dictionary<string, IAttributeData>
             {
-                { LargeEmpEffectiveFrom, new AttributeData(LargeEmpEffectiveFrom, largeEmpEffectiveFrom) },
-                { LargeEmpEffectiveTo, new AttributeData(LargeEmpEffectiveTo, largeEmpEffectiveTo) },
+                { LargeEmpEffectiveFrom, new AttributeData(largeEmpEffectiveFrom) },
+                { LargeEmpEffectiveTo, new AttributeData(largeEmpEffectiveTo) },
             };
         }
 
@@ -150,9 +150,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
         {
             return new Dictionary<string, IAttributeData>
             {
-                { DisUplift, new AttributeData(DisUplift, disUplift) },
-                { DisUpEffectiveFrom, new AttributeData(DisUpEffectiveFrom, disUpEffectiveFrom) },
-                { DisUpEffectiveTo, new AttributeData(DisUpEffectiveTo, disUpEffectiveTo) },
+                { DisUplift, new AttributeData(disUplift) },
+                { DisUpEffectiveFrom, new AttributeData(disUpEffectiveFrom) },
+                { DisUpEffectiveTo, new AttributeData(disUpEffectiveTo) },
             };
         }
 
@@ -187,33 +187,33 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
         {
             return new Dictionary<string, IAttributeData>
             {
-                { AchDate, new AttributeData(AchDate, achDate) },
-                { AddHours, new AttributeData(AddHours, addHours) },
-                { AimSeqNumber, new AttributeData(AimSeqNumber, aimSeqNumber) },
-                { AimType, new AttributeData(AimType, aimType) },
-                { CompStatus, new AttributeData(CompStatus, compStatus) },
-                { EmpOutcome, new AttributeData(EmpOutcome, empOutcome) },
-                { EnglandFEHEStatus, new AttributeData(EnglandFEHEStatus, englandFEHEStatus) },
-                { EnglPrscID, new AttributeData(EnglPrscID, englPrscID) },
-                { FworkCode, new AttributeData(FworkCode, fworkCode) },
-                { FrameworkCommonComponent, new AttributeData(FrameworkCommonComponent, frameworkCommonComponent) },
-                { FrameworkComponentType, new AttributeData(FrameworkComponentType, frameworkComponentType) },
-                { LearnActEndDate, new AttributeData(LearnActEndDate, learnActEndDate) },
-                { LearnPlanEndDate, new AttributeData(LearnPlanEndDate, learnPlanEndDate) },
-                { LearnStartDate, new AttributeData(LearnStartDate, learnStartDate) },
-                { LrnDelFAM_EEF, new AttributeData(LrnDelFAM_EEF, lrnDelFAM_EEF) },
-                { LrnDelFAM_LDM1, new AttributeData(LrnDelFAM_LDM1, lrnDelFAM_LDM1) },
-                { LrnDelFAM_LDM2, new AttributeData(LrnDelFAM_LDM2, lrnDelFAM_LDM2) },
-                { LrnDelFAM_LDM3, new AttributeData(LrnDelFAM_LDM3, lrnDelFAM_LDM3) },
-                { LrnDelFAM_LDM4, new AttributeData(LrnDelFAM_LDM4, lrnDelFAM_LDM4) },
-                { LrnDelFAM_FFI, new AttributeData(LrnDelFAM_FFI, lrnDelFAM_FFI) },
-                { LrnDelFAM_RES, new AttributeData(LrnDelFAM_RES, lrnDelFAM_RES) },
-                { OrigLearnStartDate, new AttributeData(OrigLearnStartDate, origLearnStartDate) },
-                { OtherFundAdj, new AttributeData(OtherFundAdj, otherFundAdj) },
-                { Outcome, new AttributeData(Outcome, outcome) },
-                { PriorLearnFundAdj, new AttributeData(PriorLearnFundAdj, priorLearnFundAdj) },
-                { ProgType, new AttributeData(ProgType, progType) },
-                { PwayCode, new AttributeData(PwayCode, pwayCode) },
+                { AchDate, new AttributeData(achDate) },
+                { AddHours, new AttributeData(addHours) },
+                { AimSeqNumber, new AttributeData(aimSeqNumber) },
+                { AimType, new AttributeData(aimType) },
+                { CompStatus, new AttributeData(compStatus) },
+                { EmpOutcome, new AttributeData(empOutcome) },
+                { EnglandFEHEStatus, new AttributeData(englandFEHEStatus) },
+                { EnglPrscID, new AttributeData(englPrscID) },
+                { FworkCode, new AttributeData(fworkCode) },
+                { FrameworkCommonComponent, new AttributeData(frameworkCommonComponent) },
+                { FrameworkComponentType, new AttributeData(frameworkComponentType) },
+                { LearnActEndDate, new AttributeData(learnActEndDate) },
+                { LearnPlanEndDate, new AttributeData(learnPlanEndDate) },
+                { LearnStartDate, new AttributeData(learnStartDate) },
+                { LrnDelFAM_EEF, new AttributeData(lrnDelFAM_EEF) },
+                { LrnDelFAM_LDM1, new AttributeData(lrnDelFAM_LDM1) },
+                { LrnDelFAM_LDM2, new AttributeData(lrnDelFAM_LDM2) },
+                { LrnDelFAM_LDM3, new AttributeData(lrnDelFAM_LDM3) },
+                { LrnDelFAM_LDM4, new AttributeData(lrnDelFAM_LDM4) },
+                { LrnDelFAM_FFI, new AttributeData(lrnDelFAM_FFI) },
+                { LrnDelFAM_RES, new AttributeData(lrnDelFAM_RES) },
+                { OrigLearnStartDate, new AttributeData(origLearnStartDate) },
+                { OtherFundAdj, new AttributeData(otherFundAdj) },
+                { Outcome, new AttributeData(outcome) },
+                { PriorLearnFundAdj, new AttributeData(priorLearnFundAdj) },
+                { ProgType, new AttributeData(progType) },
+                { PwayCode, new AttributeData(pwayCode) },
             };
         }
 
@@ -221,10 +221,10 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
         {
             return new Dictionary<string, IAttributeData>
             {
-                { LearnDelFAMCode, new AttributeData(LearnDelFAMCode, learnDelFAMCode) },
-                { LearnDelFAMDateFrom, new AttributeData(LearnDelFAMDateFrom, learnDelFAMDateFrom) },
-                { LearnDelFAMDateTo, new AttributeData(LearnDelFAMDateTo, learnDelFAMDateTo) },
-                { LearnDelFAMType, new AttributeData(LearnDelFAMType, learnDelFAMType) },
+                { LearnDelFAMCode, new AttributeData(learnDelFAMCode) },
+                { LearnDelFAMDateFrom, new AttributeData(learnDelFAMDateFrom) },
+                { LearnDelFAMDateTo, new AttributeData(learnDelFAMDateTo) },
+                { LearnDelFAMType, new AttributeData(learnDelFAMType) },
             };
         }
 
@@ -232,9 +232,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
         {
             return new Dictionary<string, IAttributeData>
             {
-                { LearnDelAnnValBasicSkillsTypeCode, new AttributeData(LearnDelAnnValBasicSkillsTypeCode, learnDelAnnValBasicSkillsTypeCode) },
-                { LearnDelAnnValDateFrom, new AttributeData(LearnDelAnnValDateFrom, learnDelAnnValDateFrom) },
-                { LearnDelAnnValDateTo, new AttributeData(LearnDelAnnValDateTo, learnDelAnnValDateTo) },
+                { LearnDelAnnValBasicSkillsTypeCode, new AttributeData(learnDelAnnValBasicSkillsTypeCode) },
+                { LearnDelAnnValDateFrom, new AttributeData(learnDelAnnValDateFrom) },
+                { LearnDelAnnValDateTo, new AttributeData(learnDelAnnValDateTo) },
             };
         }
 
@@ -242,9 +242,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
         {
             return new Dictionary<string, IAttributeData>
             {
-                { LearnDelCatRef, new AttributeData(LearnDelCatRef, learnDelCatRef) },
-                { LearnDelCatDateFrom, new AttributeData(LearnDelCatDateFrom, learnDelCatDateFrom) },
-                { LearnDelCatDateTo, new AttributeData(LearnDelCatDateTo, learnDelCatDateTo) },
+                { LearnDelCatRef, new AttributeData(learnDelCatRef) },
+                { LearnDelCatDateFrom, new AttributeData(learnDelCatDateFrom) },
+                { LearnDelCatDateTo, new AttributeData(learnDelCatDateTo) },
             };
         }
 
@@ -252,12 +252,12 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
         {
             return new Dictionary<string, IAttributeData>
             {
-                { LARSFundCategory, new AttributeData(LARSFundCategory, larsFundCategory) },
-                { LARSFundEffectiveFrom, new AttributeData(LARSFundEffectiveFrom, larsFundEffectiveFrom) },
-                { LARSFundEffectiveTo, new AttributeData(LARSFundEffectiveTo, larsFundEffectiveTo) },
-                { LARSFundUnweightedRate, new AttributeData(LARSFundUnweightedRate, larsFundUnWeightedRate) },
-                { LARSFundWeightedRate, new AttributeData(LARSFundWeightedRate, larsFundWeightedRate) },
-                { LARSFundWeightingFactor, new AttributeData(LARSFundWeightingFactor, larsFundWeightingFactor) },
+                { LARSFundCategory, new AttributeData(larsFundCategory) },
+                { LARSFundEffectiveFrom, new AttributeData(larsFundEffectiveFrom) },
+                { LARSFundEffectiveTo, new AttributeData(larsFundEffectiveTo) },
+                { LARSFundUnweightedRate, new AttributeData(larsFundUnWeightedRate) },
+                { LARSFundWeightedRate, new AttributeData(larsFundWeightedRate) },
+                { LARSFundWeightingFactor, new AttributeData(larsFundWeightingFactor) },
             };
         }
 
@@ -265,9 +265,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Builders
         {
             return new Dictionary<string, IAttributeData>
             {
-                { AreaCosEffectiveFrom, new AttributeData(AreaCosEffectiveFrom, areaCosEffectiveFrom) },
-                { AreaCosEffectiveTo, new AttributeData(AreaCosEffectiveTo, areaCosEffectiveTo) },
-                { AreaCosFactor, new AttributeData(AreaCosFactor, areaCosFactor) },
+                { AreaCosEffectiveFrom, new AttributeData(areaCosEffectiveFrom) },
+                { AreaCosEffectiveTo, new AttributeData(areaCosEffectiveTo) },
+                { AreaCosFactor, new AttributeData(areaCosFactor) },
             };
         }
     }

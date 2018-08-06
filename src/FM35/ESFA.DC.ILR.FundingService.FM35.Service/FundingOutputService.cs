@@ -189,17 +189,17 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
 
             foreach (var attribute in attributeList)
             {
-                var attributeValue = (AttributeData)learningDelivery.Attributes[attribute];
+                var attributeValue = learningDelivery.Attributes[attribute];
 
                 var changePoints = attributeValue.Changepoints;
 
                 if (!changePoints.Any())
                 {
-                    var value = attributeValue.Name == "LearnSuppFund" ? ConvertLearnSuppFund(attributeValue.Value.ToString()) : decimal.Parse(attributeValue.Value.ToString());
+                    var value = attribute == "LearnSuppFund" ? ConvertLearnSuppFund(attributeValue.Value.ToString()) : decimal.Parse(attributeValue.Value.ToString());
 
                     learningDeliveryPeriodisedAttributesList.Add(new LearningDeliveryPeriodisedAttribute
                     {
-                        AttributeName = attributeValue.Name,
+                        AttributeName = attribute,
                         Period1 = value,
                         Period2 = value,
                         Period3 = value,
@@ -219,19 +219,19 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
                 {
                     learningDeliveryPeriodisedAttributesList.Add(new LearningDeliveryPeriodisedAttribute
                     {
-                        AttributeName = attributeValue.Name,
-                        Period1 = GetPeriodAttributeValue(attributeValue, 1),
-                        Period2 = GetPeriodAttributeValue(attributeValue, 2),
-                        Period3 = GetPeriodAttributeValue(attributeValue, 3),
-                        Period4 = GetPeriodAttributeValue(attributeValue, 4),
-                        Period5 = GetPeriodAttributeValue(attributeValue, 5),
-                        Period6 = GetPeriodAttributeValue(attributeValue, 6),
-                        Period7 = GetPeriodAttributeValue(attributeValue, 7),
-                        Period8 = GetPeriodAttributeValue(attributeValue, 8),
-                        Period9 = GetPeriodAttributeValue(attributeValue, 9),
-                        Period10 = GetPeriodAttributeValue(attributeValue, 10),
-                        Period11 = GetPeriodAttributeValue(attributeValue, 11),
-                        Period12 = GetPeriodAttributeValue(attributeValue, 12),
+                        AttributeName = attribute,
+                        Period1 = GetPeriodAttributeValue(attributeValue, 1, attribute),
+                        Period2 = GetPeriodAttributeValue(attributeValue, 2, attribute),
+                        Period3 = GetPeriodAttributeValue(attributeValue, 3, attribute),
+                        Period4 = GetPeriodAttributeValue(attributeValue, 4, attribute),
+                        Period5 = GetPeriodAttributeValue(attributeValue, 5, attribute),
+                        Period6 = GetPeriodAttributeValue(attributeValue, 6, attribute),
+                        Period7 = GetPeriodAttributeValue(attributeValue, 7, attribute),
+                        Period8 = GetPeriodAttributeValue(attributeValue, 8, attribute),
+                        Period9 = GetPeriodAttributeValue(attributeValue, 9, attribute),
+                        Period10 = GetPeriodAttributeValue(attributeValue, 10, attribute),
+                        Period11 = GetPeriodAttributeValue(attributeValue, 11, attribute),
+                        Period12 = GetPeriodAttributeValue(attributeValue, 12, attribute),
                     });
                 }
             }
@@ -239,11 +239,11 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
             return learningDeliveryPeriodisedAttributesList.ToArray();
         }
 
-        private decimal? GetPeriodAttributeValue(AttributeData attributes, int period)
+        private decimal? GetPeriodAttributeValue(IAttributeData attribute, int period, string attributeName)
         {
-            var value = attributes.Changepoints.Where(cp => cp.ChangePoint == Periods[period]).Select(v => v.Value).SingleOrDefault();
+            var value = attribute.Changepoints.Where(cp => cp.ChangePoint == Periods[period]).Select(v => v.Value).SingleOrDefault();
 
-            return attributes.Name == "LearnSuppFund" ? ConvertLearnSuppFund(value.ToString()) : decimal.Parse(value.ToString());
+            return attributeName == "LearnSuppFund" ? ConvertLearnSuppFund(value.ToString()) : decimal.Parse(value.ToString());
         }
 
         private decimal? ConvertLearnSuppFund(string value)

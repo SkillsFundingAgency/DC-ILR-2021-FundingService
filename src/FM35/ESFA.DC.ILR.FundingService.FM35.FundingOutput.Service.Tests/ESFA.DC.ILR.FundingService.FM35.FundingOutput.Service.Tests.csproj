@@ -45,15 +45,6 @@
     <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ESFA.DC.ILR.1819.Model.Interface.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.OPA.Model, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.OPA.Model.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.OPA.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.OPA.Model.Interface, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.OPA.Model.Interface.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.OPA.Model.Interface.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.OPA.Service, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.OPA.Service.0.1.2-beta0001\lib\netstandard2.0\ESFA.DC.OPA.Service.dll</HintPath>
-    </Reference>
     <Reference Include="FluentAssertions, Version=5.4.1.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\FluentAssertions.5.4.1\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
@@ -115,6 +106,14 @@
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Interfaces\ESFA.DC.ILR.FundingService.Interfaces.csproj">
       <Project>{81fa550d-dd5e-4f5b-ac66-1dca51824e9c}</Project>
       <Name>ESFA.DC.ILR.FundingService.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model.Interface\ESFA.DC.OPA.Model.Interface.csproj">
+      <Project>{7C69290E-B03C-490B-9821-04E2B0B9CDF7}</Project>
+      <Name>ESFA.DC.OPA.Model.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model\ESFA.DC.OPA.Model.csproj">
+      <Project>{B8B8D031-851C-427B-9DEA-9F87A2F1B642}</Project>
+      <Name>ESFA.DC.OPA.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service.Interface\ESFA.DC.OPA.Service.Interface.csproj">
       <Project>{BBA05279-51DA-427B-8708-CA7AF3A228F5}</Project>
