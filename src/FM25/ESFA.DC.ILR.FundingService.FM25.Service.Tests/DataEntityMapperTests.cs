@@ -63,7 +63,16 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 MathGrade = "B",
                 PlanEEPHoursNullable = 2,
                 PlanLearnHoursNullable = 3,
-                ULN = 123456
+                ULN = 123456,
+                LearnerFAMs = new List<TestLearnerFAM>()
+                {
+                    new TestLearnerFAM() { LearnFAMType = "ECF", LearnFAMCode = 1 },
+                    new TestLearnerFAM() { LearnFAMType = "EDF", LearnFAMCode = 2 },
+                    new TestLearnerFAM() { LearnFAMType = "EDF", LearnFAMCode = 3 },
+                    new TestLearnerFAM() { LearnFAMType = "EHC", LearnFAMCode = 4 },
+                    new TestLearnerFAM() { LearnFAMType = "HNS", LearnFAMCode = 5 },
+                    new TestLearnerFAM() { LearnFAMType = "MCF", LearnFAMCode = 6 },
+                }
             };
 
             var fileDataServiceMock = new Mock<IFileDataService>();
@@ -77,12 +86,12 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             dataEntity.Attributes["DateOfBirth"].Value.Should().Be(learner.DateOfBirthNullable);
             dataEntity.Attributes["EngGrade"].Value.Should().Be(learner.EngGrade);
             dataEntity.Attributes["LearnRefNumber"].Value.Should().Be(learner.LearnRefNumber);
-            dataEntity.Attributes["LrnFAM_ECF"].Should().BeNull();
-            dataEntity.Attributes["LrnFAM_EDF1"].Should().BeNull();
-            dataEntity.Attributes["LrnFAM_EDF2"].Should().BeNull();
-            dataEntity.Attributes["LrnFAM_EHC"].Should().BeNull();
-            dataEntity.Attributes["LrnFAM_HNS"].Should().BeNull();
-            dataEntity.Attributes["LrnFAM_MCF"].Should().BeNull();
+            dataEntity.Attributes["LrnFAM_ECF"].Value.Should().Be(1);
+            dataEntity.Attributes["LrnFAM_EDF1"].Value.Should().Be(2);
+            dataEntity.Attributes["LrnFAM_EDF2"].Value.Should().Be(3);
+            dataEntity.Attributes["LrnFAM_EHC"].Value.Should().Be(4);
+            dataEntity.Attributes["LrnFAM_HNS"].Value.Should().Be(5);
+            dataEntity.Attributes["LrnFAM_MCF"].Value.Should().Be(6);
             dataEntity.Attributes["MathGrade"].Value.Should().Be(learner.MathGrade);
             dataEntity.Attributes["PlanEEPHours"].Value.Should().Be(learner.PlanEEPHoursNullable);
             dataEntity.Attributes["PostcodeDisadvantageUplift"].Should().BeNull();
@@ -168,6 +177,79 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             dataEntity.Attributes["ProgType"].Value.Should().Be(learningDelivery.ProgTypeNullable);
             dataEntity.Attributes["SectorSubjectAreaTier2"].Should().BeNull();
             dataEntity.Attributes["WithdrawReason"].Value.Should().Be(learningDelivery.WithdrawReasonNullable);
+        }
+
+        [Fact]
+        public void BuildLearnerFAMDenormalized()
+        {
+            var learnerFams = new List<TestLearnerFAM>()
+            {
+                new TestLearnerFAM() { LearnFAMType = "ECF", LearnFAMCode = 1 },
+                new TestLearnerFAM() { LearnFAMType = "EDF", LearnFAMCode = 2 },
+                new TestLearnerFAM() { LearnFAMType = "EDF", LearnFAMCode = 3 },
+                new TestLearnerFAM() { LearnFAMType = "EHC", LearnFAMCode = 4 },
+                new TestLearnerFAM() { LearnFAMType = "HNS", LearnFAMCode = 5 },
+                new TestLearnerFAM() { LearnFAMType = "MCF", LearnFAMCode = 6 },
+            };
+
+            var learnerFamDenormalized = NewService().BuildLearnerFAMDenormalized(learnerFams);
+
+            learnerFamDenormalized.ECF.Should().Be(1);
+            learnerFamDenormalized.EDF1.Should().Be(2);
+            learnerFamDenormalized.EDF2.Should().Be(3);
+            learnerFamDenormalized.EHC.Should().Be(4);
+            learnerFamDenormalized.HNS.Should().Be(5);
+            learnerFamDenormalized.MCF.Should().Be(6);
+        }
+
+        [Fact]
+        public void BuildLearnerFAMDenormalized_Null()
+        {
+            var learnerFamDenormalized = NewService().BuildLearnerFAMDenormalized(null);
+
+            learnerFamDenormalized.ECF.Should().BeNull();
+            learnerFamDenormalized.EDF1.Should().BeNull();
+            learnerFamDenormalized.EDF2.Should().BeNull();
+            learnerFamDenormalized.EHC.Should().BeNull();
+            learnerFamDenormalized.HNS.Should().BeNull();
+            learnerFamDenormalized.MCF.Should().BeNull();
+        }
+
+        [Fact]
+        public void BuildLearnerFAMDenormalized_NoMatches()
+        {
+            var learnerFams = new List<TestLearnerFAM>();
+
+            var learnerFamDenormalized = NewService().BuildLearnerFAMDenormalized(learnerFams);
+
+            learnerFamDenormalized.ECF.Should().BeNull();
+            learnerFamDenormalized.EDF1.Should().BeNull();
+            learnerFamDenormalized.EDF2.Should().BeNull();
+            learnerFamDenormalized.EHC.Should().BeNull();
+            learnerFamDenormalized.HNS.Should().BeNull();
+            learnerFamDenormalized.MCF.Should().BeNull();
+        }
+
+        [Fact]
+        public void BuildLearnerFAMDenormalized_EDF2()
+        {
+            var learnerFams = new List<TestLearnerFAM>()
+            {
+                new TestLearnerFAM() { LearnFAMType = "ECF", LearnFAMCode = 1 },
+                new TestLearnerFAM() { LearnFAMType = "EDF", LearnFAMCode = 2 },
+                new TestLearnerFAM() { LearnFAMType = "EHC", LearnFAMCode = 4 },
+                new TestLearnerFAM() { LearnFAMType = "HNS", LearnFAMCode = 5 },
+                new TestLearnerFAM() { LearnFAMType = "MCF", LearnFAMCode = 6 },
+            };
+
+            var learnerFamDenormalized = NewService().BuildLearnerFAMDenormalized(learnerFams);
+
+            learnerFamDenormalized.ECF.Should().Be(1);
+            learnerFamDenormalized.EDF1.Should().Be(2);
+            learnerFamDenormalized.EDF2.Should().BeNull();
+            learnerFamDenormalized.EHC.Should().Be(4);
+            learnerFamDenormalized.HNS.Should().Be(5);
+            learnerFamDenormalized.MCF.Should().Be(6);
         }
 
         private DataEntityMapper NewService(ILARSReferenceDataService larsReferenceDataService = null, IOrganisationReferenceDataService organisationReferenceDataService = null, IFileDataService fileDataService = null)

@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
 using ESFA.DC.ILR.FundingService.Data.File.Interface;
 using ESFA.DC.ILR.FundingService.Data.File.Model;
+using ESFA.DC.ILR.FundingService.FM25.Service.Model;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
@@ -73,6 +76,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
         private const string LearningDeliveryLARSValidityValidityLastNewStartDate = "ValidityLastNewStartDate";
         private const string LearningDeliveryLARSValidityValidityStartDate = "ValidityStartDate";
 
+        private const string ECF = "ECF";
+
         private readonly ILARSReferenceDataService _larsReferenceDataService;
         private readonly IOrganisationReferenceDataService _organisationReferenceDataService;
         private readonly IFileDataService _fileDataService;
@@ -113,6 +118,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
 
         public IDataEntity BuildLearnerDataEntity(ILearner learner)
         {
+            var learnerFamDenormalized = BuildLearnerFAMDenormalized(learner.LearnerFAMs);
+
             return new DataEntity(EntityLearner)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
@@ -120,12 +127,12 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { LearnerDateOfBirth, new AttributeData(learner.DateOfBirthNullable) },
                     { LearnerEngGrade, new AttributeData(learner.EngGrade) },
                     { LearnerLearnRefNumber, new AttributeData(learner.LearnRefNumber) },
-                    { LearnerLrnFAM_ECF, todo },
-                    { LearnerLrnFAM_EDF1, todo },
-                    { LearnerLrnFAM_EDF2, todo },
-                    { LearnerLrnFAM_EHC, todo },
-                    { LearnerLrnFAM_HNS, todo },
-                    { LearnerLrnFAM_MCF, todo },
+                    { LearnerLrnFAM_ECF, new AttributeData(learnerFamDenormalized.ECF) },
+                    { LearnerLrnFAM_EDF1, new AttributeData(learnerFamDenormalized.EDF1) },
+                    { LearnerLrnFAM_EDF2, new AttributeData(learnerFamDenormalized.EDF2) },
+                    { LearnerLrnFAM_EHC, new AttributeData(learnerFamDenormalized.EHC) },
+                    { LearnerLrnFAM_HNS, new AttributeData(learnerFamDenormalized.HNS) },
+                    { LearnerLrnFAM_MCF, new AttributeData(learnerFamDenormalized.MCF) },
                     { LearnerMathGrade, new AttributeData(learner.MathGrade) },
                     { LearnerPlanEEPHours, new AttributeData(learner.PlanEEPHoursNullable) },
                     { LearnerPlanLearnHours, new AttributeData(learner.PlanLearnHoursNullable) },
@@ -203,6 +210,29 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { LearningDeliveryLARSValidityValidityStartDate, new AttributeData(larsValidity.StartDate) },
                 }
             };
+        }
+
+        public LearnerFAMDenormalized BuildLearnerFAMDenormalized(IEnumerable<ILearnerFAM> learnerFams)
+        {
+            var learnerFam = new LearnerFAMDenormalized();
+
+            if (learnerFams != null)
+            {
+                learnerFams = learnerFams.ToList();
+
+                var edfArray = learnerFams.Where(f => f.LearnFAMType == "EDF").Select(f => (int?)f.LearnFAMCode).ToArray();
+
+                Array.Resize(ref edfArray, 2);
+
+                learnerFam.ECF = learnerFams.Where(f => f.LearnFAMType == ECF).Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
+                learnerFam.EDF1 = edfArray[0];
+                learnerFam.EDF2 = edfArray[1];
+                learnerFam.EHC = learnerFams.Where(f => f.LearnFAMType == "EHC").Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
+                learnerFam.HNS = learnerFams.Where(f => f.LearnFAMType == "HNS").Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
+                learnerFam.MCF = learnerFams.Where(f => f.LearnFAMType == "MCF").Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
+            }
+
+            return learnerFam;
         }
     }
 }
