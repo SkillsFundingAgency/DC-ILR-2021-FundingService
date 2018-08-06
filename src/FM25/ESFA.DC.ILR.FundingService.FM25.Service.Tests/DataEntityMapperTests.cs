@@ -149,9 +149,18 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 WithdrawReasonNullable = 8
             };
 
+            var larsLearningDelivery = new LARSLearningDelivery()
+            {
+                AwardOrgCode = "awardOrgCode",
+                EFACOFType = 1,
+                LearnAimRefTitle = "learnAimRefTitle",
+                LearnAimRefType = "learnAimRefType",
+                SectorSubjectAreaTier2 = 1.0m
+            };
+
             var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
 
-            larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(new LARSLearningDelivery());
+            larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
 
             var dataEntity = NewService(larsReferenceDataServiceMock.Object).BuildLearningDeliveryDataEntity(learningDelivery);
 
@@ -159,14 +168,14 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             dataEntity.Attributes.Should().HaveCount(20);
             dataEntity.Attributes["AimSeqNumber"].Value.Should().Be(learningDelivery.AimSeqNumber);
             dataEntity.Attributes["AimType"].Value.Should().Be(learningDelivery.AimType);
-            dataEntity.Attributes["AwardOrgCode"].Should().BeNull();
+            dataEntity.Attributes["AwardOrgCode"].Value.Should().Be(larsLearningDelivery.AwardOrgCode);
             dataEntity.Attributes["CompStatus"].Value.Should().Be(learningDelivery.CompStatus);
-            dataEntity.Attributes["EFACOFType"].Should().BeNull();
+            dataEntity.Attributes["EFACOFType"].Value.Should().Be(larsLearningDelivery.EFACOFType);
             dataEntity.Attributes["FundModel"].Value.Should().Be(learningDelivery.FundModel);
             dataEntity.Attributes["LearnActEndDate"].Value.Should().Be(learningDelivery.LearnActEndDateNullable);
             dataEntity.Attributes["LearnAimRef"].Value.Should().Be(learningDelivery.LearnAimRef);
-            dataEntity.Attributes["LearnAimRefTitle"].Should().BeNull();
-            dataEntity.Attributes["LearnAimRefType"].Should().BeNull();
+            dataEntity.Attributes["LearnAimRefTitle"].Value.Should().Be(larsLearningDelivery.LearnAimRefTitle);
+            dataEntity.Attributes["LearnAimRefType"].Value.Should().Be(larsLearningDelivery.LearnAimRefType);
             dataEntity.Attributes["LearnPlanEndDate"].Value.Should().Be(learningDelivery.LearnPlanEndDate);
             dataEntity.Attributes["LearnStartDate"].Value.Should().Be(learningDelivery.LearnStartDate);
             dataEntity.Attributes["LrnDelFAM_SOF"].Should().BeNull();
@@ -175,7 +184,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             dataEntity.Attributes["LearnDelFAM_LDM3"].Should().BeNull();
             dataEntity.Attributes["LearnDelFAM_LDM4"].Should().BeNull();
             dataEntity.Attributes["ProgType"].Value.Should().Be(learningDelivery.ProgTypeNullable);
-            dataEntity.Attributes["SectorSubjectAreaTier2"].Should().BeNull();
+            dataEntity.Attributes["SectorSubjectAreaTier2"].Value.Should().Be(larsLearningDelivery.SectorSubjectAreaTier2);
             dataEntity.Attributes["WithdrawReason"].Value.Should().Be(learningDelivery.WithdrawReasonNullable);
         }
 

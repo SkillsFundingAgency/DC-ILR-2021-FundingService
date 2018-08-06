@@ -219,8 +219,12 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                 FrameworkCommonComponent = 2,
                 LearnAimRef = "learnAimRef",
                 LearnAimRefType = "learnAimRefType",
+                LearnAimRefTitle = "learnAimRefTitle",
                 NotionalNVQLevelv2 = "notionalNVQLevelv2",
                 RegulatedCreditValue = 3,
+                EFACOFType = 1,
+                AwardOrgCode = "awardOrgCode",
+                SectorSubjectAreaTier2 = 1.0m,
                 LARS_Validity = new List<LARS_Validity>()
                 {
                     new LARS_Validity(),
@@ -235,8 +239,12 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             larsLearningDelivery.FrameworkCommonComponent.Should().Be(lars_LearningDelivery.FrameworkCommonComponent);
             larsLearningDelivery.LearnAimRef.Should().Be(lars_LearningDelivery.LearnAimRef);
             larsLearningDelivery.LearnAimRefType.Should().Be(lars_LearningDelivery.LearnAimRefType);
+            larsLearningDelivery.LearnAimRefTitle.Should().Be(lars_LearningDelivery.LearnAimRefTitle);
             larsLearningDelivery.NotionalNVQLevelv2.Should().Be(lars_LearningDelivery.NotionalNVQLevelv2);
             larsLearningDelivery.RegulatedCreditValue.Should().Be(lars_LearningDelivery.RegulatedCreditValue);
+            larsLearningDelivery.AwardOrgCode.Should().Be(lars_LearningDelivery.AwardOrgCode);
+            larsLearningDelivery.EFACOFType.Should().Be(lars_LearningDelivery.EFACOFType);
+            larsLearningDelivery.SectorSubjectAreaTier2.Should().Be(lars_LearningDelivery.SectorSubjectAreaTier2);
 
             larsLearningDelivery.LARSValidities.Should().HaveCount(2);
         }

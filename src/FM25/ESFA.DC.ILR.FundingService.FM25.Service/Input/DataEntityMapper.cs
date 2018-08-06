@@ -152,20 +152,23 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
 
         public IDataEntity BuildLearningDeliveryDataEntity(ILearningDelivery learningDelivery)
         {
+            var larsLearningDelivery =
+                _larsReferenceDataService.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef);
+
             return new DataEntity(EntityLearningDelivery)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
                     { LearningDeliveryAimSeqNumber, new AttributeData(learningDelivery.AimSeqNumber) },
                     { LearningDeliveryAimType, new AttributeData(learningDelivery.AimType) },
-                    { LearningDeliveryAwardOrgCode, todo },
+                    { LearningDeliveryAwardOrgCode, new AttributeData(larsLearningDelivery.AwardOrgCode) },
                     { LearningDeliveryCompStatus, new AttributeData(learningDelivery.CompStatus) },
-                    { LearningDeliveryEFACOFType, todo },
+                    { LearningDeliveryEFACOFType, new AttributeData(larsLearningDelivery.EFACOFType) },
                     { LearningDeliveryFundModel, new AttributeData(learningDelivery.FundModel) },
                     { LearningDeliveryLearnActEndDate, new AttributeData(learningDelivery.LearnActEndDateNullable) },
                     { LearningDeliveryLearnAimRef, new AttributeData(learningDelivery.LearnAimRef) },
-                    { LearningDeliveryLearnAimRefTitle, todo },
-                    { LearningDeliveryLearnAimRefType, todo },
+                    { LearningDeliveryLearnAimRefTitle, new AttributeData(larsLearningDelivery.LearnAimRefTitle) },
+                    { LearningDeliveryLearnAimRefType, new AttributeData(larsLearningDelivery.LearnAimRefType) },
                     { LearningDeliveryLearnPlanEndDate, new AttributeData(learningDelivery.LearnPlanEndDate) },
                     { LearningDeliveryLearnStartDate, new AttributeData(learningDelivery.LearnStartDate) },
                     { LearningDeliveryLrnDelFAM_SOF, todo },
@@ -174,12 +177,10 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { LearningDeliveryLearnDelFAM_LDM3, todo },
                     { LearningDeliveryLearnDelFAM_LDM4, todo },
                     { LearningDeliveryProgType, new AttributeData(learningDelivery.ProgTypeNullable) },
-                    { LearningDeliverySectorSubjectAreaTier2, todo },
+                    { LearningDeliverySectorSubjectAreaTier2, new AttributeData(larsLearningDelivery.SectorSubjectAreaTier2) },
                     { LearningDeliveryWithdrawReason, new AttributeData(learningDelivery.WithdrawReasonNullable) },
                 },
-                Children =
-                    _larsReferenceDataService
-                        .LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)?
+                Children = larsLearningDelivery?
                         .LARSValidities?
                         .Select(BuildLearningDeliveryLARSValidity)
                         .ToList()

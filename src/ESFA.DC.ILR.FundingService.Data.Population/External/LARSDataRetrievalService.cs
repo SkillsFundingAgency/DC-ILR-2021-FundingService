@@ -82,12 +82,16 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             return new LARSLearningDelivery
             {
                 LearnAimRef = entity.LearnAimRef,
+                LearnAimRefTitle = entity.LearnAimRefTitle,
                 LearnAimRefType = entity.LearnAimRefType,
                 NotionalNVQLevelv2 = entity.NotionalNVQLevelv2,
                 RegulatedCreditValue = entity.RegulatedCreditValue,
                 EnglandFEHEStatus = entity.EnglandFEHEStatus,
                 EnglPrscID = entity.EnglPrscID,
                 FrameworkCommonComponent = entity.FrameworkCommonComponent,
+                AwardOrgCode = entity.AwardOrgCode,
+                EFACOFType = entity.EFACOFType,
+                SectorSubjectAreaTier2 = entity.SectorSubjectAreaTier2,
                 LARSValidities = entity.LARS_Validity.Select(LARSValidityFromEntity).ToList()
             };
         }
