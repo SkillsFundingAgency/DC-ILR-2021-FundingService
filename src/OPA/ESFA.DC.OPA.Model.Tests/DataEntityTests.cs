@@ -44,22 +44,6 @@ namespace ESFA.DC.OPA.Model.Tests
         }
 
         [Fact]
-        public void OPA_DataEntity_LearnRefNumber_Exists()
-        {
-            var dataEntity = new DataEntity(null);
-
-            dataEntity.Attributes.Add("LearnRefNumber", new AttributeData("value"));
-
-            dataEntity.LearnRefNumber.Should().Be("value");
-        }
-
-        [Fact]
-        public void LearnRefNumber_Null()
-        {
-            new DataEntity(null).LearnRefNumber.Should().BeNull();
-        }
-
-        [Fact]
         public void IsGlobal_True()
         {
             new DataEntity("global").IsGlobal.Should().BeTrue();

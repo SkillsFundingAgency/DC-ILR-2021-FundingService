@@ -12,8 +12,6 @@ namespace ESFA.DC.OPA.Model.Interface
 
         IDataEntity Parent { get; }
 
-        string LearnRefNumber { get; }
-
         bool IsGlobal { get; }
 
         void AddChild(IDataEntity childDataEntity);

@@ -56,7 +56,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             // ASSERT
             attributes["UKPRN"].Value.Should().Be(12345678);
             attributes["LARSVersion"].Value.Should().Be("Version_005");
-            outputEntity.Children.First().LearnRefNumber.Should().Be("TestLearner");
+            outputEntity.Children.First().Attributes["LearnRefNumber"].Value.Should().Be("TestLearner");
         }
 
         [Fact]

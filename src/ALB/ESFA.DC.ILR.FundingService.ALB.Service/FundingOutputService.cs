@@ -73,7 +73,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
         {
             return new LearnerAttribute()
             {
-                LearnRefNumber = dataEntity.LearnRefNumber,
+                LearnRefNumber = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, "LearnRefNumber"),
                 LearnerPeriodisedAttributes = LearnerPeriodisedAttributes(dataEntity).ToArray(),
                 LearningDeliveryAttributes = dataEntity.Children.Select(LearningDeliveryFromDataEntity).ToArray()
             };

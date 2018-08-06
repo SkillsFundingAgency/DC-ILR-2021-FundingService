@@ -45,7 +45,7 @@ namespace ESFA.DC.OPA.Service.Tests
             result.Children.Count.Should().Be(1);
             result.Children.Select(a => a.Attributes).Should().HaveCount(1);
             result.Attributes["UKPRN"].Value.Should().Be(12345678);
-            result.Children.First().LearnRefNumber.Should().Be("Learner1");
+            result.Children.First().Attributes["LearnRefNumber"].Value.Should().Be("Learner1");
         }
 
         private IDataEntity TestDataEntity()

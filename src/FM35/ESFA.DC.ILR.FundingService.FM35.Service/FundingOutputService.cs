@@ -64,7 +64,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
         {
             return new LearnerAttribute()
                 {
-                    LearnRefNumber = dataEntity.LearnRefNumber,
+                    LearnRefNumber = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, "LearnRefNumber"),
                     LearningDeliveryAttributes = dataEntity
                         .Children
                         .Where(e => e.EntityName == "LearningDelivery")

@@ -5,7 +5,6 @@ namespace ESFA.DC.OPA.Model
 {
     public class DataEntity : IDataEntity
     {
-        private const string attributeLearnRefNumber = "LearnRefNumber";
         private const string entityNameGlobal = "global";
 
         public DataEntity(string entityName)
@@ -22,16 +21,6 @@ namespace ESFA.DC.OPA.Model
         public IList<IDataEntity> Children { get; set; }
 
         public IDataEntity Parent { get; set; }
-
-        public string LearnRefNumber
-        {
-            get
-            {
-                Attributes.TryGetValue(attributeLearnRefNumber, out IAttributeData attribute);
-
-                return attribute?.Value.ToString();
-            }
-        }
 
         public bool IsGlobal => EntityName != null && EntityName.Equals(entityNameGlobal);
 
