@@ -107,7 +107,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { GlobalSpecialistResources, todo },
                     { GlobalUKPRN, new AttributeData(_fileDataService.UKPRN()) }
                 },
-                Children = { BuildLearnerDataEntity(learner) }
+                Children = learner != null ? new List<IDataEntity>() { BuildLearnerDataEntity(learner) } : new List<IDataEntity>()
             };
         }
 
@@ -133,9 +133,9 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { LearnerULN, new AttributeData(learner.ULN) },
                 },
                 Children =
-                    learner
-                        .LearningDeliveries
-                        .Select(BuildLearningDeliveryDataEntity)
+                    (learner
+                        .LearningDeliveries?
+                        .Select(BuildLearningDeliveryDataEntity) ?? new List<IDataEntity>())
                         .Union(
                             _fileDataService.DPOutcomesForLearnRefNumber(learner.LearnRefNumber)
                                 .Select(BuildDPOutcome))
@@ -173,7 +173,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                 Children =
                     _larsReferenceDataService
                         .LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)?
-                        .LARSValidities
+                        .LARSValidities?
                         .Select(BuildLearningDeliveryLARSValidity)
                         .ToList()
                     ?? new List<IDataEntity>()
@@ -198,9 +198,9 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    { LearningDeliveryLARSValidityValidityCategory,  todo },
-                    { LearningDeliveryLARSValidityValidityLastNewStartDate, todo },
-                    { LearningDeliveryLARSValidityValidityStartDate, todo },
+                    { LearningDeliveryLARSValidityValidityCategory, new AttributeData(larsValidity.Category) },
+                    { LearningDeliveryLARSValidityValidityLastNewStartDate, new AttributeData(larsValidity.LastNewStartDate) },
+                    { LearningDeliveryLARSValidityValidityStartDate, new AttributeData(larsValidity.StartDate) },
                 }
             };
         }
