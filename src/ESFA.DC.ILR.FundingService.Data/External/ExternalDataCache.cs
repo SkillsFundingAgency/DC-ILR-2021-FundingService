@@ -27,6 +27,8 @@ namespace ESFA.DC.ILR.FundingService.Data.External
        
         public IDictionary<string, IEnumerable<SfaDisadvantage>> SfaDisadvantage { get; set; }
 
+        public IDictionary<string, IEnumerable<EfaDisadvantage>> EfaDisadvantage { get; set; }
+
         public string OrgVersion { get; set; }
 
         public IDictionary<long, IEnumerable<OrgFunding>> OrgFunding { get; set; }

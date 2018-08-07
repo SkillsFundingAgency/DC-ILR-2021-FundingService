@@ -27,6 +27,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public virtual IQueryable<SFA_PostcodeDisadvantage> SfaPostcodeDisadvantages => _postcodes.SFA_PostcodeDisadvantage;
 
+        public virtual IQueryable<EFA_PostcodeDisadvantage> EfaPostcodeDisadvantages => _postcodes.EFA_PostcodeDisadvantage;
+
         public IEnumerable<string> UniquePostcodes(IMessage message)
         {
             return message.Learners.Where(l => l.LearningDeliveries != null).SelectMany(l => l.LearningDeliveries).Select(ld => ld.DelLocPostCode).Distinct();
@@ -67,6 +69,25 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         public SfaDisadvantage SfaDisadvantageFromEntity(SFA_PostcodeDisadvantage entity)
         {
             return new SfaDisadvantage
+            {
+                Postcode = entity.Postcode,
+                Uplift = entity.Uplift,
+                EffectiveFrom = entity.EffectiveFrom,
+                EffectiveTo = entity.EffectiveTo,
+            };
+        }
+
+        public IDictionary<string, IEnumerable<EfaDisadvantage>> EfaDisadvantagesForPostcodes(IEnumerable<string> postcodes)
+        {
+            return EfaPostcodeDisadvantages
+                .Where(p => postcodes.Contains(p.Postcode))
+                .GroupBy(a => a.Postcode)
+                .ToDictionary(a => a.Key, a => a.Select(EfaDisadvantageFromEntity).ToList() as IEnumerable<EfaDisadvantage>);
+        }
+
+        public EfaDisadvantage EfaDisadvantageFromEntity(EFA_PostcodeDisadvantage entity)
+        {
+            return new EfaDisadvantage()
             {
                 Postcode = entity.Postcode,
                 Uplift = entity.Uplift,

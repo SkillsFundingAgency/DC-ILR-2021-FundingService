@@ -2,7 +2,7 @@
 
 namespace ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model
 {
-    public class SfaDisadvantage : AbstractDisadvantage
+    public class EfaDisadvantage : AbstractDisadvantage 
     {
     }
 }

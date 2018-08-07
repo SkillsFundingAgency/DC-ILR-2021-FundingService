@@ -146,7 +146,15 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 LearnPlanEndDate = new DateTime(2018, 1, 1),
                 LearnStartDate = new DateTime(2019, 1, 1),
                 ProgTypeNullable = 7,
-                WithdrawReasonNullable = 8
+                WithdrawReasonNullable = 8,
+                LearningDeliveryFAMs = new List<TestLearningDeliveryFAM>()
+                {
+                    new TestLearningDeliveryFAM() { LearnDelFAMType = "SOF", LearnDelFAMCode = "SOF" },
+                    new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "LDM1" },
+                    new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "LDM2" },
+                    new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "LDM3" },
+                    new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "LDM4" },
+                }
             };
 
             var larsLearningDelivery = new LARSLearningDelivery()
@@ -178,11 +186,11 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             dataEntity.Attributes["LearnAimRefType"].Value.Should().Be(larsLearningDelivery.LearnAimRefType);
             dataEntity.Attributes["LearnPlanEndDate"].Value.Should().Be(learningDelivery.LearnPlanEndDate);
             dataEntity.Attributes["LearnStartDate"].Value.Should().Be(learningDelivery.LearnStartDate);
-            dataEntity.Attributes["LrnDelFAM_SOF"].Should().BeNull();
-            dataEntity.Attributes["LearnDelFAM_LDM1"].Should().BeNull();
-            dataEntity.Attributes["LearnDelFAM_LDM2"].Should().BeNull();
-            dataEntity.Attributes["LearnDelFAM_LDM3"].Should().BeNull();
-            dataEntity.Attributes["LearnDelFAM_LDM4"].Should().BeNull();
+            dataEntity.Attributes["LrnDelFAM_SOF"].Value.Should().Be("SOF");
+            dataEntity.Attributes["LearnDelFAM_LDM1"].Value.Should().Be("LDM1");
+            dataEntity.Attributes["LearnDelFAM_LDM2"].Value.Should().Be("LDM2");
+            dataEntity.Attributes["LearnDelFAM_LDM3"].Value.Should().Be("LDM3");
+            dataEntity.Attributes["LearnDelFAM_LDM4"].Value.Should().Be("LDM4");
             dataEntity.Attributes["ProgType"].Value.Should().Be(learningDelivery.ProgTypeNullable);
             dataEntity.Attributes["SectorSubjectAreaTier2"].Value.Should().Be(larsLearningDelivery.SectorSubjectAreaTier2);
             dataEntity.Attributes["WithdrawReason"].Value.Should().Be(learningDelivery.WithdrawReasonNullable);

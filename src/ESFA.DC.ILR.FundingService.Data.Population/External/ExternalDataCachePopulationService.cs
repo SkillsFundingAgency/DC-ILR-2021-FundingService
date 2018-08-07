@@ -51,6 +51,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             referenceDataCache.PostcodeCurrentVersion = _postcodesDataRetrievalService.CurrentVersion();
             referenceDataCache.SfaAreaCost = _postcodesDataRetrievalService.SfaAreaCostsForPostcodes(uniquePostcodes);
             referenceDataCache.SfaDisadvantage = _postcodesDataRetrievalService.SfaDisadvantagesForPostcodes(uniquePostcodes);
+            referenceDataCache.EfaDisadvantage = _postcodesDataRetrievalService.EfaDisadvantagesForPostcodes(uniquePostcodes);
 
             referenceDataCache.OrgVersion = _organisationDataRetrievalService.CurrentVersion();
             referenceDataCache.OrgFunding = _organisationDataRetrievalService.OrgFundingsForUkprns(ukprns);

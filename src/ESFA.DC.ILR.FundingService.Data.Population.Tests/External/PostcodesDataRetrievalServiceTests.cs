@@ -237,6 +237,77 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             sfaDisadvantage.Postcode.Should().Be(sfaPostcodeDisadvantage.Postcode);
         }
 
+        [Fact]
+        public void EfaPostcodeDisadvantagesForPostcodes()
+        {
+            var efaPostcodeDisadvantages = new List<EFA_PostcodeDisadvantage>()
+            {
+                new EFA_PostcodeDisadvantage()
+                {
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2WT" },
+                    Postcode = "CV1 2WT",
+                    Uplift = 1.2m,
+                    EffectiveFrom = new DateTime(2000, 01, 01),
+                    EffectiveTo = null,
+                },
+                new EFA_PostcodeDisadvantage()
+                {
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2TT" },
+                    Postcode = "CV1 2TT",
+                    Uplift = 1.5m,
+                    EffectiveFrom = new DateTime(2000, 01, 01),
+                    EffectiveTo = new DateTime(2015, 12, 31)
+                },
+                new EFA_PostcodeDisadvantage()
+                {
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2TT" },
+                    Postcode = "CV1 2TT",
+                    Uplift = 2.1m,
+                    EffectiveFrom = new DateTime(2016, 01, 01),
+                    EffectiveTo = null,
+                },
+                new EFA_PostcodeDisadvantage()
+                {
+                    Postcode = "Fictional"
+                }
+            }.AsQueryable();
+
+            var postcodesDataRetrievalServiceMock = NewMock();
+
+            postcodesDataRetrievalServiceMock.SetupGet(p => p.EfaPostcodeDisadvantages).Returns(efaPostcodeDisadvantages);
+
+            var postcodes = new List<string>() { "CV1 2WT", "CV1 2TT" };
+
+            var efaDisadvantages = postcodesDataRetrievalServiceMock.Object.EfaDisadvantagesForPostcodes(postcodes);
+
+            efaDisadvantages.Should().HaveCount(2);
+            efaDisadvantages.Should().ContainKeys("CV1 2WT", "CV1 2TT");
+            efaDisadvantages.Should().NotContainKey("Fictional");
+
+            efaDisadvantages["CV1 2TT"].Should().HaveCount(2);
+            efaDisadvantages["CV1 2WT"].Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void EfaDisadvantageFromEntity()
+        {
+            var efaPostcodeDisadvantage = new EFA_PostcodeDisadvantage()
+            {
+                MasterPostcode = new MasterPostcode { Postcode = "CV1 2TT" },
+                Postcode = "CV1 2TT",
+                Uplift = 1.5m,
+                EffectiveFrom = new DateTime(2000, 01, 01),
+                EffectiveTo = new DateTime(2015, 12, 31),
+            };
+
+            var efaDisadvantage = NewService().EfaDisadvantageFromEntity(efaPostcodeDisadvantage);
+
+            efaDisadvantage.Uplift.Should().Be(efaPostcodeDisadvantage.Uplift);
+            efaDisadvantage.EffectiveFrom.Should().Be(efaPostcodeDisadvantage.EffectiveFrom);
+            efaDisadvantage.EffectiveTo.Should().Be(efaPostcodeDisadvantage.EffectiveTo);
+            efaDisadvantage.Postcode.Should().Be(efaPostcodeDisadvantage.Postcode);
+        }
+
         private PostcodesDataRetrievalService NewService(IPostcodes postcodes = null)
         {
             return new PostcodesDataRetrievalService(postcodes);

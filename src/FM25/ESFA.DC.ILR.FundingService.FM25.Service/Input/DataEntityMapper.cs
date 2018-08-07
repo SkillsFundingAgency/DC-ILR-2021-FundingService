@@ -158,8 +158,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
 
         public IDataEntity BuildLearningDeliveryDataEntity(ILearningDelivery learningDelivery)
         {
-            var larsLearningDelivery =
-                _larsReferenceDataService.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef);
+            var larsLearningDelivery = _larsReferenceDataService.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef);
+            var learningDeliveryFAMDenormalized = BuildLearningDeliveryFAMDenormalized(learningDelivery.LearningDeliveryFAMs);
 
             return new DataEntity(EntityLearningDelivery)
             {
@@ -177,11 +177,11 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { LearningDeliveryLearnAimRefType, new AttributeData(larsLearningDelivery.LearnAimRefType) },
                     { LearningDeliveryLearnPlanEndDate, new AttributeData(learningDelivery.LearnPlanEndDate) },
                     { LearningDeliveryLearnStartDate, new AttributeData(learningDelivery.LearnStartDate) },
-                    { LearningDeliveryLrnDelFAM_SOF, todo },
-                    { LearningDeliveryLearnDelFAM_LDM1, todo },
-                    { LearningDeliveryLearnDelFAM_LDM2, todo },
-                    { LearningDeliveryLearnDelFAM_LDM3, todo },
-                    { LearningDeliveryLearnDelFAM_LDM4, todo },
+                    { LearningDeliveryLrnDelFAM_SOF, new AttributeData(learningDeliveryFAMDenormalized.SOF) },
+                    { LearningDeliveryLearnDelFAM_LDM1, new AttributeData(learningDeliveryFAMDenormalized.LDM1) },
+                    { LearningDeliveryLearnDelFAM_LDM2, new AttributeData(learningDeliveryFAMDenormalized.LDM2) },
+                    { LearningDeliveryLearnDelFAM_LDM3, new AttributeData(learningDeliveryFAMDenormalized.LDM3) },
+                    { LearningDeliveryLearnDelFAM_LDM4, new AttributeData(learningDeliveryFAMDenormalized.LDM4) },
                     { LearningDeliveryProgType, new AttributeData(learningDelivery.ProgTypeNullable) },
                     { LearningDeliverySectorSubjectAreaTier2, new AttributeData(larsLearningDelivery.SectorSubjectAreaTier2) },
                     { LearningDeliveryWithdrawReason, new AttributeData(learningDelivery.WithdrawReasonNullable) },

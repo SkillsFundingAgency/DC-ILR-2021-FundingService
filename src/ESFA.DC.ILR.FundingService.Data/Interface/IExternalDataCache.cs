@@ -15,7 +15,10 @@ namespace ESFA.DC.ILR.FundingService.Data.Interface
         string LARSCurrentVersion { get; }
 
         IDictionary<string, IEnumerable<SfaAreaCost>> SfaAreaCost { get; }
+
         IDictionary<string, IEnumerable<SfaDisadvantage>> SfaDisadvantage { get; }
+
+        IDictionary<string, IEnumerable<EfaDisadvantage>> EfaDisadvantage { get; }
 
         string PostcodeCurrentVersion { get; }
 
