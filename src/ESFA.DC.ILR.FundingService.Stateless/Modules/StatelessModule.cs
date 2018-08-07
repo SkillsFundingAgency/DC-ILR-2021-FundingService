@@ -39,7 +39,7 @@ using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.Serialization.Json;
 using ESFA.DC.Serialization.Xml;
 
-namespace ESFA.DC.ILR.FundingService.Modules
+namespace ESFA.DC.ILR.FundingService.Stateless.Modules
 {
     public class StatelessModule : Module
     {

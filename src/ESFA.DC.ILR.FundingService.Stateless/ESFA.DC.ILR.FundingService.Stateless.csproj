@@ -433,6 +433,7 @@
     <Compile Include="Configuration\ServiceBusTopicConfig.cs" />
     <Compile Include="Handlers\MessageHandler.cs" />
     <Compile Include="Mappers\JobContextMessageMapper.cs" />
+    <Compile Include="Modules\StatelessModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stateless.cs" />
     <Compile Include="Program.cs" />
@@ -463,9 +464,21 @@
       <Project>{7D044D8C-64BE-48A0-A2F2-1284FC7395F5}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALBActor.Interfaces\ESFA.DC.ILR.FundingService.ALBActor.Interfaces.csproj">
+      <Project>{14944B1C-9717-4CBB-B756-37502DDB5E0B}</Project>
+      <Name>ESFA.DC.ILR.FundingService.ALBActor.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Config\ESFA.DC.ILR.FundingService.Config.csproj">
       <Project>{29C28BC1-23E2-4FAD-AB74-83CD2D33E7D8}</Project>
       <Name>ESFA.DC.ILR.FundingService.Config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Data.Population\ESFA.DC.ILR.FundingService.Data.Population.csproj">
+      <Project>{CB179664-339B-4877-B208-1007AE42FD7C}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Data.Population</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Data\ESFA.DC.ILR.FundingService.Data.csproj">
+      <Project>{69B93B19-4FD0-4205-AFFA-8B71122A3C65}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Dto\ESFA.DC.ILR.FundingService.Dto.csproj">
       <Project>{0021C0BF-4592-40C8-9272-82AC3A1339FA}</Project>
@@ -487,9 +500,17 @@
       <Project>{e6cf1460-4ef0-4579-b022-dc2d3f383568}</Project>
       <Name>ESFA.DC.ILR.FundingService.Providers</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ServiceFabric.Common\ESFA.DC.ILR.FundingService.ServiceFabric.Common.csproj">
+      <Project>{21BA0741-5975-4902-8D7A-567A50873CFA}</Project>
+      <Name>ESFA.DC.ILR.FundingService.ServiceFabric.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Stateless.Models\ESFA.DC.ILR.FundingService.Stateless.Models.csproj">
       <Project>{0faaaab8-443b-47bf-9e96-c3069e8789f9}</Project>
       <Name>ESFA.DC.ILR.FundingService.Stateless.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FM35\ESFA.DC.ILR.FundingService.FM35Actor.Interfaces\ESFA.DC.ILR.FundingService.FM35Actor.Interfaces.csproj">
+      <Project>{479E2521-1924-41DB-9CB7-CF8EA6DECD18}</Project>
+      <Name>ESFA.DC.ILR.FundingService.FM35Actor.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

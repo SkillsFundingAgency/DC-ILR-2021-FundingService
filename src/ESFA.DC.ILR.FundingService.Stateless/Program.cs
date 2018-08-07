@@ -32,6 +32,7 @@ using ESFA.DC.Queueing;
 using ESFA.DC.Queueing.Interface;
 using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.ServiceFabric.Helpers;
+using StatelessModule = ESFA.DC.ILR.FundingService.Stateless.Modules.StatelessModule;
 
 namespace ESFA.DC.ILR.FundingService.Stateless
 {
