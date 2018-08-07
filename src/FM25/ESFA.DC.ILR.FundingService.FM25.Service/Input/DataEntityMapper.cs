@@ -77,6 +77,12 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
         private const string LearningDeliveryLARSValidityValidityStartDate = "ValidityStartDate";
 
         private const string ECF = "ECF";
+        private const string EHC = "EHC";
+        private const string HNS = "HNS";
+        private const string MCF = "MCF";
+        private const string EDF = "EDF";
+        private const string LDM = "LDM";
+        private const string SOF = "SOF";
 
         private readonly ILARSReferenceDataService _larsReferenceDataService;
         private readonly IOrganisationReferenceDataService _organisationReferenceDataService;
@@ -221,19 +227,41 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
             {
                 learnerFams = learnerFams.ToList();
 
-                var edfArray = learnerFams.Where(f => f.LearnFAMType == "EDF").Select(f => (int?)f.LearnFAMCode).ToArray();
+                var edfArray = learnerFams.Where(f => f.LearnFAMType == EDF).Select(f => (int?)f.LearnFAMCode).ToArray();
 
                 Array.Resize(ref edfArray, 2);
 
                 learnerFam.ECF = learnerFams.Where(f => f.LearnFAMType == ECF).Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
                 learnerFam.EDF1 = edfArray[0];
                 learnerFam.EDF2 = edfArray[1];
-                learnerFam.EHC = learnerFams.Where(f => f.LearnFAMType == "EHC").Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
-                learnerFam.HNS = learnerFams.Where(f => f.LearnFAMType == "HNS").Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
-                learnerFam.MCF = learnerFams.Where(f => f.LearnFAMType == "MCF").Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
+                learnerFam.EHC = learnerFams.Where(f => f.LearnFAMType == EHC).Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
+                learnerFam.HNS = learnerFams.Where(f => f.LearnFAMType == HNS).Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
+                learnerFam.MCF = learnerFams.Where(f => f.LearnFAMType == MCF).Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
             }
 
             return learnerFam;
+        }
+
+        public LearningDeliveryFAMDenormalized BuildLearningDeliveryFAMDenormalized(IEnumerable<ILearningDeliveryFAM> learningDeliveryFams)
+        {
+            var learningDeliveryFam = new LearningDeliveryFAMDenormalized();
+
+            if (learningDeliveryFams != null)
+            {
+                learningDeliveryFams = learningDeliveryFams.ToList();
+
+                var ldmArray = learningDeliveryFams.Where(f => f.LearnDelFAMType == LDM).Select(f => f.LearnDelFAMCode).ToArray();
+
+                Array.Resize(ref ldmArray, 4);
+
+                learningDeliveryFam.SOF = learningDeliveryFams.Where(f => f.LearnDelFAMType == SOF).Select(f => f.LearnDelFAMCode).FirstOrDefault();
+                learningDeliveryFam.LDM1 = ldmArray[0];
+                learningDeliveryFam.LDM2 = ldmArray[1];
+                learningDeliveryFam.LDM3 = ldmArray[2];
+                learningDeliveryFam.LDM4 = ldmArray[3];
+            }
+
+            return learningDeliveryFam;
         }
     }
 }

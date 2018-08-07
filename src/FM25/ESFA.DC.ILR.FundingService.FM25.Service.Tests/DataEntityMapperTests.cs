@@ -261,6 +261,72 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             learnerFamDenormalized.MCF.Should().Be(6);
         }
 
+        [Fact]
+        public void BuildLearningDeliveryFAMDenormalized()
+        {
+            var learningDeliveryFams = new List<TestLearningDeliveryFAM>()
+            {
+                new TestLearningDeliveryFAM() { LearnDelFAMType = "SOF", LearnDelFAMCode = "1" },
+                new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "2" },
+                new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "3" },
+                new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "4" },
+                new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "5" },
+            };
+
+            var learningDeliveryFAMDenormalized = NewService().BuildLearningDeliveryFAMDenormalized(learningDeliveryFams);
+
+            learningDeliveryFAMDenormalized.SOF.Should().Be("1");
+            learningDeliveryFAMDenormalized.LDM1.Should().Be("2");
+            learningDeliveryFAMDenormalized.LDM2.Should().Be("3");
+            learningDeliveryFAMDenormalized.LDM3.Should().Be("4");
+            learningDeliveryFAMDenormalized.LDM4.Should().Be("5");
+        }
+
+        [Fact]
+        public void BuildLearningDeliveryFAMDenormalized_Null()
+        {
+            var learningDeliveryFAMDenormalized = NewService().BuildLearningDeliveryFAMDenormalized(null);
+
+            learningDeliveryFAMDenormalized.SOF.Should().BeNull();
+            learningDeliveryFAMDenormalized.LDM1.Should().BeNull();
+            learningDeliveryFAMDenormalized.LDM2.Should().BeNull();
+            learningDeliveryFAMDenormalized.LDM3.Should().BeNull();
+            learningDeliveryFAMDenormalized.LDM4.Should().BeNull();
+        }
+
+        [Fact]
+        public void BuildLearningDeliveryFAMDenormalized_NoMatches()
+        {
+            var learningDeliveryFams = new List<TestLearningDeliveryFAM>();
+
+            var learningDeliveryFAMDenormalized = NewService().BuildLearningDeliveryFAMDenormalized(learningDeliveryFams);
+
+            learningDeliveryFAMDenormalized.SOF.Should().BeNull();
+            learningDeliveryFAMDenormalized.LDM1.Should().BeNull();
+            learningDeliveryFAMDenormalized.LDM2.Should().BeNull();
+            learningDeliveryFAMDenormalized.LDM3.Should().BeNull();
+            learningDeliveryFAMDenormalized.LDM4.Should().BeNull();
+        }
+
+        [Fact]
+        public void BuildLearningDeliveryFAMDenormalized_EDF2()
+        {
+            var learningDeliveryFams = new List<TestLearningDeliveryFAM>()
+            {
+                new TestLearningDeliveryFAM() { LearnDelFAMType = "SOF", LearnDelFAMCode = "1" },
+                new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "2" },
+                new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "3" },
+            };
+
+            var learningDeliveryFAMDenormalized = NewService().BuildLearningDeliveryFAMDenormalized(learningDeliveryFams);
+
+            learningDeliveryFAMDenormalized.SOF.Should().Be("1");
+            learningDeliveryFAMDenormalized.LDM1.Should().Be("2");
+            learningDeliveryFAMDenormalized.LDM2.Should().Be("3");
+            learningDeliveryFAMDenormalized.LDM3.Should().BeNull();
+            learningDeliveryFAMDenormalized.LDM4.Should().BeNull();
+        }
+
         private DataEntityMapper NewService(ILARSReferenceDataService larsReferenceDataService = null, IOrganisationReferenceDataService organisationReferenceDataService = null, IFileDataService fileDataService = null)
         {
             return new DataEntityMapper(larsReferenceDataService, organisationReferenceDataService, fileDataService);
