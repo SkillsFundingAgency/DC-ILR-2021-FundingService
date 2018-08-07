@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
+using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.File.Interface;
 using ESFA.DC.ILR.FundingService.Data.File.Model;
 using ESFA.DC.ILR.FundingService.FM25.Service.Model;
@@ -86,37 +86,41 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
 
         private readonly ILARSReferenceDataService _larsReferenceDataService;
         private readonly IOrganisationReferenceDataService _organisationReferenceDataService;
+        private readonly IPostcodesReferenceDataService _postcodesReferenceDataService;
         private readonly IFileDataService _fileDataService;
 
         private readonly IAttributeData todo = null;
 
-        public DataEntityMapper(ILARSReferenceDataService larsReferenceDataService, IOrganisationReferenceDataService organisationReferenceDataService, IFileDataService fileDataService)
+        public DataEntityMapper(ILARSReferenceDataService larsReferenceDataService, IOrganisationReferenceDataService organisationReferenceDataService, IPostcodesReferenceDataService postcodesReferenceDataService, IFileDataService fileDataService)
         {
             _larsReferenceDataService = larsReferenceDataService;
             _organisationReferenceDataService = organisationReferenceDataService;
+            _postcodesReferenceDataService = postcodesReferenceDataService;
             _fileDataService = fileDataService;
         }
 
         public IEnumerable<IDataEntity> MapTo(IEnumerable<ILearner> inputModels)
         {
-            return inputModels.Select(BuildGlobalDataEntity);
+            var global = BuildGlobal();
+
+            return inputModels.Select(l => BuildGlobalDataEntity(l, global));
         }
 
-        public IDataEntity BuildGlobalDataEntity(ILearner learner)
+        public IDataEntity BuildGlobalDataEntity(ILearner learner, Global global)
         {
             return new DataEntity(EntityGlobal)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    { GlobalAreaCostFactor1618, todo },
-                    { GlobalDisadvantageProportion, todo },
-                    { GlobalHistoricLargeProgrammeProportion, todo },
-                    { GlobalLARSVersion, new AttributeData(_larsReferenceDataService.LARSCurrentVersion()) },
-                    { GlobalOrgVersion, new AttributeData(_organisationReferenceDataService.OrganisationVersion()) },
-                    { GlobalProgrammeWeighting, todo },
-                    { GlobalRetentionFactor, todo },
-                    { GlobalSpecialistResources, todo },
-                    { GlobalUKPRN, new AttributeData(_fileDataService.UKPRN()) }
+                    { GlobalAreaCostFactor1618, new AttributeData(global.AreaCostFactor1618) },
+                    { GlobalDisadvantageProportion, new AttributeData(global.DisadvantageProportion) },
+                    { GlobalHistoricLargeProgrammeProportion, new AttributeData(global.HistoricLargeProgrammeProportion) },
+                    { GlobalLARSVersion, new AttributeData(global.LARSVersion) },
+                    { GlobalOrgVersion, new AttributeData(global.OrgVersion) },
+                    { GlobalProgrammeWeighting, new AttributeData(global.ProgrammeWeighting) },
+                    { GlobalRetentionFactor, new AttributeData(global.RetentionFactor) },
+                    { GlobalSpecialistResources, new AttributeData(global.SpecialistResources) },
+                    { GlobalUKPRN, new AttributeData(global.UKPRN) }
                 },
                 Children = learner != null ? new List<IDataEntity>() { BuildLearnerDataEntity(learner) } : new List<IDataEntity>()
             };
@@ -125,6 +129,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
         public IDataEntity BuildLearnerDataEntity(ILearner learner)
         {
             var learnerFamDenormalized = BuildLearnerFAMDenormalized(learner.LearnerFAMs);
+            var efaDisadvantage = _postcodesReferenceDataService.EFADisadvantagesForPostcode(learner.Postcode).FirstOrDefault();
 
             return new DataEntity(EntityLearner)
             {
@@ -142,7 +147,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { LearnerMathGrade, new AttributeData(learner.MathGrade) },
                     { LearnerPlanEEPHours, new AttributeData(learner.PlanEEPHoursNullable) },
                     { LearnerPlanLearnHours, new AttributeData(learner.PlanLearnHoursNullable) },
-                    { LearnerPostcodeDisadvantageUplift, todo },
+                    { LearnerPostcodeDisadvantageUplift, new AttributeData(efaDisadvantage?.Uplift) },
                     { LearnerULN, new AttributeData(learner.ULN) },
                 },
                 Children =
@@ -216,6 +221,27 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { LearningDeliveryLARSValidityValidityLastNewStartDate, new AttributeData(larsValidity.LastNewStartDate) },
                     { LearningDeliveryLARSValidityValidityStartDate, new AttributeData(larsValidity.StartDate) },
                 }
+            };
+        }
+
+        public Global BuildGlobal()
+        {
+            var ukprn = _fileDataService.UKPRN();
+            var orgFundings = _organisationReferenceDataService.OrganisationFundingForUKPRN(ukprn).Where(f => f.OrgFundFactType == "EFA 16-19").ToList();
+
+            var effectiveFrom = new DateTime(2018, 8, 1); // TODO : Create Academic Year Service
+
+            return new Global()
+            {
+                AreaCostFactor1618 = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == effectiveFrom && f.OrgFundFactor == "HISTORIC AREA COST FACTOR")?.OrgFundFactValue,
+                DisadvantageProportion = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == effectiveFrom && f.OrgFundFactor == "HISTORIC DISADVANTAGE FUNDING PROPORTION")?.OrgFundFactValue,
+                HistoricLargeProgrammeProportion = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == effectiveFrom && f.OrgFundFactor == "HISTORIC LARGE PROGRAMME PROPORTION")?.OrgFundFactValue,
+                LARSVersion = _larsReferenceDataService.LARSCurrentVersion(),
+                OrgVersion = _organisationReferenceDataService.OrganisationVersion(),
+                ProgrammeWeighting = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == effectiveFrom && f.OrgFundFactor == "HISTORIC PROGRAMME COST WEIGHTING FACTOR")?.OrgFundFactValue,
+                RetentionFactor = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == effectiveFrom && f.OrgFundFactor == "HISTORIC RETENTION FACTOR")?.OrgFundFactValue,
+                SpecialistResources = orgFundings.FirstOrDefault(f => f.OrgFundFactor == "SPECIALIST RESOURCES")?.OrgFundFactValue,
+                UKPRN = ukprn,
             };
         }
 

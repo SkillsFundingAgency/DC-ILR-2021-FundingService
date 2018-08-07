@@ -10,5 +10,7 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface
         IEnumerable<SfaAreaCost> SFAAreaCostsForPostcode(string postcode);
 
         IEnumerable<SfaDisadvantage> SFADisadvantagesForPostcode(string postcode);
+
+        IEnumerable<EfaDisadvantage> EFADisadvantagesForPostcode(string postcode);
     }
 }
