@@ -4,7 +4,7 @@ namespace ESFA.DC.OPA.Model.Interface
 {
     public interface IAttributeData
     {
-        IList<ITemporalValueItem> Changepoints { get; }
+        IEnumerable<ITemporalValueItem> Changepoints { get; }
 
         object Value { get; }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ESFA.DC.OPA.Model.Interface;
 
 namespace ESFA.DC.OPA.Model
@@ -13,11 +14,11 @@ namespace ESFA.DC.OPA.Model
             _changePoints = new List<ITemporalValueItem>();
         }
 
-        public IList<ITemporalValueItem> Changepoints => _changePoints;
+        public IEnumerable<ITemporalValueItem> Changepoints => _changePoints;
 
         public object Value { get; set; }
 
-        public bool IsTemporal => (Value == null) && (Changepoints.Count > 0);
+        public bool IsTemporal => Value == null && _changePoints.Any();
 
         public void AddChangepoint(ITemporalValueItem temporalValue)
         {

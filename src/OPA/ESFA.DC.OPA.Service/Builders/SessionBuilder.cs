@@ -98,7 +98,7 @@ namespace ESFA.DC.OPA.Service.Builders
 
         protected internal void SetAttribute(Entity entity, EntityInstance targetInstance, string attributeName, IAttributeData attributeData)
         {
-            if (attributeData.Value == null && attributeData.Changepoints.Count == 0)
+            if (attributeData.Value == null && !attributeData.Changepoints.Any())
             {
                 return;
             }
@@ -106,7 +106,7 @@ namespace ESFA.DC.OPA.Service.Builders
             RBAttr attribute = entity.GetAttribute(attributeName);
             if (attribute != null)
             {
-                if (attributeData.Changepoints.Count > 0)
+                if (attributeData.Changepoints.Any())
                 {
                     var changePoints = this.MapTemporalValue(attributeData.Changepoints);
                     attribute.SetValue(targetInstance, new TemporalValue(null, changePoints));
@@ -138,7 +138,7 @@ namespace ESFA.DC.OPA.Service.Builders
             }
         }
 
-        protected internal ArrayList MapTemporalValue(IList<ITemporalValueItem> valueList)
+        protected internal ArrayList MapTemporalValue(IEnumerable<ITemporalValueItem> valueList)
         {
             ArrayList changepoints = new ArrayList();
             foreach (var temporalValueItem in valueList)

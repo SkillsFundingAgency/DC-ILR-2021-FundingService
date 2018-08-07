@@ -73,7 +73,7 @@ namespace ESFA.DC.OPA.Service.Builders
                     var date = _yearStartDate.AddMonths(period);
                     var index = temporalValue.FindChangePointIndex(new ChangePointDate(date.Year, date.Month, date.Day));
                     var val = temporalValue.GetValue(index);
-                    attributeData.Changepoints.Add(new TemporalValueItem(date, val, string.Empty));
+                    attributeData.AddChangepoint(new TemporalValueItem(date, val, string.Empty));
                 }
 
                 return attributeData;
