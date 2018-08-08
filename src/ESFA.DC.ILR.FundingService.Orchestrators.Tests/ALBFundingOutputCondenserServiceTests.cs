@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
-using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Attribute;
-using ESFA.DC.ILR.FundingService.FM35.Service;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Attribute;
+using ESFA.DC.ILR.FundingService.Orchestrators.Output;
 using FluentAssertions;
 using Xunit;
 
-namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
+namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
 {
-    public class FundingOutputCondenserServiceTests
+    public class ALBFundingOutputCondenserServiceTests
     {
         [Fact]
         public void Condense()
@@ -27,9 +24,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             var globalTwo = new GlobalAttribute();
             var globalThree = new GlobalAttribute();
 
-            var fundingOutputs = new List<FM35FundingOutputs>()
+            var fundingOutputs = new List<FundingOutputs>()
             {
-                new FM35FundingOutputs()
+                new FundingOutputs()
                 {
                     Global = globalOne,
                     Learners = new LearnerAttribute[]
@@ -38,7 +35,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
                         learnerTwo,
                     },
                 },
-                new FM35FundingOutputs()
+                new FundingOutputs()
                 {
                     Global = globalTwo,
                     Learners = new LearnerAttribute[]
@@ -47,7 +44,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
                         learnerFour,
                     },
                 },
-                new FM35FundingOutputs()
+                new FundingOutputs()
                 {
                     Global = globalThree,
                     Learners = new LearnerAttribute[]
@@ -83,9 +80,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             var learnerFive = new LearnerAttribute();
             var learnerSix = new LearnerAttribute();
 
-            var fundingOutputs = new List<FM35FundingOutputs>()
+            var fundingOutputs = new List<FundingOutputs>()
             {
-                new FM35FundingOutputs()
+                new FundingOutputs()
                 {
                     Global = null,
                     Learners = new LearnerAttribute[]
@@ -94,7 +91,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
                         learnerTwo,
                     },
                 },
-                new FM35FundingOutputs()
+                new FundingOutputs()
                 {
                     Global = null,
                     Learners = new LearnerAttribute[]
@@ -103,7 +100,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
                         learnerFour,
                     },
                 },
-                new FM35FundingOutputs()
+                new FundingOutputs()
                 {
                     Global = null,
                     Learners = new LearnerAttribute[]
@@ -128,19 +125,19 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             var globalTwo = new GlobalAttribute();
             var globalThree = new GlobalAttribute();
 
-            var fundingOutputs = new List<FM35FundingOutputs>()
+            var fundingOutputs = new List<FundingOutputs>()
             {
-                new FM35FundingOutputs()
+                new FundingOutputs()
                 {
                     Global = globalOne,
                     Learners = null
                 },
-                new FM35FundingOutputs()
+                new FundingOutputs()
                 {
                     Global = globalTwo,
                     Learners = null
                 },
-                new FM35FundingOutputs()
+                new FundingOutputs()
                 {
                     Global = globalThree,
                     Learners = null
@@ -158,8 +155,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
         {
             var learnerOne = new LearnerAttribute();
             var learnerTwo = new LearnerAttribute();
-            var learnerThree = new LearnerAttribute();
-            var learnerFour = new LearnerAttribute();
             var learnerFive = new LearnerAttribute();
             var learnerSix = new LearnerAttribute();
 
@@ -167,9 +162,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             var globalTwo = new GlobalAttribute();
             var globalThree = new GlobalAttribute();
 
-            var fundingOutputs = new List<FM35FundingOutputs>()
+            var fundingOutputs = new List<FundingOutputs>()
             {
-                new FM35FundingOutputs()
+                new FundingOutputs()
                 {
                     Global = globalOne,
                     Learners = new LearnerAttribute[]
@@ -178,12 +173,12 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
                         learnerTwo,
                     },
                 },
-                new FM35FundingOutputs()
+                new FundingOutputs()
                 {
                     Global = globalTwo,
                     Learners = null,
                 },
-                new FM35FundingOutputs()
+                new FundingOutputs()
                 {
                     Global = globalThree,
                     Learners = new LearnerAttribute[]
@@ -201,9 +196,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             fundingOutput.Learners.Should().Contain(new[] { learnerOne, learnerTwo, learnerFive, learnerSix });
         }
 
-        private FundingOutputCondenserService NewService()
+        private ALBFundingOutputCondenserService NewService()
         {
-            return new FundingOutputCondenserService();
+            return new ALBFundingOutputCondenserService();
         }
     }
 }

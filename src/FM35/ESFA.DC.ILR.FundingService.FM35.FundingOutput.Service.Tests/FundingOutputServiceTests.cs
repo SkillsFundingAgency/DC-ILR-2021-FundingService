@@ -81,7 +81,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             var adjLearnStartDate = new DateTime(2018, 09, 01);
             var adltLearnResp = false;
             var ageAimStart = 1;
-            var aimValue = 1;
+            var aimValue = 1.0m;
             var appAdjLearnStartDate = new DateTime(2018, 09, 01);
             var appAgeFact = 1;
             var appATAGTA = false;
@@ -158,7 +158,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "AdjLearnStartDate")).Returns(adjLearnStartDate);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "AdltLearnResp")).Returns(adltLearnResp);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "AgeAimStart")).Returns(ageAimStart);
-            dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "AimValue")).Returns(aimValue);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "AimValue")).Returns(aimValue);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "AppAdjLearnStartDate")).Returns(appAdjLearnStartDate);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "AppAgeFact")).Returns(appAgeFact);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "AppATAGTA")).Returns(appATAGTA);

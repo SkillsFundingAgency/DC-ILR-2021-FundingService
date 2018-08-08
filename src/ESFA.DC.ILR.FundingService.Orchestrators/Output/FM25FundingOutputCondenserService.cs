@@ -5,7 +5,7 @@ using ESFA.DC.ILR.FundingService.Interfaces;
 
 namespace ESFA.DC.ILR.FundingService.FM25.Service.Output
 {
-    public class FundingOutputCondenserService : IFundingOutputCondenserService<Global>
+    public class FM25FundingOutputCondenserService : IFundingOutputCondenserService<Global>
     {
         public Global Condense(IEnumerable<Global> fundingOutputs)
         {

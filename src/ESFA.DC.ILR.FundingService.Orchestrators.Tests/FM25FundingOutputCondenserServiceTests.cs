@@ -5,7 +5,7 @@ using ESFA.DC.ILR.FundingService.FM25.Service.Output;
 using FluentAssertions;
 using Xunit;
 
-namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
+namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
 {
     public class FundingOutputCondenserServiceTests
     {
@@ -144,9 +144,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             fundingOutput.Learners.Should().Contain(new[] { learnerOne, learnerTwo, learnerFive, learnerSix });
         }
 
-        private FundingOutputCondenserService NewService()
+        private FM25FundingOutputCondenserService NewService()
         {
-            return new FundingOutputCondenserService();
+            return new FM25FundingOutputCondenserService();
         }
     }
 }

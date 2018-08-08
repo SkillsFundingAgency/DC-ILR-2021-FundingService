@@ -10,6 +10,7 @@ using ESFA.DC.Data.Organisatons.Model;
 using ESFA.DC.Data.Organisatons.Model.Interface;
 using ESFA.DC.Data.Postcodes.Model;
 using ESFA.DC.Data.Postcodes.Model.Interfaces;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Config.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.Context;
@@ -23,10 +24,12 @@ using ESFA.DC.ILR.FundingService.Data.Population.File;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Dto.Interfaces;
+using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.FM35Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Implementations;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
+using ESFA.DC.ILR.FundingService.Orchestrators.Output;
 using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
 using ESFA.DC.ILR.FundingService.ServiceFabric.Common.Interfaces;
 using ESFA.DC.ILR.FundingService.Stubs;
@@ -97,8 +100,13 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
 
             builder.RegisterType<FundingServiceDto>().As<IFundingServiceDto>().InstancePerLifetimeScope();
 
-            builder.RegisterType<ALBActorTask>().As<IALBActorTask>().InstancePerLifetimeScope();
-            builder.RegisterType<FM35ActorTask>().As<IFM35ActorTask>().InstancePerLifetimeScope();
+            var actorNameParameter = "actorName";
+
+            builder.RegisterType<ActorTask<IALBActor, FundingOutputs>>().As<IActorTask<IALBActor, FundingOutputs>>().WithParameter(actorNameParameter, ActorServiceNameConstants.ALB).InstancePerLifetimeScope();
+            builder.RegisterType<ActorTask<IFM35Actor, FM35FundingOutputs>>().As<IActorTask<IFM35Actor, FM35FundingOutputs>>().WithParameter(actorNameParameter, ActorServiceNameConstants.FM35).InstancePerLifetimeScope();
+
+            builder.RegisterType<FM35FundingOutputCondenserService>().As<IFundingOutputCondenserService<FM35FundingOutputs>>().InstancePerLifetimeScope();
+            builder.RegisterType<ALBFundingOutputCondenserService>().As<IFundingOutputCondenserService<FundingOutputs>>().InstancePerLifetimeScope();
 
             builder.RegisterInstance(new ActorProvider<IFM35Actor>(ActorServiceNameConstants.FM35)).As<IActorProvider<IFM35Actor>>();
             builder.RegisterInstance(new ActorProvider<IALBActor>(ActorServiceNameConstants.ALB)).As<IActorProvider<IALBActor>>();

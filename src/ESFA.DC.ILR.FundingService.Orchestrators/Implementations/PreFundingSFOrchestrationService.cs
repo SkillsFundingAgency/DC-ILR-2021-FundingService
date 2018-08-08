@@ -4,10 +4,14 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
+using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Dto.Interfaces;
+using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
+using ESFA.DC.ILR.FundingService.FM35Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers.Interfaces;
@@ -26,8 +30,8 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         private readonly IIlrFileProviderService _ilrFileProviderService;
         private readonly IFundingServiceDto _fundingServiceDto;
         private readonly IPopulationService _populationService;
-        private readonly IALBActorTask _albOrchestrationSfTask;
-        private readonly IFM35ActorTask _fm35OrchestrationSfTask;
+        private readonly IActorTask<IALBActor, FundingOutputs> _albActorTask;
+        private readonly IActorTask<IFM35Actor, FM35FundingOutputs> _fm35ActorTask;
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
         private readonly IPagingService<ILearner> _learnerPagingService;
         private readonly IExternalDataCache _externalDataCache;
@@ -38,8 +42,8 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             IIlrFileProviderService ilrFileProviderService,
             IFundingServiceDto fundingServiceDto,
             IPopulationService populationService,
-            IALBActorTask albOrchestrationSfTask,
-            IFM35ActorTask fm35OrchestrationSfTask,
+            IActorTask<IALBActor, FundingOutputs> albActorTask,
+            IActorTask<IFM35Actor, FM35FundingOutputs> fm35ActorTask,
             IKeyValuePersistenceService keyValuePersistenceService,
             IPagingService<ILearner> learnerPagingService,
             IExternalDataCache externalDataCache,
@@ -49,8 +53,8 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             _ilrFileProviderService = ilrFileProviderService;
             _fundingServiceDto = fundingServiceDto;
             _populationService = populationService;
-            _albOrchestrationSfTask = albOrchestrationSfTask;
-            _fm35OrchestrationSfTask = fm35OrchestrationSfTask;
+            _albActorTask = albActorTask;
+            _fm35ActorTask = fm35ActorTask;
             _keyValuePersistenceService = keyValuePersistenceService;
             _externalDataCache = externalDataCache;
             _learnerPagingService = learnerPagingService;
@@ -92,8 +96,8 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
 
             var fundingTasks = new List<Task>()
             {
-                _albOrchestrationSfTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString()),
-                _fm35OrchestrationSfTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString())
+                _albActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString()),
+                _fm35ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString())
             };
 
             // execute all fundingtasks
