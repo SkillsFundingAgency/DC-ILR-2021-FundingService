@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataEntityMapperTests.cs" />
+    <Compile Include="FundingOutputCondenserServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +108,10 @@
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model\ESFA.DC.OPA.Model.csproj">
       <Project>{b8b8d031-851c-427b-9dea-9f87a2f1b642}</Project>
       <Name>ESFA.DC.OPA.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM25.Model\ESFA.DC.ILR.FundingService.FM25.Model.csproj">
+      <Project>{3215BE00-4548-4D0F-A38E-77974B44E49E}</Project>
+      <Name>ESFA.DC.ILR.FundingService.FM25.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM25.Service\ESFA.DC.ILR.FundingService.FM25.Service.csproj">
       <Project>{69A6495C-540F-4B31-A056-668A807502A5}</Project>
