@@ -118,7 +118,7 @@
         <UniformInt64Partition PartitionCount="[FM35ActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
       </StatefulService>
     </Service>
-    <Service Name="FM25ActorService" GeneratedIdRef="6f53527f-31c0-4c6e-b98b-c693691a10c4|Persisted">
+    <Service Name="FM25ActorService" GeneratedIdRef="fa318bfa-3e44-4104-b9da-ea02a7873184|None">
       <StatefulService ServiceTypeName="FM25ActorServiceType" TargetReplicaSetSize="[FM25ActorService_TargetReplicaSetSize]" MinReplicaSetSize="[FM25ActorService_MinReplicaSetSize]">
         <UniformInt64Partition PartitionCount="[FM25ActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
       </StatefulService>

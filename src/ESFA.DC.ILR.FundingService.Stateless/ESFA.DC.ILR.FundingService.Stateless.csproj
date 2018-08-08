@@ -508,6 +508,14 @@
       <Project>{0faaaab8-443b-47bf-9e96-c3069e8789f9}</Project>
       <Name>ESFA.DC.ILR.FundingService.Stateless.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FM25\ESFA.DC.ILR.FundingService.FM25.Model\ESFA.DC.ILR.FundingService.FM25.Model.csproj">
+      <Project>{3215BE00-4548-4D0F-A38E-77974B44E49E}</Project>
+      <Name>ESFA.DC.ILR.FundingService.FM25.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FM25\ESFA.DC.ILR.FundingService.FM25Actor.Interfaces\ESFA.DC.ILR.FundingService.FM25Actor.Interfaces.csproj">
+      <Project>{7B947EBD-BB53-41DB-81B5-C798CFABB45C}</Project>
+      <Name>ESFA.DC.ILR.FundingService.FM25Actor.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FM35\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.csproj">
       <Project>{4470C1A0-91D9-4411-9F30-51F69E39C11D}</Project>
       <Name>ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model</Name>

@@ -46,6 +46,7 @@
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Providers\ESFA.DC.ILR.FundingService.Providers.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ServiceFabric.Common\ESFA.DC.ILR.FundingService.ServiceFabric.Common.csproj" />
     <ProjectReference Include="..\FM25\ESFA.DC.ILR.FundingService.FM25.Model\ESFA.DC.ILR.FundingService.FM25.Model.csproj" />
+    <ProjectReference Include="..\FM25\ESFA.DC.ILR.FundingService.FM25Actor.Interfaces\ESFA.DC.ILR.FundingService.FM25Actor.Interfaces.csproj" />
     <ProjectReference Include="..\FM35\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.csproj" />
     <ProjectReference Include="..\FM35\ESFA.DC.ILR.FundingService.FM35Actor.Interfaces\ESFA.DC.ILR.FundingService.FM35Actor.Interfaces.csproj" />
   </ItemGroup>

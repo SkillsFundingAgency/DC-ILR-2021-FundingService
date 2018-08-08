@@ -112,6 +112,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.ServiceFabric.Common\ESFA.DC.ILR.FundingService.ServiceFabric.Common.csproj">
+      <Project>{21BA0741-5975-4902-8D7A-567A50873CFA}</Project>
+      <Name>ESFA.DC.ILR.FundingService.ServiceFabric.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Stateless.Models\ESFA.DC.ILR.FundingService.Stateless.Models.csproj">
+      <Project>{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Stateless.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM25Actor.Interfaces\ESFA.DC.ILR.FundingService.FM25Actor.Interfaces.csproj">
       <Project>{7B947EBD-BB53-41DB-81B5-C798CFABB45C}</Project>
       <Name>ESFA.DC.ILR.FundingService.FM25Actor.Interfaces</Name>

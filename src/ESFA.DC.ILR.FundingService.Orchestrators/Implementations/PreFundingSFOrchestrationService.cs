@@ -10,6 +10,8 @@ using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Dto.Interfaces;
+using ESFA.DC.ILR.FundingService.FM25.Model.Output;
+using ESFA.DC.ILR.FundingService.FM25Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.FM35Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
@@ -32,6 +34,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         private readonly IPopulationService _populationService;
         private readonly IActorTask<IALBActor, FundingOutputs> _albActorTask;
         private readonly IActorTask<IFM35Actor, FM35FundingOutputs> _fm35ActorTask;
+        private readonly IActorTask<IFM25Actor, Global> _fm25ActorTask;
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
         private readonly IPagingService<ILearner> _learnerPagingService;
         private readonly IExternalDataCache _externalDataCache;
@@ -44,6 +47,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             IPopulationService populationService,
             IActorTask<IALBActor, FundingOutputs> albActorTask,
             IActorTask<IFM35Actor, FM35FundingOutputs> fm35ActorTask,
+            IActorTask<IFM25Actor, Global> fm25ActorTask,
             IKeyValuePersistenceService keyValuePersistenceService,
             IPagingService<ILearner> learnerPagingService,
             IExternalDataCache externalDataCache,
@@ -55,6 +59,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             _populationService = populationService;
             _albActorTask = albActorTask;
             _fm35ActorTask = fm35ActorTask;
+            _fm25ActorTask = fm25ActorTask;
             _keyValuePersistenceService = keyValuePersistenceService;
             _externalDataCache = externalDataCache;
             _learnerPagingService = learnerPagingService;
@@ -97,7 +102,8 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             var fundingTasks = new List<Task>()
             {
                 _albActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString()),
-                _fm35ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString())
+                _fm35ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString()),
+                _fm25ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString()),
             };
 
             // execute all fundingtasks
