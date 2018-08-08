@@ -99,7 +99,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
                 AdjLearnStartDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, "AdjLearnStartDate"),
                 AdltLearnResp = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, "AdltLearnResp"),
                 AgeAimStart = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, "AgeAimStart"),
-                AimValue = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, "AimValue"),
+                AimValue = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, "AimValue"),
                 AppAdjLearnStartDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, "AppAdjLearnStartDate"),
                 AppAgeFact = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, "AppAgeFact"),
                 AppATAGTA = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, "AppATAGTA"),
