@@ -89,8 +89,8 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             var ukprn = Convert.ToInt32(jobContextMessage.KeyValuePairs[JobContextMessageKey.UkPrn]);
             var jobId = Convert.ToInt32(jobContextMessage.JobId);
 
-            var referenceDataInBytes = Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(_externalDataCache));
-            var fileDataCacheInBytes = Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(_fileDataCache));
+            var externalDataCache = _jsonSerializationService.Serialize(_externalDataCache);
+            var fileDataCache = _jsonSerializationService.Serialize(_fileDataCache);
 
             var fundingActorDtos = _learnerPagingService
                 .BuildPages()
@@ -99,9 +99,9 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
                     {
                         JobId = jobId,
                         Ukprn = ukprn,
-                        ExternalDataCache = referenceDataInBytes,
-                        FileDataCache = fileDataCacheInBytes,
-                        ValidLearners = Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(p))
+                        ExternalDataCache = externalDataCache,
+                        FileDataCache = fileDataCache,
+                        ValidLearners = _jsonSerializationService.Serialize(p)
                     }).ToList();
 
             var fundingTasks = new List<Task>()

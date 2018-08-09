@@ -6,10 +6,10 @@
 
         public int Ukprn { get; set; }
 
-        public byte[] ValidLearners { get; set; }
+        public string ValidLearners { get; set; }
 
-        public byte[] ExternalDataCache { get; set; }
+        public string ExternalDataCache { get; set; }
 
-        public byte[] FileDataCache { get; set; }
+        public string FileDataCache { get; set; }
     }
 }

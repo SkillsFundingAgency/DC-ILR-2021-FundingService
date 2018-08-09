@@ -37,8 +37,8 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
 
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
-                c.Register(a => a.Resolve<IJsonSerializationService>().Deserialize<ExternalDataCache>(Encoding.UTF8.GetString(fm25ActorModel.ExternalDataCache))).As<IExternalDataCache>();
-                c.Register(a => a.Resolve<IJsonSerializationService>().Deserialize<FileDataCache>(Encoding.UTF8.GetString(fm25ActorModel.FileDataCache))).As<IFileDataCache>();
+                c.Register(a => a.Resolve<IJsonSerializationService>().Deserialize<ExternalDataCache>(fm25ActorModel.ExternalDataCache)).As<IExternalDataCache>();
+                c.Register(a => a.Resolve<IJsonSerializationService>().Deserialize<FileDataCache>(fm25ActorModel.FileDataCache)).As<IFileDataCache>();
             }))
             {
                 var jsonSerializationService = childLifetimeScope.Resolve<IJsonSerializationService>();
@@ -52,21 +52,16 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
 
                 try
                 {
-                    logger.LogDebug("FM35 Actor started processing");
+                    logger.LogDebug("FM25 Actor started processing");
                     var fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, Global>>();
 
-                    IEnumerable<MessageLearner> learners;
-
-                    using (var memoryStream = new MemoryStream(fm25ActorModel.ValidLearners))
-                    {
-                        learners = jsonSerializationService.Deserialize<List<MessageLearner>>(memoryStream);
-                    }
+                    var learners = jsonSerializationService.Deserialize<List<MessageLearner>>(fm25ActorModel.ValidLearners);
 
                     fm25ActorModel = null;
 
                     var results = fundingService.ProcessFunding(learners);
 
-                    logger.LogDebug("FM35 Actor completed processing");
+                    logger.LogDebug("FM25 Actor completed processing");
                     resultString = jsonSerializationService.Serialize(results);
                 }
                 catch (Exception ex)

@@ -26,9 +26,11 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Output
             if (first != null)
             {
                 first.Learners = globals.SelectMany(g => g.Learners).ToList();
+
+                return first;
             }
 
-            return first;
+            return new Global();
         }
 
         public Global MapGlobal(IDataEntity dataEntity)

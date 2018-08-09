@@ -37,8 +37,8 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
 
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
-                c.Register(a => a.Resolve<IJsonSerializationService>().Deserialize<ExternalDataCache>(Encoding.UTF8.GetString(fm35ActorModel.ExternalDataCache))).As<IExternalDataCache>();
-                c.Register(a => a.Resolve<IJsonSerializationService>().Deserialize<FileDataCache>(Encoding.UTF8.GetString(fm35ActorModel.FileDataCache))).As<IFileDataCache>();
+                c.Register(a => a.Resolve<IJsonSerializationService>().Deserialize<ExternalDataCache>(fm35ActorModel.ExternalDataCache)).As<IExternalDataCache>();
+                c.Register(a => a.Resolve<IJsonSerializationService>().Deserialize<FileDataCache>(fm35ActorModel.FileDataCache)).As<IFileDataCache>();
             }))
             {
                 var jsonSerializationService = childLifetimeScope.Resolve<IJsonSerializationService>();
@@ -55,12 +55,7 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
                     logger.LogDebug("FM35 Actor started processing");
                     var fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, FM35FundingOutputs>>();
 
-                    IEnumerable<MessageLearner> learners;
-
-                    using (var memoryStream = new MemoryStream(fm35ActorModel.ValidLearners))
-                    {
-                        learners = jsonSerializationService.Deserialize<List<MessageLearner>>(memoryStream);
-                    }
+                    var learners = jsonSerializationService.Deserialize<List<MessageLearner>>(fm35ActorModel.ValidLearners);
 
                     fm35ActorModel = null;
 

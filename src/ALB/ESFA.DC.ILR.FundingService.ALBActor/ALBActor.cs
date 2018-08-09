@@ -35,10 +35,9 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
         {
             var jsonSerializationService = LifetimeScope.Resolve<ISerializationService>();
 
-            var referenceDataCache = jsonSerializationService.Deserialize<ExternalDataCache>(
-                Encoding.UTF8.GetString(albActorModel.ExternalDataCache));
+            var referenceDataCache = jsonSerializationService.Deserialize<ExternalDataCache>(albActorModel.ExternalDataCache);
 
-            var fileDataCache = jsonSerializationService.Deserialize<FileDataCache>(Encoding.UTF8.GetString(albActorModel.FileDataCache));
+            var fileDataCache = jsonSerializationService.Deserialize<FileDataCache>(albActorModel.FileDataCache);
 
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
@@ -56,12 +55,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                     logger.LogDebug("ALB Actor started processing");
                     var fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, FundingOutputs>>();
 
-                    IEnumerable<MessageLearner> learners;
-
-                    using (var memoryStream = new MemoryStream(albActorModel.ValidLearners))
-                    {
-                        learners = jsonSerializationService.Deserialize<List<MessageLearner>>(memoryStream);
-                    }
+                    var learners = jsonSerializationService.Deserialize<List<MessageLearner>>(albActorModel.ValidLearners);
 
                     albActorModel = null;
 
