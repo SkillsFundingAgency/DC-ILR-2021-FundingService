@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System.Collections.Generic;
+using Autofac;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Interface;
@@ -9,9 +10,10 @@ using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.File;
+using ESFA.DC.ILR.FundingService.Data.File.Interface;
 using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.FM25.Model.Output;
 using ESFA.DC.ILR.FundingService.FM25.Service.Input;
-using ESFA.DC.ILR.FundingService.FM25.Service.Model;
 using ESFA.DC.ILR.FundingService.FM25.Service.Output;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers.Factory;
@@ -42,6 +44,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor.Modules
             builder.RegisterType<PostcodesReferenceDataService>().As<IPostcodesReferenceDataService>().InstancePerLifetimeScope();
             builder.RegisterType<ExternalDataCache>().As<IExternalDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<FileDataCache>().As<IFileDataCache>().InstancePerLifetimeScope();
+            builder.RegisterType<FileDataService>().As<IFileDataService>().InstancePerLifetimeScope();
             builder.RegisterType<FundingOutputService>().As<IOutputService<Global>>().InstancePerLifetimeScope();
             builder.RegisterType<FundingService<ILearner, Global>>().As<IFundingService<ILearner, Global>>().InstancePerLifetimeScope();
             builder.RegisterType<JsonSerializationService>().As<ISerializationService>().InstancePerLifetimeScope();

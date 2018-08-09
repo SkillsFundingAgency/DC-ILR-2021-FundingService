@@ -8,7 +8,7 @@ using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM25.Service.Output
 {
-    public class FundingOutputService : IOutputService<IEnumerable<Global>>
+    public class FundingOutputService : IOutputService<Global>
     {
         private readonly IDataEntityAttributeService _dataEntityAttributeService;
 
@@ -17,9 +17,18 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Output
             _dataEntityAttributeService = dataEntityAttributeService;
         }
 
-        public IEnumerable<Global> ProcessFundingOutputs(IEnumerable<IDataEntity> dataEntities)
+        public Global ProcessFundingOutputs(IEnumerable<IDataEntity> dataEntities)
         {
-            return dataEntities.Select(MapGlobal);
+            var globals = dataEntities.Select(MapGlobal);
+
+            var first = globals.FirstOrDefault();
+
+            if (first != null)
+            {
+                first.Learners = globals.SelectMany(g => g.Learners).ToList();
+            }
+
+            return first;
         }
 
         public Global MapGlobal(IDataEntity dataEntity)

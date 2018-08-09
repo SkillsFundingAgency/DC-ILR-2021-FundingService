@@ -38,6 +38,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
         private readonly IPagingService<ILearner> _learnerPagingService;
         private readonly IExternalDataCache _externalDataCache;
+        private readonly IFileDataCache _fileDataCache;
         private readonly ILogger _logger;
 
         public PreFundingSFOrchestrationService(
@@ -51,6 +52,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             IKeyValuePersistenceService keyValuePersistenceService,
             IPagingService<ILearner> learnerPagingService,
             IExternalDataCache externalDataCache,
+            IFileDataCache fileDataCache,
             ILogger logger)
         {
             _jsonSerializationService = jsonSerializationService;
@@ -62,6 +64,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             _fm25ActorTask = fm25ActorTask;
             _keyValuePersistenceService = keyValuePersistenceService;
             _externalDataCache = externalDataCache;
+            _fileDataCache = fileDataCache;
             _learnerPagingService = learnerPagingService;
             _logger = logger;
         }
@@ -87,6 +90,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             var jobId = Convert.ToInt32(jobContextMessage.JobId);
 
             var referenceDataInBytes = Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(_externalDataCache));
+            var fileDataCacheInBytes = Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(_fileDataCache));
 
             var fundingActorDtos = _learnerPagingService
                 .BuildPages()
@@ -95,7 +99,8 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
                     {
                         JobId = jobId,
                         Ukprn = ukprn,
-                        ReferenceDataCache = referenceDataInBytes,
+                        ExternalDataCache = referenceDataInBytes,
+                        FileDataCache = fileDataCacheInBytes,
                         ValidLearners = Encoding.UTF8.GetBytes(_jsonSerializationService.Serialize(p))
                     }).ToList();
 
@@ -103,7 +108,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             {
                 _albActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString()),
                 _fm35ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString()),
-                _fm25ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString()),
+                // _fm25ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString()),
             };
 
             // execute all fundingtasks

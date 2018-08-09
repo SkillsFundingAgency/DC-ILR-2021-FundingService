@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Autofac;
 using ESFA.DC.ILR.FundingService.Data.External;
+using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.FM35Actor.Interfaces;
@@ -36,7 +37,8 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
 
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
-                c.Register(a => a.Resolve<IJsonSerializationService>().Deserialize<ExternalDataCache>(Encoding.UTF8.GetString(fm35ActorModel.ReferenceDataCache))).As<IExternalDataCache>();
+                c.Register(a => a.Resolve<IJsonSerializationService>().Deserialize<ExternalDataCache>(Encoding.UTF8.GetString(fm35ActorModel.ExternalDataCache))).As<IExternalDataCache>();
+                c.Register(a => a.Resolve<IJsonSerializationService>().Deserialize<FileDataCache>(Encoding.UTF8.GetString(fm35ActorModel.FileDataCache))).As<IFileDataCache>();
             }))
             {
                 var jsonSerializationService = childLifetimeScope.Resolve<IJsonSerializationService>();

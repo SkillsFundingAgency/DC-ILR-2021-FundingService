@@ -8,6 +8,8 @@
 
         public byte[] ValidLearners { get; set; }
 
-        public byte[] ReferenceDataCache { get; set; }
+        public byte[] ExternalDataCache { get; set; }
+
+        public byte[] FileDataCache { get; set; }
     }
 }

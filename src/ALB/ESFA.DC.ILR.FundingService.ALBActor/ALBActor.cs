@@ -7,6 +7,7 @@ using Autofac;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.External;
+using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
@@ -35,11 +36,14 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
             var jsonSerializationService = LifetimeScope.Resolve<ISerializationService>();
 
             var referenceDataCache = jsonSerializationService.Deserialize<ExternalDataCache>(
-                Encoding.UTF8.GetString(albActorModel.ReferenceDataCache));
+                Encoding.UTF8.GetString(albActorModel.ExternalDataCache));
+
+            var fileDataCache = jsonSerializationService.Deserialize<FileDataCache>(Encoding.UTF8.GetString(albActorModel.FileDataCache));
 
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
                 c.RegisterInstance(referenceDataCache).As<IExternalDataCache>();
+                c.RegisterInstance(fileDataCache).As<IFileDataCache>();
             }))
             {
                 var executionContext = (ExecutionContext)childLifetimeScope.Resolve<IExecutionContext>();
