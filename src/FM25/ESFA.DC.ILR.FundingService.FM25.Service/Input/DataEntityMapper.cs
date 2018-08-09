@@ -103,7 +103,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
         {
             var global = BuildGlobal();
 
-            return inputModels.Select(l => BuildGlobalDataEntity(l, global));
+            return inputModels.Where(l => l.LearningDeliveries.Any(ld => ld.FundModel == 25)).Select(l => BuildGlobalDataEntity(l, global));
         }
 
         public IDataEntity BuildGlobalDataEntity(ILearner learner, Global global)

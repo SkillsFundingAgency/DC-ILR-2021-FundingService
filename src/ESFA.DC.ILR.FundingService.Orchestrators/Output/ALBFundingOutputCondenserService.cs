@@ -9,11 +9,18 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Output
     {
         public FundingOutputs Condense(IEnumerable<FundingOutputs> fundingOutputs)
         {
-            return new FundingOutputs()
+            fundingOutputs = fundingOutputs.Where(f => f != null);
+
+            if (fundingOutputs.Any())
             {
-                Global = fundingOutputs.First().Global,
-                Learners = fundingOutputs.Where(o => o.Learners != null).SelectMany(r => r.Learners).ToArray()
-            };
+                return new FundingOutputs()
+                {
+                    Global = fundingOutputs.FirstOrDefault()?.Global,
+                    Learners = fundingOutputs.Where(o => o.Learners != null).SelectMany(r => r.Learners).ToArray()
+                };
+            }
+
+            return new FundingOutputs();
         }
     }
 }

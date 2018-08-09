@@ -37,14 +37,20 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
 
         public FM35FundingOutputs ProcessFundingOutputs(IEnumerable<IDataEntity> dataEntities)
         {
-            return new FM35FundingOutputs
+            if (dataEntities.Any())
             {
-                Global = GlobalOutput(dataEntities.First()),
-                Learners = dataEntities
-                    .SelectMany(g => g.Children.Where(e => e.EntityName == "Learner")
-                    .Select(LearnerFromDataEntity))
-                    .ToArray(),
-            };
+                return new FM35FundingOutputs
+                {
+                    Global = GlobalOutput(dataEntities.First()),
+                    Learners = dataEntities
+                        .Where(g => g.Children != null)
+                        .SelectMany(g => g.Children.Where(e => e.EntityName == "Learner")
+                        .Select(LearnerFromDataEntity))
+                        .ToArray(),
+                };
+            }
+
+            return new FM35FundingOutputs();
         }
 
         public GlobalAttribute GlobalOutput(IDataEntity dataEntity)

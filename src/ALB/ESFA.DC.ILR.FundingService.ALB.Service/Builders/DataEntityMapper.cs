@@ -13,6 +13,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
 {
     public class DataEntityMapper : IDataEntityMapper<ILearner>
     {
+        private const int FundModel = 99;
+
         private const string EntityGlobal = "global";
         private const string EntityLearner = "Learner";
         private const string EntityLearningDelivery = "LearningDelivery";
@@ -35,7 +37,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
 
         public IEnumerable<IDataEntity> MapTo(IEnumerable<ILearner> learners)
         {
-            var globalEntities = learners.Select(learner =>
+            var globalEntities = learners
+                .Where(l => l.LearningDeliveries.Any(ld => ld.FundModel == FundModel))
+                .Select(learner =>
             {
                 // Global Entity
                 IDataEntity globalEntity = GlobalEntity(_fileDataCache.UKPRN);
@@ -44,7 +48,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders
                 IDataEntity learnerEntity = LearnerEntity(learner.LearnRefNumber);
 
                 // LearningDelivery Entities
-                foreach (var learningDelivery in learner.LearningDeliveries)
+                foreach (var learningDelivery in learner.LearningDeliveries.Where(ld => ld.FundModel == FundModel))
                 {
                     _referenceDataCache.LARSLearningDelivery.TryGetValue(learningDelivery.LearnAimRef, out LARSLearningDelivery larsLearningDelivery);
                     IDataEntity learningDeliveryEntity = LearningDeliveryEntity(learningDelivery, larsLearningDelivery);
