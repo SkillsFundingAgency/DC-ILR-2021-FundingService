@@ -108,7 +108,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             {
                 _albActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString()),
                 _fm35ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString()),
-                _fm25ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString()),
+                // _fm25ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString()),
             };
 
             // execute all fundingtasks
