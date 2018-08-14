@@ -96,7 +96,7 @@ namespace ESFA.DC.ILR.FundingService.Console.Modules
                 SubmissionDateTimeUtc = System.DateTime.Parse("2018-08-01").ToUniversalTime(),
                 Topics = TopicList(),
                 TopicPointer = 1,
-                KeyValuePairs = new Dictionary<JobContextMessageKey, object>
+                KeyValuePairs = new Dictionary<string, object>
                 {
                     { JobContextMessageKey.Filename, "fileName" },
                     { JobContextMessageKey.UkPrn, 10006341 },
