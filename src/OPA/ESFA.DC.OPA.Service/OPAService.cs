@@ -11,22 +11,20 @@ namespace ESFA.DC.OPA.Service
     {
         private readonly ISessionBuilder _sessionBuilder;
         private readonly IOPADataEntityBuilder _dataEntityBuilder;
-        private readonly IRulebaseProviderFactory _rulebaseProviderFactory;
+        private readonly IRulebaseProvider _rulebaseProvider;
 
-        public OPAService(ISessionBuilder sessionBuilder, IOPADataEntityBuilder dataEntityBuilder, IRulebaseProviderFactory rulebaseProviderFactory)
+        public OPAService(ISessionBuilder sessionBuilder, IOPADataEntityBuilder dataEntityBuilder, IRulebaseProvider rulebaseProvider)
         {
             _sessionBuilder = sessionBuilder;
             _dataEntityBuilder = dataEntityBuilder;
-            _rulebaseProviderFactory = rulebaseProviderFactory;
+            _rulebaseProvider = rulebaseProvider;
         }
 
         public IDataEntity ExecuteSession(IDataEntity globalEntity)
         {
-            var rulebaseProvider = _rulebaseProviderFactory.Build();
-
             Session session;
 
-            using (Stream stream = rulebaseProvider.GetStream())
+            using (Stream stream = _rulebaseProvider.GetStream())
             {
                 session = _sessionBuilder.CreateOPASession(stream, globalEntity);
             }

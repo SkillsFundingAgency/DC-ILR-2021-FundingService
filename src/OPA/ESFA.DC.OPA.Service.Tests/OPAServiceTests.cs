@@ -84,18 +84,9 @@ namespace ESFA.DC.OPA.Service.Tests
             return ruleBaseProviderMock.Object;
         }
 
-        private IRulebaseProviderFactory MockRulebaseProviderFactory()
-        {
-            var mock = new Mock<IRulebaseProviderFactory>();
-
-            mock.Setup(m => m.Build()).Returns(RulebaseProviderMock());
-
-            return mock.Object;
-        }
-
         private IOPAService MockTestObject()
         {
-            return new OPAService(new SessionBuilder(), new OPADataEntityBuilder(new DateTime(2017, 8, 1)), MockRulebaseProviderFactory());
+            return new OPAService(new SessionBuilder(), new OPADataEntityBuilder(new DateTime(2017, 8, 1)), RulebaseProviderMock());
         }
 
         private IDataEntity MockOPAService(IDataEntity dataEntity)
