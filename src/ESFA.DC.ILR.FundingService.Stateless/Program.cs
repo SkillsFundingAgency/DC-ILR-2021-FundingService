@@ -6,6 +6,7 @@ using Autofac.Integration.ServiceFabric;
 using ESFA.DC.Auditing;
 using ESFA.DC.Auditing.Dto;
 using ESFA.DC.Auditing.Interface;
+using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.ILR.FundingService.Config;
 using ESFA.DC.ILR.FundingService.Config.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
@@ -123,7 +124,8 @@ namespace ESFA.DC.ILR.FundingService.Stateless
                     new TopicSubscriptionSevice<JobContextDto>(
                         topicSubscribeConfig,
                         c.Resolve<ISerializationService>(),
-                        c.Resolve<ILogger>());
+                        c.Resolve<ILogger>(),
+                        c.Resolve<IDateTimeProvider>());
                 return topicSubscriptionSevice;
             }).As<ITopicSubscriptionService<JobContextDto>>();
 

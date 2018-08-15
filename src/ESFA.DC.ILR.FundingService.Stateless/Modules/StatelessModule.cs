@@ -10,6 +10,7 @@ using ESFA.DC.Data.Organisatons.Model;
 using ESFA.DC.Data.Organisatons.Model.Interface;
 using ESFA.DC.Data.Postcodes.Model;
 using ESFA.DC.Data.Postcodes.Model.Interfaces;
+using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Config.Interfaces;
@@ -93,6 +94,8 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             builder.RegisterType<JsonSerializationService>().As<ISerializationService>();
             builder.RegisterType<JsonSerializationService>().As<IJsonSerializationService>();
             builder.RegisterType<XmlSerializationService>().As<IXmlSerializationService>();
+
+            builder.RegisterType<DateTimeProvider.DateTimeProvider>().As<IDateTimeProvider>();
 
             // register the  callback handle when a new message is received from ServiceBus
             builder.Register<Func<JobContextMessage, CancellationToken, Task<bool>>>(c => c.Resolve<IMessageHandler>().Handle).InstancePerLifetimeScope();
