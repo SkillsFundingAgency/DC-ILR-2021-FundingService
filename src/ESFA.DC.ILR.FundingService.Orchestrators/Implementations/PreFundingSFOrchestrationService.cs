@@ -15,6 +15,7 @@ using ESFA.DC.ILR.FundingService.FM25Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.FM35Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
+using ESFA.DC.ILR.FundingService.Orchestrators.Constants;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers.Interfaces;
 using ESFA.DC.ILR.FundingService.Stateless.Models;
@@ -104,12 +105,25 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
                         ValidLearners = _jsonSerializationService.Serialize(p)
                     }).ToList();
 
-            var fundingTasks = new List<Task>()
+            var taskNames = jobContextMessage.Topics[jobContextMessage.TopicPointer].Tasks.SelectMany(t => t.Tasks).ToList();
+
+            var fundingTasks = new List<Task>();
+
+            foreach (var taskName in taskNames)
             {
-                _albActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString()),
-                _fm35ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString()),
-                _fm25ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm25Output].ToString()),
-            };
+                switch (taskName)
+                {
+                    case FundModelNames.FM35:
+                        fundingTasks.Add(_fm35ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString()));
+                        break;
+                    case FundModelNames.FM25:
+                        fundingTasks.Add(_fm25ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm25Output].ToString()));
+                        break;
+                    case FundModelNames.ALB:
+                        fundingTasks.Add(_albActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString()));
+                        break;
+                }
+            }
 
             // execute all fundingtasks
             await Task.WhenAll(fundingTasks);
