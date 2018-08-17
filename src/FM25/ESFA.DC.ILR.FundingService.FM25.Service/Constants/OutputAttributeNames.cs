@@ -5,7 +5,7 @@
         // Entities
         public const string Global = "Global";
         public const string Learner = "Learner";
-        public const string LearnerPeriodisedValues = "Learner_PeriodisedValues";
+        public const string LearnerPeriodisedValues = "LearnerPeriodisedValues";
 
         // Global
         public const string UKPRN = "UKPRN";
