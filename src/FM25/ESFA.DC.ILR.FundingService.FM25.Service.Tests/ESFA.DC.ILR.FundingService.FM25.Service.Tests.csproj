@@ -90,6 +90,7 @@
   <ItemGroup>
     <Compile Include="DataEntityMapperTests.cs" />
     <Compile Include="FundingOutputServiceTests.cs" />
+    <Compile Include="PeriodisationOutputServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
