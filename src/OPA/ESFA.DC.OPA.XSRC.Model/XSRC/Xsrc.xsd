@@ -1,0 +1,96 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="root">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="entities">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="entity" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="attribute" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="text">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:string" name="base"/>
+                                <xs:element type="xs:string" name="parse" minOccurs="0"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="props" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="prop" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:simpleContent>
+                                      <xs:extension base="xs:string">
+                                        <xs:attribute type="xs:string" name="name" use="optional"/>
+                                      </xs:extension>
+                                    </xs:simpleContent>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute type="xs:string" name="name" use="optional"/>
+                        <xs:attribute type="xs:string" name="type" use="optional"/>
+                        <xs:attribute type="xs:string" name="public-name" use="optional"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="ref" use="optional"/>
+                  <xs:attribute type="xs:string" name="id" use="optional"/>
+                  <xs:attribute type="xs:string" name="name" use="optional"/>
+                  <xs:attribute type="xs:string" name="containment-relationship-id" use="optional"/>
+                  <xs:attribute type="xs:string" name="containment-parent-id" use="optional"/>
+                  <xs:attribute type="xs:string" name="public-id" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:string" name="rules"/>
+        <xs:element name="interactive-items">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="folders"/>
+              <xs:element type="xs:string" name="screens"/>
+              <xs:element type="xs:string" name="documents"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="relationships">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="relationship" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:string" name="source" use="optional"/>
+                      <xs:attribute type="xs:string" name="target" use="optional"/>
+                      <xs:attribute type="xs:string" name="text" use="optional"/>
+                      <xs:attribute type="xs:string" name="relationship-id" use="optional"/>
+                      <xs:attribute type="xs:string" name="reverse-text" use="optional"/>
+                      <xs:attribute type="xs:string" name="reverse-relationship-id" use="optional"/>
+                      <xs:attribute type="xs:string" name="type" use="optional"/>
+                      <xs:attribute type="xs:string" name="is-computed" use="optional"/>
+                      <xs:attribute type="xs:string" name="is-containment" use="optional"/>
+                      <xs:attribute type="xs:string" name="public-id" use="optional"/>
+                      <xs:attribute type="xs:string" name="reverse-public-id" use="optional"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:string" name="rule-folders"/>
+      </xs:sequence>
+      <xs:attribute type="xs:byte" name="schema-version"/>
+      <xs:attribute type="xs:string" name="product-version"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

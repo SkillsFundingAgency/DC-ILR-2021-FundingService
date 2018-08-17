@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ApplicationManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ApplicationTypeName="ESFA.DC.ILR.FundingServiceType" ApplicationTypeVersion="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+  <Parameters>
+    <Parameter Name="ESFA.DC.ILR.FundingService.Stateless_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="AuditQueueName" DefaultValue="audit-queue" />
+    <Parameter Name="ServiceBusConnectionString" DefaultValue="" />
+    <Parameter Name="TopicName" DefaultValue="" />
+    <Parameter Name="FundingCalcSubscriptionName" DefaultValue="fundingcalc-init" />
+    <Parameter Name="JobStatusQueueName" DefaultValue="jobstatusqueue" />
+    <Parameter Name="MaxMessageSize" DefaultValue="1073741824" />
+    <Parameter Name="LoggerConnectionstring" DefaultValue="Server=localhost;Database=logs;User Id=loguser;Password=password1;" />
+    <Parameter Name="EndpointUrl" DefaultValue="" />
+    <Parameter Name="AuthKeyOrResourceToken" DefaultValue="" />
+    <Parameter Name="DataStoreSubscriptionName" DefaultValue="" />
+    <Parameter Name="LARSConnectionString" DefaultValue="metadata=res://*/LARS.csdl|res://*/LARS.ssdl|res://*/LARS.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(local);initial catalog=ESFA.DC.Data.LARS.Database;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
+    <Parameter Name="PostcodesConnectionString" DefaultValue="metadata=res://*/Postcodes.csdl|res://*/Postcodes.ssdl|res://*/Postcodes.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(local);initial catalog=ESFA.DC.Data.Postcodes.Database;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
+    <Parameter Name="OrganisationConnectionString" DefaultValue="__OrganisationConnectionString__" />
+    <Parameter Name="LargeEmployersConnectionString" DefaultValue="__LargeEmployersConnectionString__" />
+    <Parameter Name="RedisCacheConnectionString" DefaultValue="" />
+    <Parameter Name="AzureBlobConnectionString" DefaultValue="UseDevelopmentStorage=true" />
+    <Parameter Name="AzureBlobContainerName" DefaultValue="ilr-files" />
+    <Parameter Name="ProcessingServicePlacementConstraints" DefaultValue="" />
+    <Parameter Name="ALBActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="ALBActorService_MinReplicaSetSize" DefaultValue="1" />
+    <Parameter Name="ALBActorService_TargetReplicaSetSize" DefaultValue="1" />
+    <Parameter Name="FM35ActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="FM35ActorService_MinReplicaSetSize" DefaultValue="1" />
+    <Parameter Name="FM35ActorService_TargetReplicaSetSize" DefaultValue="1" />
+    <Parameter Name="FM25ActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="FM25ActorService_MinReplicaSetSize" DefaultValue="1" />
+    <Parameter Name="FM25ActorService_TargetReplicaSetSize" DefaultValue="1" />
+  </Parameters>
+  <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
+       should match the Name and Version attributes of the ServiceManifest element defined in the 
+       ServiceManifest.xml file. -->
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="ESFA.DC.ILR.FundingService.FM25ActorPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides>
+      <ConfigOverride Name="Config">
+        <Settings>
+          <Section Name="LoggerSection">
+            <Parameter Name="LoggerConnectionstring" Value="[LoggerConnectionstring]" />
+          </Section>
+        </Settings>
+      </ConfigOverride>
+    </ConfigOverrides>
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="ESFA.DC.ILR.FundingService.FM35ActorPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides>
+      <ConfigOverride Name="Config">
+        <Settings>
+          <Section Name="LoggerSection">
+            <Parameter Name="LoggerConnectionstring" Value="[LoggerConnectionstring]" />
+          </Section>
+        </Settings>
+      </ConfigOverride>
+    </ConfigOverrides>
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="ESFA.DC.ILR.FundingService.ALBActorPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides>
+      <ConfigOverride Name="Config">
+        <Settings>
+          <Section Name="LoggerSection">
+            <Parameter Name="LoggerConnectionstring" Value="[LoggerConnectionstring]" />
+          </Section>
+        </Settings>
+      </ConfigOverride>
+    </ConfigOverrides>
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="ESFA.DC.ILR.FundingService.StatelessPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides>
+      <ConfigOverride Name="Config">
+        <Settings>
+          <Section Name="ServiceBusSettings">
+            <Parameter Name="AuditQueueName" Value="[AuditQueueName]" />
+            <Parameter Name="ServiceBusConnectionString" Value="[ServiceBusConnectionString]" />
+            <Parameter Name="TopicName" Value="[TopicName]" />
+            <Parameter Name="FundingCalcSubscriptionName" Value="[FundingCalcSubscriptionName]" />
+            <Parameter Name="DataStoreSubscriptionName" Value="[DataStoreSubscriptionName]" />
+            <Parameter Name="JobStatusQueueName" Value="[JobStatusQueueName]" />
+          </Section>
+          <Section Name="DataTransportSettings">
+            <Parameter Name="MaxMessageSize" Value="[MaxMessageSize]" />
+          </Section>
+          <Section Name="LoggerSection">
+            <Parameter Name="LoggerConnectionstring" Value="[LoggerConnectionstring]" />
+          </Section>
+          <Section Name="AzureRedisSection">
+            <Parameter Name="RedisCacheConnectionString" Value="[RedisCacheConnectionString]" />
+          </Section>
+          <Section Name="ReferenceDataSection">
+            <Parameter Name="LARSConnectionString" Value="[LARSConnectionString]" />
+            <Parameter Name="PostcodesConnectionString" Value="[PostcodesConnectionString]" />
+            <Parameter Name="OrganisationConnectionString" Value="[OrganisationConnectionString]" />
+            <Parameter Name="LargeEmployersConnectionString" Value="[LargeEmployersConnectionString]" />
+          </Section>
+          <Section Name="AzureStorageSection">
+            <Parameter Name="AzureBlobConnectionString" Value="[AzureBlobConnectionString]" />
+            <Parameter Name="AzureBlobContainerName" Value="[AzureBlobContainerName]" />
+          </Section>
+        </Settings>
+      </ConfigOverride>
+    </ConfigOverrides>
+  </ServiceManifestImport>
+  <DefaultServices>
+    <!-- The section below creates instances of service types, when an instance of this 
+         application type is created. You can also create one or more instances of service type using the 
+         ServiceFabric PowerShell module.
+         
+         The attribute ServiceTypeName below must match the name defined in the imported ServiceManifest.xml file. -->
+    <Service Name="ESFA.DC.ILR.1819.FundingService.Stateless" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="ESFA.DC.ILR.1819.FundingService.StatelessType" InstanceCount="[ESFA.DC.ILR.FundingService.Stateless_InstanceCount]">
+        <SingletonPartition />
+        <PlacementConstraints>[ProcessingServicePlacementConstraints]</PlacementConstraints>
+      </StatelessService>
+    </Service>
+    <Service Name="ALBActorService" GeneratedIdRef="315a37b1-2ec1-4c08-9c37-245fc59f40ca|None">
+      <StatefulService ServiceTypeName="ALBActorServiceType" TargetReplicaSetSize="[ALBActorService_TargetReplicaSetSize]" MinReplicaSetSize="[ALBActorService_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[ALBActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
+    </Service>
+    <Service Name="FM35ActorService" GeneratedIdRef="eca4f2d5-fcff-4c7a-842f-91b0f984c4c8|None">
+      <StatefulService ServiceTypeName="FM35ActorServiceType" TargetReplicaSetSize="[FM35ActorService_TargetReplicaSetSize]" MinReplicaSetSize="[FM35ActorService_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[FM35ActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
+    </Service>
+    <Service Name="FM25ActorService" GeneratedIdRef="fa318bfa-3e44-4104-b9da-ea02a7873184|None">
+      <StatefulService ServiceTypeName="FM25ActorServiceType" TargetReplicaSetSize="[FM25ActorService_TargetReplicaSetSize]" MinReplicaSetSize="[FM25ActorService_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[FM25ActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
+    </Service>
+  </DefaultServices>
+</ApplicationManifest>
