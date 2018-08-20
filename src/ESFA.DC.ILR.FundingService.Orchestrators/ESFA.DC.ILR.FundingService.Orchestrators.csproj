@@ -40,6 +40,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.csproj" />
     <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALBActor.Interfaces\ESFA.DC.ILR.FundingService.ALBActor.Interfaces.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Config\ESFA.DC.ILR.FundingService.Config.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Data.Population\ESFA.DC.ILR.FundingService.Data.Population.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Data\ESFA.DC.ILR.FundingService.Data.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Dto\ESFA.DC.ILR.FundingService.Dto.csproj" />

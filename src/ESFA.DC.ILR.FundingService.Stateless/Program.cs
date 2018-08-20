@@ -91,6 +91,9 @@ namespace ESFA.DC.ILR.FundingService.Stateless
             builder.RegisterInstance(loggerOptions).As<ILoggerConfig>().SingleInstance();
             builder.RegisterModule<LoggerModule>();
 
+            var topicAndTaskSectionOptions = configHelper.GetSectionValues<TopicAndTaskSectionConfig>("TopicAndTaskSection");
+            builder.RegisterInstance(topicAndTaskSectionOptions).As<ITopicAndTaskSectionConfig>().SingleInstance();
+
             // auditing
             var auditPublishConfig = new ServiceBusQueueConfig(
                 serviceBusOptions.ServiceBusConnectionString,
