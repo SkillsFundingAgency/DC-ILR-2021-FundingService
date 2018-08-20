@@ -20,6 +20,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Interface
 
         IDictionary<string, IEnumerable<EfaDisadvantage>> EfaDisadvantage { get; }
 
+        IDictionary<string, IEnumerable<CareerLearningPilot>> CareerLearningPilot { get; }
+
         string PostcodeCurrentVersion { get; }
 
         IDictionary<string, IEnumerable<LARSAnnualValue>> LARSAnnualValue { get; }

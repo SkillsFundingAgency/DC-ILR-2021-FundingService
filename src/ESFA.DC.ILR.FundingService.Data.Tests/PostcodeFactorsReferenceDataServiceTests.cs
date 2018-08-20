@@ -115,6 +115,37 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             NewService(referenceDataCacheMock.Object).EFADisadvantagesForPostcode("notPostcode").Should().BeEmpty();
         }
 
+        [Fact]
+        public void CareerLearningPilot()
+        {
+            var postcode = "postcode";
+            var careerLearningPilot = new List<CareerLearningPilot>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.CareerLearningPilot)
+                .Returns(new Dictionary<string, IEnumerable<CareerLearningPilot>>()
+                {
+                    { postcode, careerLearningPilot }
+                });
+
+            NewService(referenceDataCacheMock.Object).CareerLearningPilotsForPostcode(postcode).Should().BeSameAs(careerLearningPilot);
+        }
+
+        [Fact]
+        public void CareerLearningPilot_NotExists()
+        {
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.CareerLearningPilot)
+                .Returns(new Dictionary<string, IEnumerable<CareerLearningPilot>>()
+                {
+                    { "postcode", null }
+                });
+
+            NewService(referenceDataCacheMock.Object).CareerLearningPilotsForPostcode("notPostcode").Should().BeEmpty();
+        }
+
         private PostcodesReferenceDataService NewService(IExternalDataCache referenceDataCache = null)
         {
             return new PostcodesReferenceDataService(referenceDataCache);

@@ -52,6 +52,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             referenceDataCache.SfaAreaCost = _postcodesDataRetrievalService.SfaAreaCostsForPostcodes(uniquePostcodes);
             referenceDataCache.SfaDisadvantage = _postcodesDataRetrievalService.SfaDisadvantagesForPostcodes(uniquePostcodes);
             referenceDataCache.EfaDisadvantage = _postcodesDataRetrievalService.EfaDisadvantagesForPostcodes(uniquePostcodes);
+            referenceDataCache.CareerLearningPilot = _postcodesDataRetrievalService.CareerLearningPilotsForPostcodes(uniquePostcodes);
 
             referenceDataCache.OrgVersion = _organisationDataRetrievalService.CurrentVersion();
             referenceDataCache.OrgFunding = _organisationDataRetrievalService.OrgFundingsForUkprns(ukprns);

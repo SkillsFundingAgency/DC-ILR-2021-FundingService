@@ -289,6 +289,69 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         }
 
         [Fact]
+        public void CareerLearningPilotFromEntity()
+        {
+            var careerLearningPilotPostcode = new CareerLearningPilot_Postcode()
+            {
+                MasterPostcode = new MasterPostcode { Postcode = "CV1 2TT" },
+                Postcode = "CV1 2TT",
+                AreaCode = "AreaCode",
+                EffectiveFrom = new DateTime(2000, 01, 01),
+                EffectiveTo = new DateTime(2015, 12, 31),
+            };
+
+            var careerLearningPilot = NewService().CareerLearningPilotFromEntity(careerLearningPilotPostcode);
+
+            careerLearningPilotPostcode.AreaCode.Should().Be(careerLearningPilotPostcode.AreaCode);
+            careerLearningPilotPostcode.EffectiveFrom.Should().Be(careerLearningPilotPostcode.EffectiveFrom);
+            careerLearningPilotPostcode.EffectiveTo.Should().Be(careerLearningPilotPostcode.EffectiveTo);
+            careerLearningPilotPostcode.Postcode.Should().Be(careerLearningPilotPostcode.Postcode);
+        }
+
+        [Fact]
+        public void CareerLearningPilotsForPostcodes()
+        {
+            var careerLearningPilotsPostocde = new List<CareerLearningPilot_Postcode>()
+            {
+                new CareerLearningPilot_Postcode()
+                {
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2WT" },
+                    Postcode = "CV1 2WT",
+                    AreaCode = "AreaCode",
+                    EffectiveFrom = new DateTime(2000, 01, 01),
+                    EffectiveTo = null,
+                },
+                new CareerLearningPilot_Postcode()
+                {
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2TT" },
+                    Postcode = "CV1 2TT",
+                    AreaCode = "AreaCode",
+                    EffectiveFrom = new DateTime(2000, 01, 01),
+                    EffectiveTo = new DateTime(2015, 12, 31)
+                },
+                new CareerLearningPilot_Postcode()
+                {
+                    Postcode = "Fictional"
+                }
+            }.AsQueryable();
+
+            var postcodesDataRetrievalServiceMock = NewMock();
+
+            postcodesDataRetrievalServiceMock.SetupGet(p => p.CareerLearningPilot_Postcodes).Returns(careerLearningPilotsPostocde);
+
+            var postcodes = new List<string>() { "CV1 2WT", "CV1 2TT" };
+
+            var careerLearningPilots = postcodesDataRetrievalServiceMock.Object.CareerLearningPilotsForPostcodes(postcodes);
+
+            careerLearningPilots.Should().HaveCount(2);
+            careerLearningPilots.Should().ContainKeys("CV1 2WT", "CV1 2TT");
+            careerLearningPilots.Should().NotContainKey("Fictional");
+
+            careerLearningPilots["CV1 2TT"].Should().HaveCount(1);
+            careerLearningPilots["CV1 2WT"].Should().HaveCount(1);
+        }
+
+        [Fact]
         public void EfaDisadvantageFromEntity()
         {
             var efaPostcodeDisadvantage = new EFA_PostcodeDisadvantage()
