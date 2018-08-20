@@ -229,6 +229,12 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                 {
                     new LARS_Validity(),
                     new LARS_Validity(),
+                },
+                LARS_CareerLearningPilot = new List<LARS_CareerLearningPilot>()
+                {
+                    new LARS_CareerLearningPilot(),
+                    new LARS_CareerLearningPilot(),
+                    new LARS_CareerLearningPilot(),
                 }
             };
 
@@ -247,6 +253,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             larsLearningDelivery.SectorSubjectAreaTier2.Should().Be(lars_LearningDelivery.SectorSubjectAreaTier2);
 
             larsLearningDelivery.LARSValidities.Should().HaveCount(2);
+            larsLearningDelivery.LARSCareerLearningPilot.Should().HaveCount(3);
         }
 
         [Fact]
@@ -264,6 +271,25 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             larsValidity.Category.Should().Be(lars_Validity.ValidityCategory);
             larsValidity.LastNewStartDate.Should().Be(lars_Validity.LastNewStartDate);
             larsValidity.StartDate.Should().Be(lars_Validity.StartDate);
+        }
+
+        [Fact]
+        public void LarsCareerLearningPilotyFromEntity()
+        {
+            var lars_CareerLearningPilot = new LARS_CareerLearningPilot()
+            {
+                AreaCode = "AreaCode",
+                SubsidyRate = 1.2m,
+                EffectiveFrom = new DateTime(2017, 1, 1),
+                EffectiveTo = new DateTime(2018, 1, 1),
+            };
+
+            var larsCareerLearningPilot = NewService().LARSCareerLearningPilotFromEntity(lars_CareerLearningPilot);
+
+            larsCareerLearningPilot.AreaCode.Should().Be(lars_CareerLearningPilot.AreaCode);
+            larsCareerLearningPilot.SubsidyRate.Should().Be(lars_CareerLearningPilot.SubsidyRate);
+            larsCareerLearningPilot.EffectiveFrom.Should().Be(lars_CareerLearningPilot.EffectiveFrom);
+            larsCareerLearningPilot.EffectiveTo.Should().Be(lars_CareerLearningPilot.EffectiveTo);
         }
 
         [Fact]

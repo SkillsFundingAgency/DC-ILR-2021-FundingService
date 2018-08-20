@@ -103,7 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.ServiceFabric.Common\ESFA.DC.ILR.FundingService.ServiceFabric.Common.csproj">
-      <Project>{21BA0741-5975-4902-8D7A-567A50873CFA}</Project>
+      <Project>{21ba0741-5975-4902-8d7a-567a50873cfa}</Project>
       <Name>ESFA.DC.ILR.FundingService.ServiceFabric.Common</Name>
     </ProjectReference>
   </ItemGroup>
