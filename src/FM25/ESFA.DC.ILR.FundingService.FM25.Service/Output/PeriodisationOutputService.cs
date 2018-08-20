@@ -9,7 +9,7 @@ using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM25.Service.Output
 {
-    public class PeriodisationOutputService : IOutputService<PeriodisationGlobal>
+    public class PeriodisationOutputService : IOutputService<IEnumerable<PeriodisationGlobal>>
     {
         private readonly IDataEntityAttributeService _dataEntityAttributeService;
 
@@ -18,21 +18,9 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Output
             _dataEntityAttributeService = dataEntityAttributeService;
         }
 
-        public PeriodisationGlobal ProcessFundingOutputs(IEnumerable<IDataEntity> dataEntities)
+        public IEnumerable<PeriodisationGlobal> ProcessFundingOutputs(IEnumerable<IDataEntity> dataEntities)
         {
-            var globals = dataEntities.Select(MapGlobal).ToList();
-
-            var firstGlobal = globals.FirstOrDefault();
-
-            if (firstGlobal != null)
-            {
-                firstGlobal.LearnerPeriods = globals.SelectMany(g => g.LearnerPeriods).ToList();
-                firstGlobal.LearnerPeriodisedValues = globals.SelectMany(g => g.LearnerPeriodisedValues).ToList();
-
-                return firstGlobal;
-            }
-
-            return new PeriodisationGlobal();
+            return dataEntities.Select(MapGlobal);
         }
 
         public PeriodisationGlobal MapGlobal(IDataEntity dataEntity)
@@ -65,6 +53,23 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Output
                 Period11 = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, OutputAttributeNames.Period11),
                 Period12 = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, OutputAttributeNames.Period12),
             };
+        }
+
+        private PeriodisationGlobal CondensePeriodisationGlobals(IEnumerable<PeriodisationGlobal> periodisationGlobals)
+        {
+            periodisationGlobals = periodisationGlobals.ToList();
+
+            var firstGlobal = periodisationGlobals.FirstOrDefault();
+
+            if (firstGlobal != null)
+            {
+                firstGlobal.LearnerPeriods = periodisationGlobals.SelectMany(g => g.LearnerPeriods).ToList();
+                firstGlobal.LearnerPeriodisedValues = periodisationGlobals.SelectMany(g => g.LearnerPeriodisedValues).ToList();
+
+                return firstGlobal;
+            }
+
+            return new PeriodisationGlobal();
         }
     }
 }

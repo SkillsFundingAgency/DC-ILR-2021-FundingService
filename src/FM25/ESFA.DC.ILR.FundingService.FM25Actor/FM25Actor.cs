@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
@@ -53,16 +54,23 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
                 try
                 {
                     logger.LogDebug("FM25 Actor started processing");
-                    var fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, Global>>();
+                    var fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, IEnumerable<Global>>>();
 
                     var learners = jsonSerializationService.Deserialize<List<MessageLearner>>(fm25ActorModel.ValidLearners);
 
                     fm25ActorModel = null;
 
-                    var results = fundingService.ProcessFunding(learners);
+                    var results = fundingService.ProcessFunding(learners).ToList();
+
+                    var periodisationService = childLifetimeScope.Resolve<IFundingService<Global, IEnumerable<PeriodisationGlobal>>>();
+
+                    var periodisationResults = periodisationService.ProcessFunding(results);
 
                     logger.LogDebug("FM25 Actor completed processing");
-                    resultString = jsonSerializationService.Serialize(results);
+
+                    var condensedResults = CondenseResults(results, periodisationResults);
+
+                    resultString = jsonSerializationService.Serialize(condensedResults);
                 }
                 catch (Exception ex)
                 {
@@ -73,6 +81,20 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
             }
 
             return Task.FromResult(resultString);
+        }
+
+        private Global CondenseResults(IEnumerable<Global> globals, IEnumerable<PeriodisationGlobal> periodisationGlobals)
+        {
+            var first = globals.FirstOrDefault();
+
+            if (first != null)
+            {
+                first.Learners = globals.SelectMany(g => g.Learners).ToList();
+
+                return first;
+            }
+
+            return new Global();
         }
     }
 }
