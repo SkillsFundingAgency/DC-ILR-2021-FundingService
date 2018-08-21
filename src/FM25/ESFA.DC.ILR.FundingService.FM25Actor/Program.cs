@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Autofac;
 using Autofac.Integration.ServiceFabric;
@@ -30,7 +31,8 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
                 using (var container = builder.Build())
                 {
                     // Not sure why this is being resolved here, to review
-                    var ss = container.Resolve<IFundingService<ILearner, Global>>();
+                    var fm25 = container.Resolve<IFundingService<ILearner, IEnumerable<Global>>>();
+                    var actor = container.Resolve<IFundingService<Global, IEnumerable<PeriodisationGlobal>>>();
                     Thread.Sleep(Timeout.Infinite);
                 }
             }

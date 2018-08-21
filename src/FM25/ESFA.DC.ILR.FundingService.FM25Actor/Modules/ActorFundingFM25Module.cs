@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System.Collections.Generic;
+using Autofac;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Interface;
@@ -37,6 +38,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor.Modules
             builder.RegisterInstance(new RulebaseProvider("Rulebase")).As<IRulebaseProvider>();
             builder.RegisterType<OPAService>().As<IOPAService>().InstancePerLifetimeScope();
             builder.RegisterType<DataEntityMapper>().As<IDataEntityMapper<ILearner>>().InstancePerLifetimeScope();
+            builder.RegisterType<PeriodisationDataEntityMapper>().As<IDataEntityMapper<Global>>().InstancePerLifetimeScope();
             builder.RegisterType<LargeEmployersReferenceDataService>().As<ILargeEmployersReferenceDataService>().InstancePerLifetimeScope();
             builder.RegisterType<LARSReferenceDataService>().As<ILARSReferenceDataService>().InstancePerLifetimeScope();
             builder.RegisterType<OrganisationReferenceDataService>().As<IOrganisationReferenceDataService>().InstancePerLifetimeScope();
@@ -44,8 +46,10 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor.Modules
             builder.RegisterType<ExternalDataCache>().As<IExternalDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<FileDataCache>().As<IFileDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<FileDataService>().As<IFileDataService>().InstancePerLifetimeScope();
-            builder.RegisterType<FundingOutputService>().As<IOutputService<Global>>().InstancePerLifetimeScope();
-            builder.RegisterType<FundingService<ILearner, Global>>().As<IFundingService<ILearner, Global>>().InstancePerLifetimeScope();
+            builder.RegisterType<FundingOutputService>().As<IOutputService<IEnumerable<Global>>>().InstancePerLifetimeScope();
+            builder.RegisterType<PeriodisationOutputService>().As<IOutputService<IEnumerable<PeriodisationGlobal>>>().InstancePerLifetimeScope();
+            builder.RegisterType<FundingService<ILearner, IEnumerable<Global>>>().As<IFundingService<ILearner, IEnumerable<Global>>>().InstancePerLifetimeScope();
+            builder.RegisterType<FundingService<Global, IEnumerable<PeriodisationGlobal>>>().As<IFundingService<Global, IEnumerable<PeriodisationGlobal>>>();
             builder.RegisterType<JsonSerializationService>().As<ISerializationService>().InstancePerLifetimeScope();
             builder.RegisterType<JsonSerializationService>().As<IJsonSerializationService>().InstancePerLifetimeScope();
             builder.RegisterType<DataEntityAttributeService>().As<IDataEntityAttributeService>().InstancePerLifetimeScope();

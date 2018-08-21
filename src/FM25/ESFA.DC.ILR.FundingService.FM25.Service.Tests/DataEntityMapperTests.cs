@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
@@ -12,7 +11,6 @@ using ESFA.DC.ILR.FundingService.Data.File.Model;
 using ESFA.DC.ILR.FundingService.FM25.Service.Input;
 using ESFA.DC.ILR.FundingService.FM25.Service.Model;
 using ESFA.DC.ILR.Tests.Model;
-using ESFA.DC.OPA.Model.Interface;
 using FluentAssertions;
 using Moq;
 using Xunit;

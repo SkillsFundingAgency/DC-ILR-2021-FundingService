@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
+using ESFA.DC.ILR.FundingService.Config.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Dto;
@@ -40,6 +41,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         private readonly IPagingService<ILearner> _learnerPagingService;
         private readonly IExternalDataCache _externalDataCache;
         private readonly IFileDataCache _fileDataCache;
+        private readonly ITopicAndTaskSectionConfig _topicAndTaskSectionConfig;
         private readonly ILogger _logger;
 
         public PreFundingSFOrchestrationService(
@@ -54,6 +56,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             IPagingService<ILearner> learnerPagingService,
             IExternalDataCache externalDataCache,
             IFileDataCache fileDataCache,
+            ITopicAndTaskSectionConfig topicAndTaskSectionConfig,
             ILogger logger)
         {
             _jsonSerializationService = jsonSerializationService;
@@ -67,6 +70,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             _externalDataCache = externalDataCache;
             _fileDataCache = fileDataCache;
             _learnerPagingService = learnerPagingService;
+            _topicAndTaskSectionConfig = topicAndTaskSectionConfig;
             _logger = logger;
         }
 
@@ -109,20 +113,19 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
 
             var fundingTasks = new List<Task>();
 
-            foreach (var taskName in taskNames)
+            if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformFM35Calculation))
             {
-                switch (taskName)
-                {
-                    case FundModelNames.FM35:
-                        fundingTasks.Add(_fm35ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString()));
-                        break;
-                    case FundModelNames.FM25:
-                        fundingTasks.Add(_fm25ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm25Output].ToString()));
-                        break;
-                    case FundModelNames.ALB:
-                        fundingTasks.Add(_albActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString()));
-                        break;
-                }
+                fundingTasks.Add(_fm35ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString()));
+            }
+
+            if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformFM25Calculation))
+            {
+                fundingTasks.Add(_fm25ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm25Output].ToString()));
+            }
+
+            if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformALBCalculation))
+            {
+                fundingTasks.Add(_albActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString()));
             }
 
             // execute all fundingtasks

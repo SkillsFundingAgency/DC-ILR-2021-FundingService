@@ -8,7 +8,7 @@ using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM25.Service.Output
 {
-    public class FundingOutputService : IOutputService<Global>
+    public class FundingOutputService : IOutputService<IEnumerable<Global>>
     {
         private readonly IDataEntityAttributeService _dataEntityAttributeService;
 
@@ -17,20 +17,9 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Output
             _dataEntityAttributeService = dataEntityAttributeService;
         }
 
-        public Global ProcessFundingOutputs(IEnumerable<IDataEntity> dataEntities)
+        public IEnumerable<Global> ProcessFundingOutputs(IEnumerable<IDataEntity> dataEntities)
         {
-            var globals = dataEntities.Select(MapGlobal);
-
-            var first = globals.FirstOrDefault();
-
-            if (first != null)
-            {
-                first.Learners = globals.SelectMany(g => g.Learners).ToList();
-
-                return first;
-            }
-
-            return new Global();
+            return dataEntities.Select(MapGlobal);
         }
 
         public Global MapGlobal(IDataEntity dataEntity)
@@ -68,6 +57,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Output
                 LearnerActEndDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, OutputAttributeNames.LearnerActEndDate),
                 LearnerPlanEndDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, OutputAttributeNames.LearnerPlanEndDate),
                 LearnerStartDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, OutputAttributeNames.LearnerStartDate),
+                LearnRefNumber = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, OutputAttributeNames.LearnRefNumber),
                 NatRate = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, OutputAttributeNames.NatRate),
                 OnProgPayment = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, OutputAttributeNames.OnProgPayment),
                 PlannedDaysILCurrYear = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, OutputAttributeNames.PlannedDaysILCurrYear),
