@@ -1,4 +1,6 @@
-﻿using ESFA.DC.ILR.FundingService.FM25.Service.Output;
+﻿using System.Linq;
+using ESFA.DC.ILR.FundingService.FM25.Model.Output;
+using ESFA.DC.ILR.FundingService.FM25.Service.Output;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Service.Interface;
 using FluentAssertions;
@@ -53,20 +55,20 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
 
             var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
 
-            dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "AttributeName")).Returns(attributeName);
+            dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "LnrOnProgPay")).Returns(attributeName);
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "LearnRefNumber")).Returns(learnRefNumber);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "Period_1")).Returns(period1);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "Period_2")).Returns(period2);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "Period_3")).Returns(period3);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "Period_4")).Returns(period4);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "Period_5")).Returns(period5);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "Period_6")).Returns(period6);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "Period_7")).Returns(period7);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "Period_8")).Returns(period8);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "Period_9")).Returns(period9);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "Period_10")).Returns(period10);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "Period_11")).Returns(period11);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "Period_12")).Returns(period12);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LnrPrd1Pay")).Returns(period1);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LnrPrd2Pay")).Returns(period2);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LnrPrd3Pay")).Returns(period3);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LnrPrd4Pay")).Returns(period4);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LnrPrd5Pay")).Returns(period5);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LnrPrd6Pay")).Returns(period6);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LnrPrd7Pay")).Returns(period7);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LnrPrd8Pay")).Returns(period8);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LnrPrd9Pay")).Returns(period9);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LnrPrd10Pay")).Returns(period10);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LnrPrd11Pay")).Returns(period11);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LnrPrd12Pay")).Returns(period12);
 
             var learnerPeriodisedValues = NewService(dataEntityAttributeServiceMock.Object).MapLearnerPeriodisedValues(dataEntity);
 
@@ -84,6 +86,58 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             learnerPeriodisedValues.Period10.Should().Be(period10);
             learnerPeriodisedValues.Period11.Should().Be(period11);
             learnerPeriodisedValues.Period12.Should().Be(period12);
+        }
+
+        [Fact]
+        public void PivotLearnerPeriodisedValue()
+        {
+            var learnerPeriodisedValue = new LearnerPeriodisedValues()
+            {
+                AttributeName = "LnrOnProgPay",
+                LearnRefNumber = "LearnRefNumber",
+                Period1 = 1.1m,
+                Period2 = 2.1m,
+                Period3 = 3.1m,
+                Period4 = 4.1m,
+                Period5 = 5.1m,
+                Period6 = 6.1m,
+                Period7 = 7.1m,
+                Period8 = 8.1m,
+                Period9 = 9.1m,
+                Period10 = 10.1m,
+                Period11 = 11.1m,
+                Period12 = 12.1m,
+            };
+
+            var pivoted = NewService().PivotLearnerPeriodisedValue(learnerPeriodisedValue).ToList();
+
+            pivoted.Should().OnlyContain(p => p.LearnRefNumber == learnerPeriodisedValue.LearnRefNumber);
+
+            pivoted[0].Period.Should().Be(1);
+            pivoted[1].Period.Should().Be(2);
+            pivoted[2].Period.Should().Be(3);
+            pivoted[3].Period.Should().Be(4);
+            pivoted[4].Period.Should().Be(5);
+            pivoted[5].Period.Should().Be(6);
+            pivoted[6].Period.Should().Be(7);
+            pivoted[7].Period.Should().Be(8);
+            pivoted[8].Period.Should().Be(9);
+            pivoted[9].Period.Should().Be(10);
+            pivoted[10].Period.Should().Be(11);
+            pivoted[11].Period.Should().Be(12);
+
+            pivoted[0].LnrOnProgPay.Should().Be(learnerPeriodisedValue.Period1);
+            pivoted[1].LnrOnProgPay.Should().Be(learnerPeriodisedValue.Period2);
+            pivoted[2].LnrOnProgPay.Should().Be(learnerPeriodisedValue.Period3);
+            pivoted[3].LnrOnProgPay.Should().Be(learnerPeriodisedValue.Period4);
+            pivoted[4].LnrOnProgPay.Should().Be(learnerPeriodisedValue.Period5);
+            pivoted[5].LnrOnProgPay.Should().Be(learnerPeriodisedValue.Period6);
+            pivoted[6].LnrOnProgPay.Should().Be(learnerPeriodisedValue.Period7);
+            pivoted[7].LnrOnProgPay.Should().Be(learnerPeriodisedValue.Period8);
+            pivoted[8].LnrOnProgPay.Should().Be(learnerPeriodisedValue.Period9);
+            pivoted[9].LnrOnProgPay.Should().Be(learnerPeriodisedValue.Period10);
+            pivoted[10].LnrOnProgPay.Should().Be(learnerPeriodisedValue.Period11);
+            pivoted[11].LnrOnProgPay.Should().Be(learnerPeriodisedValue.Period12);
         }
 
         private PeriodisationOutputService NewService(IDataEntityAttributeService dataEntityAttributeService = null)

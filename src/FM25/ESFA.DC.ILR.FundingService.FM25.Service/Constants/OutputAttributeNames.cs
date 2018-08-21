@@ -44,18 +44,18 @@
         public const string ThresholdDays = "ThresholdDays";
 
         // Learner Periodised Values
-        public const string AttributeName = "AttributeName";
-        public const string Period1 = "Period_1";
-        public const string Period2 = "Period_2";
-        public const string Period3 = "Period_3";
-        public const string Period4 = "Period_4";
-        public const string Period5 = "Period_5";
-        public const string Period6 = "Period_6";
-        public const string Period7 = "Period_7";
-        public const string Period8 = "Period_8";
-        public const string Period9 = "Period_9";
-        public const string Period10 = "Period_10";
-        public const string Period11 = "Period_11";
-        public const string Period12 = "Period_12";
+        public const string LnrOnProgPay = "LnrOnProgPay";
+        public const string Period1 = "LnrPrd1Pay";
+        public const string Period2 = "LnrPrd2Pay";
+        public const string Period3 = "LnrPrd3Pay";
+        public const string Period4 = "LnrPrd4Pay";
+        public const string Period5 = "LnrPrd5Pay";
+        public const string Period6 = "LnrPrd6Pay";
+        public const string Period7 = "LnrPrd7Pay";
+        public const string Period8 = "LnrPrd8Pay";
+        public const string Period9 = "LnrPrd9Pay";
+        public const string Period10 = "LnrPrd10Pay";
+        public const string Period11 = "LnrPrd11Pay";
+        public const string Period12 = "LnrPrd12Pay";
     }
 }

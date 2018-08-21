@@ -17,6 +17,8 @@ using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.Logging;
 using ESFA.DC.Logging.Interfaces;
+using ESFA.DC.OPA.Service.Interface.Rulebase;
+using ESFA.DC.OPA.Service.Rulebase;
 using ESFA.DC.Serialization.Interfaces;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
@@ -54,21 +56,45 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
                 try
                 {
                     logger.LogDebug("FM25 Actor started processing");
-                    var fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, IEnumerable<Global>>>();
 
-                    var learners = jsonSerializationService.Deserialize<List<MessageLearner>>(fm25ActorModel.ValidLearners);
+                    IEnumerable<Global> fm25Results;
+                    IEnumerable<PeriodisationGlobal> fm25PeriodisationResults;
 
-                    fm25ActorModel = null;
+                    using (var fundingServiceLifetimeScope = childLifetimeScope.BeginLifetimeScope(c =>
+                    {
+                        c.RegisterInstance(new RulebaseProvider("FM25")).As<IRulebaseProvider>();
+                    }))
+                    {
+                        logger.LogDebug("FM25 Rulebase Starting");
 
-                    var results = fundingService.ProcessFunding(learners).ToList();
+                        var fundingService = fundingServiceLifetimeScope.Resolve<IFundingService<ILearner, IEnumerable<Global>>>();
 
-                    var periodisationService = childLifetimeScope.Resolve<IFundingService<Global, IEnumerable<PeriodisationGlobal>>>();
+                        var learners = jsonSerializationService.Deserialize<List<MessageLearner>>(fm25ActorModel.ValidLearners);
 
-                    var periodisationResults = periodisationService.ProcessFunding(results);
+                        fm25ActorModel = null;
+
+                        fm25Results = fundingService.ProcessFunding(learners).ToList();
+
+                        logger.LogDebug("FM25 Rulebase Finishing");
+                    }
+
+                    using (var fundingServiceLifetimeScope = childLifetimeScope.BeginLifetimeScope(c =>
+                    {
+                        c.RegisterInstance(new RulebaseProvider("FM25 Periodisation")).As<IRulebaseProvider>();
+                    }))
+                    {
+                        logger.LogDebug("FM25 Periodisation Rulebase Starting");
+
+                        var periodisationService = fundingServiceLifetimeScope.Resolve<IFundingService<Global, IEnumerable<PeriodisationGlobal>>>();
+
+                        fm25PeriodisationResults = periodisationService.ProcessFunding(fm25Results).ToList();
+
+                        logger.LogDebug("FM25 Periodisation Rulebase Finishing");
+                    }
 
                     logger.LogDebug("FM25 Actor completed processing");
 
-                    var condensedResults = CondenseResults(results, periodisationResults);
+                    var condensedResults = CondenseResults(fm25Results, fm25PeriodisationResults);
 
                     resultString = jsonSerializationService.Serialize(condensedResults);
                 }
