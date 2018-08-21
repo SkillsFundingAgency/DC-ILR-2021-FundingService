@@ -16,5 +16,8 @@
     <Parameter Name="AzureBlobConnectionString" Value="__AzureBlobConnectionString__" />
     <Parameter Name="AzureBlobContainerName" Value="__AzureBlobContainerName__" />
     <Parameter Name="ProcessingServicePlacementConstraints" Value="__ProcessingServicePlacementConstraints__" />
+    <Parameter Name="TopicFunding_TaskPerformALBCalculation" Value="__TopicFunding_TaskPerformALBCalculation__" />
+    <Parameter Name="TopicFunding_TaskPerformFM25Calculation" Value="__TopicFunding_TaskPerformFM25Calculation__" />
+    <Parameter Name="TopicFunding_TaskPerformFM35Calculation" Value="__TopicFunding_TaskPerformFM35Calculation__" />
   </Parameters>
 </Application>

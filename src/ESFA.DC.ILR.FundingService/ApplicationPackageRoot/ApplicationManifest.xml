@@ -29,6 +29,9 @@
     <Parameter Name="FM25ActorService_PartitionCount" DefaultValue="10" />
     <Parameter Name="FM25ActorService_MinReplicaSetSize" DefaultValue="1" />
     <Parameter Name="FM25ActorService_TargetReplicaSetSize" DefaultValue="1" />
+    <Parameter Name="TopicFunding_TaskPerformALBCalculation" DefaultValue="ALB" />
+    <Parameter Name="TopicFunding_TaskPerformFM25Calculation" DefaultValue="FM25" />
+    <Parameter Name="TopicFunding_TaskPerformFM35Calculation" DefaultValue="FM35" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
@@ -100,6 +103,11 @@
           <Section Name="AzureStorageSection">
             <Parameter Name="AzureBlobConnectionString" Value="[AzureBlobConnectionString]" />
             <Parameter Name="AzureBlobContainerName" Value="[AzureBlobContainerName]" />
+          </Section>
+          <Section Name="TopicAndTaskSection">
+            <Parameter Name="TopicFunding_TaskPerformALBCalculation" Value="[TopicFunding_TaskPerformALBCalculation]" />
+            <Parameter Name="TopicFunding_TaskPerformFM25Calculation" Value="[TopicFunding_TaskPerformFM25Calculation]" />
+            <Parameter Name="TopicFunding_TaskPerformFM35Calculation" Value="[TopicFunding_TaskPerformFM35Calculation]" />
           </Section>
         </Settings>
       </ConfigOverride>
