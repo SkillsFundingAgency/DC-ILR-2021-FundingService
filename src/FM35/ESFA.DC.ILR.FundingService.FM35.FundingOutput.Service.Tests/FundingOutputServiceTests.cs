@@ -87,7 +87,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             var appATAGTA = false;
             var appCompetency = false;
             var appFuncSkill = false;
-            var appFuncSkill1618AdjFact = 1;
+            var appFuncSkill1618AdjFact = 1.0m;
             var appKnowl = false;
             var appLearnStartDate = new DateTime(2018, 09, 01);
             var applicEmpFactDate = new DateTime(2018, 09, 01);
@@ -116,7 +116,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             var lTRCUpliftFctr = 1;
             var nonGovCont = 1;
             var oLASSCustody = false;
-            var onProgPayPctPreTrans = 1;
+            var onProgPayPctPreTrans = 1.7m;
             var outstndNumOnProgInstalm = 1;
             var outstndNumOnProgInstalmTrans = 1;
             var plannedNumOnProgInstalm = 1;
@@ -164,7 +164,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "AppATAGTA")).Returns(appATAGTA);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "AppCompetency")).Returns(appCompetency);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "AppFuncSkill")).Returns(appFuncSkill);
-            dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "AppFuncSkill1618AdjFact")).Returns(appFuncSkill1618AdjFact);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "AppFuncSkill1618AdjFact")).Returns(appFuncSkill1618AdjFact);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "AppKnowl")).Returns(appKnowl);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "AppLearnStartDate")).Returns(appLearnStartDate);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "ApplicEmpFactDate")).Returns(applicEmpFactDate);
@@ -193,7 +193,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LTRCUpliftFctr")).Returns(lTRCUpliftFctr);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "NonGovCont")).Returns(nonGovCont);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "OLASSCustody")).Returns(oLASSCustody);
-            dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "OnProgPayPctPreTrans")).Returns(onProgPayPctPreTrans);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "OnProgPayPctPreTrans")).Returns(onProgPayPctPreTrans);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "OutstndNumOnProgInstalm")).Returns(outstndNumOnProgInstalm);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "OutstndNumOnProgInstalmTrans")).Returns(outstndNumOnProgInstalmTrans);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "PlannedNumOnProgInstalm")).Returns(plannedNumOnProgInstalm);
