@@ -33,7 +33,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         private readonly IIlrFileProviderService _ilrFileProviderService;
         private readonly IFundingServiceDto _fundingServiceDto;
         private readonly IPopulationService _populationService;
-        private readonly IActorTask<IALBActor, FundingOutputs> _albActorTask;
+        private readonly IActorTask<IALBActor, ALBFundingOutputs> _albActorTask;
         private readonly IActorTask<IFM35Actor, FM35FundingOutputs> _fm35ActorTask;
         private readonly IActorTask<IFM25Actor, Global> _fm25ActorTask;
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
@@ -47,7 +47,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             IIlrFileProviderService ilrFileProviderService,
             IFundingServiceDto fundingServiceDto,
             IPopulationService populationService,
-            IActorTask<IALBActor, FundingOutputs> albActorTask,
+            IActorTask<IALBActor, ALBFundingOutputs> albActorTask,
             IActorTask<IFM35Actor, FM35FundingOutputs> fm35ActorTask,
             IActorTask<IFM25Actor, Global> fm25ActorTask,
             IKeyValuePersistenceService keyValuePersistenceService,

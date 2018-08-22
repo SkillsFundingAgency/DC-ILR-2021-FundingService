@@ -13,12 +13,12 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
     public class TaskProviderService : ITaskProviderService
     {
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
-        private readonly IFundingService<ILearner, FundingOutputs> _fundingService;
+        private readonly IFundingService<ILearner, ALBFundingOutputs> _fundingService;
         private readonly IPopulationService _populationService;
         private readonly IPagingService<ILearner> _learnerPerActorService;
         private readonly IJsonSerializationService _jsonSerializationService;
 
-        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IFundingService<ILearner, FundingOutputs> fundingService, IPopulationService populationService, IPagingService<ILearner> learnerPerActorService, IJsonSerializationService jsonSerializationService)
+        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IFundingService<ILearner, ALBFundingOutputs> fundingService, IPopulationService populationService, IPagingService<ILearner> learnerPerActorService, IJsonSerializationService jsonSerializationService)
         {
             _keyValuePersistenceService = keyValuePersistenceService;
             _fundingService = fundingService;
@@ -57,9 +57,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
             _keyValuePersistenceService.SaveAsync("ValidLearnRefNumbers", serializer.Serialize(learners)).Wait();
         }
 
-        private IEnumerable<FundingOutputs> ProcessFunding(IEnumerable<IEnumerable<ILearner>> learnersList)
+        private IEnumerable<ALBFundingOutputs> ProcessFunding(IEnumerable<IEnumerable<ILearner>> learnersList)
         {
-            var fundingOutputsList = new List<FundingOutputs>();
+            var fundingOutputsList = new List<ALBFundingOutputs>();
 
             foreach (var list in learnersList)
             {
@@ -69,13 +69,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
             return fundingOutputsList;
         }
 
-        private FundingOutputs TransformFundingOutput(IEnumerable<FundingOutputs> fundingOutputsList)
+        private ALBFundingOutputs TransformFundingOutput(IEnumerable<ALBFundingOutputs> fundingOutputsList)
         {
             var global = fundingOutputsList.First().Global;
 
             var learnerAttributes = fundingOutputsList.SelectMany(l => l.Learners).ToArray();
 
-            return new FundingOutputs
+            return new ALBFundingOutputs
             {
                 Global = global,
                 Learners = learnerAttributes,

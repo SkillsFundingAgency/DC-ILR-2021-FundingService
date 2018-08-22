@@ -24,9 +24,9 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
             var globalTwo = new GlobalAttribute();
             var globalThree = new GlobalAttribute();
 
-            var fundingOutputs = new List<FundingOutputs>()
+            var fundingOutputs = new List<ALBFundingOutputs>()
             {
-                new FundingOutputs()
+                new ALBFundingOutputs()
                 {
                     Global = globalOne,
                     Learners = new LearnerAttribute[]
@@ -35,7 +35,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
                         learnerTwo,
                     },
                 },
-                new FundingOutputs()
+                new ALBFundingOutputs()
                 {
                     Global = globalTwo,
                     Learners = new LearnerAttribute[]
@@ -44,7 +44,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
                         learnerFour,
                     },
                 },
-                new FundingOutputs()
+                new ALBFundingOutputs()
                 {
                     Global = globalThree,
                     Learners = new LearnerAttribute[]
@@ -80,9 +80,9 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
             var learnerFive = new LearnerAttribute();
             var learnerSix = new LearnerAttribute();
 
-            var fundingOutputs = new List<FundingOutputs>()
+            var fundingOutputs = new List<ALBFundingOutputs>()
             {
-                new FundingOutputs()
+                new ALBFundingOutputs()
                 {
                     Global = null,
                     Learners = new LearnerAttribute[]
@@ -91,7 +91,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
                         learnerTwo,
                     },
                 },
-                new FundingOutputs()
+                new ALBFundingOutputs()
                 {
                     Global = null,
                     Learners = new LearnerAttribute[]
@@ -100,7 +100,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
                         learnerFour,
                     },
                 },
-                new FundingOutputs()
+                new ALBFundingOutputs()
                 {
                     Global = null,
                     Learners = new LearnerAttribute[]
@@ -125,19 +125,19 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
             var globalTwo = new GlobalAttribute();
             var globalThree = new GlobalAttribute();
 
-            var fundingOutputs = new List<FundingOutputs>()
+            var fundingOutputs = new List<ALBFundingOutputs>()
             {
-                new FundingOutputs()
+                new ALBFundingOutputs()
                 {
                     Global = globalOne,
                     Learners = null
                 },
-                new FundingOutputs()
+                new ALBFundingOutputs()
                 {
                     Global = globalTwo,
                     Learners = null
                 },
-                new FundingOutputs()
+                new ALBFundingOutputs()
                 {
                     Global = globalThree,
                     Learners = null
@@ -162,9 +162,9 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
             var globalTwo = new GlobalAttribute();
             var globalThree = new GlobalAttribute();
 
-            var fundingOutputs = new List<FundingOutputs>()
+            var fundingOutputs = new List<ALBFundingOutputs>()
             {
-                new FundingOutputs()
+                new ALBFundingOutputs()
                 {
                     Global = globalOne,
                     Learners = new LearnerAttribute[]
@@ -173,12 +173,12 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
                         learnerTwo,
                     },
                 },
-                new FundingOutputs()
+                new ALBFundingOutputs()
                 {
                     Global = globalTwo,
                     Learners = null,
                 },
-                new FundingOutputs()
+                new ALBFundingOutputs()
                 {
                     Global = globalThree,
                     Learners = new LearnerAttribute[]

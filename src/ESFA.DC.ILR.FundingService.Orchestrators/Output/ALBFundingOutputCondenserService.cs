@@ -5,22 +5,22 @@ using ESFA.DC.ILR.FundingService.Interfaces;
 
 namespace ESFA.DC.ILR.FundingService.Orchestrators.Output
 {
-    public class ALBFundingOutputCondenserService : IFundingOutputCondenserService<FundingOutputs>
+    public class ALBFundingOutputCondenserService : IFundingOutputCondenserService<ALBFundingOutputs>
     {
-        public FundingOutputs Condense(IEnumerable<FundingOutputs> fundingOutputs)
+        public ALBFundingOutputs Condense(IEnumerable<ALBFundingOutputs> fundingOutputs)
         {
             fundingOutputs = fundingOutputs.Where(f => f != null);
 
             if (fundingOutputs.Any())
             {
-                return new FundingOutputs()
+                return new ALBFundingOutputs()
                 {
                     Global = fundingOutputs.FirstOrDefault()?.Global,
                     Learners = fundingOutputs.Where(o => o.Learners != null).SelectMany(r => r.Learners).ToArray()
                 };
             }
 
-            return new FundingOutputs();
+            return new ALBFundingOutputs();
         }
     }
 }
