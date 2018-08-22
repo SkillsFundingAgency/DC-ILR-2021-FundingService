@@ -24,15 +24,15 @@ namespace ESFA.DC.ILR.FundingService.ALBActor.Modules
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<SessionBuilder>().As<ISessionBuilder>().InstancePerLifetimeScope();
-            builder.RegisterType<OPADataEntityBuilder>().As<IOPADataEntityBuilder>().WithParameter("yearStartDate", new DateTime(2017, 8, 1)).InstancePerLifetimeScope();
-            builder.RegisterInstance(new RulebaseProvider("Rulebase")).As<IRulebaseProvider>();
+            builder.RegisterType<OPADataEntityBuilder>().As<IOPADataEntityBuilder>().WithParameter("yearStartDate", new DateTime(2018, 8, 1)).InstancePerLifetimeScope();
+            builder.RegisterInstance(new RulebaseProvider("Loans Bursary 18_19")).As<IRulebaseProvider>();
             builder.RegisterType<OPAService>().As<IOPAService>().InstancePerLifetimeScope();
             builder.RegisterType<ALBAttributeBuilder>().As<IALBAttributeBuilder>().InstancePerLifetimeScope();
             builder.RegisterType<DataEntityMapper>().As<IDataEntityMapper<ILearner>>().InstancePerLifetimeScope();
             builder.RegisterType<ExternalDataCache>().As<IExternalDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<FileDataCache>().As<IFileDataCache>().InstancePerLifetimeScope();
-            builder.RegisterType<FundingOutputService>().As<IOutputService<FundingOutputs>>().InstancePerLifetimeScope();
-            builder.RegisterType<FundingService<ILearner, FundingOutputs>>().As<IFundingService<ILearner, FundingOutputs>>().InstancePerLifetimeScope();
+            builder.RegisterType<FundingOutputService>().As<IOutputService<ALBFundingOutputs>>().InstancePerLifetimeScope();
+            builder.RegisterType<FundingService<ILearner, ALBFundingOutputs>>().As<IFundingService<ILearner, ALBFundingOutputs>>().InstancePerLifetimeScope();
             builder.RegisterType<DataEntityAttributeService>().As<IDataEntityAttributeService>();
         }
     }

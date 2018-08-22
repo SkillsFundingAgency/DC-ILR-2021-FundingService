@@ -198,7 +198,7 @@
     <None Include="PackageRoot\Config\Settings.xml" />
     <None Include="App.config" />
     <None Include="packages.config" />
-    <EmbeddedResource Include="Resources\Rulebase.zip" />
+    <EmbeddedResource Include="Resources\Loans Bursary 18_19.zip" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Providers\ESFA.DC.ILR.FundingService.Providers.csproj">
