@@ -274,7 +274,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         }
 
         [Fact]
-        public void LarsCareerLearningPilotyFromEntity()
+        public void LarsCareerLearningPilotFromEntity()
         {
             var lars_CareerLearningPilot = new LARS_CareerLearningPilot()
             {

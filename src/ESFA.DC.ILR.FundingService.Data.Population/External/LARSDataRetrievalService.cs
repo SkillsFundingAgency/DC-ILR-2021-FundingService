@@ -93,7 +93,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 EFACOFType = entity.EFACOFType,
                 SectorSubjectAreaTier2 = entity.SectorSubjectAreaTier2,
                 LARSValidities = entity.LARS_Validity.Select(LARSValidityFromEntity).ToList(),
-                LARSCareerLearningPilot = entity.LARS_CareerLearningPilot.Select(LARSCareerLearningPilotFromEntity).ToList()
+                LARSCareerLearningPilot = entity.LARS_CareerLearningPilot.Select(LARSCareerLearningPilotFromEntity).ToList(),
+                LARSFunding = entity.LARS_Funding.Select(LARSFundingFromEntity).ToList()
             };
         }
 
