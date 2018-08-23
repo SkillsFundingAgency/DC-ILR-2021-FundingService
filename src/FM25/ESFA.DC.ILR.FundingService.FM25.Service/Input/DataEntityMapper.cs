@@ -155,8 +155,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                         .LearningDeliveries?
                         .Select(BuildLearningDeliveryDataEntity) ?? new List<IDataEntity>())
                         .Union(
-                            _fileDataService.DPOutcomesForLearnRefNumber(learner.LearnRefNumber)
-                                .Select(BuildDPOutcome))
+                            _fileDataService.DPOutcomesForLearnRefNumber(learner.LearnRefNumber)?
+                                .Select(BuildDPOutcome) ?? new List<IDataEntity>())
                         .ToList()
             };
         }
