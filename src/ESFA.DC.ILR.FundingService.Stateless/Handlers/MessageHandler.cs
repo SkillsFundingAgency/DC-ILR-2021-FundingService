@@ -23,7 +23,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Handlers
         }
 
         public async Task<bool> Handle(JobContextMessage jobContextMessage, CancellationToken cancellationToken)
-        {
+         {
             try
             {
                 using (var childLifeTimeScope = _parentLifeTimeScope.BeginLifetimeScope(c =>
