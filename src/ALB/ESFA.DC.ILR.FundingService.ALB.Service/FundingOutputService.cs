@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Attribute;
+using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Interface;
@@ -11,28 +12,14 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
 {
     public class FundingOutputService : IOutputService<ALBFundingOutputs>
     {
+        private readonly IInternalDataCache _internalDataCache;
         private readonly IDataEntityAttributeService _dataEntityAttributeService;
 
-        public FundingOutputService(IDataEntityAttributeService dataEntityAttributeService)
+        public FundingOutputService(IInternalDataCache internalDataCache, IDataEntityAttributeService dataEntityAttributeService)
         {
+            _internalDataCache = internalDataCache;
             _dataEntityAttributeService = dataEntityAttributeService;
         }
-
-        private static IReadOnlyDictionary<int, DateTime> Periods => new Dictionary<int, DateTime>
-        {
-            { 1, new DateTime(2017, 08, 01) },
-            { 2, new DateTime(2017, 09, 01) },
-            { 3, new DateTime(2017, 10, 01) },
-            { 4, new DateTime(2017, 11, 01) },
-            { 5, new DateTime(2017, 12, 01) },
-            { 6, new DateTime(2018, 01, 01) },
-            { 7, new DateTime(2018, 02, 01) },
-            { 8, new DateTime(2018, 03, 01) },
-            { 9, new DateTime(2018, 04, 01) },
-            { 10, new DateTime(2018, 05, 01) },
-            { 11, new DateTime(2018, 06, 01) },
-            { 12, new DateTime(2018, 07, 01) },
-        };
 
         public ALBFundingOutputs ProcessFundingOutputs(IEnumerable<IDataEntity> dataEntities)
         {
@@ -122,18 +109,18 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
                     learnerPeriodisedAttributesList.Add(new LearnerPeriodisedAttribute
                     {
                         AttributeName = attribute,
-                        Period1 = GetPeriodAttributeValue(attributeValue, 1),
-                        Period2 = GetPeriodAttributeValue(attributeValue, 2),
-                        Period3 = GetPeriodAttributeValue(attributeValue, 3),
-                        Period4 = GetPeriodAttributeValue(attributeValue, 4),
-                        Period5 = GetPeriodAttributeValue(attributeValue, 5),
-                        Period6 = GetPeriodAttributeValue(attributeValue, 6),
-                        Period7 = GetPeriodAttributeValue(attributeValue, 7),
-                        Period8 = GetPeriodAttributeValue(attributeValue, 8),
-                        Period9 = GetPeriodAttributeValue(attributeValue, 9),
-                        Period10 = GetPeriodAttributeValue(attributeValue, 10),
-                        Period11 = GetPeriodAttributeValue(attributeValue, 11),
-                        Period12 = GetPeriodAttributeValue(attributeValue, 12),
+                        Period1 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period1),
+                        Period2 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period2),
+                        Period3 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period3),
+                        Period4 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period4),
+                        Period5 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period5),
+                        Period6 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period6),
+                        Period7 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period7),
+                        Period8 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period8),
+                        Period9 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period9),
+                        Period10 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period10),
+                        Period11 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period11),
+                        Period12 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period12),
                     });
                 }
             }
@@ -225,18 +212,18 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
                     learningDeliveryPeriodisedAttributeList.Add(new LearningDeliveryPeriodisedAttribute
                     {
                         AttributeName = attribute,
-                        Period1 = GetPeriodAttributeValue(attributeValue, 1),
-                        Period2 = GetPeriodAttributeValue(attributeValue, 2),
-                        Period3 = GetPeriodAttributeValue(attributeValue, 3),
-                        Period4 = GetPeriodAttributeValue(attributeValue, 4),
-                        Period5 = GetPeriodAttributeValue(attributeValue, 5),
-                        Period6 = GetPeriodAttributeValue(attributeValue, 6),
-                        Period7 = GetPeriodAttributeValue(attributeValue, 7),
-                        Period8 = GetPeriodAttributeValue(attributeValue, 8),
-                        Period9 = GetPeriodAttributeValue(attributeValue, 9),
-                        Period10 = GetPeriodAttributeValue(attributeValue, 10),
-                        Period11 = GetPeriodAttributeValue(attributeValue, 11),
-                        Period12 = GetPeriodAttributeValue(attributeValue, 12),
+                        Period1 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period1),
+                        Period2 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period2),
+                        Period3 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period3),
+                        Period4 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period4),
+                        Period5 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period5),
+                        Period6 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period6),
+                        Period7 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period7),
+                        Period8 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period8),
+                        Period9 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period9),
+                        Period10 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period10),
+                        Period11 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period11),
+                        Period12 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period12),
                     });
                 }
             }
@@ -244,9 +231,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
             return learningDeliveryPeriodisedAttributeList.ToArray();
         }
 
-        private decimal GetPeriodAttributeValue(IAttributeData attributes, int period)
+        private decimal GetPeriodAttributeValue(IAttributeData attributes, DateTime periodDate)
         {
-            return decimal.Parse(attributes.Changepoints.Where(cp => cp.ChangePoint == Periods[period]).Select(v => v.Value).SingleOrDefault().ToString());
+            return decimal.Parse(attributes.Changepoints.Where(cp => cp.ChangePoint == periodDate).Select(v => v.Value).SingleOrDefault().ToString());
         }
     }
 }

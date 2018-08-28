@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Attribute;
-using ESFA.DC.ILR.FundingService.ALB.Service;
+using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Interface;
@@ -33,7 +32,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "PostcodeAreaCostVersion")).Returns(postcodeAreaCostVersion);
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "RulebaseVersion")).Returns(rulebaseVersion);
 
-            var global = NewService(dataEntityAttributeServiceMock.Object).GlobalOutput(dataEntity);
+            var global = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).GlobalOutput(dataEntity);
 
             global.UKPRN.Should().Be(ukprn);
             global.LARSVersion.Should().Be(larsVersion);
@@ -60,7 +59,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
 
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "LearnRefNumber")).Returns(learnRefNumber);
 
-            var learner = NewService(dataEntityAttributeServiceMock.Object).LearnerFromDataEntity(dataEntity);
+            var learner = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).LearnerFromDataEntity(dataEntity);
 
             learner.LearnRefNumber = learnRefNumber;
         }
@@ -90,7 +89,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
 
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "AimSeqNumber")).Returns(aimSeqNumber);
 
-            var learningDelivery = NewService(dataEntityAttributeServiceMock.Object).LearningDeliveryFromDataEntity(dataEntity);
+            var learningDelivery = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).LearningDeliveryFromDataEntity(dataEntity);
 
             learningDelivery.AimSeqNumber = aimSeqNumber;
         }
@@ -98,14 +97,35 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
         [Fact]
         public void FundingOutput_LearnerPeriodisedAttributeData_Correct()
         {
-            // ARRANGE
-            var fundingOutputService = NewService();
-
-            // ACT
             var learnerPeriodisedAttributeData =
-                fundingOutputService.LearnerPeriodisedAttributes(TestLearnerEntity(null).Single());
+                NewService().LearnerPeriodisedAttributes(TestLearnerEntity(null).Single());
 
-            // ASSERT
+            var expectedLearnerPeriodisedAttributeData = TestLearnerPeriodisedAttributesArray();
+
+            expectedLearnerPeriodisedAttributeData.Should().BeEquivalentTo(learnerPeriodisedAttributeData);
+        }
+
+        [Fact]
+        public void FundingOutput_LearnerPeriodisedAttributeData_ChangePoints_Correct()
+        {
+            var internalDataCacheMock = new Mock<IInternalDataCache>();
+
+            internalDataCacheMock.Setup(p => p.Period1).Returns(new DateTime(2018, 8, 1));
+            internalDataCacheMock.Setup(p => p.Period2).Returns(new DateTime(2018, 9, 1));
+            internalDataCacheMock.Setup(p => p.Period3).Returns(new DateTime(2018, 10, 1));
+            internalDataCacheMock.Setup(p => p.Period4).Returns(new DateTime(2018, 11, 1));
+            internalDataCacheMock.Setup(p => p.Period5).Returns(new DateTime(2018, 12, 1));
+            internalDataCacheMock.Setup(p => p.Period6).Returns(new DateTime(2019, 1, 1));
+            internalDataCacheMock.Setup(p => p.Period7).Returns(new DateTime(2019, 2, 1));
+            internalDataCacheMock.Setup(p => p.Period8).Returns(new DateTime(2019, 3, 1));
+            internalDataCacheMock.Setup(p => p.Period9).Returns(new DateTime(2019, 4, 1));
+            internalDataCacheMock.Setup(p => p.Period10).Returns(new DateTime(2019, 5, 1));
+            internalDataCacheMock.Setup(p => p.Period11).Returns(new DateTime(2019, 6, 1));
+            internalDataCacheMock.Setup(p => p.Period12).Returns(new DateTime(2019, 7, 1));
+
+            var learnerPeriodisedAttributeData =
+                 NewService(internalDataCacheMock.Object).LearnerPeriodisedAttributes(TestLearnerEntityWithChangePoints(null).Single());
+
             var expectedLearnerPeriodisedAttributeData = TestLearnerPeriodisedAttributesArray();
 
             expectedLearnerPeriodisedAttributeData.Should().BeEquivalentTo(learnerPeriodisedAttributeData);
@@ -176,7 +196,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "PlannedNumOnProgInstalm")).Returns(plannedNumOnProgInstalm);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "WeightedRate")).Returns(weightedRate);
 
-            var learningDelivery = NewService(dataEntityAttributeServiceMock.Object).LearningDeliveryAttributeData(dataEntity);
+            var learningDelivery = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).LearningDeliveryAttributeData(dataEntity);
 
             learningDelivery.Achieved.Should().Be(achieved);
 
@@ -205,14 +225,35 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
         [Fact]
         public void FundingOutput_LearningDeliveryPeriodisedAttributeData_Correct()
         {
-            // ARRANGE
-            var fundingOutputService = NewService();
-
-            // ACT
             var learningDeliveryPeriodisedAttributeData =
-                fundingOutputService.LearningDeliveryPeriodisedAttributeData(TestLearningDeliveryEntity(null).Single());
+                NewService().LearningDeliveryPeriodisedAttributeData(TestLearningDeliveryEntity(null).Single());
 
-            // ASSERT
+            var expectedLearningDeliveryPeriodisedAttributeData = TestLearningDeliveryPeriodisedAttributesDataArray();
+
+            expectedLearningDeliveryPeriodisedAttributeData.Should().BeEquivalentTo(learningDeliveryPeriodisedAttributeData);
+        }
+
+        [Fact]
+        public void FundingOutput_LearningDeliveryPeriodisedAttributeData_WithChangePoints_Correct()
+        {
+            var internalDataCacheMock = new Mock<IInternalDataCache>();
+
+            internalDataCacheMock.Setup(p => p.Period1).Returns(new DateTime(2018, 8, 1));
+            internalDataCacheMock.Setup(p => p.Period2).Returns(new DateTime(2018, 9, 1));
+            internalDataCacheMock.Setup(p => p.Period3).Returns(new DateTime(2018, 10, 1));
+            internalDataCacheMock.Setup(p => p.Period4).Returns(new DateTime(2018, 11, 1));
+            internalDataCacheMock.Setup(p => p.Period5).Returns(new DateTime(2018, 12, 1));
+            internalDataCacheMock.Setup(p => p.Period6).Returns(new DateTime(2019, 1, 1));
+            internalDataCacheMock.Setup(p => p.Period7).Returns(new DateTime(2019, 2, 1));
+            internalDataCacheMock.Setup(p => p.Period8).Returns(new DateTime(2019, 3, 1));
+            internalDataCacheMock.Setup(p => p.Period9).Returns(new DateTime(2019, 4, 1));
+            internalDataCacheMock.Setup(p => p.Period10).Returns(new DateTime(2019, 5, 1));
+            internalDataCacheMock.Setup(p => p.Period11).Returns(new DateTime(2019, 6, 1));
+            internalDataCacheMock.Setup(p => p.Period12).Returns(new DateTime(2019, 7, 1));
+
+            var learningDeliveryPeriodisedAttributeData =
+                NewService(internalDataCacheMock.Object).LearningDeliveryPeriodisedAttributeData(TestLearningDeliveryEntityWithChangePoints(null).Single());
+
             var expectedLearningDeliveryPeriodisedAttributeData = TestLearningDeliveryPeriodisedAttributesDataArray();
 
             expectedLearningDeliveryPeriodisedAttributeData.Should().BeEquivalentTo(learningDeliveryPeriodisedAttributeData);
@@ -264,6 +305,52 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             return entities;
         }
 
+        private IEnumerable<IDataEntity> TestLearningDeliveryEntityWithChangePoints(DataEntity parent)
+        {
+            var entities = new List<DataEntity>();
+
+            var entity = new DataEntity("LearningDelivery")
+            {
+                EntityName = "LearningDelivery",
+                Attributes = new Dictionary<string, IAttributeData>
+                {
+                    { "AimSeqNumber", Attribute(false, "1.0") },
+                    { "Achieved", Attribute(false, "1.0") },
+                    { "ActualNumInstalm", Attribute(false, "1.0") },
+                    { "AdvLoan", Attribute(false, "1.0") },
+                    { "ApplicFactDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "ApplicProgWeightFact", Attribute(false, "1.0") },
+                    { "ALBCode", Attribute(false, "1.0") },
+                    { "ALBSupportPayment", Attribute(true, "1.0") },
+                    { "AreaUpliftBalPayment", Attribute(false, "1.0") },
+                    { "AreaUpliftOnProgPayment", Attribute(false, "1.0") },
+                    { "AreaCostFactAdj", Attribute(false, "1.0") },
+                    { "AreaCostInstalment", Attribute(false, "1.0") },
+                    { "FundLine", Attribute(false, "1.0") },
+                    { "FundStart", Attribute(false, "1.0") },
+                    { "LearnDelApplicLARSCarPilFundSubRate", Attribute(false, "1.0") },
+                    { "LearnDelApplicSubsidyPilotAreaCode", Attribute(false, "1.0") },
+                    { "LearnDelCarLearnPilotAimValue", Attribute(false, "1.0") },
+                    { "LearnDelCarLearnPilotInstalAmount", Attribute(false, "1.0") },
+                    { "LearnDelCarLearnPilotOnProgPayment", Attribute(false, "1.0") },
+                    { "LearnDelCarLearnPilotBalPayment", Attribute(false, "1.0") },
+                    { "LearnDelEligCareerLearnPilot", Attribute(false, "1.0") },
+                    { "LiabilityDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "LoanBursAreaUplift", Attribute(false, "1.0") },
+                    { "LoanBursSupp", Attribute(false, "1.0") },
+                    { "OutstndNumOnProgInstalm", Attribute(false, "1.0") },
+                    { "PlannedNumOnProgInstalm", Attribute(false, "1.0") },
+                    { "WeightedRate", Attribute(false, "1.0") }
+                },
+
+                Parent = parent,
+            };
+
+            entities.Add(entity);
+
+            return entities;
+        }
+
         private IEnumerable<IDataEntity> TestLearnerEntity(DataEntity parent)
         {
             var entities = new List<DataEntity>();
@@ -275,6 +362,27 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                 {
                     { "LearnRefNumber", Attribute(false, "LearnRefNumber") },
                     { "ALBSeqNum", Attribute(false, "1.0") },
+                },
+
+                Parent = parent,
+            };
+
+            entities.Add(entity);
+
+            return entities;
+        }
+
+        private IEnumerable<IDataEntity> TestLearnerEntityWithChangePoints(DataEntity parent)
+        {
+            var entities = new List<DataEntity>();
+
+            var entity = new DataEntity("Learner")
+            {
+                EntityName = "Learner",
+                Attributes = new Dictionary<string, IAttributeData>
+                {
+                    { "LearnRefNumber", Attribute(false, "LearnRefNumber") },
+                    { "ALBSeqNum", Attribute(true, "1.0") },
                 },
 
                 Parent = parent,
@@ -384,9 +492,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             };
         }
 
-        private FundingOutputService NewService(IDataEntityAttributeService dataEntityAttributeService = null)
+        private FundingOutputService NewService(IInternalDataCache internalDataCache = null, IDataEntityAttributeService dataEntityAttributeService = null)
         {
-            return new FundingOutputService(dataEntityAttributeService);
+            return new FundingOutputService(internalDataCache, dataEntityAttributeService);
         }
     }
 }
