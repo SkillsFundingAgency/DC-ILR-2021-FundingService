@@ -3,10 +3,8 @@ using System.Linq;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Attribute;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Interface;
-using Oracle.Determinations.Masquerade.Util;
 
 namespace ESFA.DC.ILR.FundingService.FM35.Service
 {

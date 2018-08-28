@@ -1,14 +1,15 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ESFA.DC.ILR.FundingService.ALB.FundingOutput.Tests")]
+[assembly: AssemblyTitle("ESFA.DC.ILR.FundingService.ALB.Service.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("HP Inc.")]
-[assembly: AssemblyProduct("ESFA.DC.ILR.FundingService.ALB.FundingOutput.Tests")]
+[assembly: AssemblyProduct("ESFA.DC.ILR.FundingService.ALB.Service.Tests")]
 [assembly: AssemblyCopyright("Copyright © HP Inc. 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("f0976c24-fa43-4f5e-8502-2e88d0dbfb1c")]
+[assembly: Guid("df002585-c7a7-42a1-a0c9-4e2fba823ee8")]
 
 // Version information for an assembly consists of the following four values:
 //

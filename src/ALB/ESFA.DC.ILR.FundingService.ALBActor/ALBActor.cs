@@ -53,7 +53,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                 try
                 {
                     logger.LogDebug("ALB Actor started processing");
-                    var fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, FundingOutputs>>();
+                    var fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, ALBFundingOutputs>>();
 
                     var learners = jsonSerializationService.Deserialize<List<MessageLearner>>(albActorModel.ValidLearners);
 

@@ -9,15 +9,16 @@ using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service
 {
-    public class FundingOutputService : IOutputService<FundingOutputs>
+    public class FundingOutputService : IOutputService<ALBFundingOutputs>
     {
         private readonly IDataEntityAttributeService _dataEntityAttributeService;
 
-        private readonly IEnumerable<string> _learnerPeriodisedAttributeList = new List<string> { "ALBSeqNum" };
+        public FundingOutputService(IDataEntityAttributeService dataEntityAttributeService)
+        {
+            _dataEntityAttributeService = dataEntityAttributeService;
+        }
 
-        private readonly IEnumerable<string> _learningDeliveryPeriodisedAttributeList = new List<string>() { "ALBCode", "ALBSupportPayment", "AreaUpliftBalPayment", "AreaUpliftOnProgPayment" };
-
-        private readonly IReadOnlyDictionary<int, DateTime> _periods = new Dictionary<int, DateTime>
+        private static IReadOnlyDictionary<int, DateTime> Periods => new Dictionary<int, DateTime>
         {
             { 1, new DateTime(2017, 08, 01) },
             { 2, new DateTime(2017, 09, 01) },
@@ -33,38 +34,37 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
             { 12, new DateTime(2018, 07, 01) },
         };
 
-        public FundingOutputService(IDataEntityAttributeService dataEntityAttributeService)
-        {
-            _dataEntityAttributeService = dataEntityAttributeService;
-        }
-
-        public FundingOutputs ProcessFundingOutputs(IEnumerable<IDataEntity> dataEntities)
+        public ALBFundingOutputs ProcessFundingOutputs(IEnumerable<IDataEntity> dataEntities)
         {
             if (dataEntities != null)
             {
                 dataEntities = dataEntities.ToList();
                 if (dataEntities.Any())
                 {
-                    return new FundingOutputs
+                    return new ALBFundingOutputs
                     {
-                        Global = GlobalFromDataEntity(dataEntities.First()),
-                        Learners = dataEntities.SelectMany(g => g.Children).Select(LearnerFromDataEntity).ToArray()
+                        Global = GlobalOutput(dataEntities.First()),
+                        Learners = dataEntities
+                        .Where(g => g.Children != null)
+                        .SelectMany(g => g.Children.Where(e => e.EntityName == "Learner")
+                        .Select(LearnerFromDataEntity))
+                        .ToArray(),
                     };
                 }
             }
 
-            return new FundingOutputs();
+            return new ALBFundingOutputs();
         }
 
-        public GlobalAttribute GlobalFromDataEntity(IDataEntity dataEntity)
+        public GlobalAttribute GlobalOutput(IDataEntity dataEntity)
         {
-           return new GlobalAttribute
-           {
-               UKPRN = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, "UKPRN").Value,
-               LARSVersion = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, "LARSVersion"),
-               PostcodeAreaCostVersion = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, "PostcodeAreaCostVersion"),
-               RulebaseVersion = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, "RulebaseVersion"),
-           };
+            return new GlobalAttribute
+            {
+                UKPRN = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, "UKPRN").Value,
+                LARSVersion = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, "LARSVersion"),
+                PostcodeAreaCostVersion = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, "PostcodeAreaCostVersion"),
+                RulebaseVersion = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, "RulebaseVersion"),
+            };
         }
 
         public LearnerAttribute LearnerFromDataEntity(IDataEntity dataEntity)
@@ -73,23 +73,33 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
             {
                 LearnRefNumber = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, "LearnRefNumber"),
                 LearnerPeriodisedAttributes = LearnerPeriodisedAttributes(dataEntity).ToArray(),
-                LearningDeliveryAttributes = dataEntity.Children.Select(LearningDeliveryFromDataEntity).ToArray()
+                LearningDeliveryAttributes = dataEntity
+                        .Children
+                        .Where(e => e.EntityName == "LearningDelivery")
+                        .Select(LearningDeliveryFromDataEntity).ToArray()
             };
         }
 
-        public IEnumerable<LearnerPeriodisedAttribute> LearnerPeriodisedAttributes(IDataEntity learner)
+        public LearnerPeriodisedAttribute[] LearnerPeriodisedAttributes(IDataEntity learner)
         {
-            foreach (var attribute in _learnerPeriodisedAttributeList)
+            List<string> attributeList = new List<string>()
+            {
+                "ALBSeqNum",
+            };
+
+            List<LearnerPeriodisedAttribute> learnerPeriodisedAttributesList = new List<LearnerPeriodisedAttribute>();
+
+            foreach (var attribute in attributeList)
             {
                 var attributeValue = learner.Attributes[attribute];
 
-                LearnerPeriodisedAttribute learnerPeriodisedAttribute;
+                var changePoints = attributeValue.Changepoints;
 
-                if (!attributeValue.Changepoints.Any())
+                if (!changePoints.Any())
                 {
                     var value = decimal.Parse(attributeValue.Value.ToString());
 
-                    learnerPeriodisedAttribute = new LearnerPeriodisedAttribute
+                    learnerPeriodisedAttributesList.Add(new LearnerPeriodisedAttribute
                     {
                         AttributeName = attribute,
                         Period1 = value,
@@ -104,11 +114,12 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
                         Period10 = value,
                         Period11 = value,
                         Period12 = value,
-                    };
+                    });
                 }
-                else
+
+                if (changePoints.Any())
                 {
-                    learnerPeriodisedAttribute = new LearnerPeriodisedAttribute
+                    learnerPeriodisedAttributesList.Add(new LearnerPeriodisedAttribute
                     {
                         AttributeName = attribute,
                         Period1 = GetPeriodAttributeValue(attributeValue, 1),
@@ -123,11 +134,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
                         Period10 = GetPeriodAttributeValue(attributeValue, 10),
                         Period11 = GetPeriodAttributeValue(attributeValue, 11),
                         Period12 = GetPeriodAttributeValue(attributeValue, 12),
-                    };
+                    });
                 }
-
-                yield return learnerPeriodisedAttribute;
             }
+
+            return learnerPeriodisedAttributesList.ToArray();
         }
 
         public LearningDeliveryAttribute LearningDeliveryFromDataEntity(IDataEntity dataEntity)
@@ -153,6 +164,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
                 AreaCostInstalment = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, "AreaCostInstalment"),
                 FundLine = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, "FundLine"),
                 FundStart = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, "FundStart"),
+                LearnDelApplicLARSCarPilFundSubRate = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, "LearnDelApplicLARSCarPilFundSubRate"),
+                LearnDelApplicSubsidyPilotAreaCode = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, "LearnDelApplicSubsidyPilotAreaCode"),
+                LearnDelCarLearnPilotAimValue = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, "LearnDelCarLearnPilotAimValue"),
+                LearnDelCarLearnPilotInstalAmount = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, "LearnDelCarLearnPilotInstalAmount"),
+                LearnDelEligCareerLearnPilot = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, "LearnDelEligCareerLearnPilot"),
                 LiabilityDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, "LiabilityDate"),
                 LoanBursAreaUplift = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, "LoanBursAreaUplift"),
                 LoanBursSupp = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, "LoanBursSupp"),
@@ -162,19 +178,31 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
             };
         }
 
-        public IEnumerable<LearningDeliveryPeriodisedAttribute> LearningDeliveryPeriodisedAttributeData(IDataEntity learningDelivery)
+        public LearningDeliveryPeriodisedAttribute[] LearningDeliveryPeriodisedAttributeData(IDataEntity learningDelivery)
         {
-            foreach (var attribute in _learningDeliveryPeriodisedAttributeList)
+            List<string> attributeList = new List<string>()
+            {
+                "ALBCode",
+                "ALBSupportPayment",
+                "AreaUpliftBalPayment",
+                "AreaUpliftOnProgPayment",
+                "LearnDelCarLearnPilotOnProgPayment",
+                "LearnDelCarLearnPilotBalPayment"
+            };
+
+            List<LearningDeliveryPeriodisedAttribute> learningDeliveryPeriodisedAttributeList = new List<LearningDeliveryPeriodisedAttribute>();
+
+            foreach (var attribute in attributeList)
             {
                 var attributeValue = learningDelivery.Attributes[attribute];
 
-                LearningDeliveryPeriodisedAttribute learningDeliveryPeriodisedAttribute;
+                var changePoints = attributeValue.Changepoints;
 
-                if (!attributeValue.Changepoints.Any())
+                if (!changePoints.Any())
                 {
                     var value = decimal.Parse(attributeValue.Value.ToString());
 
-                    learningDeliveryPeriodisedAttribute = new LearningDeliveryPeriodisedAttribute
+                    learningDeliveryPeriodisedAttributeList.Add(new LearningDeliveryPeriodisedAttribute
                     {
                         AttributeName = attribute,
                         Period1 = value,
@@ -189,11 +217,12 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
                         Period10 = value,
                         Period11 = value,
                         Period12 = value,
-                    };
+                    });
                 }
-                else
+
+                if (changePoints.Any())
                 {
-                    learningDeliveryPeriodisedAttribute = new LearningDeliveryPeriodisedAttribute
+                    learningDeliveryPeriodisedAttributeList.Add(new LearningDeliveryPeriodisedAttribute
                     {
                         AttributeName = attribute,
                         Period1 = GetPeriodAttributeValue(attributeValue, 1),
@@ -208,16 +237,16 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
                         Period10 = GetPeriodAttributeValue(attributeValue, 10),
                         Period11 = GetPeriodAttributeValue(attributeValue, 11),
                         Period12 = GetPeriodAttributeValue(attributeValue, 12),
-                    };
+                    });
                 }
-
-                yield return learningDeliveryPeriodisedAttribute;
             }
+
+            return learningDeliveryPeriodisedAttributeList.ToArray();
         }
 
         private decimal GetPeriodAttributeValue(IAttributeData attributes, int period)
         {
-            return decimal.Parse(attributes.Changepoints.Where(cp => cp.ChangePoint == _periods[period]).Select(v => v.Value).SingleOrDefault().ToString());
+            return decimal.Parse(attributes.Changepoints.Where(cp => cp.ChangePoint == Periods[period]).Select(v => v.Value).SingleOrDefault().ToString());
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model
 {
-    public class FundingOutputs
+    public class ALBFundingOutputs
     {
         public GlobalAttribute Global { get; set; }
 

@@ -92,7 +92,9 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 AwardOrgCode = entity.AwardOrgCode,
                 EFACOFType = entity.EFACOFType,
                 SectorSubjectAreaTier2 = entity.SectorSubjectAreaTier2,
-                LARSValidities = entity.LARS_Validity.Select(LARSValidityFromEntity).ToList()
+                LARSValidities = entity.LARS_Validity.Select(LARSValidityFromEntity).ToList(),
+                LARSCareerLearningPilot = entity.LARS_CareerLearningPilot.Select(LARSCareerLearningPilotFromEntity).ToList(),
+                LARSFunding = entity.LARS_Funding.Select(LARSFundingFromEntity).ToList()
             };
         }
 
@@ -103,6 +105,17 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 Category = entity.ValidityCategory,
                 LastNewStartDate = entity.LastNewStartDate,
                 StartDate = entity.StartDate,
+            };
+        }
+
+        public LARSCareerLearningPilot LARSCareerLearningPilotFromEntity(LARS_CareerLearningPilot entity)
+        {
+            return new LARSCareerLearningPilot()
+            {
+                AreaCode = entity.AreaCode,
+                SubsidyRate = entity.SubsidyRate,
+                EffectiveFrom = entity.EffectiveFrom,
+                EffectiveTo = entity.EffectiveTo,
             };
         }
 

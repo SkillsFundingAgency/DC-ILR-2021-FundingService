@@ -6,8 +6,7 @@ using ESFA.DC.Data.Postcodes.Model;
 using ESFA.DC.Data.Postcodes.Model.Interfaces;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALB.Service;
-using ESFA.DC.ILR.FundingService.ALB.Service.Builders;
-using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
+using ESFA.DC.ILR.FundingService.ALB.Service.Input;
 using ESFA.DC.ILR.FundingService.Data.Context;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.Interface;
@@ -60,10 +59,9 @@ namespace ESFA.DC.ILR.FundingService.Console.Modules
             builder.RegisterType<OPADataEntityBuilder>().As<IOPADataEntityBuilder>().WithParameter("yearStartDate", new System.DateTime(2017, 8, 1)).InstancePerLifetimeScope();
             builder.RegisterInstance(new RulebaseProvider("Rulebase")).As<IRulebaseProvider>();
             builder.RegisterType<OPAService>().As<IOPAService>().InstancePerLifetimeScope();
-            builder.RegisterType<ALBAttributeBuilder>().As<IALBAttributeBuilder>().InstancePerLifetimeScope();
             builder.RegisterType<DataEntityMapper>().As<IDataEntityMapper<ILearner>>().InstancePerLifetimeScope();
-            builder.RegisterType<FundingOutputService>().As<IOutputService<FundingOutputs>>().InstancePerLifetimeScope();
-            builder.RegisterType<FundingService<ILearner, FundingOutputs>>().As<IFundingService<ILearner, FundingOutputs>>().InstancePerLifetimeScope();
+            builder.RegisterType<FundingOutputService>().As<IOutputService<ALBFundingOutputs>>().InstancePerLifetimeScope();
+            builder.RegisterType<FundingService<ILearner, ALBFundingOutputs>>().As<IFundingService<ILearner, ALBFundingOutputs>>().InstancePerLifetimeScope();
             builder.RegisterType<LearnerPagingService<ILearner>>().As<IPagingService<ILearner>>().InstancePerLifetimeScope();
             builder.RegisterType<ExternalDataCache>().As<IExternalDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<ExternalDataCachePopulationService>().As<IExternalDataCachePopulationService>().InstancePerLifetimeScope();
@@ -72,7 +70,6 @@ namespace ESFA.DC.ILR.FundingService.Console.Modules
             builder.RegisterType<FundingContext>().As<IFundingContext>().InstancePerLifetimeScope();
             builder.RegisterType<FundingContextPopulationService>().As<IFundingContextPopulationService>().InstancePerLifetimeScope();
             builder.RegisterType<DictionaryKeyValuePersistenceService>().As<IKeyValuePersistenceService>().InstancePerLifetimeScope();
-            builder.RegisterType<TaskProviderService>().As<ITaskProviderService>().InstancePerLifetimeScope();
             builder.Register(ctx => BuildJobContext()).As<IJobContextMessage>().InstancePerLifetimeScope();
         }
 
