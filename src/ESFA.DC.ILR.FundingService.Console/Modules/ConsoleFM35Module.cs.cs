@@ -25,6 +25,7 @@ using ESFA.DC.ILR.FundingService.Data.Population.Context;
 using ESFA.DC.ILR.FundingService.Data.Population.External;
 using ESFA.DC.ILR.FundingService.Data.Population.File;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
+using ESFA.DC.ILR.FundingService.Data.Population.Internal;
 using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Dto.Interfaces;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
@@ -73,6 +74,7 @@ namespace ESFA.DC.ILR.FundingService.Console.Modules
             builder.RegisterType<OrganisationReferenceDataService>().As<IOrganisationReferenceDataService>().InstancePerLifetimeScope();
             builder.RegisterType<PostcodesReferenceDataService>().As<IPostcodesReferenceDataService>().InstancePerLifetimeScope();
             builder.RegisterType<ExternalDataCache>().As<IExternalDataCache>().InstancePerLifetimeScope();
+            builder.RegisterType<InternalDataCachePopulationService>().As<IInternalDataCachePopulationService>().InstancePerLifetimeScope();
             builder.RegisterType<ExternalDataCachePopulationService>().As<IExternalDataCachePopulationService>().InstancePerLifetimeScope();
             builder.RegisterType<FileDataCache>().As<IFileDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<FileDataCachePopulationService>().As<IFileDataCachePopulationService>().InstancePerLifetimeScope();

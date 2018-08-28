@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Application xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="fabric:/ESFA.DC.ILR.FundingService" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+  <Parameters>
+    <Parameter Name="ESFA.DC.ILR.FundingService.Stateless_InstanceCount" Value="-1" />
+    <Parameter Name="AuditQueueName" Value="auditingqueue" />
+    <Parameter Name="ServiceBusConnectionString" Value="Endpoint=sb://xx-ab-servicebus-weu.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=/i2m16oGuUGu+4DUOC+fATuVrZ2txFLopGE5ama/0O0=" />
+    <Parameter Name="TopicName" Value="ilr1819submissiontopic" />
+    <Parameter Name="FundingCalcSubscriptionName" Value="Funding" />
+    <Parameter Name="JobStatusQueueName" Value="jobstatusqueue" />
+    <Parameter Name="LoggerConnectionstring" Value="Server=DC-CI-SqlServer-WEU.database.windows.net;Database=AppLogs;User Id=ApplicationLogUser;Password=873lGdCMEa@Specm@2jy4zPNnZLJIYATuUb;MultipleActiveResultSets=true;" />
+    <Parameter Name="DataStoreSubscriptionName" Value="deds" />
+    <Parameter Name="LARSConnectionString" Value="metadata=res://*/LARS.csdl|res://*/LARS.ssdl|res://*/LARS.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=DCOL-TST-SqlServer-WEU.database.windows.net;initial catalog=Lars;;User Id=Lars_RO_User;Password=qysSYaBPhDb2lHd0EZzkvGtXQ8pJAi3KLeo1Fg6mU9jM7TxcurC5W4NVwOIfnR-@rNMX42EvK76;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
+    <Parameter Name="PostcodesConnectionString" Value="metadata=res://*/Postcodes.csdl|res://*/Postcodes.ssdl|res://*/Postcodes.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=DCOL-TST-SqlServer-WEU.database.windows.net;initial catalog=PostCodes;User Id=PostCode_RO_User;Password=4SYuMwKpfVkrb@zhxJXQ3FTicaL9lyWCjnO0Aog1UNEv-D5GqZs8RPI6HdmeB7t2zV@7fWHRNJ6;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
+    <Parameter Name="OrganisationConnectionString" Value="metadata=res://*/Organisations.csdl|res://*/Organisations.ssdl|res://*/Organisations.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=DC-CI-SqlServer-WEU.database.windows.net;initial catalog=Org;User Id=Org_RO_User;Password=Gc1-LRxPHQ7M4vXyoD6efrsWpAKuz@EqdwNa29U8imlSgbBkY3CFVJI0tTZOn5hjgRuCGsMSHa7;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
+    <Parameter Name="LargeEmployersConnectionString" Value="metadata=res://*/LargeEmployer.csdl|res://*/LargeEmployer.ssdl|res://*/LargeEmployer.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=DC-CI-SqlServer-WEU.database.windows.net;initial catalog=LargeEmployers;;User Id=LargeEmployer_RO_User;Password=sJue-Vb4iNLn8ZtfwjrhmvRcDY3XBAS9za5;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
+    <Parameter Name="RedisCacheConnectionString" Value="dc-ci-transientstore-red-weu.redis.cache.windows.net:6380,password=X2PjOWBSn7W3lx0CisJ+Uw7rMyqsVPtVNOTCf7ohFqM=,ssl=True,abortConnect=False" />
+    <Parameter Name="AzureBlobConnectionString" Value="DefaultEndpointsProtocol=https;AccountName=dcoldevstorageaccountweu;AccountKey=WrrqU5Io8ZC3gvLTunjRZfOyZiUMMexbBJFvNGkoClu1FTlQX/Hu01w4tkMrfbxUZhcNo+DBtfFFgtBjQJgcrw==;EndpointSuffix=core.windows.net" />
+    <Parameter Name="AzureBlobContainerName" Value="ilr-files" />
+    <Parameter Name="ProcessingServicePlacementConstraints" Value="" />
+    <Parameter Name="ALBActorService_PartitionCount" Value="5" />
+    <Parameter Name="ALBActorService_TargetReplicaSetSize" Value="1" />
+    <Parameter Name="ALBActorService_MinReplicaSetSize" Value="1" />
+    <Parameter Name="FM35ActorService_PartitionCount" Value="5" />
+    <Parameter Name="FM35ActorService_TargetReplicaSetSize" Value="1" />
+    <Parameter Name="FM35ActorService_MinReplicaSetSize" Value="1" />
+    <Parameter Name="FM25ActorService_PartitionCount" Value="5" />
+    <Parameter Name="FM25ActorService_TargetReplicaSetSize" Value="1" />
+    <Parameter Name="FM25ActorService_MinReplicaSetSize" Value="1" />
+  </Parameters>
+</Application>

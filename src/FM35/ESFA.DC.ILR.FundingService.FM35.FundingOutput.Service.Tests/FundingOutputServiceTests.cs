@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Attribute;
 using ESFA.DC.ILR.FundingService.FM35.Service;
@@ -40,7 +41,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "PostcodeDisadvantageVersion")).Returns(postcodeDisadvantageVersion);
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "RulebaseVersion")).Returns(rulebaseVersion);
 
-            var global = NewService(dataEntityAttributeServiceMock.Object).GlobalOutput(dataEntity);
+            var global = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).GlobalOutput(dataEntity);
 
             global.UKPRN.Should().Be(ukprn);
             global.CurFundYr.Should().Be(curFundYr);
@@ -60,7 +61,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
                 EntityName = learnRefNumber,
             };
 
-            var learner = NewService(new Mock<IDataEntityAttributeService>().Object).LearnerFromDataEntity(dataEntity);
+            var learner = NewService(dataEntityAttributeService: new Mock<IDataEntityAttributeService>().Object).LearnerFromDataEntity(dataEntity);
 
             learner.LearnRefNumber = learnRefNumber;
         }
@@ -218,7 +219,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "WeightedRateFromESOL")).Returns(weightedRateFromESOL);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "StartPropTrans")).Returns(startPropTrans);
 
-            var learningDelivery = NewService(dataEntityAttributeServiceMock.Object).LearningDeliveryAttributeData(dataEntity);
+            var learningDelivery = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).LearningDeliveryAttributeData(dataEntity);
 
             learningDelivery.AchApplicDate.Should().Be(achApplicDate);
             learningDelivery.Achieved.Should().Be(achieved);
@@ -310,6 +311,33 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             expectedLearningDeliveryPeriodisedAttributeData.Should().BeEquivalentTo(learningDeliveryPeriodisedAttributeData);
         }
 
+        [Fact]
+        public void FundingOutput_LearningDeliveryPeriodisedAttributeData_WithChangePoints_Correct()
+        {
+            var internalDataCacheMock = new Mock<IInternalDataCache>();
+
+            internalDataCacheMock.Setup(p => p.Period1).Returns(new DateTime(2018, 8, 1));
+            internalDataCacheMock.Setup(p => p.Period2).Returns(new DateTime(2018, 9, 1));
+            internalDataCacheMock.Setup(p => p.Period3).Returns(new DateTime(2018, 10, 1));
+            internalDataCacheMock.Setup(p => p.Period4).Returns(new DateTime(2018, 11, 1));
+            internalDataCacheMock.Setup(p => p.Period5).Returns(new DateTime(2018, 12, 1));
+            internalDataCacheMock.Setup(p => p.Period6).Returns(new DateTime(2019, 1, 1));
+            internalDataCacheMock.Setup(p => p.Period7).Returns(new DateTime(2019, 2, 1));
+            internalDataCacheMock.Setup(p => p.Period8).Returns(new DateTime(2019, 3, 1));
+            internalDataCacheMock.Setup(p => p.Period9).Returns(new DateTime(2019, 4, 1));
+            internalDataCacheMock.Setup(p => p.Period10).Returns(new DateTime(2019, 5, 1));
+            internalDataCacheMock.Setup(p => p.Period11).Returns(new DateTime(2019, 6, 1));
+            internalDataCacheMock.Setup(p => p.Period12).Returns(new DateTime(2019, 7, 1));
+
+            var learningDeliveryPeriodisedAttributeData =
+                NewService(internalDataCacheMock.Object).LearningDeliveryPeriodisedAttributeData(TestLearningDeliveryEntityWithChangePoints(null).Single());
+
+            // ASSERT
+            var expectedLearningDeliveryPeriodisedAttributeData = TestLearningDeliveryPeriodisedAttributesDataArray();
+
+            expectedLearningDeliveryPeriodisedAttributeData.Should().BeEquivalentTo(learningDeliveryPeriodisedAttributeData);
+        }
+
         private IEnumerable<IDataEntity> TestLearningDeliveryEntity(DataEntity parent)
         {
             var entities = new List<DataEntity>();
@@ -350,6 +378,115 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
                     { "ApplicWeightFundRate", Attribute(false, "1.0") },
                     { "AppNonFund", Attribute(false, "1.0") },
                     { "AreaCostFactAdj", Attribute(false, "1.0") },
+                    { "BalInstalmPreTrans", Attribute(false, "1.0") },
+                    { "BaseValueUnweight", Attribute(false, "1.0") },
+                    { "CapFactor", Attribute(false, "1.0") },
+                    { "DisUpFactAdj", Attribute(false, "1.0") },
+                    { "EmpOutcomePayElig", Attribute(false, "1.0") },
+                    { "EmpOutcomePctHeldBackTrans", Attribute(false, "1.0") },
+                    { "EmpOutcomePctPreTrans", Attribute(false, "1.0") },
+                    { "EmpRespOth", Attribute(false, "1.0") },
+                    { "ESOL", Attribute(false, "1.0") },
+                    { "FullyFund", Attribute(false, "1.0") },
+                    { "FundLine", Attribute(false, "1.0") },
+                    { "FundStart", Attribute(false, "1.0") },
+                    { "LargeEmployerFM35Fctr", Attribute(false, "1.0") },
+                    { "LargeEmployerID", Attribute(false, "1.0") },
+                    { "LargeEmployerStatusDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "LTRCUpliftFctr", Attribute(false, "1.0") },
+                    { "NonGovCont", Attribute(false, "1.0") },
+                    { "OLASSCustody", Attribute(false, "1.0") },
+                    { "OnProgPayPctPreTrans", Attribute(false, "1.0") },
+                    { "OutstndNumOnProgInstalm", Attribute(false, "1.0") },
+                    { "OutstndNumOnProgInstalmTrans", Attribute(false, "1.0") },
+                    { "PlannedNumOnProgInstalm", Attribute(false, "1.0") },
+                    { "PlannedNumOnProgInstalmTrans", Attribute(false, "1.0") },
+                    { "PlannedTotalDaysIL", Attribute(false, "1.0") },
+                    { "PlannedTotalDaysILPreTrans", Attribute(false, "1.0") },
+                    { "PropFundRemain", Attribute(false, "1.0") },
+                    { "PropFundRemainAch", Attribute(false, "1.0") },
+                    { "PrscHEAim", Attribute(false, "1.0") },
+                    { "Residential", Attribute(false, "1.0") },
+                    { "Restart", Attribute(false, "1.0") },
+                    { "SpecResUplift", Attribute(false, "1.0") },
+                    { "StartPropTrans", Attribute(false, "1.0") },
+                    { "ThresholdDays", Attribute(false, "1.0") },
+                    { "Traineeship", Attribute(false, "1.0") },
+                    { "Trans", Attribute(false, "1.0") },
+                    { "TrnAdjLearnStartDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "TrnWorkPlaceAim", Attribute(false, "1.0") },
+                    { "TrnWorkPrepAim", Attribute(false, "1.0") },
+                    { "UnWeightedRateFromESOL", Attribute(false, "1.0") },
+                    { "UnweightedRateFromLARS", Attribute(false, "1.0") },
+                    { "WeightedRateFromESOL", Attribute(false, "1.0") },
+                    { "WeightedRateFromLARS", Attribute(false, "1.0") },
+                    { "AchievePayment", Attribute(false, "1.0") },
+                    { "AchievePayPct", Attribute(false, "1.0") },
+                    { "AchievePayPctTrans", Attribute(false, "1.0") },
+                    { "BalancePayment", Attribute(false, "1.0") },
+                    { "BalancePaymentUncapped", Attribute(false, "1.0") },
+                    { "BalancePct", Attribute(false, "1.0") },
+                    { "BalancePctTrans", Attribute(false, "1.0") },
+                    { "EmpOutcomePay", Attribute(false, "1.0") },
+                    { "EmpOutcomePct", Attribute(false, "1.0") },
+                    { "EmpOutcomePctTrans", Attribute(false, "1.0") },
+                    { "InstPerPeriod", Attribute(false, "1.0") },
+                    { "LearnSuppFund", Attribute(false, "1.0") },
+                    { "LearnSuppFundCash", Attribute(false, "1.0") },
+                    { "OnProgPayment", Attribute(false, "1.0") },
+                    { "OnProgPaymentUncapped", Attribute(false, "1.0") },
+                    { "OnProgPayPct", Attribute(false, "1.0") },
+                    { "OnProgPayPctTrans", Attribute(false, "1.0") },
+                    { "TransInstPerPeriod", Attribute(false, "1.0") },
+                },
+                Parent = parent,
+            };
+
+            entities.Add(entity);
+
+            return entities;
+        }
+
+        private IEnumerable<IDataEntity> TestLearningDeliveryEntityWithChangePoints(DataEntity parent)
+        {
+            var entities = new List<DataEntity>();
+
+            var entity = new DataEntity("LearningDelivery")
+            {
+                EntityName = "LearningDelivery",
+                Attributes = new Dictionary<string, IAttributeData>
+                {
+                    { "AimSeqNumber", Attribute(false, "1.0") },
+                    { "AchApplicDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "Achieved", Attribute(false, "1.0") },
+                    { "AchieveElement", Attribute(false, "1.0") },
+                    { "AchievePayElig", Attribute(false, "1.0") },
+                    { "AchievePayPctPreTrans", Attribute(false, "1.0") },
+                    { "AchPayTransHeldBack", Attribute(false, "1.0") },
+                    { "ActualDaysIL", Attribute(false, "1.0") },
+                    { "ActualNumInstalm", Attribute(false, "1.0") },
+                    { "ActualNumInstalmPreTrans", Attribute(false, "1.0") },
+                    { "ActualNumInstalmTrans", Attribute(false, "1.0") },
+                    { "AdjLearnStartDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "AdltLearnResp", Attribute(false, "1.0") },
+                    { "AgeAimStart", Attribute(false, "1.0") },
+                    { "AimValue", Attribute(false, "1.0") },
+                    { "AppAdjLearnStartDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "AppAgeFact", Attribute(false, "1.0") },
+                    { "AppATAGTA", Attribute(false, "1.0") },
+                    { "AppCompetency", Attribute(false, "1.0") },
+                    { "AppFuncSkill", Attribute(false, "1.0") },
+                    { "AppFuncSkill1618AdjFact", Attribute(false, "1.0") },
+                    { "AppKnowl", Attribute(false, "1.0") },
+                    { "AppLearnStartDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "ApplicEmpFactDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "ApplicFactDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "ApplicFundRateDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "ApplicProgWeightFact", Attribute(false, "1.0") },
+                    { "ApplicUnweightFundRate", Attribute(false, "1.0") },
+                    { "ApplicWeightFundRate", Attribute(false, "1.0") },
+                    { "AppNonFund", Attribute(false, "1.0") },
+                    { "AreaCostFactAdj", Attribute(true, "1.0") },
                     { "BalInstalmPreTrans", Attribute(false, "1.0") },
                     { "BaseValueUnweight", Attribute(false, "1.0") },
                     { "CapFactor", Attribute(false, "1.0") },
@@ -502,9 +639,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
             };
         }
 
-        private FundingOutputService NewService(IDataEntityAttributeService dataEntityAttributeService = null)
+        private FundingOutputService NewService(IInternalDataCache internalDataCache = null, IDataEntityAttributeService dataEntityAttributeService = null)
         {
-            return new FundingOutputService(dataEntityAttributeService);
+            return new FundingOutputService(internalDataCache, dataEntityAttributeService);
         }
     }
 }
