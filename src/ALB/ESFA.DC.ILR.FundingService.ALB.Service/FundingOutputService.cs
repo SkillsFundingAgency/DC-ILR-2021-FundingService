@@ -20,18 +20,18 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
 
         private static IReadOnlyDictionary<int, DateTime> Periods => new Dictionary<int, DateTime>
         {
-            { 1, new DateTime(2017, 08, 01) },
-            { 2, new DateTime(2017, 09, 01) },
-            { 3, new DateTime(2017, 10, 01) },
-            { 4, new DateTime(2017, 11, 01) },
-            { 5, new DateTime(2017, 12, 01) },
-            { 6, new DateTime(2018, 01, 01) },
-            { 7, new DateTime(2018, 02, 01) },
-            { 8, new DateTime(2018, 03, 01) },
-            { 9, new DateTime(2018, 04, 01) },
-            { 10, new DateTime(2018, 05, 01) },
-            { 11, new DateTime(2018, 06, 01) },
-            { 12, new DateTime(2018, 07, 01) },
+            { 1, new DateTime(2018, 08, 01) },
+            { 2, new DateTime(2018, 09, 01) },
+            { 3, new DateTime(2018, 10, 01) },
+            { 4, new DateTime(2018, 11, 01) },
+            { 5, new DateTime(2018, 12, 01) },
+            { 6, new DateTime(2019, 01, 01) },
+            { 7, new DateTime(2019, 02, 01) },
+            { 8, new DateTime(2019, 03, 01) },
+            { 9, new DateTime(2019, 04, 01) },
+            { 10, new DateTime(2019, 05, 01) },
+            { 11, new DateTime(2019, 06, 01) },
+            { 12, new DateTime(2019, 07, 01) },
         };
 
         public ALBFundingOutputs ProcessFundingOutputs(IEnumerable<IDataEntity> dataEntities)
@@ -246,7 +246,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
 
         private decimal GetPeriodAttributeValue(IAttributeData attributes, int period)
         {
-            return decimal.Parse(attributes.Changepoints.Where(cp => cp.ChangePoint == Periods[period]).Select(v => v.Value).SingleOrDefault().ToString());
+            var d = decimal.Parse(attributes.Changepoints.Where(cp => cp.ChangePoint == Periods[period]).Select(v => v.Value).SingleOrDefault().ToString());
+
+            return d;
         }
     }
 }
