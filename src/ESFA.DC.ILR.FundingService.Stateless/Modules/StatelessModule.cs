@@ -38,6 +38,8 @@ using ESFA.DC.ILR.FundingService.Orchestrators.Output;
 using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
 using ESFA.DC.ILR.FundingService.ServiceFabric.Common.Interfaces;
 using ESFA.DC.ILR.FundingService.Stubs;
+using ESFA.DC.ILR.FundingService.Stubs.Database;
+using ESFA.DC.ILR.FundingService.Stubs.Database.Interface;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.JobContext;
 using ESFA.DC.JobContext.Interface;
@@ -92,6 +94,8 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             builder.RegisterType<LargeEmployersDataRetrievalService>().As<ILargeEmployersDataRetrievalService>().InstancePerLifetimeScope();
             builder.RegisterType<LARSDataRetrievalService>().As<ILARSDataRetrievalService>().InstancePerLifetimeScope();
             builder.RegisterType<OrganisationDataRetrievalService>().As<IOrganisationDataRetrievalService>().InstancePerLifetimeScope();
+            builder.RegisterType<AppsEarningsHistoryDataRetrievalService>().As<IAppsEarningsHistoryDataRetrievalService>().InstancePerLifetimeScope();
+            builder.RegisterType<AppsEarningsHistoryStub>().As<IAppsEarningsHistoryStub>().InstancePerLifetimeScope();
 
             builder.RegisterType<JsonSerializationService>().As<ISerializationService>();
             builder.RegisterType<JsonSerializationService>().As<IJsonSerializationService>();

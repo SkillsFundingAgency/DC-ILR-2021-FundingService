@@ -522,6 +522,10 @@
       <Project>{0faaaab8-443b-47bf-9e96-c3069e8789f9}</Project>
       <Name>ESFA.DC.ILR.FundingService.Stateless.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Stubs\ESFA.DC.ILR.FundingService.Stubs.csproj">
+      <Project>{D3745D8B-F4D1-47C9-857A-A912516B2559}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Stubs</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FM25\ESFA.DC.ILR.FundingService.FM25.Model\ESFA.DC.ILR.FundingService.FM25.Model.csproj">
       <Project>{3215BE00-4548-4D0F-A38E-77974B44E49E}</Project>
       <Name>ESFA.DC.ILR.FundingService.FM25.Model</Name>

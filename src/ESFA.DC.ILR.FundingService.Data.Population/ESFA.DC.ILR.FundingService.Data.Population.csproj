@@ -89,10 +89,12 @@
     <Compile Include="External\LargeEmployersDataRetrievalService.cs" />
     <Compile Include="External\LARSDataRetrievalService.cs" />
     <Compile Include="External\OrganisationDataRetrievalService.cs" />
+    <Compile Include="External\AppsEarningsHistoryDataRetrievalService.cs" />
     <Compile Include="External\PostcodesDataRetrievalService.cs" />
     <Compile Include="File\FileDataRetrievalService.cs" />
     <Compile Include="Context\ValidLearnersDataRetrievalService.cs" />
     <Compile Include="File\FileDataCachePopulationService.cs" />
+    <Compile Include="Interface\IAppsEarningsHistoryDataRetrievalService.cs" />
     <Compile Include="Interface\IFileDataCachePopulationService.cs" />
     <Compile Include="Interface\IFundingContextPopulationService.cs" />
     <Compile Include="Interface\IInternalDataCachePopulationService.cs" />
@@ -105,6 +107,9 @@
     <Compile Include="Interface\IFileDataRetrievalService.cs" />
     <Compile Include="Interface\IValidLearnersDataRetrievalService.cs" />
     <Compile Include="Internal\InternalDataCachePopulationService.cs" />
+    <Compile Include="Keys\LARSApprenticeshipFundingKey.cs" />
+    <Compile Include="Keys\LearnRefNumberULNKey.cs" />
+    <Compile Include="Keys\LARSFrameworkKey.cs" />
     <Compile Include="PopulationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="External\ExternalDataCachePopulationService.cs" />
@@ -124,6 +129,10 @@
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Dto\ESFA.DC.ILR.FundingService.Dto.csproj">
       <Project>{0021C0BF-4592-40C8-9272-82AC3A1339FA}</Project>
       <Name>ESFA.DC.ILR.FundingService.Dto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Stubs\ESFA.DC.ILR.FundingService.Stubs.csproj">
+      <Project>{d3745d8b-f4d1-47c9-857a-a912516b2559}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Stubs</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

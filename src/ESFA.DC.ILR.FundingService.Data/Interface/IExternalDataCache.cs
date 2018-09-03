@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Organisation.Model;
@@ -16,6 +17,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Interface
 
         IDictionary<string, IEnumerable<SfaAreaCost>> SfaAreaCost { get; }
 
+        IDictionary<string, IEnumerable<DasDisadvantage>> DasDisadvantage { get; }
+
         IDictionary<string, IEnumerable<SfaDisadvantage>> SfaDisadvantage { get; }
 
         IDictionary<string, IEnumerable<EfaDisadvantage>> EfaDisadvantage { get; }
@@ -26,6 +29,14 @@ namespace ESFA.DC.ILR.FundingService.Data.Interface
 
         IDictionary<string, IEnumerable<LARSAnnualValue>> LARSAnnualValue { get; }
 
+        IDictionary<int, IEnumerable<LARSStandardCommonComponent>> LARSStandardCommonComponent { get; }
+
+        IDictionary<string, IEnumerable<LARSFrameworkCommonComponent>> LARSFrameworkCommonComponent { get; }
+
+        IDictionary<int, IEnumerable<LARSStandardApprenticeshipFunding>> LARSApprenticeshipFundingStandards { get; }
+
+        IDictionary<int, IEnumerable<LARSFrameworkApprenticeshipFunding>> LARSApprenticeshipFundingFrameworks { get; }
+
         IDictionary<string, IEnumerable<LARSFrameworkAims>> LARSFrameworkAims { get; }
 
         IDictionary<string, IEnumerable<LARSLearningDeliveryCategory>> LARSLearningDeliveryCategory { get; }
@@ -35,5 +46,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Interface
         IDictionary<long, IEnumerable<OrgFunding>> OrgFunding { get; }
 
         IDictionary<int, IEnumerable<LargeEmployers>> LargeEmployers { get; }
+
+        IDictionary<long, IEnumerable<AECLatestInYearEarningHistory>> AECLatestInYearEarningHistory { get; }
     }
 }

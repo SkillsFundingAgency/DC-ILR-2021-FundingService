@@ -125,6 +125,7 @@
     <Compile Include="Context\FundingContextPopulationServiceTests.cs" />
     <Compile Include="Context\ValidLearnersDataRetrievalServiceTests.cs" />
     <Compile Include="External\LargeEmployersDataRetrievalServiceTests.cs" />
+    <Compile Include="External\AppsEarningsHistoryDataRetrievalServiceTests.cs" />
     <Compile Include="External\LARSDataRetrievalServiceTests.cs" />
     <Compile Include="External\OrganisationDataRetrievalServiceTests.cs" />
     <Compile Include="External\PostcodesDataRetrievalServiceTests.cs" />
@@ -154,6 +155,10 @@
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Dto\ESFA.DC.ILR.FundingService.Dto.csproj">
       <Project>{0021C0BF-4592-40C8-9272-82AC3A1339FA}</Project>
       <Name>ESFA.DC.ILR.FundingService.Dto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Stubs\ESFA.DC.ILR.FundingService.Stubs.csproj">
+      <Project>{D3745D8B-F4D1-47C9-857A-A912516B2559}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Stubs</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Tests.Common\ESFA.DC.ILR.FundingService.Tests.Common.csproj">
       <Project>{12B2CB23-3369-4720-8E41-C2DEDAA787CF}</Project>
