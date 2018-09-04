@@ -264,20 +264,98 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
 
             var frameworks = NewService().UniqueFrameworkCommonComponents(message);
 
-            frameworks.Should().HaveCount(2);
-            frameworks.Should().BeEquivalentTo(new Dictionary<string, IEnumerable<LARSFrameworkKey>>
+            frameworks.Should().HaveCount(3);
+            frameworks.Should().BeEquivalentTo(new List<LARSFrameworkKey>
             {
-                { "1", new List<LARSFrameworkKey>
+                new LARSFrameworkKey("1", 1, 2, 3),
+                new LARSFrameworkKey("1", 1, 5, 3),
+                new LARSFrameworkKey("2", 1, 2, 4)
+            });
+        }
+
+        [Fact]
+        public void UniqueApprenticesipFundings()
+        {
+            var message = new TestMessage()
+            {
+                Learners = new List<TestLearner>()
+                {
+                    new TestLearner()
                     {
-                        new LARSFrameworkKey("1", 1, 2, 3),
-                        new LARSFrameworkKey("1", 1, 5, 3)
-                    }
-                },
-                { "2", new List<LARSFrameworkKey>
+                        LearningDeliveries = new List<TestLearningDelivery>()
+                        {
+                            new TestLearningDelivery()
+                            {
+                                LearnAimRef = "1",
+                                FworkCodeNullable = 1,
+                                ProgTypeNullable = 2,
+                                PwayCodeNullable = 3
+                            },
+                            new TestLearningDelivery()
+                            {
+                                LearnAimRef = "1",
+                                FworkCodeNullable = 1,
+                                ProgTypeNullable = 5,
+                                PwayCodeNullable = 3
+                            },
+                            new TestLearningDelivery()
+                            {
+                                LearnAimRef = "2",
+                                FworkCodeNullable = 1,
+                                ProgTypeNullable = 2,
+                                PwayCodeNullable = 4
+                            }
+                        },
+                    },
+                    new TestLearner()
                     {
-                        new LARSFrameworkKey("2", 1, 2, 4)
-                    }
+                        LearningDeliveries = new List<TestLearningDelivery>()
+                        {
+                            new TestLearningDelivery()
+                            {
+                            }
+                        }
+                    },
+                    new TestLearner()
+                    {
+                        LearningDeliveries = new List<TestLearningDelivery>()
+                        {
+                            new TestLearningDelivery()
+                            {
+                                FworkCodeNullable = 1
+                            },
+                            new TestLearningDelivery()
+                            {
+                                FworkCodeNullable = 1,
+                                PwayCodeNullable = 3
+                            },
+                            new TestLearningDelivery()
+                            {
+                                LearnAimRef = "2",
+                                StdCodeNullable = 10,
+                                ProgTypeNullable = 2,
+                                PwayCodeNullable = 4
+                            }
+                        }
+                    },
                 }
+            };
+
+            var frameworks = NewService().UniqueApprenticeshipFundingFrameworks(message);
+            var standards = NewService().UniqueApprenticeshipFundingStandards(message);
+
+            frameworks.Should().HaveCount(3);
+            frameworks.Should().BeEquivalentTo(new List<LARSApprenticeshipFundingKey>
+            {
+                new LARSApprenticeshipFundingKey(1, 2, 3),
+                new LARSApprenticeshipFundingKey(1, 5, 3),
+                new LARSApprenticeshipFundingKey(1, 2, 4)
+            });
+
+            standards.Should().HaveCount(1);
+            standards.Should().BeEquivalentTo(new List<LARSApprenticeshipFundingKey>
+            {
+                new LARSApprenticeshipFundingKey(10, 2, 0)
             });
         }
 
@@ -735,6 +813,14 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                     PwayCode = 4,
                     EffectiveFrom = new DateTime(2018, 8, 1)
                 },
+                new LARS_FrameworkCmnComp()
+                {
+                    CommonComponent = 2,
+                    FworkCode = 2,
+                    ProgType = 3,
+                    PwayCode = 5,
+                    EffectiveFrom = new DateTime(2018, 8, 1)
+                },
                 new LARS_FrameworkCmnComp(),
             }.AsQueryable();
 
@@ -757,30 +843,172 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             larsDataRetrievalServiceMock.SetupGet(l => l.LARSLearningDeliveries).Returns(lars_LearningDeliveries);
             larsDataRetrievalServiceMock.SetupGet(l => l.LARSFrameworkCommonComponents).Returns(lars_FrameworkCommonComponents);
 
-            var learnAimRefs = new List<string>() { "123", "456", "234" };
-
-            var frameworkKeys = new Dictionary<string, IEnumerable<LARSFrameworkKey>>
+            var frameworkKeys = new List<LARSFrameworkKey>
             {
-                { "123", new List<LARSFrameworkKey>
-                    {
-                        new LARSFrameworkKey("123", 2, 3, 4),
-                        new LARSFrameworkKey("123", 3, 3, 4),
-                    }
-                },
-                { "456", new List<LARSFrameworkKey>
-                    {
-                        new LARSFrameworkKey("456", 2, 3, 4),
-                        new LARSFrameworkKey("456", 2, 3, 10)
-                    }
-                }
+                new LARSFrameworkKey("123", 2, 3, 4),
+                new LARSFrameworkKey("123", 3, 3, 4),
+                new LARSFrameworkKey("456", 2, 3, 4)
             };
 
-            var larsFramworkCommonComponents = larsDataRetrievalServiceMock.Object.LARSFrameworkCommonComponentForLearnAimRefs(learnAimRefs, frameworkKeys);
+            var larsFramworkCommonComponents = larsDataRetrievalServiceMock.Object.LARSFrameworkCommonComponentForLearnAimRefs(frameworkKeys);
 
-            larsFramworkCommonComponents.Should().HaveCount(2);
-            larsFramworkCommonComponents.Should().ContainKeys("123", "4567");
-            larsFramworkCommonComponents["123"].Should().HaveCount(2);
-            larsFramworkCommonComponents["456"].Should().HaveCount(1);
+            larsFramworkCommonComponents.Should().HaveCount(3);
+            larsFramworkCommonComponents.Select(l => l.LearnAimRef).ToList().Should().Contain("123", "456");
+        }
+
+        [Fact]
+        public void LARSApprenticeshipFundingStandards()
+        {
+            var lars_ApprenticeshipFunding = new List<LARS_ApprenticeshipFunding>()
+            {
+                new LARS_ApprenticeshipFunding()
+                {
+                    ApprenticeshipType = "STD",
+                    ApprenticeshipCode = 1,
+                    ProgType = 2,
+                    PwayCode = 0,
+                    EffectiveFrom = new DateTime(2018, 8, 1)
+                },
+               new LARS_ApprenticeshipFunding()
+                {
+                    ApprenticeshipType = "STD",
+                    ApprenticeshipCode = 1,
+                    ProgType = 2,
+                    PwayCode = 4,
+                    EffectiveFrom = new DateTime(2018, 8, 1)
+                },
+               new LARS_ApprenticeshipFunding()
+                {
+                    ApprenticeshipType = "STD",
+                    ApprenticeshipCode = 1,
+                    ProgType = 4,
+                    PwayCode = 0,
+                    EffectiveFrom = new DateTime(2018, 8, 1)
+                },
+                new LARS_ApprenticeshipFunding(),
+                new LARS_ApprenticeshipFunding()
+                {
+                    ApprenticeshipType = "FWK",
+                    ApprenticeshipCode = 1,
+                    ProgType = 4,
+                    PwayCode = 3,
+                    EffectiveFrom = new DateTime(2018, 8, 1)
+                },
+            }.AsQueryable();
+
+            var larsDataRetrievalServiceMock = NewMock();
+
+            larsDataRetrievalServiceMock.SetupGet(l => l.LARSApprenticeshipFundings).Returns(lars_ApprenticeshipFunding);
+
+            var keys = new List<LARSApprenticeshipFundingKey>
+            {
+                new LARSApprenticeshipFundingKey(1, 2, 0),
+                new LARSApprenticeshipFundingKey(1, 4, 0)
+            };
+
+            var larsApprenticeshipFundingStandards = larsDataRetrievalServiceMock.Object.LARSApprenticeshipFundingStandards(keys);
+
+            larsApprenticeshipFundingStandards.Should().HaveCount(2);
+        }
+
+        [Fact]
+        public void LARSStandardApprenticeshipFundingFromEntity()
+        {
+            var entity = new LARS_ApprenticeshipFunding()
+            {
+                EffectiveFrom = new DateTime(2017, 1, 1),
+                EffectiveTo = new DateTime(2018, 1, 1),
+                ApprenticeshipType = "STD",
+                ApprenticeshipCode = 1,
+                ProgType = 3,
+                PwayCode = 0,
+            };
+
+            var larsApprenticeshipFunding = NewService().LARSStandardApprenticeshipFundingFromEntity(entity);
+
+            larsApprenticeshipFunding.EffectiveFrom.Should().Be(entity.EffectiveFrom);
+            larsApprenticeshipFunding.EffectiveTo.Should().Be(entity.EffectiveTo);
+            larsApprenticeshipFunding.ApprenticeshipType.Should().Be(entity.ApprenticeshipType);
+            larsApprenticeshipFunding.ApprenticeshipCode.Should().Be(entity.ApprenticeshipCode);
+            larsApprenticeshipFunding.ProgType.Should().Be(entity.ProgType);
+            larsApprenticeshipFunding.PwayCode.Should().Be(entity.PwayCode);
+        }
+
+        [Fact]
+        public void LARSApprenticeshipFundingFrameworks()
+        {
+            var lars_ApprenticeshipFunding = new List<LARS_ApprenticeshipFunding>()
+            {
+                new LARS_ApprenticeshipFunding()
+                {
+                    ApprenticeshipType = "STD",
+                    ApprenticeshipCode = 1,
+                    ProgType = 2,
+                    PwayCode = 0,
+                    EffectiveFrom = new DateTime(2018, 8, 1)
+                },
+               new LARS_ApprenticeshipFunding()
+                {
+                    ApprenticeshipType = "STD",
+                    ApprenticeshipCode = 1,
+                    ProgType = 2,
+                    PwayCode = 4,
+                    EffectiveFrom = new DateTime(2018, 8, 1)
+                },
+               new LARS_ApprenticeshipFunding()
+                {
+                    ApprenticeshipType = "FWK",
+                    ApprenticeshipCode = 1,
+                    ProgType = 4,
+                    PwayCode = 0,
+                    EffectiveFrom = new DateTime(2018, 8, 1)
+                },
+                new LARS_ApprenticeshipFunding(),
+                new LARS_ApprenticeshipFunding()
+                {
+                    ApprenticeshipType = "FWK",
+                    ApprenticeshipCode = 1,
+                    ProgType = 4,
+                    PwayCode = 3,
+                    EffectiveFrom = new DateTime(2018, 8, 1)
+                },
+            }.AsQueryable();
+
+            var larsDataRetrievalServiceMock = NewMock();
+
+            larsDataRetrievalServiceMock.SetupGet(l => l.LARSApprenticeshipFundings).Returns(lars_ApprenticeshipFunding);
+
+            var keys = new List<LARSApprenticeshipFundingKey>
+            {
+                new LARSApprenticeshipFundingKey(1, 4, 3)
+            };
+
+            var larsApprenticeshipFundingFrameworks = larsDataRetrievalServiceMock.Object.LARSApprenticeshipFundingFrameworks(keys);
+
+            larsApprenticeshipFundingFrameworks.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void LARSFrameworkApprenticeshipFundingFromEntity()
+        {
+            var entity = new LARS_ApprenticeshipFunding()
+            {
+                EffectiveFrom = new DateTime(2017, 1, 1),
+                EffectiveTo = new DateTime(2018, 1, 1),
+                ApprenticeshipType = "FWK",
+                ApprenticeshipCode = 1,
+                ProgType = 3,
+                PwayCode = 4,
+            };
+
+            var larsApprenticeshipFunding = NewService().LARSFrameworkApprenticeshipFundingFromEntity(entity);
+
+            larsApprenticeshipFunding.EffectiveFrom.Should().Be(entity.EffectiveFrom);
+            larsApprenticeshipFunding.EffectiveTo.Should().Be(entity.EffectiveTo);
+            larsApprenticeshipFunding.ApprenticeshipType.Should().Be(entity.ApprenticeshipType);
+            larsApprenticeshipFunding.ApprenticeshipCode.Should().Be(entity.ApprenticeshipCode);
+            larsApprenticeshipFunding.ProgType.Should().Be(entity.ProgType);
+            larsApprenticeshipFunding.PwayCode.Should().Be(entity.PwayCode);
         }
 
         private LARSDataRetrievalService NewService(ILARS lars = null)

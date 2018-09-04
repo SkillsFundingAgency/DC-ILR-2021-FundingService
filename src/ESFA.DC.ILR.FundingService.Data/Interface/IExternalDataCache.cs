@@ -31,11 +31,11 @@ namespace ESFA.DC.ILR.FundingService.Data.Interface
 
         IDictionary<int, IEnumerable<LARSStandardCommonComponent>> LARSStandardCommonComponent { get; }
 
-        IDictionary<string, IEnumerable<LARSFrameworkCommonComponent>> LARSFrameworkCommonComponent { get; }
+        IEnumerable<LARSFrameworkCommonComponent> LARSFrameworkCommonComponent { get; }
 
-        IDictionary<int, IEnumerable<LARSStandardApprenticeshipFunding>> LARSApprenticeshipFundingStandards { get; }
+        IEnumerable<LARSStandardApprenticeshipFunding> LARSApprenticeshipFundingStandards { get; }
 
-        IDictionary<int, IEnumerable<LARSFrameworkApprenticeshipFunding>> LARSApprenticeshipFundingFrameworks { get; }
+        IEnumerable<LARSFrameworkApprenticeshipFunding> LARSApprenticeshipFundingFrameworks { get; }
 
         IDictionary<string, IEnumerable<LARSFrameworkAims>> LARSFrameworkAims { get; }
 

@@ -22,11 +22,11 @@ namespace ESFA.DC.ILR.FundingService.Data.External
 
         public IDictionary<int, IEnumerable<LARSStandardCommonComponent>> LARSStandardCommonComponent { get; set; }
 
-        public IDictionary<string, IEnumerable<LARSFrameworkCommonComponent>> LARSFrameworkCommonComponent { get; set; }
+        public IEnumerable<LARSFrameworkCommonComponent> LARSFrameworkCommonComponent { get; set; }
 
-        public IDictionary<int, IEnumerable<LARSStandardApprenticeshipFunding>> LARSApprenticeshipFundingStandards { get; set; }
+        public IEnumerable<LARSStandardApprenticeshipFunding> LARSApprenticeshipFundingStandards { get; set; }
 
-        public IDictionary<int, IEnumerable<LARSFrameworkApprenticeshipFunding>> LARSApprenticeshipFundingFrameworks { get; set; }
+        public IEnumerable<LARSFrameworkApprenticeshipFunding> LARSApprenticeshipFundingFrameworks { get; set; }
 
         public IDictionary<string, IEnumerable<LARSLearningDeliveryCategory>> LARSLearningDeliveryCategory { get; set; }
         

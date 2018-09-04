@@ -65,7 +65,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 .Distinct();
         }
 
-        public IDictionary<string, IEnumerable<LARSFrameworkKey>> UniqueFrameworkCommonComponents(IMessage message)
+        public IEnumerable<LARSFrameworkKey> UniqueFrameworkCommonComponents(IMessage message)
         {
             return message
                        .Learners?
@@ -75,30 +75,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                            ld.FworkCodeNullable.HasValue
                            && ld.ProgTypeNullable.HasValue
                            && ld.PwayCodeNullable.HasValue)
-                       .GroupBy(ld => ld.LearnAimRef)
-                       .ToDictionary(
-                           ld => ld.Key,
-                           g => g.Select(lf => new LARSFrameworkKey(lf.LearnAimRef, (int)lf.FworkCodeNullable, (int)lf.ProgTypeNullable, (int)lf.PwayCodeNullable)).Distinct());
-
-            //return message
-            //           .Learners?
-            //           .Where(l => l.LearningDeliveries != null)
-            //           .SelectMany(l => l.LearningDeliveries)
-            //           .Where(ld =>
-            //               ld.FworkCodeNullable.HasValue
-            //               && ld.ProgTypeNullable.HasValue
-            //               && ld.PwayCodeNullable.HasValue)
-            //           .GroupBy(ld =>
-            //               new
-            //               {
-            //                   ld.LearnAimRef,
-            //                   FworkCode = ld.FworkCodeNullable,
-            //                   ProgType = ld.ProgTypeNullable,
-            //                   PwayCode = ld.PwayCodeNullable
-            //               })
-            //           .Select(g =>
-            //               new LARSFrameworkKey(g.Key.LearnAimRef, g.Key.FworkCode.Value, g.Key.ProgType.Value, g.Key.PwayCode.Value)).Distinct()
-            //       ?? new List<LARSFrameworkKey>();
+                       .Select(lf => new LARSFrameworkKey(lf.LearnAimRef, (int)lf.FworkCodeNullable, (int)lf.ProgTypeNullable, (int)lf.PwayCodeNullable)).Distinct();
         }
 
         public IEnumerable<LARSApprenticeshipFundingKey> UniqueApprenticeshipFundingStandards(IMessage message)
@@ -278,12 +255,12 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             };
         }
 
-        public IDictionary<string, IEnumerable<LARSFrameworkCommonComponent>> LARSFrameworkCommonComponentForLearnAimRefs(IEnumerable<string> learnAimRefs, IDictionary<string, IEnumerable<LARSFrameworkKey>> larsFrameworkKeys)
+        public IEnumerable<LARSFrameworkCommonComponent> LARSFrameworkCommonComponentForLearnAimRefs(IEnumerable<LARSFrameworkKey> larsFrameworkKeys)
         {
-            var dictionary = new Dictionary<string, IEnumerable<LARSFrameworkCommonComponent>>();
+            var larsFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>();
 
             var larsFrameworksCmnComponents = LARSLearningDeliveries
-                    .Where(ld => learnAimRefs.Contains(ld.LearnAimRef))
+                    .Where(ld => larsFrameworkKeys.Select(lfk => lfk.LearnAimRef).Contains(ld.LearnAimRef))
                     .Join(
                     LARSFrameworkCommonComponents,
                     ld => ld.FrameworkCommonComponent,
@@ -301,84 +278,38 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                     })
                     .ToList();
 
-            //foreach (var larsFrameworkKey in larsFrameworkKeys)
-            //{
-            //    var ts = larsFrameworksCmnComponents
-            //        .Where(lf => lf.LearnAimRef == larsFrameworkKey.Key
-            //        && larsFrameworkKey.Value.Select(new
-            //            fk => fk.ProgType = lf.ProgType))
-            //        .Select(ld => ld);
+            foreach (var larsFrameworkKey in larsFrameworkKeys)
+            {
+                larsFrameworkCommonComponents.Add(
+                    larsFrameworksCmnComponents
+                    .Where(
+                        fc => fc.LearnAimRef == larsFrameworkKey.LearnAimRef
+                        && fc.FworkCode == larsFrameworkKey.FworkCode
+                        && fc.ProgType == larsFrameworkKey.ProgType
+                        && fc.PwayCode == larsFrameworkKey.PwayCode)
+                        .Select(fcc => fcc).SingleOrDefault());
+            }
 
-            //    var t = larsFrameworksCmnComponents
-            //        .Where(lf => lf.LearnAimRef == larsFrameworkKey.Key)
-            //        .ToDictionary(
-            //        k =>
-            //        k.LearnAimRef,
-            //        v => new LARSFrameworkCommonComponent
-            //        {
-            //            LearnAimRef = v.LearnAimRef,
-            //            CommonComponent = v.CommonComponent,
-            //            FworkCode = v.FworkCode,
-            //            PwayCode = v.PwayCode,
-            //            ProgType = v.ProgType,
-            //            EffectiveFrom = v.EffectiveFrom,
-            //            EffectiveTo = v.EffectiveTo
-            //        }); // as IEnumerable<LARSFrameworkCommonComponent>
-
-                //dictionary.Add(
-                //    larsFrameworkKey.LearnAimRef,
-                //    LARSLearningDeliveries?
-                //       .Where(ld => ld.LearnAimRef == larsFrameworkKey.LearnAimRef)
-                //       .Join(
-                //           LARSFrameworkCommonComponents,
-                //           ld => ld.FrameworkCommonComponent,
-                //           fcc => fcc.CommonComponent,
-                //           (ld, fcc) => new { LARSFrameworkCommonComponent = fcc, LARSLearningDelivery = ld })
-                //       .Where(fc =>
-                //           fc.LARSFrameworkCommonComponent.FworkCode == larsFrameworkKey.FworkCode
-                //           && fc.LARSFrameworkCommonComponent.ProgType == larsFrameworkKey.ProgType
-                //           && fc.LARSFrameworkCommonComponent.PwayCode == larsFrameworkKey.PwayCode)
-                //       .GroupBy(fc => fc.LARSLearningDelivery.LearnAimRef)
-                //       .Select(fc => fc).ToList() as IEnumerable<LARSFrameworkCommonComponent>);
-          //  }
-
-            return dictionary;
+            return larsFrameworkCommonComponents;
         }
 
-        //public LARSFrameworkCommonComponent LARSFrameworkCommonComponentFromEntity(LARS_FrameworkCmnComp entity)
-        //{
-        //    return new LARSFrameworkCommonComponent()
-        //    {
-        //        //LearnAimRef = learnAimRef,
-        //        FworkCode = entity.FworkCode,
-        //        ProgType = entity.ProgType,
-        //        PwayCode = entity.PwayCode,
-        //        CommonComponent = entity.CommonComponent,
-        //        EffectiveFrom = entity.EffectiveFrom,
-        //        EffectiveTo = entity.EffectiveTo,
-        //    };
-        //}
-
-        public IDictionary<int, IEnumerable<LARSStandardApprenticeshipFunding>> LARSApprenticeshipFundingStandards(IEnumerable<LARSApprenticeshipFundingKey> apprenticeshipFundingKeys)
+        public IEnumerable<LARSStandardApprenticeshipFunding> LARSApprenticeshipFundingStandards(IEnumerable<LARSApprenticeshipFundingKey> apprenticeshipFundingKeys)
         {
-            var dictionary = new Dictionary<int, IEnumerable<LARSStandardApprenticeshipFunding>>();
+            var apprenticeshipFundings = new List<LARSStandardApprenticeshipFunding>();
 
             foreach (var apprenticeshipFundingKey in apprenticeshipFundingKeys)
             {
-                dictionary.Add(
-                    apprenticeshipFundingKey.Code,
+                apprenticeshipFundings.Add(
                     LARSApprenticeshipFundings
                     .Where(
                         a => a.ApprenticeshipType == "STD"
                         && a.ApprenticeshipCode == apprenticeshipFundingKey.Code
                         && a.ProgType == apprenticeshipFundingKey.ProgType
                         && a.PwayCode == apprenticeshipFundingKey.PwayCode)
-                    .GroupBy(u => u.ApprenticeshipCode)
-                    .Select(u => u.Select(LARSStandardApprenticeshipFundingFromEntity).ToList() as IEnumerable<LARSStandardApprenticeshipFunding>)
-                    .SingleOrDefault());
+                    .Select(u => LARSStandardApprenticeshipFundingFromEntity(u)).SingleOrDefault());
             }
 
-            return dictionary;
+            return apprenticeshipFundings;
         }
 
         public LARSStandardApprenticeshipFunding LARSStandardApprenticeshipFundingFromEntity(LARS_ApprenticeshipFunding entity)
@@ -407,26 +338,23 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             };
         }
 
-        public IDictionary<int, IEnumerable<LARSFrameworkApprenticeshipFunding>> LARSApprenticeshipFundingFrameworks(IEnumerable<LARSApprenticeshipFundingKey> apprenticeshipFundingKeys)
+        public IEnumerable<LARSFrameworkApprenticeshipFunding> LARSApprenticeshipFundingFrameworks(IEnumerable<LARSApprenticeshipFundingKey> apprenticeshipFundingKeys)
         {
-            var dictionary = new Dictionary<int, IEnumerable<LARSFrameworkApprenticeshipFunding>>();
+            var apprenticeshipFundings = new List<LARSFrameworkApprenticeshipFunding>();
 
             foreach (var apprenticeshipFundingKey in apprenticeshipFundingKeys)
             {
-                dictionary.Add(
-                    apprenticeshipFundingKey.Code,
+                apprenticeshipFundings.Add(
                     LARSApprenticeshipFundings
                     .Where(
                         a => a.ApprenticeshipType == "FWK"
                         && a.ApprenticeshipCode == apprenticeshipFundingKey.Code
                         && a.ProgType == apprenticeshipFundingKey.ProgType
                         && a.PwayCode == apprenticeshipFundingKey.PwayCode)
-                    .GroupBy(u => u.ApprenticeshipCode)
-                    .Select(u => u.Select(LARSFrameworkApprenticeshipFundingFromEntity).ToList() as IEnumerable<LARSFrameworkApprenticeshipFunding>)
-                    .SingleOrDefault());
+                    .Select(u => LARSFrameworkApprenticeshipFundingFromEntity(u)).SingleOrDefault());
             }
 
-            return dictionary;
+            return apprenticeshipFundings;
         }
 
         public LARSFrameworkApprenticeshipFunding LARSFrameworkApprenticeshipFundingFromEntity(LARS_ApprenticeshipFunding entity)

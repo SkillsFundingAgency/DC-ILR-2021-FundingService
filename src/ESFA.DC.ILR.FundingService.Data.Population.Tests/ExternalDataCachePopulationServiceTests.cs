@@ -77,11 +77,15 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             var larsFundings = new Dictionary<string, IEnumerable<LARSFunding>>();
             var larsLearningDeliveries = new Dictionary<string, LARSLearningDelivery>();
             var larsStandardCommonComponents = new Dictionary<int, IEnumerable<LARSStandardCommonComponent>>();
-            var larsFrameworkCommonComponents = new Dictionary<string, IEnumerable<LARSFrameworkCommonComponent>>();
+            var larsFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>();
+            var larsApprenticeshipFundingStandards = new List<LARSStandardApprenticeshipFunding>();
+            var larsApprenticeshipFundingFrameworks = new List<LARSFrameworkApprenticeshipFunding>();
 
             larsDataRetrievalServiceMock.Setup(l => l.UniqueLearnAimRefs(message)).Returns(new List<string>()).Verifiable();
             larsDataRetrievalServiceMock.Setup(l => l.UniqueStandardCodes(message)).Returns(new List<int>()).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.UniqueFrameworkCommonComponents(message)).Returns(new Dictionary<string, IEnumerable<LARSFrameworkKey>>()).Verifiable();
+            larsDataRetrievalServiceMock.Setup(l => l.UniqueFrameworkCommonComponents(message)).Returns(new List<LARSFrameworkKey>()).Verifiable();
+            larsDataRetrievalServiceMock.Setup(l => l.UniqueApprenticeshipFundingStandards(message)).Returns(It.IsAny<List<LARSApprenticeshipFundingKey>>).Verifiable();
+            larsDataRetrievalServiceMock.Setup(l => l.UniqueApprenticeshipFundingFrameworks(message)).Returns(It.IsAny<List<LARSApprenticeshipFundingKey>>).Verifiable();
             larsDataRetrievalServiceMock.Setup(l => l.CurrentVersion()).Returns(larsCurrentVersion).Verifiable();
             larsDataRetrievalServiceMock.Setup(l => l.LARSAnnualValuesForLearnAimRefs(It.IsAny<List<string>>())).Returns(larsAnnualValues).Verifiable();
             larsDataRetrievalServiceMock.Setup(l => l.LARSFrameworkAimsForLearnAimRefs(It.IsAny<List<string>>())).Returns(larsFrameworkAims).Verifiable();
@@ -89,7 +93,9 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             larsDataRetrievalServiceMock.Setup(l => l.LARSFundingsForLearnAimRefs(It.IsAny<List<string>>())).Returns(larsFundings).Verifiable();
             larsDataRetrievalServiceMock.Setup(l => l.LARSLearningDeliveriesForLearnAimRefs(It.IsAny<List<string>>())).Returns(larsLearningDeliveries).Verifiable();
             larsDataRetrievalServiceMock.Setup(l => l.LARSStandardCommonComponentForStandardCode(It.IsAny<List<int>>())).Returns(larsStandardCommonComponents).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.LARSFrameworkCommonComponentForLearnAimRefs(It.IsAny<List<string>>(), It.IsAny<Dictionary<string, IEnumerable<LARSFrameworkKey>>>())).Returns(larsFrameworkCommonComponents).Verifiable();
+            larsDataRetrievalServiceMock.Setup(l => l.LARSFrameworkCommonComponentForLearnAimRefs(It.IsAny<List<LARSFrameworkKey>>())).Returns(larsFrameworkCommonComponents).Verifiable();
+            larsDataRetrievalServiceMock.Setup(l => l.LARSApprenticeshipFundingStandards(It.IsAny<List<LARSApprenticeshipFundingKey>>())).Returns(larsApprenticeshipFundingStandards).Verifiable();
+            larsDataRetrievalServiceMock.Setup(l => l.LARSApprenticeshipFundingFrameworks(It.IsAny<List<LARSApprenticeshipFundingKey>>())).Returns(larsApprenticeshipFundingFrameworks).Verifiable();
 
             var organisationDataRetrievalServiceMock = new Mock<IOrganisationDataRetrievalService>();
 

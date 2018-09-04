@@ -60,7 +60,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             referenceDataCache.LARSFrameworkAims = _larsDataRetrievalService.LARSFrameworkAimsForLearnAimRefs(learnAimRefs);
             referenceDataCache.LARSFunding = _larsDataRetrievalService.LARSFundingsForLearnAimRefs(learnAimRefs);
             referenceDataCache.LARSStandardCommonComponent = _larsDataRetrievalService.LARSStandardCommonComponentForStandardCode(standardCodes);
-            referenceDataCache.LARSFrameworkCommonComponent = _larsDataRetrievalService.LARSFrameworkCommonComponentForLearnAimRefs(learnAimRefs, frameworks);
+            referenceDataCache.LARSFrameworkCommonComponent = _larsDataRetrievalService.LARSFrameworkCommonComponentForLearnAimRefs(frameworks);
             referenceDataCache.LARSApprenticeshipFundingStandards = _larsDataRetrievalService.LARSApprenticeshipFundingStandards(apprenticeshipFundingStandards);
             referenceDataCache.LARSApprenticeshipFundingFrameworks = _larsDataRetrievalService.LARSApprenticeshipFundingFrameworks(apprenticeshipFundingFrameworks);
 

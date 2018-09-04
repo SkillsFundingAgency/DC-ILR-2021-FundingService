@@ -13,7 +13,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Interface
 
         IEnumerable<int> UniqueStandardCodes(IMessage message);
 
-        IDictionary<string, IEnumerable<LARSFrameworkKey>> UniqueFrameworkCommonComponents(IMessage message);
+        IEnumerable<LARSFrameworkKey> UniqueFrameworkCommonComponents(IMessage message);
 
         IEnumerable<LARSApprenticeshipFundingKey> UniqueApprenticeshipFundingStandards(IMessage message);
 
@@ -31,10 +31,10 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Interface
 
         IDictionary<int, IEnumerable<LARSStandardCommonComponent>> LARSStandardCommonComponentForStandardCode(IEnumerable<int> standardCodes);
 
-        IDictionary<string, IEnumerable<LARSFrameworkCommonComponent>> LARSFrameworkCommonComponentForLearnAimRefs(IEnumerable<string> learnAimRefs, IDictionary<string, IEnumerable<LARSFrameworkKey>> frameworkKeys);
+        IEnumerable<LARSFrameworkCommonComponent> LARSFrameworkCommonComponentForLearnAimRefs(IEnumerable<LARSFrameworkKey> larsFrameworkKeys);
 
-        IDictionary<int, IEnumerable<LARSStandardApprenticeshipFunding>> LARSApprenticeshipFundingStandards(IEnumerable<LARSApprenticeshipFundingKey> apprenticeshipFundingKeys);
+        IEnumerable<LARSStandardApprenticeshipFunding> LARSApprenticeshipFundingStandards(IEnumerable<LARSApprenticeshipFundingKey> apprenticeshipFundingKeys);
 
-        IDictionary<int, IEnumerable<LARSFrameworkApprenticeshipFunding>> LARSApprenticeshipFundingFrameworks(IEnumerable<LARSApprenticeshipFundingKey> apprenticeshipFundingKeys);
+        IEnumerable<LARSFrameworkApprenticeshipFunding> LARSApprenticeshipFundingFrameworks(IEnumerable<LARSApprenticeshipFundingKey> apprenticeshipFundingKeys);
     }
 }
