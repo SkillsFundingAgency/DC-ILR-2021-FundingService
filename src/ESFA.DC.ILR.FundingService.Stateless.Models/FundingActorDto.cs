@@ -2,7 +2,7 @@
 {
     public class FundingActorDto
     {
-        public int JobId { get; set; }
+        public long JobId { get; set; }
 
         public int Ukprn { get; set; }
 
