@@ -4,7 +4,7 @@
     {
         public string LearnRefNumber { get; set; }
 
-        public PriceEpisodeAttribute[] ProceEpisodeAttributes { get; set; }
+        public PriceEpisodeAttribute[] PriceEpisodeAttributes { get; set; }
 
         public LearningDeliveryAttribute[] LearningDeliveryAttributes { get; set; }
 
