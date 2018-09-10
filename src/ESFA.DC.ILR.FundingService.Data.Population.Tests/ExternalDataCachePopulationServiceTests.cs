@@ -107,7 +107,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
 
             var appsEarningsHistoryDataRetrievalServiceMock = new Mock<IAppsEarningsHistoryDataRetrievalService>();
 
-            var aecHistory = new Dictionary<long, IEnumerable<AECLatestInYearEarningHistory>>();
+            var aecHistory = new Dictionary<long, IEnumerable<AECEarningsHistory>>();
 
             appsEarningsHistoryDataRetrievalServiceMock.Setup(a => a.AppsEarningsHistoryForLearners(It.IsAny<int>(), It.IsAny<IEnumerable<LearnRefNumberULNKey>>())).Returns(aecHistory).Verifiable();
 

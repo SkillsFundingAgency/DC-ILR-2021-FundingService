@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory.Model
 {
-    public class AECLatestInYearEarningHistory
+    public class AECEarningsHistory
     {
         public string AppIdentifier { get; set; }
 

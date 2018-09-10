@@ -23,9 +23,9 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public virtual IQueryable<AppsEarningsHistory> AecLatestInYearHistory => _appsEarningsHistory.AppsEarningsHistory;
 
-        public IDictionary<long, IEnumerable<AECLatestInYearEarningHistory>> AppsEarningsHistoryForLearners(int providerUKPRN, IEnumerable<LearnRefNumberULNKey> learners)
+        public IDictionary<long, IEnumerable<AECEarningsHistory>> AppsEarningsHistoryForLearners(int providerUKPRN, IEnumerable<LearnRefNumberULNKey> learners)
         {
-            var dictionary = new Dictionary<long, IEnumerable<AECLatestInYearEarningHistory>>();
+            var dictionary = new Dictionary<long, IEnumerable<AECEarningsHistory>>();
 
             foreach (var learner in learners)
             {
@@ -38,16 +38,16 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                         && a.LearnRefNumber == learner.LearnRefNumber
                         && a.ULN == learner.ULN)
                     .GroupBy(u => u.ULN)
-                    .Select(u => u.Select(AECLatestInYearEarningsFromEntity).ToList() as IEnumerable<AECLatestInYearEarningHistory>)
+                    .Select(u => u.Select(AECLatestInYearEarningsFromEntity).ToList() as IEnumerable<AECEarningsHistory>)
                     .SingleOrDefault());
             }
 
             return dictionary;
         }
 
-        public AECLatestInYearEarningHistory AECLatestInYearEarningsFromEntity(AppsEarningsHistory entity)
+        public AECEarningsHistory AECLatestInYearEarningsFromEntity(AppsEarningsHistory entity)
         {
-            return new AECLatestInYearEarningHistory
+            return new AECEarningsHistory
             {
                 AppIdentifier = entity.AppIdentifier,
                 AppProgCompletedInTheYearInput = entity.AppProgCompletedInTheYearInput,

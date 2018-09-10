@@ -6,6 +6,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Interface
 {
     public interface IAppsEarningsHistoryDataRetrievalService
     {
-        IDictionary<long, IEnumerable<AECLatestInYearEarningHistory>> AppsEarningsHistoryForLearners(int providerUKPRN, IEnumerable<LearnRefNumberULNKey> learners);
+        IDictionary<long, IEnumerable<AECEarningsHistory>> AppsEarningsHistoryForLearners(int providerUKPRN, IEnumerable<LearnRefNumberULNKey> learners);
     }
 }

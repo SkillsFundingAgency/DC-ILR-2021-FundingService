@@ -67,6 +67,11 @@
           <base>the learner's UKPRN in previous year</base>
         </text>
       </attribute>
+      <attribute name="p614" type="number" public-name="PMUKPRN">
+        <text>
+          <base>the learner's pre-merger UKPRN</base>
+        </text>
+      </attribute>
     </entity>
     <entity id="learningdelivery" name="the learning delivery" containment-relationship-id="learnerslearningdeliveries" containment-parent-id="learner" public-id="LearningDelivery">
       <attribute name="p11" type="date" public-name="LearnPlanEndDate">

@@ -17,5 +17,12 @@ namespace ESFA.DC.ILR.FundingService.Data.External.LARS.Interface
 
         IEnumerable<LARSLearningDeliveryCategory> LARSLearningDeliveryCategoriesForLearnAimRef(string learnAimRef);
 
+        IEnumerable<LARSStandardApprenticeshipFunding> LARSStandardApprenticeshipFunding(int? standardCode, int? progType);
+
+        IEnumerable<LARSFrameworkApprenticeshipFunding> LARSFrameworkApprenticeshipFunding(int? standardCode, int? progType, int? pwayCode);
+
+        IEnumerable<LARSStandardCommonComponent> LARSStandardCommonComponent(int? standardCode);
+
+        IEnumerable<LARSFrameworkCommonComponent> LARSFrameworkCommonComponent(string learnAimRef, int? fworkCode, int? progType, int? pwayCode);
     }
 }

@@ -2,158 +2,172 @@
 {
     public static class InputAttributes
     {
+        // FundModels
+        public const int FundModel_36 = 36;
+
         // Entity
-        private const string EntityGlobal = "global";
-        private const string EntityLearner = "Learner";
-        private const string EntityLearningDelivery = "LearningDelivery";
-        private const string EntityApprenticeshipFinancialRecord = "ApprenticeshipFinancialRecord";
-        private const string EntityLearnerEmploymentStatus = "LearnerEmploymentStatus";
-        private const string EntityLearningDeliveryFAM = "LearningDeliveryFAM";
-        private const string EntityStandardLARSApprenticshipFunding = "Standard_LARS_ApprenticshipFunding";
-        private const string EntityFrameworkLARSApprenticshipFunding = "Framework_LARS_ApprenticshipFunding";
-        private const string EntityLearningDeliverySFA_PostcodeDisadvantage = "SFA_PostcodeDisadvantage";
-        private const string EntityHistoricEarningInput = "HistoricEarningInput";
-        private const string EntityLARSFrameworkCmnComp = "LARS_FrameworkCmnComp";
-        private const string EntityStandardCommonComponent = "LARS_StandardCommonComponent";
-        private const string EntityLearningDeliveryLARS_Funding = "LearningDeliveryLARS_Funding";
+        public const string EntityGlobal = "global";
+        public const string EntityLearner = "Learner";
+        public const string EntityLearningDelivery = "LearningDelivery";
+        public const string EntityApprenticeshipFinancialRecord = "ApprenticeshipFinancialRecord";
+        public const string EntityLearnerEmploymentStatus = "LearnerEmploymentStatus";
+        public const string EntityLearningDeliveryFAM = "LearningDeliveryFAM";
+        public const string EntityStandardLARSApprenticshipFunding = "Standard_LARS_ApprenticshipFunding";
+        public const string EntityFrameworkLARSApprenticshipFunding = "Framework_LARS_ApprenticshipFunding";
+        public const string EntitySFA_PostcodeDisadvantage = "SFA_PostcodeDisadvantage";
+        public const string EntityHistoricEarningInput = "HistoricEarningInput";
+        public const string EntityLARSFrameworkCmnComp = "LARS_FrameworkCmnComp";
+        public const string EntityStandardCommonComponent = "LARS_StandardCommonComponent";
+        public const string EntityLearningDeliveryLARS_Funding = "LearningDeliveryLARS_Funding";
 
         // Global Names
-        private const string LARSVersion = "LARSVersion";
-        private const string UKPRN = "UKPRN";
-        private const string CollectionPeriod = "CollectionPeriod";
-        private const string Year = "Year";
+        public const string LARSVersion = "LARSVersion";
+        public const string UKPRN = "UKPRN";
+        public const string CollectionPeriod = "CollectionPeriod";
+        public const string Year = "Year";
 
         // Global Values
-        private const string YearValue = "1819";
-        private const string Period1 = "R01";
-        private const string Period2 = "R02";
-        private const string Period3 = "R03";
-        private const string Period4 = "R04";
-        private const string Period5 = "R05";
-        private const string Period6 = "R06";
-        private const string Period7 = "R07";
-        private const string Period8 = "R08";
-        private const string Period9 = "R09";
-        private const string Period10 = "R10";
-        private const string Period11 = "R11";
-        private const string Period12 = "R12";
+        public const string YearValue = "1819";
+        public const string CollectionPeriodValue = "DefaultPeriod";
+        public const string Period1 = "R01";
+        public const string Period2 = "R02";
+        public const string Period3 = "R03";
+        public const string Period4 = "R04";
+        public const string Period5 = "R05";
+        public const string Period6 = "R06";
+        public const string Period7 = "R07";
+        public const string Period8 = "R08";
+        public const string Period9 = "R09";
+        public const string Period10 = "R10";
+        public const string Period11 = "R11";
+        public const string Period12 = "R12";
 
         // Learner
-        private const string LearnRefNumber = "LearnRefNumber";
-        private const string DateOfBirth = "DateOfBirth";
-        private const string ULN = "ULN";
-        private const string PrevUKPRN = "PrevUKPRN";
+        public const string LearnRefNumber = "LearnRefNumber";
+        public const string DateOfBirth = "DateOfBirth";
+        public const string ULN = "ULN";
+        public const string PrevUKPRN = "PrevUKPRN";
+        public const string PMUKPRN = "PMUKPRN";
 
         // LearningDelivery
-        private const string AimSeqNumber = "AimSeqNumber";
-        private const string AimType = "AimType";
-        private const string FrameworkCommonComponent = "FrameworkCommonComponent";
-        private const string FworkCode = "FworkCode";
-        private const string LearnAimRef = "LearnAimRef";
-        private const string LearnPlanEndDate = "LearnPlanEndDate";
-        private const string LearnStartDate = "LearnStartDate";
-        private const string LrnDelFAM_LDM1 = "LrnDelFAM_LDM1";
-        private const string LrnDelFAM_LDM2 = "LrnDelFAM_LDM2";
-        private const string LrnDelFAM_LDM3 = "LrnDelFAM_LDM3";
-        private const string LrnDelFAM_LDM4 = "LrnDelFAM_LDM4";
-        private const string OrigLearnStartDate = "OrigLearnStartDate";
-        private const string PriorLearnFundAdj = "PriorLearnFundAdj";
-        private const string PwayCode = "PwayCode";
-        private const string STDCode = "STDCode";
-
-        // ApprenticeshipFinancialRecord
-        private const string AFinAmount = "AFinAmount";
-        private const string AFinCode = "AFinCode";
-        private const string AFinDate = "AFinDate";
-        private const string AFinType = "AFinType";
+        public const string AimSeqNumber = "AimSeqNumber";
+        public const string AimType = "AimType";
+        public const string CompStatus = "CompStatus";
+        public const string FrameworkCommonComponent = "FrameworkCommonComponent";
+        public const string FworkCode = "FworkCode";
+        public const string LearnAimRef = "LearnAimRef";
+        public const string LearnActEndDate = "LearnActEndDate";
+        public const string LearnPlanEndDate = "LearnPlanEndDate";
+        public const string LearnStartDate = "LearnStartDate";
+        public const string LrnDelFAM_EEF = "LrnDelFAM_EEF";
+        public const string LrnDelFAM_LDM1 = "LrnDelFAM_LDM1";
+        public const string LrnDelFAM_LDM2 = "LrnDelFAM_LDM2";
+        public const string LrnDelFAM_LDM3 = "LrnDelFAM_LDM3";
+        public const string LrnDelFAM_LDM4 = "LrnDelFAM_LDM4";
+        public const string OrigLearnStartDate = "OrigLearnStartDate";
+        public const string OtherFundAdj = "OtherFundAdj";
+        public const string PriorLearnFundAdj = "PriorLearnFundAdj";
+        public const string ProgType = "ProgTpe";
+        public const string PwayCode = "PwayCode";
+        public const string STDCode = "STDCode";
 
         // LearningDeliveryFAM
-        private const string LearnDelFAMCode = "LearnDelFAMCode";
-        private const string LearnDelFAMDateFrom = "LearnDelFAMDateFrom";
-        private const string LearnDelFAMDateTo = "LearnDelFAMDateTo";
-        private const string LearnDelFAMType = "LearnDelFAMType";
+        public const string EEF = "EEF";
+        public const string LDM = "LDM";
+
+        // ApprenticeshipFinancialRecord
+        public const string AFinAmount = "AFinAmount";
+        public const string AFinCode = "AFinCode";
+        public const string AFinDate = "AFinDate";
+        public const string AFinType = "AFinType";
+
+        // LearningDeliveryFAM
+        public const string LearnDelFAMCode = "LearnDelFAMCode";
+        public const string LearnDelFAMDateFrom = "LearnDelFAMDateFrom";
+        public const string LearnDelFAMDateTo = "LearnDelFAMDateTo";
+        public const string LearnDelFAMType = "LearnDelFAMType";
 
         // LearnerEmploymentStatus
-        private const string AgreeId = "AgreeId";
-        private const string DateEmpStatApp = "DateEmpStatApp";
-        private const string EmpId = "EmpId";
-        private const string EMPStat = "EMPStat";
-        private const string EmpStatMon_SEM = "EmpStatMon_SEM";
+        public const string AgreeId = "AgreeId";
+        public const string DateEmpStatApp = "DateEmpStatApp";
+        public const string EmpId = "EmpId";
+        public const string EMPStat = "EMPStat";
+        public const string EmpStatMon_SEM = "EmpStatMon_SEM";
 
         // Standard_LARS_ApprenticshipFunding
-        private const string StandardAF1618EmployerAdditionalPayment = "StandardAF1618EmployerAdditionalPayment";
-        private const string StandardAF1618ProviderAdditionalPayment = "StandardAF1618ProviderAdditionalPayment";
-        private const string StandardAF1618FrameworkUplift = "StandardAF1618FrameworkUplift";
-        private const string StandardAFCareLeaverAdditionalPayment = "StandardAFCareLeaverAdditionalPayment";
-        private const string StandardAFEffectiveFrom = "StandardAFEffectiveFrom";
-        private const string StandardAFEffectiveTo = "StandardAFEffectiveTo";
-        private const string StandardAFFundingCategory = "StandardAFFundingCategory";
-        private const string StandardAFMaxEmployerLevyCap = "StandardAFMaxEmployerLevyCap";
-        private const string StandardAFReservedValue2 = "StandardAFReservedValue2";
-        private const string StandardAFReservedValue3 = "StandardAFReservedValue3";
+        public const string StandardAF1618EmployerAdditionalPayment = "StandardAF1618EmployerAdditionalPayment";
+        public const string StandardAF1618ProviderAdditionalPayment = "StandardAF1618ProviderAdditionalPayment";
+        public const string StandardAF1618FrameworkUplift = "StandardAF1618FrameworkUplift";
+        public const string StandardAFCareLeaverAdditionalPayment = "StandardAFCareLeaverAdditionalPayment";
+        public const string StandardAFEffectiveFrom = "StandardAFEffectiveFrom";
+        public const string StandardAFEffectiveTo = "StandardAFEffectiveTo";
+        public const string StandardAFFundingCategory = "StandardAFFundingCategory";
+        public const string StandardAFMaxEmployerLevyCap = "StandardAFMaxEmployerLevyCap";
+        public const string StandardAFReservedValue2 = "StandardAFReservedValue2";
+        public const string StandardAFReservedValue3 = "StandardAFReservedValue3";
 
         // Framework_LARS_ApprenticshipFunding
-        private const string FrameworkAF1618EmployerAdditionalPayment = "FrameworkAF1618EmployerAdditionalPayment";
-        private const string FrameworkAF1618ProviderAdditionalPayment = "FrameworkAF1618ProviderAdditionalPayment";
-        private const string FrameworkAF1618FrameworkUplift = "FrameworkAF1618FrameworkUplift";
-        private const string FrameworkAFCareLeaverAdditionalPayment = "FrameworkAFCareLeaverAdditionalPayment";
-        private const string FrameworkAFEffectiveFrom = "FrameworkAFEffectiveFrom";
-        private const string FrameworkAFEffectiveTo = "FrameworkAFEffectiveTo";
-        private const string FrameworkAFFundingCategory = "FrameworkAFFundingCategory";
-        private const string FrameworkAFMaxEmployerLevyCap = "FrameworkAFMaxEmployerLevyCap";
-        private const string FrameworkAFReservedValue2 = "FrameworkAFReservedValue2";
-        private const string FrameworkAFReservedValue3 = "FrameworkAFReservedValue3";
+        public const string FrameworkAF1618EmployerAdditionalPayment = "FrameworkAF1618EmployerAdditionalPayment";
+        public const string FrameworkAF1618ProviderAdditionalPayment = "FrameworkAF1618ProviderAdditionalPayment";
+        public const string FrameworkAF1618FrameworkUplift = "FrameworkAF1618FrameworkUplift";
+        public const string FrameworkAFCareLeaverAdditionalPayment = "FrameworkAFCareLeaverAdditionalPayment";
+        public const string FrameworkAFEffectiveFrom = "FrameworkAFEffectiveFrom";
+        public const string FrameworkAFEffectiveTo = "FrameworkAFEffectiveTo";
+        public const string FrameworkAFFundingCategory = "FrameworkAFFundingCategory";
+        public const string FrameworkAFMaxEmployerLevyCap = "FrameworkAFMaxEmployerLevyCap";
+        public const string FrameworkAFReservedValue2 = "FrameworkAFReservedValue2";
+        public const string FrameworkAFReservedValue3 = "FrameworkAFReservedValue3";
 
         // SFA_PostcodeDisadvantage
-        private const string DisApprenticeshipUplift = "DisApprenticeshipUplift";
-        private const string DisUpEffectiveFrom = "DisUpEffectiveFrom";
-        private const string DisUpEffectiveTo = "DisUpEffectiveTo";
+        public const string DisApprenticeshipUplift = "DisApprenticeshipUplift";
+        public const string DisUpEffectiveFrom = "DisUpEffectiveFrom";
+        public const string DisUpEffectiveTo = "DisUpEffectiveTo";
 
         // HistoricEarningInput
-        private const string AppIdentifierInput = "AppIdentifierInput";
-        private const string AppProgCompletedInTheYearInput = "AppProgCompletedInTheYearInput";
-        private const string HistoricCollectionReturnInput = "HistoricCollectionReturnInput";
-        private const string HistoricCollectionYearInput = "HistoricCollectionYearInput";
-        private const string HistoricDaysInYearInput = "HistoricDaysInYearInput";
-        private const string HistoricEffectiveTNPStartDateInput = "HistoricEffectiveTNPStartDateInput";
-        private const string HistoricEmpIdStartWithinYearInput = "HistoricEmpIdStartWithinYearInput";
-        private const string HistoricEmpIdEndWithinYearInput = "HistoricEmpIdEndWithinYearInput";
-        private const string HistoricFworkCodeInput = "HistoricFworkCodeInput";
-        private const string HistoricLearnDelProgEarliestACT2DateInput = "HistoricLearnDelProgEarliestACT2DateInput";
-        private const string HistoricLearner1618AtStartInput = "HistoricLearner1618AtStartInput";
-        private const string HistoricLearnRefNumberInput = "HistoricLearnRefNumberInput";
-        private const string HistoricPMRAmountInput = "HistoricPMRAmountInput";
-        private const string HistoricProgrammeStartDateIgnorePathwayInput = "HistoricProgrammeStartDateIgnorePathwayInput";
-        private const string HistoricProgrammeStartDateMatchPathwayInput = "HistoricProgrammeStartDateMatchPathwayInput";
-        private const string HistoricProgTypeInput = "HistoricProgTypeInput";
-        private const string HistoricPwayCodeInput = "HistoricPwayCodeInput";
-        private const string HistoricTotalProgAimPaymentsInTheYearInput = "HistoricTotalProgAimPaymentsInTheYearInput";
-        private const string HistoricTotal1618UpliftPaymentsInTheYearInput = "HistoricTotal1618UpliftPaymentsInTheYearInput";
-        private const string HistoricSTDCodeInput = "HistoricSTDCodeInput";
-        private const string HistoricTNP1Input = "HistoricTNP1Input";
-        private const string HistoricTNP2Input = "HistoricTNP2Input";
-        private const string HistoricTNP3Input = "HistoricTNP3Input";
-        private const string HistoricTNP4Input = "HistoricTNP4Input";
-        private const string HistoricUKPRNInput = "HistoricUKPRNInput";
-        private const string HistoricULNInput = "HistoricULNInput";
-        private const string HistoricUptoEndDateInput = "HistoricUptoEndDateInput";
-        private const string HistoricVirtualTNP3EndofTheYearInput = "HistoricVirtualTNP3EndofTheYearInput";
-        private const string HistoricVirtualTNP4EndofTheYearInput = "HistoricVirtualTNP4EndofTheYearInput";
+        public const string AppIdentifierInput = "AppIdentifierInput";
+        public const string AppProgCompletedInTheYearInput = "AppProgCompletedInTheYearInput";
+        public const string HistoricCollectionReturnInput = "HistoricCollectionReturnInput";
+        public const string HistoricCollectionYearInput = "HistoricCollectionYearInput";
+        public const string HistoricDaysInYearInput = "HistoricDaysInYearInput";
+        public const string HistoricEffectiveTNPStartDateInput = "HistoricEffectiveTNPStartDateInput";
+        public const string HistoricEmpIdStartWithinYearInput = "HistoricEmpIdStartWithinYearInput";
+        public const string HistoricEmpIdEndWithinYearInput = "HistoricEmpIdEndWithinYearInput";
+        public const string HistoricFworkCodeInput = "HistoricFworkCodeInput";
+        public const string HistoricLearnDelProgEarliestACT2DateInput = "HistoricLearnDelProgEarliestACT2DateInput";
+        public const string HistoricLearner1618AtStartInput = "HistoricLearner1618AtStartInput";
+        public const string HistoricLearnRefNumberInput = "HistoricLearnRefNumberInput";
+        public const string HistoricPMRAmountInput = "HistoricPMRAmountInput";
+        public const string HistoricProgrammeStartDateIgnorePathwayInput = "HistoricProgrammeStartDateIgnorePathwayInput";
+        public const string HistoricProgrammeStartDateMatchPathwayInput = "HistoricProgrammeStartDateMatchPathwayInput";
+        public const string HistoricProgTypeInput = "HistoricProgTypeInput";
+        public const string HistoricPwayCodeInput = "HistoricPwayCodeInput";
+        public const string HistoricTotalProgAimPaymentsInTheYearInput = "HistoricTotalProgAimPaymentsInTheYearInput";
+        public const string HistoricTotal1618UpliftPaymentsInTheYearInput = "HistoricTotal1618UpliftPaymentsInTheYearInput";
+        public const string HistoricSTDCodeInput = "HistoricSTDCodeInput";
+        public const string HistoricTNP1Input = "HistoricTNP1Input";
+        public const string HistoricTNP2Input = "HistoricTNP2Input";
+        public const string HistoricTNP3Input = "HistoricTNP3Input";
+        public const string HistoricTNP4Input = "HistoricTNP4Input";
+        public const string HistoricUKPRNInput = "HistoricUKPRNInput";
+        public const string HistoricULNInput = "HistoricULNInput";
+        public const string HistoricUptoEndDateInput = "HistoricUptoEndDateInput";
+        public const string HistoricVirtualTNP3EndofTheYearInput = "HistoricVirtualTNP3EndofTheYearInput";
+        public const string HistoricVirtualTNP4EndofTheYearInput = "HistoricVirtualTNP4EndofTheYearInput";
 
         // LARS_FrameworkCmnComp
-        private const string LARSFrameworkCommonComponentCode = "LARSFrameworkCommonComponentCode";
-        private const string LARSFrameworkCommonComponentEffectiveTo = "LARSFrameworkCommonComponentEffectiveTo";
-        private const string LARSFrameworkCommonComponentEffectiveFrom = "LARSFrameworkCommonComponentEffectiveFrom";
+        public const string LARSFrameworkCommonComponentCode = "LARSFrameworkCommonComponentCode";
+        public const string LARSFrameworkCommonComponentEffectiveTo = "LARSFrameworkCommonComponentEffectiveTo";
+        public const string LARSFrameworkCommonComponentEffectiveFrom = "LARSFrameworkCommonComponentEffectiveFrom";
 
         // LARS_StandardCommonComponent
-        private const string LARSStandardCommonComponentCode = "LARSStandardCommonComponentCode";
-        private const string LARSStandardCommonComponentEffectiveFrom = "LARSStandardCommonComponentEffectiveFrom";
-        private const string LARSStandardCommonComponentEffectiveTo = "LARSStandardCommonComponentEffectiveTo";
+        public const string LARSStandardCommonComponentCode = "LARSStandardCommonComponentCode";
+        public const string LARSStandardCommonComponentEffectiveFrom = "LARSStandardCommonComponentEffectiveFrom";
+        public const string LARSStandardCommonComponentEffectiveTo = "LARSStandardCommonComponentEffectiveTo";
 
         // LearningDeliveryLARSFunding
-        private const string LARSFundCategory = "LARSFundCategory";
-        private const string LARSFundEffectiveFrom = "LARSFundEffectiveFrom";
-        private const string LARSFundEffectiveTo = "LARSFundEffectiveTo";
-        private const string LARSFundWeightedRate = "LARSFundWeightedRate";
+        public const string LARSFundCategory = "LARSFundCategory";
+        public const string LARSFundEffectiveFrom = "LARSFundEffectiveFrom";
+        public const string LARSFundEffectiveTo = "LARSFundEffectiveTo";
+        public const string LARSFundWeightedRate = "LARSFundWeightedRate";
     }
 }

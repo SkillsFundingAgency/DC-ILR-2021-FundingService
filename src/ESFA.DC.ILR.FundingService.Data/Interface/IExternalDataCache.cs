@@ -47,6 +47,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Interface
 
         IDictionary<int, IEnumerable<LargeEmployers>> LargeEmployers { get; }
 
-        IDictionary<long, IEnumerable<AECLatestInYearEarningHistory>> AECLatestInYearEarningHistory { get; }
+        IDictionary<long, IEnumerable<AECEarningsHistory>> AECLatestInYearEarningHistory { get; }
     }
 }
