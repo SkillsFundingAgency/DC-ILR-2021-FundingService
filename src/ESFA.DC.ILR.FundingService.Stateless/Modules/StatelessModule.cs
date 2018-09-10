@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
+using ESFA.DC.Data.AppsEarningsHistory.Model;
+using ESFA.DC.Data.AppsEarningsHistory.Model.Interfaces;
 using ESFA.DC.Data.LargeEmployer.Model;
 using ESFA.DC.Data.LargeEmployer.Model.Interface;
 using ESFA.DC.Data.LARS.Model;
@@ -38,8 +40,6 @@ using ESFA.DC.ILR.FundingService.Orchestrators.Output;
 using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
 using ESFA.DC.ILR.FundingService.ServiceFabric.Common.Interfaces;
 using ESFA.DC.ILR.FundingService.Stubs;
-using ESFA.DC.ILR.FundingService.Stubs.Database;
-using ESFA.DC.ILR.FundingService.Stubs.Database.Interface;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.JobContext;
 using ESFA.DC.JobContext.Interface;
@@ -95,7 +95,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             builder.RegisterType<LARSDataRetrievalService>().As<ILARSDataRetrievalService>().InstancePerLifetimeScope();
             builder.RegisterType<OrganisationDataRetrievalService>().As<IOrganisationDataRetrievalService>().InstancePerLifetimeScope();
             builder.RegisterType<AppsEarningsHistoryDataRetrievalService>().As<IAppsEarningsHistoryDataRetrievalService>().InstancePerLifetimeScope();
-            builder.RegisterType<AppsEarningsHistoryStub>().As<IAppsEarningsHistoryStub>().InstancePerLifetimeScope();
+            builder.RegisterType<AppsEarningsHistory>().As<IAppsEarningsHistory>().InstancePerLifetimeScope();
 
             builder.RegisterType<JsonSerializationService>().As<ISerializationService>();
             builder.RegisterType<JsonSerializationService>().As<IJsonSerializationService>();

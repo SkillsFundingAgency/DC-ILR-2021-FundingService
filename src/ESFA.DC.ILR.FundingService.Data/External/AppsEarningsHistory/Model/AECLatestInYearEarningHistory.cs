@@ -36,7 +36,7 @@ namespace ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory.Model
 
         public decimal? HistoricTNP4Input { get; set; }
 
-        public decimal? HistoricTotal1618 { get; set; }
+        public decimal? HistoricTotal1618UpliftPaymentsInTheYearInput { get; set; }
 
         public decimal? HistoricVirtualTNP3EndOfTheYearInput { get; set; }
 

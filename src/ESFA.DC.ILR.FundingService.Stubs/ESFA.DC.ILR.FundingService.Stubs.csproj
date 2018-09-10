@@ -70,9 +70,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\AppsEarningsHistoryStub.cs" />
-    <Compile Include="Database\Interface\IAppsEarningsHistoryStub.cs" />
-    <Compile Include="Database\Model\AEC_LatestInYearHistory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

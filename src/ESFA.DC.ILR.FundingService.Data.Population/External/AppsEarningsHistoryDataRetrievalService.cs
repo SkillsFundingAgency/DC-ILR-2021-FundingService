@@ -1,27 +1,27 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ESFA.DC.Data.AppsEarningsHistory.Model;
+using ESFA.DC.Data.AppsEarningsHistory.Model.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory.Model;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Keys;
-using ESFA.DC.ILR.FundingService.Stubs.Database.Interface;
-using ESFA.DC.ILR.FundingService.Stubs.Database.Model;
 
 namespace ESFA.DC.ILR.FundingService.Data.Population.External
 {
     public class AppsEarningsHistoryDataRetrievalService : IAppsEarningsHistoryDataRetrievalService
     {
-        private readonly IAppsEarningsHistoryStub _appsEarningsHistory;
+        private readonly IAppsEarningsHistory _appsEarningsHistory;
 
         public AppsEarningsHistoryDataRetrievalService()
         {
         }
 
-        public AppsEarningsHistoryDataRetrievalService(IAppsEarningsHistoryStub appsEarningsHistory)
+        public AppsEarningsHistoryDataRetrievalService(IAppsEarningsHistory appsEarningsHistory)
         {
             _appsEarningsHistory = appsEarningsHistory;
         }
 
-        public virtual IQueryable<AEC_LatestInYearHistory> AecLatestInYearHistory => _appsEarningsHistory.AEC_LatestInYearHistories;
+        public virtual IQueryable<AppsEarningsHistory> AecLatestInYearHistory => _appsEarningsHistory.AppsEarningsHistory;
 
         public IDictionary<long, IEnumerable<AECLatestInYearEarningHistory>> AppsEarningsHistoryForLearners(int providerUKPRN, IEnumerable<LearnRefNumberULNKey> learners)
         {
@@ -45,29 +45,29 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             return dictionary;
         }
 
-        public AECLatestInYearEarningHistory AECLatestInYearEarningsFromEntity(AEC_LatestInYearHistory entity)
+        public AECLatestInYearEarningHistory AECLatestInYearEarningsFromEntity(AppsEarningsHistory entity)
         {
             return new AECLatestInYearEarningHistory
             {
                 AppIdentifier = entity.AppIdentifier,
-                AppProgCompletedInTheYearInput = entity.AppProgCompletedInTheYearOutput,
+                AppProgCompletedInTheYearInput = entity.AppProgCompletedInTheYearInput,
                 CollectionYear = entity.CollectionYear,
                 CollectionReturnCode = entity.CollectionReturnCode,
                 DaysInYear = entity.DaysInYear,
                 FworkCode = entity.FworkCode,
-                HistoricEffectiveTNPStartDateInput = entity.HistoricEffectiveTNPStartDateOutput,
+                HistoricEffectiveTNPStartDateInput = entity.HistoricEffectiveTNPStartDateInput,
                 HistoricEmpIdEndWithinYear = entity.HistoricEmpIdEndWithinYear,
                 HistoricEmpIdStartWithinYear = entity.HistoricEmpIdStartWithinYear,
-                HistoricLearner1618StartInput = entity.HistoricLearner1618StartOutput,
+                HistoricLearner1618StartInput = entity.HistoricLearner1618StartInput,
                 HistoricPMRAmount = entity.HistoricPMRAmount,
-                HistoricTNP1Input = entity.HistoricTNP1Output,
-                HistoricTNP2Input = entity.HistoricTNP2Output,
-                HistoricTNP3Input = entity.HistoricTNP3Output,
-                HistoricTNP4Input = entity.HistoricTNP4Output,
-                HistoricTotal1618 = entity.HistoricTotal1618,
-                HistoricVirtualTNP3EndOfTheYearInput = entity.HistoricVirtualTNP3EndOfTheYearOutput,
-                HistoricVirtualTNP4EndOfTheYearInput = entity.HistoricVirtualTNP4EndOfTheYearOutput,
-                HistoricLearnDelProgEarliestACT2DateInput = entity.HistoricLearnDelProgEarliestACT2DateOutput,
+                HistoricTNP1Input = entity.HistoricTNP1Input,
+                HistoricTNP2Input = entity.HistoricTNP2Input,
+                HistoricTNP3Input = entity.HistoricTNP3Input,
+                HistoricTNP4Input = entity.HistoricTNP4Input,
+                HistoricTotal1618UpliftPaymentsInTheYearInput = entity.HistoricTotal1618UpliftPaymentsInTheYearInput,
+                HistoricVirtualTNP3EndOfTheYearInput = entity.HistoricVirtualTNP3EndOfTheYearInput,
+                HistoricVirtualTNP4EndOfTheYearInput = entity.HistoricVirtualTNP4EndOfTheYearInput,
+                HistoricLearnDelProgEarliestACT2DateInput = entity.HistoricLearnDelProgEarliestACT2DateInput,
                 LatestInYear = entity.LatestInYear,
                 LearnRefNumber = entity.LearnRefNumber,
                 ProgrammeStartDateIgnorePathway = entity.ProgrammeStartDateIgnorePathway,

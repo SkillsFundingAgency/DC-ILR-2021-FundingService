@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ESFA.DC.Data.AppsEarningsHistory.Model;
+using ESFA.DC.Data.AppsEarningsHistory.Model.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.Population.External;
-using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Keys;
-using ESFA.DC.ILR.FundingService.Stubs.Database.Interface;
-using ESFA.DC.ILR.FundingService.Stubs.Database.Model;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -17,72 +16,72 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         [Fact]
         public void AppEarningsHistory()
         {
-            var appsHistoryMock = new Mock<IAppsEarningsHistoryStub>();
+            var appsHistoryMock = new Mock<IAppsEarningsHistory>();
 
             var appsHistory = NewService(appsHistoryMock.Object).AecLatestInYearHistory;
 
-            appsHistoryMock.VerifyGet(a => a.AEC_LatestInYearHistories);
+            appsHistoryMock.VerifyGet(a => a.AppsEarningsHistory);
         }
 
         [Fact]
         public void AppsEarningsHistoryForLearners()
         {
-            var aec_Histories = new List<AEC_LatestInYearHistory>()
+            var apps_Histories = new List<AppsEarningsHistory>()
             {
-                new AEC_LatestInYearHistory()
+                new AppsEarningsHistory()
                 {
                     LearnRefNumber = "123",
                     ULN = 1234567890,
                     UKPRN = 123456,
                     LatestInYear = true,
-                    HistoricTNP1Output = 1
+                    HistoricTNP1Input = 1
                 },
-                new AEC_LatestInYearHistory()
+                new AppsEarningsHistory()
                 {
                     LearnRefNumber = "123",
                     ULN = 1234567890,
                     UKPRN = 123456,
                     LatestInYear = true,
-                    HistoricTNP1Output = 2
+                    HistoricTNP1Input = 2
                 },
-                new AEC_LatestInYearHistory()
+                new AppsEarningsHistory()
                 {
                     LearnRefNumber = "123",
                     ULN = 12345678,
                     UKPRN = 123456,
                     LatestInYear = true,
-                    HistoricTNP1Output = 2
+                    HistoricTNP1Input = 2
                 },
-                new AEC_LatestInYearHistory()
+                new AppsEarningsHistory()
                 {
                     LearnRefNumber = "456",
                     ULN = 1234567899,
                     UKPRN = 123456,
                     LatestInYear = true,
-                    HistoricTNP1Output = 1
+                    HistoricTNP1Input = 1
                 },
-                new AEC_LatestInYearHistory()
+                new AppsEarningsHistory()
                 {
                     LearnRefNumber = "456",
                     ULN = 1234567890,
                     UKPRN = 1234,
                     LatestInYear = true,
-                    HistoricTNP1Output = 1
+                    HistoricTNP1Input = 1
                 },
-                new AEC_LatestInYearHistory()
+                new AppsEarningsHistory()
                 {
                     LearnRefNumber = "456",
                     ULN = 1234567890,
                     UKPRN = 123456,
                     LatestInYear = false,
-                    HistoricTNP1Output = 1
+                    HistoricTNP1Input = 1
                 },
-                new AEC_LatestInYearHistory(),
+                new AppsEarningsHistory(),
             }.AsQueryable();
 
             var appsEarningHistoryDataRetrievalServiceMock = NewMock();
 
-            appsEarningHistoryDataRetrievalServiceMock.SetupGet(a => a.AecLatestInYearHistory).Returns(aec_Histories);
+            appsEarningHistoryDataRetrievalServiceMock.SetupGet(a => a.AecLatestInYearHistory).Returns(apps_Histories);
 
             var ukprn = 123456;
             var learners = new List<LearnRefNumberULNKey> { new LearnRefNumberULNKey("123", 1234567890), new LearnRefNumberULNKey("456", 1234567899) };
@@ -99,27 +98,27 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         [Fact]
         public void AECLatestInYearEarningsFromEntity()
         {
-            var aec_LatestInYearHistory = new AEC_LatestInYearHistory()
+            var aec_LatestInYearHistory = new AppsEarningsHistory()
             {
                 AppIdentifier = "1",
-                AppProgCompletedInTheYearOutput = true,
+                AppProgCompletedInTheYearInput = true,
                 CollectionYear = "2",
                 CollectionReturnCode = "3",
                 DaysInYear = 4,
                 FworkCode = 5,
-                HistoricEffectiveTNPStartDateOutput = new DateTime(2018, 8, 1),
+                HistoricEffectiveTNPStartDateInput = new DateTime(2018, 8, 1),
                 HistoricEmpIdEndWithinYear = 6,
                 HistoricEmpIdStartWithinYear = 7,
-                HistoricLearner1618StartOutput = true,
+                HistoricLearner1618StartInput = true,
                 HistoricPMRAmount = 8m,
-                HistoricTNP1Output = 9m,
-                HistoricTNP2Output = 10m,
-                HistoricTNP3Output = 11m,
-                HistoricTNP4Output = 12m,
-                HistoricTotal1618 = 13m,
-                HistoricVirtualTNP3EndOfTheYearOutput = 14m,
-                HistoricVirtualTNP4EndOfTheYearOutput = 15m,
-                HistoricLearnDelProgEarliestACT2DateOutput = new DateTime(2018, 8, 1),
+                HistoricTNP1Input = 9m,
+                HistoricTNP2Input = 10m,
+                HistoricTNP3Input = 11m,
+                HistoricTNP4Input = 12m,
+                HistoricTotal1618UpliftPaymentsInTheYearInput = 13m,
+                HistoricVirtualTNP3EndOfTheYearInput = 14m,
+                HistoricVirtualTNP4EndOfTheYearInput = 15m,
+                HistoricLearnDelProgEarliestACT2DateInput = new DateTime(2018, 8, 1),
                 LatestInYear = true,
                 LearnRefNumber = "16",
                 ProgrammeStartDateIgnorePathway = new DateTime(2018, 8, 1),
@@ -136,24 +135,24 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             var aecLatestInYearHistory = NewService().AECLatestInYearEarningsFromEntity(aec_LatestInYearHistory);
 
             aecLatestInYearHistory.AppIdentifier.Should().Be(aec_LatestInYearHistory.AppIdentifier);
-            aecLatestInYearHistory.AppProgCompletedInTheYearInput.Should().Be(aec_LatestInYearHistory.AppProgCompletedInTheYearOutput);
+            aecLatestInYearHistory.AppProgCompletedInTheYearInput.Should().Be(aec_LatestInYearHistory.AppProgCompletedInTheYearInput);
             aecLatestInYearHistory.CollectionYear.Should().Be(aec_LatestInYearHistory.CollectionYear);
             aecLatestInYearHistory.CollectionReturnCode.Should().Be(aec_LatestInYearHistory.CollectionReturnCode);
             aecLatestInYearHistory.DaysInYear.Should().Be(aec_LatestInYearHistory.DaysInYear);
             aecLatestInYearHistory.FworkCode.Should().Be(aec_LatestInYearHistory.FworkCode);
-            aecLatestInYearHistory.HistoricEffectiveTNPStartDateInput.Should().Be(aec_LatestInYearHistory.HistoricEffectiveTNPStartDateOutput);
+            aecLatestInYearHistory.HistoricEffectiveTNPStartDateInput.Should().Be(aec_LatestInYearHistory.HistoricEffectiveTNPStartDateInput);
             aecLatestInYearHistory.HistoricEmpIdEndWithinYear.Should().Be(aec_LatestInYearHistory.HistoricEmpIdEndWithinYear);
             aecLatestInYearHistory.HistoricEmpIdStartWithinYear.Should().Be(aec_LatestInYearHistory.HistoricEmpIdStartWithinYear);
-            aecLatestInYearHistory.HistoricLearner1618StartInput.Should().Be(aec_LatestInYearHistory.HistoricLearner1618StartOutput);
+            aecLatestInYearHistory.HistoricLearner1618StartInput.Should().Be(aec_LatestInYearHistory.HistoricLearner1618StartInput);
             aecLatestInYearHistory.HistoricPMRAmount.Should().Be(aec_LatestInYearHistory.HistoricPMRAmount);
-            aecLatestInYearHistory.HistoricTNP1Input.Should().Be(aec_LatestInYearHistory.HistoricTNP1Output);
-            aecLatestInYearHistory.HistoricTNP2Input.Should().Be(aec_LatestInYearHistory.HistoricTNP2Output);
-            aecLatestInYearHistory.HistoricTNP3Input.Should().Be(aec_LatestInYearHistory.HistoricTNP3Output);
-            aecLatestInYearHistory.HistoricTNP4Input.Should().Be(aec_LatestInYearHistory.HistoricTNP4Output);
-            aecLatestInYearHistory.HistoricTotal1618.Should().Be(aec_LatestInYearHistory.HistoricTotal1618);
-            aecLatestInYearHistory.HistoricVirtualTNP3EndOfTheYearInput.Should().Be(aec_LatestInYearHistory.HistoricVirtualTNP3EndOfTheYearOutput);
-            aecLatestInYearHistory.HistoricVirtualTNP4EndOfTheYearInput.Should().Be(aec_LatestInYearHistory.HistoricVirtualTNP4EndOfTheYearOutput);
-            aecLatestInYearHistory.HistoricLearnDelProgEarliestACT2DateInput.Should().Be(aec_LatestInYearHistory.HistoricLearnDelProgEarliestACT2DateOutput);
+            aecLatestInYearHistory.HistoricTNP1Input.Should().Be(aec_LatestInYearHistory.HistoricTNP1Input);
+            aecLatestInYearHistory.HistoricTNP2Input.Should().Be(aec_LatestInYearHistory.HistoricTNP2Input);
+            aecLatestInYearHistory.HistoricTNP3Input.Should().Be(aec_LatestInYearHistory.HistoricTNP3Input);
+            aecLatestInYearHistory.HistoricTNP4Input.Should().Be(aec_LatestInYearHistory.HistoricTNP4Input);
+            aecLatestInYearHistory.HistoricTotal1618UpliftPaymentsInTheYearInput.Should().Be(aec_LatestInYearHistory.HistoricTotal1618UpliftPaymentsInTheYearInput);
+            aecLatestInYearHistory.HistoricVirtualTNP3EndOfTheYearInput.Should().Be(aec_LatestInYearHistory.HistoricVirtualTNP3EndOfTheYearInput);
+            aecLatestInYearHistory.HistoricVirtualTNP4EndOfTheYearInput.Should().Be(aec_LatestInYearHistory.HistoricVirtualTNP4EndOfTheYearInput);
+            aecLatestInYearHistory.HistoricLearnDelProgEarliestACT2DateInput.Should().Be(aec_LatestInYearHistory.HistoricLearnDelProgEarliestACT2DateInput);
             aecLatestInYearHistory.LatestInYear.Should().Be(aec_LatestInYearHistory.LatestInYear);
             aecLatestInYearHistory.LearnRefNumber.Should().Be(aec_LatestInYearHistory.LearnRefNumber);
             aecLatestInYearHistory.ProgrammeStartDateIgnorePathway.Should().Be(aec_LatestInYearHistory.ProgrammeStartDateIgnorePathway);
@@ -167,7 +166,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             aecLatestInYearHistory.ULN.Should().Be(aec_LatestInYearHistory.ULN);
         }
 
-        private AppsEarningsHistoryDataRetrievalService NewService(IAppsEarningsHistoryStub appsHistory = null)
+        private AppsEarningsHistoryDataRetrievalService NewService(IAppsEarningsHistory appsHistory = null)
         {
             return new AppsEarningsHistoryDataRetrievalService(appsHistory);
         }

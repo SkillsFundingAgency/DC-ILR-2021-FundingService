@@ -83,6 +83,9 @@
     <Reference Include="ESFA.DC.Auditing.Interface, Version=0.1.9.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Auditing.Interface.0.1.9-beta0001\lib\netstandard2.0\ESFA.DC.Auditing.Interface.dll</HintPath>
     </Reference>
+    <Reference Include="ESFA.DC.Data.AppsEarningsHistory.Model, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.Data.AppsEarningsHistory.Model.0.1.0-beta0001\lib\net461\ESFA.DC.Data.AppsEarningsHistory.Model.dll</HintPath>
+    </Reference>
     <Reference Include="ESFA.DC.Data.LargeEmployer.Model, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Data.LargeEmployer.Model.0.1.2-beta0001\lib\net461\ESFA.DC.Data.LargeEmployer.Model.dll</HintPath>
     </Reference>
@@ -521,10 +524,6 @@
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Stateless.Models\ESFA.DC.ILR.FundingService.Stateless.Models.csproj">
       <Project>{0faaaab8-443b-47bf-9e96-c3069e8789f9}</Project>
       <Name>ESFA.DC.ILR.FundingService.Stateless.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Stubs\ESFA.DC.ILR.FundingService.Stubs.csproj">
-      <Project>{D3745D8B-F4D1-47C9-857A-A912516B2559}</Project>
-      <Name>ESFA.DC.ILR.FundingService.Stubs</Name>
     </ProjectReference>
     <ProjectReference Include="..\FM25\ESFA.DC.ILR.FundingService.FM25.Model\ESFA.DC.ILR.FundingService.FM25.Model.csproj">
       <Project>{3215BE00-4548-4D0F-A38E-77974B44E49E}</Project>
