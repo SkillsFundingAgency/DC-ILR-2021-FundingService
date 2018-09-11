@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
@@ -74,7 +75,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             _logger = logger;
         }
 
-        public async Task Execute(IJobContextMessage jobContextMessage)
+        public async Task Execute(IJobContextMessage jobContextMessage, CancellationToken cancellationToken)
         {
             var stopWatch = new Stopwatch();
             stopWatch.Start();
@@ -84,15 +85,20 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             var fundingServiceDto = (FundingServiceDto)_fundingServiceDto;
             fundingServiceDto.Message = ilrMessage;
 
+            cancellationToken.ThrowIfCancellationRequested();
+
             // get valid learners from intermediate storage and store it in the dto for rulebases
             fundingServiceDto.ValidLearners = _jsonSerializationService.Deserialize<string[]>(
                 await _keyValuePersistenceService.GetAsync(
                     jobContextMessage.KeyValuePairs[JobContextMessageKey.ValidLearnRefNumbers].ToString()));
 
+            cancellationToken.ThrowIfCancellationRequested();
+
             _populationService.Populate();
 
+            cancellationToken.ThrowIfCancellationRequested();
+
             var ukprn = Convert.ToInt32(jobContextMessage.KeyValuePairs[JobContextMessageKey.UkPrn]);
-            var jobId = Convert.ToInt32(jobContextMessage.JobId);
 
             var externalDataCache = _jsonSerializationService.Serialize(_externalDataCache);
             var fileDataCache = _jsonSerializationService.Serialize(_fileDataCache);
@@ -102,7 +108,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
                 .Select(p =>
                     new FundingActorDto()
                     {
-                        JobId = jobId,
+                        JobId = jobContextMessage.JobId,
                         Ukprn = ukprn,
                         ExternalDataCache = externalDataCache,
                         FileDataCache = fileDataCache,

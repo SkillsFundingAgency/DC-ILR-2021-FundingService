@@ -31,7 +31,5 @@ namespace ESFA.DC.ILR.FundingService.Data.External.LARS.Model
         public IEnumerable<LARSCareerLearningPilot> LARSCareerLearningPilot { get; set; }
 
         public IEnumerable<LARSFunding> LARSFunding { get; set; }
-
-
     }
 }

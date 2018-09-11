@@ -1,4 +1,4 @@
-﻿namespace ESFA.DC.ILR.FundingService.FM25.Service.Constants
+﻿namespace ESFA.DC.ILR.FundingService.ALB.Service.Constants
 {
     public static class OutputAttributeNames
     {

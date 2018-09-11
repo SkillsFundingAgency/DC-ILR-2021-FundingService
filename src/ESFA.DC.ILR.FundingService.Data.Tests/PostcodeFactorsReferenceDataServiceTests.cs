@@ -85,6 +85,37 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         }
 
         [Fact]
+        public void DasDisadvantageCost()
+        {
+            var postcode = "postcode";
+            var dasDisadvantages = new List<DasDisadvantage>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.DasDisadvantage)
+                .Returns(new Dictionary<string, IEnumerable<DasDisadvantage>>()
+                {
+                    { postcode, dasDisadvantages }
+                });
+
+            NewService(referenceDataCacheMock.Object).DASDisadvantagesForPostcode(postcode).Should().BeSameAs(dasDisadvantages);
+        }
+
+        [Fact]
+        public void DasDisadvantageCost_NotExists()
+        {
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.DasDisadvantage)
+                .Returns(new Dictionary<string, IEnumerable<DasDisadvantage>>()
+                {
+                    { "postcode", null }
+                });
+
+            NewService(referenceDataCacheMock.Object).DASDisadvantagesForPostcode("notPostcode").Should().BeEmpty();
+        }
+
+        [Fact]
         public void EfaDisadvantageCost()
         {
             var postcode = "postcode";

@@ -14,12 +14,17 @@
 
   <ItemGroup>
     <None Remove="Rulebase\ALBInputs.xsrc" />
+    <None Remove="Rulebase\Loans Bursary 18_19.zip" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Rulebase\ALBInputs.xsrc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Rulebase\Loans Bursary 18_19.zip" />
   </ItemGroup>
 
   <ItemGroup>
