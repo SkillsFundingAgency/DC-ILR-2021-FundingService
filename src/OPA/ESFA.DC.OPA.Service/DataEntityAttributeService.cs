@@ -62,6 +62,23 @@ namespace ESFA.DC.OPA.Service
             return null;
         }
 
+        public long? GetLongAttributeValue(IDataEntity dataEntity, string attributeName)
+        {
+            var attribute = dataEntity.Attributes[attributeName].Value;
+
+            if (attribute != null)
+            {
+                var attributeString = attribute.ToString();
+
+                if (attributeString != Uncertain)
+                {
+                    return long.Parse(attributeString, NumberStyles.AllowDecimalPoint);
+                }
+            }
+
+            return null;
+        }
+
         public decimal? GetDecimalAttributeValue(IDataEntity dataEntity, string attributeName)
         {
             var attribute = dataEntity.Attributes[attributeName].Value;
