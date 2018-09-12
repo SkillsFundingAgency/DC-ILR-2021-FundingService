@@ -119,7 +119,7 @@
         public const string PlannedNumOnProgInstalm = "PlannedNumOnProgInstalm";
         public const string PlannedTotalDaysIL = "PlannedTotalDaysIL";
         public const string PriorLearnFundAdj = "PriorLearnFundAdj";
-        public const string ProgType = "ProgTpe";
+        public const string ProgType = "ProgType";
         public const string PwayCode = "PwayCode";
         public const string SecondIncentiveThresholdDate = "SecondIncentiveThresholdDate";
         public const string STDCode = "STDCode";
@@ -177,6 +177,7 @@
         public const string EmpId = "EmpId";
         public const string EMPStat = "EMPStat";
         public const string EmpStatMon_SEM = "EmpStatMon_SEM";
+        public const string SEM = "SEM";
 
         // Standard_LARS_ApprenticshipFunding
         public const string StandardAF1618EmployerAdditionalPayment = "StandardAF1618EmployerAdditionalPayment";

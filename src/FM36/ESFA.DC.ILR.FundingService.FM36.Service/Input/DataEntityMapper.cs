@@ -82,13 +82,13 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
                         .Select(BuildLearningDeliveryDataEntity) ?? new List<IDataEntity>())
                         .Union(
                             learnerEmploymentStatusDenormalized?
-                            .Select(BuildLearnerEmploymentStatus))
+                            .Select(BuildLearnerEmploymentStatus) ?? new List<IDataEntity>())
                         .Union(
                             sfaPostDisadvantage?
-                            .Select(BuildSFAPostcodeDisadvantage))
+                            .Select(BuildSFAPostcodeDisadvantage) ?? new List<IDataEntity>())
                         .Union(
                             appsEarningsHistory?
-                            .Select(BuildApprenticeshipsEarningsHistory))
+                            .Select(BuildApprenticeshipsEarningsHistory) ?? new List<IDataEntity>())
                         .ToList()
             };
         }
@@ -134,19 +134,19 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
                             .Union(
                                    learningDelivery?
                                     .AppFinRecords?
-                                    .Select(BuildApprenticeshipFinancialRecord))
+                                    .Select(BuildApprenticeshipFinancialRecord) ?? new List<IDataEntity>())
                             .Union(
                                    larsStandardAppenticeshipFunding?
-                                    .Select(BuildLARSStandardApprenticeshipFunding))
+                                    .Select(BuildLARSStandardApprenticeshipFunding) ?? new List<IDataEntity>())
                             .Union(
                                    larsFrameworkAppenticeshipFunding?
-                                    .Select(BuildLARSFrameworkApprenticeshipFunding))
+                                    .Select(BuildLARSFrameworkApprenticeshipFunding) ?? new List<IDataEntity>())
                             .Union(
                                    larsFrameworkCommonComponent?
-                                    .Select(BuildLARSFrameworkCommonComponent))
+                                    .Select(BuildLARSFrameworkCommonComponent) ?? new List<IDataEntity>())
                             .Union(
                                    larsStandardCommonComponent?
-                                    .Select(BuildLARSStandardCommonComponent))
+                                    .Select(BuildLARSStandardCommonComponent) ?? new List<IDataEntity>())
                             .Union(
                                    larsLearningDelivery?
                                     .LARSFunding?
@@ -201,7 +201,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
 
         public IDataEntity BuildApprenticeshipsEarningsHistory(AECEarningsHistory aecEarningsHistory)
         {
-            return new DataEntity(Attributes.EntitySFA_PostcodeDisadvantage)
+            return new DataEntity(Attributes.EntityHistoricEarningInput)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
@@ -210,7 +210,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
                     { Attributes.HistoricCollectionYearInput, new AttributeData(aecEarningsHistory.CollectionYear) },
                     { Attributes.HistoricDaysInYearInput, new AttributeData(aecEarningsHistory.DaysInYear) },
                     { Attributes.HistoricEffectiveTNPStartDateInput, new AttributeData(aecEarningsHistory.HistoricEffectiveTNPStartDateInput) },
-                    { Attributes.HistoricEmpIdStartWithinYearInput, new AttributeData(aecEarningsHistory.HistoricEmpIdEndWithinYear) },
+                    { Attributes.HistoricEmpIdStartWithinYearInput, new AttributeData(aecEarningsHistory.HistoricEmpIdStartWithinYear) },
                     { Attributes.HistoricEmpIdEndWithinYearInput, new AttributeData(aecEarningsHistory.HistoricEmpIdEndWithinYear) },
                     { Attributes.HistoricFworkCodeInput, new AttributeData(aecEarningsHistory.FworkCode) },
                     { Attributes.HistoricLearnDelProgEarliestACT2DateInput, new AttributeData(aecEarningsHistory.HistoricLearnDelProgEarliestACT2DateInput) },
@@ -352,7 +352,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
                 DateEmpStatApp = les.DateEmpStatApp,
                 EmpId = les.EmpIdNullable,
                 EMPStat = les.EmpStat,
-                SEM = les.EmploymentStatusMonitorings.Where(e => e.ESMType == Attributes.EmpStatMon_SEM).Select(e => e.ESMCode).FirstOrDefault()
+                SEM = les.EmploymentStatusMonitorings?.Where(e => e.ESMType == Attributes.SEM).Select(e => (int?)e.ESMCode).FirstOrDefault()
             });
         }
 
