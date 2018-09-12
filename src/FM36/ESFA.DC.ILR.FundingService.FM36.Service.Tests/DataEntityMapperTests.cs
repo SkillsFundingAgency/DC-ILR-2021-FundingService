@@ -5,16 +5,12 @@ using ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
-using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
-using ESFA.DC.ILR.FundingService.Data.External.Organisation.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Data.File.Interface;
-using ESFA.DC.ILR.FundingService.Data.File.Model;
 using ESFA.DC.ILR.FundingService.FM36.Service.Input;
 using ESFA.DC.ILR.FundingService.FM36.Service.Model;
 using ESFA.DC.ILR.Tests.Model;
-using ESFA.DC.OPA.Model.Interface;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -160,24 +156,9 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 }
             };
 
-            //var larsFrameworkCommonComponent = new List<LARSFrameworkCommonComponent>
-            //{
-            //    new LARSFrameworkCommonComponent
-            //    {
-            //        LearnAimRef = "LearnAimRef",
-            //        CommonComponent = 20,
-            //    }
-            //};
-
             var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
-            //var postcodeReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
 
             larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
-            //larsReferenceDataServiceMock.Setup(l => l.LARSFrameworkCommonComponent(
-            //    learningDelivery.LearnAimRef,
-            //    learningDelivery.FworkCodeNullable,
-            //    learningDelivery.ProgTypeNullable,
-            //    learningDelivery.PwayCodeNullable)).Returns(larsFrameworkCommonComponent);
 
             var dataEntity = NewService(larsReferenceDataServiceMock.Object).BuildLearningDeliveryDataEntity(learningDelivery);
 
