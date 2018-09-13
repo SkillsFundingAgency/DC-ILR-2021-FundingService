@@ -82,6 +82,11 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
 
             // Get the ilr object from file
             var ilrMessage = await _ilrFileProviderService.Provide(jobContextMessage.KeyValuePairs[JobContextMessageKey.Filename].ToString());
+            if (ilrMessage == null)
+            {
+                throw new ArgumentNullException(nameof(jobContextMessage), "Failed to get ILR file");
+            }
+
             var fundingServiceDto = (FundingServiceDto)_fundingServiceDto;
             fundingServiceDto.Message = ilrMessage;
 

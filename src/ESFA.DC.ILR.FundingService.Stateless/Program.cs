@@ -76,7 +76,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless
                 }).As<IRedisKeyValuePersistenceServiceConfig>().SingleInstance();
 
             builder.RegisterType<RedisKeyValuePersistenceService>().As<IKeyValuePersistenceService>().InstancePerLifetimeScope();
-            builder.RegisterType<AzureStorageKeyValuePersistenceService>().Keyed<IKeyValuePersistenceService>(IOPersistenceKeys.Blob).InstancePerLifetimeScope();
+            builder.RegisterType<AzureStorageKeyValuePersistenceService>().Keyed<IKeyValuePersistenceService>(IOPersistenceKeys.Blob).As<IStreamableKeyValuePersistenceService>().InstancePerLifetimeScope();
 
             // register reference data configs
             var referenceDataConfig = configHelper.GetSectionValues<ReferenceDataConfig>("ReferenceDataSection");
@@ -164,9 +164,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless
             builder.RegisterType<JobStatus.JobStatus>().As<IJobStatus>();
 
             // register ilrfile provider service
-            builder.Register(c => new IlrFileProviderService(
-                c.ResolveKeyed<IKeyValuePersistenceService>(IOPersistenceKeys.Blob),
-                c.Resolve<IXmlSerializationService>())).As<IIlrFileProviderService>().InstancePerLifetimeScope();
+            builder.RegisterType<IlrFileProviderService>().As<IIlrFileProviderService>().InstancePerLifetimeScope();
 
             builder.RegisterType<JobContextMessageMapper>().As<IMapper<JobContextMessage, JobContextMessage>>().InstancePerLifetimeScope();
 
