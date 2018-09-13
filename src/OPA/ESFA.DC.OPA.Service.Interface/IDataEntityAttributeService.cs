@@ -11,6 +11,8 @@ namespace ESFA.DC.OPA.Service.Interface
 
         int? GetIntAttributeValue(IDataEntity dataEntity, string attributeName);
 
+        long? GetLongAttributeValue(IDataEntity dataEntity, string attributeName);
+
         decimal? GetDecimalAttributeValue(IDataEntity dataEntity, string attributeName);
 
         bool? GetBoolAttributeValue(IDataEntity dataEntity, string attributeName);

@@ -12,6 +12,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Model
 
         public int EMPStat { get; set; }
 
-        public int SEM { get; set; }
+        public int? SEM { get; set; }
     }
 }
