@@ -16,11 +16,11 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         [Fact]
         public void AppEarningsHistory()
         {
-            var appsHistoryMock = new Mock<IAppsEarningsHistory>();
+            var appsHistoryMock = new Mock<IApprenticeshipsEarningsHistory>();
 
             var appsHistory = NewService(appsHistoryMock.Object).AecLatestInYearHistory;
 
-            appsHistoryMock.VerifyGet(a => a.AppsEarningsHistory);
+            appsHistoryMock.VerifyGet(a => a.AppsEarningsHistories);
         }
 
         [Fact]
@@ -166,7 +166,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             aecLatestInYearHistory.ULN.Should().Be(aec_LatestInYearHistory.ULN);
         }
 
-        private AppsEarningsHistoryDataRetrievalService NewService(IAppsEarningsHistory appsHistory = null)
+        private AppsEarningsHistoryDataRetrievalService NewService(IApprenticeshipsEarningsHistory appsHistory = null)
         {
             return new AppsEarningsHistoryDataRetrievalService(appsHistory);
         }

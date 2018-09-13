@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.8.1" />
+    <PackageReference Include="ESFA.DC.Data.AppsEarningsHistory.Model" Version="0.1.1-beta0001" />
     <PackageReference Include="ESFA.DC.Data.LargeEmployer.Model" Version="0.1.2-beta0001" />
     <PackageReference Include="ESFA.DC.Data.LARS.Model" Version="0.1.4-beta0001" />
     <PackageReference Include="ESFA.DC.Data.Organisations.Model" Version="0.1.5-beta0001" />

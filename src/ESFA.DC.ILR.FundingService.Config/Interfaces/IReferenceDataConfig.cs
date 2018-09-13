@@ -9,5 +9,7 @@
         string OrganisationConnectionString { get; }
 
         string LargeEmployersConnectionString { get; }
+
+        string AppsEarningsHistoryConnectionString { get; }
     }
 }

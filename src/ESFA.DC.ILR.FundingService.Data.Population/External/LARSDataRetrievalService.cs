@@ -257,10 +257,12 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public IEnumerable<LARSFrameworkCommonComponent> LARSFrameworkCommonComponentForLearnAimRefs(IEnumerable<LARSFrameworkKey> larsFrameworkKeys)
         {
+            var learnAimRefsFromKey = larsFrameworkKeys.Select(lfk => lfk.LearnAimRef).Distinct();
+
             var larsFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>();
 
             var larsFrameworksCmnComponents = LARSLearningDeliveries
-                    .Where(ld => larsFrameworkKeys.Select(lfk => lfk.LearnAimRef).Contains(ld.LearnAimRef))
+                    .Where(ld => learnAimRefsFromKey.Contains(ld.LearnAimRef))
                     .Join(
                     LARSFrameworkCommonComponents,
                     ld => ld.FrameworkCommonComponent,
@@ -280,14 +282,19 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
             foreach (var larsFrameworkKey in larsFrameworkKeys)
             {
-                larsFrameworkCommonComponents.Add(
-                    larsFrameworksCmnComponents
+                var larsFramework =
+                larsFrameworksCmnComponents?
                     .Where(
                         fc => fc.LearnAimRef == larsFrameworkKey.LearnAimRef
                         && fc.FworkCode == larsFrameworkKey.FworkCode
                         && fc.ProgType == larsFrameworkKey.ProgType
                         && fc.PwayCode == larsFrameworkKey.PwayCode)
-                        .Select(fcc => fcc).SingleOrDefault());
+                        .Select(fcc => fcc).SingleOrDefault();
+
+                if (larsFramework != null)
+                {
+                    larsFrameworkCommonComponents.Add(larsFramework);
+                }
             }
 
             return larsFrameworkCommonComponents;
@@ -299,14 +306,21 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
             foreach (var apprenticeshipFundingKey in apprenticeshipFundingKeys)
             {
-                apprenticeshipFundings.Add(
-                    LARSApprenticeshipFundings
+                var appFunding =
+                    LARSApprenticeshipFundings?
                     .Where(
                         a => a.ApprenticeshipType == "STD"
                         && a.ApprenticeshipCode == apprenticeshipFundingKey.Code
                         && a.ProgType == apprenticeshipFundingKey.ProgType
                         && a.PwayCode == apprenticeshipFundingKey.PwayCode)
-                    .Select(u => LARSStandardApprenticeshipFundingFromEntity(u)).SingleOrDefault());
+                    .Select(l => l) as IEnumerable<LARS_ApprenticeshipFunding>;
+
+                if (appFunding != null)
+                {
+                    apprenticeshipFundings.AddRange(
+                        appFunding
+                        .Select(u => LARSStandardApprenticeshipFundingFromEntity(u)));
+                }
             }
 
             return apprenticeshipFundings;
@@ -344,14 +358,21 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
             foreach (var apprenticeshipFundingKey in apprenticeshipFundingKeys)
             {
-                apprenticeshipFundings.Add(
+                var appFunding =
                     LARSApprenticeshipFundings
                     .Where(
                         a => a.ApprenticeshipType == "FWK"
                         && a.ApprenticeshipCode == apprenticeshipFundingKey.Code
                         && a.ProgType == apprenticeshipFundingKey.ProgType
                         && a.PwayCode == apprenticeshipFundingKey.PwayCode)
-                    .Select(u => LARSFrameworkApprenticeshipFundingFromEntity(u)).SingleOrDefault());
+                    .Select(l => l) as IEnumerable<LARS_ApprenticeshipFunding>;
+
+                if (appFunding != null)
+                {
+                    apprenticeshipFundings.AddRange(
+                        appFunding
+                        .Select(u => LARSFrameworkApprenticeshipFundingFromEntity(u)));
+                }
             }
 
             return apprenticeshipFundings;

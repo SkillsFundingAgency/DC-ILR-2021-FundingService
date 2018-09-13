@@ -16,6 +16,7 @@
     <Parameter Name="PostcodesConnectionString" DefaultValue="metadata=res://*/Postcodes.csdl|res://*/Postcodes.ssdl|res://*/Postcodes.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(local);initial catalog=ESFA.DC.Data.Postcodes.Database;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
     <Parameter Name="OrganisationConnectionString" DefaultValue="__OrganisationConnectionString__" />
     <Parameter Name="LargeEmployersConnectionString" DefaultValue="__LargeEmployersConnectionString__" />
+    <Parameter Name="AppsEarningsHistoryConnectionString" DefaultValue="__AppsEarningsHistoryConnectionString__" />
     <Parameter Name="RedisCacheConnectionString" DefaultValue="" />
     <Parameter Name="AzureBlobConnectionString" DefaultValue="UseDevelopmentStorage=true" />
     <Parameter Name="AzureBlobContainerName" DefaultValue="ilr-files" />
@@ -99,6 +100,7 @@
             <Parameter Name="PostcodesConnectionString" Value="[PostcodesConnectionString]" />
             <Parameter Name="OrganisationConnectionString" Value="[OrganisationConnectionString]" />
             <Parameter Name="LargeEmployersConnectionString" Value="[LargeEmployersConnectionString]" />
+            <Parameter Name="AppsEarningsHistoryConnectionString" Value="[AppsEarningsHistoryConnectionString]" />
           </Section>
           <Section Name="AzureStorageSection">
             <Parameter Name="AzureBlobConnectionString" Value="[AzureBlobConnectionString]" />

@@ -20,6 +20,7 @@ using ESFA.DC.ILR.FundingService.Data.Context;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Data.Internal;
 using ESFA.DC.ILR.FundingService.Data.Population;
 using ESFA.DC.ILR.FundingService.Data.Population.Context;
 using ESFA.DC.ILR.FundingService.Data.Population.External;
@@ -79,6 +80,12 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
                 return new LargeEmployer(referenceDataConfig.LargeEmployersConnectionString);
             }).As<ILargeEmployer>().InstancePerLifetimeScope();
 
+            builder.Register(c =>
+            {
+                var referenceDataConfig = c.Resolve<IReferenceDataConfig>();
+                return new ApprenticeshipsEarningsHistory(referenceDataConfig.AppsEarningsHistoryConnectionString);
+            }).As<IApprenticeshipsEarningsHistory>().InstancePerLifetimeScope();
+
             builder.RegisterType<PopulationService>().As<IPopulationService>().InstancePerLifetimeScope();
             builder.RegisterType<FileDataCachePopulationService>().As<IFileDataCachePopulationService>().InstancePerLifetimeScope();
             builder.RegisterType<InternalDataCachePopulationService>().As<IInternalDataCachePopulationService>().InstancePerLifetimeScope();
@@ -87,6 +94,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             builder.RegisterType<FundingContext>().As<IFundingContext>().InstancePerLifetimeScope();
             builder.RegisterType<FundingContextPopulationService>().As<IFundingContextPopulationService>().InstancePerLifetimeScope();
             builder.RegisterType<ExternalDataCache>().As<IExternalDataCache>().InstancePerLifetimeScope();
+            builder.RegisterType<InternalDataCache>().As<IInternalDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<FileDataCache>().As<IFileDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<ValidLearnersDataRetrievalService>().As<IValidLearnersDataRetrievalService>().InstancePerLifetimeScope();
             builder.RegisterType<FileDataRetrievalService>().As<IFileDataRetrievalService>().InstancePerLifetimeScope();
@@ -95,7 +103,6 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             builder.RegisterType<LARSDataRetrievalService>().As<ILARSDataRetrievalService>().InstancePerLifetimeScope();
             builder.RegisterType<OrganisationDataRetrievalService>().As<IOrganisationDataRetrievalService>().InstancePerLifetimeScope();
             builder.RegisterType<AppsEarningsHistoryDataRetrievalService>().As<IAppsEarningsHistoryDataRetrievalService>().InstancePerLifetimeScope();
-            builder.RegisterType<AppsEarningsHistory>().As<IAppsEarningsHistory>().InstancePerLifetimeScope();
 
             builder.RegisterType<JsonSerializationService>().As<ISerializationService>();
             builder.RegisterType<JsonSerializationService>().As<IJsonSerializationService>();

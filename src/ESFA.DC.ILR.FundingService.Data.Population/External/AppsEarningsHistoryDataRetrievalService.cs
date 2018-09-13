@@ -10,18 +10,18 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 {
     public class AppsEarningsHistoryDataRetrievalService : IAppsEarningsHistoryDataRetrievalService
     {
-        private readonly IAppsEarningsHistory _appsEarningsHistory;
+        private readonly IApprenticeshipsEarningsHistory _appsEarningsHistory;
 
         public AppsEarningsHistoryDataRetrievalService()
         {
         }
 
-        public AppsEarningsHistoryDataRetrievalService(IAppsEarningsHistory appsEarningsHistory)
+        public AppsEarningsHistoryDataRetrievalService(IApprenticeshipsEarningsHistory appsEarningsHistory)
         {
             _appsEarningsHistory = appsEarningsHistory;
         }
 
-        public virtual IQueryable<AppsEarningsHistory> AecLatestInYearHistory => _appsEarningsHistory.AppsEarningsHistory;
+        public virtual IQueryable<AppsEarningsHistory> AecLatestInYearHistory => _appsEarningsHistory.AppsEarningsHistories;
 
         public IDictionary<long, IEnumerable<AECEarningsHistory>> AppsEarningsHistoryForLearners(int providerUKPRN, IEnumerable<LearnRefNumberULNKey> learners)
         {
