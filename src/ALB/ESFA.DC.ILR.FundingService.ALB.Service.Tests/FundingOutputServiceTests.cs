@@ -91,7 +91,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
 
             var learningDelivery = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).LearningDeliveryFromDataEntity(dataEntity);
 
-            learningDelivery.AimSeqNumber = aimSeqNumber;
+            learningDelivery.AimSeqNumber.Should().Be(aimSeqNumber);
         }
 
         [Fact]

@@ -67,11 +67,11 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 PriceEpisodeAttributes = dataEntity
                         .Children
                         .Where(e => e.EntityName == Attributes.EntityApprenticeshipPriceEpisode)
-                        .Select(ApprenticeshipPriceEpisodeFromDataEntity).ToArray(),
+                        .Select(PriceEpisodeFromDataEntity).ToArray(),
                 HistoricEarningOutputAttributeDatas = dataEntity
                         .Children
                         .Where(e => e.EntityName == Attributes.EntityHistoricEarningOutput)
-                        .Select(HistoricEarningOutputFromDataEntity).ToArray()
+                        .Select(HistoricEarningOutputDataFromDataEntity).ToArray()
             };
         }
 
@@ -232,7 +232,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
             return learningDeliveryPeriodisedAttributeList.ToArray();
         }
 
-        public PriceEpisodeAttribute ApprenticeshipPriceEpisodeFromDataEntity(IDataEntity dataEntity)
+        public PriceEpisodeAttribute PriceEpisodeFromDataEntity(IDataEntity dataEntity)
         {
             return new PriceEpisodeAttribute
             {
@@ -314,7 +314,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 Attributes.PriceEpisodeBalancePayment,
                 Attributes.PriceEpisodeBalanceValue,
                 Attributes.PriceEpisodeCompletionPayment,
-                Attributes.PriceEpisodeFirstDisadvantagePayment,
+                Attributes.PriceEpisodeCompletionPayment,
                 Attributes.PriceEpisodeFirstEmp1618Pay,
                 Attributes.PriceEpisodeFirstProv1618Pay,
                 Attributes.PriceEpisodeInstalmentsThisPeriod,
@@ -385,7 +385,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
             return priceEpisodePeriodisedAttributeList.ToArray();
         }
 
-        public HistoricEarningOutputAttributeData HistoricEarningOutputFromDataEntity(IDataEntity dataEntity)
+        public HistoricEarningOutputAttributeData HistoricEarningOutputDataFromDataEntity(IDataEntity dataEntity)
         {
             return new HistoricEarningOutputAttributeData
             {

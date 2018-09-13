@@ -59,7 +59,7 @@
         public const string AgeAtProgStart = "AgeAtProgStart";
         public const string AimSeqNumber = "AimSeqNumber";
         public const string AimType = "AimType";
-        public const string AppAdjLearnStartDate = "AppAdjLearnStartDate ";
+        public const string AppAdjLearnStartDate = "AppAdjLearnStartDate";
         public const string AppAdjLearnStartDateMatchPathway = "AppAdjLearnStartDateMatchPathway";
         public const string ApplicCompDate = "ApplicCompDate";
         public const string CombinedAdjProp = "CombinedAdjProp";
