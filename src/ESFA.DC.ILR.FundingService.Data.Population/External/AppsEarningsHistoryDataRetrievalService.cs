@@ -29,22 +29,22 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
             foreach (var learner in learners)
             {
-                var l = AecLatestInYearHistory?
+                var aecHistory = AecLatestInYearHistory?
                     .Where(
                         a => a.UKPRN == providerUKPRN
                         && a.LatestInYear == true
                         && a.ULN < 9999999999
                         && a.LearnRefNumber == learner.LearnRefNumber
                         && a.ULN == learner.ULN)
-                        .Select(u => u).ToList();
+                        .Select(u => u).ToList() as List<AppsEarningsHistory>;
 
-                if (l.Count > 0)
+                if (aecHistory.Count > 0)
                 {
                     dictionary.Add(
                     learner.ULN,
-                    l
+                    aecHistory
                     .GroupBy(u => u.ULN)
-                    .Select(u => u.Select(AECLatestInYearEarningsFromEntity) as IEnumerable<AECEarningsHistory>)
+                    .Select(u => u.Select(AECLatestInYearEarningsFromEntity).ToList() as List<AECEarningsHistory>)
                     .SingleOrDefault());
                 }
             }

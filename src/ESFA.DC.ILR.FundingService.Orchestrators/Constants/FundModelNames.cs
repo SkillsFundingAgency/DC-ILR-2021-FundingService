@@ -8,6 +8,8 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Constants
     {
         public const string FM35 = "FM35";
 
+        public const string FM36 = "FM36";
+
         public const string FM25 = "FM25";
 
         public const string ALB = "ALB";
