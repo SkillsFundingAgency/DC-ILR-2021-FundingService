@@ -1,9 +1,12 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Fabric;
 using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.ServiceFabric.Actors.Runtime;
+using Autofac;
+using Autofac.Integration.ServiceFabric;
+using ESFA.DC.ILR.FundingService.Config;
+using ESFA.DC.ILR.FundingService.Config.Interfaces;
+using ESFA.DC.ILR.FundingService.FM36Actor.Modules;
+using ESFA.DC.ILR.FundingService.Modules;
+using ESFA.DC.ServiceFabric.Helpers;
 
 namespace ESFA.DC.ILR.FundingService.FM36Actor
 {
@@ -16,21 +19,40 @@ namespace ESFA.DC.ILR.FundingService.FM36Actor
         {
             try
             {
-                // This line registers an Actor Service to host your actor class with the Service Fabric runtime.
-                // The contents of your ServiceManifest.xml and ApplicationManifest.xml files
-                // are automatically populated when you build this project.
-                // For more information, see https://aka.ms/servicefabricactorsplatform
+                var builder = BuildContainer();
 
-                ActorRuntime.RegisterActorAsync<FM36Actor>(
-                   (context, actorType) => new ActorService(context, actorType)).GetAwaiter().GetResult();
+                builder.RegisterServiceFabricSupport();
+                builder.RegisterActor<FM36Actor>();
 
-                Thread.Sleep(Timeout.Infinite);
+                using (var container = builder.Build())
+                {
+                    // Not sure why this is being resolved here, to review
+                    //  var ss = container.Resolve<IFundingService<ILearner, FM35FundingOutputs>>();
+                    Thread.Sleep(Timeout.Infinite);
+                }
             }
             catch (Exception e)
             {
                 ActorEventSource.Current.ActorHostInitializationFailed(e.ToString());
                 throw;
             }
+        }
+
+        private static ContainerBuilder BuildContainer()
+        {
+            var containerBuilder = new ContainerBuilder();
+            var configHelper = new ConfigurationHelper();
+
+            // register actor ALB funding module
+            containerBuilder.RegisterModule<ActorFundingFM36Module>();
+
+            var loggerConfig = configHelper.GetSectionValues<LoggerConfig>("LoggerSection");
+
+            containerBuilder.RegisterInstance(loggerConfig).As<ILoggerConfig>().SingleInstance();
+            containerBuilder.RegisterModule<LoggerModule>();
+
+            // register serialization
+            return containerBuilder;
         }
     }
 }

@@ -23,6 +23,8 @@ using ESFA.DC.OPA.Service.Interface;
 using ESFA.DC.OPA.Service.Interface.Builders;
 using ESFA.DC.OPA.Service.Interface.Rulebase;
 using ESFA.DC.OPA.Service.Rulebase;
+using ESFA.DC.Serialization.Interfaces;
+using ESFA.DC.Serialization.Json;
 
 namespace ESFA.DC.ILR.FundingService.FM36Actor.Modules
 {
@@ -44,6 +46,7 @@ namespace ESFA.DC.ILR.FundingService.FM36Actor.Modules
             builder.RegisterType<FileDataService>().As<IFileDataService>().InstancePerLifetimeScope();
             builder.RegisterType<FundingOutputService>().As<IOutputService<FM36FundingOutputs>>().InstancePerLifetimeScope();
             builder.RegisterType<FundingService<ILearner, FM36FundingOutputs>>().As<IFundingService<ILearner, FM36FundingOutputs>>().InstancePerLifetimeScope();
+            builder.RegisterType<JsonSerializationService>().As<ISerializationService>().InstancePerLifetimeScope();
             builder.RegisterType<DataEntityAttributeService>().As<IDataEntityAttributeService>();
         }
     }

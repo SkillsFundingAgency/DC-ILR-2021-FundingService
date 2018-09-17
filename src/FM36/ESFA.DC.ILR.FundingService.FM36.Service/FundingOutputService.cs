@@ -150,14 +150,13 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
             {
                 Attributes.DisadvFirstPayment,
                 Attributes.DisadvSecondPayment,
-                Attributes.FundLineType,
                 Attributes.InstPerPeriod,
                 Attributes.LDApplic1618FrameworkUpliftBalancingPayment,
                 Attributes.LDApplic1618FrameworkUpliftCompletionPayment,
                 Attributes.LDApplic1618FrameworkUpliftOnProgPayment,
-                Attributes.LearnDelContType,
                 Attributes.LearnDelFirstEmp1618Pay,
                 Attributes.LearnDelFirstProv1618Pay,
+                Attributes.LearnDelLearnAddPayment,
                 Attributes.LearnDelLevyNonPayInd,
                 Attributes.LearnDelSecondEmp1618Pay,
                 Attributes.LearnDelSecondProv1618Pay,
@@ -174,8 +173,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 Attributes.ProgrammeAimOnProgPayment,
                 Attributes.ProgrammeAimProgFundIndMaxEmpCont,
                 Attributes.ProgrammeAimProgFundIndMinCoInvest,
-                Attributes.ProgrammeAimTotProgFund,
-                Attributes.LearnDelLearnAddPayment,
+                Attributes.ProgrammeAimTotProgFund
             };
 
             List<LearningDeliveryPeriodisedAttribute> learningDeliveryPeriodisedAttributeList = new List<LearningDeliveryPeriodisedAttribute>();
@@ -314,10 +312,11 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 Attributes.PriceEpisodeBalancePayment,
                 Attributes.PriceEpisodeBalanceValue,
                 Attributes.PriceEpisodeCompletionPayment,
-                Attributes.PriceEpisodeCompletionPayment,
+                Attributes.PriceEpisodeFirstDisadvantagePayment,
                 Attributes.PriceEpisodeFirstEmp1618Pay,
                 Attributes.PriceEpisodeFirstProv1618Pay,
                 Attributes.PriceEpisodeInstalmentsThisPeriod,
+                Attributes.PriceEpisodeLearnerAdditionalPayment,
                 Attributes.PriceEpisodeLevyNonPayInd,
                 Attributes.PriceEpisodeLSFCash,
                 Attributes.PriceEpisodeOnProgPayment,
@@ -327,8 +326,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 Attributes.PriceEpisodeSecondEmp1618Pay,
                 Attributes.PriceEpisodeSecondProv1618Pay,
                 Attributes.PriceEpisodeSFAContribPct,
-                Attributes.PriceEpisodeTotProgFunding,
-                Attributes.PriceEpisodeLearnerAdditionalPayment
+                Attributes.PriceEpisodeTotProgFunding
             };
 
             List<PriceEpisodePeriodisedAttribute> priceEpisodePeriodisedAttributeList = new List<PriceEpisodePeriodisedAttribute>();

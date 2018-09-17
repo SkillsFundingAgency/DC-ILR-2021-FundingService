@@ -5,6 +5,7 @@ using Autofac;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Data.Internal;
 using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.FM36Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
@@ -34,12 +35,14 @@ namespace ESFA.DC.ILR.FundingService.FM36Actor
             var jsonSerializationService = LifetimeScope.Resolve<ISerializationService>();
 
             var referenceDataCache = jsonSerializationService.Deserialize<ExternalDataCache>(fm36ActorModel.ExternalDataCache);
+            var internalDataCache = jsonSerializationService.Deserialize<InternalDataCache>(fm36ActorModel.InternalDataCache);
 
             var fileDataCache = jsonSerializationService.Deserialize<FileDataCache>(fm36ActorModel.FileDataCache);
 
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
                 c.RegisterInstance(referenceDataCache).As<IExternalDataCache>();
+                c.RegisterInstance(internalDataCache).As<IInternalDataCache>();
                 c.RegisterInstance(fileDataCache).As<IFileDataCache>();
             }))
             {

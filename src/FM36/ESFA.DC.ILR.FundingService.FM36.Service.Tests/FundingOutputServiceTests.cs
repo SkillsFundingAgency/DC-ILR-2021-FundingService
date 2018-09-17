@@ -845,14 +845,13 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             {
                 TestLearningDeliveryPeriodisedAttributesData("DisadvFirstPayment", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("DisadvSecondPayment", 1.0m),
-                TestLearningDeliveryPeriodisedAttributesData("FundLineType", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("InstPerPeriod", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("LDApplic1618FrameworkUpliftBalancingPayment", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("LDApplic1618FrameworkUpliftCompletionPayment", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("LDApplic1618FrameworkUpliftOnProgPayment", 1.0m),
-                TestLearningDeliveryPeriodisedAttributesData("LearnDelContType", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("LearnDelFirstEmp1618Pay", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("LearnDelFirstProv1618Pay", 1.0m),
+                TestLearningDeliveryPeriodisedAttributesData("LearnDelLearnAddPayment", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("LearnDelLevyNonPayInd", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("LearnDelSecondEmp1618Pay", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("LearnDelSecondProv1618Pay", 1.0m),
@@ -869,8 +868,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 TestLearningDeliveryPeriodisedAttributesData("ProgrammeAimOnProgPayment", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("ProgrammeAimProgFundIndMaxEmpCont", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("ProgrammeAimProgFundIndMinCoInvest", 1.0m),
-                TestLearningDeliveryPeriodisedAttributesData("ProgrammeAimTotProgFund", 1.0m),
-                TestLearningDeliveryPeriodisedAttributesData("LearnDelLearnAddPayment", 1.0m)
+                TestLearningDeliveryPeriodisedAttributesData("ProgrammeAimTotProgFund", 1.0m)
             };
         }
 
@@ -980,10 +978,11 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 TestPriceEpisodePeriodisedAttributesData("PriceEpisodeBalancePayment", 1.0m),
                 TestPriceEpisodePeriodisedAttributesData("PriceEpisodeBalanceValue", 1.0m),
                 TestPriceEpisodePeriodisedAttributesData("PriceEpisodeCompletionPayment", 1.0m),
-                TestPriceEpisodePeriodisedAttributesData("PriceEpisodeCompletionPayment", 1.0m),
+                TestPriceEpisodePeriodisedAttributesData("PriceEpisodeFirstDisadvantagePayment", 1.0m),
                 TestPriceEpisodePeriodisedAttributesData("PriceEpisodeFirstEmp1618Pay", 1.0m),
                 TestPriceEpisodePeriodisedAttributesData("PriceEpisodeFirstProv1618Pay", 1.0m),
                 TestPriceEpisodePeriodisedAttributesData("PriceEpisodeInstalmentsThisPeriod", 1.0m),
+                TestPriceEpisodePeriodisedAttributesData("PriceEpisodeLearnerAdditionalPayment", 1.0m),
                 TestPriceEpisodePeriodisedAttributesData("PriceEpisodeLevyNonPayInd", 1.0m),
                 TestPriceEpisodePeriodisedAttributesData("PriceEpisodeLSFCash", 1.0m),
                 TestPriceEpisodePeriodisedAttributesData("PriceEpisodeOnProgPayment", 1.0m),
@@ -993,8 +992,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 TestPriceEpisodePeriodisedAttributesData("PriceEpisodeSecondEmp1618Pay", 1.0m),
                 TestPriceEpisodePeriodisedAttributesData("PriceEpisodeSecondProv1618Pay", 1.0m),
                 TestPriceEpisodePeriodisedAttributesData("PriceEpisodeSFAContribPct", 1.0m),
-                TestPriceEpisodePeriodisedAttributesData("PriceEpisodeTotProgFunding", 1.0m),
-                TestPriceEpisodePeriodisedAttributesData("PriceEpisodeLearnerAdditionalPayment", 1.0m)
+                TestPriceEpisodePeriodisedAttributesData("PriceEpisodeTotProgFunding", 1.0m)
             };
         }
 

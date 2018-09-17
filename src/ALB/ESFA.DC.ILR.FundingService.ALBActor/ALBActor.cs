@@ -37,11 +37,14 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
 
             var referenceDataCache = jsonSerializationService.Deserialize<ExternalDataCache>(albActorModel.ExternalDataCache);
 
+            var internalDataCache = jsonSerializationService.Deserialize<ExternalDataCache>(albActorModel.InternalDataCache);
+
             var fileDataCache = jsonSerializationService.Deserialize<FileDataCache>(albActorModel.FileDataCache);
 
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
                 c.RegisterInstance(referenceDataCache).As<IExternalDataCache>();
+                c.RegisterInstance(internalDataCache).As<IInternalDataCache>();
                 c.RegisterInstance(fileDataCache).As<IFileDataCache>();
             }))
             {
