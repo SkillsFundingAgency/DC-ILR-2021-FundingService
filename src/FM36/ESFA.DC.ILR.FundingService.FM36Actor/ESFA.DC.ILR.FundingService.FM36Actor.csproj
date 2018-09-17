@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
-    <ProjectGuid>{1AF8930F-8F7E-46FD-92C0-F31451512492}</ProjectGuid>
+    <ProjectGuid>{0326CE37-598C-4E12-99E1-4FA894A99080}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ESFA.DC.ILR.FundingService.ALBActor</RootNamespace>
-    <AssemblyName>ESFA.DC.ILR.FundingService.ALBActor</AssemblyName>
+    <RootNamespace>ESFA.DC.ILR.FundingService.FM36Actor</RootNamespace>
+    <AssemblyName>ESFA.DC.ILR.FundingService.FM36Actor</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -28,7 +28,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <PlatformTarget>x64</PlatformTarget>
-    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.ALBActor.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <DebugType>pdbonly</DebugType>
@@ -37,7 +37,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <PlatformTarget>x64</PlatformTarget>
-    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.ALBActor.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
     <IsServiceFabricServiceProject>true</IsServiceFabricServiceProject>
@@ -53,34 +53,13 @@
       <HintPath>..\..\packages\Autofac.ServiceFabric.2.0.0\lib\net452\Autofac.Integration.ServiceFabric.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Castle.Core.4.3.1\lib\net45\Castle.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.Data.AppsEarningsHistory.Model, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.Data.AppsEarningsHistory.Model.0.1.1-beta0001\lib\net461\ESFA.DC.Data.AppsEarningsHistory.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.Data.LARS.Model, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.Data.LARS.Model.0.1.4-beta0001\lib\net461\ESFA.DC.Data.LARS.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.Data.Postcodes.Model, Version=0.1.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.Data.Postcodes.Model.0.1.3-beta0001\lib\net461\ESFA.DC.Data.Postcodes.Model.dll</HintPath>
+      <HintPath>..\..\packages\Castle.Core.4.2.1\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.Model, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ESFA.DC.ILR.1819.Model.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.ILR.1819.Model.Interface.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.IO.Dictionary, Version=0.1.13.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.IO.Dictionary.0.1.13-beta0001\lib\netstandard2.0\ESFA.DC.IO.Dictionary.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.IO.Interfaces, Version=0.1.12.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.IO.Interfaces.0.1.12-beta0001\lib\netstandard2.0\ESFA.DC.IO.Interfaces.dll</HintPath>
+    <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ESFA.DC.ILR.1819.Model.Interface.0.1.3-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.Logging, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ESFA.DC.Logging.0.1.1-beta0001\lib\netstandard2.0\ESFA.DC.Logging.dll</HintPath>
@@ -165,7 +144,6 @@
       <HintPath>..\..\packages\Serilog.Sinks.PeriodicBatching.2.1.1\lib\net45\Serilog.Sinks.PeriodicBatching.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -187,55 +165,24 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Modules\ActorFundingALBModule.cs" />
+    <Compile Include="Modules\ActorFundingFM36Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ALBActor.cs" />
+    <Compile Include="FM36Actor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ActorEventSource.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ESFA.DC.ILR.FundingService.ALBActor.ruleset">
+    <None Include="PackageRoot\ServiceManifest.xml" />
+    <None Include="PackageRoot\Config\Settings.xml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="PackageRoot\ServiceManifest.xml" />
-    <None Include="PackageRoot\Config\Settings.xml" />
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
-    <EmbeddedResource Include="Resources\Loans Bursary 18_19.zip" />
+    <EmbeddedResource Include="Resources\Apprenticeships Earnings Calc 18_19.zip" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Providers\ESFA.DC.ILR.FundingService.Providers.csproj">
-      <Project>{E6CF1460-4EF0-4579-B022-DC2D3F383568}</Project>
-      <Name>ESFA.DC.ILR.FundingService.Providers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.ServiceFabric.Common\ESFA.DC.ILR.FundingService.ServiceFabric.Common.csproj">
-      <Project>{21ba0741-5975-4902-8d7a-567a50873cfa}</Project>
-      <Name>ESFA.DC.ILR.FundingService.ServiceFabric.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Service\ESFA.DC.ILR.FundingService.Service.csproj">
-      <Project>{652FF283-3708-4DCA-A45E-81297B8BA8A7}</Project>
-      <Name>ESFA.DC.ILR.FundingService.Service</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service.Interface\ESFA.DC.OPA.Service.Interface.csproj">
-      <Project>{BBA05279-51DA-427B-8708-CA7AF3A228F5}</Project>
-      <Name>ESFA.DC.OPA.Service.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service\ESFA.DC.OPA.Service.csproj">
-      <Project>{FC137929-D3E2-41C2-9C9A-ADC8B32D009A}</Project>
-      <Name>ESFA.DC.OPA.Service</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.csproj">
-      <Project>{7D044D8C-64BE-48A0-A2F2-1284FC7395F5}</Project>
-      <Name>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.Service\ESFA.DC.ILR.FundingService.ALB.Service.csproj">
-      <Project>{6D9E7986-7D34-4433-81D2-7C905B621FFD}</Project>
-      <Name>ESFA.DC.ILR.FundingService.ALB.Service</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALBActor.Interfaces\ESFA.DC.ILR.FundingService.ALBActor.Interfaces.csproj">
-      <Project>{14944B1C-9717-4CBB-B756-37502DDB5E0B}</Project>
-      <Name>ESFA.DC.ILR.FundingService.ALBActor.Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Config\ESFA.DC.ILR.FundingService.Config.csproj">
       <Project>{29C28BC1-23E2-4FAD-AB74-83CD2D33E7D8}</Project>
       <Name>ESFA.DC.ILR.FundingService.Config</Name>
@@ -249,17 +196,41 @@
       <Name>ESFA.DC.ILR.FundingService.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Modules\ESFA.DC.ILR.FundingService.Modules.csproj">
-      <Project>{79748ecd-e5d4-4d1e-be10-32588b2f625c}</Project>
+      <Project>{79748ECD-E5D4-4D1E-BE10-32588B2F625C}</Project>
       <Name>ESFA.DC.ILR.FundingService.Modules</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.ServiceFabric.Common\ESFA.DC.ILR.FundingService.ServiceFabric.Common.csproj">
+      <Project>{21BA0741-5975-4902-8D7A-567A50873CFA}</Project>
+      <Name>ESFA.DC.ILR.FundingService.ServiceFabric.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Service\ESFA.DC.ILR.FundingService.Service.csproj">
+      <Project>{652FF283-3708-4DCA-A45E-81297B8BA8A7}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Stateless.Models\ESFA.DC.ILR.FundingService.Stateless.Models.csproj">
-      <Project>{0faaaab8-443b-47bf-9e96-c3069e8789f9}</Project>
+      <Project>{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}</Project>
       <Name>ESFA.DC.ILR.FundingService.Stateless.Models</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
-    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service.Interface\ESFA.DC.OPA.Service.Interface.csproj">
+      <Project>{BBA05279-51DA-427B-8708-CA7AF3A228F5}</Project>
+      <Name>ESFA.DC.OPA.Service.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service\ESFA.DC.OPA.Service.csproj">
+      <Project>{FC137929-D3E2-41C2-9C9A-ADC8B32D009A}</Project>
+      <Name>ESFA.DC.OPA.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.csproj">
+      <Project>{E0EDD60C-BE4F-4B75-AD47-BCD8C86312A5}</Project>
+      <Name>ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM36.Service\ESFA.DC.ILR.FundingService.FM36.Service.csproj">
+      <Project>{CB2352D8-AB26-4E9C-9A90-E8292D434745}</Project>
+      <Name>ESFA.DC.ILR.FundingService.FM36.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM36Actor.Interfaces\ESFA.DC.ILR.FundingService.FM36Actor.Interfaces.csproj">
+      <Project>{C03A5548-0F4D-4DF0-B350-91B3C0762AFA}</Project>
+      <Name>ESFA.DC.ILR.FundingService.FM36Actor.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.ServiceFabric.Actors.3.2.162\build\net45\Microsoft.ServiceFabric.Actors.targets" Condition="Exists('..\..\packages\Microsoft.ServiceFabric.Actors.3.2.162\build\net45\Microsoft.ServiceFabric.Actors.targets')" />

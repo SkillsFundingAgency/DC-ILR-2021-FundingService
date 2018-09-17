@@ -16,6 +16,8 @@ using ESFA.DC.ILR.FundingService.FM25.Model.Output;
 using ESFA.DC.ILR.FundingService.FM25Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.FM35Actor.Interfaces;
+using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model;
+using ESFA.DC.ILR.FundingService.FM36Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Constants;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
@@ -37,10 +39,12 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         private readonly IPopulationService _populationService;
         private readonly IActorTask<IALBActor, ALBFundingOutputs> _albActorTask;
         private readonly IActorTask<IFM35Actor, FM35FundingOutputs> _fm35ActorTask;
+        private readonly IActorTask<IFM36Actor, FM36FundingOutputs> _fm36ActorTask;
         private readonly IActorTask<IFM25Actor, Global> _fm25ActorTask;
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
         private readonly IPagingService<ILearner> _learnerPagingService;
         private readonly IExternalDataCache _externalDataCache;
+        private readonly IInternalDataCache _internalDataCache;
         private readonly IFileDataCache _fileDataCache;
         private readonly ITopicAndTaskSectionConfig _topicAndTaskSectionConfig;
         private readonly ILogger _logger;
@@ -52,10 +56,12 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             IPopulationService populationService,
             IActorTask<IALBActor, ALBFundingOutputs> albActorTask,
             IActorTask<IFM35Actor, FM35FundingOutputs> fm35ActorTask,
+            IActorTask<IFM36Actor, FM36FundingOutputs> fm36ActorTask,
             IActorTask<IFM25Actor, Global> fm25ActorTask,
             IKeyValuePersistenceService keyValuePersistenceService,
             IPagingService<ILearner> learnerPagingService,
             IExternalDataCache externalDataCache,
+            IInternalDataCache internalDataCache,
             IFileDataCache fileDataCache,
             ITopicAndTaskSectionConfig topicAndTaskSectionConfig,
             ILogger logger)
@@ -66,9 +72,11 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             _populationService = populationService;
             _albActorTask = albActorTask;
             _fm35ActorTask = fm35ActorTask;
+            _fm36ActorTask = fm36ActorTask;
             _fm25ActorTask = fm25ActorTask;
             _keyValuePersistenceService = keyValuePersistenceService;
             _externalDataCache = externalDataCache;
+            _internalDataCache = internalDataCache;
             _fileDataCache = fileDataCache;
             _learnerPagingService = learnerPagingService;
             _topicAndTaskSectionConfig = topicAndTaskSectionConfig;
@@ -106,6 +114,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             var ukprn = Convert.ToInt32(jobContextMessage.KeyValuePairs[JobContextMessageKey.UkPrn]);
 
             var externalDataCache = _jsonSerializationService.Serialize(_externalDataCache);
+            var internalDataCache = _jsonSerializationService.Serialize(_internalDataCache);
             var fileDataCache = _jsonSerializationService.Serialize(_fileDataCache);
 
             var fundingActorDtos = _learnerPagingService
@@ -116,6 +125,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
                         JobId = jobContextMessage.JobId,
                         Ukprn = ukprn,
                         ExternalDataCache = externalDataCache,
+                        InternalDataCache = internalDataCache,
                         FileDataCache = fileDataCache,
                         ValidLearners = _jsonSerializationService.Serialize(p)
                     }).ToList();
@@ -127,6 +137,11 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformFM35Calculation))
             {
                 fundingTasks.Add(_fm35ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString()));
+            }
+
+            if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformFM36Calculation))
+            {
+                fundingTasks.Add(_fm36ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm36Output].ToString()));
             }
 
             if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformFM25Calculation))

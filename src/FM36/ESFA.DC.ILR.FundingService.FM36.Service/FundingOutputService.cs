@@ -150,14 +150,13 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
             {
                 Attributes.DisadvFirstPayment,
                 Attributes.DisadvSecondPayment,
-                Attributes.FundLineType,
                 Attributes.InstPerPeriod,
                 Attributes.LDApplic1618FrameworkUpliftBalancingPayment,
                 Attributes.LDApplic1618FrameworkUpliftCompletionPayment,
                 Attributes.LDApplic1618FrameworkUpliftOnProgPayment,
-                Attributes.LearnDelContType,
                 Attributes.LearnDelFirstEmp1618Pay,
                 Attributes.LearnDelFirstProv1618Pay,
+                Attributes.LearnDelLearnAddPayment,
                 Attributes.LearnDelLevyNonPayInd,
                 Attributes.LearnDelSecondEmp1618Pay,
                 Attributes.LearnDelSecondProv1618Pay,
@@ -174,8 +173,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 Attributes.ProgrammeAimOnProgPayment,
                 Attributes.ProgrammeAimProgFundIndMaxEmpCont,
                 Attributes.ProgrammeAimProgFundIndMinCoInvest,
-                Attributes.ProgrammeAimTotProgFund,
-                Attributes.LearnDelLearnAddPayment,
+                Attributes.ProgrammeAimTotProgFund
             };
 
             List<LearningDeliveryPeriodisedAttribute> learningDeliveryPeriodisedAttributeList = new List<LearningDeliveryPeriodisedAttribute>();
@@ -188,7 +186,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
 
                 if (!changePoints.Any())
                 {
-                    var value = decimal.Parse(attributeValue.Value.ToString());
+                    var value = ConvertValue(attributeValue.Value);
 
                     learningDeliveryPeriodisedAttributeList.Add(new LearningDeliveryPeriodisedAttribute
                     {
@@ -314,10 +312,11 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 Attributes.PriceEpisodeBalancePayment,
                 Attributes.PriceEpisodeBalanceValue,
                 Attributes.PriceEpisodeCompletionPayment,
-                Attributes.PriceEpisodeCompletionPayment,
+                Attributes.PriceEpisodeFirstDisadvantagePayment,
                 Attributes.PriceEpisodeFirstEmp1618Pay,
                 Attributes.PriceEpisodeFirstProv1618Pay,
                 Attributes.PriceEpisodeInstalmentsThisPeriod,
+                Attributes.PriceEpisodeLearnerAdditionalPayment,
                 Attributes.PriceEpisodeLevyNonPayInd,
                 Attributes.PriceEpisodeLSFCash,
                 Attributes.PriceEpisodeOnProgPayment,
@@ -327,8 +326,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 Attributes.PriceEpisodeSecondEmp1618Pay,
                 Attributes.PriceEpisodeSecondProv1618Pay,
                 Attributes.PriceEpisodeSFAContribPct,
-                Attributes.PriceEpisodeTotProgFunding,
-                Attributes.PriceEpisodeLearnerAdditionalPayment
+                Attributes.PriceEpisodeTotProgFunding
             };
 
             List<PriceEpisodePeriodisedAttribute> priceEpisodePeriodisedAttributeList = new List<PriceEpisodePeriodisedAttribute>();
@@ -341,7 +339,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
 
                 if (!changePoints.Any())
                 {
-                    var value = decimal.Parse(attributeValue.Value.ToString());
+                    var value = ConvertValue(attributeValue.Value);
 
                     priceEpisodePeriodisedAttributeList.Add(new PriceEpisodePeriodisedAttribute
                     {
@@ -417,9 +415,28 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
             };
         }
 
-        private decimal GetPeriodAttributeValue(IAttributeData attributes, DateTime periodDate)
+        private decimal? GetPeriodAttributeValue(IAttributeData attributes, DateTime periodDate)
         {
-            return decimal.Parse(attributes.Changepoints.Where(cp => cp.ChangePoint == periodDate).Select(v => v.Value).SingleOrDefault().ToString());
+            var value = ConvertValue(attributes.Changepoints.Where(cp => cp.ChangePoint == periodDate).Select(v => v.Value).SingleOrDefault());
+
+            return value != null ? decimal.Parse(value.ToString()) : value;
+        }
+
+        private decimal? ConvertValue(object value)
+        {
+            if (value != null && value.ToString() != "uncertain")
+            {
+                var stringValue = value.ToString();
+
+                if (stringValue == "true" || stringValue == "false")
+                {
+                    return stringValue == "true" ? 1.0m : 0.0m;
+                }
+
+                return decimal.Parse(stringValue);
+            }
+
+            return null;
         }
     }
 }

@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using Autofac;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
-using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Data.Internal;
+using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model;
+using ESFA.DC.ILR.FundingService.FM36Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
 using ESFA.DC.ILR.FundingService.Stateless.Models;
@@ -20,26 +19,25 @@ using ESFA.DC.Serialization.Interfaces;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
 
-namespace ESFA.DC.ILR.FundingService.ALBActor
+namespace ESFA.DC.ILR.FundingService.FM36Actor
 {
     [StatePersistence(StatePersistence.None)]
-    [ActorService(Name = ActorServiceNameConstants.ALB)]
-    public class ALBActor : AbstractFundingActor, IALBActor
+    [ActorService(Name = ActorServiceNameConstants.FM36)]
+    public class FM36Actor : AbstractFundingActor, IFM36Actor
     {
-        public ALBActor(ActorService actorService, ActorId actorId, ILifetimeScope lifetimeScope)
+        public FM36Actor(ActorService actorService, ActorId actorId, ILifetimeScope lifetimeScope)
             : base(actorService, actorId, lifetimeScope)
         {
         }
 
-        public Task<string> Process(FundingActorDto albActorModel)
+        public Task<string> Process(FundingActorDto fm36ActorModel)
         {
             var jsonSerializationService = LifetimeScope.Resolve<ISerializationService>();
 
-            var referenceDataCache = jsonSerializationService.Deserialize<ExternalDataCache>(albActorModel.ExternalDataCache);
+            var referenceDataCache = jsonSerializationService.Deserialize<ExternalDataCache>(fm36ActorModel.ExternalDataCache);
+            var internalDataCache = jsonSerializationService.Deserialize<InternalDataCache>(fm36ActorModel.InternalDataCache);
 
-            var internalDataCache = jsonSerializationService.Deserialize<ExternalDataCache>(albActorModel.InternalDataCache);
-
-            var fileDataCache = jsonSerializationService.Deserialize<FileDataCache>(albActorModel.FileDataCache);
+            var fileDataCache = jsonSerializationService.Deserialize<FileDataCache>(fm36ActorModel.FileDataCache);
 
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
@@ -49,22 +47,22 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
             }))
             {
                 var executionContext = (ExecutionContext)childLifetimeScope.Resolve<IExecutionContext>();
-                executionContext.JobId = albActorModel.JobId.ToString();
+                executionContext.JobId = fm36ActorModel.JobId.ToString();
                 executionContext.TaskKey = ActorId.ToString();
                 var logger = childLifetimeScope.Resolve<ILogger>();
 
                 try
                 {
-                    logger.LogDebug("ALB Actor started processing");
-                    var fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, ALBFundingOutputs>>();
+                    logger.LogDebug("FM36 Actor started processing");
+                    var fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, FM36FundingOutputs>>();
 
-                    var learners = jsonSerializationService.Deserialize<List<MessageLearner>>(albActorModel.ValidLearners);
+                    var learners = jsonSerializationService.Deserialize<List<MessageLearner>>(fm36ActorModel.ValidLearners);
 
-                    albActorModel = null;
+                    fm36ActorModel = null;
 
                     var results = fundingService.ProcessFunding(learners);
 
-                    logger.LogDebug("ALB Actor completed processing");
+                    logger.LogDebug("FM36 Actor completed processing");
                     return Task.FromResult(jsonSerializationService.Serialize(results));
                 }
                 catch (Exception ex)

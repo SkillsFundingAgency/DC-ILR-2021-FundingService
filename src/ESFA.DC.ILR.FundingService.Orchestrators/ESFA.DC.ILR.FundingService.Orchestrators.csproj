@@ -30,7 +30,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ESFA.DC.JobContext.Interface" Version="0.1.15-beta0001" />
+    <PackageReference Include="ESFA.DC.JobContext.Interface" Version="0.1.16-beta0001" />
     <PackageReference Include="ESFA.DC.Logging" Version="0.1.1-beta0001" />
     <PackageReference Include="ESFA.DC.Serialization.Json" Version="0.1.4-beta0001" />
     <PackageReference Include="Microsoft.ServiceFabric.Actors" Version="3.2.162" />
@@ -50,6 +50,8 @@
     <ProjectReference Include="..\FM25\ESFA.DC.ILR.FundingService.FM25Actor.Interfaces\ESFA.DC.ILR.FundingService.FM25Actor.Interfaces.csproj" />
     <ProjectReference Include="..\FM35\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.csproj" />
     <ProjectReference Include="..\FM35\ESFA.DC.ILR.FundingService.FM35Actor.Interfaces\ESFA.DC.ILR.FundingService.FM35Actor.Interfaces.csproj" />
+    <ProjectReference Include="..\FM36\ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.csproj" />
+    <ProjectReference Include="..\FM36\ESFA.DC.ILR.FundingService.FM36Actor.Interfaces\ESFA.DC.ILR.FundingService.FM36Actor.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>

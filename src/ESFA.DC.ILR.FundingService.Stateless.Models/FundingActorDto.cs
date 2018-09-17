@@ -10,6 +10,8 @@
 
         public string ExternalDataCache { get; set; }
 
+        public string InternalDataCache { get; set; }
+
         public string FileDataCache { get; set; }
     }
 }
