@@ -186,7 +186,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
 
                 if (!changePoints.Any())
                 {
-                    var value = decimal.Parse(attributeValue.Value.ToString());
+                    var value = ConvertValue(attributeValue.Value);
 
                     learningDeliveryPeriodisedAttributeList.Add(new LearningDeliveryPeriodisedAttribute
                     {
@@ -339,7 +339,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
 
                 if (!changePoints.Any())
                 {
-                    var value = decimal.Parse(attributeValue.Value.ToString());
+                    var value = ConvertValue(attributeValue.Value);
 
                     priceEpisodePeriodisedAttributeList.Add(new PriceEpisodePeriodisedAttribute
                     {
@@ -415,9 +415,28 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
             };
         }
 
-        private decimal GetPeriodAttributeValue(IAttributeData attributes, DateTime periodDate)
+        private decimal? GetPeriodAttributeValue(IAttributeData attributes, DateTime periodDate)
         {
-            return decimal.Parse(attributes.Changepoints.Where(cp => cp.ChangePoint == periodDate).Select(v => v.Value).SingleOrDefault().ToString());
+            var value = ConvertValue(attributes.Changepoints.Where(cp => cp.ChangePoint == periodDate).Select(v => v.Value).SingleOrDefault());
+
+            return value != null ? decimal.Parse(value.ToString()) : value;
+        }
+
+        private decimal? ConvertValue(object value)
+        {
+            if (value != null && value.ToString() != "uncertain")
+            {
+                var stringValue = value.ToString();
+
+                if (stringValue == "true" || stringValue == "false")
+                {
+                    return stringValue == "true" ? 1.0m : 0.0m;
+                }
+
+                return decimal.Parse(stringValue);
+            }
+
+            return null;
         }
     }
 }
