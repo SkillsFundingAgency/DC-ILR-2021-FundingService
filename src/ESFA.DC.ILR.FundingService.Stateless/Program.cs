@@ -95,7 +95,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless
             builder.RegisterInstance(topicAndTaskSectionOptions).As<ITopicAndTaskSectionConfig>().SingleInstance();
 
             // auditing
-            var auditPublishConfig = new ServiceBusQueueConfig(
+            var auditPublishConfig = new QueueConfiguration(
                 serviceBusOptions.ServiceBusConnectionString,
                 serviceBusOptions.AuditQueueName,
                 Environment.ProcessorCount);
@@ -106,14 +106,15 @@ namespace ESFA.DC.ILR.FundingService.Stateless
             builder.RegisterType<Auditor>().As<IAuditor>();
 
             // register Jobcontext services
-            var topicSubscribeConfig = new ServiceBusTopicConfig(
+            var topicSubscribeConfig = new TopicConfiguration(
                 serviceBusOptions.ServiceBusConnectionString,
                 serviceBusOptions.TopicName,
                 serviceBusOptions.FundingCalcSubscriptionName,
-                Environment.ProcessorCount);
+                Environment.ProcessorCount,
+                maximumCallbackTimeSpan: TimeSpan.FromMinutes(20));
 
             // register Jobcontext services
-            var topicPublishConfig = new ServiceBusTopicConfig(
+            var topicPublishConfig = new TopicConfiguration(
                 serviceBusOptions.ServiceBusConnectionString,
                 serviceBusOptions.TopicName,
                 serviceBusOptions.DataStoreSubscriptionName,
@@ -127,8 +128,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless
                     new TopicSubscriptionSevice<JobContextDto>(
                         topicSubscribeConfig,
                         c.Resolve<ISerializationService>(),
-                        c.Resolve<ILogger>(),
-                        c.Resolve<IDateTimeProvider>());
+                        c.Resolve<ILogger>());
                 return topicSubscriptionSevice;
             }).As<ITopicSubscriptionService<JobContextDto>>();
 
@@ -152,7 +152,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless
                         azureStorageConfig.AzureBlobContainerName))
                 .As<IAzureStorageKeyValuePersistenceServiceConfig>().SingleInstance();
 
-            var jobStatusPublishConfig = new JobStatusQueueConfig(
+            var jobStatusPublishConfig = new QueueConfiguration(
                 serviceBusOptions.ServiceBusConnectionString,
                 serviceBusOptions.JobStatusQueueName,
                 Environment.ProcessorCount);

@@ -149,11 +149,11 @@
     <Reference Include="ESFA.DC.Mapping.Interface, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Mapping.Interface.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.Mapping.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.Queueing, Version=0.1.13.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Queueing.0.1.13-beta0001\lib\netstandard2.0\ESFA.DC.Queueing.dll</HintPath>
+    <Reference Include="ESFA.DC.Queueing, Version=0.1.14.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.Queueing.0.1.14-beta0001\lib\netstandard2.0\ESFA.DC.Queueing.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.Queueing.Interface, Version=0.1.13.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Queueing.Interface.0.1.13-beta0001\lib\netstandard2.0\ESFA.DC.Queueing.Interface.dll</HintPath>
+    <Reference Include="ESFA.DC.Queueing.Interface, Version=0.1.14.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.Queueing.Interface.0.1.14-beta0001\lib\netstandard2.0\ESFA.DC.Queueing.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.Serialization.Interfaces, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Serialization.Interfaces.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Interfaces.dll</HintPath>
@@ -445,9 +445,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\AzureStorageKeyValuePersistenceServiceConfig.cs" />
-    <Compile Include="Configuration\JobStatusQueueConfig.cs" />
-    <Compile Include="Configuration\ServiceBusQueueConfig.cs" />
-    <Compile Include="Configuration\ServiceBusTopicConfig.cs" />
     <Compile Include="Handlers\MessageHandler.cs" />
     <Compile Include="Mappers\JobContextMessageMapper.cs" />
     <Compile Include="Modules\StatelessModule.cs" />

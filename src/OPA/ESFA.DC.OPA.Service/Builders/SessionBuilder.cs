@@ -74,6 +74,8 @@ namespace ESFA.DC.OPA.Service.Builders
                 SetAttribute(entity, targetInstance, attribute.Key, attribute.Value);
             }
 
+            //// TODO: Come back to this commented block to see if it was neccessary. Turned off during FM36 implementation.
+
             //var opaChildEntities = entity.GetChildEntities();
 
             //foreach (Entity opaChildEntity in opaChildEntities)
