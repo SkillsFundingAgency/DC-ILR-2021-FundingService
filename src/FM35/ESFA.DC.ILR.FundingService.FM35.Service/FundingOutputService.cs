@@ -235,12 +235,17 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
         {
             var value = attribute.Changepoints.Where(cp => cp.ChangePoint == periodDate).Select(v => v.Value).SingleOrDefault();
 
-            return attributeName == "LearnSuppFund" ? ConvertLearnSuppFund(value.ToString()) : decimal.Parse(value.ToString());
+            if (value != null && value.ToString() != "uncertain")
+            {
+                return attributeName == "LearnSuppFund" ? ConvertLearnSuppFund(value.ToString()) : decimal.Parse(value.ToString());
+            }
+
+            return null;
         }
 
         private decimal? ConvertLearnSuppFund(string value)
         {
-            if (value != null && value != "uncertain")
+            if (value != null)
             {
                 return value == "true" ? 1.0m : 0.0m;
             }

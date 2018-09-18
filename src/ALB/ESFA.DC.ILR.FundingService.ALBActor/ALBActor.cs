@@ -9,6 +9,7 @@ using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Data.Internal;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
 using ESFA.DC.ILR.FundingService.Stateless.Models;
@@ -37,7 +38,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
 
             var referenceDataCache = jsonSerializationService.Deserialize<ExternalDataCache>(albActorModel.ExternalDataCache);
 
-            var internalDataCache = jsonSerializationService.Deserialize<ExternalDataCache>(albActorModel.InternalDataCache);
+            var internalDataCache = jsonSerializationService.Deserialize<InternalDataCache>(albActorModel.InternalDataCache);
 
             var fileDataCache = jsonSerializationService.Deserialize<FileDataCache>(albActorModel.FileDataCache);
 
