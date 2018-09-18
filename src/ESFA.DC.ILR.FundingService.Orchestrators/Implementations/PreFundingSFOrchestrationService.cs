@@ -100,10 +100,14 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            // get valid learners from intermediate storage and store it in the dto for rulebases
+            // get valid and invalid learners from intermediate storage and store it in the dto for rulebases
             fundingServiceDto.ValidLearners = _jsonSerializationService.Deserialize<string[]>(
                 await _keyValuePersistenceService.GetAsync(
                     jobContextMessage.KeyValuePairs[JobContextMessageKey.ValidLearnRefNumbers].ToString()));
+
+            fundingServiceDto.InvalidLearners = _jsonSerializationService.Deserialize<string[]>(
+                await _keyValuePersistenceService.GetAsync(
+                    jobContextMessage.KeyValuePairs[JobContextMessageKey.InvalidLearnRefNumbers].ToString()));
 
             cancellationToken.ThrowIfCancellationRequested();
 

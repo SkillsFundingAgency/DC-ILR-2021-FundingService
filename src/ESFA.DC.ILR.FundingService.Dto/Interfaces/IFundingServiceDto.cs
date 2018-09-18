@@ -7,5 +7,7 @@ namespace ESFA.DC.ILR.FundingService.Dto.Interfaces
         IMessage Message { get; }
 
         string[] ValidLearners { get; }
+
+        string[] InvalidLearners { get; }
     }
 }
