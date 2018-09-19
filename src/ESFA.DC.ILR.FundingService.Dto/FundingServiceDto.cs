@@ -8,5 +8,7 @@ namespace ESFA.DC.ILR.FundingService.Dto
         public virtual IMessage Message { get; set; }
 
         public virtual string[] ValidLearners { get; set; }
+
+        public virtual string[] InvalidLearners { get; set; }
     }
 }

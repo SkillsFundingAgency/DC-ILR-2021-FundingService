@@ -1,39 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Attribute;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Interface;
-using Oracle.Determinations.Masquerade.Util;
 
 namespace ESFA.DC.ILR.FundingService.FM35.Service
 {
     public class FundingOutputService : IOutputService<FM35FundingOutputs>
     {
+        private readonly IInternalDataCache _internalDataCache;
         private readonly IDataEntityAttributeService _dataEntityAttributeService;
 
-        public FundingOutputService(IDataEntityAttributeService dataEntityAttributeService)
+        public FundingOutputService(IInternalDataCache internalDataCache, IDataEntityAttributeService dataEntityAttributeService)
         {
+            _internalDataCache = internalDataCache;
             _dataEntityAttributeService = dataEntityAttributeService;
         }
-
-        private static Dictionary<int, System.DateTime> Periods => new Dictionary<int, System.DateTime>
-        {
-           { 1, new System.DateTime(2018, 08, 01) },
-           { 2, new System.DateTime(2018, 09, 01) },
-           { 3, new System.DateTime(2018, 10, 01) },
-           { 4, new System.DateTime(2018, 11, 01) },
-           { 5, new System.DateTime(2018, 12, 01) },
-           { 6, new System.DateTime(2019, 01, 01) },
-           { 7, new System.DateTime(2019, 02, 01) },
-           { 8, new System.DateTime(2019, 03, 01) },
-           { 9, new System.DateTime(2019, 04, 01) },
-           { 10, new System.DateTime(2019, 05, 01) },
-           { 11, new System.DateTime(2019, 06, 01) },
-           { 12, new System.DateTime(2019, 07, 01) },
-        };
 
         public FM35FundingOutputs ProcessFundingOutputs(IEnumerable<IDataEntity> dataEntities)
         {
@@ -111,7 +97,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
                 AppATAGTA = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, "AppATAGTA"),
                 AppCompetency = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, "AppCompetency"),
                 AppFuncSkill = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, "AppFuncSkill"),
-                AppFuncSkill1618AdjFact = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, "AppFuncSkill1618AdjFact"),
+                AppFuncSkill1618AdjFact = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, "AppFuncSkill1618AdjFact"),
                 AppKnowl = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, "AppKnowl"),
                 AppLearnStartDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, "AppLearnStartDate"),
                 ApplicEmpFactDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, "ApplicEmpFactDate"),
@@ -140,7 +126,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
                 LTRCUpliftFctr = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, "LTRCUpliftFctr"),
                 NonGovCont = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, "NonGovCont"),
                 OLASSCustody = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, "OLASSCustody"),
-                OnProgPayPctPreTrans = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, "OnProgPayPctPreTrans"),
+                OnProgPayPctPreTrans = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, "OnProgPayPctPreTrans"),
                 OutstndNumOnProgInstalm = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, "OutstndNumOnProgInstalm"),
                 OutstndNumOnProgInstalmTrans = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, "OutstndNumOnProgInstalmTrans"),
                 PlannedNumOnProgInstalm = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, "PlannedNumOnProgInstalm"),
@@ -226,18 +212,18 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
                     learningDeliveryPeriodisedAttributesList.Add(new LearningDeliveryPeriodisedAttribute
                     {
                         AttributeName = attribute,
-                        Period1 = GetPeriodAttributeValue(attributeValue, 1, attribute),
-                        Period2 = GetPeriodAttributeValue(attributeValue, 2, attribute),
-                        Period3 = GetPeriodAttributeValue(attributeValue, 3, attribute),
-                        Period4 = GetPeriodAttributeValue(attributeValue, 4, attribute),
-                        Period5 = GetPeriodAttributeValue(attributeValue, 5, attribute),
-                        Period6 = GetPeriodAttributeValue(attributeValue, 6, attribute),
-                        Period7 = GetPeriodAttributeValue(attributeValue, 7, attribute),
-                        Period8 = GetPeriodAttributeValue(attributeValue, 8, attribute),
-                        Period9 = GetPeriodAttributeValue(attributeValue, 9, attribute),
-                        Period10 = GetPeriodAttributeValue(attributeValue, 10, attribute),
-                        Period11 = GetPeriodAttributeValue(attributeValue, 11, attribute),
-                        Period12 = GetPeriodAttributeValue(attributeValue, 12, attribute),
+                        Period1 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period1, attribute),
+                        Period2 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period2, attribute),
+                        Period3 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period3, attribute),
+                        Period4 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period4, attribute),
+                        Period5 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period5, attribute),
+                        Period6 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period6, attribute),
+                        Period7 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period7, attribute),
+                        Period8 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period8, attribute),
+                        Period9 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period9, attribute),
+                        Period10 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period10, attribute),
+                        Period11 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period11, attribute),
+                        Period12 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period12, attribute),
                     });
                 }
             }
@@ -245,16 +231,21 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
             return learningDeliveryPeriodisedAttributesList.ToArray();
         }
 
-        private decimal? GetPeriodAttributeValue(IAttributeData attribute, int period, string attributeName)
+        private decimal? GetPeriodAttributeValue(IAttributeData attribute, DateTime periodDate, string attributeName)
         {
-            var value = attribute.Changepoints.Where(cp => cp.ChangePoint == Periods[period]).Select(v => v.Value).SingleOrDefault();
+            var value = attribute.Changepoints.Where(cp => cp.ChangePoint == periodDate).Select(v => v.Value).SingleOrDefault();
 
-            return attributeName == "LearnSuppFund" ? ConvertLearnSuppFund(value.ToString()) : decimal.Parse(value.ToString());
+            if (value != null && value.ToString() != "uncertain")
+            {
+                return attributeName == "LearnSuppFund" ? ConvertLearnSuppFund(value.ToString()) : decimal.Parse(value.ToString());
+            }
+
+            return null;
         }
 
         private decimal? ConvertLearnSuppFund(string value)
         {
-            if (value != null && value != "uncertain")
+            if (value != null)
             {
                 return value == "true" ? 1.0m : 0.0m;
             }

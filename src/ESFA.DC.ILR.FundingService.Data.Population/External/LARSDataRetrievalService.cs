@@ -4,6 +4,7 @@ using ESFA.DC.Data.LARS.Model;
 using ESFA.DC.Data.LARS.Model.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
+using ESFA.DC.ILR.FundingService.Data.Population.Keys;
 using ESFA.DC.ILR.Model.Interface;
 
 namespace ESFA.DC.ILR.FundingService.Data.Population.External
@@ -33,6 +34,12 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public virtual IQueryable<LARS_FrameworkAims> LARSFrameworkAims => _lars.LARS_FrameworkAims;
 
+        public virtual IQueryable<LARS_StandardCommonComponent> LARSStandardCommonComponents => _lars.LARS_StandardCommonComponent;
+
+        public virtual IQueryable<LARS_FrameworkCmnComp> LARSFrameworkCommonComponents => _lars.LARS_FrameworkCmnComp;
+
+        public virtual IQueryable<LARS_ApprenticeshipFunding> LARSApprenticeshipFundings => _lars.LARS_ApprenticeshipFunding;
+
         public string CurrentVersion()
         {
             return LARSVersions.OrderByDescending(v => v.MainDataSchemaName).Select(lv => lv.MainDataSchemaName).FirstOrDefault();
@@ -46,6 +53,56 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 .SelectMany(l => l.LearningDeliveries)
                 .Select(ld => ld.LearnAimRef)
                 .Distinct();
+        }
+
+        public IEnumerable<int> UniqueStandardCodes(IMessage message)
+        {
+            return message
+                .Learners
+                .Where(l => l.LearningDeliveries != null)
+                .SelectMany(l => l.LearningDeliveries.Where(s => s.StdCodeNullable != null))
+                .Select(ld => (int)ld.StdCodeNullable)
+                .Distinct();
+        }
+
+        public IEnumerable<LARSFrameworkKey> UniqueFrameworkCommonComponents(IMessage message)
+        {
+            return message
+                       .Learners?
+                       .Where(l => l.LearningDeliveries != null)
+                       .SelectMany(l => l.LearningDeliveries)
+                       .Where(ld =>
+                           ld.FworkCodeNullable.HasValue
+                           && ld.ProgTypeNullable.HasValue
+                           && ld.PwayCodeNullable.HasValue)
+                       .Select(lf => new LARSFrameworkKey(lf.LearnAimRef, (int)lf.FworkCodeNullable, (int)lf.ProgTypeNullable, (int)lf.PwayCodeNullable)).Distinct();
+        }
+
+        public IEnumerable<LARSApprenticeshipFundingKey> UniqueApprenticeshipFundingStandards(IMessage message)
+        {
+            return message
+                 .Learners
+                 .Where(l => l.LearningDeliveries != null)
+                 .SelectMany(l => l.LearningDeliveries
+                 .Where(
+                     s => s.StdCodeNullable != null
+                     && s.ProgTypeNullable != null))
+                 .Select(ld => new LARSApprenticeshipFundingKey((int)ld.StdCodeNullable, (int)ld.ProgTypeNullable, 0))
+                 .Distinct().ToList() as IEnumerable<LARSApprenticeshipFundingKey>;
+        }
+
+        public IEnumerable<LARSApprenticeshipFundingKey> UniqueApprenticeshipFundingFrameworks(IMessage message)
+        {
+            return message
+                 .Learners
+                 .Where(l => l.LearningDeliveries != null)
+                 .SelectMany(l => l.LearningDeliveries
+                 .Where(
+                     s => s.FworkCodeNullable != null
+                     && s.ProgTypeNullable != null
+                     && s.PwayCodeNullable != null))
+                 .Select(ld => new LARSApprenticeshipFundingKey((int)ld.FworkCodeNullable, (int)ld.ProgTypeNullable, (int)ld.PwayCodeNullable))
+                 .Distinct().ToList() as IEnumerable<LARSApprenticeshipFundingKey>;
         }
 
         public IDictionary<string, IEnumerable<LARSFunding>> LARSFundingsForLearnAimRefs(IEnumerable<string> learnAimRefs)
@@ -92,7 +149,9 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 AwardOrgCode = entity.AwardOrgCode,
                 EFACOFType = entity.EFACOFType,
                 SectorSubjectAreaTier2 = entity.SectorSubjectAreaTier2,
-                LARSValidities = entity.LARS_Validity.Select(LARSValidityFromEntity).ToList()
+                LARSValidities = entity.LARS_Validity.Select(LARSValidityFromEntity).ToList(),
+                LARSCareerLearningPilot = entity.LARS_CareerLearningPilot.Select(LARSCareerLearningPilotFromEntity).ToList(),
+                LARSFunding = entity.LARS_Funding.Select(LARSFundingFromEntity).ToList()
             };
         }
 
@@ -103,6 +162,17 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 Category = entity.ValidityCategory,
                 LastNewStartDate = entity.LastNewStartDate,
                 StartDate = entity.StartDate,
+            };
+        }
+
+        public LARSCareerLearningPilot LARSCareerLearningPilotFromEntity(LARS_CareerLearningPilot entity)
+        {
+            return new LARSCareerLearningPilot()
+            {
+                AreaCode = entity.AreaCode,
+                SubsidyRate = entity.SubsidyRate,
+                EffectiveFrom = entity.EffectiveFrom,
+                EffectiveTo = entity.EffectiveTo,
             };
         }
 
@@ -146,10 +216,10 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public IDictionary<string, IEnumerable<LARSFrameworkAims>> LARSFrameworkAimsForLearnAimRefs(IEnumerable<string> learnAimRefs)
         {
-            return LARSFrameworkAims
-                .Where(lf => learnAimRefs.Contains(lf.LearnAimRef))
-                .GroupBy(a => a.LearnAimRef)
-                .ToDictionary(a => a.Key, a => a.Select(LARSFrameworkAimsFromEntity).ToList() as IEnumerable<LARSFrameworkAims>);
+                return LARSFrameworkAims
+                    .Where(lf => learnAimRefs.Contains(lf.LearnAimRef))
+                    .GroupBy(a => a.LearnAimRef)
+                    .ToDictionary(a => a.Key, a => a.Select(LARSFrameworkAimsFromEntity).ToList() as IEnumerable<LARSFrameworkAims>);
         }
 
         public LARSFrameworkAims LARSFrameworkAimsFromEntity(LARS_FrameworkAims entity)
@@ -163,6 +233,174 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 FrameworkComponentType = entity.FrameworkComponentType,
                 EffectiveFrom = entity.EffectiveFrom,
                 EffectiveTo = entity.EffectiveTo,
+            };
+        }
+
+        public IDictionary<int, IEnumerable<LARSStandardCommonComponent>> LARSStandardCommonComponentForStandardCode(IEnumerable<int> standardCodes)
+        {
+            return LARSStandardCommonComponents
+                .Where(sc => standardCodes.Contains(sc.StandardCode))
+                .GroupBy(s => s.StandardCode)
+                .ToDictionary(a => a.Key, a => a.Select(LARSStandardCommonComponentFromEntity).ToList() as IEnumerable<LARSStandardCommonComponent>);
+        }
+
+        public LARSStandardCommonComponent LARSStandardCommonComponentFromEntity(LARS_StandardCommonComponent entity)
+        {
+            return new LARSStandardCommonComponent()
+            {
+                StandardCode = entity.StandardCode,
+                CommonComponent = entity.CommonComponent,
+                EffectiveFrom = entity.EffectiveFrom,
+                EffectiveTo = entity.EffectiveTo,
+            };
+        }
+
+        public IEnumerable<LARSFrameworkCommonComponent> LARSFrameworkCommonComponentForLearnAimRefs(IEnumerable<LARSFrameworkKey> larsFrameworkKeys)
+        {
+            var learnAimRefsFromKey = larsFrameworkKeys.Select(lfk => lfk.LearnAimRef).Distinct();
+
+            var larsFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>();
+
+            var larsFrameworksCmnComponents = LARSLearningDeliveries
+                    .Where(ld => learnAimRefsFromKey.Contains(ld.LearnAimRef))
+                    .Join(
+                    LARSFrameworkCommonComponents,
+                    ld => ld.FrameworkCommonComponent,
+                    fcc => fcc.CommonComponent,
+                    (ld, fcc) => new { LARSFrameworkCommonComponent = fcc, LARSLearningDelivery = ld })
+                    .Select(fc => new LARSFrameworkCommonComponent
+                    {
+                        LearnAimRef = fc.LARSLearningDelivery.LearnAimRef,
+                        CommonComponent = fc.LARSFrameworkCommonComponent.CommonComponent,
+                        FworkCode = fc.LARSFrameworkCommonComponent.FworkCode,
+                        PwayCode = fc.LARSFrameworkCommonComponent.PwayCode,
+                        ProgType = fc.LARSFrameworkCommonComponent.ProgType,
+                        EffectiveFrom = fc.LARSFrameworkCommonComponent.EffectiveFrom,
+                        EffectiveTo = fc.LARSFrameworkCommonComponent.EffectiveFrom
+                    })
+                    .ToList();
+
+            foreach (var larsFrameworkKey in larsFrameworkKeys)
+            {
+                var larsFramework =
+                larsFrameworksCmnComponents?
+                    .Where(
+                        fc => fc.LearnAimRef == larsFrameworkKey.LearnAimRef
+                        && fc.FworkCode == larsFrameworkKey.FworkCode
+                        && fc.ProgType == larsFrameworkKey.ProgType
+                        && fc.PwayCode == larsFrameworkKey.PwayCode)
+                        .Select(fcc => fcc).SingleOrDefault();
+
+                if (larsFramework != null)
+                {
+                    larsFrameworkCommonComponents.Add(larsFramework);
+                }
+            }
+
+            return larsFrameworkCommonComponents;
+        }
+
+        public IEnumerable<LARSStandardApprenticeshipFunding> LARSApprenticeshipFundingStandards(IEnumerable<LARSApprenticeshipFundingKey> apprenticeshipFundingKeys)
+        {
+            var apprenticeshipFundings = new List<LARSStandardApprenticeshipFunding>();
+
+            foreach (var apprenticeshipFundingKey in apprenticeshipFundingKeys)
+            {
+                var appFunding =
+                    LARSApprenticeshipFundings?
+                    .Where(
+                        a => a.ApprenticeshipType == "STD"
+                        && a.ApprenticeshipCode == apprenticeshipFundingKey.Code
+                        && a.ProgType == apprenticeshipFundingKey.ProgType
+                        && a.PwayCode == apprenticeshipFundingKey.PwayCode)
+                    .Select(l => l) as IEnumerable<LARS_ApprenticeshipFunding>;
+
+                if (appFunding != null)
+                {
+                    apprenticeshipFundings.AddRange(
+                        appFunding
+                        .Select(u => LARSStandardApprenticeshipFundingFromEntity(u)));
+                }
+            }
+
+            return apprenticeshipFundings;
+        }
+
+        public LARSStandardApprenticeshipFunding LARSStandardApprenticeshipFundingFromEntity(LARS_ApprenticeshipFunding entity)
+        {
+            return new LARSStandardApprenticeshipFunding
+            {
+                ApprenticeshipCode = entity.ApprenticeshipCode,
+                ApprenticeshipType = entity.ApprenticeshipType,
+                BandNumber = entity.BandNumber,
+                CareLeaverAdditionalPayment = entity.CareLeaverAdditionalPayment,
+                ProgType = entity.ProgType,
+                PwayCode = entity.PwayCode,
+                FundingCategory = entity.FundingCategory,
+                EffectiveFrom = entity.EffectiveFrom,
+                EffectiveTo = entity.EffectiveTo,
+                CoreGovContributionCap = entity.CoreGovContributionCap,
+                SixteenToEighteenIncentive = entity.C1618Incentive,
+                SixteenToEighteenProviderAdditionalPayment = entity.C1618ProviderAdditionalPayment,
+                SixteenToEighteenEmployerAdditionalPayment = entity.C1618EmployerAdditionalPayment,
+                SixteenToEighteenFrameworkUplift = entity.C1618FrameworkUplift,
+                Duration = entity.Duration,
+                ReservedValue2 = entity.ReservedValue2,
+                ReservedValue3 = entity.ReservedValue3,
+                MaxEmployerLevyCap = entity.MaxEmployerLevyCap,
+                FundableWithoutEmployer = entity.FundableWithoutEmployer
+            };
+        }
+
+        public IEnumerable<LARSFrameworkApprenticeshipFunding> LARSApprenticeshipFundingFrameworks(IEnumerable<LARSApprenticeshipFundingKey> apprenticeshipFundingKeys)
+        {
+            var apprenticeshipFundings = new List<LARSFrameworkApprenticeshipFunding>();
+
+            foreach (var apprenticeshipFundingKey in apprenticeshipFundingKeys)
+            {
+                var appFunding =
+                    LARSApprenticeshipFundings
+                    .Where(
+                        a => a.ApprenticeshipType == "FWK"
+                        && a.ApprenticeshipCode == apprenticeshipFundingKey.Code
+                        && a.ProgType == apprenticeshipFundingKey.ProgType
+                        && a.PwayCode == apprenticeshipFundingKey.PwayCode)
+                    .Select(l => l) as IEnumerable<LARS_ApprenticeshipFunding>;
+
+                if (appFunding != null)
+                {
+                    apprenticeshipFundings.AddRange(
+                        appFunding
+                        .Select(u => LARSFrameworkApprenticeshipFundingFromEntity(u)));
+                }
+            }
+
+            return apprenticeshipFundings;
+        }
+
+        public LARSFrameworkApprenticeshipFunding LARSFrameworkApprenticeshipFundingFromEntity(LARS_ApprenticeshipFunding entity)
+        {
+            return new LARSFrameworkApprenticeshipFunding
+            {
+                ApprenticeshipCode = entity.ApprenticeshipCode,
+                ApprenticeshipType = entity.ApprenticeshipType,
+                BandNumber = entity.BandNumber,
+                CareLeaverAdditionalPayment = entity.CareLeaverAdditionalPayment,
+                ProgType = entity.ProgType,
+                PwayCode = entity.PwayCode,
+                FundingCategory = entity.FundingCategory,
+                EffectiveFrom = entity.EffectiveFrom,
+                EffectiveTo = entity.EffectiveTo,
+                CoreGovContributionCap = entity.CoreGovContributionCap,
+                SixteenToEighteenIncentive = entity.C1618Incentive,
+                SixteenToEighteenProviderAdditionalPayment = entity.C1618ProviderAdditionalPayment,
+                SixteenToEighteenEmployerAdditionalPayment = entity.C1618EmployerAdditionalPayment,
+                SixteenToEighteenFrameworkUplift = entity.C1618FrameworkUplift,
+                Duration = entity.Duration,
+                ReservedValue2 = entity.ReservedValue2,
+                ReservedValue3 = entity.ReservedValue3,
+                MaxEmployerLevyCap = entity.MaxEmployerLevyCap,
+                FundableWithoutEmployer = entity.FundableWithoutEmployer
             };
         }
     }

@@ -61,6 +61,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="ESFA.DC.Data.AppsEarningsHistory.Model, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ESFA.DC.Data.AppsEarningsHistory.Model.0.1.1-beta0001\lib\net461\ESFA.DC.Data.AppsEarningsHistory.Model.dll</HintPath>
+    </Reference>
     <Reference Include="ESFA.DC.Data.LARS.Model, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ESFA.DC.Data.LARS.Model.0.1.4-beta0001\lib\net461\ESFA.DC.Data.LARS.Model.dll</HintPath>
     </Reference>
@@ -73,11 +76,11 @@
     <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ESFA.DC.ILR.1819.Model.Interface.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.IO.Dictionary, Version=0.1.10.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.IO.Dictionary.0.1.10-beta0001\lib\netstandard2.0\ESFA.DC.IO.Dictionary.dll</HintPath>
+    <Reference Include="ESFA.DC.IO.Dictionary, Version=0.1.13.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ESFA.DC.IO.Dictionary.0.1.13-beta0001\lib\netstandard2.0\ESFA.DC.IO.Dictionary.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.IO.Interfaces, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.IO.Interfaces.0.1.2-beta0001\lib\netstandard2.0\ESFA.DC.IO.Interfaces.dll</HintPath>
+    <Reference Include="ESFA.DC.IO.Interfaces, Version=0.1.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ESFA.DC.IO.Interfaces.0.1.12-beta0001\lib\netstandard2.0\ESFA.DC.IO.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.Logging, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ESFA.DC.Logging.0.1.1-beta0001\lib\netstandard2.0\ESFA.DC.Logging.dll</HintPath>
@@ -198,7 +201,7 @@
     <None Include="PackageRoot\Config\Settings.xml" />
     <None Include="App.config" />
     <None Include="packages.config" />
-    <EmbeddedResource Include="Resources\Rulebase.zip" />
+    <EmbeddedResource Include="Resources\Loans Bursary 18_19.zip" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Providers\ESFA.DC.ILR.FundingService.Providers.csproj">

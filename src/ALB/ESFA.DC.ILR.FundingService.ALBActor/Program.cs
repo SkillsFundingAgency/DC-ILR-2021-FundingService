@@ -35,7 +35,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                 using (var container = builder.Build())
                 {
                     // Not sure why this is being resolved here, to review
-                    var ss = container.Resolve<IFundingService<ILearner, FundingOutputs>>();
+                    var ss = container.Resolve<IFundingService<ILearner, ALBFundingOutputs>>();
                     Thread.Sleep(Timeout.Infinite);
                 }
             }

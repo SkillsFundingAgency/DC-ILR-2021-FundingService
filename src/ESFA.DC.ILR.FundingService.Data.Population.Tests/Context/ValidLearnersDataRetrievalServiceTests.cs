@@ -39,11 +39,13 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.Context
             };
 
             var validLearnerReferenceNumbers = new string[] { "abc", "def" };
+            var invalidLearnerReferenceNumbers = new string[] { "ghi", "jkl" };
 
             var fundingServiceDto = new Mock<IFundingServiceDto>();
 
             fundingServiceDto.SetupGet(fs => fs.Message).Returns(message);
             fundingServiceDto.SetupGet(fs => fs.ValidLearners).Returns(validLearnerReferenceNumbers);
+            fundingServiceDto.SetupGet(fs => fs.InvalidLearners).Returns(invalidLearnerReferenceNumbers);
 
             NewService(fundingServiceDto.Object).Retrieve().Should().Contain(new[] { validLearnerOne, validLearnerTwo });
         }

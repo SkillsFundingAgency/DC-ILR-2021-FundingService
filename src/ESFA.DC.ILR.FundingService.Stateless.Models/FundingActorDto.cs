@@ -2,13 +2,15 @@
 {
     public class FundingActorDto
     {
-        public int JobId { get; set; }
+        public long JobId { get; set; }
 
         public int Ukprn { get; set; }
 
         public string ValidLearners { get; set; }
 
         public string ExternalDataCache { get; set; }
+
+        public string InternalDataCache { get; set; }
 
         public string FileDataCache { get; set; }
     }

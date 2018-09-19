@@ -83,6 +83,9 @@
     <Reference Include="ESFA.DC.Auditing.Interface, Version=0.1.9.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Auditing.Interface.0.1.9-beta0001\lib\netstandard2.0\ESFA.DC.Auditing.Interface.dll</HintPath>
     </Reference>
+    <Reference Include="ESFA.DC.Data.AppsEarningsHistory.Model, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.Data.AppsEarningsHistory.Model.0.1.1-beta0001\lib\net461\ESFA.DC.Data.AppsEarningsHistory.Model.dll</HintPath>
+    </Reference>
     <Reference Include="ESFA.DC.Data.LargeEmployer.Model, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Data.LargeEmployer.Model.0.1.2-beta0001\lib\net461\ESFA.DC.Data.LargeEmployer.Model.dll</HintPath>
     </Reference>
@@ -107,23 +110,23 @@
     <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.1819.Model.Interface.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.IO.AzureStorage, Version=0.1.10.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.IO.AzureStorage.0.1.10-beta0001\lib\netstandard2.0\ESFA.DC.IO.AzureStorage.dll</HintPath>
+    <Reference Include="ESFA.DC.IO.AzureStorage, Version=0.1.13.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.IO.AzureStorage.0.1.13-beta0001\lib\netstandard2.0\ESFA.DC.IO.AzureStorage.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.IO.Dictionary, Version=0.1.10.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.IO.Dictionary.0.1.10-beta0001\lib\netstandard2.0\ESFA.DC.IO.Dictionary.dll</HintPath>
+    <Reference Include="ESFA.DC.IO.Dictionary, Version=0.1.13.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.IO.Dictionary.0.1.13-beta0001\lib\netstandard2.0\ESFA.DC.IO.Dictionary.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.IO.Interfaces, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.IO.Interfaces.0.1.2-beta0001\lib\netstandard2.0\ESFA.DC.IO.Interfaces.dll</HintPath>
+    <Reference Include="ESFA.DC.IO.Interfaces, Version=0.1.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.IO.Interfaces.0.1.12-beta0001\lib\netstandard2.0\ESFA.DC.IO.Interfaces.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.IO.Redis, Version=0.1.10.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.IO.Redis.0.1.10-beta0001\lib\netstandard2.0\ESFA.DC.IO.Redis.dll</HintPath>
+    <Reference Include="ESFA.DC.IO.Redis, Version=0.1.13.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.IO.Redis.0.1.13-beta0001\lib\netstandard2.0\ESFA.DC.IO.Redis.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.JobContext, Version=0.1.15.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.JobContext.0.1.15-beta0001\lib\netstandard2.0\ESFA.DC.JobContext.dll</HintPath>
+    <Reference Include="ESFA.DC.JobContext, Version=0.1.16.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.JobContext.0.1.16-beta0001\lib\netstandard2.0\ESFA.DC.JobContext.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.JobContext.Interface, Version=0.1.15.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.JobContext.Interface.0.1.15-beta0001\lib\netstandard2.0\ESFA.DC.JobContext.Interface.dll</HintPath>
+    <Reference Include="ESFA.DC.JobContext.Interface, Version=0.1.16.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.JobContext.Interface.0.1.16-beta0001\lib\netstandard2.0\ESFA.DC.JobContext.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.JobContextManager, Version=0.1.17.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>..\packages\ESFA.DC.JobContextManager.0.1.17-beta0001\lib\netstandard2.0\ESFA.DC.JobContextManager.dll</HintPath>
@@ -146,11 +149,11 @@
     <Reference Include="ESFA.DC.Mapping.Interface, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Mapping.Interface.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.Mapping.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.Queueing, Version=0.1.13.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Queueing.0.1.13-beta0001\lib\netstandard2.0\ESFA.DC.Queueing.dll</HintPath>
+    <Reference Include="ESFA.DC.Queueing, Version=0.1.14.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.Queueing.0.1.14-beta0001\lib\netstandard2.0\ESFA.DC.Queueing.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.Queueing.Interface, Version=0.1.13.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Queueing.Interface.0.1.13-beta0001\lib\netstandard2.0\ESFA.DC.Queueing.Interface.dll</HintPath>
+    <Reference Include="ESFA.DC.Queueing.Interface, Version=0.1.14.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.Queueing.Interface.0.1.14-beta0001\lib\netstandard2.0\ESFA.DC.Queueing.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.Serialization.Interfaces, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Serialization.Interfaces.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Interfaces.dll</HintPath>
@@ -442,9 +445,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\AzureStorageKeyValuePersistenceServiceConfig.cs" />
-    <Compile Include="Configuration\JobStatusQueueConfig.cs" />
-    <Compile Include="Configuration\ServiceBusQueueConfig.cs" />
-    <Compile Include="Configuration\ServiceBusTopicConfig.cs" />
     <Compile Include="Handlers\MessageHandler.cs" />
     <Compile Include="Mappers\JobContextMessageMapper.cs" />
     <Compile Include="Modules\StatelessModule.cs" />
@@ -537,6 +537,14 @@
     <ProjectReference Include="..\FM35\ESFA.DC.ILR.FundingService.FM35Actor.Interfaces\ESFA.DC.ILR.FundingService.FM35Actor.Interfaces.csproj">
       <Project>{479E2521-1924-41DB-9CB7-CF8EA6DECD18}</Project>
       <Name>ESFA.DC.ILR.FundingService.FM35Actor.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FM36\ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.csproj">
+      <Project>{E0EDD60C-BE4F-4B75-AD47-BCD8C86312A5}</Project>
+      <Name>ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FM36\ESFA.DC.ILR.FundingService.FM36Actor.Interfaces\ESFA.DC.ILR.FundingService.FM36Actor.Interfaces.csproj">
+      <Project>{C03A5548-0F4D-4DF0-B350-91B3C0762AFA}</Project>
+      <Name>ESFA.DC.ILR.FundingService.FM36Actor.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

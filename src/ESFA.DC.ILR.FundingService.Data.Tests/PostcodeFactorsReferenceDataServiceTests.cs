@@ -85,6 +85,37 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         }
 
         [Fact]
+        public void DasDisadvantageCost()
+        {
+            var postcode = "postcode";
+            var dasDisadvantages = new List<DasDisadvantage>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.DasDisadvantage)
+                .Returns(new Dictionary<string, IEnumerable<DasDisadvantage>>()
+                {
+                    { postcode, dasDisadvantages }
+                });
+
+            NewService(referenceDataCacheMock.Object).DASDisadvantagesForPostcode(postcode).Should().BeSameAs(dasDisadvantages);
+        }
+
+        [Fact]
+        public void DasDisadvantageCost_NotExists()
+        {
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.DasDisadvantage)
+                .Returns(new Dictionary<string, IEnumerable<DasDisadvantage>>()
+                {
+                    { "postcode", null }
+                });
+
+            NewService(referenceDataCacheMock.Object).DASDisadvantagesForPostcode("notPostcode").Should().BeEmpty();
+        }
+
+        [Fact]
         public void EfaDisadvantageCost()
         {
             var postcode = "postcode";
@@ -113,6 +144,37 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
                 });
 
             NewService(referenceDataCacheMock.Object).EFADisadvantagesForPostcode("notPostcode").Should().BeEmpty();
+        }
+
+        [Fact]
+        public void CareerLearningPilot()
+        {
+            var postcode = "postcode";
+            var careerLearningPilot = new List<CareerLearningPilot>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.CareerLearningPilot)
+                .Returns(new Dictionary<string, IEnumerable<CareerLearningPilot>>()
+                {
+                    { postcode, careerLearningPilot }
+                });
+
+            NewService(referenceDataCacheMock.Object).CareerLearningPilotsForPostcode(postcode).Should().BeSameAs(careerLearningPilot);
+        }
+
+        [Fact]
+        public void CareerLearningPilot_NotExists()
+        {
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.CareerLearningPilot)
+                .Returns(new Dictionary<string, IEnumerable<CareerLearningPilot>>()
+                {
+                    { "postcode", null }
+                });
+
+            NewService(referenceDataCacheMock.Object).CareerLearningPilotsForPostcode("notPostcode").Should().BeEmpty();
         }
 
         private PostcodesReferenceDataService NewService(IExternalDataCache referenceDataCache = null)

@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <None Remove="Rulebase\ALBInputs.xsrc" />
-    <None Remove="Rulebase\Loans Bursary 17_18.zip" />
+    <None Remove="Rulebase\Loans Bursary 18_19.zip" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,17 +24,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Rulebase\Loans Bursary 17_18.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Rulebase\Loans Bursary 18_19.zip" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="ESFA.DC.ILR.1819.Model" Version="0.1.4-beta0001" />
     <PackageReference Include="ESFA.DC.ILR.1819.Model.Interface" Version="0.1.4-beta0001" />
-    <PackageReference Include="ESFA.DC.IO.Dictionary" Version="0.1.10-beta0001" />
-    <PackageReference Include="ESFA.DC.IO.Interfaces" Version="0.1.2-beta0001" />
-    <PackageReference Include="ESFA.DC.JobContext" Version="0.1.15-beta0001" />
+    <PackageReference Include="ESFA.DC.IO.Dictionary" Version="0.1.13-beta0001" />
+    <PackageReference Include="ESFA.DC.IO.Interfaces" Version="0.1.12-beta0001" />
+    <PackageReference Include="ESFA.DC.JobContext" Version="0.1.16-beta0001" />
     <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.4-beta0001" />
     <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.4-beta0001" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />

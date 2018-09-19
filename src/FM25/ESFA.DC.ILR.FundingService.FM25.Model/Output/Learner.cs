@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ESFA.DC.ILR.FundingService.FM25.Model.Output
 {
     public class Learner
     {
-        public int UKPRN { get; set; }
         public string LearnRefNumber { get; set; }
         public int? AcadMonthPayment { get; set; }
         public bool? AcadProg { get; set; }
@@ -32,5 +32,9 @@ namespace ESFA.DC.ILR.FundingService.FM25.Model.Output
         public decimal? RetentNew { get; set; }
         public bool? StartFund { get; set; }
         public int? ThresholdDays { get; set; }
+
+        public List<LearnerPeriod> LearnerPeriods { get; set; }
+
+        public List<LearnerPeriodisedValues> LearnerPeriodisedValues { get; set; }
     }
 }

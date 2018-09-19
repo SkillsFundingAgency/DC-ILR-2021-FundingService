@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
@@ -52,6 +53,57 @@ namespace ESFA.DC.ILR.FundingService.Data.External.LARS
             _referenceDataCache.LARSLearningDeliveryCategory.TryGetValue(learnAimRef, out IEnumerable<LARSLearningDeliveryCategory> larsLearningDeliveryCategory);
 
             return larsLearningDeliveryCategory;
+        }
+
+        public IEnumerable<LARSStandardApprenticeshipFunding> LARSStandardApprenticeshipFunding(int? standardCode, int? progType)
+        {
+            if (standardCode == null || progType == null)
+            {
+                return null;
+            }
+
+            return _referenceDataCache.LARSApprenticeshipFundingStandards
+                        .Where(la =>
+                        la.ApprenticeshipCode == standardCode
+                        && la.ProgType == progType);
+        }
+
+        public IEnumerable<LARSFrameworkApprenticeshipFunding> LARSFrameworkApprenticeshipFunding(int? fworkCode, int? progType, int? pwayCode)
+        {
+            if (fworkCode == null || progType == null || pwayCode == null)
+            {
+                return null;
+            }
+
+            return _referenceDataCache.LARSApprenticeshipFundingFrameworks
+                        .Where(la =>
+                        la.ApprenticeshipCode == fworkCode
+                        && la.ProgType == progType
+                        && la.PwayCode == pwayCode);
+        }
+
+        public IEnumerable<LARSFrameworkCommonComponent> LARSFrameworkCommonComponent(string learnAimRef, int? fworkCode, int? progType, int? pwayCode)
+        {
+            if (learnAimRef == null || fworkCode == null || progType == null || pwayCode == null)
+            {
+                return null;
+            }
+
+            return _referenceDataCache.LARSFrameworkCommonComponent
+                        .Where(lf =>
+                        lf.LearnAimRef == learnAimRef
+                        && lf.FworkCode == fworkCode
+                        && lf.ProgType == progType
+                        && lf.PwayCode == pwayCode);
+        }
+
+        public IEnumerable<LARSStandardCommonComponent> LARSStandardCommonComponent(int? standardCode)
+        {
+            return standardCode == null ? null :
+                _referenceDataCache
+                .LARSStandardCommonComponent
+                .Where(k => k.Key == standardCode)
+                .Select(v => v.Value).FirstOrDefault();
         }
     }
 }

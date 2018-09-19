@@ -12,8 +12,12 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Interface
 
         IDictionary<string, IEnumerable<SfaAreaCost>> SfaAreaCostsForPostcodes(IEnumerable<string> postcodes);
 
+        IDictionary<string, IEnumerable<DasDisadvantage>> DasDisadvantagesForPostcodes(IEnumerable<string> postcodes);
+
         IDictionary<string, IEnumerable<SfaDisadvantage>> SfaDisadvantagesForPostcodes(IEnumerable<string> postcodes);
 
         IDictionary<string, IEnumerable<EfaDisadvantage>> EfaDisadvantagesForPostcodes(IEnumerable<string> postcodes);
+
+        IDictionary<string, IEnumerable<CareerLearningPilot>> CareerLearningPilotsForPostcodes(IEnumerable<string> postcodes);
     }
 }

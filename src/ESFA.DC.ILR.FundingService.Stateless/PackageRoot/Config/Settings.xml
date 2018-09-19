@@ -29,15 +29,21 @@
     <Parameter Name="RedisCacheConnectionString" Value="" />
   </Section>
 
-
   <Section  Name="ReferenceDataSection">
     <Parameter Name="LARSConnectionString" Value="" />
     <Parameter Name="PostCodesConnectionString" Value="" />
     <Parameter Name="OrganisationConnectionString" Value=""/>
     <Parameter Name="LargeEmployersConnectionString" Value=""/>
+    <Parameter Name="AppsEarningsHistoryConnectionString" Value=""/>
+  </Section>
+
+  <Section  Name="TopicAndTaskSection">
+    <Parameter Name="TopicFunding_TaskPerformALBCalculation" Value="ALB" />
+    <Parameter Name="TopicFunding_TaskPerformFM25Calculation" Value="FM25" />
+    <Parameter Name="TopicFunding_TaskPerformFM35Calculation" Value="FM35"/>
+    <Parameter Name="TopicFunding_TaskPerformFM36Calculation" Value="FM36"/>
   </Section>
   
-
   <Section Name="DataTransportSettings">
     <Parameter Name="MaxMessageSize" Value="1073741824" MustOverride="true"/>
     <Parameter Name="SecurityCredentialsType" Value="None" />

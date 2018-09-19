@@ -23,7 +23,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Handlers
         }
 
         public async Task<bool> Handle(JobContextMessage jobContextMessage, CancellationToken cancellationToken)
-        {
+         {
             try
             {
                 using (var childLifeTimeScope = _parentLifeTimeScope.BeginLifetimeScope(c =>
@@ -38,7 +38,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Handlers
                     var preFundingSfOrchestrationService =
                         childLifeTimeScope.Resolve<IPreFundingSFOrchestrationService>();
 
-                    await preFundingSfOrchestrationService.Execute(jobContextMessage);
+                    await preFundingSfOrchestrationService.Execute(jobContextMessage, cancellationToken);
                 }
 
                 ServiceEventSource.Current.ServiceMessage(_context, "Job complete");

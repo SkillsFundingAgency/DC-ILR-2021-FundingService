@@ -27,7 +27,11 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public virtual IQueryable<SFA_PostcodeDisadvantage> SfaPostcodeDisadvantages => _postcodes.SFA_PostcodeDisadvantage;
 
+        public virtual IQueryable<DAS_PostcodeDisadvantage> DasPostcodeDisadvantages => _postcodes.DAS_PostcodeDisadvantage;
+
         public virtual IQueryable<EFA_PostcodeDisadvantage> EfaPostcodeDisadvantages => _postcodes.EFA_PostcodeDisadvantage;
+
+        public virtual IQueryable<CareerLearningPilot_Postcode> CareerLearningPilot_Postcodes => _postcodes.CareerLearningPilot_Postcode;
 
         public IEnumerable<string> UniquePostcodes(IMessage message)
         {
@@ -55,6 +59,25 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 AreaCostFactor = entity.AreaCostFactor,
                 EffectiveFrom = entity.EffectiveFrom,
                 EffectiveTo = entity.EffectiveTo
+            };
+        }
+
+        public IDictionary<string, IEnumerable<DasDisadvantage>> DasDisadvantagesForPostcodes(IEnumerable<string> postcodes)
+        {
+            return DasPostcodeDisadvantages
+                .Where(p => postcodes.Contains(p.Postcode))
+                .GroupBy(a => a.Postcode)
+                .ToDictionary(a => a.Key, a => a.Select(DasDisadvantageFromEntity).ToList() as IEnumerable<DasDisadvantage>);
+        }
+
+        public DasDisadvantage DasDisadvantageFromEntity(DAS_PostcodeDisadvantage entity)
+        {
+            return new DasDisadvantage
+            {
+                Postcode = entity.Postcode,
+                Uplift = entity.Uplift,
+                EffectiveFrom = entity.EffectiveFrom,
+                EffectiveTo = entity.EffectiveTo,
             };
         }
 
@@ -91,6 +114,25 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             {
                 Postcode = entity.Postcode,
                 Uplift = entity.Uplift,
+                EffectiveFrom = entity.EffectiveFrom,
+                EffectiveTo = entity.EffectiveTo,
+            };
+        }
+
+        public IDictionary<string, IEnumerable<CareerLearningPilot>> CareerLearningPilotsForPostcodes(IEnumerable<string> postcodes)
+        {
+            return CareerLearningPilot_Postcodes
+                .Where(p => postcodes.Contains(p.Postcode))
+                .GroupBy(a => a.Postcode)
+                .ToDictionary(a => a.Key, a => a.Select(CareerLearningPilotFromEntity).ToList() as IEnumerable<CareerLearningPilot>);
+        }
+
+        public CareerLearningPilot CareerLearningPilotFromEntity(CareerLearningPilot_Postcode entity)
+        {
+            return new CareerLearningPilot()
+            {
+                Postcode = entity.Postcode,
+                AreaCode = entity.AreaCode,
                 EffectiveFrom = entity.EffectiveFrom,
                 EffectiveTo = entity.EffectiveTo,
             };

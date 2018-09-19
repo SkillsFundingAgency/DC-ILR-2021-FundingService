@@ -22,6 +22,16 @@ namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Attribute
 
         public bool? FundStart { get; set; }
 
+        public decimal? LearnDelApplicLARSCarPilFundSubRate { get; set; }
+
+        public string LearnDelApplicSubsidyPilotAreaCode { get; set; }
+
+        public decimal? LearnDelCarLearnPilotAimValue { get; set; }
+
+        public decimal? LearnDelCarLearnPilotInstalAmount { get; set; }
+
+        public bool? LearnDelEligCareerLearnPilot { get; set; }
+
         public DateTime? LiabilityDate { get; set; }
 
         public bool? LoanBursAreaUplift { get; set; }

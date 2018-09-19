@@ -9,6 +9,7 @@ using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Data.Internal;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
 using ESFA.DC.ILR.FundingService.Stateless.Models;
@@ -37,11 +38,14 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
 
             var referenceDataCache = jsonSerializationService.Deserialize<ExternalDataCache>(albActorModel.ExternalDataCache);
 
+            var internalDataCache = jsonSerializationService.Deserialize<InternalDataCache>(albActorModel.InternalDataCache);
+
             var fileDataCache = jsonSerializationService.Deserialize<FileDataCache>(albActorModel.FileDataCache);
 
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
                 c.RegisterInstance(referenceDataCache).As<IExternalDataCache>();
+                c.RegisterInstance(internalDataCache).As<IInternalDataCache>();
                 c.RegisterInstance(fileDataCache).As<IFileDataCache>();
             }))
             {
@@ -53,7 +57,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                 try
                 {
                     logger.LogDebug("ALB Actor started processing");
-                    var fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, FundingOutputs>>();
+                    var fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, ALBFundingOutputs>>();
 
                     var learners = jsonSerializationService.Deserialize<List<MessageLearner>>(albActorModel.ValidLearners);
 

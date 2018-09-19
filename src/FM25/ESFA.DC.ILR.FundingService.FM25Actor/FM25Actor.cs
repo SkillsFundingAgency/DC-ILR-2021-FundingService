@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Data.Internal;
 using ESFA.DC.ILR.FundingService.FM25.Model.Output;
 using ESFA.DC.ILR.FundingService.FM25Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
@@ -16,6 +18,8 @@ using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.Logging;
 using ESFA.DC.Logging.Interfaces;
+using ESFA.DC.OPA.Service.Interface.Rulebase;
+using ESFA.DC.OPA.Service.Rulebase;
 using ESFA.DC.Serialization.Interfaces;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
@@ -38,6 +42,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
                 c.Register(a => a.Resolve<IJsonSerializationService>().Deserialize<ExternalDataCache>(fm25ActorModel.ExternalDataCache)).As<IExternalDataCache>();
+                c.Register(a => a.Resolve<IJsonSerializationService>().Deserialize<InternalDataCache>(fm25ActorModel.InternalDataCache)).As<IInternalDataCache>();
                 c.Register(a => a.Resolve<IJsonSerializationService>().Deserialize<FileDataCache>(fm25ActorModel.FileDataCache)).As<IFileDataCache>();
             }))
             {
@@ -53,16 +58,47 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
                 try
                 {
                     logger.LogDebug("FM25 Actor started processing");
-                    var fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, Global>>();
 
-                    var learners = jsonSerializationService.Deserialize<List<MessageLearner>>(fm25ActorModel.ValidLearners);
+                    IEnumerable<Global> fm25Results;
+                    IEnumerable<PeriodisationGlobal> fm25PeriodisationResults;
 
-                    fm25ActorModel = null;
+                    using (var fundingServiceLifetimeScope = childLifetimeScope.BeginLifetimeScope(c =>
+                    {
+                        c.RegisterInstance(new RulebaseProvider("FM25")).As<IRulebaseProvider>();
+                    }))
+                    {
+                        logger.LogDebug("FM25 Rulebase Starting");
 
-                    var results = fundingService.ProcessFunding(learners);
+                        var fundingService = fundingServiceLifetimeScope.Resolve<IFundingService<ILearner, IEnumerable<Global>>>();
+
+                        var learners = jsonSerializationService.Deserialize<List<MessageLearner>>(fm25ActorModel.ValidLearners);
+
+                        fm25ActorModel = null;
+
+                        fm25Results = fundingService.ProcessFunding(learners).ToList();
+
+                        logger.LogDebug("FM25 Rulebase Finishing");
+                    }
+
+                    using (var fundingServiceLifetimeScope = childLifetimeScope.BeginLifetimeScope(c =>
+                    {
+                        c.RegisterInstance(new RulebaseProvider("FM25 Periodisation")).As<IRulebaseProvider>();
+                    }))
+                    {
+                        logger.LogDebug("FM25 Periodisation Rulebase Starting");
+
+                        var periodisationService = fundingServiceLifetimeScope.Resolve<IFundingService<Global, IEnumerable<PeriodisationGlobal>>>();
+
+                        fm25PeriodisationResults = periodisationService.ProcessFunding(fm25Results).ToList();
+
+                        logger.LogDebug("FM25 Periodisation Rulebase Finishing");
+                    }
 
                     logger.LogDebug("FM25 Actor completed processing");
-                    resultString = jsonSerializationService.Serialize(results);
+
+                    var condensedResults = CondenseResults(fm25Results, fm25PeriodisationResults);
+
+                    resultString = jsonSerializationService.Serialize(condensedResults);
                 }
                 catch (Exception ex)
                 {
@@ -73,6 +109,36 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
             }
 
             return Task.FromResult(resultString);
+        }
+
+        private Global CondenseResults(IEnumerable<Global> globals, IEnumerable<PeriodisationGlobal> periodisationGlobals)
+        {
+            var first = globals.FirstOrDefault();
+
+            var emptyLearnerPeriodsList = new List<LearnerPeriod>();
+            var emptyLearnerPeriodisedValuesList = new List<LearnerPeriodisedValues>();
+
+            if (first != null)
+            {
+                var learners = globals.SelectMany(g => g.Learners).ToList();
+                var learnerPeriodsDictionary = periodisationGlobals.SelectMany(pg => pg.LearnerPeriods).GroupBy(lp => lp.LearnRefNumber).ToDictionary(lp => lp.Key, lp => lp.ToList());
+                var learnerPeriodisedValuesDictionary = periodisationGlobals.SelectMany(pg => pg.LearnerPeriodisedValues).GroupBy(lp => lp.LearnRefNumber).ToDictionary(lp => lp.Key, lp => lp.ToList());
+
+                foreach (var learner in learners)
+                {
+                    learnerPeriodsDictionary.TryGetValue(learner.LearnRefNumber, out var matchingLearnerPeriods);
+                    learnerPeriodisedValuesDictionary.TryGetValue(learner.LearnRefNumber, out var matchinglearnerPeriodisedValues);
+
+                    learner.LearnerPeriods = matchingLearnerPeriods ?? emptyLearnerPeriodsList;
+                    learner.LearnerPeriodisedValues = matchinglearnerPeriodisedValues ?? emptyLearnerPeriodisedValuesList;
+                }
+
+                first.Learners = learners;
+
+                return first;
+            }
+
+            return new Global();
         }
     }
 }

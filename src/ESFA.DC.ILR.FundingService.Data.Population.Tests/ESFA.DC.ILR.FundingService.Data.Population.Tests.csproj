@@ -64,6 +64,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="ESFA.DC.Data.AppsEarningsHistory.Model, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.Data.AppsEarningsHistory.Model.0.1.1-beta0001\lib\net461\ESFA.DC.Data.AppsEarningsHistory.Model.dll</HintPath>
+    </Reference>
     <Reference Include="ESFA.DC.Data.LargeEmployer.Model, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Data.LargeEmployer.Model.0.1.2-beta0001\lib\net461\ESFA.DC.Data.LargeEmployer.Model.dll</HintPath>
     </Reference>
@@ -125,11 +128,13 @@
     <Compile Include="Context\FundingContextPopulationServiceTests.cs" />
     <Compile Include="Context\ValidLearnersDataRetrievalServiceTests.cs" />
     <Compile Include="External\LargeEmployersDataRetrievalServiceTests.cs" />
+    <Compile Include="External\AppsEarningsHistoryDataRetrievalServiceTests.cs" />
     <Compile Include="External\LARSDataRetrievalServiceTests.cs" />
     <Compile Include="External\OrganisationDataRetrievalServiceTests.cs" />
     <Compile Include="External\PostcodesDataRetrievalServiceTests.cs" />
     <Compile Include="File\FileDataCachePopulationServiceTests.cs" />
     <Compile Include="File\FileDataRetrievalServiceTests.cs" />
+    <Compile Include="Internal\InternalDataCachePopulationServiceTests.cs" />
     <Compile Include="PopulationServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExternalDataCachePopulationServiceTests.cs" />

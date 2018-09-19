@@ -238,6 +238,77 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         }
 
         [Fact]
+        public void DasPostcodeDisadvantagesForPostcodes()
+        {
+            var dasPostcodeDisadvantages = new List<DAS_PostcodeDisadvantage>()
+            {
+                new DAS_PostcodeDisadvantage()
+                {
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2WT" },
+                    Postcode = "CV1 2WT",
+                    Uplift = 1.2m,
+                    EffectiveFrom = new DateTime(2000, 01, 01),
+                    EffectiveTo = null,
+                },
+                new DAS_PostcodeDisadvantage()
+                {
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2TT" },
+                    Postcode = "CV1 2TT",
+                    Uplift = 1.5m,
+                    EffectiveFrom = new DateTime(2000, 01, 01),
+                    EffectiveTo = new DateTime(2015, 12, 31)
+                },
+                new DAS_PostcodeDisadvantage()
+                {
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2TT" },
+                    Postcode = "CV1 2TT",
+                    Uplift = 2.1m,
+                    EffectiveFrom = new DateTime(2016, 01, 01),
+                    EffectiveTo = null,
+                },
+                new DAS_PostcodeDisadvantage()
+                {
+                    Postcode = "Fictional"
+                }
+            }.AsQueryable();
+
+            var postcodesDataRetrievalServiceMock = NewMock();
+
+            postcodesDataRetrievalServiceMock.SetupGet(p => p.DasPostcodeDisadvantages).Returns(dasPostcodeDisadvantages);
+
+            var postcodes = new List<string>() { "CV1 2WT", "CV1 2TT" };
+
+            var dasDisadvantages = postcodesDataRetrievalServiceMock.Object.DasDisadvantagesForPostcodes(postcodes);
+
+            dasDisadvantages.Should().HaveCount(2);
+            dasDisadvantages.Should().ContainKeys("CV1 2WT", "CV1 2TT");
+            dasDisadvantages.Should().NotContainKey("Fictional");
+
+            dasDisadvantages["CV1 2TT"].Should().HaveCount(2);
+            dasDisadvantages["CV1 2WT"].Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void DasDisadvantageFromEntity()
+        {
+            var dasPostcodeDisadvantage = new DAS_PostcodeDisadvantage()
+            {
+                MasterPostcode = new MasterPostcode { Postcode = "CV1 2TT" },
+                Postcode = "CV1 2TT",
+                Uplift = 1.5m,
+                EffectiveFrom = new DateTime(2000, 01, 01),
+                EffectiveTo = new DateTime(2015, 12, 31),
+            };
+
+            var dasDisadvantage = NewService().DasDisadvantageFromEntity(dasPostcodeDisadvantage);
+
+            dasDisadvantage.Uplift.Should().Be(dasPostcodeDisadvantage.Uplift);
+            dasDisadvantage.EffectiveFrom.Should().Be(dasPostcodeDisadvantage.EffectiveFrom);
+            dasDisadvantage.EffectiveTo.Should().Be(dasPostcodeDisadvantage.EffectiveTo);
+            dasDisadvantage.Postcode.Should().Be(dasPostcodeDisadvantage.Postcode);
+        }
+
+        [Fact]
         public void EfaPostcodeDisadvantagesForPostcodes()
         {
             var efaPostcodeDisadvantages = new List<EFA_PostcodeDisadvantage>()
@@ -286,6 +357,69 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
 
             efaDisadvantages["CV1 2TT"].Should().HaveCount(2);
             efaDisadvantages["CV1 2WT"].Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void CareerLearningPilotFromEntity()
+        {
+            var careerLearningPilotPostcode = new CareerLearningPilot_Postcode()
+            {
+                MasterPostcode = new MasterPostcode { Postcode = "CV1 2TT" },
+                Postcode = "CV1 2TT",
+                AreaCode = "AreaCode",
+                EffectiveFrom = new DateTime(2000, 01, 01),
+                EffectiveTo = new DateTime(2015, 12, 31),
+            };
+
+            var careerLearningPilot = NewService().CareerLearningPilotFromEntity(careerLearningPilotPostcode);
+
+            careerLearningPilotPostcode.AreaCode.Should().Be(careerLearningPilotPostcode.AreaCode);
+            careerLearningPilotPostcode.EffectiveFrom.Should().Be(careerLearningPilotPostcode.EffectiveFrom);
+            careerLearningPilotPostcode.EffectiveTo.Should().Be(careerLearningPilotPostcode.EffectiveTo);
+            careerLearningPilotPostcode.Postcode.Should().Be(careerLearningPilotPostcode.Postcode);
+        }
+
+        [Fact]
+        public void CareerLearningPilotsForPostcodes()
+        {
+            var careerLearningPilotsPostocde = new List<CareerLearningPilot_Postcode>()
+            {
+                new CareerLearningPilot_Postcode()
+                {
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2WT" },
+                    Postcode = "CV1 2WT",
+                    AreaCode = "AreaCode",
+                    EffectiveFrom = new DateTime(2000, 01, 01),
+                    EffectiveTo = null,
+                },
+                new CareerLearningPilot_Postcode()
+                {
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2TT" },
+                    Postcode = "CV1 2TT",
+                    AreaCode = "AreaCode",
+                    EffectiveFrom = new DateTime(2000, 01, 01),
+                    EffectiveTo = new DateTime(2015, 12, 31)
+                },
+                new CareerLearningPilot_Postcode()
+                {
+                    Postcode = "Fictional"
+                }
+            }.AsQueryable();
+
+            var postcodesDataRetrievalServiceMock = NewMock();
+
+            postcodesDataRetrievalServiceMock.SetupGet(p => p.CareerLearningPilot_Postcodes).Returns(careerLearningPilotsPostocde);
+
+            var postcodes = new List<string>() { "CV1 2WT", "CV1 2TT" };
+
+            var careerLearningPilots = postcodesDataRetrievalServiceMock.Object.CareerLearningPilotsForPostcodes(postcodes);
+
+            careerLearningPilots.Should().HaveCount(2);
+            careerLearningPilots.Should().ContainKeys("CV1 2WT", "CV1 2TT");
+            careerLearningPilots.Should().NotContainKey("Fictional");
+
+            careerLearningPilots["CV1 2TT"].Should().HaveCount(1);
+            careerLearningPilots["CV1 2WT"].Should().HaveCount(1);
         }
 
         [Fact]

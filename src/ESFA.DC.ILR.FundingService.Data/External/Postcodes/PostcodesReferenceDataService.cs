@@ -9,8 +9,10 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Postcodes
     {
         private readonly IExternalDataCache _referenceDataCache;
         private readonly IEnumerable<SfaAreaCost> _emptySfaAreaCost = new List<SfaAreaCost>();
+        private readonly IEnumerable<DasDisadvantage> _emptyDasDisadvantage = new List<DasDisadvantage>();
         private readonly IEnumerable<SfaDisadvantage> _emptySfaDisadvantage = new List<SfaDisadvantage>();
         private readonly IEnumerable<EfaDisadvantage> _emptyEfaDisadvantage = new List<EfaDisadvantage>();
+        private readonly IEnumerable<CareerLearningPilot> _emptyCareerLearningPilot = new List<CareerLearningPilot>();
 
         public PostcodesReferenceDataService(IExternalDataCache referenceDataCache)
         {
@@ -29,6 +31,14 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Postcodes
             return sfaAreaCost ?? _emptySfaAreaCost;
         }
 
+        public IEnumerable<DasDisadvantage> DASDisadvantagesForPostcode(string postcode)
+        {
+            _referenceDataCache.DasDisadvantage.TryGetValue(postcode, out IEnumerable<DasDisadvantage> dasDisadvantage);
+
+            return dasDisadvantage ?? _emptyDasDisadvantage;
+        }
+
+
         public IEnumerable<SfaDisadvantage> SFADisadvantagesForPostcode(string postcode)
         {
             _referenceDataCache.SfaDisadvantage.TryGetValue(postcode, out IEnumerable<SfaDisadvantage> sfaDisadvantage);
@@ -41,6 +51,13 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Postcodes
             _referenceDataCache.EfaDisadvantage.TryGetValue(postcode, out IEnumerable<EfaDisadvantage> efaDisadvantages);
 
             return efaDisadvantages ?? _emptyEfaDisadvantage;
+        }
+
+        public IEnumerable<CareerLearningPilot> CareerLearningPilotsForPostcode(string postcode)
+        {
+            _referenceDataCache.CareerLearningPilot.TryGetValue(postcode, out IEnumerable<CareerLearningPilot> careerLearningPilots);
+
+            return careerLearningPilots ?? _emptyCareerLearningPilot;
         }
     }
 }

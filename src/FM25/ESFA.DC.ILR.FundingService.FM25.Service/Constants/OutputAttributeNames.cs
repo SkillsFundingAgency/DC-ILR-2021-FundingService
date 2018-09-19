@@ -5,6 +5,7 @@
         // Entities
         public const string Global = "Global";
         public const string Learner = "Learner";
+        public const string LearnerPeriodisedValues = "LearnerPeriodisedValues";
 
         // Global
         public const string UKPRN = "UKPRN";
@@ -41,5 +42,20 @@
         public const string RetentNew = "RetentNew";
         public const string StartFund = "StartFund";
         public const string ThresholdDays = "ThresholdDays";
+
+        // Learner Periodised Values
+        public const string LnrOnProgPay = "LnrOnProgPay";
+        public const string Period1 = "LnrPrd1Pay";
+        public const string Period2 = "LnrPrd2Pay";
+        public const string Period3 = "LnrPrd3Pay";
+        public const string Period4 = "LnrPrd4Pay";
+        public const string Period5 = "LnrPrd5Pay";
+        public const string Period6 = "LnrPrd6Pay";
+        public const string Period7 = "LnrPrd7Pay";
+        public const string Period8 = "LnrPrd8Pay";
+        public const string Period9 = "LnrPrd9Pay";
+        public const string Period10 = "LnrPrd10Pay";
+        public const string Period11 = "LnrPrd11Pay";
+        public const string Period12 = "LnrPrd12Pay";
     }
 }

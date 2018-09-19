@@ -11,5 +11,7 @@ namespace ESFA.DC.ILR.FundingService.Config
         public string OrganisationConnectionString { get; set; }
 
         public string LargeEmployersConnectionString { get; set; }
+
+        public string AppsEarningsHistoryConnectionString { get; set; }
     }
 }

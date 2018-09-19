@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.FM36.Service.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.FM36.Service.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="ESFA.DC.ILR.FundingService.FM36.Service.ruleset" />
+    <None Remove="Rulebase\Apprenticeships Earnings Calc 18_19.zip" />
+    <None Remove="Rulebase\FM36Inputs.xsrc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ESFA.DC.ILR.FundingService.FM36.Service.ruleset">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Rulebase\FM36Inputs.xsrc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Rulebase\Apprenticeships Earnings Calc 18_19.zip" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.4-beta0001" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Data\ESFA.DC.ILR.FundingService.Data.csproj" />
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model\ESFA.DC.OPA.Model.csproj" />
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service.Interface\ESFA.DC.OPA.Service.Interface.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.csproj" />
+  </ItemGroup>
+
+</Project>
