@@ -15,14 +15,10 @@
   <ItemGroup>
     <None Remove="ESFA.DC.ILR.FundingService.FM36.Service.ruleset" />
     <None Remove="Rulebase\Apprenticeships Earnings Calc 18_19.zip" />
-    <None Remove="Rulebase\FM36Inputs.xsrc" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="ESFA.DC.ILR.FundingService.FM36.Service.ruleset">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Rulebase\FM36Inputs.xsrc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -44,6 +40,12 @@
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model\ESFA.DC.OPA.Model.csproj" />
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service.Interface\ESFA.DC.OPA.Service.Interface.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Rulebase\XSRC\Inputs.xsrc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

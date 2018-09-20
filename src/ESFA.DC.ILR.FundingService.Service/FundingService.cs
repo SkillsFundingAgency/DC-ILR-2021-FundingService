@@ -24,7 +24,9 @@ namespace ESFA.DC.ILR.FundingService.Service
 
             var outputDataEntities = inputDataEntities.Select(e => _opaService.ExecuteSession(e));
 
-            return _fundingOutputService.ProcessFundingOutputs(outputDataEntities);
+            var f = _fundingOutputService.ProcessFundingOutputs(outputDataEntities);
+
+            return f;
         }
     }
 }
