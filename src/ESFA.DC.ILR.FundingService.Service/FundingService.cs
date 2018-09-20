@@ -30,7 +30,9 @@ namespace ESFA.DC.ILR.FundingService.Service
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            return _fundingOutputService.ProcessFundingOutputs(outputDataEntities);
+            var f = _fundingOutputService.ProcessFundingOutputs(outputDataEntities);
+
+            return f;
         }
     }
 }
