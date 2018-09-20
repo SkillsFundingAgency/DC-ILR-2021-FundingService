@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
@@ -33,6 +34,17 @@ namespace ESFA.DC.ILR.FundingService.FM36Actor
 
         public async Task<string> Process(FundingActorDto actorModel, CancellationToken cancellationToken)
         {
+            FM36FundingOutputs results = RunFunding(actorModel, cancellationToken);
+            actorModel = null;
+
+            GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
+
+            return JsonSerializationService.Serialize(results);
+        }
+
+        private FM36FundingOutputs RunFunding(FundingActorDto actorModel, CancellationToken cancellationToken)
+        {
             if (ExecutionContext is ExecutionContext executionContextObj)
             {
                 executionContextObj.JobId = "-1";
@@ -44,23 +56,24 @@ namespace ESFA.DC.ILR.FundingService.FM36Actor
             IExternalDataCache externalDataCache;
             IInternalDataCache internalDataCache;
             IFileDataCache fileDataCache;
+            FM36FundingOutputs results;
 
             try
             {
-                logger.LogDebug($"{nameof(FM36Actor)} {ActorId} starting");
+                logger.LogDebug($"{nameof(FM36Actor)} {ActorId} {GC.GetGeneration(actorModel)} starting");
 
                 externalDataCache = JsonSerializationService.Deserialize<ExternalDataCache>(actorModel.ExternalDataCache);
                 internalDataCache = JsonSerializationService.Deserialize<InternalDataCache>(actorModel.InternalDataCache);
                 fileDataCache = JsonSerializationService.Deserialize<FileDataCache>(actorModel.FileDataCache);
 
-                logger.LogDebug($"{nameof(FM36Actor)} {ActorId} finished getting input data");
+                logger.LogDebug($"{nameof(FM36Actor)} {ActorId} {GC.GetGeneration(actorModel)} finished getting input data");
 
                 cancellationToken.ThrowIfCancellationRequested();
             }
             catch (Exception ex)
             {
                 ActorEventSource.Current.ActorMessage(this, "Exception-{0}", ex.ToString());
-                logger.LogError($"Error while processing {nameof(FM36Actor)} job", ex);
+                logger.LogError($"Error while processing {nameof(FM36Actor)}", ex);
                 throw;
             }
 
@@ -78,25 +91,32 @@ namespace ESFA.DC.ILR.FundingService.FM36Actor
 
                 try
                 {
-                    jobLogger.LogDebug($"{nameof(FM36Actor)} {ActorId} started processing");
-                    IFundingService<ILearner, FM36FundingOutputs> fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, FM36FundingOutputs>>();
+                    jobLogger.LogDebug(
+                        $"{nameof(FM36Actor)} {ActorId} {GC.GetGeneration(actorModel)} started processing");
+                    IFundingService<ILearner, FM36FundingOutputs> fundingService =
+                        childLifetimeScope.Resolve<IFundingService<ILearner, FM36FundingOutputs>>();
 
-                    List<MessageLearner> learners = JsonSerializationService.Deserialize<List<MessageLearner>>(actorModel.ValidLearners);
+                    List<MessageLearner> learners =
+                        JsonSerializationService.Deserialize<List<MessageLearner>>(actorModel.ValidLearners);
 
-                    actorModel = null;
+                    results = fundingService.ProcessFunding(learners, cancellationToken);
 
-                    FM36FundingOutputs results = fundingService.ProcessFunding(learners, cancellationToken);
-
-                    jobLogger.LogDebug($"{nameof(FM36Actor)} {ActorId} completed processing");
-                    return JsonSerializationService.Serialize(results);
+                    jobLogger.LogDebug(
+                        $"{nameof(FM36Actor)} {ActorId} {GC.GetGeneration(actorModel)} completed processing");
                 }
                 catch (Exception ex)
                 {
                     ActorEventSource.Current.ActorMessage(this, "Exception-{0}", ex.ToString());
-                    jobLogger.LogError($"Error while processing {nameof(FM36Actor)} job", ex);
+                    jobLogger.LogError($"Error while processing {nameof(FM36Actor)}", ex);
                     throw;
                 }
             }
+
+            externalDataCache = null;
+            internalDataCache = null;
+            fileDataCache = null;
+
+            return results;
         }
     }
 }

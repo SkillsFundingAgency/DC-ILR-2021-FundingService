@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
@@ -33,6 +34,17 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
 
         public async Task<string> Process(FundingActorDto actorModel, CancellationToken cancellationToken)
         {
+            FM35FundingOutputs results = RunFunding(actorModel, cancellationToken);
+            actorModel = null;
+
+            GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
+
+            return JsonSerializationService.Serialize(results);
+        }
+
+        private FM35FundingOutputs RunFunding(FundingActorDto actorModel, CancellationToken cancellationToken)
+        {
             if (ExecutionContext is ExecutionContext executionContextObj)
             {
                 executionContextObj.JobId = "-1";
@@ -44,23 +56,24 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
             IExternalDataCache externalDataCache;
             IInternalDataCache internalDataCache;
             IFileDataCache fileDataCache;
+            FM35FundingOutputs results;
 
             try
             {
-                logger.LogDebug($"{nameof(FM35Actor)} {ActorId} starting");
+                logger.LogDebug($"{nameof(FM35Actor)} {ActorId} {GC.GetGeneration(actorModel)} starting");
 
                 externalDataCache = JsonSerializationService.Deserialize<ExternalDataCache>(actorModel.ExternalDataCache);
                 internalDataCache = JsonSerializationService.Deserialize<InternalDataCache>(actorModel.InternalDataCache);
                 fileDataCache = JsonSerializationService.Deserialize<FileDataCache>(actorModel.FileDataCache);
 
-                logger.LogDebug($"{nameof(FM35Actor)} {ActorId} finished getting input data");
+                logger.LogDebug($"{nameof(FM35Actor)} {ActorId} {GC.GetGeneration(actorModel)} finished getting input data");
 
                 cancellationToken.ThrowIfCancellationRequested();
             }
             catch (Exception ex)
             {
                 ActorEventSource.Current.ActorMessage(this, "Exception-{0}", ex.ToString());
-                logger.LogError($"Error while processing {nameof(FM35Actor)} job", ex);
+                logger.LogError($"Error while processing {nameof(FM35Actor)}", ex);
                 throw;
             }
 
@@ -78,25 +91,28 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
 
                 try
                 {
-                    jobLogger.LogDebug($"{nameof(FM35Actor)} {ActorId} started processing");
+                    jobLogger.LogDebug($"{nameof(FM35Actor)} {ActorId} {GC.GetGeneration(actorModel)} started processing");
                     IFundingService<ILearner, FM35FundingOutputs> fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, FM35FundingOutputs>>();
 
                     List<MessageLearner> learners = JsonSerializationService.Deserialize<List<MessageLearner>>(actorModel.ValidLearners);
 
-                    actorModel = null;
+                    results = fundingService.ProcessFunding(learners, cancellationToken);
 
-                    FM35FundingOutputs results = fundingService.ProcessFunding(learners, cancellationToken);
-
-                    jobLogger.LogDebug($"{nameof(FM35Actor)} {ActorId} completed processing");
-                    return JsonSerializationService.Serialize(results);
+                    jobLogger.LogDebug($"{nameof(FM35Actor)} {ActorId} {GC.GetGeneration(actorModel)} completed processing");
                 }
                 catch (Exception ex)
                 {
                     ActorEventSource.Current.ActorMessage(this, "Exception-{0}", ex.ToString());
-                    jobLogger.LogError($"Error while processing {nameof(FM35Actor)} job", ex);
+                    jobLogger.LogError($"Error while processing {nameof(FM35Actor)}", ex);
                     throw;
                 }
             }
+
+            externalDataCache = null;
+            internalDataCache = null;
+            fileDataCache = null;
+
+            return results;
         }
     }
 }

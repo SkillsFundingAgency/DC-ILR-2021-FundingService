@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
@@ -36,6 +37,17 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
 
         public async Task<string> Process(FundingActorDto actorModel, CancellationToken cancellationToken)
         {
+            Global results = RunFunding(actorModel, cancellationToken);
+            actorModel = null;
+
+            GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
+
+            return JsonSerializationService.Serialize(results);
+        }
+
+        private Global RunFunding(FundingActorDto actorModel, CancellationToken cancellationToken)
+        {
             if (ExecutionContext is ExecutionContext executionContextObj)
             {
                 executionContextObj.JobId = "-1";
@@ -47,6 +59,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
             IExternalDataCache externalDataCache;
             IInternalDataCache internalDataCache;
             IFileDataCache fileDataCache;
+            Global condensedResults;
 
             try
             {
@@ -63,7 +76,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
             catch (Exception ex)
             {
                 ActorEventSource.Current.ActorMessage(this, "Exception-{0}", ex.ToString());
-                logger.LogError($"Error while processing {nameof(FM25Actor)} job", ex);
+                logger.LogError($"Error while processing {nameof(FM25Actor)}", ex);
                 throw;
             }
 
@@ -81,7 +94,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
 
                 try
                 {
-                    jobLogger.LogDebug($"{nameof(FM25Actor)} {ActorId} started processing");
+                    jobLogger.LogDebug($"{nameof(FM25Actor)} {ActorId} {GC.GetGeneration(actorModel)} started processing");
 
                     IEnumerable<Global> fm25Results;
                     IEnumerable<PeriodisationGlobal> fm25PeriodisationResults;
@@ -96,8 +109,6 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
                         IFundingService<ILearner, IEnumerable<Global>> fundingService = fundingServiceLifetimeScope.Resolve<IFundingService<ILearner, IEnumerable<Global>>>();
 
                         List<MessageLearner> learners = JsonSerializationService.Deserialize<List<MessageLearner>>(actorModel.ValidLearners);
-
-                        actorModel = null;
 
                         fm25Results = fundingService.ProcessFunding(learners, cancellationToken).ToList();
 
@@ -118,18 +129,23 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
                         jobLogger.LogDebug("FM25 Periodisation Rulebase Finishing");
                     }
 
-                    jobLogger.LogDebug($"{nameof(FM25Actor)} {ActorId} completed processing");
+                    jobLogger.LogDebug($"{nameof(FM25Actor)} {ActorId} {GC.GetGeneration(actorModel)} completed processing");
 
-                    Global condensedResults = CondenseResults(fm25Results, fm25PeriodisationResults);
-                    return JsonSerializationService.Serialize(condensedResults);
+                    condensedResults = CondenseResults(fm25Results, fm25PeriodisationResults);
                 }
                 catch (Exception ex)
                 {
                     ActorEventSource.Current.ActorMessage(this, "Exception-{0}", ex.ToString());
-                    jobLogger.LogError($"Error while processing {nameof(FM25Actor)} job", ex);
+                    jobLogger.LogError($"Error while processing {nameof(FM25Actor)}", ex);
                     throw;
                 }
             }
+
+            externalDataCache = null;
+            internalDataCache = null;
+            fileDataCache = null;
+
+            return condensedResults;
         }
 
         private Global CondenseResults(IEnumerable<Global> globals, IEnumerable<PeriodisationGlobal> periodisationGlobals)
