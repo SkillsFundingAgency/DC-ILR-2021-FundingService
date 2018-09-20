@@ -19,7 +19,7 @@ namespace ESFA.DC.ILR.FundingService.Data.External.LARS.Interface
 
         IEnumerable<LARSStandardApprenticeshipFunding> LARSStandardApprenticeshipFunding(int? standardCode, int? progType);
 
-        IEnumerable<LARSFrameworkApprenticeshipFunding> LARSFrameworkApprenticeshipFunding(int? standardCode, int? progType, int? pwayCode);
+        IEnumerable<LARSFrameworkApprenticeshipFunding> LARSFrameworkApprenticeshipFunding(int? fworkCode, int? progType, int? pwayCode);
 
         IEnumerable<LARSStandardCommonComponent> LARSStandardCommonComponent(int? standardCode);
 

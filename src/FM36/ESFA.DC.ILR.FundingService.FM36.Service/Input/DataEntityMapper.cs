@@ -205,6 +205,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
+                    { Attributes.AppIdentifierInput, new AttributeData(aecEarningsHistory.AppIdentifier) },
                     { Attributes.AppProgCompletedInTheYearInput, new AttributeData(aecEarningsHistory.AppProgCompletedInTheYearInput) },
                     { Attributes.HistoricCollectionReturnInput, new AttributeData(aecEarningsHistory.CollectionReturnCode) },
                     { Attributes.HistoricCollectionYearInput, new AttributeData(aecEarningsHistory.CollectionYear) },
@@ -337,6 +338,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
             {
                 LARSVersion = _larsReferenceDataService.LARSCurrentVersion(),
                 Year = Attributes.YearValue,
+
                 // ToDo: implement AcademicYear service over InternalCache for "CollectionPeriod" to calculate value.
                 // This attribute is not used by rulebase at present 10/09/18.
                 CollectionPeriod = Attributes.CollectionPeriodValue,
