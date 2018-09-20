@@ -1,4 +1,6 @@
-﻿using ESFA.DC.ILR.FundingService.Data.Population.Interface;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 
 namespace ESFA.DC.ILR.FundingService.Data.Population
 {
@@ -21,12 +23,14 @@ namespace ESFA.DC.ILR.FundingService.Data.Population
             _fileDataCachePopulationService = fileDataCachePopulationService;
         }
 
-        public void Populate()
+        public async Task PopulateAsync(CancellationToken cancellationToken)
         {
-            _internalDataCachePopulationService.Populate();
-            _referenceDataCachePopulationService.Populate();
-            _fundingContextPopulationService.Populate();
-            _fileDataCachePopulationService.Populate();
+            await Task.WhenAll(
+                _internalDataCachePopulationService.PopulateAsync(cancellationToken),
+                _referenceDataCachePopulationService.PopulateAsync(cancellationToken),
+                _fundingContextPopulationService.PopulateAsync(cancellationToken),
+                _fileDataCachePopulationService.PopulateAsync(cancellationToken))
+            .ConfigureAwait(false);
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Model;
@@ -20,7 +22,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
     public class ExternalDataCachePopulationServiceTests
     {
         [Fact]
-        public void Populate()
+        public async Task Populate()
         {
             var message = new TestMessage()
             {
@@ -111,7 +113,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
 
             appsEarningsHistoryDataRetrievalServiceMock.Setup(a => a.AppsEarningsHistoryForLearners(It.IsAny<int>(), It.IsAny<IEnumerable<LearnRefNumberULNKey>>())).Returns(aecHistory).Verifiable();
 
-            NewService(
+            await NewService(
                 externalDataCache,
                 appsEarningsHistoryDataRetrievalServiceMock.Object,
                 postcodesDataRetrievalServiceMock.Object,
@@ -119,7 +121,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
                 larsDataRetrievalServiceMock.Object,
                 organisationDataRetrievalServiceMock.Object,
                 fundingServiceDtoMock.Object)
-                .Populate();
+                .PopulateAsync(CancellationToken.None);
 
             postcodesDataRetrievalServiceMock.VerifyAll();
             largeEmployersDataRetrievalServiceMock.VerifyAll();

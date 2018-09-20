@@ -1,4 +1,6 @@
-﻿using ESFA.DC.ILR.FundingService.Data.Population.Interface;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using Moq;
 using Xunit;
 
@@ -7,19 +9,19 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
     public class PopulationServiceTests
     {
         [Fact]
-        public void Populate()
+        public async Task Populate()
         {
             var internalDataCachePopulationServiceMock = new Mock<IInternalDataCachePopulationService>();
             var externalDataCachePopulationServiceMock = new Mock<IExternalDataCachePopulationService>();
             var fundingContextPopulationServiceMock = new Mock<IFundingContextPopulationService>();
             var fileDataCachePopulationServiceMock = new Mock<IFileDataCachePopulationService>();
 
-            internalDataCachePopulationServiceMock.Setup(ps => ps.Populate()).Verifiable();
-            externalDataCachePopulationServiceMock.Setup(ps => ps.Populate()).Verifiable();
-            fundingContextPopulationServiceMock.Setup(ps => ps.Populate()).Verifiable();
-            fileDataCachePopulationServiceMock.Setup(ps => ps.Populate()).Verifiable();
+            internalDataCachePopulationServiceMock.Setup(ps => ps.PopulateAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask).Verifiable();
+            externalDataCachePopulationServiceMock.Setup(ps => ps.PopulateAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask).Verifiable();
+            fundingContextPopulationServiceMock.Setup(ps => ps.PopulateAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask).Verifiable();
+            fileDataCachePopulationServiceMock.Setup(ps => ps.PopulateAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask).Verifiable();
 
-            NewService(internalDataCachePopulationServiceMock.Object, externalDataCachePopulationServiceMock.Object, fundingContextPopulationServiceMock.Object, fileDataCachePopulationServiceMock.Object).Populate();
+            await NewService(internalDataCachePopulationServiceMock.Object, externalDataCachePopulationServiceMock.Object, fundingContextPopulationServiceMock.Object, fileDataCachePopulationServiceMock.Object).PopulateAsync(CancellationToken.None);
 
             internalDataCachePopulationServiceMock.Verify();
             externalDataCachePopulationServiceMock.Verify();

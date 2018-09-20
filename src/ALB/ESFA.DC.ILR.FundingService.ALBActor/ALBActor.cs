@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
@@ -15,11 +14,11 @@ using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
 using ESFA.DC.ILR.FundingService.Stateless.Models;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
-using ESFA.DC.Logging;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
+using ExecutionContext = ESFA.DC.Logging.ExecutionContext;
 
 namespace ESFA.DC.ILR.FundingService.ALBActor
 {
@@ -27,20 +26,43 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
     [ActorService(Name = ActorServiceNameConstants.ALB)]
     public class ALBActor : AbstractFundingActor, IALBActor
     {
-        public ALBActor(ActorService actorService, ActorId actorId, ILifetimeScope lifetimeScope)
-            : base(actorService, actorId, lifetimeScope)
+        public ALBActor(ActorService actorService, ActorId actorId, ILifetimeScope lifetimeScope, IExecutionContext executionContext, IJsonSerializationService jsonSerializationService)
+            : base(actorService, actorId, lifetimeScope, executionContext, jsonSerializationService)
         {
         }
 
-        public Task<string> Process(FundingActorDto albActorModel)
+        public async Task<string> Process(FundingActorDto actorModel, CancellationToken cancellationToken)
         {
-            var jsonSerializationService = LifetimeScope.Resolve<ISerializationService>();
+            ExternalDataCache referenceDataCache;
+            InternalDataCache internalDataCache;
+            FileDataCache fileDataCache;
 
-            var referenceDataCache = jsonSerializationService.Deserialize<ExternalDataCache>(albActorModel.ExternalDataCache);
+            if (ExecutionContext is ExecutionContext executionContextObj)
+            {
+                executionContextObj.JobId = "-1";
+                executionContextObj.TaskKey = ActorId.ToString();
+            }
 
-            var internalDataCache = jsonSerializationService.Deserialize<InternalDataCache>(albActorModel.InternalDataCache);
+            ILogger logger = LifetimeScope.Resolve<ILogger>();
 
-            var fileDataCache = jsonSerializationService.Deserialize<FileDataCache>(albActorModel.FileDataCache);
+            try
+            {
+                logger.LogDebug($"{nameof(ALBActor)} {ActorId} starting");
+
+                referenceDataCache = JsonSerializationService.Deserialize<ExternalDataCache>(actorModel.ExternalDataCache);
+                internalDataCache = JsonSerializationService.Deserialize<InternalDataCache>(actorModel.InternalDataCache);
+                fileDataCache = JsonSerializationService.Deserialize<FileDataCache>(actorModel.FileDataCache);
+
+                logger.LogDebug($"{nameof(ALBActor)} {ActorId} finished getting input data");
+
+                cancellationToken.ThrowIfCancellationRequested();
+            }
+            catch (Exception ex)
+            {
+                ActorEventSource.Current.ActorMessage(this, "Exception-{0}", ex.ToString());
+                logger.LogError($"Error while processing {nameof(ALBActor)} job", ex);
+                throw;
+            }
 
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
@@ -49,29 +71,29 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                 c.RegisterInstance(fileDataCache).As<IFileDataCache>();
             }))
             {
-                var executionContext = (ExecutionContext)childLifetimeScope.Resolve<IExecutionContext>();
-                executionContext.JobId = albActorModel.JobId.ToString();
+                ExecutionContext executionContext = (ExecutionContext)childLifetimeScope.Resolve<IExecutionContext>();
+                executionContext.JobId = actorModel.JobId.ToString();
                 executionContext.TaskKey = ActorId.ToString();
-                var logger = childLifetimeScope.Resolve<ILogger>();
+                ILogger jobLogger = childLifetimeScope.Resolve<ILogger>();
 
                 try
                 {
-                    logger.LogDebug("ALB Actor started processing");
-                    var fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, ALBFundingOutputs>>();
+                    jobLogger.LogDebug($"{nameof(ALBActor)} started processing");
+                    IFundingService<ILearner, ALBFundingOutputs> fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, ALBFundingOutputs>>();
 
-                    var learners = jsonSerializationService.Deserialize<List<MessageLearner>>(albActorModel.ValidLearners);
+                    List<MessageLearner> learners = JsonSerializationService.Deserialize<List<MessageLearner>>(actorModel.ValidLearners);
 
-                    albActorModel = null;
+                    actorModel = null;
 
-                    var results = fundingService.ProcessFunding(learners);
+                    ALBFundingOutputs results = fundingService.ProcessFunding(learners, cancellationToken);
 
-                    logger.LogDebug("ALB Actor completed processing");
-                    return Task.FromResult(jsonSerializationService.Serialize(results));
+                    jobLogger.LogDebug($"{nameof(ALBActor)} completed processing");
+                    return JsonSerializationService.Serialize(results);
                 }
                 catch (Exception ex)
                 {
                     ActorEventSource.Current.ActorMessage(this, "Exception-{0}", ex.ToString());
-                    logger.LogError("Error while processing Actor job", ex);
+                    jobLogger.LogError($"Error while processing {nameof(ALBActor)} job", ex);
                     throw;
                 }
             }

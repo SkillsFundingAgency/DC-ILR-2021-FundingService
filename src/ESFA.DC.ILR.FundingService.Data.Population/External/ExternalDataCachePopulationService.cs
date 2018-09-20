@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
@@ -36,7 +38,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             _fundingServiceDto = fundingServiceDto;
         }
 
-        public void Populate()
+        public async Task PopulateAsync(CancellationToken cancellationToken)
         {
             var providerUKPRN = _fundingServiceDto.Message.LearningProviderEntity.UKPRN;
 

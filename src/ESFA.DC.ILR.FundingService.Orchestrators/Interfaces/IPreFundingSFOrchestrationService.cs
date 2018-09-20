@@ -6,6 +6,6 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Interfaces
 {
     public interface IPreFundingSFOrchestrationService
     {
-        Task Execute(IJobContextMessage jobContextMessage, CancellationToken cancellationToken);
+        Task ExecuteAsync(IJobContextMessage jobContextMessage, CancellationToken cancellationToken);
     }
 }

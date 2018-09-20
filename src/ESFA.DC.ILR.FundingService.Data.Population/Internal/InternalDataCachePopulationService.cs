@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Internal;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
@@ -31,7 +33,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Internal
            { 12, new DateTime(2019, 07, 01) },
         };
 
-        public void Populate()
+        public async Task PopulateAsync(CancellationToken cancellationToken)
         {
             var internalCache = (InternalDataCache)_internalDataCache;
 

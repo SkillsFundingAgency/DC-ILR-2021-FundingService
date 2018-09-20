@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
@@ -34,7 +35,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
             // Build Persistance Dictionary
             BuildKeyValueDictionary(message);
 
-            _populationService.Populate();
+            _populationService.PopulateAsync(CancellationToken.None).Wait();
 
             // pre funding
             var learnersToProcess = _learnerPerActorService.BuildPages();
@@ -63,7 +64,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
 
             Parallel.ForEach(learnersList, ll =>
             {
-                fundingOutputsList.Add(_fundingService.ProcessFunding(ll));
+                fundingOutputsList.Add(_fundingService.ProcessFunding(ll, CancellationToken.None));
             });
 
             return TransformFundingOutput(fundingOutputsList.ToList());
