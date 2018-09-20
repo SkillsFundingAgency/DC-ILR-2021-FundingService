@@ -34,6 +34,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Rulebase
         public const string RulebaseMasterFolder = "RulebaseMasterFiles";
         public const string XsrcName = "Inputs";
 
+        private IList<string> xsrcEntityList = new List<string>();
+        private IList<string> dataEntityEntityList = new List<string>();
+        private IList<string> xsrcAttributeList = new List<string>();
+        private IList<string> dataEntityAttributeList = new List<string>();
+        private IDictionary<string, List<string>> xsrcEntityDictionary = new Dictionary<string, List<string>>();
+        private IDictionary<string, List<string>> dataEntityDictionary = new Dictionary<string, List<string>>();
+
         [Fact]
         public void RulebaseVersion_AcademicYear()
         {
@@ -148,7 +155,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Rulebase
             var xsrcEntityAttributeDictionaries = GetXsrcEntityAttributeDictionaries(xsrcEntity);
             var dataEntityMapperAttributeDictionaries = GetDataEntityAttributeDictionaries(dateEntityMapperEntities);
 
-            // Global
             dataEntityMapperAttributeDictionaries.Should().BeEquivalentTo(xsrcEntityAttributeDictionaries);
         }
 
@@ -283,8 +289,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Rulebase
             };
         }
 
-        public IList<string> xsrcEntityList = new List<string>();
-
         public IList<string> GetEntityList(IXsrcEntity entity)
         {
             xsrcEntityList.Add(entity.PublicName);
@@ -297,8 +301,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Rulebase
             return xsrcEntityList;
         }
 
-        public IList<string> dataEntityEntityList = new List<string>();
-
         public IList<string> GetEntityList(IDataEntity entity)
         {
             dataEntityEntityList.Add(entity.EntityName);
@@ -310,8 +312,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Rulebase
 
             return dataEntityEntityList;
         }
-
-        public IList<string> xsrcAttributeList = new List<string>();
 
         public IList<string> GetAttributeList(IXsrcEntity entity)
         {
@@ -327,8 +327,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Rulebase
 
             return xsrcAttributeList;
         }
-
-        public IList<string> dataEntityAttributeList = new List<string>();
 
         public IList<string> GetAttributeList(IDataEntity entity)
         {
@@ -379,32 +377,28 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Rulebase
             return dataEntities;
         }
 
-        IDictionary<string, List<string>> XsrcEntityDictionary = new Dictionary<string, List<string>>();
-
         public IDictionary<string, List<string>> GetXsrcEntityAttributeDictionaries(IDataEntity dataEntity)
         {
-            XsrcEntityDictionary.Add(dataEntity.EntityName, dataEntity.Attributes.Keys.ToList());
+            xsrcEntityDictionary.Add(dataEntity.EntityName, dataEntity.Attributes.Keys.ToList());
 
             foreach (var child in dataEntity.Children)
             {
                 GetXsrcEntityAttributeDictionaries(child);
             }
 
-            return XsrcEntityDictionary;
+            return xsrcEntityDictionary;
         }
-
-        IDictionary<string, List<string>> DataEntityDictionary = new Dictionary<string, List<string>>();
 
         public IDictionary<string, List<string>> GetDataEntityAttributeDictionaries(IDataEntity dataEntity)
         {
-            DataEntityDictionary.Add(dataEntity.EntityName, dataEntity.Attributes.Keys.ToList());
+            dataEntityDictionary.Add(dataEntity.EntityName, dataEntity.Attributes.Keys.ToList());
 
             foreach (var child in dataEntity.Children)
             {
                 GetDataEntityAttributeDictionaries(child);
             }
 
-            return DataEntityDictionary;
+            return dataEntityDictionary;
         }
 
         public XsrcGlobal GetXSRCEntity(string folderName)

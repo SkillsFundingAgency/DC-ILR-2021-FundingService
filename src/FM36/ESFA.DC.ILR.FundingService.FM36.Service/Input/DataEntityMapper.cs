@@ -338,6 +338,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
             {
                 LARSVersion = _larsReferenceDataService.LARSCurrentVersion(),
                 Year = Attributes.YearValue,
+
                 // ToDo: implement AcademicYear service over InternalCache for "CollectionPeriod" to calculate value.
                 // This attribute is not used by rulebase at present 10/09/18.
                 CollectionPeriod = Attributes.CollectionPeriodValue,
