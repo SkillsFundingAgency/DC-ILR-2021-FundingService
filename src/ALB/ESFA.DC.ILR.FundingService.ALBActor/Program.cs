@@ -59,9 +59,6 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
             containerBuilder.RegisterInstance(loggerConfig).As<ILoggerConfig>().SingleInstance();
             containerBuilder.RegisterModule<LoggerModule>();
 
-            // register serialization
-            containerBuilder.RegisterType<JsonSerializationService>().As<ISerializationService>();
-
             return containerBuilder;
         }
     }
