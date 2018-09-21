@@ -34,7 +34,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                         Global = GlobalOutput(dataEntities.First()),
                         Learners = dataEntities
                         .Where(g => g.Children != null)
-                        .SelectMany(g => g.Children.Where(e => e.EntityName == "Learner")
+                        .SelectMany(g => g.Children.Where(e => e.EntityName == Attributes.EntityLearner)
                         .Select(LearnerFromDataEntity))
                         .ToArray(),
                     };
