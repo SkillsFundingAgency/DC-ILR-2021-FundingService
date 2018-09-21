@@ -4,16 +4,14 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Xml;
-using ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory.Interface;
-using ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory.Model;
+using ESFA.DC.ILR.FundingService.ALB.Service.Constants;
+using ESFA.DC.ILR.FundingService.ALB.Service.Input;
+using ESFA.DC.ILR.FundingService.ALB.Service.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Data.File.Interface;
-using ESFA.DC.ILR.FundingService.FM36.Service.Constants;
-using ESFA.DC.ILR.FundingService.FM36.Service.Input;
-using ESFA.DC.ILR.FundingService.FM36.Service.Model;
 using ESFA.DC.ILR.Tests.Model;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
@@ -24,12 +22,12 @@ using FluentAssertions;
 using Moq;
 using Xunit;
 
-namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
+namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
 {
     public class RulebaseInterfaceTests
     {
         public const string AcademicYear = "1819";
-        public const string RulebaseName = "Apprenticeships Earnings Calc 18_19";
+        public const string RulebaseName = "Loans Bursary 18_19";
         public const string RulebaseFolder = "Rulebase";
         public const string RulebaseMasterFolder = "RulebaseMasterFiles";
         public const string XsrcName = "Inputs";
@@ -165,16 +163,11 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 Attributes.EntityGlobal,
                 Attributes.EntityLearner,
                 Attributes.EntityLearningDelivery,
-                Attributes.EntityApprenticeshipFinancialRecord,
                 Attributes.EntityLearningDeliveryFAM,
-                Attributes.EntityLearnerEmploymentStatus,
-                Attributes.EntityStandardLARSApprenticshipFunding,
-                Attributes.EntityFrameworkLARSApprenticshipFunding,
-                Attributes.EntitySFA_PostcodeDisadvantage,
-                Attributes.EntityHistoricEarningInput,
-                Attributes.EntityLARSFrameworkCmnComp,
-                Attributes.EntityStandardCommonComponent,
-                Attributes.EntityLearningDeliveryLARS_Funding
+                Attributes.EntityLearningDeliverySFA_PostcodeAreaCost,
+                Attributes.EntityLearningDeliveryLARS_Funding,
+                Attributes.EntityLearningDeliverySubsidyPilotPostcodeArea,
+                Attributes.EntityLearningDeliveryLARS_CareerLearningPilot,
             };
         }
 
@@ -182,110 +175,48 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         {
             return new List<string>
             {
-                Attributes.AFinAmount,
-                Attributes.AFinCode,
-                Attributes.AFinDate,
-                Attributes.AFinType,
-                Attributes.AgreeId,
-                Attributes.AimSeqNumber,
-                Attributes.AimType,
-                Attributes.AppProgCompletedInTheYearInput,
-                Attributes.CollectionPeriod,
-                Attributes.CompStatus,
-                Attributes.DateEmpStatApp,
-                Attributes.DateOfBirth,
-                Attributes.DisApprenticeshipUplift,
-                Attributes.DisUpEffectiveFrom,
-                Attributes.DisUpEffectiveTo,
-                Attributes.EmpId,
-                Attributes.EMPStat,
-                Attributes.EmpStatMon_SEM,
-                Attributes.FrameworkAF1618EmployerAdditionalPayment,
-                Attributes.FrameworkAF1618FrameworkUplift,
-                Attributes.FrameworkAF1618ProviderAdditionalPayment,
-                Attributes.FrameworkAFCareLeaverAdditionalPayment,
-                Attributes.FrameworkAFEffectiveFrom,
-                Attributes.FrameworkAFEffectiveTo,
-                Attributes.FrameworkAFFundingCategory,
-                Attributes.FrameworkAFMaxEmployerLevyCap,
-                Attributes.FrameworkAFReservedValue2,
-                Attributes.FrameworkAFReservedValue3,
-                Attributes.FrameworkCommonComponent,
-                Attributes.FworkCode,
-                Attributes.AppIdentifierInput,
-                Attributes.HistoricCollectionReturnInput,
-                Attributes.HistoricCollectionYearInput,
-                Attributes.HistoricDaysInYearInput,
-                Attributes.HistoricEffectiveTNPStartDateInput,
-                Attributes.HistoricEmpIdEndWithinYearInput,
-                Attributes.HistoricEmpIdStartWithinYearInput,
-                Attributes.HistoricFworkCodeInput,
-                Attributes.HistoricLearnDelProgEarliestACT2DateInput,
-                Attributes.HistoricLearner1618AtStartInput,
-                Attributes.HistoricLearnRefNumberInput,
-                Attributes.HistoricPMRAmountInput,
-                Attributes.HistoricProgrammeStartDateIgnorePathwayInput,
-                Attributes.HistoricProgrammeStartDateMatchPathwayInput,
-                Attributes.HistoricProgTypeInput,
-                Attributes.HistoricPwayCodeInput,
-                Attributes.HistoricSTDCodeInput,
-                Attributes.HistoricTNP1Input,
-                Attributes.HistoricTNP2Input,
-                Attributes.HistoricTNP3Input,
-                Attributes.HistoricTNP4Input,
-                Attributes.HistoricTotal1618UpliftPaymentsInTheYearInput,
-                Attributes.HistoricTotalProgAimPaymentsInTheYearInput,
-                Attributes.HistoricUKPRNInput,
-                Attributes.HistoricULNInput,
-                Attributes.HistoricUptoEndDateInput,
-                Attributes.HistoricVirtualTNP3EndofTheYearInput,
-                Attributes.HistoricVirtualTNP4EndofTheYearInput,
-                Attributes.LARSFrameworkCommonComponentCode,
-                Attributes.LARSFrameworkCommonComponentEffectiveFrom,
-                Attributes.LARSFrameworkCommonComponentEffectiveTo,
-                Attributes.LARSFundCategory,
-                Attributes.LARSFundEffectiveFrom,
-                Attributes.LARSFundEffectiveTo,
-                Attributes.LARSFundWeightedRate,
-                Attributes.LARSStandardCommonComponentCode,
-                Attributes.LARSStandardCommonComponentEffectiveFrom,
-                Attributes.LARSStandardCommonComponentEffectiveTo,
                 Attributes.LARSVersion,
-                Attributes.LearnActEndDate,
-                Attributes.LearnAimRef,
-                Attributes.LearnDelFAMCode,
-                Attributes.LearnDelFAMDateFrom,
-                Attributes.LearnDelFAMDateTo,
-                Attributes.LearnDelFAMType,
-                Attributes.LearnPlanEndDate,
+                Attributes.PostcodeAreaCostVersion,
+                Attributes.UKPRN,
                 Attributes.LearnRefNumber,
+                Attributes.AimSeqNumber,
+                Attributes.CompStatus,
+                Attributes.LearnActEndDate,
+                Attributes.LearnAimRefType,
+                Attributes.LearnDelFundModel,
+                Attributes.LearnPlanEndDate,
                 Attributes.LearnStartDate,
-                Attributes.LrnDelFAM_EEF,
+                Attributes.LrnDelFAM_ADL,
                 Attributes.LrnDelFAM_LDM1,
                 Attributes.LrnDelFAM_LDM2,
                 Attributes.LrnDelFAM_LDM3,
                 Attributes.LrnDelFAM_LDM4,
+                Attributes.LrnDelFAM_RES,
+                Attributes.NotionalNVQLevelv2,
                 Attributes.OrigLearnStartDate,
                 Attributes.OtherFundAdj,
-                Attributes.PMUKPRN,
-                Attributes.PrevUKPRN,
+                Attributes.Outcome,
                 Attributes.PriorLearnFundAdj,
-                Attributes.ProgType,
-                Attributes.PwayCode,
-                Attributes.StandardAF1618EmployerAdditionalPayment,
-                Attributes.StandardAF1618FrameworkUplift,
-                Attributes.StandardAF1618ProviderAdditionalPayment,
-                Attributes.StandardAFCareLeaverAdditionalPayment,
-                Attributes.StandardAFEffectiveFrom,
-                Attributes.StandardAFEffectiveTo,
-                Attributes.StandardAFFundingCategory,
-                Attributes.StandardAFMaxEmployerLevyCap,
-                Attributes.StandardAFReservedValue2,
-                Attributes.StandardAFReservedValue3,
-                Attributes.STDCode,
-                Attributes.UKPRN,
-                Attributes.ULN,
-                Attributes.Year,
+                Attributes.RegulatedCreditValue,
+                Attributes.LearnDelFAMCode,
+                Attributes.LearnDelFAMDateFrom,
+                Attributes.LearnDelFAMDateTo,
+                Attributes.LearnDelFAMType,
+                Attributes.AreaCosFactor,
+                Attributes.AreaCosEffectiveFrom,
+                Attributes.AreaCosEffectiveTo,
+                Attributes.SubsidyPilotAreaCode,
+                Attributes.SubsidyPilotEffectiveFrom,
+                Attributes.SubsidyPilotEffectiveTo,
+                Attributes.LARSFundCategory,
+                Attributes.LARSFundEffectiveFrom,
+                Attributes.LARSFundEffectiveTo,
+                Attributes.LARSFundWeightedRate,
+                Attributes.LARSFundWeightingFactor,
+                Attributes.LearnDelLARSCarPilFundAreaCode,
+                Attributes.LearnDelLARSCarPilFundEffToDate,
+                Attributes.LearnDelLARSCarPilFundEffFromDate,
+                Attributes.LearnDelLARSCarPilFundSubsidyRate
             };
         }
 
@@ -410,7 +341,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         {
             var larsRefererenceDataServiceMock = new Mock<ILARSReferenceDataService>();
             var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
-            var appsEarningsHistoryReferenceDataServiceMock = new Mock<IAppsEarningsHistoryReferenceDataService>();
             var fileDataServiceMock = new Mock<IFileDataService>();
 
             var learner = new TestLearner
@@ -441,6 +371,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                         StdCodeNullable = 8,
                         LearnStartDate = new DateTime(2018, 8, 1),
                         LearnPlanEndDate = new DateTime(2019, 8, 1),
+                        DelLocPostCode = "Postcode",
                         LearningDeliveryFAMs = new List<TestLearningDeliveryFAM>
                         {
                             new TestLearningDeliveryFAM()
@@ -458,23 +389,22 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 LARSFunding = new List<LARSFunding>
                 {
                     new LARSFunding()
+                },
+                LARSCareerLearningPilot = new List<LARSCareerLearningPilot>
+                {
+                    new LARSCareerLearningPilot()
                 }
             };
 
             var learningDelivery = learner.LearningDeliveries.First();
 
             larsRefererenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
-            larsRefererenceDataServiceMock.Setup(l => l.LARSStandardApprenticeshipFunding(learningDelivery.StdCodeNullable, learningDelivery.ProgTypeNullable)).Returns(new List<LARSStandardApprenticeshipFunding> { new LARSStandardApprenticeshipFunding() });
-            larsRefererenceDataServiceMock.Setup(l => l.LARSFrameworkApprenticeshipFunding(learningDelivery.FworkCodeNullable, learningDelivery.ProgTypeNullable, learningDelivery.PwayCodeNullable)).Returns(new List<LARSFrameworkApprenticeshipFunding> { new LARSFrameworkApprenticeshipFunding() });
-            larsRefererenceDataServiceMock.Setup(l => l.LARSFrameworkCommonComponent(learningDelivery.LearnAimRef, learningDelivery.FworkCodeNullable, learningDelivery.ProgTypeNullable, learningDelivery.PwayCodeNullable)).Returns(new List<LARSFrameworkCommonComponent> { new LARSFrameworkCommonComponent() });
-            larsRefererenceDataServiceMock.Setup(l => l.LARSStandardCommonComponent(learningDelivery.StdCodeNullable)).Returns(new List<LARSStandardCommonComponent> { new LARSStandardCommonComponent() });
-            postcodesReferenceDataServiceMock.Setup(p => p.SFADisadvantagesForPostcode(learner.PostcodePrior)).Returns(new List<SfaDisadvantage> { new SfaDisadvantage() });
-            appsEarningsHistoryReferenceDataServiceMock.Setup(a => a.AECEarningsHistory(learner.ULN)).Returns(new List<AECEarningsHistory> { new AECEarningsHistory() });
+            postcodesReferenceDataServiceMock.Setup(p => p.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode)).Returns(new List<SfaAreaCost> { new SfaAreaCost() });
+            postcodesReferenceDataServiceMock.Setup(p => p.CareerLearningPilotsForPostcode(learningDelivery.DelLocPostCode)).Returns(new List<CareerLearningPilot> { new CareerLearningPilot() });
 
             return new DataEntityMapper(
                 larsRefererenceDataServiceMock.Object,
                 postcodesReferenceDataServiceMock.Object,
-                appsEarningsHistoryReferenceDataServiceMock.Object,
                 fileDataServiceMock.Object).BuildGlobalDataEntity(learner, new Global());
         }
 
