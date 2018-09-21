@@ -102,16 +102,10 @@
     <Compile Include="RulebaseInterfaceTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Apprenticeships Earnings Calc 18_19.zip" />
     <None Include="ESFA.DC.ILR.FundingService.FM36.Service.Tests.ruleset" />
-    <None Include="Inputs.xsrc" />
-    <None Include="Interim.xsrc" />
-    <None Include="Outputs.xsrc" />
-    <None Include="packages.config" />
     <Content Include="Rulebase\Apprenticeships Earnings Calc 18_19.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Parameters.xsrc" />
     <Content Include="Rulebase\XSRC\Inputs.xsrc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -121,6 +115,7 @@
     <Content Include="RulebaseMasterFiles\XSRC\Inputs.xsrc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="packages.config" />
     <None Include="RulebaseMasterFiles\XSRC\Interim.xsrc" />
     <None Include="RulebaseMasterFiles\XSRC\Outputs.xsrc" />
     <None Include="RulebaseMasterFiles\XSRC\Parameters.xsrc" />
