@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ESFA.DC.ILR.FundingService.ALB.Service.Constants;
 using ESFA.DC.ILR.FundingService.ALB.Service.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Data.File.Interface;
-using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
@@ -17,69 +17,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
 {
     public class DataEntityMapper : IDataEntityMapper<ILearner>
     {
-        private const string EntityGlobal = "global";
-        private const string EntityLearner = "Learner";
-        private const string EntityLearningDelivery = "LearningDelivery";
-        private const string EntityLearningDeliveryFAM = "LearningDeliveryFAM";
-        private const string EntityLearningDeliverySFA_PostcodeAreaCost = "SFA_PostcodeAreaCost";
-        private const string EntityLearningDeliveryLARS_Funding = "LearningDeliveryLARS_Funding";
-        private const string EntityLearningDeliverySubsidyPilotPostcodeArea = "SubsidyPilotPostcodeArea";
-        private const string EntityLearningDeliveryLARS_CareerLearningPilot = "LARS_CareerLearningPilot";
-
-        private const string GlobalLARSVersion = "LARSVersion";
-        private const string GlobalPostcodeAreaCostVersion = "PostcodeAreaCostVersion";
-        private const string GlobalUKPRN = "UKPRN";
-
-        private const string LearnerLearnRefNumber = "LearnRefNumber";
-
-        private const string LearningDeliveryAimSeqNumber = "AimSeqNumber";
-        private const string LearningDeliveryCompStatus = "CompStatus";
-        private const string LearningDeliveryLearnActEndDate = "LearnActEndDate";
-        private const string LearningDeliveryLearnAimRefType = "LearnAimRefType";
-        private const string LearningDeliveryLearnDelFundModel = "LearnDelFundModel";
-        private const string LearningDeliveryLearnPlanEndDate = "LearnPlanEndDate";
-        private const string LearningDeliveryLearnStartDate = "LearnStartDate";
-        private const string LearningDeliveryLrnDelFAM_ADL = "LrnDelFAM_ADL";
-        private const string LearningDeliveryLrnDelFAM_LDM1 = "LrnDelFAM_LDM1";
-        private const string LearningDeliveryLrnDelFAM_LDM2 = "LrnDelFAM_LDM2";
-        private const string LearningDeliveryLrnDelFAM_LDM3 = "LrnDelFAM_LDM3";
-        private const string LearningDeliveryLrnDelFAM_LDM4 = "LrnDelFAM_LDM4";
-        private const string LearningDeliveryLrnDelFAM_RES = "LrnDelFAM_RES";
-        private const string LearningDeliveryNotionalNVQLevelv2 = "NotionalNVQLevelv2";
-        private const string LearningDeliveryOrigLearnStartDate = "OrigLearnStartDate";
-        private const string LearningDeliveryOtherFundAdj = "OtherFundAdj";
-        private const string LearningDeliveryOutcome = "Outcome";
-        private const string LearningDeliveryPriorLearnFundAdj = "PriorLearnFundAdj";
-        private const string LearningDeliveryRegulatedCreditValue = "RegulatedCreditValue";
-
-        private const string LearnDelFAMCode = "LearnDelFAMCode";
-        private const string LearnDelFAMDateFrom = "LearnDelFAMDateFrom";
-        private const string LearnDelFAMDateTo = "LearnDelFAMDateTo";
-        private const string LearnDelFAMType = "LearnDelFAMType";
-
-        private const string AreaCosFactor = "AreaCosFactor";
-        private const string AreaCosEffectiveFrom = "AreaCosEffectiveFrom";
-        private const string AreaCosEffectiveTo = "AreaCosEffectiveTo";
-
-        private const string SubsidyPilotAreaCode = "SubsidyPilotAreaCode";
-        private const string SubsidyPilotEffectiveFrom = "SubsidyPilotEffectiveFrom";
-        private const string SubsidyPilotEffectiveTo = "SubsidyPilotEffectiveTo";
-
-        private const string LARSFundCategory = "LARSFundCategory";
-        private const string LARSFundEffectiveFrom = "LARSFundEffectiveFrom";
-        private const string LARSFundEffectiveTo = "LARSFundEffectiveTo";
-        private const string LARSFundWeightedRate = "LARSFundWeightedRate";
-        private const string LARSFundWeightingFactor = "LARSFundWeightingFactor";
-
-        private const string LearnDelLARSCarPilFundAreaCode = "LearnDelLARSCarPilFundAreaCode";
-        private const string LearnDelLARSCarPilFundEffToDate = "LearnDelLARSCarPilFundEffToDate";
-        private const string LearnDelLARSCarPilFundEffFromDate = "LearnDelLARSCarPilFundEffFromDate";
-        private const string LearnDelLARSCarPilFundSubsidyRate = "LearnDelLARSCarPilFundSubsidyRate";
-
-        private const string ADL = "ADL";
-        private const string LDM = "LDM";
-        private const string RES = "RES";
-
         private readonly HashSet<int> _fundModels = new HashSet<int> { 81, 99 };
 
         private readonly ILARSReferenceDataService _larsReferenceDataService;
@@ -102,13 +39,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
 
         public IDataEntity BuildGlobalDataEntity(ILearner learner, Global global)
         {
-            return new DataEntity(EntityGlobal)
+            return new DataEntity(Attributes.EntityGlobal)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    { GlobalLARSVersion, new AttributeData(global.LARSVersion) },
-                    { GlobalPostcodeAreaCostVersion, new AttributeData(global.PostcodesVersion) },
-                    { GlobalUKPRN, new AttributeData(global.UKPRN) }
+                    { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
+                    { Attributes.PostcodeAreaCostVersion, new AttributeData(global.PostcodesVersion) },
+                    { Attributes.UKPRN, new AttributeData(global.UKPRN) }
                 },
                 Children = learner != null ? new List<IDataEntity>() { BuildLearnerDataEntity(learner) } : new List<IDataEntity>()
             };
@@ -116,11 +53,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
 
         public IDataEntity BuildLearnerDataEntity(ILearner learner)
         {
-            return new DataEntity(EntityLearner)
+            return new DataEntity(Attributes.EntityLearner)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    { LearnerLearnRefNumber, new AttributeData(learner.LearnRefNumber) },
+                    { Attributes.LearnRefNumber, new AttributeData(learner.LearnRefNumber) },
                 },
                 Children =
                     (learner
@@ -137,29 +74,29 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
             var subsidyPilotPostcodeArea = _postcodesReferenceDataService.CareerLearningPilotsForPostcode(learningDelivery.DelLocPostCode);
             var learningDeliveryFAMDenormalized = BuildLearningDeliveryFAMDenormalized(learningDelivery.LearningDeliveryFAMs);
 
-            return new DataEntity(EntityLearningDelivery)
+            return new DataEntity(Attributes.EntityLearningDelivery)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    { LearningDeliveryAimSeqNumber, new AttributeData(learningDelivery.AimSeqNumber) },
-                    { LearningDeliveryCompStatus, new AttributeData(learningDelivery.CompStatus) },
-                    { LearningDeliveryLearnActEndDate, new AttributeData(learningDelivery.LearnActEndDateNullable) },
-                    { LearningDeliveryLearnAimRefType, new AttributeData(larsLearningDelivery.LearnAimRefType) },
-                    { LearningDeliveryLearnDelFundModel, new AttributeData(learningDelivery.FundModel) },
-                    { LearningDeliveryLearnPlanEndDate, new AttributeData(learningDelivery.LearnPlanEndDate) },
-                    { LearningDeliveryLearnStartDate, new AttributeData(learningDelivery.LearnStartDate) },
-                    { LearningDeliveryLrnDelFAM_ADL, new AttributeData(learningDeliveryFAMDenormalized.ADL) },
-                    { LearningDeliveryLrnDelFAM_LDM1, new AttributeData(learningDeliveryFAMDenormalized.LDM1) },
-                    { LearningDeliveryLrnDelFAM_LDM2, new AttributeData(learningDeliveryFAMDenormalized.LDM2) },
-                    { LearningDeliveryLrnDelFAM_LDM3, new AttributeData(learningDeliveryFAMDenormalized.LDM3) },
-                    { LearningDeliveryLrnDelFAM_LDM4, new AttributeData(learningDeliveryFAMDenormalized.LDM4) },
-                    { LearningDeliveryLrnDelFAM_RES, new AttributeData(learningDeliveryFAMDenormalized.RES) },
-                    { LearningDeliveryNotionalNVQLevelv2, new AttributeData(larsLearningDelivery.NotionalNVQLevelv2) },
-                    { LearningDeliveryOrigLearnStartDate, new AttributeData(learningDelivery.OrigLearnStartDateNullable) },
-                    { LearningDeliveryOtherFundAdj, new AttributeData(learningDelivery.OtherFundAdjNullable) },
-                    { LearningDeliveryOutcome, new AttributeData(learningDelivery.OutcomeNullable) },
-                    { LearningDeliveryPriorLearnFundAdj, new AttributeData(learningDelivery.PriorLearnFundAdjNullable) },
-                    { LearningDeliveryRegulatedCreditValue, new AttributeData(larsLearningDelivery.RegulatedCreditValue) },
+                    { Attributes.AimSeqNumber, new AttributeData(learningDelivery.AimSeqNumber) },
+                    { Attributes.CompStatus, new AttributeData(learningDelivery.CompStatus) },
+                    { Attributes.LearnActEndDate, new AttributeData(learningDelivery.LearnActEndDateNullable) },
+                    { Attributes.LearnAimRefType, new AttributeData(larsLearningDelivery.LearnAimRefType) },
+                    { Attributes.LearnDelFundModel, new AttributeData(learningDelivery.FundModel) },
+                    { Attributes.LearnPlanEndDate, new AttributeData(learningDelivery.LearnPlanEndDate) },
+                    { Attributes.LearnStartDate, new AttributeData(learningDelivery.LearnStartDate) },
+                    { Attributes.LrnDelFAM_ADL, new AttributeData(learningDeliveryFAMDenormalized.ADL) },
+                    { Attributes.LrnDelFAM_LDM1, new AttributeData(learningDeliveryFAMDenormalized.LDM1) },
+                    { Attributes.LrnDelFAM_LDM2, new AttributeData(learningDeliveryFAMDenormalized.LDM2) },
+                    { Attributes.LrnDelFAM_LDM3, new AttributeData(learningDeliveryFAMDenormalized.LDM3) },
+                    { Attributes.LrnDelFAM_LDM4, new AttributeData(learningDeliveryFAMDenormalized.LDM4) },
+                    { Attributes.LrnDelFAM_RES, new AttributeData(learningDeliveryFAMDenormalized.RES) },
+                    { Attributes.NotionalNVQLevelv2, new AttributeData(larsLearningDelivery.NotionalNVQLevelv2) },
+                    { Attributes.OrigLearnStartDate, new AttributeData(learningDelivery.OrigLearnStartDateNullable) },
+                    { Attributes.OtherFundAdj, new AttributeData(learningDelivery.OtherFundAdjNullable) },
+                    { Attributes.Outcome, new AttributeData(learningDelivery.OutcomeNullable) },
+                    { Attributes.PriorLearnFundAdj, new AttributeData(learningDelivery.PriorLearnFundAdjNullable) },
+                    { Attributes.RegulatedCreditValue, new AttributeData(larsLearningDelivery.RegulatedCreditValue) },
                 },
                 Children = (
                             learningDelivery?
@@ -187,69 +124,69 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
 
         public IDataEntity BuildLearningDeliveryFAM(ILearningDeliveryFAM learningDeliveryFAM)
         {
-            return new DataEntity(EntityLearningDeliveryFAM)
+            return new DataEntity(Attributes.EntityLearningDeliveryFAM)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    { LearnDelFAMCode, new AttributeData(learningDeliveryFAM.LearnDelFAMCode) },
-                    { LearnDelFAMDateTo, new AttributeData(learningDeliveryFAM.LearnDelFAMDateToNullable) },
-                    { LearnDelFAMDateFrom, new AttributeData(learningDeliveryFAM.LearnDelFAMDateFromNullable) },
-                    { LearnDelFAMType, new AttributeData(learningDeliveryFAM.LearnDelFAMType) },
+                    { Attributes.LearnDelFAMCode, new AttributeData(learningDeliveryFAM.LearnDelFAMCode) },
+                    { Attributes.LearnDelFAMDateTo, new AttributeData(learningDeliveryFAM.LearnDelFAMDateToNullable) },
+                    { Attributes.LearnDelFAMDateFrom, new AttributeData(learningDeliveryFAM.LearnDelFAMDateFromNullable) },
+                    { Attributes.LearnDelFAMType, new AttributeData(learningDeliveryFAM.LearnDelFAMType) },
                 }
             };
         }
 
         public IDataEntity BuildLARSCareerLearningPilot(LARSCareerLearningPilot larsCareerLearningPilot)
         {
-            return new DataEntity(EntityLearningDeliveryLARS_CareerLearningPilot)
+            return new DataEntity(Attributes.EntityLearningDeliveryLARS_CareerLearningPilot)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    { LearnDelLARSCarPilFundAreaCode, new AttributeData(larsCareerLearningPilot.AreaCode) },
-                    { LearnDelLARSCarPilFundEffFromDate, new AttributeData(larsCareerLearningPilot.EffectiveFrom) },
-                    { LearnDelLARSCarPilFundEffToDate, new AttributeData(larsCareerLearningPilot.EffectiveTo) },
-                    { LearnDelLARSCarPilFundSubsidyRate, new AttributeData(larsCareerLearningPilot.SubsidyRate) },
+                    { Attributes.LearnDelLARSCarPilFundAreaCode, new AttributeData(larsCareerLearningPilot.AreaCode) },
+                    { Attributes.LearnDelLARSCarPilFundEffFromDate, new AttributeData(larsCareerLearningPilot.EffectiveFrom) },
+                    { Attributes.LearnDelLARSCarPilFundEffToDate, new AttributeData(larsCareerLearningPilot.EffectiveTo) },
+                    { Attributes.LearnDelLARSCarPilFundSubsidyRate, new AttributeData(larsCareerLearningPilot.SubsidyRate) },
                 }
             };
         }
 
         public IDataEntity BuildLARSFunding(LARSFunding larsFunding)
         {
-            return new DataEntity(EntityLearningDeliveryLARS_Funding)
+            return new DataEntity(Attributes.EntityLearningDeliveryLARS_Funding)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    { LARSFundCategory, new AttributeData(larsFunding.FundingCategory) },
-                    { LARSFundEffectiveFrom, new AttributeData(larsFunding.EffectiveFrom) },
-                    { LARSFundEffectiveTo, new AttributeData(larsFunding.EffectiveTo) },
-                    { LARSFundWeightedRate, new AttributeData(larsFunding.RateWeighted) },
-                    { LARSFundWeightingFactor, new AttributeData(larsFunding.WeightingFactor) },
+                    { Attributes.LARSFundCategory, new AttributeData(larsFunding.FundingCategory) },
+                    { Attributes.LARSFundEffectiveFrom, new AttributeData(larsFunding.EffectiveFrom) },
+                    { Attributes.LARSFundEffectiveTo, new AttributeData(larsFunding.EffectiveTo) },
+                    { Attributes.LARSFundWeightedRate, new AttributeData(larsFunding.RateWeighted) },
+                    { Attributes.LARSFundWeightingFactor, new AttributeData(larsFunding.WeightingFactor) },
                 }
             };
         }
 
         public IDataEntity BuildSFAPostcodeAreaCost(SfaAreaCost sfaAreaCost)
         {
-            return new DataEntity(EntityLearningDeliverySFA_PostcodeAreaCost)
+            return new DataEntity(Attributes.EntityLearningDeliverySFA_PostcodeAreaCost)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    { AreaCosFactor, new AttributeData(sfaAreaCost.AreaCostFactor) },
-                    { AreaCosEffectiveFrom, new AttributeData(sfaAreaCost.EffectiveFrom) },
-                    { AreaCosEffectiveTo, new AttributeData(sfaAreaCost.EffectiveTo) },
+                    { Attributes.AreaCosFactor, new AttributeData(sfaAreaCost.AreaCostFactor) },
+                    { Attributes.AreaCosEffectiveFrom, new AttributeData(sfaAreaCost.EffectiveFrom) },
+                    { Attributes.AreaCosEffectiveTo, new AttributeData(sfaAreaCost.EffectiveTo) },
                 }
             };
         }
 
         public IDataEntity BuildSubsidyPilotPostcodeArea(CareerLearningPilot larsCareerLearningPilot)
         {
-            return new DataEntity(EntityLearningDeliverySubsidyPilotPostcodeArea)
+            return new DataEntity(Attributes.EntityLearningDeliverySubsidyPilotPostcodeArea)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    { SubsidyPilotAreaCode, new AttributeData(larsCareerLearningPilot.AreaCode) },
-                    { SubsidyPilotEffectiveFrom, new AttributeData(larsCareerLearningPilot.EffectiveFrom) },
-                    { SubsidyPilotEffectiveTo, new AttributeData(larsCareerLearningPilot.EffectiveTo) },
+                    { Attributes.SubsidyPilotAreaCode, new AttributeData(larsCareerLearningPilot.AreaCode) },
+                    { Attributes.SubsidyPilotEffectiveFrom, new AttributeData(larsCareerLearningPilot.EffectiveFrom) },
+                    { Attributes.SubsidyPilotEffectiveTo, new AttributeData(larsCareerLearningPilot.EffectiveTo) },
                 }
             };
         }
@@ -272,12 +209,12 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
             {
                 learningDeliveryFams = learningDeliveryFams.ToList();
 
-                var ldmArray = learningDeliveryFams.Where(f => f.LearnDelFAMType == LDM).Select(f => f.LearnDelFAMCode).ToArray();
+                var ldmArray = learningDeliveryFams.Where(f => f.LearnDelFAMType == Attributes.LDM).Select(f => f.LearnDelFAMCode).ToArray();
 
                 Array.Resize(ref ldmArray, 4);
 
-                learningDeliveryFam.ADL = learningDeliveryFams.Where(f => f.LearnDelFAMType == ADL).Select(f => f.LearnDelFAMCode).FirstOrDefault();
-                learningDeliveryFam.RES = learningDeliveryFams.Where(f => f.LearnDelFAMType == RES).Select(f => f.LearnDelFAMCode).FirstOrDefault();
+                learningDeliveryFam.ADL = learningDeliveryFams.Where(f => f.LearnDelFAMType == Attributes.ADL).Select(f => f.LearnDelFAMCode).FirstOrDefault();
+                learningDeliveryFam.RES = learningDeliveryFams.Where(f => f.LearnDelFAMType == Attributes.RES).Select(f => f.LearnDelFAMCode).FirstOrDefault();
                 learningDeliveryFam.LDM1 = ldmArray[0];
                 learningDeliveryFam.LDM2 = ldmArray[1];
                 learningDeliveryFam.LDM3 = ldmArray[2];
