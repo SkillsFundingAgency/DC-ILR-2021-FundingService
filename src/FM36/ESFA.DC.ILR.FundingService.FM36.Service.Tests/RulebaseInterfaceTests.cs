@@ -468,7 +468,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             larsRefererenceDataServiceMock.Setup(l => l.LARSFrameworkApprenticeshipFunding(learningDelivery.FworkCodeNullable, learningDelivery.ProgTypeNullable, learningDelivery.PwayCodeNullable)).Returns(new List<LARSFrameworkApprenticeshipFunding> { new LARSFrameworkApprenticeshipFunding() });
             larsRefererenceDataServiceMock.Setup(l => l.LARSFrameworkCommonComponent(learningDelivery.LearnAimRef, learningDelivery.FworkCodeNullable, learningDelivery.ProgTypeNullable, learningDelivery.PwayCodeNullable)).Returns(new List<LARSFrameworkCommonComponent> { new LARSFrameworkCommonComponent() });
             larsRefererenceDataServiceMock.Setup(l => l.LARSStandardCommonComponent(learningDelivery.StdCodeNullable)).Returns(new List<LARSStandardCommonComponent> { new LARSStandardCommonComponent() });
-            postcodesReferenceDataServiceMock.Setup(p => p.SFADisadvantagesForPostcode(learner.PostcodePrior)).Returns(new List<SfaDisadvantage> { new SfaDisadvantage() });
+            postcodesReferenceDataServiceMock.Setup(p => p.DASDisadvantagesForPostcode(learner.PostcodePrior)).Returns(new List<DasDisadvantage> { new DasDisadvantage() });
             appsEarningsHistoryReferenceDataServiceMock.Setup(a => a.AECEarningsHistory(learner.ULN)).Returns(new List<AECEarningsHistory> { new AECEarningsHistory() });
 
             return new DataEntityMapper(

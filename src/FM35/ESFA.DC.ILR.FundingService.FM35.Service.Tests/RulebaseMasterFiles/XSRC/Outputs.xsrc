@@ -1,0 +1,970 @@
+<root schema-version="1" product-version="10.4.2.18">
+  <entities>
+    <entity ref="global">
+      <attribute name="p308" type="text" public-name="CurFundYr">
+        <text>
+          <base>the current funding year</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">9</prop>
+        </props>
+      </attribute>
+      <attribute name="p310" type="text" public-name="RulebaseVersion">
+        <text>
+          <base>the current version of the rulebase</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+        </props>
+      </attribute>
+    </entity>
+    <entity id="learner" name="the learner" containment-relationship-id="learners" containment-parent-id="global" public-id="">
+    </entity>
+    <entity id="learningdelivery" name="the learning delivery" containment-relationship-id="learnerslearningdeliveries" containment-parent-id="learner" public-id="">
+      <attribute name="b12" type="boolean" public-name="FundStart">
+        <text>
+          <base>the learning delivery is a start for funding purposes</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a start for funding purposes'))</parse>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p380" type="number" public-name="ThresholdDays">
+        <text>
+          <base>the learning delivery's threshold days</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">2</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">31</prop>
+        </props>
+      </attribute>
+      <attribute name="p381" type="number" public-name="ActualDaysIL">
+        <text>
+          <base>the learning delivery's actual number of days in learning</base>
+        </text>
+        <props>
+          <prop name="Size">5</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1</prop>
+        </props>
+      </attribute>
+      <attribute name="p382" type="number" public-name="PlannedTotalDaysIL">
+        <text>
+          <base>the learning delivery's planned number of days in learning</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">48</prop>
+        </props>
+      </attribute>
+      <attribute name="p383" type="date" public-name="AchApplicDate">
+        <text>
+          <base>the learning delivery's applicable aim achievement date</base>
+        </text>
+        <props>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">01/08/2015</prop>
+        </props>
+      </attribute>
+      <attribute name="p384" type="date" public-name="AppLearnStartDate">
+        <text>
+          <base>the learning delivery's Apprenticeship programme start date</base>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">02/08/2015</prop>
+        </props>
+      </attribute>
+      <attribute name="b15" type="boolean" public-name="Achieved">
+        <text>
+          <base>the learning delivery has been achieved</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,perfect)),sb('the learning delivery',singular),o('achieved'))</parse>
+        </text>
+        <props>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p387" type="number" public-name="AgeAimStart">
+        <text>
+          <base>the learning delivery's age at start</base>
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">3</prop>
+        </props>
+      </attribute>
+      <attribute name="p388" type="date" public-name="ApplicFundRateDate">
+        <text>
+          <base>the learning delivery's applicable rate date</base>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">01/08/2015</prop>
+        </props>
+      </attribute>
+      <attribute name="p389" type="text" public-name="FundLine">
+        <text>
+          <base>the learning delivery's funding line type</base>
+        </text>
+        <props>
+          <prop name="Size">100</prop>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">FundLineType</prop>
+        </props>
+      </attribute>
+      <attribute name="p390" type="currency" public-name="NonGovCont">
+        <text>
+          <base>the learning delivery's non-government contribution</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">22.00001</prop>
+        </props>
+      </attribute>
+      <attribute name="b16" type="boolean" public-name="FullyFund">
+        <text>
+          <base>the learning delivery is fully funded</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('fully funded'))</parse>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p391" type="currency" public-name="AimValue">
+        <text>
+          <base>the learning delivery's aim value</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">6.00001</prop>
+        </props>
+      </attribute>
+      <attribute name="p392" type="text" public-name="ApplicProgWeightFact">
+        <text>
+          <base>the learning delivery's applicable programme weighting factor</base>
+        </text>
+        <props>
+          <prop name="Size">1</prop>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">A</prop>
+        </props>
+      </attribute>
+      <attribute name="p393" type="currency" public-name="ApplicUnweightFundRate">
+        <text>
+          <base>the learning delivery's applicable unweighted rate</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">49.00001</prop>
+        </props>
+      </attribute>
+      <attribute name="p394" type="currency" public-name="ApplicWeightFundRate">
+        <text>
+          <base>the learning delivery's applicable weighted rate</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">50.00001</prop>
+        </props>
+      </attribute>
+      <attribute name="p395" type="number" public-name="AppAgeFact">
+        <text>
+          <base>the learning delivery's Apprenticeship age factor</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00005</prop>
+        </props>
+      </attribute>
+      <attribute name="p396" type="currency" public-name="BaseValueUnweight">
+        <text>
+          <base>the learning delivery's base unweighted value</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">13.00001</prop>
+        </props>
+      </attribute>
+      <attribute name="p397" type="number" public-name="LargeEmployerFM35Fctr">
+        <text>
+          <base>the learning delivery's large employer factor</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.15</prop>
+        </props>
+      </attribute>
+      <attribute name="p398" type="number" public-name="LargeEmployerID">
+        <text>
+          <base>the learning delivery's large employer id</base>
+        </text>
+        <props>
+          <prop name="Size">9</prop>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">18</prop>
+        </props>
+      </attribute>
+      <attribute name="p399" type="number" public-name="ActualNumInstalm">
+        <text>
+          <base>the learning delivery's actual instalments</base>
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">2</prop>
+        </props>
+      </attribute>
+      <attribute name="p400" type="number" public-name="OutstndNumOnProgInstalmTrans">
+        <text>
+          <base>the learning delivery's transitional outstanding instalments</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">25</prop>
+        </props>
+      </attribute>
+      <attribute name="p401" type="number" public-name="PlannedNumOnProgInstalm">
+        <text>
+          <base>the learning delivery's planned instalments</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">26</prop>
+        </props>
+      </attribute>
+      <attribute name="p402" type="number" public-name="PropFundRemain">
+        <text>
+          <base>the learning delivery's proportion of funding remaining</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.20</prop>
+        </props>
+      </attribute>
+      <attribute name="p405" type="currency" public-name="BalancePayment">
+        <text>
+          <base>the learning delivery's balancing payment cash</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">11.00001</prop>
+        </props>
+      </attribute>
+      <attribute name="p406" type="currency" public-name="OnProgPaymentUncapped">
+        <text>
+          <base>the learning delivery's uncapped on-programme cash</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">28.00001</prop>
+        </props>
+      </attribute>
+      <attribute name="p408" type="currency" public-name="BalancePaymentUncapped">
+        <text>
+          <base>the learning delivery's uncapped balancing payment cash</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">11.00001</prop>
+        </props>
+      </attribute>
+      <attribute name="p409" type="number" public-name="CapFactor">
+        <text>
+          <base>the learning delivery's cap factor</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00009</prop>
+        </props>
+      </attribute>
+      <attribute name="p412" type="currency" public-name="EmpOutcomePay">
+        <text>
+          <base>the learning delivery's job outcome cash</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">16.00001</prop>
+        </props>
+      </attribute>
+      <attribute name="p416" type="currency" public-name="LearnSuppFundCash">
+        <text>
+          <base>the learning delivery's LSF cash</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="IntegrationTestValue">20.00001</prop>
+        </props>
+      </attribute>
+      <attribute name="p417" type="number" public-name="SpecResUplift">
+        <text>
+          <base>the learning delivery's specialist resources uplift</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00022</prop>
+        </props>
+      </attribute>
+      <attribute name="p420" type="date" public-name="LargeEmployerStatusDate">
+        <text>
+          <base>the learning delivery's large employer employment status date</base>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">01/08/2015</prop>
+        </props>
+      </attribute>
+      <attribute name="p421" type="number" public-name="StartPropTrans">
+        <text>
+          <base>the learning delivery's transitional start proportion</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00023</prop>
+        </props>
+      </attribute>
+      <attribute name="p422" type="number" public-name="AchievePayPctTrans">
+        <text>
+          <base>the learning delivery's transitional aim achievement percentage</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00003</prop>
+        </props>
+      </attribute>
+      <attribute name="p423" type="number" public-name="AchievePayPct">
+        <text>
+          <base>the learning delivery's aim achievement percentage</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00001</prop>
+        </props>
+      </attribute>
+      <attribute name="p424" type="number" public-name="EmpOutcomePct">
+        <text>
+          <base>the learning delivery's job outcome percentage</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00011</prop>
+        </props>
+      </attribute>
+      <attribute name="p425" type="number" public-name="DisUpFactAdj">
+        <text>
+          <base>the learning delivery's adjusted disadvantage uplift</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">4</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.0001</prop>
+        </props>
+      </attribute>
+      <attribute name="p426" type="number" public-name="AreaCostFactAdj">
+        <text>
+          <base>the learning delivery's adjusted area cost factor</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.01</prop>
+        </props>
+      </attribute>
+      <attribute name="p427" type="number" public-name="PlannedNumOnProgInstalmTrans">
+        <text>
+          <base>the learning delivery's transitional planned instalments</base>
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">27</prop>
+        </props>
+      </attribute>
+      <attribute name="p428" type="number" public-name="ActualNumInstalmTrans">
+        <text>
+          <base>the learning delivery's transitional actual instalments</base>
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">33</prop>
+        </props>
+      </attribute>
+      <attribute name="p429" type="number" public-name="OutstndNumOnProgInstalm">
+        <text>
+          <base>the learning delivery's outstanding instalments</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">24</prop>
+        </props>
+      </attribute>
+      <attribute name="p430" type="number" public-name="PlannedTotalDaysILPreTrans">
+        <text>
+          <base>the learning delivery's pre-transitional planned number of days</base>
+        </text>
+        <props>
+          <prop name="Size">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">26</prop>
+        </props>
+      </attribute>
+      <attribute name="b18" type="boolean" public-name="Trans">
+        <text>
+          <base>the learning delivery is transitional</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('transitional'))</parse>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p431" type="number" public-name="BalancePctTrans">
+        <text>
+          <base>the learning delivery's transitional balancing percentage</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00008</prop>
+        </props>
+      </attribute>
+      <attribute name="p432" type="number" public-name="OnProgPayPct">
+        <text>
+          <base>the learning delivery's on-programme percentage</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00017</prop>
+        </props>
+      </attribute>
+      <attribute name="p433" type="number" public-name="OnProgPayPctTrans">
+        <text>
+          <base>the learning delivery's transitional on-programme percentage</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00019</prop>
+        </props>
+      </attribute>
+      <attribute name="p434" type="number" public-name="EmpOutcomePctTrans">
+        <text>
+          <base>the learning delivery's transitional job outcome percentage</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00014</prop>
+        </props>
+      </attribute>
+      <attribute name="p435" type="number" public-name="AppFuncSkill1618AdjFact">
+        <text>
+          <base>the learning delivery's 16-18 Apprenticeship Functional Skills adjustment factor</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00006</prop>
+        </props>
+      </attribute>
+      <attribute name="b19" type="boolean" public-name="AdltLearnResp">
+        <text>
+          <base>the learning delivery was Adult Learner Responsive</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,past,normal)),sb('the learning delivery',singular),o('Adult Learner Responsive'))</parse>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="b20" type="boolean" public-name="EmpRespOth">
+        <text>
+          <base>the learning delivery was Employer Responsive Other</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,past,normal)),sb('the learning delivery',singular),o('Employer Responsive Other'))</parse>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="b21" type="boolean" public-name="OLASSCustody">
+        <text>
+          <base>the learning delivery is OLASS in custody</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('OLASS in custody'))</parse>
+        </text>
+        <props>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="b22" type="boolean" public-name="AppNonFund">
+        <text>
+          <base>the learning delivery is a non-funded Apprenticeship aim</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a non-funded Apprenticeship aim'))</parse>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="b23" type="boolean" public-name="AppATAGTA">
+        <text>
+          <base>the learning delivery is an ATA or GTA Apprenticeship aim</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('an ATA or GTA Apprenticeship aim'))</parse>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p436" type="number" public-name="BalancePct">
+        <text>
+          <base>the learning delivery's balancing percentage</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00007</prop>
+        </props>
+      </attribute>
+      <attribute name="b24" type="boolean" public-name="Residential">
+        <text>
+          <base>the learning delivery is residential</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('residential'))</parse>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="b25" type="boolean" public-name="AchievePayElig">
+        <text>
+          <base>the learning delivery is eligible for an aim achievement payment</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('eligible for an aim achievement payment'))</parse>
+        </text>
+        <props>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">true</prop>
+        </props>
+      </attribute>
+      <attribute name="b26" type="boolean" public-name="EmpOutcomePayElig">
+        <text>
+          <base>the learning delivery is eligible for a job outcome payment</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('eligible for a job outcome payment'))</parse>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p437" type="date" public-name="AppAdjLearnStartDate">
+        <text>
+          <base>the learning delivery's adjusted Apprenticeship programme start date</base>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">nulll</prop>
+          <prop name="IntegrationTestValue">01/08/2015</prop>
+        </props>
+      </attribute>
+      <attribute name="b29" type="boolean" public-name="LearnSuppFund">
+        <text>
+          <base>the learning delivery is eligible for LSF in the period</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('eligible for LSF in the period'))</parse>
+        </text>
+        <props>
+          <prop name="Temporal">True</prop>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p438" type="number" public-name="LTRCUpliftFctr">
+        <text>
+          <base>the learning delivery's LTRC uplift</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00016</prop>
+        </props>
+      </attribute>
+      <attribute name="p439" type="date" public-name="AdjLearnStartDate">
+        <text>
+          <base>the learning delivery's adjusted start date</base>
+        </text>
+        <props>
+          <prop name="Temporal">False</prop>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">06/08/2015</prop>
+        </props>
+      </attribute>
+      <attribute name="b31" type="boolean" public-name="AppCompetency">
+        <text>
+          <base>the learning delivery is an Apprenticeship Competency aim</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('an Apprenticeship Competency aim'))</parse>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="b32" type="boolean" public-name="AppKnowl">
+        <text>
+          <base>the learning delivery is an Apprenticeship Knowledge aim</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('an Apprenticeship Knowledge aim'))</parse>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="b33" type="boolean" public-name="AppFuncSkill">
+        <text>
+          <base>the learning delivery is an Apprenticeship Functional Skills aim</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('an Apprenticeship Functional Skills aim'))</parse>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p441" type="number" public-name="EmpOutcomePctHeldBackTrans">
+        <text>
+          <base>the learning delivery's transitional job outcome percentage held back</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00012</prop>
+        </props>
+      </attribute>
+      <attribute name="p442" type="number" public-name="AchPayTransHeldBack">
+        <text>
+          <base>the learning delivery's transitional achievement percentage held back</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00004</prop>
+        </props>
+      </attribute>
+      <attribute name="p443" type="number" public-name="EmpOutcomePctPreTrans">
+        <text>
+          <base>the learning delivery's pre-transitional job outcome percentage</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00013</prop>
+        </props>
+      </attribute>
+      <attribute name="p444" type="number" public-name="ActualNumInstalmPreTrans">
+        <text>
+          <base>the learning delivery's pre-transitional actual instalments</base>
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">43</prop>
+        </props>
+      </attribute>
+      <attribute name="p445" type="number" public-name="AchievePayPctPreTrans">
+        <text>
+          <base>the learning delivery's pre-transitional achievement percentage held back</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00002</prop>
+        </props>
+      </attribute>
+      <attribute name="p446" type="number" public-name="OnProgPayPctPreTrans">
+        <text>
+          <base>the learning delivery's pre-transitional on-programme percentage</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00018</prop>
+        </props>
+      </attribute>
+      <attribute name="p447" type="number" public-name="BalInstalmPreTrans">
+        <text>
+          <base>the learning delivery's pre-transitional balancing instalments</base>
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">45</prop>
+        </props>
+      </attribute>
+      <attribute name="p448" type="currency" public-name="AchievePayment">
+        <text>
+          <base>the learning delivery's aim achievement cash</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">4.00001</prop>
+        </props>
+      </attribute>
+      <attribute name="p450" type="currency" public-name="OnProgPayment">
+        <text>
+          <base>the learning delivery's on-programme cash</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">27.00001</prop>
+        </props>
+      </attribute>
+      <attribute name="b34" type="boolean" public-name="Traineeship">
+        <text>
+          <base>the learning delivery is a Traineeship</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a Traineeship'))</parse>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p452" type="number" public-name="PropFundRemainAch">
+        <text>
+          <base>the learning delivery's proportion of funding remaining for achievement</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.21</prop>
+        </props>
+      </attribute>
+      <attribute name="b35" type="boolean" public-name="Restart">
+        <text>
+          <base>the learning delivery is a restart</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a restart'))</parse>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p453" type="currency" public-name="AchieveElement">
+        <text>
+          <base>the learning delivery's achievement element</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">57.0001</prop>
+        </props>
+      </attribute>
+      <attribute name="p454" type="number" public-name="InstPerPeriod">
+        <text>
+          <base>the learning delivery's number of instalments this period</base>
+        </text>
+        <props>
+          <prop name="Size">2</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1</prop>
+        </props>
+      </attribute>
+      <attribute name="p455" type="number" public-name="TransInstPerPeriod">
+        <text>
+          <base>the learning delivery's transitional number of instalments this period</base>
+        </text>
+        <props>
+          <prop name="Size">1</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1</prop>
+        </props>
+      </attribute>
+      <attribute name="p456" type="date" public-name="TrnAdjLearnStartDate">
+        <text>
+          <base>the learning delivery's adjusted Traineeship programme start date</base>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">01/08/2015</prop>
+        </props>
+      </attribute>
+      <attribute name="p457" type="currency" public-name="UnweightedRateFromLARS">
+        <text>
+          <base>the learning delivery's applicable unweighted rate from LARS</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p458" type="currency" public-name="WeightedRateFromESOL">
+        <text>
+          <base>the learning delivery's applicable weighted rate from ESOL Hours</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p459" type="currency" public-name="WeightedRateFromLARS">
+        <text>
+          <base>the learning delivery's applicable weighted rate from LARS</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="b36" type="boolean" public-name="TrnWorkPlaceAim">
+        <text>
+          <base>the learning delivery is a Traineeship work placement aim</base>
+          <parse>s(ver('10.4.5.40'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a Traineeship work placement aim'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b37" type="boolean" public-name="TrnWorkPrepAim">
+        <text>
+          <base>the learning delivery is a Traineeship work preparation aim</base>
+          <parse>s(ver('10.4.5.40'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a Traineeship work preparation aim'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b38" type="boolean" public-name="PrscHEAim">
+        <text>
+          <base>the learning delivery is a higher apprenticeship prescribed HE aim</base>
+          <parse>s(ver('10.4.5.40'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a higher apprenticeship prescribed HE aim'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b39" type="boolean" public-name="ESOL">
+        <text>
+          <base>the learning delivery is an ESOL aim</base>
+          <parse>s(ver('10.4.5.40'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('an ESOL aim'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p460" type="currency" public-name="UnWeightedRateFromESOL">
+        <text>
+          <base>the learning delivery's applicable unweighted rate from ESOL Hours</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p461" type="date" public-name="ApplicFactDate">
+        <text>
+          <base>the learning delivery's applicable lookup factor date</base>
+        </text>
+      </attribute>
+      <attribute name="p462" type="date" public-name="ApplicEmpFactDate">
+        <text>
+          <base>the learning delivery's applicable employment factor date</base>
+        </text>
+      </attribute>
+    </entity>
+  </entities>
+  <rules />
+  <interactive-items>
+    <folders />
+    <screens />
+    <documents />
+  </interactive-items>
+  <relationships>
+    <relationship source="global" target="learner" text="the learners" relationship-id="learners" reverse-text="the provider associated with the learner" reverse-relationship-id="providerassociatedwiththelearner" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learner" target="learningdelivery" text="the learner's learning deliveries" relationship-id="learnerslearningdeliveries" reverse-text="the learner associated with the learning delivery" reverse-relationship-id="learnerassociatedwiththelearningdelivery" type="OneToMany" is-computed="false" is-containment="true" />
+  </relationships>
+  <rule-folders />
+</root>

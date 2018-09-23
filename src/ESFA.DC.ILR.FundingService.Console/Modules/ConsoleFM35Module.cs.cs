@@ -30,8 +30,7 @@ using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Dto.Interfaces;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.FM35.Service;
-using ESFA.DC.ILR.FundingService.FM35.Service.Builders;
-using ESFA.DC.ILR.FundingService.FM35.Service.Interfaces;
+using ESFA.DC.ILR.FundingService.FM35.Service.Input;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Service;
 using ESFA.DC.ILR.FundingService.Stubs;
@@ -64,7 +63,6 @@ namespace ESFA.DC.ILR.FundingService.Console.Modules
             builder.RegisterType<OPADataEntityBuilder>().As<IOPADataEntityBuilder>().WithParameter("yearStartDate", new System.DateTime(2018, 8, 1)).InstancePerLifetimeScope();
             builder.RegisterInstance(new RulebaseProvider("Rulebase")).As<IRulebaseProvider>().InstancePerLifetimeScope();
             builder.RegisterType<OPAService>().As<IOPAService>().InstancePerLifetimeScope();
-            builder.RegisterType<AttributeBuilder>().As<IAttributeBuilder<IAttributeData>>().InstancePerLifetimeScope();
             builder.RegisterType<DataEntityMapper>().As<IDataEntityMapper<ILearner>>().InstancePerLifetimeScope();
             builder.RegisterType<FundingOutputService>().As<IOutputService<FM35FundingOutputs>>().InstancePerLifetimeScope();
             builder.RegisterType<FundingService<ILearner, FM35FundingOutputs>>().As<IFundingService<ILearner, FM35FundingOutputs>>().InstancePerLifetimeScope();

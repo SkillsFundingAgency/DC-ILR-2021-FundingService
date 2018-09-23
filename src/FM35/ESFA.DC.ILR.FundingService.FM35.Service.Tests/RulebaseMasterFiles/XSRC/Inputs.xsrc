@@ -1,0 +1,577 @@
+<root schema-version="1" product-version="10.4.2.18">
+  <entities>
+    <entity ref="global">
+      <attribute name="p323" type="text" public-name="LARSVersion">
+        <text>
+          <base>the LARS reference data version</base>
+        </text>
+        <props>
+          <prop name="PassThrough">True</prop>
+          <prop name="Size">100</prop>
+        </props>
+      </attribute>
+      <attribute name="p324" type="text" public-name="OrgVersion">
+        <text>
+          <base>the Org reference data version</base>
+        </text>
+        <props>
+          <prop name="PassThrough">True</prop>
+          <prop name="Size">100</prop>
+        </props>
+      </attribute>
+      <attribute name="p325" type="text" public-name="PostcodeDisadvantageVersion">
+        <text>
+          <base>the postcode disadvantage reference data version</base>
+        </text>
+        <props>
+          <prop name="PassThrough">True</prop>
+          <prop name="Size">50</prop>
+        </props>
+      </attribute>
+      <attribute name="p326" type="text" public-name="UKPRN">
+        <text>
+          <base>UK provider reference number</base>
+        </text>
+        <props>
+          <prop name="PassThrough">True</prop>
+          <prop name="KeySequence">1</prop>
+          <prop name="Size">8</prop>
+        </props>
+      </attribute>
+    </entity>
+    <entity id="learner" name="the learner" containment-relationship-id="learners" containment-parent-id="global" public-id="Learner">
+      <attribute name="p246" type="date" public-name="DateOfBirth">
+        <text>
+          <base>the learner's date of birth</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">01/08/2013</prop>
+        </props>
+      </attribute>
+      <attribute name="p321" type="text" public-name="LearnRefNumber">
+        <text>
+          <base>the learner's learner reference number</base>
+        </text>
+        <props>
+          <prop name="KeySequence">1</prop>
+          <prop name="Size">12</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">LearnRef</prop>
+        </props>
+      </attribute>
+    </entity>
+    <entity id="learningdelivery" name="the learning delivery" containment-relationship-id="learnerslearningdeliveries" containment-parent-id="learner" public-id="LearningDelivery">
+      <attribute name="p9" type="date" public-name="AchDate">
+        <text>
+          <base>the learning delivery's achievement date</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">01/08/2015</prop>
+        </props>
+      </attribute>
+      <attribute name="p11" type="date" public-name="LearnPlanEndDate">
+        <text>
+          <base>the learning delivery's learning planned end date</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">31/07/2016</prop>
+        </props>
+      </attribute>
+      <attribute name="p12" type="date" public-name="LearnStartDate">
+        <text>
+          <base>the learning delivery's learning start date</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">01/08/2015</prop>
+        </props>
+      </attribute>
+      <attribute name="p19" type="number" public-name="AimSeqNumber">
+        <text>
+          <base>the learning delivery's aim sequence number</base>
+        </text>
+        <props>
+          <prop name="KeySequence">1</prop>
+          <prop name="Size">2</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">2</prop>
+        </props>
+      </attribute>
+      <attribute name="p21" type="number" public-name="AimType">
+        <text>
+          <base>the learning delivery's aim type</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">1</prop>
+        </props>
+      </attribute>
+      <attribute name="p24" type="number" public-name="CompStatus">
+        <text>
+          <base>the learning delivery's completion status</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">1</prop>
+        </props>
+      </attribute>
+      <attribute name="p250" type="number" public-name="EmpOutcome">
+        <text>
+          <base>the learning delivery's employment outcome</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">10</prop>
+        </props>
+      </attribute>
+      <attribute name="p252" type="number" public-name="FworkCode">
+        <text>
+          <base>the learning delivery's framework code</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">450</prop>
+        </props>
+      </attribute>
+      <attribute name="p253" type="number" public-name="ProgType">
+        <text>
+          <base>the learning delivery's programme type</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">2</prop>
+        </props>
+      </attribute>
+      <attribute name="p255" type="number" public-name="FrameworkComponentType">
+        <text>
+          <base>the learning delivery's framework component type</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">14</prop>
+        </props>
+      </attribute>
+      <attribute name="p260" type="number" public-name="Outcome">
+        <text>
+          <base>the learning delivery's outcome</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">1</prop>
+        </props>
+      </attribute>
+      <attribute name="p264" type="number" public-name="PwayCode">
+        <text>
+          <base>the learning delivery's Apprenticeship pathway</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">1</prop>
+        </props>
+      </attribute>
+      <attribute name="p268" type="date" public-name="OrigLearnStartDate">
+        <text>
+          <base>the learning delivery's original learning start date</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">01/08/2013</prop>
+        </props>
+      </attribute>
+      <attribute name="p283" type="number" public-name="OtherFundAdj">
+        <text>
+          <base>the learning delivery's other funding adjustment</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">75</prop>
+        </props>
+      </attribute>
+      <attribute name="p284" type="number" public-name="PriorLearnFundAdj">
+        <text>
+          <base>the learning delivery's funding adjustment for prior learning</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">75</prop>
+        </props>
+      </attribute>
+      <attribute name="p288" type="date" public-name="LearnActEndDate">
+        <text>
+          <base>the learning delivery's learning actual end date</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">31/07/2016</prop>
+        </props>
+      </attribute>
+      <attribute name="p299" type="number" public-name="FrameworkCommonComponent">
+        <text>
+          <base>the learning delivery's framework common component</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">14</prop>
+        </props>
+      </attribute>
+      <attribute name="p309" type="number" public-name="LrnDelFAM_LDM1">
+        <text>
+          <base>the learning delivery's LDM 1 FAM code</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">123</prop>
+        </props>
+      </attribute>
+      <attribute name="p310" type="number" public-name="LrnDelFAM_LDM2">
+        <text>
+          <base>the learning delivery's LDM 2 FAM code</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">123</prop>
+        </props>
+      </attribute>
+      <attribute name="p311" type="number" public-name="LrnDelFAM_LDM3">
+        <text>
+          <base>the learning delivery's LDM 3 FAM code</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">123</prop>
+        </props>
+      </attribute>
+      <attribute name="p312" type="number" public-name="LrnDelFAM_LDM4">
+        <text>
+          <base>the learning delivery's LDM 4 FAM code</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">123</prop>
+        </props>
+      </attribute>
+      <attribute name="p314" type="number" public-name="LrnDelFAM_FFI">
+        <text>
+          <base>the learning delivery's FFI FAM code</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">1</prop>
+        </props>
+      </attribute>
+      <attribute name="p315" type="number" public-name="LrnDelFAM_RES">
+        <text>
+          <base>the learning delivery's RES FAM code</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">1</prop>
+        </props>
+      </attribute>
+      <attribute name="p316" type="number" public-name="LrnDelFAM_EEF">
+        <text>
+          <base>the learning delivery's EEF FAM code</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">1</prop>
+        </props>
+      </attribute>
+      <attribute name="p320" type="number" public-name="AddHours">
+        <text>
+          <base>the learning delivery's additional ESOL hours</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">10</prop>
+        </props>
+      </attribute>
+      <attribute name="p322" type="number" public-name="EnglPrscID">
+        <text>
+          <base>the learning delivery's England prescribed id</base>
+        </text>
+        <props>
+          <prop name="Size">2</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">1</prop>
+        </props>
+      </attribute>
+      <attribute name="p333" type="text" public-name="EnglandFEHEStatus">
+        <text>
+          <base>the learning delivery's England FE HE status</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learningdeliveryfam" name="the learning delivery FAM" containment-relationship-id="learningdeliverysfams" containment-parent-id="learningdelivery" public-id="LearningDeliveryFAM">
+      <attribute name="p1" type="text" public-name="LearnDelFAMCode">
+        <text>
+          <base>the learning delivery FAM's code</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p2" type="text" public-name="LearnDelFAMType">
+        <text>
+          <base>the learning delivery FAM's type</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p307" type="date" public-name="LearnDelFAMDateFrom">
+        <text>
+          <base>the learning delivery FAM's date applies from</base>
+        </text>
+      </attribute>
+      <attribute name="p308" type="date" public-name="LearnDelFAMDateTo">
+        <text>
+          <base>the learning delivery FAM's date applies to</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learneremploymentstatus" name="the learner employment status" containment-relationship-id="learnersemploymentstatuses" containment-parent-id="learner" public-id="LearnerEmploymentStatus">
+      <attribute name="p240" type="number" public-name="EmpId">
+        <text>
+          <base>the employment status's employer identifier</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">123</prop>
+        </props>
+      </attribute>
+      <attribute name="p241" type="date" public-name="DateEmpStatApp">
+        <text>
+          <base>the employment status's date applies</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">01/08/2013</prop>
+        </props>
+      </attribute>
+    </entity>
+    <entity id="learningdeliverylarscategory" name="the learning delivery LARS category" containment-relationship-id="learningdeliveryslarscategories" containment-parent-id="learningdelivery" public-id="LearningDeliveryLARSCategory">
+      <attribute name="p328" type="number" public-name="LearnDelCatRef">
+        <text>
+          <base>the learning delivery LARS category's reference</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p331" type="date" public-name="LearnDelCatDateFrom">
+        <text>
+          <base>the learning delivery LARS category's effective from date</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p332" type="date" public-name="LearnDelCatDateTo">
+        <text>
+          <base>the learning delivery LARS category's effective to date</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learningdeliveryannualvalue" name="the learning delivery annual value" containment-relationship-id="learningdeliverysannualvalues" containment-parent-id="learningdelivery" public-id="LearningDeliveryAnnualValue">
+      <attribute name="p335" type="date" public-name="LearnDelAnnValDateFrom">
+        <text>
+          <base>the learning delivery annual value's effective from date</base>
+        </text>
+      </attribute>
+      <attribute name="p336" type="date" public-name="LearnDelAnnValDateTo">
+        <text>
+          <base>the learning delivery annual value's effective to date</base>
+        </text>
+      </attribute>
+      <attribute name="p337" type="number" public-name="LearnDelAnnValBasicSkillsTypeCode">
+        <text>
+          <base>the learning delivery annual value's basic skills type code</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learneremploymentstatuslargeemployerreferencedata" name="the learner employment status large employer reference data" containment-relationship-id="learneremploymentstatusslargeemployerreferencedata" containment-parent-id="learneremploymentstatus" public-id="LargeEmployerReferenceData">
+      <attribute name="p340" type="date" public-name="LargeEmpEffectiveTo">
+        <text>
+          <base>the learner employment status large employer reference data's effective to date</base>
+        </text>
+      </attribute>
+      <attribute name="p341" type="date" public-name="LargeEmpEffectiveFrom">
+        <text>
+          <base>the learner employment status large employer reference data's effective from date</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learningdeliverylarsfunding" name="the learning delivery LARS funding" containment-relationship-id="learningdeliveryslarsfundingrates" containment-parent-id="learningdelivery" public-id="LearningDeliveryLARS_Funding">
+      <attribute name="p343" type="text" public-name="LARSFundCategory">
+        <text>
+          <base>the learning delivery's LARS funding category</base>
+        </text>
+      </attribute>
+      <attribute name="p344" type="date" public-name="LARSFundEffectiveTo">
+        <text>
+          <base>the learning delivery's LARS funding effective to date</base>
+        </text>
+      </attribute>
+      <attribute name="p345" type="date" public-name="LARSFundEffectiveFrom">
+        <text>
+          <base>the learning delivery's LARS funding effective from date</base>
+        </text>
+      </attribute>
+      <attribute name="p346" type="currency" public-name="LARSFundWeightedRate">
+        <text>
+          <base>the learning delivery's LARS funding weighted rate</base>
+        </text>
+      </attribute>
+      <attribute name="p347" type="currency" public-name="LARSFundUnweightedRate">
+        <text>
+          <base>the learning delivery's LARS funding unweighted rate</base>
+        </text>
+      </attribute>
+      <attribute name="p348" type="text" public-name="LARSFundWeightingFactor">
+        <text>
+          <base>the learning delivery's LARS funding weighting factor</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="organisationalfunding" name="the organisational  funding" containment-relationship-id="organisationalfundingreferencedata" containment-parent-id="global" public-id="OrgFunding">
+      <attribute name="p350" type="date" public-name="OrgFundEffectiveTo">
+        <text>
+          <base>the organisational  funding's effective to date</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p351" type="date" public-name="OrgFundEffectiveFrom">
+        <text>
+          <base>the organisational funding effective from date</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p352" type="text" public-name="OrgFundFactor">
+        <text>
+          <base>the organisational  funding's funding factor</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p353" type="text" public-name="OrgFundFactValue">
+        <text>
+          <base>the organisational  funding's funding factor value</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p354" type="text" public-name="OrgFundFactType">
+        <text>
+          <base>the organisational  funding's funding factor type</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learnerpostcodedisadvantageupliftreferencedata" name="the learner postcode disadvantage uplift reference data" containment-relationship-id="learnerspostcodedisadvantageupliftreferencedata" containment-parent-id="learner" public-id="SFA_PostcodeDisadvantage">
+      <attribute name="p358" type="date" public-name="DisUpEffectiveTo">
+        <text>
+          <base>the learner postcode disadvantage uplift reference data's effective to date</base>
+        </text>
+      </attribute>
+      <attribute name="p359" type="date" public-name="DisUpEffectiveFrom">
+        <text>
+          <base>the learner postcode disadvantage uplift reference data's effective from</base>
+        </text>
+      </attribute>
+      <attribute name="p361" type="number" public-name="DisUplift">
+        <text>
+          <base>the learner postcode disadvantage uplift reference data's Uplift</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learningdeliverypostcodeareacostreferencedata" name="the learning delivery postcode area cost reference data" containment-relationship-id="learningdeliveryspostcodeareacostreferencedata" containment-parent-id="learningdelivery" public-id="SFA_PostcodeAreaCost">
+      <attribute name="p362" type="date" public-name="AreaCosEffectiveTo">
+        <text>
+          <base>the learning delivery postcode area cost reference data's effective to date</base>
+        </text>
+      </attribute>
+      <attribute name="p363" type="date" public-name="AreaCosEffectiveFrom">
+        <text>
+          <base>the learning delivery postcode area cost reference data's effective from date</base>
+        </text>
+      </attribute>
+      <attribute name="p364" type="number" public-name="AreaCosFactor">
+        <text>
+          <base>the learning delivery postcode area cost reference data's area cost factor</base>
+        </text>
+      </attribute>
+    </entity>
+  </entities>
+  <rules />
+  <interactive-items>
+    <folders />
+    <screens />
+    <documents />
+  </interactive-items>
+  <relationships>
+    <relationship source="global" target="learner" text="the learners" relationship-id="learners" reverse-text="the provider associated with the learner" reverse-relationship-id="providerassociatedwiththelearner" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learner" target="learningdelivery" text="the learner's learning deliveries" relationship-id="learnerslearningdeliveries" reverse-text="the learner associated with the learning delivery" reverse-relationship-id="learnerassociatedwiththelearningdelivery" type="OneToMany" is-computed="false" is-containment="true" />
+    <relationship source="learningdelivery" target="learningdeliveryfam" text="the learning delivery's FAMs" relationship-id="learningdeliverysfams" reverse-text="the learning delivery associated with the learning delivery FAM" reverse-relationship-id="learningdeliveryassociatedwiththelearningdeliveryfam" type="OneToMany" is-computed="false" is-containment="true" />
+    <relationship source="learner" target="learneremploymentstatus" is-containment="true" public-id="" reverse-public-id="" text="the learner's employment statuses" relationship-id="learnersemploymentstatuses" reverse-text="the learner associated with the learner employment status" reverse-relationship-id="learnerassociatedwiththelearneremploymentstatus" type="OneToMany" is-computed="false" />
+    <relationship source="learningdelivery" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's Apprenticeship programme aims" relationship-id="learningdeliverysapprenticeshipprogrammeaims" reverse-text="" reverse-relationship-id="learningdelivery_learningdeliverysapprenticeshipprogrammeaims_rev" type="ManyToMany" is-computed="false" />
+    <relationship source="learningdelivery" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's Apprenticeship pathway programme aims" relationship-id="learningdeliverysapprenticeshippathwayprogrammeaims" reverse-text="" reverse-relationship-id="learningdelivery_learningdeliverysapprenticeshippathwayprogrammeaims_rev" type="ManyToMany" is-computed="true" />
+    <relationship source="learningdelivery" target="learneremploymentstatus" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's applicable employment statuses" relationship-id="learningdeliverysapplicableemploymentstatuses" reverse-text="the employment statuses applicable to the learning delivery" reverse-relationship-id="employmentstatusesapplicabletothelearningdelivery" type="ManyToMany" is-computed="false" />
+    <relationship source="learningdelivery" target="learneremploymentstatus" is-containment="false" public-id="" reverse-public-id="" text="the Apprenticeship programme aim's applicable employment statuses" relationship-id="apprenticeshipprogrammeaimsapplicableemploymentstatuses" reverse-text="the employment statuses applicable to the apprenticeship programme aim" reverse-relationship-id="employmentstatusesapplicabletotheapprenticeshipprogrammeaim" type="ManyToMany" is-computed="false" />
+    <relationship source="learningdelivery" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's Traineeship programme aims" relationship-id="learningdeliverystraineeshipprogrammeaims" reverse-relationship-id="learningdelivery_learningdeliverystraineeshipprogrammeaims_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="learningdelivery" target="learningdeliverylarscategory" text="the learning delivery's LARS categories" relationship-id="learningdeliveryslarscategories" reverse-relationship-id="learningdeliveryassociatedwiththelearningdeliverylarscategory" reverse-text="the learning delivery associated with the learning delivery LARS category" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learningdelivery" target="learningdeliveryannualvalue" text="the learning delivery's annual values" relationship-id="learningdeliverysannualvalues" reverse-relationship-id="learningdelivery_learningdeliverysannualvalues_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learneremploymentstatus" target="learneremploymentstatuslargeemployerreferencedata" text="the learner employment status's large employer reference data" relationship-id="learneremploymentstatusslargeemployerreferencedata" reverse-relationship-id="largeemployerreferencedataassociatedwiththelearneremploymentstatus" reverse-text="the large employer reference data associated with the learner employment status" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learningdelivery" target="learningdeliverylarsfunding" text="the learning delivery's LARS funding rates" relationship-id="learningdeliveryslarsfundingrates" reverse-relationship-id="learningdelivery_learningdeliveryslarsfundingrates_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learner" target="learnerpostcodedisadvantageupliftreferencedata" text="the learner's postcode disadvantage uplift reference data" relationship-id="learnerspostcodedisadvantageupliftreferencedata" reverse-relationship-id="learner_learnerspostcodedisadvantageupliftreferencedata_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learningdelivery" target="learningdeliverypostcodeareacostreferencedata" text="the learning delivery's postcode area cost reference data" relationship-id="learningdeliveryspostcodeareacostreferencedata" reverse-relationship-id="learningdelivery_learningdeliveryspostcodeareacostreferencedata_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="global" target="organisationalfunding" text="the organisational  funding reference data" relationship-id="organisationalfundingreferencedata" reverse-relationship-id="global_organisationalfundingreferencedata_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learningdelivery" target="learneremploymentstatus" is-containment="false" public-id="" reverse-public-id="" text="the Apprenticeship programme aim's latest applicable employment statuses" relationship-id="apprenticeshipprogrammeaimslatestapplicableemploymentstatuses" reverse-relationship-id="latestemploymentstatusesapplicabletotheapprenticeshipprogrammeaim" reverse-text="the latest employment statuses applicable to the apprenticeship programme aim" type="ManyToMany" is-computed="false" />
+    <relationship source="learningdelivery" target="learningdeliverylarsfunding" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's LARS Funding ADULT_LR funding categories" relationship-id="learningdeliveryslarsfundingadultlrfundingcategories" reverse-relationship-id="learningdelivery_learningdeliveryslarsfundingadultlrfundingcategories_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="learningdelivery" target="learningdeliverylarsfunding" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's LARS Funding ER App funding categories" relationship-id="learningdeliveryslarsfundingerappfundingcategories" reverse-relationship-id="learningdelivery_learningdeliveryslarsfundingerappfundingcategories_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="learningdelivery" target="learningdeliverylarsfunding" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's LARS Funding ER Other funding categories" relationship-id="learningdeliveryslarsfundingerotherfundingcategories" reverse-relationship-id="learningdelivery_learningdeliveryslarsfundingerotherfundingcategories_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="learningdelivery" target="learningdeliverylarsfunding" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's LARS Funding Matrix funding categories" relationship-id="learningdeliveryslarsfundingmatrixfundingcategories" reverse-relationship-id="learningdelivery_learningdeliveryslarsfundingmatrixfundingcategories_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="learningdelivery" target="learningdeliverylarsfunding" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's LARS Funding OLASS  funding categories" relationship-id="learningdeliveryslarsfundingolassfundingcategories" reverse-relationship-id="learningdelivery_learningdeliveryslarsfundingolassfundingcategories_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+  </relationships>
+  <rule-folders />
+</root>
