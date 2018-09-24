@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Attribute
+namespace ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output
 {
-    public class PriceEpisodeAttributeData
+    public class PriceEpisodeValues
     {
         public DateTime? EpisodeStartDate { get; set; }
 

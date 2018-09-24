@@ -14,7 +14,7 @@ using ESFA.DC.ILR.FundingService.FM25.Model.Output;
 using ESFA.DC.ILR.FundingService.FM25Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.FM35Actor.Interfaces;
-using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model;
+using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FM36Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
@@ -36,7 +36,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         private readonly IPopulationService _populationService;
         private readonly IActorTask<IALBActor, ALBFundingOutputs> _albActorTask;
         private readonly IActorTask<IFM35Actor, FM35FundingOutputs> _fm35ActorTask;
-        private readonly IActorTask<IFM36Actor, FM36FundingOutputs> _fm36ActorTask;
+        private readonly IActorTask<IFM36Actor, FM36Global> _fm36ActorTask;
         private readonly IActorTask<IFM25Actor, Global> _fm25ActorTask;
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
         private readonly IPagingService<ILearner> _learnerPagingService;
@@ -53,7 +53,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             IPopulationService populationService,
             IActorTask<IALBActor, ALBFundingOutputs> albActorTask,
             IActorTask<IFM35Actor, FM35FundingOutputs> fm35ActorTask,
-            IActorTask<IFM36Actor, FM36FundingOutputs> fm36ActorTask,
+            IActorTask<IFM36Actor, FM36Global> fm36ActorTask,
             IActorTask<IFM25Actor, Global> fm25ActorTask,
             IKeyValuePersistenceService keyValuePersistenceService,
             IPagingService<ILearner> learnerPagingService,

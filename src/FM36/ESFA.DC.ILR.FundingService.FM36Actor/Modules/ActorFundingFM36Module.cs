@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Autofac;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory;
@@ -11,7 +12,7 @@ using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.File.Interface;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Internal;
-using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model;
+using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FM36.Service;
 using ESFA.DC.ILR.FundingService.FM36.Service.Input;
 using ESFA.DC.ILR.FundingService.Interfaces;
@@ -44,8 +45,8 @@ namespace ESFA.DC.ILR.FundingService.FM36Actor.Modules
             builder.RegisterType<InternalDataCache>().As<IInternalDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<FileDataCache>().As<IFileDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<FileDataService>().As<IFileDataService>().InstancePerLifetimeScope();
-            builder.RegisterType<FundingOutputService>().As<IOutputService<FM36FundingOutputs>>().InstancePerLifetimeScope();
-            builder.RegisterType<FundingService<ILearner, FM36FundingOutputs>>().As<IFundingService<ILearner, FM36FundingOutputs>>().InstancePerLifetimeScope();
+            builder.RegisterType<FundingOutputService>().As<IOutputService<FM36Global>>().InstancePerLifetimeScope();
+            builder.RegisterType<FundingService<ILearner, FM36Global>>().As<IFundingService<ILearner, FM36Global>>().InstancePerLifetimeScope();
             builder.RegisterType<JsonSerializationService>().As<IJsonSerializationService>().InstancePerLifetimeScope();
             builder.RegisterType<JsonSerializationService>().As<ISerializationService>().InstancePerLifetimeScope();
             builder.RegisterType<DataEntityAttributeService>().As<IDataEntityAttributeService>();
