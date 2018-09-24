@@ -6,7 +6,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output
     {
         public int AimSeqNumber { get; set; }
 
-        public List<LearningDeliveryValues> LearningDeliveryValues { get; set; }
+        public LearningDeliveryValues LearningDeliveryValues { get; set; }
 
         public List<LearningDeliveryPeriodisedValues> LearningDeliveryPeriodisedValues { get; set; }
     }

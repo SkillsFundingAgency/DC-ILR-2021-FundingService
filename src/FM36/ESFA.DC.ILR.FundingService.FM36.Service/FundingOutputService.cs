@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output;
-using ESFA.DC.ILR.FundingService.FM36.HistoricEarningsOutput.Model;
 using ESFA.DC.ILR.FundingService.FM36.Service.Constants;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.OPA.Model.Interface;
@@ -11,7 +10,7 @@ using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM36.Service
 {
-    public class FundingOutputService : IOutputService<FM36FundingOutputs>
+    public class FundingOutputService : IOutputService<FM36Global>
     {
         private readonly IInternalDataCache _internalDataCache;
         private readonly IDataEntityAttributeService _dataEntityAttributeService;
@@ -22,29 +21,12 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
             _dataEntityAttributeService = dataEntityAttributeService;
         }
 
-        public FM36FundingOutputs ProcessFundingOutputs(IEnumerable<IDataEntity> dataEntities)
+        public FM36Global ProcessFundingOutputs(IEnumerable<IDataEntity> dataEntities)
         {
-            if (dataEntities != null)
-            {
-                dataEntities = dataEntities.ToList();
-                if (dataEntities.Any())
-                {
-                    return new FM36FundingOutputs
-                    {
-                        Global = GlobalOutput(dataEntities.First()),
-                        Learners = dataEntities
-                        .Where(g => g.Children != null)
-                        .SelectMany(g => g.Children.Where(e => e.EntityName == Attributes.EntityLearner)
-                        .Select(LearnerFromDataEntity))
-                        .ToArray(),
-                    };
-                }
-            }
-
-            return new FM36FundingOutputs();
+            return dataEntities.Select(MapGlobal).SingleOrDefault();
         }
 
-        public FM36Global GlobalOutput(IDataEntity dataEntity)
+        public FM36Global MapGlobal(IDataEntity dataEntity)
         {
             return new FM36Global
             {
@@ -52,26 +34,31 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 LARSVersion = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.LARSVersion),
                 RulebaseVersion = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.RulebaseVersion),
                 Year = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.Year),
+                Learners = dataEntity
+                    .Children?
+                    .Where(c => c.EntityName == Attributes.EntityLearner)
+                    .Select(MapLearner)
+                    .ToList()
             };
         }
 
-        public Learner LearnerFromDataEntity(IDataEntity dataEntity)
+        public FM36Learner MapLearner(IDataEntity dataEntity)
         {
-            return new Learner()
+            return new FM36Learner()
             {
                 LearnRefNumber = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.LearnRefNumber),
-                LearningDeliveryAttributes = dataEntity
+                LearningDeliveries = dataEntity
                         .Children
                         .Where(e => e.EntityName == Attributes.EntityLearningDelivery)
-                        .Select(LearningDeliveryFromDataEntity).ToArray(),
-                PriceEpisodeAttributes = dataEntity
+                        .Select(LearningDeliveryFromDataEntity).ToList(),
+                PriceEpisodes = dataEntity
                         .Children
                         .Where(e => e.EntityName == Attributes.EntityApprenticeshipPriceEpisode)
-                        .Select(PriceEpisodeFromDataEntity).ToArray(),
-                HistoricEarningOutputAttributeDatas = dataEntity
-                        .Children
-                        .Where(e => e.EntityName == Attributes.EntityHistoricEarningOutput)
-                        .Select(HistoricEarningOutputDataFromDataEntity).ToArray()
+                        .Select(PriceEpisodeFromDataEntity).ToList(),
+                //HistoricEarningOutputAttributeDatas = dataEntity
+                //        .Children
+                //        .Where(e => e.EntityName == Attributes.EntityHistoricEarningOutput)
+                //        .Select(HistoricEarningOutputDataFromDataEntity).ToList(),
             };
         }
 
@@ -80,8 +67,8 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
             return new LearningDelivery
             {
                 AimSeqNumber = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.AimSeqNumber).Value,
-                LearningDeliveryAttributeDatas = LearningDeliveryAttributeData(dataEntity),
-                LearningDeliveryPeriodisedAttributes = LearningDeliveryPeriodisedAttributeData(dataEntity).ToArray(),
+                LearningDeliveryValues = LearningDeliveryAttributeData(dataEntity),
+                LearningDeliveryPeriodisedValues = LearningDeliveryPeriodisedValues(dataEntity),
             };
         }
 
@@ -144,7 +131,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
             };
         }
 
-        public LearningDeliveryPeriodisedValues[] LearningDeliveryPeriodisedAttributeData(IDataEntity learningDelivery)
+        public List<LearningDeliveryPeriodisedValues> LearningDeliveryPeriodisedValues(IDataEntity learningDelivery)
         {
             List<string> attributeList = new List<string>()
             {
@@ -227,22 +214,22 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 }
             }
 
-            return learningDeliveryPeriodisedAttributeList.ToArray();
+            return learningDeliveryPeriodisedAttributeList;
         }
 
-        public PriceEpisodes PriceEpisodeFromDataEntity(IDataEntity dataEntity)
+        public PriceEpisode PriceEpisodeFromDataEntity(IDataEntity dataEntity)
         {
-            return new PriceEpisodes
+            return new PriceEpisode
             {
                 PriceEpisodeIdentifier = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.PriceEpisodeIdentifier),
-                PriceEpisodeAttributeDatas = PriceEpisodeAttributeData(dataEntity),
-                PriceEpisodePeriodisedAttributes = PriceEpisodePeriodisedAttributeData(dataEntity).ToArray(),
+                PriceEpisodeValues = PriceEpisodeValues(dataEntity),
+                PriceEpisodePeriodisedValues = PriceEpisodePeriodisedValues(dataEntity),
             };
         }
 
-        public PriceEpisodeData PriceEpisodeAttributeData(IDataEntity dataEntity)
+        public PriceEpisodeValues PriceEpisodeValues(IDataEntity dataEntity)
         {
-            return new PriceEpisodeData
+            return new PriceEpisodeValues
             {
                 EpisodeStartDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.EpisodeStartDate),
                 TNP1 = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.TNP1),
@@ -302,7 +289,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
             };
         }
 
-        public PriceEpisodePeriodisedValues[] PriceEpisodePeriodisedAttributeData(IDataEntity priceEpisode)
+        public List<PriceEpisodePeriodisedValues> PriceEpisodePeriodisedValues(IDataEntity priceEpisode)
         {
             List<string> attributeList = new List<string>()
             {
@@ -380,40 +367,40 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 }
             }
 
-            return priceEpisodePeriodisedAttributeList.ToArray();
+            return priceEpisodePeriodisedAttributeList;
         }
 
-        public HistoricEarningOutputAttributeData HistoricEarningOutputDataFromDataEntity(IDataEntity dataEntity)
-        {
-            return new HistoricEarningOutputAttributeData
-            {
-                AppIdentifierOutput = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.AppIdentifierOutput),
-                AppProgCompletedInTheYearOutput = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, Attributes.AppProgCompletedInTheYearOutput),
-                HistoricDaysInYearOutput = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.HistoricDaysInYearOutput),
-                HistoricEffectiveTNPStartDateOutput = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.HistoricEffectiveTNPStartDateOutput),
-                HistoricEmpIdEndWithinYearOutput = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.HistoricEmpIdEndWithinYearOutput),
-                HistoricEmpIdStartWithinYearOutput = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.HistoricEmpIdStartWithinYearOutput),
-                HistoricFworkCodeOutput = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.HistoricFworkCodeOutput),
-                HistoricLearner1618AtStartOutput = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, Attributes.HistoricLearner1618AtStartOutput),
-                HistoricPMRAmountOutput = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.HistoricPMRAmountOutput),
-                HistoricProgrammeStartDateIgnorePathwayOutput = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.HistoricProgrammeStartDateIgnorePathwayOutput),
-                HistoricProgrammeStartDateMatchPathwayOutput = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.HistoricProgrammeStartDateMatchPathwayOutput),
-                HistoricProgTypeOutput = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.HistoricProgTypeOutput),
-                HistoricPwayCodeOutput = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.HistoricPwayCodeOutput),
-                HistoricSTDCodeOutput = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.HistoricSTDCodeOutput),
-                HistoricTNP1Output = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.HistoricTNP1Output),
-                HistoricTNP2Output = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.HistoricTNP2Output),
-                HistoricTNP3Output = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.HistoricTNP3Output),
-                HistoricTNP4Output = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.HistoricTNP4Output),
-                HistoricTotal1618UpliftPaymentsInTheYear = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.HistoricTotal1618UpliftPaymentsInTheYear),
-                HistoricTotalProgAimPaymentsInTheYear = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.HistoricTotalProgAimPaymentsInTheYear),
-                HistoricULNOutput = _dataEntityAttributeService.GetLongAttributeValue(dataEntity, Attributes.HistoricULNOutput),
-                HistoricUptoEndDateOutput = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.HistoricUptoEndDateOutput),
-                HistoricVirtualTNP3EndofThisYearOutput = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.HistoricVirtualTNP3EndofThisYearOutput),
-                HistoricVirtualTNP4EndofThisYearOutput = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.HistoricVirtualTNP4EndofThisYearOutput),
-                HistoricLearnDelProgEarliestACT2DateOutput = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.HistoricLearnDelProgEarliestACT2DateOutput)
-            };
-        }
+        //public HistoricEarningOutputAttributeData HistoricEarningOutputDataFromDataEntity(IDataEntity dataEntity)
+        //{
+        //    return new HistoricEarningOutputAttributeData
+        //    {
+        //        AppIdentifierOutput = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.AppIdentifierOutput),
+        //        AppProgCompletedInTheYearOutput = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, Attributes.AppProgCompletedInTheYearOutput),
+        //        HistoricDaysInYearOutput = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.HistoricDaysInYearOutput),
+        //        HistoricEffectiveTNPStartDateOutput = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.HistoricEffectiveTNPStartDateOutput),
+        //        HistoricEmpIdEndWithinYearOutput = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.HistoricEmpIdEndWithinYearOutput),
+        //        HistoricEmpIdStartWithinYearOutput = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.HistoricEmpIdStartWithinYearOutput),
+        //        HistoricFworkCodeOutput = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.HistoricFworkCodeOutput),
+        //        HistoricLearner1618AtStartOutput = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, Attributes.HistoricLearner1618AtStartOutput),
+        //        HistoricPMRAmountOutput = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.HistoricPMRAmountOutput),
+        //        HistoricProgrammeStartDateIgnorePathwayOutput = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.HistoricProgrammeStartDateIgnorePathwayOutput),
+        //        HistoricProgrammeStartDateMatchPathwayOutput = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.HistoricProgrammeStartDateMatchPathwayOutput),
+        //        HistoricProgTypeOutput = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.HistoricProgTypeOutput),
+        //        HistoricPwayCodeOutput = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.HistoricPwayCodeOutput),
+        //        HistoricSTDCodeOutput = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.HistoricSTDCodeOutput),
+        //        HistoricTNP1Output = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.HistoricTNP1Output),
+        //        HistoricTNP2Output = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.HistoricTNP2Output),
+        //        HistoricTNP3Output = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.HistoricTNP3Output),
+        //        HistoricTNP4Output = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.HistoricTNP4Output),
+        //        HistoricTotal1618UpliftPaymentsInTheYear = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.HistoricTotal1618UpliftPaymentsInTheYear),
+        //        HistoricTotalProgAimPaymentsInTheYear = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.HistoricTotalProgAimPaymentsInTheYear),
+        //        HistoricULNOutput = _dataEntityAttributeService.GetLongAttributeValue(dataEntity, Attributes.HistoricULNOutput),
+        //        HistoricUptoEndDateOutput = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.HistoricUptoEndDateOutput),
+        //        HistoricVirtualTNP3EndofThisYearOutput = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.HistoricVirtualTNP3EndofThisYearOutput),
+        //        HistoricVirtualTNP4EndofThisYearOutput = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.HistoricVirtualTNP4EndofThisYearOutput),
+        //        HistoricLearnDelProgEarliestACT2DateOutput = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.HistoricLearnDelProgEarliestACT2DateOutput)
+        //    };
+        //}
 
         private decimal? GetPeriodAttributeValue(IAttributeData attributes, DateTime periodDate)
         {

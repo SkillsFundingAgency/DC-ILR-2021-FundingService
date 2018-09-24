@@ -6,7 +6,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output
     {
         public string PriceEpisodeIdentifier { get; set; }
 
-        public List<PriceEpisodeValues> PriceEpisodeDatas { get; set; }
+        public PriceEpisodeValues PriceEpisodeValues { get; set; }
 
         public List<PriceEpisodePeriodisedValues> PriceEpisodePeriodisedValues { get; set; }
     }
