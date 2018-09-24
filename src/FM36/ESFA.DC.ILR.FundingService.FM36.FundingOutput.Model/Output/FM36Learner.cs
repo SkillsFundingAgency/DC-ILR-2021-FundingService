@@ -9,5 +9,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output
         public List<PriceEpisode> PriceEpisodes { get; set; }
 
         public List<LearningDelivery> LearningDeliveries { get; set; }
+
+        public List<HistoricEarningOutputValues> HistoricEarningOutputValues { get; set; }
     }
 }
