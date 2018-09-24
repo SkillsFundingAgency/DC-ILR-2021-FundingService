@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Attribute;
 using ESFA.DC.ILR.FundingService.FM35.Service;
-using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
@@ -16,7 +14,7 @@ using Moq;
 using Oracle.Determinations.Masquerade.Util;
 using Xunit;
 
-namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Service.Tests
+namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
 {
     public class FundingOutputServiceTests
     {

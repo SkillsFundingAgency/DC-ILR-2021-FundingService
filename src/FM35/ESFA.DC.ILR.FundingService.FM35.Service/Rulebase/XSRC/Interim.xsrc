@@ -1,0 +1,822 @@
+<root schema-version="1" product-version="10.4.2.18">
+  <entities>
+    <entity ref="global">
+      <attribute name="p156" type="date" public-name="August31stCurrentFundYr">
+        <text>
+          <base>the 31st August of the current funding year</base>
+        </text>
+      </attribute>
+      <attribute name="p167" type="date" public-name="TransPeriodEnd">
+        <text>
+          <base>the end of the funding method transition period</base>
+        </text>
+      </attribute>
+      <attribute name="b132" type="boolean" public-name="LastDayOfPeriod">
+        <text>
+          <base>the date is the last day of the period</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,normal)),sb('the date',singular),o('the last day of the period'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b145" type="boolean" public-name="DateInCurrentFundYr">
+        <text>
+          <base>the date is in the current funding year</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,normal)),sb('the date',singular),o('in the current funding year'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p219" type="date" public-name="LookUpFactorTransDate">
+        <text>
+          <base>lookup factor transition date</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learner" name="the learner" containment-relationship-id="learners" containment-parent-id="global" public-id="">
+      <attribute name="p150" type="number" public-name="LearnerCapFactor">
+        <text>
+          <base>the learner's cap factor</base>
+        </text>
+      </attribute>
+      <attribute name="p154" type="currency" public-name="TotalUncappedFunding">
+        <text>
+          <base>the learner's total uncapped funding</base>
+        </text>
+      </attribute>
+      <attribute name="p157" type="number" public-name="AgeAtAugust31st">
+        <text>
+          <base>the learner's age at 31st August of the current funding year</base>
+        </text>
+      </attribute>
+      <attribute name="p159" type="number" public-name="LSFHighestAimType">
+        <text>
+          <base>the learner's highest LSF aim type</base>
+        </text>
+      </attribute>
+      <attribute name="p160" type="currency" public-name="LSFHighestRate">
+        <text>
+          <base>the learner's highest LSF rate</base>
+        </text>
+      </attribute>
+      <attribute name="p161" type="date" public-name="LSFEarliestStartDate">
+        <text>
+          <base>the learner's earliest LSF start date</base>
+        </text>
+      </attribute>
+      <attribute name="p163" type="number" public-name="LSFLowestAimSeq">
+        <text>
+          <base>the learner's lowest LSF aim sequence number</base>
+        </text>
+      </attribute>
+      <attribute name="p237" type="number" public-name="DisadvantageUplift">
+        <text>
+          <base>the learner's disadvantage uplift</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">1.0001</prop>
+        </props>
+      </attribute>
+      <attribute name="p244" type="number" public-name="DisadvantageUpliftStageOne">
+        <text>
+          <base>the learner's disadvantage uplift stage one</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learningdelivery" name="the learning delivery" containment-relationship-id="learnerslearningdeliveries" containment-parent-id="learner">
+      <attribute name="p120" type="number" public-name="LearnDelFAMCount">
+        <text>
+          <base>the learning delivery's number of FAM records</base>
+        </text>
+      </attribute>
+      <attribute name="p121" type="number" public-name="LearnDelFAMCountStage1">
+        <text>
+          <base>the learning delivery's number of FAM records stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="b96" type="boolean" public-name="AppProgAim">
+        <text>
+          <base>the learning delivery is an Apprenticeship programme aim</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('an Apprenticeship programme aim'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b97" type="boolean" public-name="TrnComponent">
+        <text>
+          <base>the learning delivery is a Traineeship component aim</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a Traineeship component aim'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p122" type="number" public-name="AppPathwayProgAimCount">
+        <text>
+          <base>the learning delivery's number of Apprenticeship pathway programme aim records</base>
+        </text>
+      </attribute>
+      <attribute name="p124" type="date" public-name="AppPathwayProgAimLatestActEndDate">
+        <text>
+          <base>the learning delivery's latest Apprenticeship pathway programme aim actual end date</base>
+        </text>
+      </attribute>
+      <attribute name="p134" type="text" public-name="LearnDelLargeEmployerFlag">
+        <text>
+          <base>the learning delivery's large employer flag</base>
+        </text>
+      </attribute>
+      <attribute name="b105" type="boolean" public-name="LearnDelLargeEmployer">
+        <text>
+          <base>the learning delivery is for a large employer</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('for a large employer'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b107" type="boolean" public-name="ActEndDatePeriodIsStartDatePeriod">
+        <text>
+          <base>the learning delivery's actual end date and start date are in the same period</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery''s actual end date and start date',plural),o('in the same period'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p136" type="date" public-name="ActEndDatePeriodStart">
+        <text>
+          <base>the beginning of the learning delivery's actual end date period</base>
+        </text>
+      </attribute>
+      <attribute name="p138" type="date" public-name="PlannedEndDatePeriodStartDayAfter">
+        <text>
+          <base>the beginning of the period the day after the learning delivery's planned end date</base>
+        </text>
+      </attribute>
+      <attribute name="p140" type="date" public-name="ActEndDatePeriodStartDayAfter">
+        <text>
+          <base>the beginning of the period the day after the learning delivery's actual end date</base>
+        </text>
+      </attribute>
+      <attribute name="b109" type="boolean" public-name="PlannedEndDatePeriodIsStartDatePeriod">
+        <text>
+          <base>the learning delivery's planned end date and start date are in the same period</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery''s planned end date and start date',plural),o('in the same period'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p141" type="date" public-name="StartDatePeriodStart">
+        <text>
+          <base>the beginning of the learning delivery's start date period</base>
+        </text>
+      </attribute>
+      <attribute name="b112" type="boolean" public-name="EEF2">
+        <text>
+          <base>the learning delivery is EEF 2</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('EEF 2'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b113" type="boolean" public-name="EEF3">
+        <text>
+          <base>the learning delivery is EEF 3</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('EEF 3'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p151" type="date" public-name="TransBalPeriodStart">
+        <text>
+          <base>the beginning of the learning delivery's transitional balancing payment period</base>
+        </text>
+      </attribute>
+      <attribute name="b118" type="boolean" public-name="App">
+        <text>
+          <base>the learning delivery is an Apprenticeship</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('an Apprenticeship'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p158" type="currency" public-name="LSFRate">
+        <text>
+          <base>the learning delivery's LSF rate</base>
+        </text>
+      </attribute>
+      <attribute name="b126" type="boolean" public-name="LSFRateHighestPriority">
+        <text>
+          <base>the learning delivery's LSF rate is the highest priority</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery''s LSF rate',singular),o('the highest priority'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b127" type="boolean" public-name="LSFAimTypeHighestPriority">
+        <text>
+          <base>the learning delivery's LSF aim type is the highest priority</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery''s LSF aim type',singular),o('the highest priority'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b128" type="boolean" public-name="LSFStartDateHighestPriority">
+        <text>
+          <base>the learning delivery's LSF start date is the highest priority</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery''s LSF start date',singular),o('the highest priority'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p162" type="number" public-name="LSFAimType">
+        <text>
+          <base>the learning delivery's LSF aim type</base>
+        </text>
+      </attribute>
+      <attribute name="b134" type="boolean" public-name="TransAppProgAim">
+        <text>
+          <base>the learning delivery is a transitional Apprenticeship programme aim</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a transitional Apprenticeship programme aim'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b136" type="boolean" public-name="TransPotentialAch">
+        <text>
+          <base>the learning delivery will potentially achieve after transition</base>
+          <parse>s(ver('10.4.2.18'),v(will,t(simple,present,normal)),sb('the learning delivery',plural),o('potentially achieve after transition'))</parse>
+          <override>
+            <q>will the learning delivery potentially achieve after transition?</q>
+            <n>the learning delivery will not potentially achieve after transition.</n>
+            <u>the learning delivery might potentially achieve after transition.</u>
+          </override>
+        </text>
+      </attribute>
+      <attribute name="b138" type="boolean" public-name="KnowledgeCompetencyAim">
+        <text>
+          <base>the learning delivery is an Apprenticeship Knowledge or Competency aim</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('an Apprenticeship Knowledge or Competency aim'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p187" type="date" public-name="AimAchPeriodStart">
+        <text>
+          <base>the beginning of the learning delivery's aim achievement payment period</base>
+        </text>
+      </attribute>
+      <attribute name="p188" type="date" public-name="TransBalDate">
+        <text>
+          <base>the learning delivery's transitional balancing payment date</base>
+        </text>
+      </attribute>
+      <attribute name="p189" type="date" public-name="TransAimAchPeriodStart">
+        <text>
+          <base>the beginning of the learning delivery's transitional aim achievement payment period</base>
+        </text>
+      </attribute>
+      <attribute name="p190" type="date" public-name="TransAimAchDate">
+        <text>
+          <base>the learning delivery's transitional aim achievement payment date</base>
+        </text>
+      </attribute>
+      <attribute name="b141" type="boolean" public-name="TransDateInBalPeriod">
+        <text>
+          <base>the date is in the learning delivery's transitional balancing payment period</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,normal)),sb('the date',singular),o('in the learning delivery''s transitional balancing payment period'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b142" type="boolean" public-name="DateInActEndDatePeriod">
+        <text>
+          <base>the date is in the learning delivery's actual end date period</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,normal)),sb('the date',singular),o('in the learning delivery''s actual end date period'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b143" type="boolean" public-name="DateInAimAchPeriod">
+        <text>
+          <base>the date is in the learning delivery's aim achievement payment period</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,normal)),sb('the date',singular),o('in the learning delivery''s aim achievement payment period'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b144" type="boolean" public-name="TransDateInAimAchPeriod">
+        <text>
+          <base>the date is in the learning delivery's transitional aim achievement payment period</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,normal)),sb('the date',singular),o('in the learning delivery''s transitional aim achievement payment period'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p191" type="currency" public-name="WeightedRateFromLARSStage1">
+        <text>
+          <base>the learning delivery's applicable weighted rate from LARS stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p192" type="currency" public-name="UnweightedRateFromLARSStage1">
+        <text>
+          <base>the learning delivery's applicable unweighted rate from LARS stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p193" type="text" public-name="WeightingFactorStage1">
+        <text>
+          <base>the learning delivery's applicable programme weighting factor stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p195" type="number" public-name="LrnDelDV_AchievePayPctPreTransUnscaled">
+        <text>
+          <base>the learning delivery's pre-transitional achievement percentage held back unscaled</base>
+        </text>
+      </attribute>
+      <attribute name="p196" type="number" public-name="PropFundRemainAchPreTrans">
+        <text>
+          <base>the learning delivery's pre-transitional proportion of funding remaining for achievement</base>
+        </text>
+      </attribute>
+      <attribute name="b152" type="boolean" public-name="TrnProgAim">
+        <text>
+          <base>the learning delivery is a Traineeship programme aim</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a Traineeship programme aim'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b153" type="boolean" public-name="AppComponent">
+        <text>
+          <base>the learning delivery is an Apprenticeship component aim</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('an Apprenticeship component aim'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p205" type="currency" public-name="WeightedRateFromESOLStage1">
+        <text>
+          <base>the learning delivery's applicable weighted rate from ESOL Hours stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p212" type="number" public-name="LearnDelWorkExpCat">
+        <text>
+          <base>the learning delivery's work experience categories</base>
+        </text>
+      </attribute>
+      <attribute name="p213" type="number" public-name="LearnDelApplicWorkExpCatRef">
+        <text>
+          <base>the learning delivery's applicable work experience category reference</base>
+        </text>
+      </attribute>
+      <attribute name="p214" type="number" public-name="LearnDelApplicWorkPrepCatRef">
+        <text>
+          <base>the learning delivery's applicable work preparation category reference</base>
+        </text>
+      </attribute>
+      <attribute name="p215" type="number" public-name="LearnDelWorkPrepCat">
+        <text>
+          <base>the learning delivery's work preparation categories</base>
+        </text>
+      </attribute>
+      <attribute name="p216" type="number" public-name="BasicSkillsTypeCode">
+        <text>
+          <base>the learning delivery's basic skills type code</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">23</prop>
+        </props>
+      </attribute>
+      <attribute name="p217" type="number" public-name="BasicSkillsTypeCodeStage1">
+        <text>
+          <base>the learning delivery's basic skills type code stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p218" type="number" public-name="ApplicBasicSkillsTypeCode">
+        <text>
+          <base>the learning delivery's applicable basic skills type code</base>
+        </text>
+      </attribute>
+      <attribute name="b160" type="boolean" public-name="WPLProv">
+        <text>
+          <base>the learning delivery is Workplace learning</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('Workplace learning'))</parse>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="b161" type="boolean" public-name="ClassRm">
+        <text>
+          <base>the learning delivery is Classroom learning</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('Classroom learning'))</parse>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="b165" type="boolean" public-name="EEF4">
+        <text>
+          <base>the learning delivery is EEF 4</base>
+          <parse>s(ver('10.4.5.40'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('EEF 4'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p223" type="currency" public-name="AdultLRUnweightedRate">
+        <text>
+          <base>the learning delivery's Adult LR unweighted rate</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="IntegrationTestValue">5000</prop>
+        </props>
+      </attribute>
+      <attribute name="p224" type="currency" public-name="AdultLRWeightedRate">
+        <text>
+          <base>the learning delivery's Adult LR weighted rate</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="IntegrationTestValue">5000</prop>
+        </props>
+      </attribute>
+      <attribute name="p225" type="currency" public-name="ERAppWeightedRate">
+        <text>
+          <base>the learning delivery's ER App weighted rate</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="IntegrationTestValue">92.001</prop>
+        </props>
+      </attribute>
+      <attribute name="p226" type="currency" public-name="EROtherUnweightedRate">
+        <text>
+          <base>the learning delivery's ER Other unweighted rate</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="IntegrationTestValue">10.001</prop>
+        </props>
+      </attribute>
+      <attribute name="p227" type="currency" public-name="EROtherWeightedRate">
+        <text>
+          <base>the learning delivery's ER Other weighted rate</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="IntegrationTestValue">10.01</prop>
+        </props>
+      </attribute>
+      <attribute name="p228" type="currency" public-name="MatrixUnweightedRate">
+        <text>
+          <base>the learning delivery's Matrix unweighted rate</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="IntegrationTestValue">2000</prop>
+        </props>
+      </attribute>
+      <attribute name="p229" type="currency" public-name="MatrixWeightedRate">
+        <text>
+          <base>the learning delivery's Matrix weighted rate</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="IntegrationTestValue">2000</prop>
+        </props>
+      </attribute>
+      <attribute name="p230" type="currency" public-name="OLASSUnweightedRate">
+        <text>
+          <base>the learning delivery's OLASS unweighted rate</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="IntegrationTestValue">2000</prop>
+        </props>
+      </attribute>
+      <attribute name="p231" type="currency" public-name="OLASSWeightedRate">
+        <text>
+          <base>the learning delivery's OLASS weighted rate</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="IntegrationTestValue">2000</prop>
+        </props>
+      </attribute>
+      <attribute name="p232" type="text" public-name="AdultLRWeightingFactor">
+        <text>
+          <base>the learning delivery's Adult LR programme weighting factor</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="IntegrationTestValue">A</prop>
+        </props>
+      </attribute>
+      <attribute name="p233" type="text" public-name="ERAppWeightingFactor">
+        <text>
+          <base>the learning delivery's ER App programme weighting factor</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="IntegrationTestValue">C</prop>
+        </props>
+      </attribute>
+      <attribute name="p234" type="text" public-name="EROtherWeightingFactor">
+        <text>
+          <base>the learning delivery's ER Other programme weighting factor</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="IntegrationTestValue">A</prop>
+        </props>
+      </attribute>
+      <attribute name="p235" type="text" public-name="MatrixWeightingFactor">
+        <text>
+          <base>the learning delivery's Matrix programme weighting factor</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="IntegrationTestValue">A</prop>
+        </props>
+      </attribute>
+      <attribute name="p236" type="text" public-name="OLASSWeightingFactor">
+        <text>
+          <base>the learning delivery's OLASS programme weighting factor</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="IntegrationTestValue">A</prop>
+        </props>
+      </attribute>
+      <attribute name="p238" type="number" public-name="AreaCostFactor">
+        <text>
+          <base>the learning delivery's area cost factor</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">1.02</prop>
+        </props>
+      </attribute>
+      <attribute name="p239" type="number" public-name="LrnDelFAM_WPL">
+        <text>
+          <base>the learning delivery's WPL FAM code</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">1</prop>
+        </props>
+      </attribute>
+      <attribute name="p243" type="number" public-name="AreaCostStageOne">
+        <text>
+          <base>the learning delivery's area cost factor stage one</base>
+        </text>
+      </attribute>
+      <attribute name="p245" type="number" public-name="LrnDelDisadvantageUplift">
+        <text>
+          <base>the learning delivery's disadvantage uplift</base>
+        </text>
+      </attribute>
+      <attribute name="b175" type="boolean" public-name="LargeEmployer">
+        <text>
+          <base>the learning delivery's employer identifier is a large employer</base>
+          <parse>s(ver('10.4.5.40'),v(be,t(simple,present,normal)),sb('the learning delivery''s employer identifier',singular),o('a large employer'))</parse>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="b176" type="boolean" public-name="SpecialistResources">
+        <text>
+          <base>the learning delivery has specialist resources</base>
+          <parse>s(ver('10.4.5.40'),v(have,t(simple,present,normal)),sb('the learning delivery',singular),o('specialist resources'))</parse>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="b177" type="boolean" public-name="LTRC">
+        <text>
+          <base>the learning delivery is a long term residential college</base>
+          <parse>s(ver('10.4.5.40'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a long term residential college'))</parse>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="b179" type="boolean" public-name="DirectFundEmp">
+        <text>
+          <base>the learning delivery is a directly funded employer</base>
+          <parse>s(ver('10.4.5.40'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a directly funded employer'))</parse>
+        </text>
+        <props>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p246" type="currency" public-name="AdultLRWeightedRateStage1">
+        <text>
+          <base>the learning delivery's Adult LR weighted rate stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p247" type="currency" public-name="AdultLRUnweightedRateStage1">
+        <text>
+          <base>the learning delivery's Adult LR unweighted rate stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p248" type="currency" public-name="ERAppWeightedRateStage1">
+        <text>
+          <base>the learning delivery's ER App weighted rate stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p249" type="currency" public-name="EROtherWeightedRateStage1">
+        <text>
+          <base>the learning delivery's ER Other weighted rate stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p250" type="currency" public-name="EROtherUnweightedRateStage1">
+        <text>
+          <base>the learning delivery's ER Other unweighted rate stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p251" type="currency" public-name="MatrixWeightingRateStage1">
+        <text>
+          <base>the learning delivery's Matrix weighted rate stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p252" type="currency" public-name="MatrixUnweightedRateStage1">
+        <text>
+          <base>the learning delivery's Matrix unweighted rate stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p253" type="currency" public-name="OLASSWeightedRateStage1">
+        <text>
+          <base>the learning delivery's OLASS weighted rate stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p254" type="currency" public-name="OLASSUnweightedRateStage1">
+        <text>
+          <base>the learning delivery's OLASS unweighted rate stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p255" type="text" public-name="AdultLRWeightingFactorStage1">
+        <text>
+          <base>the learning delivery's Adult LR programme weighting factor stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p256" type="text" public-name="EROtherWeightingFactorStage1">
+        <text>
+          <base>the learning delivery's ER Other programme weighting factor Stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p257" type="text" public-name="ERAppWeightingFactorStage1">
+        <text>
+          <base>the learning delivery's ER App programme weighting factor Stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p258" type="text" public-name="OLASSWeightingFactorStage1">
+        <text>
+          <base>the learning delivery's OLASS programme weighting factor Stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p261" type="text" public-name="MatrixWeightingFactorStage1">
+        <text>
+          <base>the learning delivery's Matrix programme weighting factor stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p262" type="date" public-name="ESOLRatePolicyChangeDate">
+        <text>
+          <base>the learning delivery's ESOL rate policy change date</base>
+        </text>
+      </attribute>
+      <attribute name="b180" type="boolean" public-name="LrnDelEmpIdIsLargeStageOne">
+        <text>
+          <base>the learning delivery's employer identifier is a large employer stage one</base>
+          <parse>s(ver('10.4.5.40'),v(be,t(simple,present,normal)),sb('the learning delivery''s employer identifier',singular),o('a large employer stage one'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b181" type="boolean" public-name="DirectlyFundLargeEmpStageOne">
+        <text>
+          <base>the learning delivery is a directly funded employer stage one</base>
+          <parse>s(ver('10.4.5.40'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a directly funded employer stage one'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b182" type="boolean" public-name="LearnDelFundProcBudget">
+        <text>
+          <base>the learning delivery is funded from a procured budget</base>
+          <parse>s(ver('10.4.5.40'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('funded from a procured budget'))</parse>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learneremploymentstatus" name="the learner employment status" containment-relationship-id="learnersemploymentstatuses" containment-parent-id="learner">
+      <attribute name="p133" type="text" public-name="EmpStatLargeEmployerFlag">
+        <text>
+          <base>the employment status's large employer flag</base>
+        </text>
+      </attribute>
+      <attribute name="p221" type="number" public-name="LargeEmpEntitesStageOne">
+        <text>
+          <base>the number of employment status's large employer reference data stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p222" type="number" public-name="LargeEmpEntites">
+        <text>
+          <base>the number of the learner employment status's large employer reference entities</base>
+        </text>
+      </attribute>
+      <attribute name="b174" type="boolean" public-name="LargeEmpIndiStage1">
+        <text>
+          <base>the learner employment status large employer reference indicates large employment stage one</base>
+          <parse>s(ver('10.4.5.40'),v(indicate,t(simple,present,normal)),sb('the learner employment status large employer reference',singular),o('large employment stage one'))</parse>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learningdeliveryfam" name="the learning delivery FAM" containment-relationship-id="learningdeliverysfams" containment-parent-id="learningdelivery">
+      <attribute name="p169" type="date" public-name="FAMFromDatePeriodStart">
+        <text>
+          <base>the beginning of the learning delivery FAM's from date period</base>
+        </text>
+      </attribute>
+      <attribute name="p170" type="date" public-name="FAMToDatePeriodStartDayAfter">
+        <text>
+          <base>the beginning of the period the day after the learning delivery FAM's to date</base>
+        </text>
+      </attribute>
+      <attribute name="p197" type="text" public-name="LearnDelFAMTypeUC">
+        <text>
+          <base>the learning delivery FAM's upper case type</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="organisationalfunding" name="the organisational  funding" containment-relationship-id="organisationalfundingreferencedata" containment-parent-id="global">
+      <attribute name="p241" type="text" public-name="OrgFundFactorUC">
+        <text>
+          <base>the organisational funding's upper case funding factor</base>
+          <parse />
+        </text>
+      </attribute>
+      <attribute name="p242" type="text" public-name="OrgFundFactTypeUC">
+        <text>
+          <base>the organisational funding's upper case funding factor type</base>
+          <parse />
+        </text>
+      </attribute>
+      <attribute name="b169" type="boolean" public-name="ValidFactor">
+        <text>
+          <base>the organisational reference data has a valid factor</base>
+          <parse>s(ver('10.4.5.40'),v(have,t(simple,present,normal)),sb('the organisational reference data',singular),o('a valid factor'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b170" type="boolean" public-name="OrgFundAppSpecialistResource">
+        <text>
+          <base>the organisational reference data has a applicable specialist resource uplift</base>
+          <parse>s(ver('10.4.5.40'),v(have,t(simple,present,normal)),sb('the organisational reference data',singular),o('a applicable specialist resource uplift'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b171" type="boolean" public-name="ValidFactorStageTwo">
+        <text>
+          <base>the organisational reference data has a valid factor stage two</base>
+          <parse>s(ver('10.4.5.40'),v(have,t(simple,present,normal)),sb('the organisational reference data',singular),o('a valid factor stage two'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b172" type="boolean" public-name="OrgFundAppLTRC">
+        <text>
+          <base>the organisational reference data has a applicable LTRC uplift</base>
+          <parse>s(ver('10.4.5.40'),v(have,t(simple,present,normal)),sb('the organisational reference data',singular),o('a applicable LTRC uplift'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b178" type="boolean" public-name="OrgFundAppDirectFundEmp">
+        <text>
+          <base>the organisational reference data has a applicable directly funded employer uplift</base>
+          <parse>s(ver('10.4.5.40'),v(have,t(simple,present,normal)),sb('the organisational reference data',singular),o('a applicable directly funded employer uplift'))</parse>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learningdeliverylarsfunding" name="the learning delivery LARS funding" containment-relationship-id="learningdeliveryslarsfundingrates" containment-parent-id="learningdelivery">
+      <attribute name="p260" type="date" public-name="LARSEffectivetoDateStage1">
+        <text>
+          <base>the learning delivery's LARS funding effective to date stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p267" type="text" public-name="LARSFundCategoryUC">
+        <text>
+          <base>the learning delivery's uppercase LARS funding category</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learningdeliverypostcodeareacostreferencedata" name="the learning delivery postcode area cost reference data" containment-relationship-id="learningdeliveryspostcodeareacostreferencedata" containment-parent-id="learningdelivery">
+      <attribute name="p264" type="date" public-name="AreaCostEffectiveToStageOne">
+        <text>
+          <base>the learning delivery postcode area cost reference data's effective to date stage one</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learnerpostcodedisadvantageupliftreferencedata" name="the learner postcode disadvantage uplift reference data" containment-relationship-id="learnerspostcodedisadvantageupliftreferencedata" containment-parent-id="learner">
+      <attribute name="p266" type="date" public-name="DisUpEffectiveToStageOne">
+        <text>
+          <base>the learner postcode disadvantage uplift reference data's effective to date stage one</base>
+        </text>
+      </attribute>
+    </entity>
+  </entities>
+  <rules />
+  <interactive-items>
+    <folders />
+    <screens />
+    <documents />
+  </interactive-items>
+  <relationships>
+    <relationship source="global" target="learner" text="the learners" relationship-id="learners" reverse-text="the provider associated with the learner" reverse-relationship-id="providerassociatedwiththelearner" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learner" target="learningdelivery" text="the learner's learning deliveries" relationship-id="learnerslearningdeliveries" reverse-text="the learner associated with the learning delivery" reverse-relationship-id="learnerassociatedwiththelearningdelivery" type="OneToMany" is-computed="false" is-containment="true" />
+    <relationship source="learner" target="learneremploymentstatus" text="the learner's employment statuses" relationship-id="learnersemploymentstatuses" reverse-text="the learner associated with the learner employment status" reverse-relationship-id="learnerassociatedwiththelearneremploymentstatus" type="OneToMany" is-computed="false" is-containment="true" />
+    <relationship source="learningdelivery" target="learningdeliveryfam" is-containment="true" public-id="" reverse-public-id="" text="the learning delivery's FAMs" relationship-id="learningdeliverysfams" reverse-text="the learning delivery associated with the learning delivery FAM" reverse-relationship-id="learningdeliveryassociatedwiththelearningdeliveryfam" type="OneToMany" is-computed="false" />
+    <relationship source="global" target="organisationalfunding" text="the organisational  funding reference data" relationship-id="organisationalfundingreferencedata" reverse-relationship-id="global_organisationalfundingreferencedata_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learningdelivery" target="learningdeliverylarsfunding" text="the learning delivery's LARS funding rates" relationship-id="learningdeliveryslarsfundingrates" reverse-relationship-id="learningdelivery_learningdeliveryslarsfundingrates_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learningdelivery" target="learningdeliverypostcodeareacostreferencedata" text="the learning delivery's postcode area cost reference data" relationship-id="learningdeliveryspostcodeareacostreferencedata" reverse-relationship-id="learningdelivery_learningdeliveryspostcodeareacostreferencedata_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learner" target="learnerpostcodedisadvantageupliftreferencedata" text="the learner's postcode disadvantage uplift reference data" relationship-id="learnerspostcodedisadvantageupliftreferencedata" reverse-relationship-id="learner_learnerspostcodedisadvantageupliftreferencedata_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+  </relationships>
+  <rule-folders />
+</root>

@@ -63,7 +63,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
         public IDataEntity BuildLearnerDataEntity(ILearner learner)
         {
             var learnerEmploymentStatusDenormalized = BuildLearnerEmploymentStatusDenormalized(learner.LearnerEmploymentStatuses);
-            var sfaPostDisadvantage = _postcodesReferenceDataService.SFADisadvantagesForPostcode(learner.PostcodePrior);
+            var dasPostDisadvantage = _postcodesReferenceDataService.DASDisadvantagesForPostcode(learner.PostcodePrior);
             var appsEarningsHistory = _appsEarningsHistoryReferenceDataService.AECEarningsHistory(learner.ULN);
 
             return new DataEntity(Attributes.EntityLearner)
@@ -84,8 +84,8 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
                             learnerEmploymentStatusDenormalized?
                             .Select(BuildLearnerEmploymentStatus) ?? new List<IDataEntity>())
                         .Union(
-                            sfaPostDisadvantage?
-                            .Select(BuildSFAPostcodeDisadvantage) ?? new List<IDataEntity>())
+                            dasPostDisadvantage?
+                            .Select(BuildDASPostcodeDisadvantage) ?? new List<IDataEntity>())
                         .Union(
                             appsEarningsHistory?
                             .Select(BuildApprenticeshipsEarningsHistory) ?? new List<IDataEntity>())
@@ -186,15 +186,15 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
             };
         }
 
-        public IDataEntity BuildSFAPostcodeDisadvantage(SfaDisadvantage sfaDisadvantage)
+        public IDataEntity BuildDASPostcodeDisadvantage(DasDisadvantage dasDisadvantage)
         {
             return new DataEntity(Attributes.EntitySFA_PostcodeDisadvantage)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    { Attributes.DisApprenticeshipUplift, new AttributeData(sfaDisadvantage.Uplift) },
-                    { Attributes.DisUpEffectiveFrom, new AttributeData(sfaDisadvantage.EffectiveFrom) },
-                    { Attributes.DisUpEffectiveTo, new AttributeData(sfaDisadvantage.EffectiveTo) }
+                    { Attributes.DisApprenticeshipUplift, new AttributeData(dasDisadvantage.Uplift) },
+                    { Attributes.DisUpEffectiveFrom, new AttributeData(dasDisadvantage.EffectiveFrom) },
+                    { Attributes.DisUpEffectiveTo, new AttributeData(dasDisadvantage.EffectiveTo) }
                 }
             };
         }
