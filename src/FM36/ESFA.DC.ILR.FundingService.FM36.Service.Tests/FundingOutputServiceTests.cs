@@ -839,9 +839,9 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             return entities;
         }
 
-        private LearningDeliveryPeriodisedAttribute[] TestLearningDeliveryPeriodisedAttributesDataArray()
+        private LearningDeliveryPeriodisedValues[] TestLearningDeliveryPeriodisedAttributesDataArray()
         {
-            return new LearningDeliveryPeriodisedAttribute[]
+            return new LearningDeliveryPeriodisedValues[]
             {
                 TestLearningDeliveryPeriodisedAttributesData("DisadvFirstPayment", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("DisadvSecondPayment", 1.0m),
@@ -872,9 +872,9 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             };
         }
 
-        private LearningDeliveryPeriodisedAttribute TestLearningDeliveryPeriodisedAttributesData(string attribute, decimal value)
+        private LearningDeliveryPeriodisedValues TestLearningDeliveryPeriodisedAttributesData(string attribute, decimal value)
         {
-            return new LearningDeliveryPeriodisedAttribute
+            return new LearningDeliveryPeriodisedValues
             {
                 AttributeName = attribute,
                 Period1 = value,
@@ -968,9 +968,9 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             return entities;
         }
 
-        private PriceEpisodePeriodisedAttribute[] TestPriceEpisodePeriodisedAttributesDataArray()
+        private PriceEpisodePeriodisedValues[] TestPriceEpisodePeriodisedAttributesDataArray()
         {
-            return new PriceEpisodePeriodisedAttribute[]
+            return new PriceEpisodePeriodisedValues[]
             {
                 TestPriceEpisodePeriodisedAttributesData("PriceEpisodeApplic1618FrameworkUpliftBalancing", 1.0m),
                 TestPriceEpisodePeriodisedAttributesData("PriceEpisodeApplic1618FrameworkUpliftCompletionPayment", 1.0m),
@@ -996,9 +996,9 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             };
         }
 
-        private PriceEpisodePeriodisedAttribute TestPriceEpisodePeriodisedAttributesData(string attribute, decimal value)
+        private PriceEpisodePeriodisedValues TestPriceEpisodePeriodisedAttributesData(string attribute, decimal value)
         {
-            return new PriceEpisodePeriodisedAttribute
+            return new PriceEpisodePeriodisedValues
             {
                 AttributeName = attribute,
                 Period1 = value,

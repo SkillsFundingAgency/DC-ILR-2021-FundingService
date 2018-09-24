@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Attribute
+namespace ESFA.DC.ILR.FundingService.FM36.HistoricEarningsOutput.Model.Output
 {
-    public class HistoricEarningOutputAttributeData
+    public class FM36HistoricEarningOutputValues
     {
         public string AppIdentifierOutput { get; set; }
 

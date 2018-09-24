@@ -13,23 +13,23 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
         [Fact]
         public void Condense()
         {
-            var learnerOne = new LearnerAttribute();
-            var learnerTwo = new LearnerAttribute();
-            var learnerThree = new LearnerAttribute();
-            var learnerFour = new LearnerAttribute();
-            var learnerFive = new LearnerAttribute();
-            var learnerSix = new LearnerAttribute();
+            var learnerOne = new Learner();
+            var learnerTwo = new Learner();
+            var learnerThree = new Learner();
+            var learnerFour = new Learner();
+            var learnerFive = new Learner();
+            var learnerSix = new Learner();
 
-            var globalOne = new GlobalAttribute();
-            var globalTwo = new GlobalAttribute();
-            var globalThree = new GlobalAttribute();
+            var globalOne = new FM36Global();
+            var globalTwo = new FM36Global();
+            var globalThree = new FM36Global();
 
             var fundingOutputs = new List<FM36FundingOutputs>()
             {
                 new FM36FundingOutputs()
                 {
                     Global = globalOne,
-                    Learners = new LearnerAttribute[]
+                    Learners = new Learner[]
                     {
                         learnerOne,
                         learnerTwo,
@@ -38,7 +38,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
                 new FM36FundingOutputs()
                 {
                     Global = globalTwo,
-                    Learners = new LearnerAttribute[]
+                    Learners = new Learner[]
                     {
                         learnerThree,
                         learnerFour,
@@ -47,7 +47,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
                 new FM36FundingOutputs()
                 {
                     Global = globalThree,
-                    Learners = new LearnerAttribute[]
+                    Learners = new Learner[]
                     {
                         learnerFive,
                         learnerSix,
@@ -73,19 +73,19 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
         [Fact]
         public void Condense_NullGlobal()
         {
-            var learnerOne = new LearnerAttribute();
-            var learnerTwo = new LearnerAttribute();
-            var learnerThree = new LearnerAttribute();
-            var learnerFour = new LearnerAttribute();
-            var learnerFive = new LearnerAttribute();
-            var learnerSix = new LearnerAttribute();
+            var learnerOne = new Learner();
+            var learnerTwo = new Learner();
+            var learnerThree = new Learner();
+            var learnerFour = new Learner();
+            var learnerFive = new Learner();
+            var learnerSix = new Learner();
 
             var fundingOutputs = new List<FM36FundingOutputs>()
             {
                 new FM36FundingOutputs()
                 {
                     Global = null,
-                    Learners = new LearnerAttribute[]
+                    Learners = new Learner[]
                     {
                         learnerOne,
                         learnerTwo,
@@ -94,7 +94,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
                 new FM36FundingOutputs()
                 {
                     Global = null,
-                    Learners = new LearnerAttribute[]
+                    Learners = new Learner[]
                     {
                         learnerThree,
                         learnerFour,
@@ -103,7 +103,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
                 new FM36FundingOutputs()
                 {
                     Global = null,
-                    Learners = new LearnerAttribute[]
+                    Learners = new Learner[]
                     {
                         learnerFive,
                         learnerSix,
@@ -121,9 +121,9 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
         [Fact]
         public void Condense_NullLearners()
         {
-            var globalOne = new GlobalAttribute();
-            var globalTwo = new GlobalAttribute();
-            var globalThree = new GlobalAttribute();
+            var globalOne = new FM36Global();
+            var globalTwo = new FM36Global();
+            var globalThree = new FM36Global();
 
             var fundingOutputs = new List<FM36FundingOutputs>()
             {
@@ -153,23 +153,23 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
         [Fact]
         public void Condense_MixedNullLearners()
         {
-            var learnerOne = new LearnerAttribute();
-            var learnerTwo = new LearnerAttribute();
-            var learnerThree = new LearnerAttribute();
-            var learnerFour = new LearnerAttribute();
-            var learnerFive = new LearnerAttribute();
-            var learnerSix = new LearnerAttribute();
+            var learnerOne = new Learner();
+            var learnerTwo = new Learner();
+            var learnerThree = new Learner();
+            var learnerFour = new Learner();
+            var learnerFive = new Learner();
+            var learnerSix = new Learner();
 
-            var globalOne = new GlobalAttribute();
-            var globalTwo = new GlobalAttribute();
-            var globalThree = new GlobalAttribute();
+            var globalOne = new FM36Global();
+            var globalTwo = new FM36Global();
+            var globalThree = new FM36Global();
 
             var fundingOutputs = new List<FM36FundingOutputs>()
             {
                 new FM36FundingOutputs()
                 {
                     Global = globalOne,
-                    Learners = new LearnerAttribute[]
+                    Learners = new Learner[]
                     {
                         learnerOne,
                         learnerTwo,
@@ -183,7 +183,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
                 new FM36FundingOutputs()
                 {
                     Global = globalThree,
-                    Learners = new LearnerAttribute[]
+                    Learners = new Learner[]
                     {
                         learnerFive,
                         learnerSix,
