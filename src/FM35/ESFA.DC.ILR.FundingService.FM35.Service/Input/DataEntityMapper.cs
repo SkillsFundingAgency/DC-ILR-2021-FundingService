@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Interface;
+using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
@@ -213,12 +214,30 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
 
         public IDataEntity BuildLearnerEmploymentStatus(ILearnerEmploymentStatus learnerEmploymentStatus)
         {
+            var largeEmployer = _largeEmployersReferenceDataService.LargeEmployersforEmpID(learnerEmploymentStatus.EmpIdNullable);
+
             return new DataEntity(Attributes.EntityLearnerEmploymentStatus)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
                     { Attributes.DateEmpStatApp, new AttributeData(learnerEmploymentStatus.DateEmpStatApp) },
                     { Attributes.EmpId, new AttributeData(learnerEmploymentStatus.EmpIdNullable) }
+                },
+                Children = (
+                            largeEmployer?
+                            .Select(BuildLargeEmployer) ?? new List<IDataEntity>())
+                            .ToList()
+            };
+        }
+
+        public IDataEntity BuildLargeEmployer(LargeEmployers largeEmployers)
+        {
+            return new DataEntity(Attributes.EntityLargeEmployerReferenceData)
+            {
+                Attributes = new Dictionary<string, IAttributeData>()
+                {
+                    { Attributes.LargeEmpEffectiveFrom, new AttributeData(largeEmployers.EffectiveFrom) },
+                    { Attributes.LargeEmpEffectiveTo, new AttributeData(largeEmployers.EffectiveTo) }
                 }
             };
         }
@@ -259,6 +278,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                     { Attributes.LARSFundEffectiveFrom, new AttributeData(larsFunding.EffectiveFrom) },
                     { Attributes.LARSFundEffectiveTo, new AttributeData(larsFunding.EffectiveTo) },
                     { Attributes.LARSFundWeightedRate, new AttributeData(larsFunding.RateWeighted) },
+                    { Attributes.LARSFundUnweightedRate, new AttributeData(larsFunding.RateUnWeighted) },
+                    { Attributes.LARSFundWeightingFactor, new AttributeData(larsFunding.WeightingFactor) },
                 }
             };
         }
@@ -278,7 +299,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
 
         public IDataEntity BuildSFAAreaCost(SfaAreaCost sfaAreaCost)
         {
-            return new DataEntity(Attributes.EntityLearningDeliveryLARS_Category)
+            return new DataEntity(Attributes.EntityLearningDeliverySFA_PostcodeAreaCost)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {

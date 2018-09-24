@@ -14,9 +14,13 @@ namespace ESFA.DC.ILR.FundingService.Data.External.LargeEmployer
             _referenceDataCache = referenceDataCache;
         }
 
-        public IEnumerable<LargeEmployers> LargeEmployersforEmpID(int lEmpID)
+        public IEnumerable<LargeEmployers> LargeEmployersforEmpID(int? lEmpID)
         {
-            _referenceDataCache.LargeEmployers.TryGetValue(lEmpID, out IEnumerable<LargeEmployers> largeEmployers);
+            if (lEmpID == null)
+            {
+                return null;
+            }
+            _referenceDataCache.LargeEmployers.TryGetValue((int)lEmpID, out IEnumerable<LargeEmployers> largeEmployers);
 
             return largeEmployers;
         }
