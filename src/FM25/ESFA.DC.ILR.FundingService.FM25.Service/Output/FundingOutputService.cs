@@ -8,7 +8,7 @@ using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM25.Service.Output
 {
-    public class FundingOutputService : IOutputService<IEnumerable<Global>>
+    public class FundingOutputService : IOutputService<IEnumerable<FM25Global>>
     {
         private readonly IDataEntityAttributeService _dataEntityAttributeService;
 
@@ -17,14 +17,14 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Output
             _dataEntityAttributeService = dataEntityAttributeService;
         }
 
-        public IEnumerable<Global> ProcessFundingOutputs(IEnumerable<IDataEntity> dataEntities)
+        public IEnumerable<FM25Global> ProcessFundingOutputs(IEnumerable<IDataEntity> dataEntities)
         {
             return dataEntities.Select(MapGlobal);
         }
 
-        public Global MapGlobal(IDataEntity dataEntity)
+        public FM25Global MapGlobal(IDataEntity dataEntity)
         {
-            return new Global()
+            return new FM25Global()
             {
                 LARSVersion = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, OutputAttributeNames.LARSVersion),
                 OrgVersion = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, OutputAttributeNames.OrgVersion),
@@ -39,9 +39,9 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Output
             };
         }
 
-        public Learner MapLearner(IDataEntity dataEntity)
+        public FM25Learner MapLearner(IDataEntity dataEntity)
         {
-            return new Learner()
+            return new FM25Learner()
             {
                 AcadMonthPayment = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, OutputAttributeNames.AcadMonthPayment),
                 AcadProg = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, OutputAttributeNames.AcadProg),

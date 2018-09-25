@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ESFA.DC.ILR.FundingService.FM25.Model.Output
 {
-    public class Learner
+    public class FM25Learner
     {
         public string LearnRefNumber { get; set; }
         public int? AcadMonthPayment { get; set; }

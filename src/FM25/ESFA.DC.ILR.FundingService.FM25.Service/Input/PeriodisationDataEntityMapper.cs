@@ -8,7 +8,7 @@ using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
 {
-    public class PeriodisationDataEntityMapper : IDataEntityMapper<Global>
+    public class PeriodisationDataEntityMapper : IDataEntityMapper<FM25Global>
     {
         private const string EntityGlobal = "global";
         private const string EntityLearner = "Learner";
@@ -23,12 +23,12 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
         private const string LearnerLearnRefNumber = "LearnRefNumber";
         private const string LearnerOnProgPayment = "OnProgPayment";
 
-        public IEnumerable<IDataEntity> MapTo(IEnumerable<Global> inputModels)
+        public IEnumerable<IDataEntity> MapTo(IEnumerable<FM25Global> inputModels)
         {
             return inputModels.Select(BuildGlobalDataEntity);
         }
 
-        public IDataEntity BuildGlobalDataEntity(Global global)
+        public IDataEntity BuildGlobalDataEntity(FM25Global global)
         {
             return new DataEntity(EntityGlobal)
             {
@@ -40,7 +40,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
             };
         }
 
-        public IDataEntity BuildLearnerDataEntity(Learner learner)
+        public IDataEntity BuildLearnerDataEntity(FM25Learner learner)
         {
             return new DataEntity(EntityLearner)
             {

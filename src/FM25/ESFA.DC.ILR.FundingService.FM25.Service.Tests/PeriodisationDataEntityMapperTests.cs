@@ -16,7 +16,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
         {
             var ukprn = 1234;
 
-            var global = new Global()
+            var global = new FM25Global()
             {
                 UKPRN = ukprn
             };
@@ -38,7 +38,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             var learnRefNumber = "LearnRefNumber";
             var onProgPayment = 1.0m;
 
-            var learner = new Learner()
+            var learner = new FM25Learner()
             {
                 AcadMonthPayment = acadMonthPayment,
                 FundLine = fundLine,
