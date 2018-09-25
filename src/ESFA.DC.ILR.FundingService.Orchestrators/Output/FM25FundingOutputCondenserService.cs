@@ -5,9 +5,9 @@ using ESFA.DC.ILR.FundingService.Interfaces;
 
 namespace ESFA.DC.ILR.FundingService.FM25.Service.Output
 {
-    public class FM25FundingOutputCondenserService : IFundingOutputCondenserService<Global>
+    public class FM25FundingOutputCondenserService : IFundingOutputCondenserService<FM25Global>
     {
-        public Global Condense(IEnumerable<Global> fundingOutputs)
+        public FM25Global Condense(IEnumerable<FM25Global> fundingOutputs)
         {
             var firstOutput = fundingOutputs.FirstOrDefault();
 
@@ -18,7 +18,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Output
                 return firstOutput;
             }
 
-            return new Global();
+            return new FM25Global();
         }
     }
 }

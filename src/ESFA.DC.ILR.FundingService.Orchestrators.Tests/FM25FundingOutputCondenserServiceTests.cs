@@ -12,41 +12,41 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
         [Fact]
         public void Condense()
         {
-            var learnerOne = new Learner();
-            var learnerTwo = new Learner();
-            var learnerThree = new Learner();
-            var learnerFour = new Learner();
-            var learnerFive = new Learner();
-            var learnerSix = new Learner();
+            var learnerOne = new FM25Learner();
+            var learnerTwo = new FM25Learner();
+            var learnerThree = new FM25Learner();
+            var learnerFour = new FM25Learner();
+            var learnerFive = new FM25Learner();
+            var learnerSix = new FM25Learner();
 
-            var globalOne = new Global()
+            var globalOne = new FM25Global()
             {
-                Learners = new List<Learner>()
+                Learners = new List<FM25Learner>()
                 {
                     learnerOne,
                     learnerTwo,
                 },
             };
 
-            var globalTwo = new Global()
+            var globalTwo = new FM25Global()
             {
-                Learners = new List<Learner>
+                Learners = new List<FM25Learner>
                 {
                     learnerThree,
                     learnerFour,
                 },
             };
 
-            var globalThree = new Global()
+            var globalThree = new FM25Global()
             {
-                Learners = new List<Learner>
+                Learners = new List<FM25Learner>
                 {
                     learnerFive,
                     learnerSix,
                 },
             };
 
-            var fundingOutputs = new List<Global>()
+            var fundingOutputs = new List<FM25Global>()
             {
                 globalOne,
                 globalTwo,
@@ -71,22 +71,22 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
         [Fact]
         public void Condense_NullLearners()
         {
-            var globalOne = new Global()
+            var globalOne = new FM25Global()
             {
                 Learners = null
             };
 
-            var globalTwo = new Global()
+            var globalTwo = new FM25Global()
             {
                 Learners = null
             };
 
-            var globalThree = new Global()
+            var globalThree = new FM25Global()
             {
                 Learners = null
             };
 
-            var fundingOutputs = new List<Global>()
+            var fundingOutputs = new List<FM25Global>()
             {
                 globalOne,
                 globalTwo,
@@ -102,35 +102,35 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
         [Fact]
         public void Condense_MixedNullLearners()
         {
-            var learnerOne = new Learner();
-            var learnerTwo = new Learner();
-            var learnerFive = new Learner();
-            var learnerSix = new Learner();
+            var learnerOne = new FM25Learner();
+            var learnerTwo = new FM25Learner();
+            var learnerFive = new FM25Learner();
+            var learnerSix = new FM25Learner();
 
-            var globalOne = new Global()
+            var globalOne = new FM25Global()
             {
-                Learners = new List<Learner>()
+                Learners = new List<FM25Learner>()
                 {
                     learnerOne,
                     learnerTwo,
                 },
             };
 
-            var globalTwo = new Global()
+            var globalTwo = new FM25Global()
             {
                 Learners = null,
             };
 
-            var globalThree = new Global()
+            var globalThree = new FM25Global()
             {
-                Learners = new List<Learner>
+                Learners = new List<FM25Learner>
                 {
                     learnerFive,
                     learnerSix,
                 },
             };
 
-            var fundingOutputs = new List<Global>()
+            var fundingOutputs = new List<FM25Global>()
             {
                 globalOne,
                 globalTwo,

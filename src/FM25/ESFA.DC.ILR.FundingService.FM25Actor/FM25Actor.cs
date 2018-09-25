@@ -37,7 +37,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
 
         public async Task<string> Process(FundingActorDto actorModel, CancellationToken cancellationToken)
         {
-            Global results = RunFunding(actorModel, cancellationToken);
+            FM25Global results = RunFunding(actorModel, cancellationToken);
             actorModel = null;
 
             GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
@@ -46,7 +46,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
             return JsonSerializationService.Serialize(results);
         }
 
-        private Global RunFunding(FundingActorDto actorModel, CancellationToken cancellationToken)
+        private FM25Global RunFunding(FundingActorDto actorModel, CancellationToken cancellationToken)
         {
             if (ExecutionContext is ExecutionContext executionContextObj)
             {
@@ -59,7 +59,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
             IExternalDataCache externalDataCache;
             IInternalDataCache internalDataCache;
             IFileDataCache fileDataCache;
-            Global condensedResults;
+            FM25Global condensedResults;
 
             try
             {
@@ -96,7 +96,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
                 {
                     jobLogger.LogDebug($"{nameof(FM25Actor)} {ActorId} {GC.GetGeneration(actorModel)} started processing");
 
-                    IEnumerable<Global> fm25Results;
+                    IEnumerable<FM25Global> fm25Results;
                     IEnumerable<PeriodisationGlobal> fm25PeriodisationResults;
 
                     using (var fundingServiceLifetimeScope = childLifetimeScope.BeginLifetimeScope(c =>
@@ -106,7 +106,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
                     {
                         jobLogger.LogDebug("FM25 Rulebase Starting");
 
-                        IFundingService<ILearner, IEnumerable<Global>> fundingService = fundingServiceLifetimeScope.Resolve<IFundingService<ILearner, IEnumerable<Global>>>();
+                        IFundingService<ILearner, IEnumerable<FM25Global>> fundingService = fundingServiceLifetimeScope.Resolve<IFundingService<ILearner, IEnumerable<FM25Global>>>();
 
                         List<MessageLearner> learners = JsonSerializationService.Deserialize<List<MessageLearner>>(actorModel.ValidLearners);
 
@@ -122,7 +122,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
                     {
                         jobLogger.LogDebug("FM25 Periodisation Rulebase Starting");
 
-                        IFundingService<Global, IEnumerable<PeriodisationGlobal>> periodisationService = fundingServiceLifetimeScope.Resolve<IFundingService<Global, IEnumerable<PeriodisationGlobal>>>();
+                        IFundingService<FM25Global, IEnumerable<PeriodisationGlobal>> periodisationService = fundingServiceLifetimeScope.Resolve<IFundingService<FM25Global, IEnumerable<PeriodisationGlobal>>>();
 
                         fm25PeriodisationResults = periodisationService.ProcessFunding(fm25Results, cancellationToken).ToList();
 
@@ -148,7 +148,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
             return condensedResults;
         }
 
-        private Global CondenseResults(IEnumerable<Global> globals, IEnumerable<PeriodisationGlobal> periodisationGlobals)
+        private FM25Global CondenseResults(IEnumerable<FM25Global> globals, IEnumerable<PeriodisationGlobal> periodisationGlobals)
         {
             var first = globals.FirstOrDefault();
 
@@ -175,7 +175,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
                 return first;
             }
 
-            return new Global();
+            return new FM25Global();
         }
     }
 }

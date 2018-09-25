@@ -37,7 +37,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         private readonly IActorTask<IALBActor, ALBFundingOutputs> _albActorTask;
         private readonly IActorTask<IFM35Actor, FM35FundingOutputs> _fm35ActorTask;
         private readonly IActorTask<IFM36Actor, FM36Global> _fm36ActorTask;
-        private readonly IActorTask<IFM25Actor, Global> _fm25ActorTask;
+        private readonly IActorTask<IFM25Actor, FM25Global> _fm25ActorTask;
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
         private readonly IPagingService<ILearner> _learnerPagingService;
         private readonly IExternalDataCache _externalDataCache;
@@ -54,7 +54,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             IActorTask<IALBActor, ALBFundingOutputs> albActorTask,
             IActorTask<IFM35Actor, FM35FundingOutputs> fm35ActorTask,
             IActorTask<IFM36Actor, FM36Global> fm36ActorTask,
-            IActorTask<IFM25Actor, Global> fm25ActorTask,
+            IActorTask<IFM25Actor, FM25Global> fm25ActorTask,
             IKeyValuePersistenceService keyValuePersistenceService,
             IPagingService<ILearner> learnerPagingService,
             IExternalDataCache externalDataCache,
