@@ -1,6 +1,6 @@
 ﻿using System;
 using Autofac;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.ALB.Service;
 using ESFA.DC.ILR.FundingService.ALB.Service.Input;
 using ESFA.DC.ILR.FundingService.Data.External;
@@ -41,10 +41,10 @@ namespace ESFA.DC.ILR.FundingService.ALBActor.Modules
             builder.RegisterType<InternalDataCache>().As<IInternalDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<FileDataCache>().As<IFileDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<FileDataService>().As<IFileDataService>().InstancePerLifetimeScope();
-            builder.RegisterType<FundingOutputService>().As<IOutputService<ALBFundingOutputs>>().InstancePerLifetimeScope();
+            builder.RegisterType<FundingOutputService>().As<IOutputService<ALBGlobal>>().InstancePerLifetimeScope();
             builder.RegisterType<JsonSerializationService>().As<IJsonSerializationService>().InstancePerLifetimeScope();
             builder.RegisterType<JsonSerializationService>().As<ISerializationService>().InstancePerLifetimeScope();
-            builder.RegisterType<FundingService<ILearner, ALBFundingOutputs>>().As<IFundingService<ILearner, ALBFundingOutputs>>().InstancePerLifetimeScope();
+            builder.RegisterType<FundingService<ILearner, ALBGlobal>>().As<IFundingService<ILearner, ALBGlobal>>().InstancePerLifetimeScope();
             builder.RegisterType<DataEntityAttributeService>().As<IDataEntityAttributeService>();
         }
     }

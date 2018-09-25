@@ -4,7 +4,7 @@ using System.Runtime;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.File;
@@ -34,7 +34,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
 
         public async Task<string> Process(FundingActorDto actorModel, CancellationToken cancellationToken)
         {
-            ALBFundingOutputs results = RunFunding(actorModel, cancellationToken);
+            ALBGlobal results = RunFunding(actorModel, cancellationToken);
             actorModel = null;
 
             GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
@@ -43,7 +43,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
             return JsonSerializationService.Serialize(results);
         }
 
-        private ALBFundingOutputs RunFunding(FundingActorDto actorModel, CancellationToken cancellationToken)
+        private ALBGlobal RunFunding(FundingActorDto actorModel, CancellationToken cancellationToken)
         {
             if (ExecutionContext is ExecutionContext executionContextObj)
             {
@@ -56,7 +56,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
             ExternalDataCache externalDataCache;
             InternalDataCache internalDataCache;
             FileDataCache fileDataCache;
-            ALBFundingOutputs results;
+            ALBGlobal results;
 
             try
             {
@@ -92,7 +92,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                 try
                 {
                     jobLogger.LogDebug($"{nameof(ALBActor)} {ActorId} {GC.GetGeneration(actorModel)} started processing");
-                    IFundingService<ILearner, ALBFundingOutputs> fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, ALBFundingOutputs>>();
+                    IFundingService<ILearner, ALBGlobal> fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, ALBGlobal>>();
 
                     List<MessageLearner> learners = JsonSerializationService.Deserialize<List<MessageLearner>>(actorModel.ValidLearners);
 
