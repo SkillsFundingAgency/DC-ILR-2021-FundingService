@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Attribute
+namespace ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output
 {
-    public class LearningDeliveryAttributeData
+    public class LearningDeliveryValue
     {
         public bool? Achieved { get; set; }
 
