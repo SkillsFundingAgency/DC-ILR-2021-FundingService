@@ -214,7 +214,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "UnWeightedRateFromESOL")).Returns(unWeightedRateFromESOL);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "UnweightedRateFromLARS")).Returns(unweightedRateFromLARS);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "WeightedRateFromESOL")).Returns(weightedRateFromESOL);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "StartPropTrans")).Returns(startPropTrans);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "WeightedRateFromLARS")).Returns(weightedRateFromLARS);
 
             var learningDelivery = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).LearningDeliveryValue(dataEntity);
 
@@ -304,6 +304,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
 
             // ASSERT
             var expectedLearningDeliveryPeriodisedAttributeData = TestLearningDeliveryPeriodisedAttributesDataArray();
+
+            var l = learningDeliveryPeriodisedAttributeData[11];
+            var e = expectedLearningDeliveryPeriodisedAttributeData[11];
 
             expectedLearningDeliveryPeriodisedAttributeData.Should().BeEquivalentTo(learningDeliveryPeriodisedAttributeData);
         }
@@ -606,7 +609,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 TestLearningDeliveryPeriodisedAttributesData("EmpOutcomePct", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("EmpOutcomePctTrans", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("InstPerPeriod", 1.0m),
-                TestLearningDeliveryPeriodisedAttributesData("LearnSuppFund", 0.0m),
+                TestLearningDeliveryPeriodisedAttributesData("LearnSuppFund", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("LearnSuppFundCash", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("OnProgPayment", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("OnProgPaymentUncapped", 1.0m),
