@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Config.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.Interface;
@@ -34,7 +34,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         private readonly IIlrFileProviderService _ilrFileProviderService;
         private readonly IFundingServiceDto _fundingServiceDto;
         private readonly IPopulationService _populationService;
-        private readonly IActorTask<IALBActor, ALBFundingOutputs> _albActorTask;
+        private readonly IActorTask<IALBActor, ALBGlobal> _albActorTask;
         private readonly IActorTask<IFM35Actor, FM35FundingOutputs> _fm35ActorTask;
         private readonly IActorTask<IFM36Actor, FM36Global> _fm36ActorTask;
         private readonly IActorTask<IFM25Actor, FM25Global> _fm25ActorTask;
@@ -51,7 +51,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             IIlrFileProviderService ilrFileProviderService,
             IFundingServiceDto fundingServiceDto,
             IPopulationService populationService,
-            IActorTask<IALBActor, ALBFundingOutputs> albActorTask,
+            IActorTask<IALBActor, ALBGlobal> albActorTask,
             IActorTask<IFM35Actor, FM35FundingOutputs> fm35ActorTask,
             IActorTask<IFM36Actor, FM36Global> fm36ActorTask,
             IActorTask<IFM25Actor, FM25Global> fm25ActorTask,
