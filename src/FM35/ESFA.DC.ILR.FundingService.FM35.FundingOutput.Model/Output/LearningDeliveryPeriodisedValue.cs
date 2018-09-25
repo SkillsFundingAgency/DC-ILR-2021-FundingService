@@ -1,6 +1,6 @@
-﻿namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Attribute
+﻿namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Output
 {
-    public class LearningDeliveryPeriodisedAttribute
+    public class LearningDeliveryPeriodisedValue
     {
         public string AttributeName { get; set; }
 
