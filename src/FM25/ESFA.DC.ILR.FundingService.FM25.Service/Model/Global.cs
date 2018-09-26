@@ -12,6 +12,8 @@
 
         public string OrgVersion { get; set; }
 
+        public string PostcodesVersion { get; set; }
+
         public string ProgrammeWeighting { get; set; }
 
         public string RetentionFactor { get; set; }

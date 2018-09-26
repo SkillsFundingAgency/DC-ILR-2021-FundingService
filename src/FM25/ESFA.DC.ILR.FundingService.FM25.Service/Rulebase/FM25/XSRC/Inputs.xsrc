@@ -1,0 +1,330 @@
+<root schema-version="1" product-version="10.4.2.18">
+  <entities>
+    <entity ref="global">
+      <attribute name="p159" type="number" public-name="AreaCostFactor1618">
+        <text>
+          <base>the provider's 16-18 area cost factor</base>
+          <parse />
+        </text>
+      </attribute>
+      <attribute name="p160" type="number" public-name="DisadvantageProportion">
+        <text>
+          <base>the provider's disadvantage proportion</base>
+        </text>
+      </attribute>
+      <attribute name="p161" type="number" public-name="ProgrammeWeighting">
+        <text>
+          <base>the provider's programme weighting</base>
+          <parse />
+        </text>
+      </attribute>
+      <attribute name="p162" type="number" public-name="RetentionFactor">
+        <text>
+          <base>the provider's retention factor</base>
+          <parse />
+        </text>
+      </attribute>
+      <attribute name="b7" type="boolean" public-name="SpecialistResources">
+        <text>
+          <base>the provider has specialist resources</base>
+          <parse>s(ver('10.4.2.18'),v(have,t(simple,present,normal)),sb('the provider',singular),o('specialist resources'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p163" type="number" public-name="UKPRN">
+        <text>
+          <base>the provider's UKPRN</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="PassThrough">True</prop>
+          <prop name="KeySequence">1</prop>
+          <prop name="Size">8</prop>
+        </props>
+      </attribute>
+      <attribute name="p165" type="text" public-name="OrgVersion">
+        <text>
+          <base>the Org reference data version</base>
+        </text>
+        <props>
+          <prop name="PassThrough">True</prop>
+          <prop name="Size">50</prop>
+        </props>
+      </attribute>
+      <attribute name="p167" type="text" public-name="PostcodeDisadvantageVersion">
+        <text>
+          <base>the postcode disadvantage reference data version</base>
+        </text>
+        <props>
+          <prop name="PassThrough">True</prop>
+          <prop name="Size">50</prop>
+        </props>
+      </attribute>
+      <attribute name="p168" type="text" public-name="LARSVersion">
+        <text>
+          <base>the LARS reference data version</base>
+        </text>
+        <props>
+          <prop name="PassThrough">True</prop>
+          <prop name="Size">50</prop>
+        </props>
+      </attribute>
+      <attribute name="p439" type="number" public-name="HistoricLargeProgrammeProportion">
+        <text>
+          <base>the provider's historic large programme proportion</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learner" name="the learner" public-id="Learner" containment-relationship-id="learners" containment-parent-id="global">
+      <attribute name="p94" type="text" public-name="LearnRefNumber">
+        <text>
+          <base>the learner's learner reference number</base>
+          <parse>
+          </parse>
+        </text>
+        <props>
+          <prop name="PassThrough">True</prop>
+          <prop name="KeySequence">1</prop>
+          <prop name="Size">12</prop>
+        </props>
+      </attribute>
+      <attribute name="p132" type="number" public-name="PlanEEPHours">
+        <text>
+          <base>the learner's planned employability, enrichment and pastoral hours</base>
+          <parse />
+        </text>
+      </attribute>
+      <attribute name="p133" type="number" public-name="PlanLearnHours">
+        <text>
+          <base>the learner's planned learning hours</base>
+          <parse />
+        </text>
+      </attribute>
+      <attribute name="p144" type="number" public-name="PostcodeDisadvantageUplift">
+        <text>
+          <base>the learner's postcode disadvantage uplift</base>
+        </text>
+      </attribute>
+      <attribute name="p157" type="date" public-name="DateOfBirth">
+        <text>
+          <base>the learner's date of birth</base>
+        </text>
+      </attribute>
+      <attribute name="p174" type="number" public-name="LrnFAM_EHC">
+        <text>
+          <base>the learner's EHC FAM code</base>
+        </text>
+      </attribute>
+      <attribute name="p175" type="number" public-name="LrnFAM_HNS">
+        <text>
+          <base>the learner's HNS FAM code</base>
+        </text>
+      </attribute>
+      <attribute name="p415" type="text" public-name="EngGrade">
+        <text>
+          <base>the learner's GCSE English qualification grade</base>
+        </text>
+      </attribute>
+      <attribute name="p416" type="number" public-name="LrnFAM_ECF">
+        <text>
+          <base>the learner's ECF FAM code</base>
+        </text>
+      </attribute>
+      <attribute name="p417" type="text" public-name="MathGrade">
+        <text>
+          <base>the learner's GCSE Maths qualification grade</base>
+        </text>
+      </attribute>
+      <attribute name="p418" type="number" public-name="LrnFAM_MCF">
+        <text>
+          <base>the learner's MCF FAM code</base>
+        </text>
+      </attribute>
+      <attribute name="p419" type="number" public-name="LrnFAM_EDF1">
+        <text>
+          <base>the learner's EDF FAM code 1</base>
+        </text>
+      </attribute>
+      <attribute name="p430" type="number" public-name="ULN">
+        <text>
+          <base>the learner's unique learner number</base>
+        </text>
+      </attribute>
+      <attribute name="p438" type="number" public-name="LrnFAM_EDF2">
+        <text>
+          <base>the learner's EDF FAM code 2</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learningdelivery" name="the learning delivery" public-id="LearningDelivery" containment-relationship-id="learnerslearningdeliveries" containment-parent-id="learner">
+      <attribute name="p1" type="text" public-name="LearnAimRefTitle">
+        <text>
+          <base>the learning delivery's learning aim reference title</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p43" type="date" public-name="LearnStartDate">
+        <text>
+          <base>the learning delivery's learning start date</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p44" type="date" public-name="LearnPlanEndDate">
+        <text>
+          <base>the learning delivery's learning planned end date</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p47" type="date" public-name="LearnActEndDate">
+        <text>
+          <base>the learning delivery's learning actual end date</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p73" type="number" public-name="AimSeqNumber">
+        <text>
+          <base>the learning delivery's aim sequence number</base>
+          <parse>
+          </parse>
+        </text>
+        <props>
+          <prop name="PassThrough">True</prop>
+          <prop name="KeySequence">1</prop>
+        </props>
+      </attribute>
+      <attribute name="p123" type="number" public-name="SectorSubjectAreaTier2">
+        <text>
+          <base>the learning delivery's sector subject area tier 2</base>
+          <parse />
+        </text>
+      </attribute>
+      <attribute name="p136" type="number" public-name="CompStatus">
+        <text>
+          <base>the learning delivery's completion status</base>
+          <parse />
+        </text>
+      </attribute>
+      <attribute name="p137" type="text" public-name="LearnAimRefType">
+        <text>
+          <base>the learning delivery's learning aim reference type</base>
+          <parse />
+        </text>
+      </attribute>
+      <attribute name="p138" type="text" public-name="AwardOrgCode">
+        <text>
+          <base>the learning delivery's awarding organisation code</base>
+          <parse />
+        </text>
+      </attribute>
+      <attribute name="p139" type="number" public-name="ProgType">
+        <text>
+          <base>the learning delivery's programme type</base>
+          <parse />
+        </text>
+      </attribute>
+      <attribute name="p164" type="number" public-name="AimType">
+        <text>
+          <base>the learning delivery's aim type</base>
+          <parse />
+        </text>
+      </attribute>
+      <attribute name="p176" type="number" public-name="LrnDelFAM_LDM1">
+        <text>
+          <base>the learning delivery's LDM 1 FAM code</base>
+        </text>
+      </attribute>
+      <attribute name="p177" type="number" public-name="LrnDelFAM_SOF">
+        <text>
+          <base>the learning delivery's SOF FAM code</base>
+        </text>
+      </attribute>
+      <attribute name="p178" type="number" public-name="LrnDelFAM_LDM2">
+        <text>
+          <base>the learning delivery's LDM 2 FAM code</base>
+        </text>
+      </attribute>
+      <attribute name="p179" type="number" public-name="LrnDelFAM_LDM4">
+        <text>
+          <base>the learning delivery's LDM 4 FAM code</base>
+        </text>
+      </attribute>
+      <attribute name="p180" type="number" public-name="LrnDelFAM_LDM3">
+        <text>
+          <base>the learning delivery's LDM 3 FAM code</base>
+        </text>
+      </attribute>
+      <attribute name="p412" type="text" public-name="LearnAimRef">
+        <text>
+          <base>the learning delivery's learning aim reference</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="PassThrough">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p414" type="number" public-name="FundModel">
+        <text>
+          <base>the learning delivery's funding model</base>
+        </text>
+      </attribute>
+      <attribute name="p440" type="number" public-name="WithdrawReason">
+        <text>
+          <base>the learning delivery's withdrawal reason</base>
+        </text>
+      </attribute>
+      <attribute name="p441" type="number" public-name="EFACOFType">
+        <text>
+          <base>the ESFA Condition of funding type</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learningdeliverylarsvalidity" name="the learning delivery LARS validity" containment-relationship-id="learningdeliveryslarsvalidities" containment-parent-id="learningdelivery" public-id="LearningDeliveryLARSValidity">
+      <attribute name="p407" type="text" public-name="ValidityCategory">
+        <text>
+          <base>the LARS validity's category</base>
+        </text>
+      </attribute>
+      <attribute name="p408" type="date" public-name="ValidityLastNewStartDate">
+        <text>
+          <base>the LARS validity's last date for new starts</base>
+        </text>
+      </attribute>
+      <attribute name="p410" type="date" public-name="ValidityStartDate">
+        <text>
+          <base>the LARS validity's start date</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learnerdestinationandprogressionoutcome" name="the learner destination and progression outcome" containment-relationship-id="learnersdestinationandprogressionoutcomes" containment-parent-id="learner" public-id="DPOutcome">
+      <attribute name="p436" type="number" public-name="OutCode">
+        <text>
+          <base>the learner destination and progression outcomes code</base>
+        </text>
+      </attribute>
+      <attribute name="p437" type="text" public-name="OutType">
+        <text>
+          <base>the learner destination and progression outcomes type</base>
+        </text>
+      </attribute>
+    </entity>
+  </entities>
+  <rules />
+  <interactive-items>
+    <folders />
+    <screens />
+    <documents />
+  </interactive-items>
+  <relationships>
+    <relationship source="global" target="learner" text="the learners" relationship-id="learners" reverse-text="" reverse-relationship-id="global_learners_rev" type="OneToMany" is-computed="false" is-containment="true" />
+    <relationship source="learner" target="learningdelivery" text="the learner's learning deliveries" relationship-id="learnerslearningdeliveries" reverse-text="the learner associated with the learning delivery" reverse-relationship-id="learnerassociatedwiththelearningdelivery" type="OneToMany" is-computed="false" is-containment="true" />
+    <relationship source="learner" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learner's core aims" relationship-id="learnerscoreaims" reverse-relationship-id="learnerassociatedwiththecoreaim" reverse-text="the learner associated with the core aim" type="ManyToMany" is-computed="false" />
+    <relationship source="learningdelivery" target="learningdeliverylarsvalidity" text="the learning delivery's LARS validities" relationship-id="learningdeliveryslarsvalidities" reverse-relationship-id="learningdeliveryassociatedwiththelearningdeliverylarsvalidity" reverse-text="the learning delivery associated with the learning delivery LARS validity" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learner" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learner's ESFA learning deliveries" relationship-id="learnersesfalearningdeliveries" reverse-relationship-id="learnerassociatedwiththeesfalearningdelivery" reverse-text="the learner associated with the ESFA learning delivery" type="ManyToMany" is-computed="false" />
+    <relationship source="learner" target="learnerdestinationandprogressionoutcome" text="the learners destination and progression outcomes" relationship-id="learnersdestinationandprogressionoutcomes" reverse-relationship-id="learnerdestinationandprogressionoutcomesassociatedwiththelearner" reverse-text="the learner destination and progression outcomes associated with the learner" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learner" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learner's ESFA 16-19 traineeship programme aims" relationship-id="learnersesfa1619traineeshipprogrammeaims" reverse-relationship-id="learner_learnersesfa1619traineeshipprogrammeaims_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+  </relationships>
+  <rule-folders />
+</root>

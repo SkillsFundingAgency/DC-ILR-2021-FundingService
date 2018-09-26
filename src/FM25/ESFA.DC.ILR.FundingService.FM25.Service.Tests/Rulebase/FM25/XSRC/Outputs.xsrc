@@ -1,0 +1,299 @@
+<root schema-version="1" product-version="10.4.2.18">
+  <entities>
+    <entity ref="global">
+      <attribute name="p34" type="text" public-name="RulebaseVersion">
+        <text>
+          <base>the current version of the rulebase</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">"22.1.11"</prop>
+        </props>
+      </attribute>
+    </entity>
+    <entity id="learner" name="the learner" containment-relationship-id="learners" containment-parent-id="global" public-id="">
+      <attribute name="p37" type="currency" public-name="NatRate">
+        <text>
+          <base>the learner's national rate</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">9.00009</prop>
+        </props>
+      </attribute>
+      <attribute name="p39" type="number" public-name="RetentNew">
+        <text>
+          <base>the learner's new retention status</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00016</prop>
+        </props>
+      </attribute>
+      <attribute name="p40" type="number" public-name="AreaCostFact1618Hist">
+        <text>
+          <base>the provider's historic 16-18 area cost factor</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">4.00001</prop>
+        </props>
+      </attribute>
+      <attribute name="p41" type="number" public-name="ProgWeightNew">
+        <text>
+          <base>the learner's new programme weighting</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00013</prop>
+        </props>
+      </attribute>
+      <attribute name="b2" type="boolean" public-name="StartFund">
+        <text>
+          <base>the learner is a start</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learner',singular),o('a start'))</parse>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p42" type="number" public-name="PlannedDaysILCurrYear">
+        <text>
+          <base>the learner's planned number of days this funding year</base>
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">11</prop>
+        </props>
+      </attribute>
+      <attribute name="p43" type="number" public-name="ActualDaysILCurrYear">
+        <text>
+          <base>the learner's actual number of days this funding year</base>
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">2</prop>
+        </props>
+      </attribute>
+      <attribute name="p44" type="number" public-name="ThresholdDays">
+        <text>
+          <base>the learner's qualifying period in days</base>
+        </text>
+        <props>
+          <prop name="Size">2</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">17</prop>
+        </props>
+      </attribute>
+      <attribute name="p45" type="date" public-name="LearnerStartDate">
+        <text>
+          <base>the learner's start date</base>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">03/08/2013</prop>
+        </props>
+      </attribute>
+      <attribute name="p46" type="date" public-name="LearnerActEndDate">
+        <text>
+          <base>the learner's actual end date</base>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">01/08/2013</prop>
+        </props>
+      </attribute>
+      <attribute name="p47" type="date" public-name="LearnerPlanEndDate">
+        <text>
+          <base>the learner's planned end date</base>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">02/08/2013</prop>
+        </props>
+      </attribute>
+      <attribute name="b3" type="boolean" public-name="AcadProg">
+        <text>
+          <base>the learner is studying an academic programme</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learner',singular),o('studying an academic programme'))</parse>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p52" type="currency" public-name="OnProgPayment">
+        <text>
+          <base>the learner's on-programme funding</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">10.0001</prop>
+        </props>
+      </attribute>
+      <attribute name="p56" type="number" public-name="AcadMonthPayment">
+        <text>
+          <base>the learner's payment period</base>
+        </text>
+        <props>
+          <prop name="Size">2</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1</prop>
+        </props>
+      </attribute>
+      <attribute name="p57" type="number" public-name="Block1DisadvUpliftNew">
+        <text>
+          <base>the learner's new block 1 disadvantage uplift</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">5.00001</prop>
+        </props>
+      </attribute>
+      <attribute name="p62" type="number" public-name="CoreAimSeqNumber">
+        <text>
+          <base>the learner's latest core aim sequence number</base>
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">7</prop>
+        </props>
+      </attribute>
+      <attribute name="p69" type="number" public-name="PrvDisadvPropnHist">
+        <text>
+          <base>the provider's historic disadvantage proportion</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00014</prop>
+        </props>
+      </attribute>
+      <attribute name="p71" type="number" public-name="ProgWeightHist">
+        <text>
+          <base>the provider's historic programme weighting</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00012</prop>
+        </props>
+      </attribute>
+      <attribute name="p72" type="number" public-name="PrvRetentFactHist">
+        <text>
+          <base>the provider's historic retention factor</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00015</prop>
+        </props>
+      </attribute>
+      <attribute name="p74" type="text" public-name="FundLine">
+        <text>
+          <base>the learner's funding line type</base>
+        </text>
+        <props>
+          <prop name="Size">100</prop>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">"FundLine"</prop>
+        </props>
+      </attribute>
+      <attribute name="p75" type="text" public-name="RateBand">
+        <text>
+          <base>the learner's rate band</base>
+        </text>
+        <props>
+          <prop name="Size">50</prop>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">"RateBand"</prop>
+        </props>
+      </attribute>
+      <attribute name="p76" type="number" public-name="FullTimeEquiv">
+        <text>
+          <base>the learner's FTE</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">8.00008</prop>
+        </props>
+      </attribute>
+      <attribute name="p78" type="number" public-name="Block2DisadvElementsNew">
+        <text>
+          <base>the learner's new block 2 disadvantage elements</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">6</prop>
+        </props>
+      </attribute>
+      <attribute name="p79" type="text" public-name="ConditionOfFundingMaths">
+        <text>
+          <base>the learner's Mathematics condition of funding status</base>
+        </text>
+        <props>
+          <prop name="Size">100</prop>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">"COFM"</prop>
+        </props>
+      </attribute>
+      <attribute name="p80" type="text" public-name="ConditionOfFundingEnglish">
+        <text>
+          <base>the learner's English condition of funding status</base>
+        </text>
+        <props>
+          <prop name="Size">100</prop>
+          <prop name="UncertainDerivation">null</prop>
+          <prop name="IntegrationTestValue">"COFE"</prop>
+        </props>
+      </attribute>
+      <attribute name="p81" type="number" public-name="PrvHistLrgProgPropn">
+        <text>
+          <base>the provider's large programme proportion</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">1.00015</prop>
+        </props>
+      </attribute>
+    </entity>
+  </entities>
+  <rules />
+  <interactive-items>
+    <folders />
+    <screens />
+    <documents />
+  </interactive-items>
+  <relationships>
+    <relationship source="global" target="learner" text="the learners" relationship-id="learners" reverse-text="" reverse-relationship-id="global_learners_rev" type="OneToMany" is-computed="false" is-containment="true" />
+  </relationships>
+  <rule-folders />
+</root>

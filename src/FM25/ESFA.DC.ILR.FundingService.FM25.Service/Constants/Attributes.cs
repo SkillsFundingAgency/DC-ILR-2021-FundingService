@@ -94,10 +94,10 @@
         public const string LearnPlanEndDate = "LearnPlanEndDate";
         public const string LearnStartDate = "LearnStartDate";
         public const string LrnDelFAM_SOF = "LrnDelFAM_SOF";
-        public const string LearnDelFAM_LDM1 = "LearnDelFAM_LDM1";
-        public const string LearnDelFAM_LDM2 = "LearnDelFAM_LDM2";
-        public const string LearnDelFAM_LDM3 = "LearnDelFAM_LDM3";
-        public const string LearnDelFAM_LDM4 = "LearnDelFAM_LDM4";
+        public const string LrnDelFAM_LDM1 = "LrnDelFAM_LDM1";
+        public const string LrnDelFAM_LDM2 = "LrnDelFAM_LDM2";
+        public const string LrnDelFAM_LDM3 = "LrnDelFAM_LDM3";
+        public const string LrnDelFAM_LDM4 = "LrnDelFAM_LDM4";
         public const string ProgType = "ProgType";
         public const string SectorSubjectAreaTier2 = "SectorSubjectAreaTier2";
         public const string WithdrawReason = "WithdrawReason";
