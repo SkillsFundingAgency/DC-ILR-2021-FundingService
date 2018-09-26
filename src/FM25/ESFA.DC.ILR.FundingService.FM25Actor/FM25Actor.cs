@@ -101,7 +101,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
 
                     using (var fundingServiceLifetimeScope = childLifetimeScope.BeginLifetimeScope(c =>
                     {
-                        c.RegisterInstance(new RulebaseProvider("FM25")).As<IRulebaseProvider>();
+                        c.RegisterInstance(new RulebaseProvider("FM25 Funding Calc 18_19")).As<IRulebaseProvider>();
                     }))
                     {
                         jobLogger.LogDebug("FM25 Rulebase Starting");
