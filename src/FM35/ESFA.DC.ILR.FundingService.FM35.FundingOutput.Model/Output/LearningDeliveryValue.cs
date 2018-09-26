@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Attribute
+namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Output
 {
-    public class LearningDeliveryAttributeData
+    public class LearningDeliveryValue
     {
         public DateTime? AchApplicDate { get; set; }
 

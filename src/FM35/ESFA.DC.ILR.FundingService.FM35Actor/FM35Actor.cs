@@ -8,7 +8,7 @@ using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Internal;
-using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
+using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FM35Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
@@ -34,7 +34,7 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
 
         public async Task<string> Process(FundingActorDto actorModel, CancellationToken cancellationToken)
         {
-            FM35FundingOutputs results = RunFunding(actorModel, cancellationToken);
+            FM35Global results = RunFunding(actorModel, cancellationToken);
             actorModel = null;
 
             GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
@@ -43,7 +43,7 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
             return JsonSerializationService.Serialize(results);
         }
 
-        private FM35FundingOutputs RunFunding(FundingActorDto actorModel, CancellationToken cancellationToken)
+        private FM35Global RunFunding(FundingActorDto actorModel, CancellationToken cancellationToken)
         {
             if (ExecutionContext is ExecutionContext executionContextObj)
             {
@@ -56,7 +56,7 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
             IExternalDataCache externalDataCache;
             IInternalDataCache internalDataCache;
             IFileDataCache fileDataCache;
-            FM35FundingOutputs results;
+            FM35Global results;
 
             try
             {
@@ -92,7 +92,7 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
                 try
                 {
                     jobLogger.LogDebug($"{nameof(FM35Actor)} {ActorId} {GC.GetGeneration(actorModel)} started processing");
-                    IFundingService<ILearner, FM35FundingOutputs> fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, FM35FundingOutputs>>();
+                    IFundingService<ILearner, FM35Global> fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, FM35Global>>();
 
                     List<MessageLearner> learners = JsonSerializationService.Deserialize<List<MessageLearner>>(actorModel.ValidLearners);
 

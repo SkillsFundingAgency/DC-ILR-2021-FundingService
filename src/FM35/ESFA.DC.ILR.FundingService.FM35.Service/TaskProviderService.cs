@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
-using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
+using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.IO.Interfaces;
@@ -18,10 +18,10 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
         private readonly IPopulationService _populationService;
         private readonly IPagingService<ILearner> _learnerPerActorService;
-        private readonly IFundingService<ILearner, FM35FundingOutputs> _fundingService;
+        private readonly IFundingService<ILearner, FM35Global> _fundingService;
         private readonly IJsonSerializationService _jsonSerializationService;
 
-        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IPopulationService populationService, IPagingService<ILearner> learnerPerActorService, IFundingService<ILearner, FM35FundingOutputs> fundingService, IJsonSerializationService jsonSerializationService)
+        public TaskProviderService(IKeyValuePersistenceService keyValuePersistenceService, IPopulationService populationService, IPagingService<ILearner> learnerPerActorService, IFundingService<ILearner, FM35Global> fundingService, IJsonSerializationService jsonSerializationService)
         {
             _keyValuePersistenceService = keyValuePersistenceService;
             _populationService = populationService;
@@ -58,9 +58,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
             _keyValuePersistenceService.SaveAsync("ValidLearnRefNumbers", serializer.Serialize(learners)).Wait();
         }
 
-        private FM35FundingOutputs ProcessFunding(IEnumerable<IEnumerable<ILearner>> learnersList)
+        private FM35Global ProcessFunding(IEnumerable<IEnumerable<ILearner>> learnersList)
         {
-            ConcurrentBag<FM35FundingOutputs> fundingOutputsList = new ConcurrentBag<FM35FundingOutputs>();
+            ConcurrentBag<FM35Global> fundingOutputsList = new ConcurrentBag<FM35Global>();
 
             Parallel.ForEach(learnersList, ll =>
             {
@@ -70,17 +70,18 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
             return TransformFundingOutput(fundingOutputsList.ToList());
         }
 
-        private FM35FundingOutputs TransformFundingOutput(IEnumerable<FM35FundingOutputs> fundingOutputs)
+        private FM35Global TransformFundingOutput(IEnumerable<FM35Global> fundingOutputs)
         {
-            var global = fundingOutputs.Select(g => g.Global).FirstOrDefault();
+            var firstOutput = fundingOutputs.FirstOrDefault();
 
-            var learnerAttributes = fundingOutputs.SelectMany(l => l.Learners).ToArray();
-
-            return new FM35FundingOutputs
+            if (firstOutput != null)
             {
-                Global = global,
-                Learners = learnerAttributes,
-            };
+                firstOutput.Learners = fundingOutputs.Where(o => o.Learners != null).SelectMany(o => o.Learners).ToList();
+
+                return firstOutput;
+            }
+
+            return new FM35Global();
         }
     }
 }

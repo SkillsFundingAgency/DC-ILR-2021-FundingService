@@ -32,7 +32,7 @@ using ESFA.DC.ILR.FundingService.Dto.Interfaces;
 using ESFA.DC.ILR.FundingService.FM25.Model.Output;
 using ESFA.DC.ILR.FundingService.FM25.Service.Output;
 using ESFA.DC.ILR.FundingService.FM25Actor.Interfaces;
-using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
+using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FM35Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FM36Actor.Interfaces;
@@ -124,11 +124,11 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             var actorNameParameter = "actorName";
 
             builder.RegisterType<ActorTask<IALBActor, ALBGlobal>>().As<IActorTask<IALBActor, ALBGlobal>>().WithParameter(actorNameParameter, ActorServiceNameConstants.ALB).InstancePerLifetimeScope();
-            builder.RegisterType<ActorTask<IFM35Actor, FM35FundingOutputs>>().As<IActorTask<IFM35Actor, FM35FundingOutputs>>().WithParameter(actorNameParameter, ActorServiceNameConstants.FM35).InstancePerLifetimeScope();
+            builder.RegisterType<ActorTask<IFM35Actor, FM35Global>>().As<IActorTask<IFM35Actor, FM35Global>>().WithParameter(actorNameParameter, ActorServiceNameConstants.FM35).InstancePerLifetimeScope();
             builder.RegisterType<ActorTask<IFM36Actor, FM36Global>>().As<IActorTask<IFM36Actor, FM36Global>>().WithParameter(actorNameParameter, ActorServiceNameConstants.FM36).InstancePerLifetimeScope();
             builder.RegisterType<ActorTask<IFM25Actor, FM25Global>>().As<IActorTask<IFM25Actor, FM25Global>>().WithParameter(actorNameParameter, ActorServiceNameConstants.FM25).InstancePerLifetimeScope();
 
-            builder.RegisterType<FM35FundingOutputCondenserService>().As<IFundingOutputCondenserService<FM35FundingOutputs>>().InstancePerLifetimeScope();
+            builder.RegisterType<FM35FundingOutputCondenserService>().As<IFundingOutputCondenserService<FM35Global>>().InstancePerLifetimeScope();
             builder.RegisterType<FM36FundingOutputCondenserService>().As<IFundingOutputCondenserService<FM36Global>>().InstancePerLifetimeScope();
             builder.RegisterType<ALBFundingOutputCondenserService>().As<IFundingOutputCondenserService<ALBGlobal>>().InstancePerLifetimeScope();
             builder.RegisterType<FM25FundingOutputCondenserService>().As<IFundingOutputCondenserService<FM25Global>>().InstancePerLifetimeScope();
