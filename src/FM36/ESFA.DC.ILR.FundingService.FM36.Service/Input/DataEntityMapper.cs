@@ -42,7 +42,9 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
         {
             var global = BuildGlobal();
 
-            return inputModels.Where(l => l.LearningDeliveries.Any(ld => _fundModels.Contains(ld.FundModel))).Select(l => BuildGlobalDataEntity(l, global));
+            var entities = inputModels.Where(l => l.LearningDeliveries.Any(ld => _fundModels.Contains(ld.FundModel))).Select(l => BuildGlobalDataEntity(l, global));
+
+            return entities.Any() ? entities : new List<IDataEntity> { BuildGlobalDataEntity(null, global) };
         }
 
         public IDataEntity BuildGlobalDataEntity(ILearner learner, Global global)

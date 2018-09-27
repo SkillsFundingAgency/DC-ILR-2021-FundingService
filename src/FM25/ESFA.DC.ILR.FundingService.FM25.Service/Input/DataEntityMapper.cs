@@ -23,8 +23,6 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
         private readonly IPostcodesReferenceDataService _postcodesReferenceDataService;
         private readonly IFileDataService _fileDataService;
 
-        private readonly IAttributeData todo = null;
-
         public DataEntityMapper(ILARSReferenceDataService larsReferenceDataService, IOrganisationReferenceDataService organisationReferenceDataService, IPostcodesReferenceDataService postcodesReferenceDataService, IFileDataService fileDataService)
         {
             _larsReferenceDataService = larsReferenceDataService;
@@ -37,7 +35,9 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
         {
             var global = BuildGlobal();
 
-            return inputModels.Where(l => l.LearningDeliveries.Any(ld => ld.FundModel == 25)).Select(l => BuildGlobalDataEntity(l, global));
+            var entities = inputModels.Where(l => l.LearningDeliveries.Any(ld => ld.FundModel == 25)).Select(l => BuildGlobalDataEntity(l, global));
+
+            return entities.Any() ? entities : new List<IDataEntity> { BuildGlobalDataEntity(null, global) };
         }
 
         public IDataEntity BuildGlobalDataEntity(ILearner learner, Global global)
