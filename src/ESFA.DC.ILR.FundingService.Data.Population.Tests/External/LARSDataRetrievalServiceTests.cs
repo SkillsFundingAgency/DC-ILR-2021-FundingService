@@ -462,6 +462,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                 LearnAimRefType = "learnAimRefType",
                 LearnAimRefTitle = "learnAimRefTitle",
                 NotionalNVQLevelv2 = "notionalNVQLevelv2",
+                LearningDeliveryGenre = "genre",
                 RegulatedCreditValue = 3,
                 EFACOFType = 1,
                 AwardOrgCode = "awardOrgCode",
@@ -488,6 +489,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             larsLearningDelivery.LearnAimRefType.Should().Be(lars_LearningDelivery.LearnAimRefType);
             larsLearningDelivery.LearnAimRefTitle.Should().Be(lars_LearningDelivery.LearnAimRefTitle);
             larsLearningDelivery.NotionalNVQLevelv2.Should().Be(lars_LearningDelivery.NotionalNVQLevelv2);
+            larsLearningDelivery.LearningDeliveryGenre.Should().Be(lars_LearningDelivery.LearningDeliveryGenre);
             larsLearningDelivery.RegulatedCreditValue.Should().Be(lars_LearningDelivery.RegulatedCreditValue);
             larsLearningDelivery.AwardOrgCode.Should().Be(lars_LearningDelivery.AwardOrgCode);
             larsLearningDelivery.EFACOFType.Should().Be(lars_LearningDelivery.EFACOFType);

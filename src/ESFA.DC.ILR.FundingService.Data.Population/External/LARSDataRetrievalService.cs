@@ -141,6 +141,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 LearnAimRef = entity.LearnAimRef,
                 LearnAimRefTitle = entity.LearnAimRefTitle,
                 LearnAimRefType = entity.LearnAimRefType,
+                LearningDeliveryGenre = entity.LearningDeliveryGenre,
                 NotionalNVQLevelv2 = entity.NotionalNVQLevelv2,
                 RegulatedCreditValue = entity.RegulatedCreditValue,
                 EnglandFEHEStatus = entity.EnglandFEHEStatus,
