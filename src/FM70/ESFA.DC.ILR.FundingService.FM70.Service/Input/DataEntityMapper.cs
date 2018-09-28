@@ -12,10 +12,11 @@ using ESFA.DC.ILR.FundingService.FM70.Service.Models;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
+using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
 {
-    public class DataEntityMapper
+    public class DataEntityMapper : IDataEntityMapper<ILearner>
     {
         private readonly int _fundModel = Attributes.FundModel_70;
 
