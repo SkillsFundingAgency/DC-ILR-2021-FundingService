@@ -100,26 +100,49 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataEntityMapperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ESF 1819 Funding Calc.zip" />
     <None Include="ESFA.DC.ILR.FundingService.FM70.Service.Tests.ruleset" />
     <None Include="packages.config" />
-    <EmbeddedResource Include="Rulebase\ESF 1819 Funding Calc.zip" />
-    <None Include="Rulebase\XSRC\Input.xsrc" />
+    <Content Include="Rulebase\ESF 1819 Funding Calc.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Rulebase\XSRC\Input.xsrc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RulebaseMasterFiles\ESF 1819 Funding Calc.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RulebaseMasterFiles\XSRC\Input.xsrc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="RulebaseMasterFiles\XSRC\Interim.xsrc" />
+    <None Include="RulebaseMasterFiles\XSRC\Output.xsrc" />
+    <None Include="RulebaseMasterFiles\XSRC\Parameters.xsrc" />
     <None Include="Rulebase\XSRC\Interim.xsrc" />
     <None Include="Rulebase\XSRC\Output.xsrc" />
     <None Include="Rulebase\XSRC\Parameters.xsrc" />
-    <None Include="XSRC\Input.xsrc" />
-    <None Include="XSRC\Interim.xsrc" />
-    <None Include="XSRC\Output.xsrc" />
-    <None Include="XSRC\Parameters.xsrc" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
     <Analyzer Include="..\..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Data\ESFA.DC.ILR.FundingService.Data.csproj">
+      <Project>{69B93B19-4FD0-4205-AFFA-8B71122A3C65}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model.csproj">
+      <Project>{ce34cd36-5367-4832-a1b3-c05cf63b7680}</Project>
+      <Name>ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM70.Service\ESFA.DC.ILR.FundingService.FM70.Service.csproj">
+      <Project>{80429f93-9f82-4923-9467-9373662d9853}</Project>
+      <Name>ESFA.DC.ILR.FundingService.FM70.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
