@@ -7,5 +7,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model.Output
         public string LearnRefNumber { get; set; }
 
         public List<LearningDelivery> LearningDeliveries { get; set; }
+
+        public List<LearnerDPOutcome> LearnerDPOutcomes { get; set; }
     }
 }
