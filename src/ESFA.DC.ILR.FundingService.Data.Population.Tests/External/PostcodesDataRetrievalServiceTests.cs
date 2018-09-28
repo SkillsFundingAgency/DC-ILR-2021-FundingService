@@ -52,6 +52,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                 {
                     new TestLearner()
                     {
+                        Postcode = "A",
+                        PostcodePrior = "B",
                         LearningDeliveries = new List<TestLearningDelivery>()
                         {
                             new TestLearningDelivery()
@@ -68,14 +70,18 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                             }
                         }
                     },
-                    new TestLearner()
+                    new TestLearner
+                    {
+                        Postcode = "AB",
+                        PostcodePrior = "B",
+                    }
                 }
             };
 
             var uniquePostcodes = NewService().UniquePostcodes(message).ToList();
 
-            uniquePostcodes.Should().HaveCount(2);
-            uniquePostcodes.Should().Contain("ABC", "DEF");
+            uniquePostcodes.Should().HaveCount(5);
+            uniquePostcodes.Should().Contain("A", "B", "AB", "ABC", "DEF");
         }
 
         [Fact]
