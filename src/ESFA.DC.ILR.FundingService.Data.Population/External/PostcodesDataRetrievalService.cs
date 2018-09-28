@@ -35,7 +35,12 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public IEnumerable<string> UniquePostcodes(IMessage message)
         {
-            return message.Learners.Where(l => l.LearningDeliveries != null).SelectMany(l => l.LearningDeliveries).Select(ld => ld.DelLocPostCode).Distinct();
+            return
+                message.Learners.Select(l => l.Postcode)
+                .Union(message.Learners.Select(l => l.PostcodePrior))
+                .Union(message.Learners.Where(l => l.LearningDeliveries != null).SelectMany(l => l.LearningDeliveries).Select(ld => ld.DelLocPostCode))
+                .Distinct()
+                .ToList();
         }
 
         public string CurrentVersion()
