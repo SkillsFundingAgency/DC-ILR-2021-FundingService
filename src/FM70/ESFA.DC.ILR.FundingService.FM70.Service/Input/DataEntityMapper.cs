@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+<<<<<<< HEAD
 using ESFA.DC.ILR.FundingService.Data.External.FCS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.FCS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
@@ -216,6 +217,22 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
                     { Attributes.EffectiveContractEndDate, new AttributeData(esfData.EffectiveContractEndDate) }
                 }
             };
+=======
+using ESFA.DC.ILR.FundingService.Data.File.Interface;
+using ESFA.DC.ILR.FundingService.FM70.Service.Constants;
+using ESFA.DC.ILR.FundingService.FM70.Service.Models;
+using ESFA.DC.ILR.Model.Interface;
+
+namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
+{
+    public class DataEntityMapper
+    {
+        private readonly IFileDataService _fileDataService;
+
+        public DataEntityMapper(IFileDataService fileDataService)
+        {
+            _fileDataService = fileDataService;
+>>>>>>> 56330 - FM70 funding contexts and attributes added.
         }
 
         public Global BuildGlobal()
@@ -247,6 +264,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
 
             return learningDeliveryFam;
         }
+<<<<<<< HEAD
 
         public IEnumerable<EsfData> BuildEsfDataFromContract(IEnumerable<FCSContractAllocation> fcsContractAllocations)
         {
@@ -260,5 +278,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
                 ESFDeliverableCode = cd.ExternalDeliverableCode,
             }));
         }
+=======
+>>>>>>> 56330 - FM70 funding contexts and attributes added.
     }
 }
