@@ -10,6 +10,6 @@ namespace ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model.Output
 
         public decimal? DeliverableUnitCost { get; set; }
 
-        public List<LearningDeliveryDeliverablePeriodisedValue> LearningDeliveryPeriodisedValues { get; set; }
+        public List<LearningDeliveryDeliverablePeriodisedValue> LearningDeliveryDeliverablePeriodisedValues { get; set; }
     }
 }
