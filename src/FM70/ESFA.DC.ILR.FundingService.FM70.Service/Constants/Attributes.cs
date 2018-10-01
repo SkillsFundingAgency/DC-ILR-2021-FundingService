@@ -11,6 +11,7 @@
         public const string EntityDPOutcome = "DPOutcome";
         public const string EntityLearnerEmploymentStatus = "LearnerEmploymentStatus";
         public const string EntityLearningDelivery = "LearningDelivery";
+        public const string EntityLearningDeliveryDeliverable = "LearningDeliveryDeliverable";
         public const string EntityESFData = "ESFData";
         public const string EntityLearningDeliveryLARSFunding = "LearningDeliveryLARSFunding";
         public const string EntityLearningDeliveryLARS_AnnualValue = "LearningDeliveryAnnualValue";
@@ -33,6 +34,7 @@
         public const string Period12 = "R12";
 
         // Global
+        public const string RulebaseVersion = "RulebaseVersion";
         public const string UKPRN = "UKPRN";
 
         // Learner
@@ -49,6 +51,12 @@
         public const string OutEndDate = "OutEndDate";
         public const string OutStartDate = "OutStartDate";
         public const string OutCollDate = "OutCollDate";
+        public const string OutcomeDateForProgression = "OutcomeDateForProgression";
+        public const string PotentialESFProgressionType = "PotentialESFProgressionType";
+        public const string ProgressionType = "ProgressionType";
+        public const string ReachedSixMonthPoint = "ReachedSixMonthPoint";
+        public const string ReachedThreeMonthPoint = "ReachedThreeMonthPoint";
+        public const string ReachedTwelveMonthPoint = "ReachedTwelveMonthPoint";
 
         // LearningDelivery
         public const string AchDate = "AchDate";
@@ -77,6 +85,35 @@
         public const string LearningDeliveryFAMTypeLDM2 = "LDM2";
         public const string LearningDeliveryFAMTypeLDM3 = "LDM3";
         public const string LearningDeliveryFAMTypeLDM4 = "LDM4";
+
+        public const string Achieved = "Achieved";
+        public const string AddProgCostElig = "AddProgCostElig";
+        public const string AdjustedAreaCostFactor = "AdjustedAreaCostFactor";
+        public const string AdjustedPremiumFactor = "AdjustedPremiumFactor";
+        public const string AdjustedStartDate = "AdjustedStartDate";
+        public const string AimClassification = "AimClassification";
+        public const string AimValue = "AimValue";
+        public const string ApplicWeightFundRate = "ApplicWeightFundRate";
+        public const string EligibleProgressionOutcomeCode = "EligibleProgressionOutcomeCode";
+        public const string EligibleProgressionOutcomeType = "EligibleProgressionOutcomeType";
+        public const string EligibleProgressionOutomeStartDate = "EligibleProgressionOutomeStartDate";
+        public const string FundStart = "FundStart";
+        public const string LARSWeightedRate = "LARSWeightedRate";
+        public const string LatestPossibleStartDate = "LatestPossibleStartDate";
+        public const string LDESFEngagementStartDate = "LDESFEngagementStartDate";
+        public const string PotentiallyEligibleForProgression = "PotentiallyEligibleForProgression";
+        public const string ProgressionEndDate = "ProgressionEndDate";
+        public const string Restart = "Restart";
+        public const string WeightedRateFromESOL = "WeightedRateFromESOL";
+
+        public const string DeliverableCode = "DeliverableCode";
+        public const string DeliverableUnitCost = "DeliverableUnitCost";
+        public const string AchievementEarnings = "AchievementEarnings";
+        public const string AdditionalProgCostEarnings = "AdditionalProgCostEarnings";
+        public const string DeliverableVolume = "DeliverableVolume";
+        public const string ProgressionEarnings = "ProgressionEarnings";
+        public const string ReportingVolume = "ReportingVolume";
+        public const string StartEarnings = "StartEarnings";
 
         // ESFData
         public const string UnitCost = "UnitCost";
