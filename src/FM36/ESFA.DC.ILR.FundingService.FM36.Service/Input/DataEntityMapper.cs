@@ -42,7 +42,9 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
         {
             var global = BuildGlobal();
 
-            return inputModels.Where(l => l.LearningDeliveries.Any(ld => _fundModels.Contains(ld.FundModel))).Select(l => BuildGlobalDataEntity(l, global));
+            var entities = inputModels.Where(l => l.LearningDeliveries.Any(ld => _fundModels.Contains(ld.FundModel))).Select(l => BuildGlobalDataEntity(l, global));
+
+            return entities.Any() ? entities : new List<IDataEntity> { BuildGlobalDataEntity(null, global) };
         }
 
         public IDataEntity BuildGlobalDataEntity(ILearner learner, Global global)
@@ -63,7 +65,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
         public IDataEntity BuildLearnerDataEntity(ILearner learner)
         {
             var learnerEmploymentStatusDenormalized = BuildLearnerEmploymentStatusDenormalized(learner.LearnerEmploymentStatuses);
-            var sfaPostDisadvantage = _postcodesReferenceDataService.SFADisadvantagesForPostcode(learner.PostcodePrior);
+            var dasPostDisadvantage = _postcodesReferenceDataService.DASDisadvantagesForPostcode(learner.PostcodePrior);
             var appsEarningsHistory = _appsEarningsHistoryReferenceDataService.AECEarningsHistory(learner.ULN);
 
             return new DataEntity(Attributes.EntityLearner)
@@ -84,8 +86,8 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
                             learnerEmploymentStatusDenormalized?
                             .Select(BuildLearnerEmploymentStatus) ?? new List<IDataEntity>())
                         .Union(
-                            sfaPostDisadvantage?
-                            .Select(BuildSFAPostcodeDisadvantage) ?? new List<IDataEntity>())
+                            dasPostDisadvantage?
+                            .Select(BuildDASPostcodeDisadvantage) ?? new List<IDataEntity>())
                         .Union(
                             appsEarningsHistory?
                             .Select(BuildApprenticeshipsEarningsHistory) ?? new List<IDataEntity>())
@@ -186,15 +188,15 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
             };
         }
 
-        public IDataEntity BuildSFAPostcodeDisadvantage(SfaDisadvantage sfaDisadvantage)
+        public IDataEntity BuildDASPostcodeDisadvantage(DasDisadvantage dasDisadvantage)
         {
             return new DataEntity(Attributes.EntitySFA_PostcodeDisadvantage)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    { Attributes.DisApprenticeshipUplift, new AttributeData(sfaDisadvantage.Uplift) },
-                    { Attributes.DisUpEffectiveFrom, new AttributeData(sfaDisadvantage.EffectiveFrom) },
-                    { Attributes.DisUpEffectiveTo, new AttributeData(sfaDisadvantage.EffectiveTo) }
+                    { Attributes.DisApprenticeshipUplift, new AttributeData(dasDisadvantage.Uplift) },
+                    { Attributes.DisUpEffectiveFrom, new AttributeData(dasDisadvantage.EffectiveFrom) },
+                    { Attributes.DisUpEffectiveTo, new AttributeData(dasDisadvantage.EffectiveTo) }
                 }
             };
         }
@@ -205,6 +207,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
+                    { Attributes.AppIdentifierInput, new AttributeData(aecEarningsHistory.AppIdentifier) },
                     { Attributes.AppProgCompletedInTheYearInput, new AttributeData(aecEarningsHistory.AppProgCompletedInTheYearInput) },
                     { Attributes.HistoricCollectionReturnInput, new AttributeData(aecEarningsHistory.CollectionReturnCode) },
                     { Attributes.HistoricCollectionYearInput, new AttributeData(aecEarningsHistory.CollectionYear) },
@@ -337,6 +340,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
             {
                 LARSVersion = _larsReferenceDataService.LARSCurrentVersion(),
                 Year = Attributes.YearValue,
+
                 // ToDo: implement AcademicYear service over InternalCache for "CollectionPeriod" to calculate value.
                 // This attribute is not used by rulebase at present 10/09/18.
                 CollectionPeriod = Attributes.CollectionPeriodValue,

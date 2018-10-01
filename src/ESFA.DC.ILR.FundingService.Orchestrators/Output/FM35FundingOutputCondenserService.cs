@@ -1,26 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model;
+using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.Interfaces;
 
 namespace ESFA.DC.ILR.FundingService.Orchestrators.Output
 {
-    public class FM35FundingOutputCondenserService : IFundingOutputCondenserService<FM35FundingOutputs>
+    public class FM35FundingOutputCondenserService : IFundingOutputCondenserService<FM35Global>
     {
-        public FM35FundingOutputs Condense(IEnumerable<FM35FundingOutputs> fundingOutputs)
+        public FM35Global Condense(IEnumerable<FM35Global> fundingOutputs)
         {
-            fundingOutputs = fundingOutputs.Where(f => f != null);
+            var firstOutput = fundingOutputs.FirstOrDefault();
 
-            if (fundingOutputs.Any())
+            if (firstOutput != null)
             {
-                return new FM35FundingOutputs()
-                {
-                    Global = fundingOutputs.FirstOrDefault()?.Global,
-                    Learners = fundingOutputs.Where(o => o.Learners != null).SelectMany(r => r.Learners).ToArray()
-                };
+                firstOutput.Learners = fundingOutputs.Where(o => o.Learners != null).SelectMany(o => o.Learners).ToList();
+
+                return firstOutput;
             }
 
-            return new FM35FundingOutputs();
+            return new FM35Global();
         }
     }
 }

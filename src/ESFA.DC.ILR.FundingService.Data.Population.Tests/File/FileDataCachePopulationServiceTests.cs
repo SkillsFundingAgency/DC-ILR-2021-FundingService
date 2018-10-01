@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.File.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
@@ -14,7 +16,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.File
     public class FileDataCachePopulationServiceTests
     {
         [Fact]
-        public void Populate()
+        public async Task Populate()
         {
             var ukprn = 1234;
             var dpOutcomes = new Dictionary<string, IEnumerable<DPOutcome>>();
@@ -26,7 +28,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.File
 
             var fileDataCache = new FileDataCache();
 
-            NewService(fileDataCache, fileDataRetrievalServiceMock.Object).Populate();
+            await NewService(fileDataCache, fileDataRetrievalServiceMock.Object).PopulateAsync(CancellationToken.None);
 
             fileDataCache.UKPRN.Should().Be(ukprn);
             fileDataCache.DPOutcomes.Should().BeSameAs(dpOutcomes);

@@ -30,7 +30,7 @@ namespace ESFA.DC.OPA.XSRC.Service
             return GlobalEntity(rootEntities);
         }
 
-        protected internal IRoot Deserialize()
+        public IRoot Deserialize()
         {
             Stream stream = new FileStream(_xsrcInput, FileMode.Open);
 
@@ -43,7 +43,7 @@ namespace ESFA.DC.OPA.XSRC.Service
             return rootEntities;
         }
 
-        protected internal XsrcGlobal GlobalEntity(IRoot rootEntities)
+        public XsrcGlobal GlobalEntity(IRoot rootEntities)
         {
             return new XsrcGlobal
             {
@@ -64,7 +64,7 @@ namespace ESFA.DC.OPA.XSRC.Service
             };
         }
 
-        protected internal IEnumerable<XsrcEntity> GetChildren(string parentName, IRoot rootEntities)
+        public IEnumerable<XsrcEntity> GetChildren(string parentName, IRoot rootEntities)
         {
             return
                rootEntities.RootEntities.Where(r => r.ContainmentParentId == parentName)

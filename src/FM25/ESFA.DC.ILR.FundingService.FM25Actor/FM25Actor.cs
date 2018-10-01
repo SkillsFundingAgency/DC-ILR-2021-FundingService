@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
+using System.Runtime;
+using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using ESFA.DC.ILR.FundingService.Data.External;
@@ -16,13 +16,13 @@ using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
 using ESFA.DC.ILR.FundingService.Stateless.Models;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
-using ESFA.DC.Logging;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.OPA.Service.Interface.Rulebase;
 using ESFA.DC.OPA.Service.Rulebase;
 using ESFA.DC.Serialization.Interfaces;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
+using ExecutionContext = ESFA.DC.Logging.ExecutionContext;
 
 namespace ESFA.DC.ILR.FundingService.FM25Actor
 {
@@ -30,54 +30,89 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
     [ActorService(Name = ActorServiceNameConstants.FM25)]
     public class FM25Actor : AbstractFundingActor, IFM25Actor
     {
-        public FM25Actor(ActorService actorService, ActorId actorId, ILifetimeScope lifetimeScope)
-            : base(actorService, actorId, lifetimeScope)
+        public FM25Actor(ActorService actorService, ActorId actorId, ILifetimeScope lifetimeScope, IExecutionContext executionContext, IJsonSerializationService jsonSerializationService)
+            : base(actorService, actorId, lifetimeScope, executionContext, jsonSerializationService)
         {
         }
 
-        public Task<string> Process(FundingActorDto fm25ActorModel)
+        public async Task<string> Process(FundingActorDto actorModel, CancellationToken cancellationToken)
         {
-            string resultString;
+            FM25Global results = RunFunding(actorModel, cancellationToken);
+            actorModel = null;
+
+            GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
+
+            return JsonSerializationService.Serialize(results);
+        }
+
+        private FM25Global RunFunding(FundingActorDto actorModel, CancellationToken cancellationToken)
+        {
+            if (ExecutionContext is ExecutionContext executionContextObj)
+            {
+                executionContextObj.JobId = "-1";
+                executionContextObj.TaskKey = ActorId.ToString();
+            }
+
+            ILogger logger = LifetimeScope.Resolve<ILogger>();
+
+            IExternalDataCache externalDataCache;
+            IInternalDataCache internalDataCache;
+            IFileDataCache fileDataCache;
+            FM25Global condensedResults;
+
+            try
+            {
+                logger.LogDebug($"{nameof(FM25Actor)} {ActorId} starting");
+
+                externalDataCache = JsonSerializationService.Deserialize<ExternalDataCache>(actorModel.ExternalDataCache);
+                internalDataCache = JsonSerializationService.Deserialize<InternalDataCache>(actorModel.InternalDataCache);
+                fileDataCache = JsonSerializationService.Deserialize<FileDataCache>(actorModel.FileDataCache);
+
+                logger.LogDebug($"{nameof(FM25Actor)} {ActorId} finished getting input data");
+
+                cancellationToken.ThrowIfCancellationRequested();
+            }
+            catch (Exception ex)
+            {
+                ActorEventSource.Current.ActorMessage(this, "Exception-{0}", ex.ToString());
+                logger.LogError($"Error while processing {nameof(FM25Actor)}", ex);
+                throw;
+            }
 
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
-                c.Register(a => a.Resolve<IJsonSerializationService>().Deserialize<ExternalDataCache>(fm25ActorModel.ExternalDataCache)).As<IExternalDataCache>();
-                c.Register(a => a.Resolve<IJsonSerializationService>().Deserialize<InternalDataCache>(fm25ActorModel.InternalDataCache)).As<IInternalDataCache>();
-                c.Register(a => a.Resolve<IJsonSerializationService>().Deserialize<FileDataCache>(fm25ActorModel.FileDataCache)).As<IFileDataCache>();
+                c.RegisterInstance(externalDataCache).As<IExternalDataCache>();
+                c.RegisterInstance(internalDataCache).As<IInternalDataCache>();
+                c.RegisterInstance(fileDataCache).As<IFileDataCache>();
             }))
             {
-                var jsonSerializationService = childLifetimeScope.Resolve<IJsonSerializationService>();
-
-                var executionContext = (ExecutionContext)childLifetimeScope.Resolve<IExecutionContext>();
-
-                executionContext.JobId = fm25ActorModel.JobId.ToString();
+                ExecutionContext executionContext = (ExecutionContext)childLifetimeScope.Resolve<IExecutionContext>();
+                executionContext.JobId = actorModel.JobId.ToString();
                 executionContext.TaskKey = ActorId.ToString();
-
-                var logger = childLifetimeScope.Resolve<ILogger>();
+                ILogger jobLogger = childLifetimeScope.Resolve<ILogger>();
 
                 try
                 {
-                    logger.LogDebug("FM25 Actor started processing");
+                    jobLogger.LogDebug($"{nameof(FM25Actor)} {ActorId} {GC.GetGeneration(actorModel)} started processing");
 
-                    IEnumerable<Global> fm25Results;
+                    IEnumerable<FM25Global> fm25Results;
                     IEnumerable<PeriodisationGlobal> fm25PeriodisationResults;
 
                     using (var fundingServiceLifetimeScope = childLifetimeScope.BeginLifetimeScope(c =>
                     {
-                        c.RegisterInstance(new RulebaseProvider("FM25")).As<IRulebaseProvider>();
+                        c.RegisterInstance(new RulebaseProvider("FM25 Funding Calc 18_19")).As<IRulebaseProvider>();
                     }))
                     {
-                        logger.LogDebug("FM25 Rulebase Starting");
+                        jobLogger.LogDebug("FM25 Rulebase Starting");
 
-                        var fundingService = fundingServiceLifetimeScope.Resolve<IFundingService<ILearner, IEnumerable<Global>>>();
+                        IFundingService<ILearner, IEnumerable<FM25Global>> fundingService = fundingServiceLifetimeScope.Resolve<IFundingService<ILearner, IEnumerable<FM25Global>>>();
 
-                        var learners = jsonSerializationService.Deserialize<List<MessageLearner>>(fm25ActorModel.ValidLearners);
+                        List<MessageLearner> learners = JsonSerializationService.Deserialize<List<MessageLearner>>(actorModel.ValidLearners);
 
-                        fm25ActorModel = null;
+                        fm25Results = fundingService.ProcessFunding(learners, cancellationToken).ToList();
 
-                        fm25Results = fundingService.ProcessFunding(learners).ToList();
-
-                        logger.LogDebug("FM25 Rulebase Finishing");
+                        jobLogger.LogDebug("FM25 Rulebase Finishing");
                     }
 
                     using (var fundingServiceLifetimeScope = childLifetimeScope.BeginLifetimeScope(c =>
@@ -85,33 +120,35 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
                         c.RegisterInstance(new RulebaseProvider("FM25 Periodisation")).As<IRulebaseProvider>();
                     }))
                     {
-                        logger.LogDebug("FM25 Periodisation Rulebase Starting");
+                        jobLogger.LogDebug("FM25 Periodisation Rulebase Starting");
 
-                        var periodisationService = fundingServiceLifetimeScope.Resolve<IFundingService<Global, IEnumerable<PeriodisationGlobal>>>();
+                        IFundingService<FM25Global, IEnumerable<PeriodisationGlobal>> periodisationService = fundingServiceLifetimeScope.Resolve<IFundingService<FM25Global, IEnumerable<PeriodisationGlobal>>>();
 
-                        fm25PeriodisationResults = periodisationService.ProcessFunding(fm25Results).ToList();
+                        fm25PeriodisationResults = periodisationService.ProcessFunding(fm25Results, cancellationToken).ToList();
 
-                        logger.LogDebug("FM25 Periodisation Rulebase Finishing");
+                        jobLogger.LogDebug("FM25 Periodisation Rulebase Finishing");
                     }
 
-                    logger.LogDebug("FM25 Actor completed processing");
+                    jobLogger.LogDebug($"{nameof(FM25Actor)} {ActorId} {GC.GetGeneration(actorModel)} completed processing");
 
-                    var condensedResults = CondenseResults(fm25Results, fm25PeriodisationResults);
-
-                    resultString = jsonSerializationService.Serialize(condensedResults);
+                    condensedResults = CondenseResults(fm25Results, fm25PeriodisationResults);
                 }
                 catch (Exception ex)
                 {
                     ActorEventSource.Current.ActorMessage(this, "Exception-{0}", ex.ToString());
-                    logger.LogError("Error while processing Actor job", ex);
+                    jobLogger.LogError($"Error while processing {nameof(FM25Actor)}", ex);
                     throw;
                 }
             }
 
-            return Task.FromResult(resultString);
+            externalDataCache = null;
+            internalDataCache = null;
+            fileDataCache = null;
+
+            return condensedResults;
         }
 
-        private Global CondenseResults(IEnumerable<Global> globals, IEnumerable<PeriodisationGlobal> periodisationGlobals)
+        private FM25Global CondenseResults(IEnumerable<FM25Global> globals, IEnumerable<PeriodisationGlobal> periodisationGlobals)
         {
             var first = globals.FirstOrDefault();
 
@@ -138,7 +175,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
                 return first;
             }
 
-            return new Global();
+            return new FM25Global();
         }
     }
 }

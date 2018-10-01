@@ -231,14 +231,14 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         [Fact]
         public void BuildSFAPostcodeDisadvantage()
         {
-            var sfaDisadvantage = new SfaDisadvantage
+            var sfaDisadvantage = new DasDisadvantage
             {
                 Uplift = 1.2m,
                 EffectiveFrom = new DateTime(2018, 1, 1),
                 EffectiveTo = new DateTime(2018, 1, 1)
             };
 
-            var dataEntity = NewService().BuildSFAPostcodeDisadvantage(sfaDisadvantage);
+            var dataEntity = NewService().BuildDASPostcodeDisadvantage(sfaDisadvantage);
 
             dataEntity.EntityName.Should().Be("SFA_PostcodeDisadvantage");
             dataEntity.Attributes.Should().HaveCount(3);
@@ -285,7 +285,8 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             var dataEntity = NewService().BuildApprenticeshipsEarningsHistory(appsHistory);
 
             dataEntity.EntityName.Should().Be("HistoricEarningInput");
-            dataEntity.Attributes.Should().HaveCount(28);
+            dataEntity.Attributes.Should().HaveCount(29);
+            dataEntity.Attributes["AppIdentifierInput"].Value.Should().Be(appsHistory.AppIdentifier);
             dataEntity.Attributes["AppProgCompletedInTheYearInput"].Value.Should().Be(appsHistory.AppProgCompletedInTheYearInput);
             dataEntity.Attributes["HistoricCollectionReturnInput"].Value.Should().Be(appsHistory.CollectionReturnCode);
             dataEntity.Attributes["HistoricCollectionYearInput"].Value.Should().Be(appsHistory.CollectionYear);

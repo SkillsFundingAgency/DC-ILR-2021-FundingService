@@ -31,14 +31,15 @@ namespace ESFA.DC.ILR.FundingService.Providers
             {
                 using (MemoryStream ms = new MemoryStream())
                 {
-                    await _blobStoragePersistenceService.GetAsync(fileName, ms);
+                    await _blobStoragePersistenceService.GetAsync(fileName, ms).ConfigureAwait(false);
                     ms.Seek(0, SeekOrigin.Begin);
                     message = _xmlSerializationService.Deserialize<Message>(ms);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError("Failed to retrieve and deserialise message", ex);
+                _logger.LogError($"Failed to retrieve and deserialise ILR file {fileName}", ex);
+                throw;
             }
 
             return message;

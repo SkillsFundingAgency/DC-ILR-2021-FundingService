@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime;
+using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Internal;
-using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model;
+using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FM36Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
 using ESFA.DC.ILR.FundingService.Stateless.Models;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
-using ESFA.DC.Logging;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
+using ExecutionContext = ESFA.DC.Logging.ExecutionContext;
 
 namespace ESFA.DC.ILR.FundingService.FM36Actor
 {
@@ -25,53 +27,99 @@ namespace ESFA.DC.ILR.FundingService.FM36Actor
     [ActorService(Name = ActorServiceNameConstants.FM36)]
     public class FM36Actor : AbstractFundingActor, IFM36Actor
     {
-        public FM36Actor(ActorService actorService, ActorId actorId, ILifetimeScope lifetimeScope)
-            : base(actorService, actorId, lifetimeScope)
+        public FM36Actor(ActorService actorService, ActorId actorId, ILifetimeScope lifetimeScope, IExecutionContext executionContext, IJsonSerializationService jsonSerializationService)
+            : base(actorService, actorId, lifetimeScope, executionContext, jsonSerializationService)
         {
         }
 
-        public Task<string> Process(FundingActorDto fm36ActorModel)
+        public async Task<string> Process(FundingActorDto actorModel, CancellationToken cancellationToken)
         {
-            var jsonSerializationService = LifetimeScope.Resolve<ISerializationService>();
+            FM36Global results = RunFunding(actorModel, cancellationToken);
+            actorModel = null;
 
-            var referenceDataCache = jsonSerializationService.Deserialize<ExternalDataCache>(fm36ActorModel.ExternalDataCache);
-            var internalDataCache = jsonSerializationService.Deserialize<InternalDataCache>(fm36ActorModel.InternalDataCache);
+            GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
 
-            var fileDataCache = jsonSerializationService.Deserialize<FileDataCache>(fm36ActorModel.FileDataCache);
+            return JsonSerializationService.Serialize(results);
+        }
+
+        private FM36Global RunFunding(FundingActorDto actorModel, CancellationToken cancellationToken)
+        {
+            if (ExecutionContext is ExecutionContext executionContextObj)
+            {
+                executionContextObj.JobId = "-1";
+                executionContextObj.TaskKey = ActorId.ToString();
+            }
+
+            ILogger logger = LifetimeScope.Resolve<ILogger>();
+
+            IExternalDataCache externalDataCache;
+            IInternalDataCache internalDataCache;
+            IFileDataCache fileDataCache;
+            FM36Global results;
+
+            try
+            {
+                logger.LogDebug($"{nameof(FM36Actor)} {ActorId} {GC.GetGeneration(actorModel)} starting");
+
+                externalDataCache = JsonSerializationService.Deserialize<ExternalDataCache>(actorModel.ExternalDataCache);
+                internalDataCache = JsonSerializationService.Deserialize<InternalDataCache>(actorModel.InternalDataCache);
+                fileDataCache = JsonSerializationService.Deserialize<FileDataCache>(actorModel.FileDataCache);
+
+                logger.LogDebug($"{nameof(FM36Actor)} {ActorId} {GC.GetGeneration(actorModel)} finished getting input data");
+
+                cancellationToken.ThrowIfCancellationRequested();
+            }
+            catch (Exception ex)
+            {
+                ActorEventSource.Current.ActorMessage(this, "Exception-{0}", ex.ToString());
+                logger.LogError($"Error while processing {nameof(FM36Actor)}", ex);
+                throw;
+            }
 
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
-                c.RegisterInstance(referenceDataCache).As<IExternalDataCache>();
+                c.RegisterInstance(externalDataCache).As<IExternalDataCache>();
                 c.RegisterInstance(internalDataCache).As<IInternalDataCache>();
                 c.RegisterInstance(fileDataCache).As<IFileDataCache>();
             }))
             {
                 var executionContext = (ExecutionContext)childLifetimeScope.Resolve<IExecutionContext>();
-                executionContext.JobId = fm36ActorModel.JobId.ToString();
+                executionContext.JobId = actorModel.JobId.ToString();
                 executionContext.TaskKey = ActorId.ToString();
-                var logger = childLifetimeScope.Resolve<ILogger>();
+                var jobLogger = childLifetimeScope.Resolve<ILogger>();
 
                 try
                 {
-                    logger.LogDebug("FM36 Actor started processing");
-                    var fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, FM36FundingOutputs>>();
+                    jobLogger.LogDebug(
+                        $"{nameof(FM36Actor)} {ActorId} {GC.GetGeneration(actorModel)} started processing");
 
-                    var learners = jsonSerializationService.Deserialize<List<MessageLearner>>(fm36ActorModel.ValidLearners);
+            
 
-                    fm36ActorModel = null;
+                    IFundingService<ILearner, FM36Global> fundingService =
+                        childLifetimeScope.Resolve<IFundingService<ILearner, FM36Global>>();
 
-                    var results = fundingService.ProcessFunding(learners);
+                    List<MessageLearner> learners =
+                        JsonSerializationService.Deserialize<List<MessageLearner>>(actorModel.ValidLearners);
 
-                    logger.LogDebug("FM36 Actor completed processing");
-                    return Task.FromResult(jsonSerializationService.Serialize(results));
+                    results = fundingService.ProcessFunding(learners, cancellationToken);
+
+                    jobLogger.LogDebug(
+                        $"{nameof(FM36Actor)} {ActorId} {GC.GetGeneration(actorModel)} completed processing");
                 }
                 catch (Exception ex)
                 {
                     ActorEventSource.Current.ActorMessage(this, "Exception-{0}", ex.ToString());
-                    logger.LogError("Error while processing Actor job", ex);
+                    jobLogger.LogError($"Error while processing {nameof(FM36Actor)}", ex);
                     throw;
                 }
             }
+
+            externalDataCache = null;
+            internalDataCache = null;
+            fileDataCache = null;
+
+            return results;
         }
     }
 }

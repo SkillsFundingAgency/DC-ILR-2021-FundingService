@@ -1,4 +1,6 @@
-﻿using ESFA.DC.ILR.FundingService.Data.File;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 
@@ -15,9 +17,9 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.File
             _fileDataRetrievalService = ukprnDataRetrievalService;
         }
 
-        public void Populate()
+        public async Task PopulateAsync(CancellationToken cancellationToken)
         {
-            var fileDataCache = (FileDataCache)_fileDataCache;
+            FileDataCache fileDataCache = (FileDataCache)_fileDataCache;
 
             fileDataCache.UKPRN = _fileDataRetrievalService.RetrieveUKPRN();
             fileDataCache.DPOutcomes = _fileDataRetrievalService.RetrieveDPOutcomes();

@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.Data.Context;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Context;
@@ -12,7 +14,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.Context
     public class FundingContextPopulationServiceTests
     {
         [Fact]
-        public void Populate()
+        public async Task Populate()
         {
             var validLearners = new List<ILearner>();
 
@@ -24,7 +26,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.Context
 
             fundingContext.SetupSet(fc => fc.ValidLearners = validLearners).Verifiable();
 
-            NewService(fundingContext.Object, validLearnerDataRetrievalServiceMock.Object).Populate();
+            await NewService(fundingContext.Object, validLearnerDataRetrievalServiceMock.Object).PopulateAsync(CancellationToken.None);
 
             fundingContext.Verify();
             validLearnerDataRetrievalServiceMock.Verify();

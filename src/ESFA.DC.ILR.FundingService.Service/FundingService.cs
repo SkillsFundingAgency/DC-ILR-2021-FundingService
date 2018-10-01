@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using ESFA.DC.ILR.FundingService.Interfaces;
+using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.Service
@@ -18,11 +20,15 @@ namespace ESFA.DC.ILR.FundingService.Service
             _fundingOutputService = fundingOutputService;
         }
 
-        public TOut ProcessFunding(IEnumerable<TIn> learnerList)
+        public TOut ProcessFunding(IEnumerable<TIn> learnerList, CancellationToken cancellationToken)
         {
-            var inputDataEntities = _dataEntityMapper.MapTo(learnerList);
+            IEnumerable<IDataEntity> inputDataEntities = _dataEntityMapper.MapTo(learnerList);
 
-            var outputDataEntities = inputDataEntities.Select(e => _opaService.ExecuteSession(e));
+            cancellationToken.ThrowIfCancellationRequested();
+
+            IEnumerable<IDataEntity> outputDataEntities = inputDataEntities.Select(e => _opaService.ExecuteSession(e));
+
+            cancellationToken.ThrowIfCancellationRequested();
 
             return _fundingOutputService.ProcessFundingOutputs(outputDataEntities);
         }

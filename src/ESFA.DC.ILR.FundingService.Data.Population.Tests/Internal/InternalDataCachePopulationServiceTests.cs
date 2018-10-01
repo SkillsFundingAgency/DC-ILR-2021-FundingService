@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Internal;
 using ESFA.DC.ILR.FundingService.Data.Population.Internal;
 using FluentAssertions;
-using Moq;
 using Xunit;
 
 namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.Internal
@@ -15,11 +12,11 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.Internal
     public class InternalDataCachePopulationServiceTests
     {
         [Fact]
-        public void Populate()
+        public async Task Populate()
         {
             IInternalDataCache internalDataCache = new InternalDataCache();
 
-            NewService(internalDataCache).Populate();
+            await NewService(internalDataCache).PopulateAsync(CancellationToken.None);
 
             internalDataCache.Period1.Should().Be(new DateTime(2018, 8, 1));
             internalDataCache.Period2.Should().Be(new DateTime(2018, 9, 1));

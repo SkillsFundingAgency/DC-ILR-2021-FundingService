@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.Interface;
-using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model;
-using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Attribute;
+using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Interface;
@@ -33,7 +32,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "Year")).Returns(year);
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "RulebaseVersion")).Returns(rulebaseVersion);
 
-            var global = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).GlobalOutput(dataEntity);
+            var global = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).MapGlobal(dataEntity);
 
             global.UKPRN.Should().Be(ukprn);
             global.LARSVersion.Should().Be(larsVersion);
@@ -55,7 +54,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
 
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "LearnRefNumber")).Returns(learnRefNumber);
 
-            var learner = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).LearnerFromDataEntity(dataEntity);
+            var learner = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).MapLearner(dataEntity);
 
             learner.LearnRefNumber = learnRefNumber;
         }
@@ -321,7 +320,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         public void LearningDeliveryPeriodisedAttributeData_Correct()
         {
             var learningDeliveryPeriodisedAttributeData =
-                NewService().LearningDeliveryPeriodisedAttributeData(TestLearningDeliveryEntity(null).Single());
+                NewService().LearningDeliveryPeriodisedValues(TestLearningDeliveryEntity(null).Single());
 
             var expectedLearningDeliveryPeriodisedAttributeData = TestLearningDeliveryPeriodisedAttributesDataArray();
 
@@ -526,7 +525,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "PriceEpisodeRedStartDate")).Returns(priceEpisodeRedStartDate);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "PriceEpisodeRedStatusCode")).Returns(priceEpisodeRedStatusCode);
 
-            var priceEpisode = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).PriceEpisodeAttributeData(dataEntity);
+            var priceEpisode = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).PriceEpisodeValues(dataEntity);
 
             priceEpisode.EpisodeStartDate.Should().Be(episodeStartDate);
             priceEpisode.TNP1.Should().Be(tnp1);
@@ -588,7 +587,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         public void PriceEpisodePeriodisedAttributeData_Correct()
         {
             var priceEpisodePeriodisedAttributeData =
-                NewService().PriceEpisodePeriodisedAttributeData(TestPriceEpisodeEntity(null).Single());
+                NewService().PriceEpisodePeriodisedValues(TestPriceEpisodeEntity(null).Single());
 
             var expectedPriceEpisodePeriodisedAttributeData = TestPriceEpisodePeriodisedAttributesDataArray();
 
@@ -839,9 +838,9 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             return entities;
         }
 
-        private LearningDeliveryPeriodisedAttribute[] TestLearningDeliveryPeriodisedAttributesDataArray()
+        private LearningDeliveryPeriodisedValues[] TestLearningDeliveryPeriodisedAttributesDataArray()
         {
-            return new LearningDeliveryPeriodisedAttribute[]
+            return new LearningDeliveryPeriodisedValues[]
             {
                 TestLearningDeliveryPeriodisedAttributesData("DisadvFirstPayment", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("DisadvSecondPayment", 1.0m),
@@ -872,9 +871,9 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             };
         }
 
-        private LearningDeliveryPeriodisedAttribute TestLearningDeliveryPeriodisedAttributesData(string attribute, decimal value)
+        private LearningDeliveryPeriodisedValues TestLearningDeliveryPeriodisedAttributesData(string attribute, decimal value)
         {
-            return new LearningDeliveryPeriodisedAttribute
+            return new LearningDeliveryPeriodisedValues
             {
                 AttributeName = attribute,
                 Period1 = value,
@@ -968,9 +967,9 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             return entities;
         }
 
-        private PriceEpisodePeriodisedAttribute[] TestPriceEpisodePeriodisedAttributesDataArray()
+        private PriceEpisodePeriodisedValues[] TestPriceEpisodePeriodisedAttributesDataArray()
         {
-            return new PriceEpisodePeriodisedAttribute[]
+            return new PriceEpisodePeriodisedValues[]
             {
                 TestPriceEpisodePeriodisedAttributesData("PriceEpisodeApplic1618FrameworkUpliftBalancing", 1.0m),
                 TestPriceEpisodePeriodisedAttributesData("PriceEpisodeApplic1618FrameworkUpliftCompletionPayment", 1.0m),
@@ -996,9 +995,9 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             };
         }
 
-        private PriceEpisodePeriodisedAttribute TestPriceEpisodePeriodisedAttributesData(string attribute, decimal value)
+        private PriceEpisodePeriodisedValues TestPriceEpisodePeriodisedAttributesData(string attribute, decimal value)
         {
-            return new PriceEpisodePeriodisedAttribute
+            return new PriceEpisodePeriodisedValues
             {
                 AttributeName = attribute,
                 Period1 = value,

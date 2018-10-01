@@ -13,7 +13,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Rulebase\FM25Periodisation\FM25 Periodisation.zip" />
+    <None Remove="Rulebase\FM25\FM25 Funding Calc 18_19.zip" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Rulebase\FM25Periodisation\FM25 Periodisation.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Rulebase\FM25\FM25 Funding Calc 18_19.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ESFA.DC.ILR.1819.Model.Interface" Version="0.1.4-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.4-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.4-beta0001" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +37,15 @@
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Interfaces\ESFA.DC.ILR.FundingService.Interfaces.csproj" />
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service\ESFA.DC.OPA.Service.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM25.Model\ESFA.DC.ILR.FundingService.FM25.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Rulebase\FM25Periodisation\XSRC\Inputs.xsrc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Rulebase\FM25\XSRC\Inputs.xsrc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

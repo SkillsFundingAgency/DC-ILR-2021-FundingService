@@ -179,7 +179,7 @@
     <None Include="PackageRoot\Config\Settings.xml" />
     <None Include="App.config" />
     <None Include="packages.config" />
-    <EmbeddedResource Include="Resources\FM25.zip" />
+    <EmbeddedResource Include="Resources\FM25 Funding Calc 18_19.zip" />
     <EmbeddedResource Include="Resources\FM25 Periodisation.zip" />
   </ItemGroup>
   <ItemGroup>

@@ -8,6 +8,7 @@ using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.JobContext;
 using ESFA.DC.JobContext.Interface;
 using ESFA.DC.Logging.Interfaces;
+using ExecutionContext = ESFA.DC.Logging.ExecutionContext;
 
 namespace ESFA.DC.ILR.FundingService.Stateless.Handlers
 {
@@ -29,19 +30,22 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Handlers
                 using (var childLifeTimeScope = _parentLifeTimeScope.BeginLifetimeScope(c =>
                     c.RegisterInstance(jobContextMessage).As<IJobContextMessage>()))
                 {
-                    // get logger
-                    var executionContext = (Logging.ExecutionContext)childLifeTimeScope.Resolve<IExecutionContext>();
+                    // Get logger
+                    ExecutionContext executionContext = (ExecutionContext)childLifeTimeScope.Resolve<IExecutionContext>();
                     executionContext.JobId = jobContextMessage.JobId.ToString();
-                    var logger = childLifeTimeScope.Resolve<ILogger>();
+                    ILogger logger = childLifeTimeScope.Resolve<ILogger>();
 
-                    logger.LogDebug("started funding calc");
+                    logger.LogDebug("Started Funding Calc Service");
                     var preFundingSfOrchestrationService =
                         childLifeTimeScope.Resolve<IPreFundingSFOrchestrationService>();
 
-                    await preFundingSfOrchestrationService.Execute(jobContextMessage, cancellationToken);
+                    // Call logic asynchronously, and return on initial context (no .ConfigureAwait(false))
+                    await preFundingSfOrchestrationService.ExecuteAsync(jobContextMessage, cancellationToken);
+
+                    logger.LogDebug("Completed Funding Calc Service");
                 }
 
-                ServiceEventSource.Current.ServiceMessage(_context, "Job complete");
+                ServiceEventSource.Current.ServiceMessage(_context, "Completed Funding Calc Service");
                 return true;
             }
             catch (Exception ex)

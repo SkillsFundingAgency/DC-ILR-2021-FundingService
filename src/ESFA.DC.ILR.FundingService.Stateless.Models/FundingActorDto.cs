@@ -4,8 +4,6 @@
     {
         public long JobId { get; set; }
 
-        public int Ukprn { get; set; }
-
         public string ValidLearners { get; set; }
 
         public string ExternalDataCache { get; set; }

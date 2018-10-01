@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Attribute;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.Orchestrators.Output;
 using FluentAssertions;
 using Xunit;
@@ -13,51 +12,50 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
         [Fact]
         public void Condense()
         {
-            var learnerOne = new LearnerAttribute();
-            var learnerTwo = new LearnerAttribute();
-            var learnerThree = new LearnerAttribute();
-            var learnerFour = new LearnerAttribute();
-            var learnerFive = new LearnerAttribute();
-            var learnerSix = new LearnerAttribute();
+            var learnerOne = new ALBLearner();
+            var learnerTwo = new ALBLearner();
+            var learnerThree = new ALBLearner();
+            var learnerFour = new ALBLearner();
+            var learnerFive = new ALBLearner();
+            var learnerSix = new ALBLearner();
 
-            var globalOne = new GlobalAttribute();
-            var globalTwo = new GlobalAttribute();
-            var globalThree = new GlobalAttribute();
-
-            var fundingOutputs = new List<ALBFundingOutputs>()
+            var globalOne = new ALBGlobal()
             {
-                new ALBFundingOutputs()
+                Learners = new List<ALBLearner>()
                 {
-                    Global = globalOne,
-                    Learners = new LearnerAttribute[]
-                    {
-                        learnerOne,
-                        learnerTwo,
-                    },
+                    learnerOne,
+                    learnerTwo,
                 },
-                new ALBFundingOutputs()
+            };
+
+            var globalTwo = new ALBGlobal()
+            {
+                Learners = new List<ALBLearner>
                 {
-                    Global = globalTwo,
-                    Learners = new LearnerAttribute[]
-                    {
-                        learnerThree,
-                        learnerFour,
-                    },
+                    learnerThree,
+                    learnerFour,
                 },
-                new ALBFundingOutputs()
+            };
+
+            var globalThree = new ALBGlobal()
+            {
+                Learners = new List<ALBLearner>
                 {
-                    Global = globalThree,
-                    Learners = new LearnerAttribute[]
-                    {
-                        learnerFive,
-                        learnerSix,
-                    },
+                    learnerFive,
+                    learnerSix,
                 },
+            };
+
+            var fundingOutputs = new List<ALBGlobal>()
+            {
+                globalOne,
+                globalTwo,
+                globalThree,
             };
 
             var fundingOutput = NewService().Condense(fundingOutputs);
 
-            fundingOutput.Global.Should().Be(globalOne);
+            fundingOutput.Should().Be(globalOne);
             fundingOutput.Learners.Should().HaveCount(6);
             fundingOutput.Learners.Should().Contain(new[] { learnerOne, learnerTwo, learnerThree, learnerFour, learnerFive, learnerSix });
         }
@@ -71,127 +69,77 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
         }
 
         [Fact]
-        public void Condense_NullGlobal()
-        {
-            var learnerOne = new LearnerAttribute();
-            var learnerTwo = new LearnerAttribute();
-            var learnerThree = new LearnerAttribute();
-            var learnerFour = new LearnerAttribute();
-            var learnerFive = new LearnerAttribute();
-            var learnerSix = new LearnerAttribute();
-
-            var fundingOutputs = new List<ALBFundingOutputs>()
-            {
-                new ALBFundingOutputs()
-                {
-                    Global = null,
-                    Learners = new LearnerAttribute[]
-                    {
-                        learnerOne,
-                        learnerTwo,
-                    },
-                },
-                new ALBFundingOutputs()
-                {
-                    Global = null,
-                    Learners = new LearnerAttribute[]
-                    {
-                        learnerThree,
-                        learnerFour,
-                    },
-                },
-                new ALBFundingOutputs()
-                {
-                    Global = null,
-                    Learners = new LearnerAttribute[]
-                    {
-                        learnerFive,
-                        learnerSix,
-                    },
-                },
-            };
-
-            var fundingOutput = NewService().Condense(fundingOutputs);
-
-            fundingOutput.Global.Should().BeNull();
-            fundingOutput.Learners.Should().HaveCount(6);
-            fundingOutput.Learners.Should().Contain(new[] { learnerOne, learnerTwo, learnerThree, learnerFour, learnerFive, learnerSix });
-        }
-
-        [Fact]
         public void Condense_NullLearners()
         {
-            var globalOne = new GlobalAttribute();
-            var globalTwo = new GlobalAttribute();
-            var globalThree = new GlobalAttribute();
-
-            var fundingOutputs = new List<ALBFundingOutputs>()
+            var globalOne = new ALBGlobal()
             {
-                new ALBFundingOutputs()
-                {
-                    Global = globalOne,
-                    Learners = null
-                },
-                new ALBFundingOutputs()
-                {
-                    Global = globalTwo,
-                    Learners = null
-                },
-                new ALBFundingOutputs()
-                {
-                    Global = globalThree,
-                    Learners = null
-                },
+                Learners = null
+            };
+
+            var globalTwo = new ALBGlobal()
+            {
+                Learners = null
+            };
+
+            var globalThree = new ALBGlobal()
+            {
+                Learners = null
+            };
+
+            var fundingOutputs = new List<ALBGlobal>()
+            {
+                globalOne,
+                globalTwo,
+                globalThree,
             };
 
             var fundingOutput = NewService().Condense(fundingOutputs);
 
-            fundingOutput.Global.Should().Be(globalOne);
+            fundingOutput.Should().Be(globalOne);
             fundingOutput.Learners.Should().BeEmpty();
         }
 
         [Fact]
         public void Condense_MixedNullLearners()
         {
-            var learnerOne = new LearnerAttribute();
-            var learnerTwo = new LearnerAttribute();
-            var learnerFive = new LearnerAttribute();
-            var learnerSix = new LearnerAttribute();
+            var learnerOne = new ALBLearner();
+            var learnerTwo = new ALBLearner();
+            var learnerFive = new ALBLearner();
+            var learnerSix = new ALBLearner();
 
-            var globalOne = new GlobalAttribute();
-            var globalTwo = new GlobalAttribute();
-            var globalThree = new GlobalAttribute();
-
-            var fundingOutputs = new List<ALBFundingOutputs>()
+            var globalOne = new ALBGlobal()
             {
-                new ALBFundingOutputs()
+                Learners = new List<ALBLearner>()
                 {
-                    Global = globalOne,
-                    Learners = new LearnerAttribute[]
-                    {
-                        learnerOne,
-                        learnerTwo,
-                    },
+                    learnerOne,
+                    learnerTwo,
                 },
-                new ALBFundingOutputs()
+            };
+
+            var globalTwo = new ALBGlobal()
+            {
+                Learners = null,
+            };
+
+            var globalThree = new ALBGlobal()
+            {
+                Learners = new List<ALBLearner>
                 {
-                    Global = globalTwo,
-                    Learners = null,
+                    learnerFive,
+                    learnerSix,
                 },
-                new ALBFundingOutputs()
-                {
-                    Global = globalThree,
-                    Learners = new LearnerAttribute[]
-                    {
-                        learnerFive,
-                        learnerSix,
-                    },
-                },
+            };
+
+            var fundingOutputs = new List<ALBGlobal>()
+            {
+                globalOne,
+                globalTwo,
+                globalThree,
             };
 
             var fundingOutput = NewService().Condense(fundingOutputs);
 
-            fundingOutput.Global.Should().Be(globalOne);
+            fundingOutput.Should().Be(globalOne);
             fundingOutput.Learners.Should().HaveCount(4);
             fundingOutput.Learners.Should().Contain(new[] { learnerOne, learnerTwo, learnerFive, learnerSix });
         }

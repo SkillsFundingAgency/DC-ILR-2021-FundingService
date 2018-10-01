@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
@@ -38,30 +39,32 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             _actorName = actorName;
         }
 
-        public async Task Execute(IEnumerable<FundingActorDto> fundingActorDtos, string outputKey)
+        public async Task Execute(
+            IEnumerable<FundingActorDto> fundingActorDtos,
+            string outputKey,
+            CancellationToken cancellationToken)
         {
             _logger.LogDebug($"Starting {_actorName} Actors");
 
-            var stopWatch = new Stopwatch();
+            Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
 
-            var taskList = new List<Task<string>>();
+            List<Task<string>> taskList = new List<Task<string>>();
 
-            foreach (var fundingActorDto in fundingActorDtos)
+            foreach (FundingActorDto fundingActorDto in fundingActorDtos)
             {
-                var task = _fundingActorProvider.Provide().Process(fundingActorDto);
-                taskList.Add(task);
+                taskList.Add(_fundingActorProvider.Provide().Process(fundingActorDto, cancellationToken));
             }
 
-            await Task.WhenAll(taskList);
+            await Task.WhenAll(taskList).ConfigureAwait(false);
 
-            var results = taskList.Select(t => _jsonSerializationService.Deserialize<TActorReturn>(t.Result));
+            IEnumerable<TActorReturn> results = taskList.Select(t => _jsonSerializationService.Deserialize<TActorReturn>(t.Result));
 
             _logger.LogDebug($"Completed {taskList.Count} {_actorName} Actors - {stopWatch.ElapsedMilliseconds}");
 
             stopWatch.Restart();
 
-            await _keyValuePersistenceService.SaveAsync(outputKey, _jsonSerializationService.Serialize(_fundingOutputCondenserService.Condense(results)));
+            await _keyValuePersistenceService.SaveAsync(outputKey, _jsonSerializationService.Serialize(_fundingOutputCondenserService.Condense(results)), cancellationToken).ConfigureAwait(false);
 
             _logger.LogDebug($"Persisted {_actorName} results - {stopWatch.ElapsedMilliseconds}");
         }

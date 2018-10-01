@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.Interface;
-using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model;
-using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Attribute;
+using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FM36.Service.Constants;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.OPA.Model.Interface;
@@ -11,7 +10,7 @@ using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM36.Service
 {
-    public class FundingOutputService : IOutputService<FM36FundingOutputs>
+    public class FundingOutputService : IOutputService<FM36Global>
     {
         private readonly IInternalDataCache _internalDataCache;
         private readonly IDataEntityAttributeService _dataEntityAttributeService;
@@ -22,72 +21,69 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
             _dataEntityAttributeService = dataEntityAttributeService;
         }
 
-        public FM36FundingOutputs ProcessFundingOutputs(IEnumerable<IDataEntity> dataEntities)
+        public FM36Global ProcessFundingOutputs(IEnumerable<IDataEntity> dataEntities)
         {
-            if (dataEntities != null)
-            {
-                dataEntities = dataEntities.ToList();
-                if (dataEntities.Any())
-                {
-                    return new FM36FundingOutputs
-                    {
-                        Global = GlobalOutput(dataEntities.First()),
-                        Learners = dataEntities
-                        .Where(g => g.Children != null)
-                        .SelectMany(g => g.Children.Where(e => e.EntityName == "Learner")
-                        .Select(LearnerFromDataEntity))
-                        .ToArray(),
-                    };
-                }
-            }
+            var globals = dataEntities.Select(MapGlobal);
 
-            return new FM36FundingOutputs();
+            return new FM36Global
+            {
+                LARSVersion = globals.FirstOrDefault().LARSVersion,
+                RulebaseVersion = globals.FirstOrDefault().RulebaseVersion,
+                Year = globals.FirstOrDefault().Year,
+                UKPRN = globals.FirstOrDefault().UKPRN,
+                Learners = globals.SelectMany(l => l.Learners).ToList()
+            };
         }
 
-        public GlobalAttribute GlobalOutput(IDataEntity dataEntity)
+        public FM36Global MapGlobal(IDataEntity dataEntity)
         {
-            return new GlobalAttribute
+            return new FM36Global
             {
                 UKPRN = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.UKPRN).Value,
                 LARSVersion = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.LARSVersion),
                 RulebaseVersion = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.RulebaseVersion),
                 Year = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.Year),
+                Learners = dataEntity
+                    .Children?
+                    .Where(c => c.EntityName == Attributes.EntityLearner)
+                    .Select(MapLearner)
+                    .ToList()
             };
         }
 
-        public LearnerAttribute LearnerFromDataEntity(IDataEntity dataEntity)
+        public FM36Learner MapLearner(IDataEntity dataEntity)
         {
-            return new LearnerAttribute()
+            return new FM36Learner()
             {
                 LearnRefNumber = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.LearnRefNumber),
-                LearningDeliveryAttributes = dataEntity
+                LearningDeliveries = dataEntity
                         .Children
                         .Where(e => e.EntityName == Attributes.EntityLearningDelivery)
-                        .Select(LearningDeliveryFromDataEntity).ToArray(),
-                PriceEpisodeAttributes = dataEntity
+                        .Select(LearningDeliveryFromDataEntity).ToList(),
+                PriceEpisodes = dataEntity
                         .Children
                         .Where(e => e.EntityName == Attributes.EntityApprenticeshipPriceEpisode)
-                        .Select(PriceEpisodeFromDataEntity).ToArray(),
-                HistoricEarningOutputAttributeDatas = dataEntity
+                        .Select(PriceEpisodeFromDataEntity).ToList(),
+                HistoricEarningOutputValues = dataEntity
                         .Children
                         .Where(e => e.EntityName == Attributes.EntityHistoricEarningOutput)
-                        .Select(HistoricEarningOutputDataFromDataEntity).ToArray()
+                        .Select(HistoricEarningOutputDataFromDataEntity).ToList(),
             };
         }
 
-        public LearningDeliveryAttribute LearningDeliveryFromDataEntity(IDataEntity dataEntity)
+        public LearningDelivery LearningDeliveryFromDataEntity(IDataEntity dataEntity)
         {
-            return new LearningDeliveryAttribute
+            return new LearningDelivery
             {
                 AimSeqNumber = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.AimSeqNumber).Value,
-                LearningDeliveryAttributeDatas = LearningDeliveryAttributeData(dataEntity),
-                LearningDeliveryPeriodisedAttributes = LearningDeliveryPeriodisedAttributeData(dataEntity).ToArray(),
+                LearningDeliveryValues = LearningDeliveryAttributeData(dataEntity),
+                LearningDeliveryPeriodisedValues = LearningDeliveryPeriodisedValues(dataEntity),
             };
         }
 
-        public LearningDeliveryAttributeData LearningDeliveryAttributeData(IDataEntity dataEntity)
+        public LearningDeliveryValues LearningDeliveryAttributeData(IDataEntity dataEntity)
         {
-            return new LearningDeliveryAttributeData
+            return new LearningDeliveryValues
             {
                 ActualDaysIL = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.ActualDaysIL),
                 ActualNumInstalm = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.ActualNumInstalm),
@@ -144,7 +140,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
             };
         }
 
-        public LearningDeliveryPeriodisedAttribute[] LearningDeliveryPeriodisedAttributeData(IDataEntity learningDelivery)
+        public List<LearningDeliveryPeriodisedValues> LearningDeliveryPeriodisedValues(IDataEntity learningDelivery)
         {
             List<string> attributeList = new List<string>()
             {
@@ -176,7 +172,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 Attributes.ProgrammeAimTotProgFund
             };
 
-            List<LearningDeliveryPeriodisedAttribute> learningDeliveryPeriodisedAttributeList = new List<LearningDeliveryPeriodisedAttribute>();
+            List<LearningDeliveryPeriodisedValues> learningDeliveryPeriodisedAttributeList = new List<LearningDeliveryPeriodisedValues>();
 
             foreach (var attribute in attributeList)
             {
@@ -188,7 +184,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 {
                     var value = ConvertValue(attributeValue.Value);
 
-                    learningDeliveryPeriodisedAttributeList.Add(new LearningDeliveryPeriodisedAttribute
+                    learningDeliveryPeriodisedAttributeList.Add(new LearningDeliveryPeriodisedValues
                     {
                         AttributeName = attribute,
                         Period1 = value,
@@ -208,7 +204,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
 
                 if (changePoints.Any())
                 {
-                    learningDeliveryPeriodisedAttributeList.Add(new LearningDeliveryPeriodisedAttribute
+                    learningDeliveryPeriodisedAttributeList.Add(new LearningDeliveryPeriodisedValues
                     {
                         AttributeName = attribute,
                         Period1 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period1),
@@ -227,22 +223,22 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 }
             }
 
-            return learningDeliveryPeriodisedAttributeList.ToArray();
+            return learningDeliveryPeriodisedAttributeList;
         }
 
-        public PriceEpisodeAttribute PriceEpisodeFromDataEntity(IDataEntity dataEntity)
+        public PriceEpisode PriceEpisodeFromDataEntity(IDataEntity dataEntity)
         {
-            return new PriceEpisodeAttribute
+            return new PriceEpisode
             {
                 PriceEpisodeIdentifier = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.PriceEpisodeIdentifier),
-                PriceEpisodeAttributeDatas = PriceEpisodeAttributeData(dataEntity),
-                PriceEpisodePeriodisedAttributes = PriceEpisodePeriodisedAttributeData(dataEntity).ToArray(),
+                PriceEpisodeValues = PriceEpisodeValues(dataEntity),
+                PriceEpisodePeriodisedValues = PriceEpisodePeriodisedValues(dataEntity),
             };
         }
 
-        public PriceEpisodeAttributeData PriceEpisodeAttributeData(IDataEntity dataEntity)
+        public PriceEpisodeValues PriceEpisodeValues(IDataEntity dataEntity)
         {
-            return new PriceEpisodeAttributeData
+            return new PriceEpisodeValues
             {
                 EpisodeStartDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.EpisodeStartDate),
                 TNP1 = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.TNP1),
@@ -302,7 +298,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
             };
         }
 
-        public PriceEpisodePeriodisedAttribute[] PriceEpisodePeriodisedAttributeData(IDataEntity priceEpisode)
+        public List<PriceEpisodePeriodisedValues> PriceEpisodePeriodisedValues(IDataEntity priceEpisode)
         {
             List<string> attributeList = new List<string>()
             {
@@ -329,7 +325,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 Attributes.PriceEpisodeTotProgFunding
             };
 
-            List<PriceEpisodePeriodisedAttribute> priceEpisodePeriodisedAttributeList = new List<PriceEpisodePeriodisedAttribute>();
+            List<PriceEpisodePeriodisedValues> priceEpisodePeriodisedAttributeList = new List<PriceEpisodePeriodisedValues>();
 
             foreach (var attribute in attributeList)
             {
@@ -341,7 +337,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 {
                     var value = ConvertValue(attributeValue.Value);
 
-                    priceEpisodePeriodisedAttributeList.Add(new PriceEpisodePeriodisedAttribute
+                    priceEpisodePeriodisedAttributeList.Add(new PriceEpisodePeriodisedValues
                     {
                         AttributeName = attribute,
                         Period1 = value,
@@ -361,7 +357,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
 
                 if (changePoints.Any())
                 {
-                    priceEpisodePeriodisedAttributeList.Add(new PriceEpisodePeriodisedAttribute
+                    priceEpisodePeriodisedAttributeList.Add(new PriceEpisodePeriodisedValues
                     {
                         AttributeName = attribute,
                         Period1 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period1),
@@ -380,12 +376,12 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 }
             }
 
-            return priceEpisodePeriodisedAttributeList.ToArray();
+            return priceEpisodePeriodisedAttributeList;
         }
 
-        public HistoricEarningOutputAttributeData HistoricEarningOutputDataFromDataEntity(IDataEntity dataEntity)
+        public HistoricEarningOutputValues HistoricEarningOutputDataFromDataEntity(IDataEntity dataEntity)
         {
-            return new HistoricEarningOutputAttributeData
+            return new HistoricEarningOutputValues
             {
                 AppIdentifierOutput = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.AppIdentifierOutput),
                 AppProgCompletedInTheYearOutput = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, Attributes.AppProgCompletedInTheYearOutput),

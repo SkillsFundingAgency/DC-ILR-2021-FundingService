@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Attribute;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
@@ -32,7 +32,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "PostcodeAreaCostVersion")).Returns(postcodeAreaCostVersion);
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "RulebaseVersion")).Returns(rulebaseVersion);
 
-            var global = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).GlobalOutput(dataEntity);
+            var global = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).MapGlobal(dataEntity);
 
             global.UKPRN.Should().Be(ukprn);
             global.LARSVersion.Should().Be(larsVersion);
@@ -59,7 +59,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
 
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "LearnRefNumber")).Returns(learnRefNumber);
 
-            var learner = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).LearnerFromDataEntity(dataEntity);
+            var learner = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).MapLearner(dataEntity);
 
             learner.LearnRefNumber = learnRefNumber;
         }
@@ -98,7 +98,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
         public void FundingOutput_LearnerPeriodisedAttributeData_Correct()
         {
             var learnerPeriodisedAttributeData =
-                NewService().LearnerPeriodisedAttributes(TestLearnerEntity(null).Single());
+                NewService().LearnerPeriodisedValues(TestLearnerEntity(null).Single());
 
             var expectedLearnerPeriodisedAttributeData = TestLearnerPeriodisedAttributesArray();
 
@@ -124,7 +124,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             internalDataCacheMock.Setup(p => p.Period12).Returns(new DateTime(2019, 7, 1));
 
             var learnerPeriodisedAttributeData =
-                 NewService(internalDataCacheMock.Object).LearnerPeriodisedAttributes(TestLearnerEntityWithChangePoints(null).Single());
+                 NewService(internalDataCacheMock.Object).LearnerPeriodisedValues(TestLearnerEntityWithChangePoints(null).Single());
 
             var expectedLearnerPeriodisedAttributeData = TestLearnerPeriodisedAttributesArray();
 
@@ -196,7 +196,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "PlannedNumOnProgInstalm")).Returns(plannedNumOnProgInstalm);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "WeightedRate")).Returns(weightedRate);
 
-            var learningDelivery = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).LearningDeliveryAttributeData(dataEntity);
+            var learningDelivery = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).LearningDeliveryValue(dataEntity);
 
             learningDelivery.Achieved.Should().Be(achieved);
 
@@ -226,7 +226,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
         public void FundingOutput_LearningDeliveryPeriodisedAttributeData_Correct()
         {
             var learningDeliveryPeriodisedAttributeData =
-                NewService().LearningDeliveryPeriodisedAttributeData(TestLearningDeliveryEntity(null).Single());
+                NewService().LearningDeliveryPeriodisedValues(TestLearningDeliveryEntity(null).Single());
 
             var expectedLearningDeliveryPeriodisedAttributeData = TestLearningDeliveryPeriodisedAttributesDataArray();
 
@@ -252,7 +252,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             internalDataCacheMock.Setup(p => p.Period12).Returns(new DateTime(2019, 7, 1));
 
             var learningDeliveryPeriodisedAttributeData =
-                NewService(internalDataCacheMock.Object).LearningDeliveryPeriodisedAttributeData(TestLearningDeliveryEntityWithChangePoints(null).Single());
+                NewService(internalDataCacheMock.Object).LearningDeliveryPeriodisedValues(TestLearningDeliveryEntityWithChangePoints(null).Single());
 
             var expectedLearningDeliveryPeriodisedAttributeData = TestLearningDeliveryPeriodisedAttributesDataArray();
 
@@ -431,17 +431,17 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             return changePoints;
         }
 
-        private LearnerPeriodisedAttribute[] TestLearnerPeriodisedAttributesArray()
+        private List<LearnerPeriodisedValue> TestLearnerPeriodisedAttributesArray()
         {
-            return new LearnerPeriodisedAttribute[]
+            return new List<LearnerPeriodisedValue>
             {
                 TestLearnerPeriodisedAttributes("ALBSeqNum", 1.0m)
             };
         }
 
-        private LearnerPeriodisedAttribute TestLearnerPeriodisedAttributes(string attribute, decimal value)
+        private LearnerPeriodisedValue TestLearnerPeriodisedAttributes(string attribute, decimal value)
         {
-            return new LearnerPeriodisedAttribute
+            return new LearnerPeriodisedValue
             {
                 AttributeName = attribute,
                 Period1 = value,
@@ -459,9 +459,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             };
         }
 
-        private LearningDeliveryPeriodisedAttribute[] TestLearningDeliveryPeriodisedAttributesDataArray()
+        private List<LearningDeliveryPeriodisedValue> TestLearningDeliveryPeriodisedAttributesDataArray()
         {
-            return new LearningDeliveryPeriodisedAttribute[]
+            return new List<LearningDeliveryPeriodisedValue>
             {
                 TestLearningDeliveryPeriodisedAttributesData("ALBCode", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("ALBSupportPayment", 1.0m),
@@ -472,9 +472,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             };
         }
 
-        private LearningDeliveryPeriodisedAttribute TestLearningDeliveryPeriodisedAttributesData(string attribute, decimal value)
+        private LearningDeliveryPeriodisedValue TestLearningDeliveryPeriodisedAttributesData(string attribute, decimal value)
         {
-            return new LearningDeliveryPeriodisedAttribute
+            return new LearningDeliveryPeriodisedValue
             {
                 AttributeName = attribute,
                 Period1 = value,

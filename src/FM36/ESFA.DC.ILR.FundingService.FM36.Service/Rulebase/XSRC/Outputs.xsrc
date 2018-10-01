@@ -1,0 +1,1406 @@
+<root schema-version="1" product-version="10.4.2.18">
+  <entities>
+    <entity ref="global">
+      <attribute name="p310" type="text" public-name="RulebaseVersion">
+        <text>
+          <base>the current version of the rulebase</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+        </props>
+      </attribute>
+    </entity>
+    <entity id="learner" name="the learner" containment-relationship-id="learners" containment-parent-id="global" public-id="Learner">
+    </entity>
+    <entity id="learningdelivery" name="the learning delivery" containment-relationship-id="learnerslearningdeliveries" containment-parent-id="learner" public-id="LearningDelivery">
+      <attribute name="p389" type="text" public-name="FundLineType">
+        <text>
+          <base>the learning delivery's funding line type</base>
+        </text>
+        <props>
+          <prop name="Size">100</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p391" type="currency" public-name="MathEngAimValue">
+        <text>
+          <base>the learning delivery's Maths/English aim value</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p401" type="number" public-name="PlannedNumOnProgInstalm">
+        <text>
+          <base>the learning delivery's planned instalments</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+        </props>
+      </attribute>
+      <attribute name="p416" type="currency" public-name="LearnSuppFundCash">
+        <text>
+          <base>the learning delivery's LSF cash</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="b29" type="boolean" public-name="LearnSuppFund">
+        <text>
+          <base>the learning delivery is eligible for LSF in the period</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('eligible for LSF in the period'))</parse>
+        </text>
+        <props>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p439" type="date" public-name="AdjStartDate">
+        <text>
+          <base>the learning delivery's adjusted start date</base>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+        </props>
+      </attribute>
+      <attribute name="p450" type="currency" public-name="MathEngOnProgPayment">
+        <text>
+          <base>the learning delivery's Maths/English on programme payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p454" type="number" public-name="InstPerPeriod">
+        <text>
+          <base>the learning delivery's number of instalments this period</base>
+        </text>
+        <props>
+          <prop name="Size">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p460" type="number" public-name="MathEngOnProgPct">
+        <text>
+          <base>the learning delivery's Maths/English on programme percentage</base>
+        </text>
+        <props>
+          <prop name="Size">8</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p461" type="number" public-name="AgeAtProgStart">
+        <text>
+          <base>the learning delivery's age at programme start</base>
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+        </props>
+      </attribute>
+      <attribute name="p463" type="date" public-name="FirstIncentiveThresholdDate">
+        <text>
+          <base>the learning delivery's first additional payment threshold date</base>
+        </text>
+      </attribute>
+      <attribute name="p476" type="number" public-name="ActualNumInstalm">
+        <text>
+          <base>the learning delivery's actual instalments</base>
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+        </props>
+      </attribute>
+      <attribute name="p478" type="number" public-name="CombinedAdjProp">
+        <text>
+          <base>the learning delivery's combined adjustment proportion</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p482" type="number" public-name="LearnDelDaysIL">
+        <text>
+          <base>the learning delivery's days in learning</base>
+        </text>
+        <props>
+          <prop name="Size">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p483" type="number" public-name="LearnDelAppAccDaysIL">
+        <text>
+          <base>the learning delivery's Apprenticeship accumulated days in learning</base>
+        </text>
+        <props>
+          <prop name="Size">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p484" type="number" public-name="LearnDelAppPrevAccDaysIL">
+        <text>
+          <base>the learning delivery's previous Apprenticeship accumulated total days in learning</base>
+        </text>
+        <props>
+          <prop name="Size">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p486" type="number" public-name="ActualDaysIL">
+        <text>
+          <base>the learning delivery's actual days in learning</base>
+        </text>
+        <props>
+          <prop name="Size">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p487" type="currency" public-name="MathEngBalPayment">
+        <text>
+          <base>the learning delivery's Maths/English balancing payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p488" type="number" public-name="MathEngBalPct">
+        <text>
+          <base>the learning delivery's Maths/English balancing percentage</base>
+        </text>
+        <props>
+          <prop name="Size">8</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="b34" type="boolean" public-name="FundStart">
+        <text>
+          <base>the learning delivery is a start for funding purposes</base>
+          <parse>s(ver('10.4.5.40'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a start for funding purposes'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p489" type="number" public-name="PlannedTotalDaysIL">
+        <text>
+          <base>the learning delivery's planned days in learning</base>
+        </text>
+        <props>
+          <prop name="Size">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p490" type="number" public-name="ThresholdDays">
+        <text>
+          <base>the learning delivery's threshold days</base>
+        </text>
+        <props>
+          <prop name="Size">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p491" type="number" public-name="OutstandNumOnProgInstalm">
+        <text>
+          <base>the learning delivery's outstanding instalments</base>
+        </text>
+        <props>
+          <prop name="Size">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p507" type="currency" public-name="ProgrammeAimBalPayment">
+        <text>
+          <base>the learning delivery's programme aim balancing payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p509" type="currency" public-name="ProgrammeAimOnProgPayment">
+        <text>
+          <base>the learning delivery's programme aim on programme payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p512" type="date" public-name="ApplicCompDate">
+        <text>
+          <base>the learning delivery's applicable completion date</base>
+        </text>
+      </attribute>
+      <attribute name="b35" type="boolean" public-name="Completed">
+        <text>
+          <base>the learning delivery has been completed</base>
+          <parse>s(ver('10.4.5.40'),v(complete,t(simple,present,perfect)),ob('the learning delivery',singular))</parse>
+        </text>
+      </attribute>
+      <attribute name="p513" type="currency" public-name="ProgrammeAimCompletionPayment">
+        <text>
+          <base>the learning delivery's programme aim completion payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p514" type="date" public-name="AppAdjLearnStartDate">
+        <text>
+          <base>the learning delivery's adjusted Apprenticeship programme start date</base>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">nulll</prop>
+          <prop name="IntegrationTestValue">01/08/2015</prop>
+        </props>
+      </attribute>
+      <attribute name="b36" type="boolean" public-name="LearnDel1618AtStart">
+        <text>
+          <base>the learning delivery is categorised as 16 to 18 at start</base>
+          <parse>s(ver('10.4.5.40'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('categorised as 16 to 18 at start'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p515" type="date" public-name="LearnDelApplicEmpDate">
+        <text>
+          <base>the learning delivery's applicable employment status date</base>
+        </text>
+      </attribute>
+      <attribute name="b37" type="boolean" public-name="LearnDelSEMContWaiver">
+        <text>
+          <base>the learning delivery is eligible for the small employer contribution waiver</base>
+          <parse>s(ver('10.4.5.40'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('eligible for the small employer contribution waiver'))</parse>
+        </text>
+        <props>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p517" type="currency" public-name="LearnDelApplicEmp1618Incentive">
+        <text>
+          <base>the learning delivery's applicable employer 1618 incentive</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p518" type="currency" public-name="LearnDelApplicProv1618Incentive">
+        <text>
+          <base>the learning delivery's applicable provider 1618 incentive</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p519" type="text" public-name="LearnDelContType">
+        <text>
+          <base>the learning delivery's contract type</base>
+        </text>
+        <props>
+          <prop name="Size">50</prop>
+          <prop name="Temporal">true</prop>
+        </props>
+      </attribute>
+      <attribute name="p521" type="currency" public-name="LearnDelDisadAmount">
+        <text>
+          <base>the learning delivery's disadvantage payment amount</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p522" type="date" public-name="SecondIncentiveThresholdDate">
+        <text>
+          <base>the learning delivery's second additional payment threshold date</base>
+        </text>
+      </attribute>
+      <attribute name="b38" type="boolean" public-name="LearnDelEligDisadvPayment">
+        <text>
+          <base>the learning delivery is eligible for a disadvantage payment</base>
+          <parse>s(ver('10.4.5.40'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('eligible for a disadvantage payment'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p523" type="currency" public-name="LearnDelApplicDisadvAmount">
+        <text>
+          <base>the learning delivery's applicable disadvantage amount</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p524" type="currency" public-name="DisadvFirstPayment">
+        <text>
+          <base>the learning delivery's first disadvantage payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p525" type="currency" public-name="DisadvSecondPayment">
+        <text>
+          <base>the learning delivery's second disadvantage payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p526" type="text" public-name="LearnDelInitialFundLineType">
+        <text>
+          <base>the learning delivery's initial funding line type</base>
+        </text>
+        <props>
+          <prop name="Size">100</prop>
+        </props>
+      </attribute>
+      <attribute name="p541" type="currency" public-name="LearnDelApplicProv1618FrameworkUplift">
+        <text>
+          <base>the learning delivery's applicable provider 1618 framework uplift</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p542" type="number" public-name="LearnDelHistDaysThisApp">
+        <text>
+          <base>the learning delivery's historic days on this apprenticeship</base>
+        </text>
+        <props>
+          <prop name="Size">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p543" type="currency" public-name="LearnDelFirstEmp1618Pay">
+        <text>
+          <base>the learning delivery's first employer 1618 payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p544" type="currency" public-name="LearnDelSecondEmp1618Pay">
+        <text>
+          <base>the learning delivery's second employer 1618 payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p545" type="currency" public-name="LearnDelFirstProv1618Pay">
+        <text>
+          <base>the learning delivery's first provider 1618 payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p546" type="currency" public-name="LearnDelSecondProv1618Pay">
+        <text>
+          <base>the learning delivery's second provider 1618 payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p577" type="currency" public-name="LDApplic1618FrameworkUpliftCompElement">
+        <text>
+          <base>the learning delivery's applicable provider 1618 framework uplift completion element</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p578" type="currency" public-name="LDApplic1618FrameworkUpliftRemainingAmount">
+        <text>
+          <base>the learning delivery's applicable provider 1618 framework uplift remaining amount</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p580" type="currency" public-name="LDApplic1618FrameworkUpliftMonthInstalVal">
+        <text>
+          <base>the learning delivery's applicable provider 1618 framework uplift monthly instalment value</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p581" type="currency" public-name="LDApplic1618FrameworkUpliftOnProgPayment">
+        <text>
+          <base>the learning delivery's applicable provider 1618 framework uplift on programme payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p582" type="currency" public-name="LDApplic1618FrameworkUpliftBalancingValue">
+        <text>
+          <base>the learning delivery's applicable provider 1618 framework uplift balancing value</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p583" type="currency" public-name="LDApplic1618FrameworkUpliftBalancingPayment">
+        <text>
+          <base>the learning delivery's applicable provider 1618 framework uplift balancing payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p584" type="currency" public-name="LDApplic1618FRameworkUpliftCompletionValue">
+        <text>
+          <base>the learning delivery's applicable provider 1618 framework uplift completion value</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p585" type="currency" public-name="LDApplic1618FrameworkUpliftCompletionPayment">
+        <text>
+          <base>the learning delivery's applicable provider 1618 framework uplift completion payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p586" type="currency" public-name="LDApplic1618FrameworkUpliftTotalActEarnings">
+        <text>
+          <base>the learning delivery's applicable provider 1618 framework uplift total actual earnings</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p587" type="currency" public-name="LDApplic1618FrameworkUpliftPrevEarnings">
+        <text>
+          <base>the learning delivery's applicable provider 1618 framework uplift total previous earnings</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p602" type="number" public-name="LearnDelSFAContribPct">
+        <text>
+          <base>the learning delivery's SFA contribution percentage</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p606" type="number" public-name="LearnDelLevyNonPayInd">
+        <text>
+          <base>the learning delivery's levy non-payment indicator</base>
+        </text>
+        <props>
+          <prop name="Size">1</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p613" type="currency" public-name="LearnDelHistProgEarnings">
+        <text>
+          <base>the learning delivery's historic programme earnings on this apprenticeship</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p615" type="date" public-name="AppAdjLearnStartDateMatchPathway">
+        <text>
+          <base>the learning delivery's adjusted Apprenticeship programme start date matching pathways</base>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">nulll</prop>
+          <prop name="IntegrationTestValue">01/08/2015</prop>
+        </props>
+      </attribute>
+      <attribute name="p628" type="currency" public-name="LDApplic1618FrameworkUpliftPrevEarningsStage1">
+        <text>
+          <base>the learning delivery's applicable provider 1618 framework uplift total previous earnings stage 1</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p629" type="number" public-name="LearnDelEmpIdFirstAdditionalPaymentThreshold">
+        <text>
+          <base>the learning delivery's employer identifier on first additional payment threshold date</base>
+        </text>
+      </attribute>
+      <attribute name="p630" type="number" public-name="LearnDelEmpIdSecondAdditionalPaymentThreshold">
+        <text>
+          <base>the learning delivery's employer identifier on second additional payment threshold date</base>
+        </text>
+      </attribute>
+      <attribute name="b42" type="boolean" public-name="LearnDelMathEng">
+        <text>
+          <base>the learning delivery is a Maths/English qualification</base>
+          <parse>s(ver('10.4.4.21'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a Maths/English qualification'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p635" type="currency" public-name="ProgrammeAimTotProgFund">
+        <text>
+          <base>the learning delivery's total programme funding</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p636" type="currency" public-name="ProgrammeAimProgFundIndMinCoInvest">
+        <text>
+          <base>the learning delivery's programme funding indicative minimum co-investment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p637" type="currency" public-name="ProgrammeAimProgFundIndMaxEmpCont">
+        <text>
+          <base>the learning delivery's programme funding indicative maximum employer contribution</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="b43" type="boolean" public-name="LearnDelNonLevyProcured">
+        <text>
+          <base>the learning delivery is non-levy procured</base>
+          <parse>s(ver('10.4.5.40'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('non-levy procured'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p646" type="date" public-name="LearnDelProgEarliestACT2Date">
+        <text>
+          <base>the learning delivery's programme earliest ACT 2 date</base>
+        </text>
+      </attribute>
+      <attribute name="p648" type="currency" public-name="LearnDelApplicCareLeaverIncentive">
+        <text>
+          <base>the learning delivery's applicable care leaver incentive</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p649" type="number" public-name="LearnDelHistDaysCareLeavers">
+        <text>
+          <base>the learning delivery's historic days for care leavers</base>
+        </text>
+      </attribute>
+      <attribute name="p650" type="number" public-name="LearnDelAccDaysILCareLeavers">
+        <text>
+          <base>the learning delivery's accumulated days in learning for care leavers</base>
+        </text>
+      </attribute>
+      <attribute name="p651" type="number" public-name="LearnDelPrevAccDaysILCareLeavers">
+        <text>
+          <base>the learning delivery's previous accumulated total days in learning for care leavers</base>
+        </text>
+      </attribute>
+      <attribute name="p652" type="date" public-name="LearnDelLearnerAddPayThresholdDate">
+        <text>
+          <base>the learning delivery's learner additional payment threshold date</base>
+        </text>
+      </attribute>
+      <attribute name="p653" type="currency" public-name="LearnDelLearnAddPayment">
+        <text>
+          <base>the learning delivery's learner additional payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">Yes</prop>
+        </props>
+      </attribute>
+      <attribute name="p659" type="number" public-name="LearnDelRedCode">
+        <text>
+          <base>the learning delivery's redundancy code</base>
+        </text>
+      </attribute>
+      <attribute name="p660" type="date" public-name="LearnDelRedStartDate">
+        <text>
+          <base>the learning delivery's redundancy start date</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="historicearningoutput" name="the historic earning output" containment-relationship-id="allinstancesofthehistoricearningoutputforthelearner" containment-parent-id="learner" identifying-attribute-name="AppIdentifierOutput" identifying-attribute-text="the historic earning output's apprenticeship identifier" public-id="HistoricEarningOutput">
+      <attribute name="p529" type="number" public-name="HistoricDaysInYearOutput">
+        <text>
+          <base>the historic earning output's no of days in the year</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+        </props>
+      </attribute>
+      <attribute name="p530" type="number" public-name="HistoricFworkCodeOutput">
+        <text>
+          <base>the historic earning output's framework code</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Size">3</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">450</prop>
+        </props>
+      </attribute>
+      <attribute name="p532" type="number" public-name="HistoricProgTypeOutput">
+        <text>
+          <base>the historic earning output's programme type</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">2</prop>
+        </props>
+      </attribute>
+      <attribute name="p533" type="number" public-name="HistoricPwayCodeOutput">
+        <text>
+          <base>the historic earning output's Apprenticeship pathway</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Size">3</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">1</prop>
+        </props>
+      </attribute>
+      <attribute name="p534" type="number" public-name="HistoricSTDCodeOutput">
+        <text>
+          <base>the historic earning output's apprenticeship standard code</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+        </props>
+      </attribute>
+      <attribute name="p536" type="date" public-name="HistoricProgrammeStartDateIgnorePathwayOutput">
+        <text>
+          <base>the historic earning output's programme start date ignoring pathways</base>
+          <parse />
+        </text>
+      </attribute>
+      <attribute name="p537" type="text" public-name="AppIdentifierOutput">
+        <text>
+          <base>the historic earning output's apprenticeship identifier</base>
+        </text>
+        <props>
+          <prop name="KeySequence">1</prop>
+          <prop name="Size">10</prop>
+        </props>
+      </attribute>
+      <attribute name="p539" type="number" public-name="HistoricULNOutput">
+        <text>
+          <base>the historic earning output's unique learner number</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+        </props>
+      </attribute>
+      <attribute name="p612" type="currency" public-name="HistoricTotalProgAimPaymentsInTheYear">
+        <text>
+          <base>the historic earning output's programme aim total payments in the year</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p614" type="date" public-name="HistoricUptoEndDateOutput">
+        <text>
+          <base>the historic earning output's up to end date</base>
+          <parse />
+        </text>
+      </attribute>
+      <attribute name="p616" type="date" public-name="HistoricProgrammeStartDateMatchPathwayOutput">
+        <text>
+          <base>the historic earning output's programme start date matching pathways</base>
+          <parse />
+        </text>
+      </attribute>
+      <attribute name="p617" type="currency" public-name="HistoricTotal1618UpliftPaymentsInTheYear">
+        <text>
+          <base>the historic earning output's 1618 framework uplift total payments in the year</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="b40" type="boolean" public-name="AppProgCompletedInTheYearOutput">
+        <text>
+          <base>the historic earning output's apprenticeship programme has been completed in the year</base>
+          <parse>s(ver('10.4.5.40'),v(complete,t(simple,present,perfect)),ob('the historic earning output''s apprenticeship programme',singular),o('in the year'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b41" type="boolean" public-name="HistoricLearner1618AtStartOutput">
+        <text>
+          <base>the historic earning output's learner is categorised as 16 to 18 at start of this programme</base>
+          <parse>s(ver('10.4.5.40'),v(be,t(simple,present,normal)),sb('the historic earning output''s learner',singular),o('categorised as 16 to 18 at start of this programme'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p618" type="currency" public-name="HistoricVirtualTNP4EndofThisYearOutput">
+        <text>
+          <base>the historic earning output's virtual TNP 4 price at the end of this year</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p619" type="currency" public-name="HistoricVirtualTNP3EndofThisYearOutput">
+        <text>
+          <base>the historic earning output's virtual TNP 3 price at the end of this year</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p620" type="date" public-name="HistoricEffectiveTNPStartDateOutput">
+        <text>
+          <base>the historic earning output's effective TNP start date</base>
+        </text>
+      </attribute>
+      <attribute name="p621" type="currency" public-name="HistoricTNP1Output">
+        <text>
+          <base>the historic earning output's TNP 1 price</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p625" type="currency" public-name="HistoricTNP4Output">
+        <text>
+          <base>the historic earning output's TNP 4 price</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p626" type="currency" public-name="HistoricTNP2Output">
+        <text>
+          <base>the historic earning output's TNP 2 price</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p627" type="currency" public-name="HistoricTNP3Output">
+        <text>
+          <base>the historic earning output's TNP 3 price</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p643" type="currency" public-name="HistoricPMRAmountOutput">
+        <text>
+          <base>the historic earning output's PMR amount</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p644" type="number" public-name="HistoricEmpIdStartWithinYearOutput">
+        <text>
+          <base>the historic earning output's employer id at start within the year</base>
+        </text>
+      </attribute>
+      <attribute name="p645" type="number" public-name="HistoricEmpIdEndWithinYearOutput">
+        <text>
+          <base>the historic earning output's employer id at end within the year</base>
+        </text>
+      </attribute>
+      <attribute name="p647" type="date" public-name="HistoricLearnDelProgEarliestACT2DateOutput">
+        <text>
+          <base>the historic earning output's learning delivery's programme earliest ACT 2 date</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="apprenticeshippriceepisode" name="the apprenticeship price episode" containment-relationship-id="allinstancesoftheapprenticeshippriceepisodeforthelearner" containment-parent-id="learner" identifying-attribute-name="PriceEpisodeIdentifier" identifying-attribute-text="the apprenticeship price episode's identifier" public-id="ApprenticeshipPriceEpisode">
+      <attribute name="p548" type="text" public-name="PriceEpisodeIdentifier">
+        <text>
+          <base>the apprenticeship price episode's identifier</base>
+          <parse>
+          </parse>
+        </text>
+        <props>
+          <prop name="KeySequence">1</prop>
+          <prop name="Size">25</prop>
+        </props>
+      </attribute>
+      <attribute name="p549" type="currency" public-name="TNP4">
+        <text>
+          <base>the apprenticeship price episode's TNP 4 price</base>
+          <parse>
+          </parse>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p550" type="currency" public-name="TNP1">
+        <text>
+          <base>the apprenticeship price episode's TNP 1 price</base>
+          <parse>
+          </parse>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p553" type="date" public-name="EpisodeStartDate">
+        <text>
+          <base>the apprenticeship price episode's start date</base>
+        </text>
+      </attribute>
+      <attribute name="p555" type="currency" public-name="TNP2">
+        <text>
+          <base>the apprenticeship price episode's TNP 2 price</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p556" type="currency" public-name="TNP3">
+        <text>
+          <base>the apprenticeship price episode's TNP 3 price</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p557" type="currency" public-name="PriceEpisodeUpperBandLimit">
+        <text>
+          <base>the apprenticeship price episode's applicable funding band upper limit</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p558" type="date" public-name="PriceEpisodePlannedEndDate">
+        <text>
+          <base>the apprenticeship price episode's planned end date</base>
+        </text>
+      </attribute>
+      <attribute name="p559" type="date" public-name="PriceEpisodeActualEndDate">
+        <text>
+          <base>the apprenticeship price episode's actual end date</base>
+        </text>
+      </attribute>
+      <attribute name="p560" type="currency" public-name="PriceEpisodeTotalTNPPrice">
+        <text>
+          <base>the apprenticeship price episode's total TNP price</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p561" type="currency" public-name="PriceEpisodeUpperLimitAdjustment">
+        <text>
+          <base>the apprenticeship price episode's upper limit adjustment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p562" type="number" public-name="PriceEpisodePlannedInstalments">
+        <text>
+          <base>the apprenticeship price episode's planned instalments</base>
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+        </props>
+      </attribute>
+      <attribute name="p563" type="number" public-name="PriceEpisodeActualInstalments">
+        <text>
+          <base>the apprenticeship price episode's actual instalments</base>
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+        </props>
+      </attribute>
+      <attribute name="p564" type="number" public-name="PriceEpisodeInstalmentsThisPeriod">
+        <text>
+          <base>the apprenticeship price episode's number of instalments this period</base>
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p565" type="currency" public-name="PriceEpisodeCompletionElement">
+        <text>
+          <base>the apprenticeship price episode's completion element</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p566" type="currency" public-name="PriceEpisodePreviousEarnings">
+        <text>
+          <base>the apprenticeship price episode's previous earnings</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p567" type="currency" public-name="PriceEpisodeInstalmentValue">
+        <text>
+          <base>the apprenticeship price episode's monthly instalment value</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p568" type="currency" public-name="PriceEpisodeOnProgPayment">
+        <text>
+          <base>the apprenticeship price episode's on programme payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p569" type="currency" public-name="PriceEpisodeTotalEarnings">
+        <text>
+          <base>the apprenticeship price episode's total earnings</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p570" type="currency" public-name="PriceEpisodeBalanceValue">
+        <text>
+          <base>the apprenticeship price episode's balancing value</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p571" type="currency" public-name="PriceEpisodeBalancePayment">
+        <text>
+          <base>the apprenticeship price episode's balancing payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="b39" type="boolean" public-name="PriceEpisodeCompleted">
+        <text>
+          <base>the apprenticeship price episode has been completed</base>
+          <parse>s(ver('10.4.5.40'),v(complete,t(simple,present,perfect)),ob('the apprenticeship price episode',singular))</parse>
+        </text>
+      </attribute>
+      <attribute name="p572" type="currency" public-name="PriceEpisodeCompletionPayment">
+        <text>
+          <base>the apprenticeship price episode's completion payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p573" type="currency" public-name="PriceEpisodeRemainingTNPAmount">
+        <text>
+          <base>the apprenticeship price episode's remaining TNP amount</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p574" type="currency" public-name="PriceEpisodeRemainingAmountWithinUpperLimit">
+        <text>
+          <base>the apprenticeship price episode's remaining amount within upper limit</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p575" type="currency" public-name="PriceEpisodeCappedRemainingTNPAmount">
+        <text>
+          <base>the apprenticeship price episode's capped remaining TNP amount</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p576" type="currency" public-name="PriceEpisodeExpectedTotalMonthlyValue">
+        <text>
+          <base>the apprenticeship price episode's expected total monthly value</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p588" type="number" public-name="PriceEpisodeAimSeqNumber">
+        <text>
+          <base>the apprenticeship price episode's aim sequence number</base>
+        </text>
+        <props>
+          <prop name="Size">2</prop>
+        </props>
+      </attribute>
+      <attribute name="p589" type="currency" public-name="PriceEpisodeFirstDisadvantagePayment">
+        <text>
+          <base>the apprenticeship price episode's first disadvantage payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p590" type="currency" public-name="PriceEpisodeSecondDisadvantagePayment">
+        <text>
+          <base>the apprenticeship price episode's second disadvantage payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p591" type="currency" public-name="PriceEpisodeApplic1618FrameworkUpliftBalancing">
+        <text>
+          <base>the apprenticeship price episode's applicable provider 1618 framework uplift balancing payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p592" type="currency" public-name="PriceEpisodeApplic1618FrameworkUpliftCompletionPayment">
+        <text>
+          <base>the apprenticeship price episode's applicable provider 1618 framework uplift completion payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">true</prop>
+        </props>
+      </attribute>
+      <attribute name="p593" type="currency" public-name="PriceEpisodeApplic1618FrameworkUpliftOnProgPayment">
+        <text>
+          <base>the apprenticeship price episode's applicable provider 1618 framework uplift on programme payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p595" type="currency" public-name="PriceEpisodeSecondProv1618Pay">
+        <text>
+          <base>the apprenticeship price episode's second provider 1618 payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p596" type="currency" public-name="PriceEpisodeFirstEmp1618Pay">
+        <text>
+          <base>the apprenticeship price episode's first employer 1618 payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p597" type="currency" public-name="PriceEpisodeSecondEmp1618Pay">
+        <text>
+          <base>the apprenticeship price episode's second employer 1618 payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p598" type="currency" public-name="PriceEpisodeFirstProv1618Pay">
+        <text>
+          <base>the apprenticeship price episode's first provider 1618 payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p599" type="currency" public-name="PriceEpisodeLSFCash">
+        <text>
+          <base>the apprenticeship price episode's LSF cash</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p600" type="text" public-name="PriceEpisodeFundLineType">
+        <text>
+          <base>the apprenticeship price episode's funding line type</base>
+        </text>
+        <props>
+          <prop name="Size">100</prop>
+        </props>
+      </attribute>
+      <attribute name="p603" type="number" public-name="PriceEpisodeSFAContribPct">
+        <text>
+          <base>the apprenticeship price episode's SFA contribution percentage</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p607" type="number" public-name="PriceEpisodeLevyNonPayInd">
+        <text>
+          <base>the apprenticeship price episode's levy non-payment indicator</base>
+        </text>
+        <props>
+          <prop name="Size">1</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p608" type="date" public-name="EpisodeEffectiveTNPStartDate">
+        <text>
+          <base>the apprenticeship price episode's effective TNP start date</base>
+        </text>
+      </attribute>
+      <attribute name="p609" type="date" public-name="PriceEpisodeFirstAdditionalPaymentThresholdDate">
+        <text>
+          <base>the apprenticeship price episode's first additional payment threshold date</base>
+        </text>
+      </attribute>
+      <attribute name="p610" type="date" public-name="PriceEpisodeSecondAdditionalPaymentThresholdDate">
+        <text>
+          <base>the apprenticeship price episode's second additional payment threshold date</base>
+        </text>
+      </attribute>
+      <attribute name="p611" type="text" public-name="PriceEpisodeContractType">
+        <text>
+          <base>the apprenticeship price episode's contract type</base>
+        </text>
+        <props>
+          <prop name="Size">50</prop>
+        </props>
+      </attribute>
+      <attribute name="p631" type="currency" public-name="PriceEpisodePreviousEarningsSameProvider">
+        <text>
+          <base>the apprenticeship price episode's previous earnings for same provider</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p632" type="currency" public-name="PriceEpisodeTotProgFunding">
+        <text>
+          <base>the apprenticeship price episode's total programme funding</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p633" type="currency" public-name="PriceEpisodeProgFundIndMinCoInvest">
+        <text>
+          <base>the apprenticeship price episode's programme funding indicative minimum co-investment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p634" type="currency" public-name="PriceEpisodeProgFundIndMaxEmpCont">
+        <text>
+          <base>the apprenticeship price episode's programme funding indicative maximum employer contribution</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p638" type="currency" public-name="PriceEpisodeTotalPMRs">
+        <text>
+          <base>the apprenticeship price episode's total PMRs</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p640" type="currency" public-name="PriceEpisodeCumulativePMRs">
+        <text>
+          <base>the apprenticeship price episode's cumulative PMRs</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p641" type="number" public-name="PriceEpisodeCompExemCode">
+        <text>
+          <base>the apprenticeship price episode's completion hold back exemption code</base>
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+        </props>
+      </attribute>
+      <attribute name="p654" type="date" public-name="PriceEpisodeLearnerAdditionalPaymentThresholdDate">
+        <text>
+          <base>the apprenticeship price episode's learner additional payment threshold date</base>
+        </text>
+      </attribute>
+      <attribute name="p655" type="currency" public-name="PriceEpisodeLearnerAdditionalPayment">
+        <text>
+          <base>the apprenticeship price episode's learner additional payment</base>
+        </text>
+        <props>
+          <prop name="Size">12</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">Yes</prop>
+        </props>
+      </attribute>
+      <attribute name="p656" type="text" public-name="PriceEpisodeAgreeId">
+        <text>
+          <base>the apprenticeship price episode's agreement identifier on price episode start date</base>
+        </text>
+        <props>
+          <prop name="Size">6</prop>
+          <prop name="Temporal">False</prop>
+        </props>
+      </attribute>
+      <attribute name="p657" type="date" public-name="PriceEpisodeRedStartDate">
+        <text>
+          <base>the apprenticeship price episode's redundancy start date</base>
+        </text>
+      </attribute>
+      <attribute name="p658" type="number" public-name="PriceEpisodeRedStatusCode">
+        <text>
+          <base>the apprenticeship price episode's redundancy status code</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="apprenticeshipfinancialrecord" name="the apprenticeship financial record" containment-relationship-id="learningdeliverysapprenticeshipfinancialrecords" containment-parent-id="learningdelivery" public-id="ApprenticeshipFinancialRecord">
+    </entity>
+  </entities>
+  <rules />
+  <interactive-items>
+    <folders />
+    <screens />
+    <documents />
+  </interactive-items>
+  <relationships>
+    <relationship source="global" target="learner" text="the learners" relationship-id="learners" reverse-text="" reverse-relationship-id="global_learners_rev" type="OneToMany" is-computed="false" is-containment="true" />
+    <relationship source="learner" target="learningdelivery" text="the learner's learning deliveries" relationship-id="learnerslearningdeliveries" reverse-text="the learner associated with the learning delivery" reverse-relationship-id="learnerassociatedwiththelearningdelivery" type="OneToMany" is-computed="false" is-containment="true" />
+    <relationship source="learner" target="historicearningoutput" text="all instances of the historic earning output for the learner" relationship-id="allinstancesofthehistoricearningoutputforthelearner" reverse-relationship-id="learnerassociatedwiththehistoricearningoutput" reverse-text="the learner associated with the historic earning output" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learningdelivery" target="historicearningoutput" is-containment="false" public-id="" reverse-public-id="" text="the historic earning output of the learning delivery" relationship-id="historicearningoutputofthelearningdelivery" reverse-relationship-id="learningdeliveriesofthehistoricearningoutput" reverse-text="the learning deliveries of the historic earning output" type="ManyToMany" is-computed="false" />
+    <relationship source="learner" target="apprenticeshippriceepisode" text="all instances of the apprenticeship price episode for the learner" relationship-id="allinstancesoftheapprenticeshippriceepisodeforthelearner" reverse-relationship-id="learnerassociatedwiththeapprenticeshippriceepisode" reverse-text="the learner associated with the apprenticeship price episode" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="apprenticeshippriceepisode" target="apprenticeshippriceepisode" is-containment="false" public-id="" reverse-public-id="" text="the apprenticeship price episode's previous records" relationship-id="apprenticeshippriceepisodespreviousrecords" reverse-relationship-id="apprenticeshippriceepisode_apprenticeshippriceepisodespreviousrecords_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="apprenticeshippriceepisode" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the apprenticeship price episode's learning deliveries" relationship-id="apprenticeshippriceepisodeslearningdeliveries" reverse-relationship-id="learningdeliveryspriceepisodes" reverse-text="the learning delivery's price episodes" type="ManyToMany" is-computed="false" />
+    <relationship source="apprenticeshippriceepisode" target="apprenticeshippriceepisode" is-containment="false" public-id="" reverse-public-id="" text="the apprenticeship price episode's future records" relationship-id="apprenticeshippriceepisodesfuturerecords" reverse-relationship-id="apprenticeshippriceepisode_apprenticeshippriceepisodesfuturerecords_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="apprenticeshippriceepisode" target="apprenticeshippriceepisode" is-containment="false" public-id="" reverse-public-id="" text="the apprenticeship price episode's latest previous record" relationship-id="apprenticeshippriceepisodeslatestpreviousrecord" reverse-relationship-id="apprenticeshippriceepisode_apprenticeshippriceepisodeslatestpreviousrecord_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="apprenticeshippriceepisode" target="apprenticeshippriceepisode" is-containment="false" public-id="" reverse-public-id="" text="the apprenticeship price episode's previous records this year" relationship-id="apprenticeshippriceepisodespreviousrecordsthisyear" reverse-relationship-id="apprenticeshippriceepisode_apprenticeshippriceepisodespreviousrecordsthisyear_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="historicearningoutput" target="apprenticeshippriceepisode" is-containment="false" public-id="" reverse-public-id="" text="the historic earning output's apprenticeship price episodes stage 1" relationship-id="historicearningoutputsapprenticeshippriceepisodesstage1" reverse-relationship-id="historicearningoutput_historicearningoutputsapprenticeshippriceepisodesstage1_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="historicearningoutput" target="apprenticeshippriceepisode" is-containment="false" public-id="" reverse-public-id="" text="the historic earning output's apprenticeship price episodes" relationship-id="historicearningoutputsapprenticeshippriceepisodes" reverse-relationship-id="historicearningoutput_historicearningoutputsapprenticeshippriceepisodes_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="learningdelivery" target="apprenticeshipfinancialrecord" text="the learning delivery's apprenticeship financial records" relationship-id="learningdeliverysapprenticeshipfinancialrecords" reverse-relationship-id="learningdeliveryassociatedwiththeapprenticeshipfinancialrecord" reverse-text="the learning delivery associated with the apprenticeship financial record" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="apprenticeshipfinancialrecord" target="apprenticeshippriceepisode" text="the apprenticeship financial record's apprenticeship price episodes" relationship-id="apprenticeshipfinancialrecordsapprenticeshippriceepisodes" reverse-relationship-id="apprenticeshippriceepisodesapprenticeshipfinancialrecords" reverse-text="the apprenticeship price episode's apprenticeship financial records" type="ManyToMany" is-computed="false" is-containment="false" public-id="" reverse-public-id="" />
+    <relationship source="apprenticeshippriceepisode" target="apprenticeshipfinancialrecord" text="the apprenticeship price episode's previous apprenticeship TNP 1 financial records" relationship-id="apprenticeshippriceepisodespreviousapprenticeshiptnp1financialrecords" reverse-relationship-id="apprenticeshippriceepisode_apprenticeshippriceepisodespreviousapprenticeshiptnp1financialrecords_rev" reverse-text="" type="ManyToMany" is-computed="false" is-containment="false" public-id="" reverse-public-id="" />
+    <relationship source="apprenticeshippriceepisode" target="apprenticeshipfinancialrecord" text="the apprenticeship price episode's previous apprenticeship TNP 2 financial records" relationship-id="apprenticeshippriceepisodespreviousapprenticeshiptnp2financialrecords" reverse-relationship-id="apprenticeshippriceepisode_apprenticeshippriceepisodespreviousapprenticeshiptnp2financialrecords_rev" reverse-text="" type="ManyToMany" is-computed="false" is-containment="false" public-id="" reverse-public-id="" />
+    <relationship source="apprenticeshippriceepisode" target="apprenticeshipfinancialrecord" text="the apprenticeship price episode's previous apprenticeship TNP 3 financial records" relationship-id="apprenticeshippriceepisodespreviousapprenticeshiptnp3financialrecords" reverse-relationship-id="apprenticeshippriceepisode_apprenticeshippriceepisodespreviousapprenticeshiptnp3financialrecords_rev" reverse-text="" type="ManyToMany" is-computed="false" is-containment="false" public-id="" reverse-public-id="" />
+    <relationship source="apprenticeshippriceepisode" target="apprenticeshipfinancialrecord" text="the apprenticeship price episode's previous apprenticeship TNP 4 financial records" relationship-id="apprenticeshippriceepisodespreviousapprenticeshiptnp4financialrecords" reverse-relationship-id="apprenticeshippriceepisode_apprenticeshippriceepisodespreviousapprenticeshiptnp4financialrecords_rev" reverse-text="" type="ManyToMany" is-computed="false" is-containment="false" public-id="" reverse-public-id="" />
+    <relationship source="apprenticeshippriceepisode" target="apprenticeshipfinancialrecord" text="the apprenticeship price episode's previous apprenticeship price records" relationship-id="apprenticeshippriceepisodespreviousapprenticeshippricerecords" reverse-relationship-id="apprenticeshippriceepisode_apprenticeshippriceepisodespreviousapprenticeshippricerecords_rev" reverse-text="" type="ManyToMany" is-computed="false" is-containment="false" public-id="" reverse-public-id="" />
+    <relationship source="apprenticeshippriceepisode" target="apprenticeshipfinancialrecord" is-containment="false" public-id="" reverse-public-id="" text="the apprenticeship price episode's PMR financial records" relationship-id="apprenticeshippriceepisodespmrfinancialrecords" reverse-relationship-id="apprenticeshippriceepisode_apprenticeshippriceepisodespmrfinancialrecords_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="historicearningoutput" target="apprenticeshippriceepisode" is-containment="false" public-id="" reverse-public-id="" text="the historic earning output's apprenticeship price episodes this year" relationship-id="historicearningoutputsapprenticeshippriceepisodesthisyear" reverse-relationship-id="historicearningoutput_historicearningoutputsapprenticeshippriceepisodesthisyear_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="apprenticeshippriceepisode" target="apprenticeshippriceepisode" is-containment="false" public-id="" reverse-public-id="" text="the apprenticeship price episode's other records in the same year" relationship-id="apprenticeshippriceepisodesotherrecordsinthesameyear" reverse-relationship-id="apprenticeshippriceepisode_apprenticeshippriceepisodesotherrecordsinthesameyear_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="apprenticeshippriceepisode" target="apprenticeshippriceepisode" is-containment="false" public-id="" reverse-public-id="" text="the apprenticeship price episode's earlier records in the same year" relationship-id="apprenticeshippriceepisodesearlierrecordsinthesameyear" reverse-relationship-id="apprenticeshippriceepisode_apprenticeshippriceepisodesearlierrecordsinthesameyear_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+  </relationships>
+  <rule-folders />
+</root>

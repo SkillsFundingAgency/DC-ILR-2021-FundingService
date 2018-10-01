@@ -148,6 +148,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 HistoricLargeProgrammeProportion = "HistoricLargeProgrammeProportion",
                 LARSVersion = "LARSVersion",
                 OrgVersion = "OrgVersion",
+                PostcodesVersion = "PostcodesVersion",
                 ProgrammeWeighting = "ProgrammeWeighting",
                 RetentionFactor = "RetentionFactor",
                 SpecialistResources = "SpecialistResources",
@@ -157,12 +158,13 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             var dataEntity = NewService().BuildGlobalDataEntity(null, global);
 
             dataEntity.EntityName.Should().Be("global");
-            dataEntity.Attributes.Should().HaveCount(9);
+            dataEntity.Attributes.Should().HaveCount(10);
             dataEntity.Attributes["AreaCostFactor1618"].Value.Should().Be(global.AreaCostFactor1618);
             dataEntity.Attributes["DisadvantageProportion"].Value.Should().Be(global.DisadvantageProportion);
             dataEntity.Attributes["HistoricLargeProgrammeProportion"].Value.Should().Be(global.HistoricLargeProgrammeProportion);
             dataEntity.Attributes["LARSVersion"].Value.Should().Be(global.LARSVersion);
             dataEntity.Attributes["OrgVersion"].Value.Should().Be(global.OrgVersion);
+            dataEntity.Attributes["PostcodeDisadvantageVersion"].Value.Should().Be(global.PostcodesVersion);
             dataEntity.Attributes["ProgrammeWeighting"].Value.Should().Be(global.ProgrammeWeighting);
             dataEntity.Attributes["RetentionFactor"].Value.Should().Be(global.RetentionFactor);
             dataEntity.Attributes["SpecialistResources"].Value.Should().Be(global.SpecialistResources);
@@ -176,6 +178,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
         {
             var larsCurrentVersion = "1.0.0";
             var orgCurrentVersion = "2.0.0";
+            var postcodesCurrentVersion = "3.0.0";
             var ukprn = 1234;
             var effectiveFrom = new DateTime(2018, 8, 1);
             var fundFactorType = "EFA 16-19";
@@ -189,6 +192,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
 
             var larsRefererenceDataServiceMock = new Mock<ILARSReferenceDataService>();
             var orgReferenceDataServiceMock = new Mock<IOrganisationReferenceDataService>();
+            var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
             var fileDataServiceMock = new Mock<IFileDataService>();
             var orgFundings = new List<OrgFunding>()
             {
@@ -206,15 +210,17 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             larsRefererenceDataServiceMock.Setup(l => l.LARSCurrentVersion()).Returns(larsCurrentVersion);
             orgReferenceDataServiceMock.Setup(o => o.OrganisationVersion()).Returns(orgCurrentVersion);
             orgReferenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(ukprn)).Returns(orgFundings);
+            postcodesReferenceDataServiceMock.Setup(p => p.PostcodesCurrentVersion()).Returns(postcodesCurrentVersion);
             fileDataServiceMock.Setup(f => f.UKPRN()).Returns(ukprn);
 
-            var global = NewService(larsRefererenceDataServiceMock.Object, orgReferenceDataServiceMock.Object, null, fileDataServiceMock.Object).BuildGlobal();
+            var global = NewService(larsRefererenceDataServiceMock.Object, orgReferenceDataServiceMock.Object, postcodesReferenceDataServiceMock.Object, fileDataServiceMock.Object).BuildGlobal();
 
             global.AreaCostFactor1618.Should().Be(historicAreaCostFactorValue);
             global.DisadvantageProportion.Should().Be(historicDisadvantageFundingProportionValue);
             global.HistoricLargeProgrammeProportion.Should().Be(historicLargeProgrammeProportionValue);
             global.LARSVersion.Should().Be(larsCurrentVersion);
             global.OrgVersion.Should().Be(orgCurrentVersion);
+            global.PostcodesVersion.Should().Be(postcodesCurrentVersion);
             global.ProgrammeWeighting.Should().Be(historicProgrammeCostWeightingFactorValue);
             global.RetentionFactor.Should().Be(historicRetentionFactorValue);
             global.SpecialistResources.Should().Be(specialistResources);
@@ -226,25 +232,29 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
         {
             var larsCurrentVersion = "1.0.0";
             var orgCurrentVersion = "2.0.0";
+            var postcodesCurrentVersion = "3.0.0";
             var ukprn = 1234;
 
             var larsRefererenceDataServiceMock = new Mock<ILARSReferenceDataService>();
             var orgReferenceDataServiceMock = new Mock<IOrganisationReferenceDataService>();
+            var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
             var fileDataServiceMock = new Mock<IFileDataService>();
             var orgFundings = new List<OrgFunding>();
 
             larsRefererenceDataServiceMock.Setup(l => l.LARSCurrentVersion()).Returns(larsCurrentVersion);
             orgReferenceDataServiceMock.Setup(o => o.OrganisationVersion()).Returns(orgCurrentVersion);
             orgReferenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(ukprn)).Returns(orgFundings);
+            postcodesReferenceDataServiceMock.Setup(p => p.PostcodesCurrentVersion()).Returns(postcodesCurrentVersion);
             fileDataServiceMock.Setup(f => f.UKPRN()).Returns(ukprn);
 
-            var global = NewService(larsRefererenceDataServiceMock.Object, orgReferenceDataServiceMock.Object, null, fileDataServiceMock.Object).BuildGlobal();
+            var global = NewService(larsRefererenceDataServiceMock.Object, orgReferenceDataServiceMock.Object, postcodesReferenceDataServiceMock.Object, fileDataServiceMock.Object).BuildGlobal();
 
             global.AreaCostFactor1618.Should().Be(null);
             global.DisadvantageProportion.Should().Be(null);
             global.HistoricLargeProgrammeProportion.Should().Be(null);
             global.LARSVersion.Should().Be(larsCurrentVersion);
             global.OrgVersion.Should().Be(orgCurrentVersion);
+            global.PostcodesVersion.Should().Be(postcodesCurrentVersion);
             global.ProgrammeWeighting.Should().Be(null);
             global.RetentionFactor.Should().Be(null);
             global.SpecialistResources.Should().Be(null);
@@ -306,10 +316,10 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             dataEntity.Attributes["LearnPlanEndDate"].Value.Should().Be(learningDelivery.LearnPlanEndDate);
             dataEntity.Attributes["LearnStartDate"].Value.Should().Be(learningDelivery.LearnStartDate);
             dataEntity.Attributes["LrnDelFAM_SOF"].Value.Should().Be("SOF");
-            dataEntity.Attributes["LearnDelFAM_LDM1"].Value.Should().Be("LDM1");
-            dataEntity.Attributes["LearnDelFAM_LDM2"].Value.Should().Be("LDM2");
-            dataEntity.Attributes["LearnDelFAM_LDM3"].Value.Should().Be("LDM3");
-            dataEntity.Attributes["LearnDelFAM_LDM4"].Value.Should().Be("LDM4");
+            dataEntity.Attributes["LrnDelFAM_LDM1"].Value.Should().Be("LDM1");
+            dataEntity.Attributes["LrnDelFAM_LDM2"].Value.Should().Be("LDM2");
+            dataEntity.Attributes["LrnDelFAM_LDM3"].Value.Should().Be("LDM3");
+            dataEntity.Attributes["LrnDelFAM_LDM4"].Value.Should().Be("LDM4");
             dataEntity.Attributes["ProgType"].Value.Should().Be(learningDelivery.ProgTypeNullable);
             dataEntity.Attributes["SectorSubjectAreaTier2"].Value.Should().Be(larsLearningDelivery.SectorSubjectAreaTier2);
             dataEntity.Attributes["WithdrawReason"].Value.Should().Be(learningDelivery.WithdrawReasonNullable);

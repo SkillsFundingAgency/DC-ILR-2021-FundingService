@@ -1,26 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.Interfaces;
 
 namespace ESFA.DC.ILR.FundingService.Orchestrators.Output
 {
-    public class ALBFundingOutputCondenserService : IFundingOutputCondenserService<ALBFundingOutputs>
+    public class ALBFundingOutputCondenserService : IFundingOutputCondenserService<ALBGlobal>
     {
-        public ALBFundingOutputs Condense(IEnumerable<ALBFundingOutputs> fundingOutputs)
+        public ALBGlobal Condense(IEnumerable<ALBGlobal> fundingOutputs)
         {
-            fundingOutputs = fundingOutputs.Where(f => f != null);
+            var firstOutput = fundingOutputs.FirstOrDefault();
 
-            if (fundingOutputs.Any())
+            if (firstOutput != null)
             {
-                return new ALBFundingOutputs()
-                {
-                    Global = fundingOutputs.FirstOrDefault()?.Global,
-                    Learners = fundingOutputs.Where(o => o.Learners != null).SelectMany(r => r.Learners).ToArray()
-                };
+                firstOutput.Learners = fundingOutputs.Where(o => o.Learners != null).SelectMany(o => o.Learners).ToList();
+
+                return firstOutput;
             }
 
-            return new ALBFundingOutputs();
+            return new ALBGlobal();
         }
     }
 }

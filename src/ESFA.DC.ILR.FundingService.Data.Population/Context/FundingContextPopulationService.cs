@@ -1,4 +1,6 @@
-﻿using ESFA.DC.ILR.FundingService.Data.Context;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using ESFA.DC.ILR.FundingService.Data.Context;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 
@@ -15,7 +17,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Context
             _validLearnersDataRetrievalService = validLearnersDataRetrievalService;
         }
 
-        public void Populate()
+        public async Task PopulateAsync(CancellationToken cancellationToken)
         {
             var fundingContext = (FundingContext)_fundingContext;
 
