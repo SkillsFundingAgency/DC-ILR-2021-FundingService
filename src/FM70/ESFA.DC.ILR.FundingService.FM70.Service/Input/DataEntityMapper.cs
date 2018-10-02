@@ -108,6 +108,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
                     { Attributes.LrnDelFAM_LDM4, new AttributeData(learningDeliveryFAMDenormalized.LDM4) },
                     { Attributes.LrnDelFAM_RES, new AttributeData(learningDeliveryFAMDenormalized.RES) },
                     { Attributes.OrigLearnStartDate, new AttributeData(learningDelivery.OrigLearnStartDateNullable) },
+                    { Attributes.OtherFundAdj, new AttributeData(learningDelivery.OtherFundAdjNullable) },
                     { Attributes.Outcome, new AttributeData(learningDelivery.OutcomeNullable) },
                     { Attributes.PriorLearnFundAdj, new AttributeData(learningDelivery.PriorLearnFundAdjNullable) },
                 },
@@ -195,6 +196,21 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
                 }
             };
         }
+
+        //public IDataEntity BuildESFData(object esfData)
+        //{
+        //    return new DataEntity(Attributes.EntityESFData)
+        //    {
+        //        Attributes = new Dictionary<string, IAttributeData>()
+        //        {
+        //            { Attributes.UnitCost, new AttributeData(esfData.UnitCost) },
+        //            { Attributes.ESFDeliverableCode, new AttributeData(esfData.ESFDeliverableCode) },
+        //            { Attributes.ESFDataPremiumFactor, new AttributeData(esfData.ESFDataPremiumFactor) },
+        //            { Attributes.EffectiveContractStartDate, new AttributeData(esfData.EffectiveContractStartDate) },
+        //            { Attributes.EffectiveContractEndDate, new AttributeData(esfData.EffectiveContractEndDate) }
+        //        }
+        //    };
+        //}
 
         public Global BuildGlobal()
         {

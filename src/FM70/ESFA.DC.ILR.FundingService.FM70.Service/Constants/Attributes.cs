@@ -43,7 +43,7 @@
 
         // Learner Employment Status
         public const string DateEmpStatApp = "DateEmpStatApp";
-        public const string EmpStat = "EmpStat";
+        public const string EmpStat = "EMPStat";
 
         // DP Outcome
         public const string OutType = "OutType";
@@ -76,6 +76,7 @@
         public const string LrnDelFAM_LDM4 = "LrnDelFAM_LDM4";
         public const string LrnDelFAM_RES = "LrnDelFAM_RES";
         public const string OrigLearnStartDate = "OrigLearnStartDate";
+        public const string OtherFundAdj = "OtherFundAdj";
         public const string Outcome = "Outcome";
         public const string PriorLearnFundAdj = "PriorLearnFundAdj";
 
@@ -128,9 +129,9 @@
         public const string LearnDelAnnValDateTo = "LearnDelAnnValDateTo";
 
         // LearningDeliveryLARSFunding
-        public const string LARSFundCategory = "LARSFundCategory";
-        public const string LARSFundEffectiveFrom = "LARSFundEffectiveFrom";
-        public const string LARSFundEffectiveTo = "LARSFundEffectiveTo";
+        public const string LARSFundCategory = "LARSFundingCategory";
+        public const string LARSFundEffectiveFrom = "LARSFundingEffectiveFrom";
+        public const string LARSFundEffectiveTo = "LARSFundingEffectiveTo";
         public const string LARSFundingWeightedRate = "LARSFundingWeightedRate";
 
         // SFAPostcodeAreaCost
