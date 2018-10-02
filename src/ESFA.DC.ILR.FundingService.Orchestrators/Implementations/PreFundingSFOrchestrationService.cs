@@ -23,6 +23,7 @@ using ESFA.DC.ILR.FundingService.Stateless.Models;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.IO.Interfaces;
 using ESFA.DC.JobContext.Interface;
+using ESFA.DC.JobContextManager.Model.Interface;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
 
