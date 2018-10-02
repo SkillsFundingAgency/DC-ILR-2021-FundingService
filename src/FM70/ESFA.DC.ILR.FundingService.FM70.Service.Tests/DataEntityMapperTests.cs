@@ -89,7 +89,7 @@ namespace ESFA.DC.ILR.FundingService.F705.Service.Tests
             dataEntity.EntityName.Should().Be("LearnerEmploymentStatus");
             dataEntity.Attributes.Should().HaveCount(2);
             dataEntity.Attributes["DateEmpStatApp"].Value.Should().Be(learnerEmploymentStatus.DateEmpStatApp);
-            dataEntity.Attributes["EmpStat"].Value.Should().Be(learnerEmploymentStatus.EmpStat);
+            dataEntity.Attributes["EMPStat"].Value.Should().Be(learnerEmploymentStatus.EmpStat);
         }
 
         [Fact]
@@ -181,11 +181,11 @@ namespace ESFA.DC.ILR.FundingService.F705.Service.Tests
             var dataEntity = NewService(
                 larsReferenceDataService: larsReferenceDataServiceMock.Object,
                 postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object)
-                //postcodesReferenceDataService : postcodesReferenceDataServiceMock.Object
+                //contracts : postcodesReferenceDataServiceMock.Object
                 .BuildLearningDeliveryDataEntity(learningDelivery);
 
             dataEntity.EntityName.Should().Be("LearningDelivery");
-            dataEntity.Attributes.Should().HaveCount(19);
+            dataEntity.Attributes.Should().HaveCount(20);
             dataEntity.Attributes["AchDate"].Value.Should().Be(learningDelivery.AchDateNullable);
             dataEntity.Attributes["AddHours"].Value.Should().Be(learningDelivery.AddHoursNullable);
             dataEntity.Attributes["AimSeqNumber"].Value.Should().Be(learningDelivery.AimSeqNumber);
@@ -203,6 +203,7 @@ namespace ESFA.DC.ILR.FundingService.F705.Service.Tests
             dataEntity.Attributes["LrnDelFAM_LDM4"].Value.Should().Be("LDM4");
             dataEntity.Attributes["LrnDelFAM_RES"].Value.Should().Be("RES");
             dataEntity.Attributes["OrigLearnStartDate"].Value.Should().Be(learningDelivery.OrigLearnStartDateNullable);
+            dataEntity.Attributes["OtherFundAdj"].Value.Should().Be(learningDelivery.OtherFundAdjNullable);
             dataEntity.Attributes["Outcome"].Value.Should().Be(learningDelivery.OutcomeNullable);
             dataEntity.Attributes["PriorLearnFundAdj"].Value.Should().Be(learningDelivery.PriorLearnFundAdjNullable);
         }
@@ -243,9 +244,9 @@ namespace ESFA.DC.ILR.FundingService.F705.Service.Tests
 
             dataEntity.EntityName.Should().Be("LearningDeliveryLARSFunding");
             dataEntity.Attributes.Should().HaveCount(4);
-            dataEntity.Attributes["LARSFundCategory"].Value.Should().Be(larsFunding.FundingCategory);
-            dataEntity.Attributes["LARSFundEffectiveFrom"].Value.Should().Be(larsFunding.EffectiveFrom);
-            dataEntity.Attributes["LARSFundEffectiveTo"].Value.Should().Be(larsFunding.EffectiveTo);
+            dataEntity.Attributes["LARSFundingCategory"].Value.Should().Be(larsFunding.FundingCategory);
+            dataEntity.Attributes["LARSFundingEffectiveFrom"].Value.Should().Be(larsFunding.EffectiveFrom);
+            dataEntity.Attributes["LARSFundingEffectiveTo"].Value.Should().Be(larsFunding.EffectiveTo);
             dataEntity.Attributes["LARSFundingWeightedRate"].Value.Should().Be(larsFunding.RateWeighted);
         }
 
