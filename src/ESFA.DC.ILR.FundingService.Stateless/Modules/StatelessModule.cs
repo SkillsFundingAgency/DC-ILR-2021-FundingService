@@ -48,6 +48,8 @@ using ESFA.DC.JobContext;
 using ESFA.DC.JobContext.Interface;
 using ESFA.DC.JobContextManager;
 using ESFA.DC.JobContextManager.Interface;
+using ESFA.DC.JobContextManager.Model;
+using ESFA.DC.JobContextManager.Model.Interface;
 using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.Serialization.Json;
 using ESFA.DC.Serialization.Xml;
@@ -113,8 +115,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             builder.RegisterType<DateTimeProvider.DateTimeProvider>().As<IDateTimeProvider>();
 
             // register the  callback handle when a new message is received from ServiceBus
-            builder.Register<Func<JobContextMessage, CancellationToken, Task<bool>>>(c => c.Resolve<IMessageHandler>().Handle).InstancePerLifetimeScope();
-            builder.RegisterType<JobContextManagerForTopics<JobContextMessage>>().As<IJobContextManager<JobContextMessage>>().InstancePerLifetimeScope();
+            builder.RegisterType<JobContextManager<JobContextMessage>>().As<IJobContextManager<JobContextMessage>>().InstancePerLifetimeScope();
             builder.RegisterType<JobContextMessage>().As<IJobContextMessage>().InstancePerLifetimeScope();
 
             builder.RegisterType<PreFundingSFOrchestrationService>().As<IPreFundingSFOrchestrationService>().InstancePerLifetimeScope();
