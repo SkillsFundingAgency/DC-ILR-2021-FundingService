@@ -14,6 +14,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
     {
         private readonly IExternalDataCache _externalDataCache;
         private readonly IAppsEarningsHistoryDataRetrievalService _appsEarningsHistoryDataRetrievalService;
+        private readonly IFCSDataRetrievalService _fcsDataRetrievalService;
         private readonly IPostcodesDataRetrievalService _postcodesDataRetrievalService;
         private readonly ILargeEmployersDataRetrievalService _largeEmployersDataRetrievalService;
         private readonly ILARSDataRetrievalService _larsDataRetrievalService;
@@ -23,6 +24,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         public ExternalDataCachePopulationService(
             IExternalDataCache externalDataCache,
             IAppsEarningsHistoryDataRetrievalService appsEarningsHistoryDataRetrievalService,
+            IFCSDataRetrievalService fcsDataRetrievalService,
             IPostcodesDataRetrievalService postcodesDataRetrievalService,
             ILargeEmployersDataRetrievalService largeEmployersDataRetrievalService,
             ILARSDataRetrievalService larsDataRetrievalService,
@@ -31,6 +33,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         {
             _externalDataCache = externalDataCache;
             _appsEarningsHistoryDataRetrievalService = appsEarningsHistoryDataRetrievalService;
+            _fcsDataRetrievalService = fcsDataRetrievalService;
             _postcodesDataRetrievalService = postcodesDataRetrievalService;
             _largeEmployersDataRetrievalService = largeEmployersDataRetrievalService;
             _larsDataRetrievalService = larsDataRetrievalService;
@@ -52,6 +55,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             var uniqueEmployerIds = _largeEmployersDataRetrievalService.UniqueEmployerIds(_fundingServiceDto.Message).ToList();
             var ukprns = new List<long>() { providerUKPRN };
             var learnRefNumberAndULN = _fundingServiceDto.Message.Learners.Select(l => new LearnRefNumberULNKey(l.LearnRefNumber, l.ULN));
+
+            var conRefNumbers = _fcsDataRetrievalService.UniqueConRefNumbers(_fundingServiceDto.Message);
 
             var referenceDataCache = (ExternalDataCache)_externalDataCache;
 
@@ -77,6 +82,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             referenceDataCache.OrgFunding = _organisationDataRetrievalService.OrgFundingsForUkprns(ukprns);
 
             referenceDataCache.LargeEmployers = _largeEmployersDataRetrievalService.LargeEmployersForEmployerIds(uniqueEmployerIds);
+
+            referenceDataCache.FCSContractAllocations = _fcsDataRetrievalService.FCSContractAllocationsForUKPRN(providerUKPRN, conRefNumbers);
 
             referenceDataCache.AECLatestInYearEarningHistory = _appsEarningsHistoryDataRetrievalService.AppsEarningsHistoryForLearners(providerUKPRN, learnRefNumberAndULN);
         }
