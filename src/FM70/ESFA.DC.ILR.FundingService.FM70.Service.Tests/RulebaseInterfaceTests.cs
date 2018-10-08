@@ -127,7 +127,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
             GetAttributeList(xsrcEntities).Should().BeEquivalentTo(GetAttributeList(masterXsrcEntities));
         }
 
-        [Fact(Skip = "Reference data services not implemented yet")]
+        [Fact]
         public void XSRC_vs_DataEntityMapper_EntitiesMatch()
         {
             var xsrcEntities = GetXSRCEntity(RulebaseFolder).GlobalEntity;
@@ -136,7 +136,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
             GetEntityList(dateEntityMapperEntities).Should().BeEquivalentTo(GetEntityList(xsrcEntities));
         }
 
-        [Fact(Skip = "Reference data services not implemented yet")]
+        [Fact]
         public void XSRC_vs_DataEntityMapper_AttributesMatch()
         {
             var xsrcEntities = GetXSRCEntity(RulebaseFolder).GlobalEntity;
@@ -145,7 +145,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
             GetAttributeList(dateEntityMapperEntities).Should().BeEquivalentTo(GetAttributeList(xsrcEntities));
         }
 
-        [Fact(Skip = "Reference data services not implemented yet")]
+        [Fact]
         public void XSRC_vs_DataEntityMapper_EntityStructureMatch()
         {
             var xsrcEntities = GetXSRCEntity(RulebaseFolder).GlobalEntity;

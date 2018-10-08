@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory.Model;
+using ESFA.DC.ILR.FundingService.Data.External.FCS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Organisation.Model;
@@ -49,5 +50,7 @@ namespace ESFA.DC.ILR.FundingService.Data.External
         public IDictionary<int, IEnumerable<LargeEmployers>> LargeEmployers { get; set; }
 
         public IDictionary<long, IEnumerable<AECEarningsHistory>> AECLatestInYearEarningHistory { get; set; }
+
+        public IDictionary<string, IEnumerable<FCSContractAllocation>> FCSContractAllocations { get; set; }
     }
 }
