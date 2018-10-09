@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ESFA.DC.ILR.FundingService.Data.External.FCS.Interface;
+using ESFA.DC.ILR.FundingService.Data.External.FCS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
@@ -21,12 +23,14 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
         private readonly int _fundModel = Attributes.FundModel_70;
 
         private readonly IFileDataService _fileDataService;
+        private readonly IFCSReferenceDataService _fcsDataReferenceDataService;
         private readonly ILARSReferenceDataService _larsReferenceDataService;
         private readonly IPostcodesReferenceDataService _postcodesReferenceDataService;
 
-        public DataEntityMapper(IFileDataService fileDataService, ILARSReferenceDataService larsReferenceDataService, IPostcodesReferenceDataService postcodesReferenceDataService)
+        public DataEntityMapper(IFileDataService fileDataService, IFCSReferenceDataService fcsDataReferenceDataService, ILARSReferenceDataService larsReferenceDataService, IPostcodesReferenceDataService postcodesReferenceDataService)
         {
             _fileDataService = fileDataService;
+            _fcsDataReferenceDataService = fcsDataReferenceDataService;
             _larsReferenceDataService = larsReferenceDataService;
             _postcodesReferenceDataService = postcodesReferenceDataService;
         }
@@ -87,6 +91,9 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
             var larsAnnualValue = _larsReferenceDataService.LARSAnnualValuesForLearnAimRef(learningDelivery.LearnAimRef);
             var sfaAreaCost = _postcodesReferenceDataService.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode);
 
+            var fcsContractData = _fcsDataReferenceDataService.FcsContractsForConRef(learningDelivery.ConRefNumber);
+            var esfData = BuildEsfDataFromContract(fcsContractData);
+
             return new DataEntity(Attributes.EntityLearningDelivery)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
@@ -94,7 +101,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
                     { Attributes.AchDate, new AttributeData(learningDelivery.AchDateNullable) },
                     { Attributes.AddHours, new AttributeData(learningDelivery.AddHoursNullable) },
                     { Attributes.AimSeqNumber, new AttributeData(learningDelivery.AimSeqNumber) },
-                    { Attributes.CalcMethod, new AttributeData("ContractValue TBC") }, // ToDo Contracts
+                    { Attributes.CalcMethod, new AttributeData(esfData.Select(c => c.CalcMethod).SingleOrDefault()) },
                     { Attributes.CompStatus, new AttributeData(learningDelivery.CompStatus) },
                     { Attributes.ConRefNumber, new AttributeData(learningDelivery.ConRefNumber) },
                     { Attributes.GenreCode, new AttributeData(larsLearningDelivery.LearningDeliveryGenre) },
@@ -114,18 +121,17 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
                 },
                 Children = (
                             larsAnnualValue?
-                                   .Select(BuildLARSAnnualValue) ?? new List<IDataEntity>()
+                                   .Select(BuildLARSAnnualValue) ?? new List<IDataEntity>())
                             .Union(
                                    sfaAreaCost?
                                    .Select(BuildSFAAreaCost) ?? new List<IDataEntity>())
                             .Union(
-                                   larsLearningDelivery?
+                                   larsLearningDelivery
                                    .LARSFunding?
-                                   .Select(BuildLARSFunding)))
-                            // ToDo
-                            // .Union(
-                            //          esfContractData
-                            //          .Select(BuildESFData)))
+                                   .Select(BuildLARSFunding))
+                             .Union(
+                                    esfData?
+                                    .Select(BuildEsfDataEntity))
                             .ToList()
             };
         }
@@ -197,20 +203,20 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
             };
         }
 
-        //public IDataEntity BuildESFData(object esfData)
-        //{
-        //    return new DataEntity(Attributes.EntityESFData)
-        //    {
-        //        Attributes = new Dictionary<string, IAttributeData>()
-        //        {
-        //            { Attributes.UnitCost, new AttributeData(esfData.UnitCost) },
-        //            { Attributes.ESFDeliverableCode, new AttributeData(esfData.ESFDeliverableCode) },
-        //            { Attributes.ESFDataPremiumFactor, new AttributeData(esfData.ESFDataPremiumFactor) },
-        //            { Attributes.EffectiveContractStartDate, new AttributeData(esfData.EffectiveContractStartDate) },
-        //            { Attributes.EffectiveContractEndDate, new AttributeData(esfData.EffectiveContractEndDate) }
-        //        }
-        //    };
-        //}
+        public IDataEntity BuildEsfDataEntity(EsfData esfData)
+        {
+            return new DataEntity(Attributes.EntityESFData)
+            {
+                Attributes = new Dictionary<string, IAttributeData>()
+                {
+                    { Attributes.UnitCost, new AttributeData(esfData.UnitCost) },
+                    { Attributes.ESFDeliverableCode, new AttributeData(esfData.ESFDeliverableCode) },
+                    { Attributes.ESFDataPremiumFactor, new AttributeData(esfData.ESFDataPremiumFactor) },
+                    { Attributes.EffectiveContractStartDate, new AttributeData(esfData.EffectiveContractStartDate) },
+                    { Attributes.EffectiveContractEndDate, new AttributeData(esfData.EffectiveContractEndDate) }
+                }
+            };
+        }
 
         public Global BuildGlobal()
         {
@@ -240,6 +246,19 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
             }
 
             return learningDeliveryFam;
+        }
+
+        public IEnumerable<EsfData> BuildEsfDataFromContract(IEnumerable<FCSContractAllocation> fcsContractAllocations)
+        {
+            return fcsContractAllocations.SelectMany(e => e.FCSContractDeliverables.Select(cd => new EsfData
+            {
+                ESFDataPremiumFactor = e.LearningRatePremiumFactor,
+                EffectiveContractStartDate = e.ContractStartDate,
+                EffectiveContractEndDate = e.ContractEndDate,
+                UnitCost = cd.UnitCost,
+                CalcMethod = e.CalcMethod,
+                ESFDeliverableCode = cd.ExternalDeliverableCode,
+            }));
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using ESFA.DC.ILR.FundingService.Data.External.FCS.Interface;
+using ESFA.DC.ILR.FundingService.Data.External.FCS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
@@ -14,7 +16,7 @@ using FluentAssertions;
 using Moq;
 using Xunit;
 
-namespace ESFA.DC.ILR.FundingService.F705.Service.Tests
+namespace ESFA.DC.ILR.FundingService.F70.Service.Tests
 {
     public class DataEntityMapperTests
     {
@@ -169,19 +171,31 @@ namespace ESFA.DC.ILR.FundingService.F705.Service.Tests
                 },
             };
 
+            var fcsContract = new List<FCSContractAllocation>
+            {
+                new FCSContractAllocation
+                {
+                    CalcMethod = 1,
+                    FCSContractDeliverables = new List<FCSContractDeliverable>
+                    {
+                        new FCSContractDeliverable()
+                    }
+                }
+            };
+
             var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
             var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
-            //var esfContractReferenceDataMock = new Mock<IESFContractReferenceDataService>()
+            var fcsReferenceDataMock = new Mock<IFCSReferenceDataService>();
 
             larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
             larsReferenceDataServiceMock.Setup(l => l.LARSAnnualValuesForLearnAimRef(learningDelivery.LearnAimRef)).Returns(new List<LARSAnnualValue> { new LARSAnnualValue() });
             postcodesReferenceDataServiceMock.Setup(p => p.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode)).Returns(new List<SfaAreaCost> { new SfaAreaCost() });
-            // esfContractReferenceDataMock.Setup().Returns();
+            fcsReferenceDataMock.Setup(f => f.FcsContractsForConRef(learningDelivery.ConRefNumber)).Returns(fcsContract);
 
             var dataEntity = NewService(
+                fcsReferenceDataService: fcsReferenceDataMock.Object,
                 larsReferenceDataService: larsReferenceDataServiceMock.Object,
                 postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object)
-                //contracts : postcodesReferenceDataServiceMock.Object
                 .BuildLearningDeliveryDataEntity(learningDelivery);
 
             dataEntity.EntityName.Should().Be("LearningDelivery");
@@ -189,7 +203,7 @@ namespace ESFA.DC.ILR.FundingService.F705.Service.Tests
             dataEntity.Attributes["AchDate"].Value.Should().Be(learningDelivery.AchDateNullable);
             dataEntity.Attributes["AddHours"].Value.Should().Be(learningDelivery.AddHoursNullable);
             dataEntity.Attributes["AimSeqNumber"].Value.Should().Be(learningDelivery.AimSeqNumber);
-            dataEntity.Attributes["CalcMethod"].Value.Should().Be("ContractValue TBC");
+            dataEntity.Attributes["CalcMethod"].Value.Should().Be(1);
             dataEntity.Attributes["CompStatus"].Value.Should().Be(learningDelivery.CompStatus);
             dataEntity.Attributes["ConRefNumber"].Value.Should().Be(learningDelivery.ConRefNumber);
             dataEntity.Attributes["GenreCode"].Value.Should().Be(larsLearningDelivery.LearningDeliveryGenre);
@@ -270,6 +284,51 @@ namespace ESFA.DC.ILR.FundingService.F705.Service.Tests
         }
 
         [Fact]
+        public void BuildEsfDataEntity()
+        {
+            var esfData = new EsfData
+            {
+                CalcMethod = 1,
+                EffectiveContractStartDate = new DateTime(2018, 1, 1),
+                EffectiveContractEndDate = new DateTime(2019, 1, 1),
+                ESFDataPremiumFactor = 1.0m,
+                ESFDeliverableCode = "1",
+                UnitCost = 1.2m
+            };
+
+            var dataEntity = NewService().BuildEsfDataEntity(esfData);
+
+            dataEntity.EntityName.Should().Be("ESFData");
+            dataEntity.Attributes.Should().HaveCount(5);
+            dataEntity.Attributes["EffectiveContractStartDate"].Value.Should().Be(esfData.EffectiveContractStartDate);
+            dataEntity.Attributes["EffectiveContractEndDate"].Value.Should().Be(esfData.EffectiveContractEndDate);
+            dataEntity.Attributes["ESFDataPremiumFactor"].Value.Should().Be(esfData.ESFDataPremiumFactor);
+            dataEntity.Attributes["ESFDeliverableCode"].Value.Should().Be(esfData.ESFDeliverableCode);
+            dataEntity.Attributes["UnitCost"].Value.Should().Be(esfData.UnitCost);
+        }
+
+        [Fact]
+        public void BuildEsfDataFromContract()
+        {
+            var fcsContract = new List<FCSContractAllocation>
+            {
+                new FCSContractAllocation
+                {
+                    CalcMethod = 1,
+                    FCSContractDeliverables = new List<FCSContractDeliverable>
+                    {
+                        new FCSContractDeliverable(),
+                        new FCSContractDeliverable()
+                    }
+                }
+            };
+
+            var esfData = NewService().BuildEsfDataFromContract(fcsContract);
+
+            esfData.Should().HaveCount(2);
+        }
+
+        [Fact]
         public void BuildLearningDeliveryFAMDenormalized()
         {
             var learningDeliveryFams = new List<TestLearningDeliveryFAM>()
@@ -318,10 +377,11 @@ namespace ESFA.DC.ILR.FundingService.F705.Service.Tests
 
         private DataEntityMapper NewService(
             IFileDataService fileDataService = null,
+            IFCSReferenceDataService fcsReferenceDataService = null,
             ILARSReferenceDataService larsReferenceDataService = null,
             IPostcodesReferenceDataService postcodesReferenceDataService = null)
         {
-            return new DataEntityMapper(fileDataService, larsReferenceDataService, postcodesReferenceDataService);
+            return new DataEntityMapper(fileDataService, fcsReferenceDataService, larsReferenceDataService, postcodesReferenceDataService);
         }
     }
 }

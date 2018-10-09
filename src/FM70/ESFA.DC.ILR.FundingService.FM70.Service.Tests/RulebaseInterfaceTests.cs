@@ -4,6 +4,8 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Xml;
+using ESFA.DC.ILR.FundingService.Data.External.FCS.Interface;
+using ESFA.DC.ILR.FundingService.Data.External.FCS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
@@ -13,6 +15,7 @@ using ESFA.DC.ILR.FundingService.Data.External.Organisation.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Data.File.Interface;
+using ESFA.DC.ILR.FundingService.Data.File.Model;
 using ESFA.DC.ILR.FundingService.FM70.Service.Constants;
 using ESFA.DC.ILR.FundingService.FM70.Service.Input;
 using ESFA.DC.ILR.FundingService.FM70.Service.Models;
@@ -347,10 +350,9 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
 
         public IDataEntity GetDataEntityMapperEntity()
         {
-            var largeEmployersRefererenceDataServiceMock = new Mock<ILargeEmployersReferenceDataService>();
             var larsRefererenceDataServiceMock = new Mock<ILARSReferenceDataService>();
-            var organisationRefererenceDataServiceMock = new Mock<IOrganisationReferenceDataService>();
             var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
+            var fcsReferenceDataServiceMock = new Mock<IFCSReferenceDataService>();
             var fileDataServiceMock = new Mock<IFileDataService>();
 
             var learner = new TestLearner
@@ -376,6 +378,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
                         AimSeqNumber = 2,
                         AimType = 3,
                         CompStatus = 4,
+                        ConRefNumber = "Conref",
                         DelLocPostCode = "Postcode",
                         PwayCodeNullable = 5,
                         ProgTypeNullable = 6,
@@ -403,19 +406,40 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
                 },
             };
 
+            var fcsContract = new List<FCSContractAllocation>
+            {
+                new FCSContractAllocation
+                {
+                    FCSContractDeliverables = new List<FCSContractDeliverable>
+                    {
+                        new FCSContractDeliverable()
+                    }
+                }
+            };
+
+            var sfaAreaCosts = new List<SfaAreaCost>
+            {
+                new SfaAreaCost
+                {
+                    Postcode = "Postcode",
+                    AreaCostFactor = 1.2m,
+                    EffectiveFrom = new DateTime(2000, 8, 1)
+                }
+            };
+
             var learningDelivery = learner.LearningDeliveries.First();
 
-            largeEmployersRefererenceDataServiceMock.Setup(l => l.LargeEmployersforEmpID(It.IsAny<int>())).Returns(new List<LargeEmployers> { new LargeEmployers() });
             larsRefererenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
             larsRefererenceDataServiceMock.Setup(l => l.LARSFFrameworkAimsForLearnAimRef(learningDelivery.LearnAimRef)).Returns(new List<LARSFrameworkAims> { new LARSFrameworkAims() });
             larsRefererenceDataServiceMock.Setup(l => l.LARSAnnualValuesForLearnAimRef(learningDelivery.LearnAimRef)).Returns(new List<LARSAnnualValue> { new LARSAnnualValue() });
             larsRefererenceDataServiceMock.Setup(l => l.LARSLearningDeliveryCategoriesForLearnAimRef(learningDelivery.LearnAimRef)).Returns(new List<LARSLearningDeliveryCategory> { new LARSLearningDeliveryCategory() });
-            organisationRefererenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(It.IsAny<int>())).Returns(new List<OrgFunding> { new OrgFunding() });
-            postcodesReferenceDataServiceMock.Setup(p => p.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode)).Returns(new List<SfaAreaCost> { new SfaAreaCost() });
-            postcodesReferenceDataServiceMock.Setup(p => p.SFADisadvantagesForPostcode(learner.PostcodePrior)).Returns(new List<SfaDisadvantage> { new SfaDisadvantage() });
+            postcodesReferenceDataServiceMock.Setup(p => p.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode)).Returns(sfaAreaCosts);
+            fcsReferenceDataServiceMock.Setup(p => p.FcsContractsForConRef(learningDelivery.ConRefNumber)).Returns(fcsContract);
+            fileDataServiceMock.Setup(f => f.DPOutcomesForLearnRefNumber(learner.LearnRefNumber)).Returns(new List<DPOutcome> { new DPOutcome() });
 
             return new DataEntityMapper(
                 fileDataServiceMock.Object,
+                fcsReferenceDataServiceMock.Object,
                 larsRefererenceDataServiceMock.Object,
                 postcodesReferenceDataServiceMock.Object)
                 .BuildGlobalDataEntity(learner, new Global());

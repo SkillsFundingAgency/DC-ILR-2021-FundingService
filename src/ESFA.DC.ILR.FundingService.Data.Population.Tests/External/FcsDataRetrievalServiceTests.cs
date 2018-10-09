@@ -34,6 +34,16 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         }
 
         [Fact]
+        public void DeliverableCodeMappings()
+        {
+            var fcsMock = new Mock<IFcsContext>();
+
+            var fcs = NewService(fcsMock.Object).DeliverableCodeMappings;
+
+            fcsMock.VerifyGet(l => l.ContractDeliverableCodeMappings);
+        }
+
+        [Fact]
         public void UniqueConRefNumbers()
         {
             var message = new TestMessage()
@@ -65,7 +75,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         }
 
         [Fact]
-        public void LargeEmployersForEmployerIds()
+        public void ESFContractsForUKPRN()
         {
             var contractors = new List<Contractor>()
             {
@@ -80,9 +90,23 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                             {
                                 new ContractAllocation
                                 {
+                                    FundingStreamPeriodCode = "7",
                                     ContractAllocationNumber = "1",
                                     TenderSpecReference = "T1",
-                                    LotReference = "L1"
+                                    LotReference = "L1",
+                                    ContractDeliverables = new List<ContractDeliverable>
+                                    {
+                                        new ContractDeliverable
+                                        {
+                                            DeliverableCode = 1,
+                                            UnitCost = 2.0m
+                                        },
+                                         new ContractDeliverable
+                                        {
+                                            DeliverableCode = 2,
+                                            UnitCost = 3.0m
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -101,7 +125,21 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                                 {
                                     ContractAllocationNumber = "2",
                                     TenderSpecReference = "T2",
-                                    LotReference = "L2"
+                                    LotReference = "L2",
+                                    FundingStreamPeriodCode = "5",
+                                    ContractDeliverables = new List<ContractDeliverable>
+                                    {
+                                        new ContractDeliverable
+                                        {
+                                            DeliverableCode = 1,
+                                            UnitCost = 2.0m
+                                        },
+                                        new ContractDeliverable
+                                        {
+                                            DeliverableCode = 2,
+                                            UnitCost = 3.0m
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -125,14 +163,43 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                 }
             }.AsQueryable();
 
+            var codeMappings = new List<ContractDeliverableCodeMapping>()
+            {
+                new ContractDeliverableCodeMapping()
+                {
+                    FundingStreamPeriodCode = "4",
+                    ExternalDeliverableCode = "ST2",
+                    FCSDeliverableCode = "2"
+                },
+                new ContractDeliverableCodeMapping()
+                {
+                    FundingStreamPeriodCode = "5",
+                    ExternalDeliverableCode = "ST1",
+                    FCSDeliverableCode = "1"
+                },
+                new ContractDeliverableCodeMapping()
+                {
+                    FundingStreamPeriodCode = "5",
+                    ExternalDeliverableCode = "ST2",
+                    FCSDeliverableCode = "2"
+                },
+                new ContractDeliverableCodeMapping()
+                {
+                    FundingStreamPeriodCode = "5",
+                    ExternalDeliverableCode = "ST3",
+                    FCSDeliverableCode = "3"
+                },
+            }.AsQueryable();
+
             var fcsDataRetrievalServiceMock = NewMock();
 
             fcsDataRetrievalServiceMock.SetupGet(l => l.Contractors).Returns(contractors);
             fcsDataRetrievalServiceMock.SetupGet(l => l.EsfEligibilityRules).Returns(eligibilityRules);
+            fcsDataRetrievalServiceMock.SetupGet(l => l.DeliverableCodeMappings).Returns(codeMappings);
 
             var conRefNumbers = new List<string>() { "1", "2" };
 
-            var fcs = fcsDataRetrievalServiceMock.Object.FCSContractAllocationsForUKPRN(1, conRefNumbers);
+            var fcs = fcsDataRetrievalServiceMock.Object.ESFContractsForUKPRN(1, conRefNumbers);
 
             fcs.Should().HaveCount(2);
 
@@ -152,11 +219,25 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                 Period = "3",
                 PeriodTypeCode = "4",
                 FundingStreamPeriodCode = "5",
+                LearningRatePremiumFactor = 1.0m,
                 StartDate = new DateTime(2018, 8, 1),
                 EndDate = new DateTime(2018, 8, 1),
                 UoPCode = "6",
                 TenderSpecReference = "T1",
                 LotReference = "L1",
+                ContractDeliverables = new List<ContractDeliverable>
+                {
+                    new ContractDeliverable
+                    {
+                        DeliverableCode = 1,
+                        UnitCost = 2.0m
+                    },
+                     new ContractDeliverable
+                    {
+                        DeliverableCode = 2,
+                        UnitCost = 3.0m
+                    }
+                }
             };
 
             var eligibilityRules = new List<EsfEligibilityRule>()
@@ -175,16 +256,41 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                 }
             }.AsQueryable();
 
+            var codeMappings = new List<ContractDeliverableCodeMapping>()
+            {
+                new ContractDeliverableCodeMapping()
+                {
+                    FundingStreamPeriodCode = "5",
+                    ExternalDeliverableCode = "ST1",
+                    FCSDeliverableCode = "1"
+                },
+                new ContractDeliverableCodeMapping()
+                {
+                    FundingStreamPeriodCode = "5",
+                    ExternalDeliverableCode = "ST2",
+                    FCSDeliverableCode = "2"
+                },
+                new ContractDeliverableCodeMapping()
+                {
+                    FundingStreamPeriodCode = "5",
+                    ExternalDeliverableCode = "ST3",
+                    FCSDeliverableCode = "3"
+                },
+            }.AsQueryable();
+
             var fcsDataRetrievalServiceMock = NewMock();
 
             fcsDataRetrievalServiceMock.SetupGet(l => l.EsfEligibilityRules).Returns(eligibilityRules);
+            fcsDataRetrievalServiceMock.SetupGet(l => l.DeliverableCodeMappings).Returns(codeMappings);
 
-            var fcs = fcsDataRetrievalServiceMock.Object.FCSContractAllocationFromEntity(contractAllocation);
+            var fcs = fcsDataRetrievalServiceMock.Object.FCSContractAllocationFromEntity(contractAllocation, new DateTime(2018, 8, 1), new DateTime(2018, 8, 1));
 
             fcs.ContractAllocationNumber.Should().Be(contractAllocation.ContractAllocationNumber);
+            fcs.LearningRatePremiumFactor.Should().Be(contractAllocation.LearningRatePremiumFactor);
             fcs.TenderSpecReference.Should().Be(contractAllocation.TenderSpecReference);
             fcs.LotReference.Should().Be(contractAllocation.LotReference);
             fcs.CalcMethod.Should().Be(1);
+            fcs.FCSContractDeliverables[0].UnitCost.Should().Be(2);
         }
 
         private FCSDataRetrievalService NewService(IFcsContext fcs = null)
