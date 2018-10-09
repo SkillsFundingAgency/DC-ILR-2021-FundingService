@@ -78,8 +78,7 @@
       <HintPath>..\packages\ESFA.DC.JobContext.Interface.0.2.1-beta0001\lib\netstandard2.0\ESFA.DC.JobContext.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ReferenceData.FCS.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ESFA.DC.ReferenceData.FCS.Model.dll</HintPath>
+      <HintPath>..\packages\ESFA.DC.ReferenceData.FCS.Model.0.1.74\lib\net461\ESFA.DC.ReferenceData.FCS.Model.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
