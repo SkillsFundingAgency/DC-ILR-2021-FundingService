@@ -78,6 +78,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FCSReferenceDataServiceTests.cs" />
     <Compile Include="LargeEmployerReferenceDataServiceTests.cs" />
     <Compile Include="LARSReferenceDataServiceTests.cs" />
     <Compile Include="OrganisationReferenceDataServiceTests.cs" />

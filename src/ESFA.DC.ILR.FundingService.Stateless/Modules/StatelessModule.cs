@@ -50,6 +50,8 @@ using ESFA.DC.JobContextManager;
 using ESFA.DC.JobContextManager.Interface;
 using ESFA.DC.JobContextManager.Model;
 using ESFA.DC.JobContextManager.Model.Interface;
+using ESFA.DC.ReferenceData.FCS.Model;
+using ESFA.DC.ReferenceData.FCS.Model.Interface;
 using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.Serialization.Json;
 using ESFA.DC.Serialization.Xml;
@@ -90,6 +92,12 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
                 return new ApprenticeshipsEarningsHistory(referenceDataConfig.AppsEarningsHistoryConnectionString);
             }).As<IApprenticeshipsEarningsHistory>().InstancePerLifetimeScope();
 
+            builder.Register(c =>
+            {
+                var referenceDataConfig = c.Resolve<IReferenceDataConfig>();
+                return new FcsContext(referenceDataConfig.FCSConnectionString);
+            }).As<IFcsContext>().InstancePerLifetimeScope();
+
             builder.RegisterType<PopulationService>().As<IPopulationService>().InstancePerLifetimeScope();
             builder.RegisterType<FileDataCachePopulationService>().As<IFileDataCachePopulationService>().InstancePerLifetimeScope();
             builder.RegisterType<InternalDataCachePopulationService>().As<IInternalDataCachePopulationService>().InstancePerLifetimeScope();
@@ -107,6 +115,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             builder.RegisterType<LARSDataRetrievalService>().As<ILARSDataRetrievalService>().InstancePerLifetimeScope();
             builder.RegisterType<OrganisationDataRetrievalService>().As<IOrganisationDataRetrievalService>().InstancePerLifetimeScope();
             builder.RegisterType<AppsEarningsHistoryDataRetrievalService>().As<IAppsEarningsHistoryDataRetrievalService>().InstancePerLifetimeScope();
+            builder.RegisterType<FCSDataRetrievalService>().As<IFCSDataRetrievalService>().InstancePerLifetimeScope();
 
             builder.RegisterType<JsonSerializationService>().As<ISerializationService>();
             builder.RegisterType<JsonSerializationService>().As<IJsonSerializationService>();

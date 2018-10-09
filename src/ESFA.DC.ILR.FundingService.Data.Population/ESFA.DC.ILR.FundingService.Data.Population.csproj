@@ -77,6 +77,10 @@
     <Reference Include="ESFA.DC.JobContext.Interface, Version=0.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.JobContext.Interface.0.2.1-beta0001\lib\netstandard2.0\ESFA.DC.JobContext.Interface.dll</HintPath>
     </Reference>
+    <Reference Include="ESFA.DC.ReferenceData.FCS.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ESFA.DC.ReferenceData.FCS.Model.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -89,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\FundingContextPopulationService.cs" />
+    <Compile Include="External\FCSDataRetrievalService.cs" />
     <Compile Include="External\LargeEmployersDataRetrievalService.cs" />
     <Compile Include="External\LARSDataRetrievalService.cs" />
     <Compile Include="External\OrganisationDataRetrievalService.cs" />
@@ -101,6 +106,7 @@
     <Compile Include="Interface\IFileDataCachePopulationService.cs" />
     <Compile Include="Interface\IFundingContextPopulationService.cs" />
     <Compile Include="Interface\IInternalDataCachePopulationService.cs" />
+    <Compile Include="Interface\IFCSDataRetrievalService.cs" />
     <Compile Include="Interface\ILargeEmployersDataRetrievalService.cs" />
     <Compile Include="Interface\ILARSDataRetrievalService.cs" />
     <Compile Include="Interface\IOrganisationDataRetrievalService.cs" />

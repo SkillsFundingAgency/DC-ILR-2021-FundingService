@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory.Model;
+using ESFA.DC.ILR.FundingService.Data.External.FCS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Organisation.Model;
@@ -113,9 +114,17 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
 
             appsEarningsHistoryDataRetrievalServiceMock.Setup(a => a.AppsEarningsHistoryForLearners(It.IsAny<int>(), It.IsAny<IEnumerable<LearnRefNumberULNKey>>())).Returns(aecHistory).Verifiable();
 
+            var fcsDataRetrievalServiceMock = new Mock<IFCSDataRetrievalService>();
+
+            var fcsContractAllocations = new Dictionary<string, IEnumerable<FCSContractAllocation>>();
+
+            fcsDataRetrievalServiceMock.Setup(f => f.UniqueConRefNumbers(message)).Returns(new List<string>()).Verifiable();
+            fcsDataRetrievalServiceMock.Setup(f => f.ESFContractsForUKPRN(It.IsAny<int>(), It.IsAny<List<string>>())).Returns(fcsContractAllocations).Verifiable();
+
             await NewService(
                 externalDataCache,
                 appsEarningsHistoryDataRetrievalServiceMock.Object,
+                fcsDataRetrievalServiceMock.Object,
                 postcodesDataRetrievalServiceMock.Object,
                 largeEmployersDataRetrievalServiceMock.Object,
                 larsDataRetrievalServiceMock.Object,
@@ -127,6 +136,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             largeEmployersDataRetrievalServiceMock.VerifyAll();
             larsDataRetrievalServiceMock.VerifyAll();
             organisationDataRetrievalServiceMock.VerifyAll();
+            appsEarningsHistoryDataRetrievalServiceMock.VerifyAll();
+            fcsDataRetrievalServiceMock.VerifyAll();
 
             externalDataCache.PostcodeCurrentVersion.Should().Be(postcodesCurrentVersion);
             externalDataCache.SfaAreaCost.Should().BeSameAs(sfaAreaCosts);
@@ -151,13 +162,14 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
         private ExternalDataCachePopulationService NewService(
             IExternalDataCache externalDataCache = null,
             IAppsEarningsHistoryDataRetrievalService appsEarningsHistoryDataRetrievalService = null,
+            IFCSDataRetrievalService fcsDataRetrievalService = null,
             IPostcodesDataRetrievalService postcodesDataRetrievalService = null,
             ILargeEmployersDataRetrievalService largeEmployersDataRetrievalService = null,
             ILARSDataRetrievalService larsDataRetrievalService = null,
             IOrganisationDataRetrievalService organisationDataRetrievalService = null,
             IFundingServiceDto fundingServiceDto = null)
         {
-            return new ExternalDataCachePopulationService(externalDataCache, appsEarningsHistoryDataRetrievalService, postcodesDataRetrievalService, largeEmployersDataRetrievalService, larsDataRetrievalService, organisationDataRetrievalService, fundingServiceDto);
+            return new ExternalDataCachePopulationService(externalDataCache, appsEarningsHistoryDataRetrievalService, fcsDataRetrievalService, postcodesDataRetrievalService, largeEmployersDataRetrievalService, larsDataRetrievalService, organisationDataRetrievalService, fundingServiceDto);
         }
     }
 }
