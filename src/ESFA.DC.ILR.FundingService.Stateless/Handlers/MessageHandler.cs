@@ -48,6 +48,11 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Handlers
                 ServiceEventSource.Current.ServiceMessage(_context, "Completed Funding Calc Service");
                 return true;
             }
+            catch (OutOfMemoryException oom)
+            {
+                Environment.FailFast("Funding Service Out Of Memory", oom);
+                throw;
+            }
             catch (Exception ex)
             {
                 ServiceEventSource.Current.ServiceMessage(_context, "Exception-{0}", ex.ToString());
