@@ -101,10 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataEntityMapperTests.cs" />
-<<<<<<< HEAD
     <Compile Include="FundingOutputServiceTests.cs" />
-=======
->>>>>>> 56330 - FM70 funding contexts and attributes added.
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RulebaseInterfaceTests.cs" />
   </ItemGroup>
@@ -140,7 +137,6 @@
       <Project>{69B93B19-4FD0-4205-AFFA-8B71122A3C65}</Project>
       <Name>ESFA.DC.ILR.FundingService.Data</Name>
     </ProjectReference>
-<<<<<<< HEAD
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model.Interface\ESFA.DC.OPA.Model.Interface.csproj">
       <Project>{7C69290E-B03C-490B-9821-04E2B0B9CDF7}</Project>
       <Name>ESFA.DC.OPA.Model.Interface</Name>
@@ -165,8 +161,6 @@
       <Project>{D1476198-DC54-475F-B392-CEC5E138A9FF}</Project>
       <Name>ESFA.DC.OPA.XSRC.Service</Name>
     </ProjectReference>
-=======
->>>>>>> 56330 - FM70 funding contexts and attributes added.
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model.csproj">
       <Project>{ce34cd36-5367-4832-a1b3-c05cf63b7680}</Project>
       <Name>ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model</Name>

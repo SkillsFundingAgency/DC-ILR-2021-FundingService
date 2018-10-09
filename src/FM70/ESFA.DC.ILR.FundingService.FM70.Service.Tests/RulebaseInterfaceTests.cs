@@ -6,12 +6,8 @@ using System.Linq;
 using System.Xml;
 using ESFA.DC.ILR.FundingService.Data.External.FCS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.FCS.Model;
-using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Interface;
-using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
-using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
-using ESFA.DC.ILR.FundingService.Data.External.Organisation.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Data.File.Interface;
@@ -216,9 +212,9 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
                 Attributes.LearnDelAnnValBasicSkillsTypeCode,
                 Attributes.LearnDelAnnValDateFrom,
                 Attributes.LearnDelAnnValDateTo,
-                Attributes.LARSFundCategory,
-                Attributes.LARSFundEffectiveFrom,
-                Attributes.LARSFundEffectiveTo,
+                Attributes.LARSFundingCategory,
+                Attributes.LARSFundingEffectiveFrom,
+                Attributes.LARSFundingEffectiveTo,
                 Attributes.LARSFundingWeightedRate,
                 Attributes.AreaCosFactor,
                 Attributes.AreaCosEffectiveFrom,

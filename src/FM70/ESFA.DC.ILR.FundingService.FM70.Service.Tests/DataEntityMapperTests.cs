@@ -1,39 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-<<<<<<< HEAD
 using ESFA.DC.ILR.FundingService.Data.External.FCS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.FCS.Model;
-=======
->>>>>>> 56330 - FM70 funding contexts and attributes added.
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Data.File.Interface;
-<<<<<<< HEAD
 using ESFA.DC.ILR.FundingService.Data.File.Model;
 using ESFA.DC.ILR.FundingService.FM70.Service.Input;
 using ESFA.DC.ILR.FundingService.FM70.Service.Models;
 using ESFA.DC.ILR.Model;
-=======
-using ESFA.DC.ILR.FundingService.FM70.Service.Input;
-using ESFA.DC.ILR.FundingService.FM70.Service.Models;
->>>>>>> 56330 - FM70 funding contexts and attributes added.
 using ESFA.DC.ILR.Tests.Model;
 using FluentAssertions;
 using Moq;
 using Xunit;
 
-<<<<<<< HEAD
-namespace ESFA.DC.ILR.FundingService.F70.Service.Tests
-=======
-namespace ESFA.DC.ILR.FundingService.F705.Service.Tests
->>>>>>> 56330 - FM70 funding contexts and attributes added.
+namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
 {
     public class DataEntityMapperTests
     {
         [Fact]
-<<<<<<< HEAD
         public void BuildGlobalDataEntity()
         {
             var global = new Global
@@ -49,8 +36,6 @@ namespace ESFA.DC.ILR.FundingService.F705.Service.Tests
         }
 
         [Fact]
-=======
->>>>>>> 56330 - FM70 funding contexts and attributes added.
         public void BuildGlobal()
         {
             var ukprn = 1234;
@@ -67,7 +52,6 @@ namespace ESFA.DC.ILR.FundingService.F705.Service.Tests
         }
 
         [Fact]
-<<<<<<< HEAD
         public void BuildLearner()
         {
             var learner = new TestLearner()
@@ -345,8 +329,6 @@ namespace ESFA.DC.ILR.FundingService.F705.Service.Tests
         }
 
         [Fact]
-=======
->>>>>>> 56330 - FM70 funding contexts and attributes added.
         public void BuildLearningDeliveryFAMDenormalized()
         {
             var learningDeliveryFams = new List<TestLearningDeliveryFAM>()
@@ -393,7 +375,6 @@ namespace ESFA.DC.ILR.FundingService.F705.Service.Tests
             learningDeliveryFAMDenormalized.LDM4.Should().BeNull();
         }
 
-<<<<<<< HEAD
         private DataEntityMapper NewService(
             IFileDataService fileDataService = null,
             IFCSReferenceDataService fcsReferenceDataService = null,
@@ -401,11 +382,6 @@ namespace ESFA.DC.ILR.FundingService.F705.Service.Tests
             IPostcodesReferenceDataService postcodesReferenceDataService = null)
         {
             return new DataEntityMapper(fileDataService, fcsReferenceDataService, larsReferenceDataService, postcodesReferenceDataService);
-=======
-        private DataEntityMapper NewService(IFileDataService fileDataService = null)
-        {
-            return new DataEntityMapper(fileDataService);
->>>>>>> 56330 - FM70 funding contexts and attributes added.
         }
     }
 }

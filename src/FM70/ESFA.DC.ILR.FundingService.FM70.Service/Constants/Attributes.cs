@@ -11,10 +11,8 @@
         public const string EntityDPOutcome = "DPOutcome";
         public const string EntityLearnerEmploymentStatus = "LearnerEmploymentStatus";
         public const string EntityLearningDelivery = "LearningDelivery";
-<<<<<<< HEAD
         public const string EntityLearningDeliveryDeliverable = "LearningDeliveryDeliverable";
-=======
->>>>>>> 56330 - FM70 funding contexts and attributes added.
+
         public const string EntityESFData = "ESFData";
         public const string EntityLearningDeliveryLARSFunding = "LearningDeliveryLARSFunding";
         public const string EntityLearningDeliveryLARS_AnnualValue = "LearningDeliveryAnnualValue";
@@ -37,10 +35,7 @@
         public const string Period12 = "R12";
 
         // Global
-<<<<<<< HEAD
         public const string RulebaseVersion = "RulebaseVersion";
-=======
->>>>>>> 56330 - FM70 funding contexts and attributes added.
         public const string UKPRN = "UKPRN";
 
         // Learner
@@ -49,11 +44,7 @@
 
         // Learner Employment Status
         public const string DateEmpStatApp = "DateEmpStatApp";
-<<<<<<< HEAD
         public const string EmpStat = "EMPStat";
-=======
-        public const string EmpStat = "EmpStat";
->>>>>>> 56330 - FM70 funding contexts and attributes added.
 
         // DP Outcome
         public const string OutType = "OutType";
@@ -61,15 +52,12 @@
         public const string OutEndDate = "OutEndDate";
         public const string OutStartDate = "OutStartDate";
         public const string OutCollDate = "OutCollDate";
-<<<<<<< HEAD
         public const string OutcomeDateForProgression = "OutcomeDateForProgression";
         public const string PotentialESFProgressionType = "PotentialESFProgressionType";
         public const string ProgressionType = "ProgressionType";
         public const string ReachedSixMonthPoint = "ReachedSixMonthPoint";
         public const string ReachedThreeMonthPoint = "ReachedThreeMonthPoint";
         public const string ReachedTwelveMonthPoint = "ReachedTwelveMonthPoint";
-=======
->>>>>>> 56330 - FM70 funding contexts and attributes added.
 
         // LearningDelivery
         public const string AchDate = "AchDate";
@@ -89,10 +77,7 @@
         public const string LrnDelFAM_LDM4 = "LrnDelFAM_LDM4";
         public const string LrnDelFAM_RES = "LrnDelFAM_RES";
         public const string OrigLearnStartDate = "OrigLearnStartDate";
-<<<<<<< HEAD
         public const string OtherFundAdj = "OtherFundAdj";
-=======
->>>>>>> 56330 - FM70 funding contexts and attributes added.
         public const string Outcome = "Outcome";
         public const string PriorLearnFundAdj = "PriorLearnFundAdj";
 
@@ -103,7 +88,6 @@
         public const string LearningDeliveryFAMTypeLDM3 = "LDM3";
         public const string LearningDeliveryFAMTypeLDM4 = "LDM4";
 
-<<<<<<< HEAD
         public const string Achieved = "Achieved";
         public const string AddProgCostElig = "AddProgCostElig";
         public const string AdjustedAreaCostFactor = "AdjustedAreaCostFactor";
@@ -133,8 +117,6 @@
         public const string ReportingVolume = "ReportingVolume";
         public const string StartEarnings = "StartEarnings";
 
-=======
->>>>>>> 56330 - FM70 funding contexts and attributes added.
         // ESFData
         public const string UnitCost = "UnitCost";
         public const string ESFDeliverableCode = "ESFDeliverableCode";
@@ -148,15 +130,9 @@
         public const string LearnDelAnnValDateTo = "LearnDelAnnValDateTo";
 
         // LearningDeliveryLARSFunding
-<<<<<<< HEAD
-        public const string LARSFundCategory = "LARSFundingCategory";
-        public const string LARSFundEffectiveFrom = "LARSFundingEffectiveFrom";
-        public const string LARSFundEffectiveTo = "LARSFundingEffectiveTo";
-=======
-        public const string LARSFundCategory = "LARSFundCategory";
-        public const string LARSFundEffectiveFrom = "LARSFundEffectiveFrom";
-        public const string LARSFundEffectiveTo = "LARSFundEffectiveTo";
->>>>>>> 56330 - FM70 funding contexts and attributes added.
+        public const string LARSFundingCategory = "LARSFundingCategory";
+        public const string LARSFundingEffectiveFrom = "LARSFundingEffectiveFrom";
+        public const string LARSFundingEffectiveTo = "LARSFundingEffectiveTo";
         public const string LARSFundingWeightedRate = "LARSFundingWeightedRate";
 
         // SFAPostcodeAreaCost
