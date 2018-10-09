@@ -8,6 +8,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Interface
     {
         IEnumerable<string> UniqueConRefNumbers(IMessage message);
 
-        IDictionary<string, IEnumerable<FCSContractAllocation>> FCSContractAllocationsForUKPRN(int ukprn, IEnumerable<string> conRefNumbers);
+        IDictionary<string, IEnumerable<FCSContractAllocation>> ESFContractsForUKPRN(int ukprn, IEnumerable<string> conRefNumbers);
     }
 }

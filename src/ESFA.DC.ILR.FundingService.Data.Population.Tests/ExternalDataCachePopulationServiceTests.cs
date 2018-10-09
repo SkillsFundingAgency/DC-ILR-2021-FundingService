@@ -119,7 +119,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             var fcsContractAllocations = new Dictionary<string, IEnumerable<FCSContractAllocation>>();
 
             fcsDataRetrievalServiceMock.Setup(f => f.UniqueConRefNumbers(message)).Returns(new List<string>()).Verifiable();
-            fcsDataRetrievalServiceMock.Setup(f => f.FCSContractAllocationsForUKPRN(It.IsAny<int>(), It.IsAny<List<string>>())).Returns(fcsContractAllocations).Verifiable();
+            fcsDataRetrievalServiceMock.Setup(f => f.ESFContractsForUKPRN(It.IsAny<int>(), It.IsAny<List<string>>())).Returns(fcsContractAllocations).Verifiable();
 
             await NewService(
                 externalDataCache,
