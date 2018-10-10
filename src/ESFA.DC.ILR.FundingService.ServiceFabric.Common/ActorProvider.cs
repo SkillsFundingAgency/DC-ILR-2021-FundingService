@@ -25,12 +25,18 @@ namespace ESFA.DC.ILR.FundingService.ServiceFabric.Common
 
         public async Task DestroyAsync(T actor, CancellationToken cancellationToken)
         {
-            ActorId actorId = actor.GetActorId();
+            try
+            {
+                ActorId actorId = actor.GetActorId();
 
-            IActorService myActorServiceProxy = ActorServiceProxy.Create(
-                new Uri($"fabric:/{FabricRuntime.GetActivationContext().ApplicationName}/{_actorServiceName}"), actorId);
+                IActorService myActorServiceProxy = ActorServiceProxy.Create(
+                    new Uri($"{FabricRuntime.GetActivationContext().ApplicationName}/{_actorServiceName}"), actorId);
 
-            await myActorServiceProxy.DeleteActorAsync(actorId, cancellationToken);
+                await myActorServiceProxy.DeleteActorAsync(actorId, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+            }
         }
     }
 }
