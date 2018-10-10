@@ -33,19 +33,25 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             return message.Learners
                 .Where(l => l.LearningDeliveries != null)
                 .SelectMany(l => l.LearningDeliveries)
+                .Where(c => c.ConRefNumber != null)
                 .Select(ld => ld.ConRefNumber)
                 .Distinct();
         }
 
-        public IDictionary<string, IEnumerable<FCSContractAllocation>> ESFContractsForUKPRN(int ukprn, IEnumerable<string> conRefNumbers)
+        public IDictionary<string, IEnumerable<FCSContractAllocation>> FCSContractsForUKPRN(int ukprn, IEnumerable<string> conRefNumbers)
         {
-            return Contractors
-               .Where(c => c.Ukprn == ukprn)
-               .SelectMany(c => c.Contracts
-               .SelectMany(ca => ca.ContractAllocations.Where(cr => conRefNumbers.Contains(cr.ContractAllocationNumber))
-               .Select(f => FCSContractAllocationFromEntity(f, ca.StartDate, ca.EndDate))))
-               .GroupBy(e => e.ContractAllocationNumber)
-               .ToDictionary(a => a.Key, a => a as IEnumerable<FCSContractAllocation>);
+            if (Contractors.Where(c => c.Ukprn == ukprn) != null && conRefNumbers.Any(c => c != null))
+            {
+                return Contractors
+                   .Where(c => c.Ukprn == ukprn)
+                   .SelectMany(c => c.Contracts
+                   .SelectMany(ca => ca.ContractAllocations.Where(cr => conRefNumbers.Contains(cr.ContractAllocationNumber))
+                   .Select(f => FCSContractAllocationFromEntity(f, ca.StartDate, ca.EndDate))))
+                   .GroupBy(e => e.ContractAllocationNumber)
+                   .ToDictionary(a => a.Key, a => a as IEnumerable<FCSContractAllocation>);
+            }
+
+            return new Dictionary<string, IEnumerable<FCSContractAllocation>>();
         }
 
         public FCSContractAllocation FCSContractAllocationFromEntity(ContractAllocation entity, DateTime? startDate, DateTime? endDate)

@@ -35,6 +35,7 @@
     <Parameter Name="OrganisationConnectionString" Value=""/>
     <Parameter Name="LargeEmployersConnectionString" Value=""/>
     <Parameter Name="AppsEarningsHistoryConnectionString" Value=""/>
+    <Parameter Name="FCSConnectionString" Value=""/>
   </Section>
 
   <Section  Name="TopicAndTaskSection">

@@ -66,7 +66,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
         {
             var learnerEmploymentStatusDenormalized = BuildLearnerEmploymentStatusDenormalized(learner.LearnerEmploymentStatuses);
             var dasPostDisadvantage = _postcodesReferenceDataService.DASDisadvantagesForPostcode(learner.PostcodePrior);
-            var appsEarningsHistory = _appsEarningsHistoryReferenceDataService.AECEarningsHistory(learner.ULN);
+            //var appsEarningsHistory = _appsEarningsHistoryReferenceDataService.AECEarningsHistory(learner.ULN);
 
             return new DataEntity(Attributes.EntityLearner)
             {
@@ -88,9 +88,9 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
                         .Union(
                             dasPostDisadvantage?
                             .Select(BuildDASPostcodeDisadvantage) ?? new List<IDataEntity>())
-                        .Union(
-                            appsEarningsHistory?
-                            .Select(BuildApprenticeshipsEarningsHistory) ?? new List<IDataEntity>())
+                        //.Union(
+                        //    appsEarningsHistory?
+                        //    .Select(BuildApprenticeshipsEarningsHistory) ?? new List<IDataEntity>())
                         .ToList()
             };
         }

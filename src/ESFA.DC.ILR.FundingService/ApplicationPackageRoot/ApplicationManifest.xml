@@ -17,6 +17,7 @@
     <Parameter Name="OrganisationConnectionString" DefaultValue="__OrganisationConnectionString__" />
     <Parameter Name="LargeEmployersConnectionString" DefaultValue="__LargeEmployersConnectionString__" />
     <Parameter Name="AppsEarningsHistoryConnectionString" DefaultValue="__AppsEarningsHistoryConnectionString__" />
+    <Parameter Name="FCSConnectionString" DefaultValue="__FCSSConnectionString__" />
     <Parameter Name="RedisCacheConnectionString" DefaultValue="" />
     <Parameter Name="AzureBlobConnectionString" DefaultValue="UseDevelopmentStorage=true" />
     <Parameter Name="AzureBlobContainerName" DefaultValue="ilr-files" />
@@ -117,6 +118,7 @@
             <Parameter Name="OrganisationConnectionString" Value="[OrganisationConnectionString]" />
             <Parameter Name="LargeEmployersConnectionString" Value="[LargeEmployersConnectionString]" />
             <Parameter Name="AppsEarningsHistoryConnectionString" Value="[AppsEarningsHistoryConnectionString]" />
+            <Parameter Name="FCSConnectionString" Value="[FCSConnectionString]" />
           </Section>
           <Section Name="AzureStorageSection">
             <Parameter Name="AzureBlobConnectionString" Value="[AzureBlobConnectionString]" />

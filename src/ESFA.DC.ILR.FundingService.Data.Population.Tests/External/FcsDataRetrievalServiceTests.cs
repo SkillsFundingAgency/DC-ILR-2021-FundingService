@@ -199,7 +199,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
 
             var conRefNumbers = new List<string>() { "1", "2" };
 
-            var fcs = fcsDataRetrievalServiceMock.Object.ESFContractsForUKPRN(1, conRefNumbers);
+            var fcs = fcsDataRetrievalServiceMock.Object.FCSContractsForUKPRN(1, conRefNumbers);
 
             fcs.Should().HaveCount(2);
 
