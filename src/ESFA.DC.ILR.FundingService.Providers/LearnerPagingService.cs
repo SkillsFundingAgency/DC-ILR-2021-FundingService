@@ -8,7 +8,7 @@ namespace ESFA.DC.ILR.FundingService.Stubs
     public class LearnerPagingService<T> : IPagingService<T>
         where T : class
     {
-        private const int PageSize = 1500;
+        private const int PageSize = 15000;
 
         private readonly IFundingContext _fundingContext;
 
