@@ -110,7 +110,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless
                 serviceBusOptions.ServiceBusConnectionString,
                 serviceBusOptions.TopicName,
                 serviceBusOptions.FundingCalcSubscriptionName,
-                Environment.ProcessorCount,
+                1,
                 maximumCallbackTimeSpan: TimeSpan.FromMinutes(20));
 
             // register Jobcontext services
