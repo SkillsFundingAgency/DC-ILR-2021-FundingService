@@ -84,9 +84,12 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         {
             var stopWatch = new Stopwatch();
             stopWatch.Start();
+            var stopWatchSteps = new Stopwatch();
+            stopWatchSteps.Start();
 
             FundingServiceDto fundingServiceDto = (FundingServiceDto)_fundingServiceDto;
             fundingServiceDto.Message = await _ilrFileProviderService.Provide(jobContextMessage.KeyValuePairs[JobContextMessageKey.Filename].ToString()).ConfigureAwait(false);
+            _logger.LogDebug($"Funding Service got file in: {stopWatchSteps.ElapsedMilliseconds}");
 
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -101,6 +104,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
 
             cancellationToken.ThrowIfCancellationRequested();
 
+            stopWatchSteps.Reset();
             await _populationService.PopulateAsync(cancellationToken).ConfigureAwait(false);
 
             cancellationToken.ThrowIfCancellationRequested();
@@ -108,6 +112,8 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             string externalDataCache = _jsonSerializationService.Serialize(_externalDataCache);
             string internalDataCache = _jsonSerializationService.Serialize(_internalDataCache);
             string fileDataCache = _jsonSerializationService.Serialize(_fileDataCache);
+
+            _logger.LogDebug($"Funding Service got external data: {stopWatchSteps.ElapsedMilliseconds}");
 
             List<FundingActorDto> fundingActorDtos = _learnerPagingService
                 .BuildPages()
