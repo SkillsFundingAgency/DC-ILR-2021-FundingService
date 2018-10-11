@@ -22,5 +22,6 @@
     <Parameter Name="TopicFunding_TaskPerformFM25Calculation" Value="__TopicFunding_TaskPerformFM25Calculation__" />
     <Parameter Name="TopicFunding_TaskPerformFM35Calculation" Value="__TopicFunding_TaskPerformFM35Calculation__" />
     <Parameter Name="TopicFunding_TaskPerformFM36Calculation" Value="__TopicFunding_TaskPerformFM36Calculation__" />
+    <Parameter Name="TopicFunding_TaskPerformFM70Calculation" Value="__TopicFunding_TaskPerformFM70Calculation__" />
   </Parameters>
 </Application>
