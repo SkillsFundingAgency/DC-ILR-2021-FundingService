@@ -14,31 +14,38 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         public void FCSContractAllocation_Exists()
         {
             var conRef = "123";
-            var contractAllocations = new List<FCSContractAllocation>();
+            IEnumerable<FCSContractAllocation> contractAllocations = new List<FCSContractAllocation>
+            {
+                new FCSContractAllocation
+                {
+                    ContractAllocationNumber = "123"
+                }
+            };
 
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
-            referenceDataCacheMock.SetupGet(rdc => rdc.FCSContractAllocations).Returns(new Dictionary<string, IEnumerable<FCSContractAllocation>>
-            {
-                { conRef, contractAllocations },
-            });
+            referenceDataCacheMock.SetupGet(rdc => rdc.FCSContractAllocations).Returns(contractAllocations);
 
-            NewService(referenceDataCacheMock.Object).FcsContractsForConRef(conRef).Should().BeSameAs(contractAllocations);
+            NewService(referenceDataCacheMock.Object).FcsContractsForConRef(conRef).Should().BeEquivalentTo(contractAllocations);
         }
 
         [Fact]
         public void FCSContractAllocation_NotExists()
         {
-            var conRef = "123";
+            var conRef = "456";
+            var contractAllocations = new List<FCSContractAllocation>
+            {
+                new FCSContractAllocation
+                {
+                    ContractAllocationNumber = "123"
+                }
+            };
 
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
-            referenceDataCacheMock.SetupGet(rdc => rdc.FCSContractAllocations).Returns(new Dictionary<string, IEnumerable<FCSContractAllocation>>
-            {
-                { conRef, null },
-            });
+            referenceDataCacheMock.SetupGet(rdc => rdc.FCSContractAllocations).Returns(contractAllocations);
 
-            NewService(referenceDataCacheMock.Object).FcsContractsForConRef(conRef).Should().BeNull();
+            NewService(referenceDataCacheMock.Object).FcsContractsForConRef(conRef).Should().BeNullOrEmpty();
         }
 
         private FCSReferenceDataService NewService(IExternalDataCache referenceDataCache = null)

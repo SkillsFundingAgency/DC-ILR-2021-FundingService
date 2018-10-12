@@ -50,6 +50,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Interface
 
         IDictionary<long, IEnumerable<AECEarningsHistory>> AECLatestInYearEarningHistory { get; }
 
-        IDictionary<string, IEnumerable<FCSContractAllocation>> FCSContractAllocations { get; }
+        IEnumerable<FCSContractAllocation> FCSContractAllocations { get; }
     }
 }

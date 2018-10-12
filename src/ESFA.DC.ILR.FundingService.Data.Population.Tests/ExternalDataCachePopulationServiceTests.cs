@@ -116,7 +116,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
 
             var fcsDataRetrievalServiceMock = new Mock<IFCSDataRetrievalService>();
 
-            var fcsContractAllocations = new Dictionary<string, IEnumerable<FCSContractAllocation>>();
+            var fcsContractAllocations = new List<FCSContractAllocation>();
 
             fcsDataRetrievalServiceMock.Setup(f => f.UniqueConRefNumbers(message)).Returns(new List<string>()).Verifiable();
             fcsDataRetrievalServiceMock.Setup(f => f.FCSContractsForUKPRN(It.IsAny<int>(), It.IsAny<List<string>>())).Returns(fcsContractAllocations).Verifiable();

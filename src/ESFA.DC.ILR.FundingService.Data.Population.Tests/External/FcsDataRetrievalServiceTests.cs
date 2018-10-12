@@ -203,94 +203,10 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
 
             fcs.Should().HaveCount(2);
 
-            fcs.Should().ContainKeys("1", "2");
+            fcs.Select(c => c.ContractAllocationNumber).Should().Contain("1", "2");
 
-            fcs["1"].Select(f => f.CalcMethod).Should().BeEquivalentTo(1);
-            fcs["2"].Select(f => f.CalcMethod).Should().BeEquivalentTo(2);
-        }
-
-        [Fact]
-        public void FCSContractAllocationFromEntity()
-        {
-            var contractAllocation = new ContractAllocation()
-            {
-                ContractAllocationNumber = "1",
-                FundingStreamCode = "2",
-                Period = "3",
-                PeriodTypeCode = "4",
-                FundingStreamPeriodCode = "5",
-                LearningRatePremiumFactor = 1.0m,
-                StartDate = new DateTime(2018, 8, 1),
-                EndDate = new DateTime(2018, 8, 1),
-                UoPCode = "6",
-                TenderSpecReference = "T1",
-                LotReference = "L1",
-                ContractDeliverables = new List<ContractDeliverable>
-                {
-                    new ContractDeliverable
-                    {
-                        DeliverableCode = 1,
-                        UnitCost = 2.0m
-                    },
-                     new ContractDeliverable
-                    {
-                        DeliverableCode = 2,
-                        UnitCost = 3.0m
-                    }
-                }
-            };
-
-            var eligibilityRules = new List<EsfEligibilityRule>()
-            {
-                new EsfEligibilityRule()
-                {
-                    TenderSpecReference = "T1",
-                    LotReference = "L1",
-                    CalcMethod = 1
-                },
-                new EsfEligibilityRule()
-                {
-                    TenderSpecReference = "T2",
-                    LotReference = "L2",
-                    CalcMethod = 2
-                }
-            }.AsQueryable();
-
-            var codeMappings = new List<ContractDeliverableCodeMapping>()
-            {
-                new ContractDeliverableCodeMapping()
-                {
-                    FundingStreamPeriodCode = "5",
-                    ExternalDeliverableCode = "ST1",
-                    FCSDeliverableCode = "1"
-                },
-                new ContractDeliverableCodeMapping()
-                {
-                    FundingStreamPeriodCode = "5",
-                    ExternalDeliverableCode = "ST2",
-                    FCSDeliverableCode = "2"
-                },
-                new ContractDeliverableCodeMapping()
-                {
-                    FundingStreamPeriodCode = "5",
-                    ExternalDeliverableCode = "ST3",
-                    FCSDeliverableCode = "3"
-                },
-            }.AsQueryable();
-
-            var fcsDataRetrievalServiceMock = NewMock();
-
-            fcsDataRetrievalServiceMock.SetupGet(l => l.EsfEligibilityRules).Returns(eligibilityRules);
-            fcsDataRetrievalServiceMock.SetupGet(l => l.DeliverableCodeMappings).Returns(codeMappings);
-
-            var fcs = fcsDataRetrievalServiceMock.Object.FCSContractAllocationFromEntity(contractAllocation, new DateTime(2018, 8, 1), new DateTime(2018, 8, 1));
-
-            fcs.ContractAllocationNumber.Should().Be(contractAllocation.ContractAllocationNumber);
-            fcs.LearningRatePremiumFactor.Should().Be(contractAllocation.LearningRatePremiumFactor);
-            fcs.TenderSpecReference.Should().Be(contractAllocation.TenderSpecReference);
-            fcs.LotReference.Should().Be(contractAllocation.LotReference);
-            fcs.CalcMethod.Should().Be(1);
-            fcs.FCSContractDeliverables[0].UnitCost.Should().Be(2);
+            fcs.Where(c => c.ContractAllocationNumber == "1").Select(cm => cm.CalcMethod).Should().BeEquivalentTo(1);
+            fcs.Where(c => c.ContractAllocationNumber == "2").Select(cm => cm.CalcMethod).Should().BeEquivalentTo(2);
         }
 
         private FCSDataRetrievalService NewService(IFcsContext fcs = null)

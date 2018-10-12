@@ -38,56 +38,43 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 .Distinct();
         }
 
-        public IDictionary<string, IEnumerable<FCSContractAllocation>> FCSContractsForUKPRN(int ukprn, IEnumerable<string> conRefNumbers)
+        public IEnumerable<FCSContractAllocation> FCSContractsForUKPRN(int ukprn, IEnumerable<string> conRefNumbers)
         {
-            if (Contractors.Where(c => c.Ukprn == ukprn) != null && conRefNumbers.Any(c => c != null))
+            if (Contractors.Where(c => c.Ukprn == ukprn).Any())
             {
                 return Contractors
-                   .Where(c => c.Ukprn == ukprn)
-                   .SelectMany(c => c.Contracts
-                   .SelectMany(ca => ca.ContractAllocations.Where(cr => conRefNumbers.Contains(cr.ContractAllocationNumber))
-                   .Select(f => FCSContractAllocationFromEntity(f, ca.StartDate, ca.EndDate))))
-                   .GroupBy(e => e.ContractAllocationNumber)
-                   .ToDictionary(a => a.Key, a => a as IEnumerable<FCSContractAllocation>);
+                     .Where(c => c.Ukprn == ukprn)
+                     .SelectMany(c => c.Contracts
+                     .SelectMany(ca => ca.ContractAllocations.Where(cr => conRefNumbers.Contains(cr.ContractAllocationNumber))
+                     .Select(f => new FCSContractAllocation
+                     {
+                         ContractAllocationNumber = f.ContractAllocationNumber,
+                         ContractStartDate = ca.StartDate,
+                         ContractEndDate = ca.EndDate,
+                         FundingStreamPeriodCode = f.FundingStreamPeriodCode,
+                         LearningRatePremiumFactor = f.LearningRatePremiumFactor,
+                         TenderSpecReference = f.TenderSpecReference,
+                         LotReference = f.LotReference,
+                         CalcMethod = EsfEligibilityRules
+                           .Where(e => e.TenderSpecReference == f.TenderSpecReference && e.LotReference == f.LotReference)
+                           .Select(cm => cm.CalcMethod).FirstOrDefault(),
+                         FCSContractDeliverables = f.ContractDeliverables.Select(cd => new FCSContractDeliverable
+                         {
+                             DeliverableCode = cd.DeliverableCode,
+                             DeliverableDescription = cd.Description,
+                             PlannedValue = cd.PlannedValue,
+                             PlannedVolume = cd.PlannedVolume,
+                             UnitCost = cd.UnitCost,
+                             ExternalDeliverableCode = DeliverableCodeMappings
+                            .Where(dc =>
+                                dc.FundingStreamPeriodCode == f.FundingStreamPeriodCode
+                                && dc.FCSDeliverableCode == cd.DeliverableCode.ToString())
+                            .Select(e => e.ExternalDeliverableCode).FirstOrDefault()
+                         }).ToList()
+                     }))).ToList() as IEnumerable<FCSContractAllocation>;
             }
 
-            return new Dictionary<string, IEnumerable<FCSContractAllocation>>();
-        }
-
-        public FCSContractAllocation FCSContractAllocationFromEntity(ContractAllocation entity, DateTime? startDate, DateTime? endDate)
-        {
-            return new FCSContractAllocation
-            {
-                ContractAllocationNumber = entity.ContractAllocationNumber,
-                ContractStartDate = startDate,
-                ContractEndDate = endDate,
-                FundingStreamPeriodCode = entity.FundingStreamPeriodCode,
-                LearningRatePremiumFactor = entity.LearningRatePremiumFactor,
-                TenderSpecReference = entity.TenderSpecReference,
-                LotReference = entity.LotReference,
-                CalcMethod = EsfEligibilityRules?
-                       .Where(e => e.TenderSpecReference == entity.TenderSpecReference && e.LotReference == entity.LotReference)
-                       .Select(cm => cm.CalcMethod).SingleOrDefault(),
-                FCSContractDeliverables = entity.ContractDeliverables
-                        .Select(cd => FCSContractDeliverableFromEntity(cd, entity.FundingStreamPeriodCode)).ToList()
-            };
-        }
-
-        public FCSContractDeliverable FCSContractDeliverableFromEntity(ContractDeliverable entity, string fundingStreamPeriodCode)
-        {
-            return new FCSContractDeliverable
-            {
-                DeliverableCode = entity.DeliverableCode,
-                DeliverableDescription = entity.Description,
-                PlannedValue = entity.PlannedValue,
-                PlannedVolume = entity.PlannedVolume,
-                UnitCost = entity.UnitCost,
-                ExternalDeliverableCode = DeliverableCodeMappings?
-                        .Where(dc =>
-                        dc.FundingStreamPeriodCode == fundingStreamPeriodCode
-                        && dc.FCSDeliverableCode == entity.DeliverableCode.ToString())
-                        .Select(e => e.ExternalDeliverableCode).SingleOrDefault()
-            };
+            return null;
         }
     }
 }

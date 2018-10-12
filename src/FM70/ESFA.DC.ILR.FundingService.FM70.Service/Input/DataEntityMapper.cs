@@ -101,7 +101,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
                     { Attributes.AchDate, new AttributeData(learningDelivery.AchDateNullable) },
                     { Attributes.AddHours, new AttributeData(learningDelivery.AddHoursNullable) },
                     { Attributes.AimSeqNumber, new AttributeData(learningDelivery.AimSeqNumber) },
-                    { Attributes.CalcMethod, new AttributeData(esfData.Select(c => c.CalcMethod).SingleOrDefault()) },
+                    { Attributes.CalcMethod, new AttributeData(esfData.Select(c => c.CalcMethod).FirstOrDefault()) },
                     { Attributes.CompStatus, new AttributeData(learningDelivery.CompStatus) },
                     { Attributes.ConRefNumber, new AttributeData(learningDelivery.ConRefNumber) },
                     { Attributes.GenreCode, new AttributeData(larsLearningDelivery.LearningDeliveryGenre) },
