@@ -17,9 +17,9 @@ namespace ESFA.DC.ILR.FundingService.Stubs
             _fundingContext = fundingContext;
         }
 
-        public IEnumerable<IEnumerable<T>> BuildPages()
+        public IEnumerable<IEnumerable<T>> BuildPages(IEnumerable<int> fundModelFilter)
         {
-            var validLearners = _fundingContext.ValidLearners.Cast<T>();
+            var validLearners = _fundingContext.ValidLearners.Where(l => l.LearningDeliveries.Any(ld => fundModelFilter.Contains(ld.FundModel))).ToList().Cast<T>();
 
             return SplitList(validLearners, PageSize);
         }

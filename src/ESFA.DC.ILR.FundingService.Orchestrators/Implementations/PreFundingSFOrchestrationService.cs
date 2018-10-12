@@ -115,8 +115,59 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
 
             _logger.LogDebug($"Funding Service got external data: {stopWatchSteps.ElapsedMilliseconds}");
 
-            List<FundingActorDto> fundingActorDtos = _learnerPagingService
-                .BuildPages()
+            //List<FundingActorDto> fundingActorDtos = _learnerPagingService
+            //    .BuildPages()
+            //    .Select(p =>
+            //        new FundingActorDto
+            //        {
+            //            JobId = jobContextMessage.JobId,
+            //            ExternalDataCache = externalDataCache,
+            //            InternalDataCache = internalDataCache,
+            //            FileDataCache = fileDataCache,
+            //            ValidLearners = _jsonSerializationService.Serialize(p)
+            //        }).ToList();
+
+            List<string> taskNames = jobContextMessage.Topics[jobContextMessage.TopicPointer].Tasks.SelectMany(t => t.Tasks).ToList();
+
+            List<Task> fundingTasks = new List<Task>();
+
+            if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformFM35Calculation))
+            {
+                List<FundingActorDto> fundingActorDtos = GetFundingModelPages(new List<int> { 35 }, jobContextMessage, externalDataCache, internalDataCache, fileDataCache);
+                _logger.LogDebug($"Funding Service FM35 {fundingActorDtos.Count} pages");
+                fundingTasks.Add(_fm35ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString(), cancellationToken));
+            }
+
+            if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformFM36Calculation))
+            {
+                List<FundingActorDto> fundingActorDtos = GetFundingModelPages(new List<int> { 36 }, jobContextMessage, externalDataCache, internalDataCache, fileDataCache);
+                _logger.LogDebug($"Funding Service FM36 {fundingActorDtos.Count} pages");
+                fundingTasks.Add(_fm36ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm36Output].ToString(), cancellationToken));
+            }
+
+            if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformFM25Calculation))
+            {
+                List<FundingActorDto> fundingActorDtos = GetFundingModelPages(new List<int> { 25 }, jobContextMessage, externalDataCache, internalDataCache, fileDataCache);
+                _logger.LogDebug($"Funding Service FM25 {fundingActorDtos.Count} pages");
+                fundingTasks.Add(_fm25ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm25Output].ToString(), cancellationToken));
+            }
+
+            if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformALBCalculation))
+            {
+                List<FundingActorDto> fundingActorDtos = GetFundingModelPages(new List<int> { 99, 81 }, jobContextMessage, externalDataCache, internalDataCache, fileDataCache);
+                _logger.LogDebug($"Funding Service FM99/81 {fundingActorDtos.Count} pages");
+                fundingTasks.Add(_albActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString(), cancellationToken));
+            }
+
+            await Task.WhenAll(fundingTasks).ConfigureAwait(false);
+
+            _logger.LogDebug($"Completed Funding Service for given rule bases in: {stopWatch.ElapsedMilliseconds}");
+        }
+
+        private List<FundingActorDto> GetFundingModelPages(IEnumerable<int> filter, IJobContextMessage jobContextMessage, string externalDataCache, string internalDataCache, string fileDataCache)
+        {
+            return _learnerPagingService
+                .BuildPages(filter)
                 .Select(p =>
                     new FundingActorDto
                     {
@@ -126,34 +177,6 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
                         FileDataCache = fileDataCache,
                         ValidLearners = _jsonSerializationService.Serialize(p)
                     }).ToList();
-
-            List<string> taskNames = jobContextMessage.Topics[jobContextMessage.TopicPointer].Tasks.SelectMany(t => t.Tasks).ToList();
-
-            List<Task> fundingTasks = new List<Task>();
-
-            if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformFM35Calculation))
-            {
-                fundingTasks.Add(_fm35ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString(), cancellationToken));
-            }
-
-            if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformFM36Calculation))
-            {
-                fundingTasks.Add(_fm36ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm36Output].ToString(), cancellationToken));
-            }
-
-            if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformFM25Calculation))
-            {
-                fundingTasks.Add(_fm25ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm25Output].ToString(), cancellationToken));
-            }
-
-            if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformALBCalculation))
-            {
-                fundingTasks.Add(_albActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString(), cancellationToken));
-            }
-
-            await Task.WhenAll(fundingTasks).ConfigureAwait(false);
-
-            _logger.LogDebug($"Completed Funding Service for given rule bases in: {stopWatch.ElapsedMilliseconds}");
         }
     }
 }
