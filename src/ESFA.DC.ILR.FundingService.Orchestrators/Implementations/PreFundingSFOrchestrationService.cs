@@ -90,7 +90,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             FundingServiceDto fundingServiceDto = (FundingServiceDto)_fundingServiceDto;
             fundingServiceDto.Message = await _ilrFileProviderService.Provide(jobContextMessage.KeyValuePairs[JobContextMessageKey.Filename].ToString()).ConfigureAwait(false);
             _logger.LogDebug($"Funding Service got file in: {stopWatchSteps.ElapsedMilliseconds}");
-            stopWatchSteps.Reset();
+            stopWatchSteps.Restart();
 
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -107,7 +107,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            stopWatchSteps.Reset();
+            stopWatchSteps.Restart();
             await _populationService.PopulateAsync(cancellationToken).ConfigureAwait(false);
 
             cancellationToken.ThrowIfCancellationRequested();
