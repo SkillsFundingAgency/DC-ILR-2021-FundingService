@@ -11,5 +11,7 @@ namespace ESFA.DC.ILR.FundingService.Config
         public string TopicFunding_TaskPerformFM35Calculation { get; set; }
 
         public string TopicFunding_TaskPerformFM36Calculation { get; set; }
+
+        public string TopicFunding_TaskPerformFM70Calculation { get; set; }
     }
 }
