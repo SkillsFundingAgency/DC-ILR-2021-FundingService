@@ -90,17 +90,20 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             FundingServiceDto fundingServiceDto = (FundingServiceDto)_fundingServiceDto;
             fundingServiceDto.Message = await _ilrFileProviderService.Provide(jobContextMessage.KeyValuePairs[JobContextMessageKey.Filename].ToString()).ConfigureAwait(false);
             _logger.LogDebug($"Funding Service got file in: {stopWatchSteps.ElapsedMilliseconds}");
+            stopWatchSteps.Reset();
 
             cancellationToken.ThrowIfCancellationRequested();
 
             // get valid and invalid learners from intermediate storage and store it in the dto for rulebases
-            fundingServiceDto.ValidLearners = _jsonSerializationService.Deserialize<string[]>(
-                await _keyValuePersistenceService.GetAsync(
-                    jobContextMessage.KeyValuePairs[JobContextMessageKey.ValidLearnRefNumbers].ToString(), cancellationToken));
+            string validLearnerString = await _keyValuePersistenceService.GetAsync(
+                    jobContextMessage.KeyValuePairs[JobContextMessageKey.ValidLearnRefNumbers].ToString(), cancellationToken);
+            fundingServiceDto.ValidLearners = _jsonSerializationService.Deserialize<string[]>(validLearnerString);
 
             fundingServiceDto.InvalidLearners = _jsonSerializationService.Deserialize<string[]>(
                 await _keyValuePersistenceService.GetAsync(
                     jobContextMessage.KeyValuePairs[JobContextMessageKey.InvalidLearnRefNumbers].ToString(), cancellationToken));
+
+            _logger.LogDebug($"Funding Service got valid learners in: {stopWatchSteps.ElapsedMilliseconds} validlearner(length): {validLearnerString.Length}");
 
             cancellationToken.ThrowIfCancellationRequested();
 
