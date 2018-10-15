@@ -21,20 +21,20 @@
     <Parameter Name="AzureBlobConnectionString" DefaultValue="UseDevelopmentStorage=true" />
     <Parameter Name="AzureBlobContainerName" DefaultValue="ilr-files" />
     <Parameter Name="ProcessingServicePlacementConstraints" DefaultValue="" />
-    <Parameter Name="ALBActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="ALBActorService_PartitionCount" DefaultValue="25" />
     <Parameter Name="ALBActorService_MinReplicaSetSize" DefaultValue="1" />
     <Parameter Name="ALBActorService_TargetReplicaSetSize" DefaultValue="1" />
-    <Parameter Name="FM35ActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="FM35ActorService_PartitionCount" DefaultValue="25" />
     <Parameter Name="FM35ActorService_MinReplicaSetSize" DefaultValue="1" />
     <Parameter Name="FM35ActorService_TargetReplicaSetSize" DefaultValue="1" />
-    <Parameter Name="FM25ActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="FM25ActorService_PartitionCount" DefaultValue="25" />
     <Parameter Name="FM25ActorService_MinReplicaSetSize" DefaultValue="1" />
     <Parameter Name="FM25ActorService_TargetReplicaSetSize" DefaultValue="1" />
     <Parameter Name="TopicFunding_TaskPerformALBCalculation" DefaultValue="ALB" />
     <Parameter Name="TopicFunding_TaskPerformFM25Calculation" DefaultValue="FM25" />
     <Parameter Name="TopicFunding_TaskPerformFM35Calculation" DefaultValue="FM35" />
     <Parameter Name="TopicFunding_TaskPerformFM36Calculation" DefaultValue="FM36" />
-    <Parameter Name="FM36ActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="FM36ActorService_PartitionCount" DefaultValue="25" />
     <Parameter Name="FM36ActorService_MinReplicaSetSize" DefaultValue="1" />
     <Parameter Name="FM36ActorService_TargetReplicaSetSize" DefaultValue="1" />
   </Parameters>
