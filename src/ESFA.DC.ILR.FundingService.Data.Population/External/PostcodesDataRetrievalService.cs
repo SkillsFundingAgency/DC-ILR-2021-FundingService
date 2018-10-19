@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.Data.Postcodes.Model;
 using ESFA.DC.Data.Postcodes.Model.Interfaces;
@@ -69,10 +70,22 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public IDictionary<string, IEnumerable<DasDisadvantage>> DasDisadvantagesForPostcodes(IEnumerable<string> postcodes)
         {
-            return DasPostcodeDisadvantages
-                .Where(p => postcodes.Contains(p.Postcode))
+            IDictionary<string, IEnumerable<DasDisadvantage>> result = new Dictionary<string, IEnumerable<DasDisadvantage>>();
+
+            var postcodeShards = SplitList(postcodes, 5000);
+            foreach (var shard in postcodeShards)
+            {
+                var data = DasPostcodeDisadvantages
+                .Where(p => shard.Contains(p.Postcode))
                 .GroupBy(a => a.Postcode)
                 .ToDictionary(a => a.Key, a => a.Select(DasDisadvantageFromEntity).ToList() as IEnumerable<DasDisadvantage>);
+                foreach (var kvp in data)
+                {
+                    result.Add(kvp);
+                }
+            }
+
+            return result;
         }
 
         public DasDisadvantage DasDisadvantageFromEntity(DAS_PostcodeDisadvantage entity)
@@ -141,6 +154,16 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 EffectiveFrom = entity.EffectiveFrom,
                 EffectiveTo = entity.EffectiveTo,
             };
+        }
+
+        private IEnumerable<IEnumerable<string>> SplitList(IEnumerable<string> postcodes, int nSize = 30)
+        {
+            var l = postcodes.ToList();
+
+            for (var i = 0; i < l.Count; i += nSize)
+            {
+                yield return l.GetRange(i, Math.Min(nSize, l.Count - i));
+            }
         }
     }
 }
