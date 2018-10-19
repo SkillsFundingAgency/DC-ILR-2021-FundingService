@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace ESFA.DC.ILR.FundingService.TBL.FundingOutput.Model.Output
+namespace ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.Output
 {
-    public class TBLLearner
+    public class FM81Learner
     {
         public string LearnRefNumber { get; set; }
 
