@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace ESFA.DC.ILR.FundingService.TBL.FundingOutput.Model.Output
+namespace ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.Output
 {
-    public class TBLGlobal
+    public class FM81Global
     {
         public int UKPRN { get; set; }
 
@@ -12,6 +12,6 @@ namespace ESFA.DC.ILR.FundingService.TBL.FundingOutput.Model.Output
 
         public string RulebaseVersion { get; set; }
 
-        public List<TBLLearner> Learners { get; set; }
+        public List<FM81Learner> Learners { get; set; }
     }
 }

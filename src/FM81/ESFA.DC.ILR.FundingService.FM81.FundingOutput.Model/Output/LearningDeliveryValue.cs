@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ESFA.DC.ILR.FundingService.TBL.FundingOutput.Model.Output
+namespace ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.Output
 {
     public class LearningDeliveryValue
     {
