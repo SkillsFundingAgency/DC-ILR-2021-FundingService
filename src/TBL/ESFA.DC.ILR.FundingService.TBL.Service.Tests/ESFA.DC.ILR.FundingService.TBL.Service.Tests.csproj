@@ -6,11 +6,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DF002585-C7A7-42A1-A0C9-4E2FBA823EE8}</ProjectGuid>
+    <ProjectGuid>{C411DC9D-F986-4764-905F-E15C6BBCC6CF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ESFA.DC.ILR.FundingService.ALB.Service.Tests</RootNamespace>
-    <AssemblyName>ESFA.DC.ILR.FundingService.ALB.Service.Tests</AssemblyName>
+    <RootNamespace>ESFA.DC.ILR.FundingService.TBL.Service.Tests</RootNamespace>
+    <AssemblyName>ESFA.DC.ILR.FundingService.TBL.Service.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -25,7 +25,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.ALB.Service.Tests.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,7 +33,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.ALB.Service.Tests.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
@@ -57,12 +55,6 @@
     </Reference>
     <Reference Include="Moq, Version=4.10.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Moq.4.10.0\lib\net45\Moq.dll</HintPath>
-    </Reference>
-    <Reference Include="Oracle.Determinations.Engine, Version=10.4.0.0, Culture=neutral, PublicKeyToken=863065c849b9b316, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.OPA.RunTime.DLLs.0.1.1-beta0001\lib\Oracle.Determinations.Engine.dll</HintPath>
-    </Reference>
-    <Reference Include="Oracle.Determinations.Masquerade, Version=10.4.0.0, Culture=neutral, PublicKeyToken=863065c849b9b316, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.OPA.RunTime.DLLs.0.1.1-beta0001\lib\Oracle.Determinations.Masquerade.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -95,69 +87,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataEntityMapperTests.cs" />
-    <Compile Include="FundingOutputServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RulebaseInterfaceTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ESFA.DC.ILR.FundingService.ALB.Service.Tests.ruleset" />
     <None Include="packages.config" />
-    <Content Include="Rulebase\Loans Bursary 18_19.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Rulebase\XSRC\Inputs.xsrc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="RulebaseMasterFiles\XSRC\Inputs.xsrc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="RulebaseMasterFiles\Loans Bursary 18_19.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
     <Analyzer Include="..\..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Data\ESFA.DC.ILR.FundingService.Data.csproj">
-      <Project>{69B93B19-4FD0-4205-AFFA-8B71122A3C65}</Project>
-      <Name>ESFA.DC.ILR.FundingService.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model.Interface\ESFA.DC.OPA.Model.Interface.csproj">
-      <Project>{7C69290E-B03C-490B-9821-04E2B0B9CDF7}</Project>
-      <Name>ESFA.DC.OPA.Model.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model\ESFA.DC.OPA.Model.csproj">
-      <Project>{b8b8d031-851c-427b-9dea-9f87a2f1b642}</Project>
-      <Name>ESFA.DC.OPA.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service.Interface\ESFA.DC.OPA.Service.Interface.csproj">
-      <Project>{BBA05279-51DA-427B-8708-CA7AF3A228F5}</Project>
-      <Name>ESFA.DC.OPA.Service.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.XSRC.Model.Interface\ESFA.DC.OPA.XSRC.Model.Interface.csproj">
-      <Project>{2A30BC1F-122E-46BD-95A1-F2F98C3F8B1F}</Project>
-      <Name>ESFA.DC.OPA.XSRC.Model.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.XSRC.Model\ESFA.DC.OPA.XSRC.Model.csproj">
-      <Project>{76638927-C08F-450E-9BFD-3B19AA19BF3F}</Project>
-      <Name>ESFA.DC.OPA.XSRC.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.XSRC.Service\ESFA.DC.OPA.XSRC.Service.csproj">
-      <Project>{D1476198-DC54-475F-B392-CEC5E138A9FF}</Project>
-      <Name>ESFA.DC.OPA.XSRC.Service</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.csproj">
-      <Project>{7D044D8C-64BE-48A0-A2F2-1284FC7395F5}</Project>
-      <Name>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.Service\ESFA.DC.ILR.FundingService.ALB.Service.csproj">
-      <Project>{6d9e7986-7d34-4433-81d2-7c905b621ffd}</Project>
-      <Name>ESFA.DC.ILR.FundingService.ALB.Service</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
