@@ -51,10 +51,22 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public IDictionary<string, IEnumerable<SfaAreaCost>> SfaAreaCostsForPostcodes(IEnumerable<string> postcodes)
         {
-            return SfaPostcodeAreaCosts
+            IDictionary<string, IEnumerable<SfaAreaCost>> result = new Dictionary<string, IEnumerable<SfaAreaCost>>();
+
+            var postcodeShards = SplitList(postcodes, 5000);
+            foreach (var shard in postcodeShards)
+            {
+                var data = SfaPostcodeAreaCosts
                     .Where(p => postcodes.Contains(p.Postcode))
                     .GroupBy(a => a.Postcode)
                     .ToDictionary(a => a.Key, a => a.Select(SfaAreaCostFromEntity).ToList() as IEnumerable<SfaAreaCost>);
+                foreach (var kvp in data)
+                {
+                    result.Add(kvp);
+                }
+            }
+
+            return result;
         }
 
         public SfaAreaCost SfaAreaCostFromEntity(SFA_PostcodeAreaCost entity)
@@ -101,10 +113,22 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public IDictionary<string, IEnumerable<SfaDisadvantage>> SfaDisadvantagesForPostcodes(IEnumerable<string> postcodes)
         {
-            return SfaPostcodeDisadvantages
+            IDictionary<string, IEnumerable<SfaDisadvantage>> result = new Dictionary<string, IEnumerable<SfaDisadvantage>>();
+
+            var postcodeShards = SplitList(postcodes, 5000);
+            foreach (var shard in postcodeShards)
+            {
+                var data = SfaPostcodeDisadvantages
                 .Where(p => postcodes.Contains(p.Postcode))
                 .GroupBy(a => a.Postcode)
                 .ToDictionary(a => a.Key, a => a.Select(SfaDisadvantageFromEntity).ToList() as IEnumerable<SfaDisadvantage>);
+                foreach (var kvp in data)
+                {
+                    result.Add(kvp);
+                }
+            }
+
+            return result;
         }
 
         public SfaDisadvantage SfaDisadvantageFromEntity(SFA_PostcodeDisadvantage entity)
@@ -120,10 +144,22 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public IDictionary<string, IEnumerable<EfaDisadvantage>> EfaDisadvantagesForPostcodes(IEnumerable<string> postcodes)
         {
-            return EfaPostcodeDisadvantages
+            IDictionary<string, IEnumerable<EfaDisadvantage>> result = new Dictionary<string, IEnumerable<EfaDisadvantage>>();
+
+            var postcodeShards = SplitList(postcodes, 5000);
+            foreach (var shard in postcodeShards)
+            {
+                var data = EfaPostcodeDisadvantages
                 .Where(p => postcodes.Contains(p.Postcode))
                 .GroupBy(a => a.Postcode)
                 .ToDictionary(a => a.Key, a => a.Select(EfaDisadvantageFromEntity).ToList() as IEnumerable<EfaDisadvantage>);
+                foreach (var kvp in data)
+                {
+                    result.Add(kvp);
+                }
+            }
+
+            return result;
         }
 
         public EfaDisadvantage EfaDisadvantageFromEntity(EFA_PostcodeDisadvantage entity)
@@ -139,10 +175,22 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public IDictionary<string, IEnumerable<CareerLearningPilot>> CareerLearningPilotsForPostcodes(IEnumerable<string> postcodes)
         {
-            return CareerLearningPilot_Postcodes
+            IDictionary<string, IEnumerable<CareerLearningPilot>> result = new Dictionary<string, IEnumerable<CareerLearningPilot>>();
+
+            var postcodeShards = SplitList(postcodes, 5000);
+            foreach (var shard in postcodeShards)
+            {
+                var data = CareerLearningPilot_Postcodes
                 .Where(p => postcodes.Contains(p.Postcode))
                 .GroupBy(a => a.Postcode)
                 .ToDictionary(a => a.Key, a => a.Select(CareerLearningPilotFromEntity).ToList() as IEnumerable<CareerLearningPilot>);
+                foreach (var kvp in data)
+                {
+                    result.Add(kvp);
+                }
+            }
+
+            return result;
         }
 
         public CareerLearningPilot CareerLearningPilotFromEntity(CareerLearningPilot_Postcode entity)
