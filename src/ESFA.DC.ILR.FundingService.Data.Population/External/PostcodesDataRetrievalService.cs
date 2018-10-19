@@ -57,7 +57,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             foreach (var shard in postcodeShards)
             {
                 var data = SfaPostcodeAreaCosts
-                    .Where(p => postcodes.Contains(p.Postcode))
+                    .Where(p => shard.Contains(p.Postcode))
                     .GroupBy(a => a.Postcode)
                     .ToDictionary(a => a.Key, a => a.Select(SfaAreaCostFromEntity).ToList() as IEnumerable<SfaAreaCost>);
                 foreach (var kvp in data)
@@ -119,7 +119,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             foreach (var shard in postcodeShards)
             {
                 var data = SfaPostcodeDisadvantages
-                .Where(p => postcodes.Contains(p.Postcode))
+                .Where(p => shard.Contains(p.Postcode))
                 .GroupBy(a => a.Postcode)
                 .ToDictionary(a => a.Key, a => a.Select(SfaDisadvantageFromEntity).ToList() as IEnumerable<SfaDisadvantage>);
                 foreach (var kvp in data)
@@ -150,7 +150,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             foreach (var shard in postcodeShards)
             {
                 var data = EfaPostcodeDisadvantages
-                .Where(p => postcodes.Contains(p.Postcode))
+                .Where(p => shard.Contains(p.Postcode))
                 .GroupBy(a => a.Postcode)
                 .ToDictionary(a => a.Key, a => a.Select(EfaDisadvantageFromEntity).ToList() as IEnumerable<EfaDisadvantage>);
                 foreach (var kvp in data)
@@ -181,7 +181,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             foreach (var shard in postcodeShards)
             {
                 var data = CareerLearningPilot_Postcodes
-                .Where(p => postcodes.Contains(p.Postcode))
+                .Where(p => shard.Contains(p.Postcode))
                 .GroupBy(a => a.Postcode)
                 .ToDictionary(a => a.Key, a => a.Select(CareerLearningPilotFromEntity).ToList() as IEnumerable<CareerLearningPilot>);
                 foreach (var kvp in data)
