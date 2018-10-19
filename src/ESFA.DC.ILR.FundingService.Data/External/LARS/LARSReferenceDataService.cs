@@ -105,5 +105,17 @@ namespace ESFA.DC.ILR.FundingService.Data.External.LARS
                 .Where(k => k.Key == standardCode)
                 .Select(v => v.Value).FirstOrDefault();
         }
+
+        public IEnumerable<LARSStandardFunding> LARSStandardFunding(int? standardCode)
+        {
+            if (standardCode == null)
+            {
+                return null;
+            }
+
+            _referenceDataCache.LARSStandardFundings.TryGetValue((int)standardCode, out IEnumerable<LARSStandardFunding> larsStandardFunding);
+
+            return larsStandardFunding?.Where(la => la.FundingCategory == "StandardTblazer");
+        }
     }
 }

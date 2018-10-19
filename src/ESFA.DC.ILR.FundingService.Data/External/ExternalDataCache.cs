@@ -30,7 +30,9 @@ namespace ESFA.DC.ILR.FundingService.Data.External
         public IEnumerable<LARSFrameworkApprenticeshipFunding> LARSApprenticeshipFundingFrameworks { get; set; }
 
         public IDictionary<string, IEnumerable<LARSLearningDeliveryCategory>> LARSLearningDeliveryCategory { get; set; }
-        
+
+        public IDictionary<int, IEnumerable<LARSStandardFunding>> LARSStandardFundings { get; set; }
+
         public string PostcodeCurrentVersion { get; set; }
 
         public IDictionary<string, IEnumerable<SfaAreaCost>> SfaAreaCost { get; set; }
