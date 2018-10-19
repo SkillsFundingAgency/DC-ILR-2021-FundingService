@@ -41,7 +41,9 @@ namespace ESFA.DC.ILR.FundingService.Data.Interface
         IDictionary<string, IEnumerable<LARSFrameworkAims>> LARSFrameworkAims { get; }
 
         IDictionary<string, IEnumerable<LARSLearningDeliveryCategory>> LARSLearningDeliveryCategory { get; }
-        
+
+        IDictionary<int, IEnumerable<LARSStandardFunding>> LARSStandardFundings { get; }
+
         string OrgVersion { get; }
 
         IDictionary<long, IEnumerable<OrgFunding>> OrgFunding { get; }
