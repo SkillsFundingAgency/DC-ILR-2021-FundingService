@@ -24,4 +24,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Data\ESFA.DC.ILR.FundingService.Data.csproj" />
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model\ESFA.DC.OPA.Model.csproj" />
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service.Interface\ESFA.DC.OPA.Service.Interface.csproj" />
+  </ItemGroup>
+
 </Project>
