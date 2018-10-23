@@ -39,10 +39,25 @@
     <Parameter Name="FM36ActorService_PartitionCount" DefaultValue="25" />
     <Parameter Name="FM36ActorService_MinReplicaSetSize" DefaultValue="1" />
     <Parameter Name="FM36ActorService_TargetReplicaSetSize" DefaultValue="1" />
+    <Parameter Name="FM70ActorService_PartitionCount" DefaultValue="25" />
+    <Parameter Name="FM70ActorService_MinReplicaSetSize" DefaultValue="1" />
+    <Parameter Name="FM70ActorService_TargetReplicaSetSize" DefaultValue="1" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="ESFA.DC.ILR.FundingService.FM70ActorPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides>
+      <ConfigOverride Name="Config">
+        <Settings>
+          <Section Name="LoggerSection">
+            <Parameter Name="LoggerConnectionstring" Value="[LoggerConnectionstring]" />
+          </Section>
+        </Settings>
+      </ConfigOverride>
+    </ConfigOverrides>
+  </ServiceManifestImport>
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="ESFA.DC.ILR.FundingService.FM36ActorPkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides>
@@ -169,6 +184,12 @@
     <Service Name="FM25ActorService" GeneratedIdRef="fa318bfa-3e44-4104-b9da-ea02a7873184|None">
       <StatefulService ServiceTypeName="FM25ActorServiceType" TargetReplicaSetSize="[FM25ActorService_TargetReplicaSetSize]" MinReplicaSetSize="[FM25ActorService_MinReplicaSetSize]">
         <UniformInt64Partition PartitionCount="[FM25ActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+        <PlacementConstraints>[ProcessingServicePlacementConstraints]</PlacementConstraints>
+      </StatefulService>
+    </Service>
+    <Service Name="FM70ActorService" GeneratedIdRef="f11ecd77-386e-4cd6-9d42-a6dca3d27bdd|None">
+      <StatefulService ServiceTypeName="FM70ActorServiceType" TargetReplicaSetSize="[FM70ActorService_TargetReplicaSetSize]" MinReplicaSetSize="[FM70ActorService_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[FM70ActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
         <PlacementConstraints>[ProcessingServicePlacementConstraints]</PlacementConstraints>
       </StatefulService>
     </Service>
