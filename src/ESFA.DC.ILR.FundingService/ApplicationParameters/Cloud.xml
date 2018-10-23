@@ -13,6 +13,7 @@
     <Parameter Name="OrganisationConnectionString" Value="__OrganisationsConnectionString__" />
     <Parameter Name="LargeEmployersConnectionString" Value="__LargeEmployerDbConnectionString__" />
     <Parameter Name="AppsEarningsHistoryConnectionString" Value="__AppsEarningsHistoryDbConnectionString__" />
+    <Parameter Name="FCSConnectionString" Value="__FCSDbConnectionString__" />
     <Parameter Name="RedisCacheConnectionString" Value="__RedisCacheConnectionString__" />
     <Parameter Name="AzureBlobConnectionString" Value="__AzureBlobConnectionString__" />
     <Parameter Name="AzureBlobContainerName" Value="__AzureBlobContainerName__" />
@@ -21,5 +22,6 @@
     <Parameter Name="TopicFunding_TaskPerformFM25Calculation" Value="__TopicFunding_TaskPerformFM25Calculation__" />
     <Parameter Name="TopicFunding_TaskPerformFM35Calculation" Value="__TopicFunding_TaskPerformFM35Calculation__" />
     <Parameter Name="TopicFunding_TaskPerformFM36Calculation" Value="__TopicFunding_TaskPerformFM36Calculation__" />
+    <Parameter Name="TopicFunding_TaskPerformFM70Calculation" Value="__TopicFunding_TaskPerformFM70Calculation__" />
   </Parameters>
 </Application>

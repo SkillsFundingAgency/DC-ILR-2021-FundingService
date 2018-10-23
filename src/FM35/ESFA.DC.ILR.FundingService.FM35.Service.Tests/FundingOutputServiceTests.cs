@@ -305,9 +305,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             // ASSERT
             var expectedLearningDeliveryPeriodisedAttributeData = TestLearningDeliveryPeriodisedAttributesDataArray();
 
-            var l = learningDeliveryPeriodisedAttributeData[11];
-            var e = expectedLearningDeliveryPeriodisedAttributeData[11];
-
             expectedLearningDeliveryPeriodisedAttributeData.Should().BeEquivalentTo(learningDeliveryPeriodisedAttributeData);
         }
 

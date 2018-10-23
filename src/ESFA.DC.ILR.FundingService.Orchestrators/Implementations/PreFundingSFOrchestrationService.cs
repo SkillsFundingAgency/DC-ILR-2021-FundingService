@@ -16,6 +16,8 @@ using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FM35Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FM36Actor.Interfaces;
+using ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model.Output;
+using ESFA.DC.ILR.FundingService.FM70Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers.Interfaces;
@@ -23,6 +25,7 @@ using ESFA.DC.ILR.FundingService.Stateless.Models;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.IO.Interfaces;
 using ESFA.DC.JobContext.Interface;
+using ESFA.DC.JobContextManager.Model.Interface;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
 
@@ -35,6 +38,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         private readonly IFundingServiceDto _fundingServiceDto;
         private readonly IPopulationService _populationService;
         private readonly IActorTask<IALBActor, ALBGlobal> _albActorTask;
+        private readonly IActorTask<IFM70Actor, FM70Global> _fm70ActorTask;
         private readonly IActorTask<IFM35Actor, FM35Global> _fm35ActorTask;
         private readonly IActorTask<IFM36Actor, FM36Global> _fm36ActorTask;
         private readonly IActorTask<IFM25Actor, FM25Global> _fm25ActorTask;
@@ -52,6 +56,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             IFundingServiceDto fundingServiceDto,
             IPopulationService populationService,
             IActorTask<IALBActor, ALBGlobal> albActorTask,
+            IActorTask<IFM70Actor, FM70Global> fm70ActorTask,
             IActorTask<IFM35Actor, FM35Global> fm35ActorTask,
             IActorTask<IFM36Actor, FM36Global> fm36ActorTask,
             IActorTask<IFM25Actor, FM25Global> fm25ActorTask,
@@ -68,6 +73,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             _fundingServiceDto = fundingServiceDto;
             _populationService = populationService;
             _albActorTask = albActorTask;
+            _fm70ActorTask = fm70ActorTask;
             _fm35ActorTask = fm35ActorTask;
             _fm36ActorTask = fm36ActorTask;
             _fm25ActorTask = fm25ActorTask;
@@ -133,6 +139,11 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             List<string> taskNames = jobContextMessage.Topics[jobContextMessage.TopicPointer].Tasks.SelectMany(t => t.Tasks).ToList();
 
             List<Task> fundingTasks = new List<Task>();
+
+            if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformFM70Calculation))
+            {
+                fundingTasks.Add(_fm70ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm70Output].ToString(), cancellationToken));
+            }
 
             if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformFM35Calculation))
             {

@@ -2,6 +2,8 @@
 {
     public static class ActorServiceNameConstants
     {
+        public const string FM70 = "FM70ActorService";
+
         public const string FM35 = "FM35ActorService";
 
         public const string FM36 = "FM36ActorService";

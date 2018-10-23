@@ -25,31 +25,16 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public IDictionary<long, IEnumerable<AECEarningsHistory>> AppsEarningsHistoryForLearners(int providerUKPRN, IEnumerable<LearnRefNumberULNKey> learners)
         {
-            var dictionary = new Dictionary<long, IEnumerable<AECEarningsHistory>>();
-
-            foreach (var learner in learners)
-            {
-                var aecHistory = AecLatestInYearHistory?
-                    .Where(
-                        a => a.UKPRN == providerUKPRN
-                        && a.LatestInYear == true
+            return learners
+                .SelectMany(l => AecLatestInYearHistory
+                    .Where(a =>
+                            a.LatestInYear == true
+                        && a.LearnRefNumber == l.LearnRefNumber
+                        && a.UKPRN == providerUKPRN
                         && a.ULN < 9999999999
-                        && a.LearnRefNumber == learner.LearnRefNumber
-                        && a.ULN == learner.ULN)
-                        .Select(u => u).ToList() as List<AppsEarningsHistory>;
-
-                if (aecHistory.Count > 0)
-                {
-                    dictionary.Add(
-                    learner.ULN,
-                    aecHistory
-                    .GroupBy(u => u.ULN)
-                    .Select(u => u.Select(AECLatestInYearEarningsFromEntity).ToList() as List<AECEarningsHistory>)
-                    .SingleOrDefault());
-                }
-            }
-
-            return dictionary;
+                        && a.ULN == l.ULN))
+                .GroupBy(u => u.ULN)
+                .ToDictionary(k => k.Key, v => v.Select(AECLatestInYearEarningsFromEntity));
         }
 
         public AECEarningsHistory AECLatestInYearEarningsFromEntity(AppsEarningsHistory entity)
