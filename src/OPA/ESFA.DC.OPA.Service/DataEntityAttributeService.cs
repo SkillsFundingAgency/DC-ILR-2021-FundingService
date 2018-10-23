@@ -55,7 +55,7 @@ namespace ESFA.DC.OPA.Service
 
                 if (attributeString != Uncertain)
                 {
-                    return int.Parse(attributeString, NumberStyles.AllowDecimalPoint);
+                    return int.Parse(attributeString, NumberStyles.AllowLeadingSign | NumberStyles.AllowDecimalPoint);
                 }
             }
 
@@ -72,7 +72,7 @@ namespace ESFA.DC.OPA.Service
 
                 if (attributeString != Uncertain)
                 {
-                    return long.Parse(attributeString, NumberStyles.AllowDecimalPoint);
+                    return long.Parse(attributeString, NumberStyles.AllowLeadingSign | NumberStyles.AllowDecimalPoint);
                 }
             }
 
