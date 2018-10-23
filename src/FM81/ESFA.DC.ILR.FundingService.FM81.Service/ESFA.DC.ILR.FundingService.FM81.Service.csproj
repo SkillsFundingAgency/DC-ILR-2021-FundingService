@@ -42,6 +42,7 @@
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Data\ESFA.DC.ILR.FundingService.Data.csproj" />
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model\ESFA.DC.OPA.Model.csproj" />
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service.Interface\ESFA.DC.OPA.Service.Interface.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.csproj" />
   </ItemGroup>
 
 </Project>

@@ -61,6 +61,12 @@
     <Reference Include="Moq, Version=4.10.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Moq.4.10.0\lib\net45\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="Oracle.Determinations.Engine, Version=10.4.0.0, Culture=neutral, PublicKeyToken=863065c849b9b316, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ESFA.DC.OPA.RunTime.DLLs.0.1.1-beta0001\lib\Oracle.Determinations.Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.Determinations.Masquerade, Version=10.4.0.0, Culture=neutral, PublicKeyToken=863065c849b9b316, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ESFA.DC.OPA.RunTime.DLLs.0.1.1-beta0001\lib\Oracle.Determinations.Masquerade.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -93,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataEntityMapperTests.cs" />
+    <Compile Include="FundingOutputServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RulebaseInterfaceTests.cs" />
   </ItemGroup>
@@ -136,6 +143,10 @@
       <Project>{b8b8d031-851c-427b-9dea-9f87a2f1b642}</Project>
       <Name>ESFA.DC.OPA.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service.Interface\ESFA.DC.OPA.Service.Interface.csproj">
+      <Project>{BBA05279-51DA-427B-8708-CA7AF3A228F5}</Project>
+      <Name>ESFA.DC.OPA.Service.Interface</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.XSRC.Model.Interface\ESFA.DC.OPA.XSRC.Model.Interface.csproj">
       <Project>{2A30BC1F-122E-46BD-95A1-F2F98C3F8B1F}</Project>
       <Name>ESFA.DC.OPA.XSRC.Model.Interface</Name>
@@ -147,6 +158,10 @@
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.XSRC.Service\ESFA.DC.OPA.XSRC.Service.csproj">
       <Project>{d1476198-dc54-475f-b392-cec5e138a9ff}</Project>
       <Name>ESFA.DC.OPA.XSRC.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.csproj">
+      <Project>{159894d1-43a0-4f81-b52a-734b7f15c1a7}</Project>
+      <Name>ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM81.Service\ESFA.DC.ILR.FundingService.FM81.Service.csproj">
       <Project>{5de5a009-8dd4-49b7-9270-853282a7c18f}</Project>

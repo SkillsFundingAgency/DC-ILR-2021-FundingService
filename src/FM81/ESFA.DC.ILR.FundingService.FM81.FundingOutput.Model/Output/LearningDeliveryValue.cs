@@ -98,7 +98,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.Output
 
         public DateTime? YoungAppFirstThresholdDate { get; set; }
 
-        public decimal YoungAppPayment { get; set; }
+        public decimal? YoungAppPayment { get; set; }
 
         public decimal? YoungAppSecondPayment { get; set; }
 
