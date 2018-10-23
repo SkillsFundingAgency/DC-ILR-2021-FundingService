@@ -194,7 +194,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         [Fact]
         public void LARSStandardApprenticeshipFunding_NullStdCode()
         {
-            int? stdCode = 1;
             int? progType = 2;
             var standardApprenticeshipFunding = new List<LARSStandardApprenticeshipFunding>();
 
@@ -209,7 +208,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         public void LARSStandardApprenticeshipFunding_NullProgType()
         {
             int? stdCode = 1;
-            int? progType = 2;
             var standardApprenticeshipFunding = new List<LARSStandardApprenticeshipFunding>();
 
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
@@ -237,7 +235,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         [Fact]
         public void LARSFrameworkApprenticeshipFunding_NullStdCode()
         {
-            int? stdCode = 1;
             int? progType = 2;
             int? pwayCode = 3;
             var frameworkApprenticeshipFunding = new List<LARSFrameworkApprenticeshipFunding>();
@@ -253,7 +250,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         public void LARSFrameworkApprenticeshipFunding_NullProgType()
         {
             int? stdCode = 1;
-            int? progType = 2;
             int? pwayCode = 3;
             var frameworkApprenticeshipFunding = new List<LARSFrameworkApprenticeshipFunding>();
 
@@ -269,7 +265,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         {
             int? stdCode = 1;
             int? progType = 2;
-            int? pwayCode = 3;
             var frameworkApprenticeshipFunding = new List<LARSFrameworkApprenticeshipFunding>();
 
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
@@ -283,7 +278,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         public void LARSStandardCommonComponent()
         {
             int? stdCode = 1;
-            int? progType = 2;
             IEnumerable<LARSStandardCommonComponent> larsStandardCommonComponent = new List<LARSStandardCommonComponent>();
 
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
@@ -300,7 +294,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         public void LARSStandardCommonComponent_NotExists()
         {
             int? stdCode = 2;
-            int? progType = 2;
             IEnumerable<LARSStandardCommonComponent> larsStandardCommonComponent = new List<LARSStandardCommonComponent>();
 
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
@@ -316,8 +309,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         [Fact]
         public void LARSStandardCommonComponent_NotExistsNull()
         {
-            int? stdCode = 2;
-            int? progType = 2;
             IEnumerable<LARSStandardCommonComponent> larsStandardCommonComponent = new List<LARSStandardCommonComponent>();
 
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
@@ -349,7 +340,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         [Fact]
         public void LARSFrameworkCommonComponentNull_LearnAimRef()
         {
-            var learnAimRef = "LearnAimRef";
             int? fworkCode = 1;
             int? progType = 2;
             int? pwayCode = 3;
@@ -366,7 +356,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         public void LARSFrameworkCommonComponentNullLearn_FworkCode()
         {
             var learnAimRef = "LearnAimRef";
-            int? fworkCode = 1;
             int? progType = 2;
             int? pwayCode = 3;
             IEnumerable<LARSFrameworkCommonComponent> larsFrameworkCommonComponent = new List<LARSFrameworkCommonComponent>();
@@ -383,7 +372,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         {
             var learnAimRef = "LearnAimRef";
             int? fworkCode = 1;
-            int? progType = 2;
             int? pwayCode = 3;
             IEnumerable<LARSFrameworkCommonComponent> larsFrameworkCommonComponent = new List<LARSFrameworkCommonComponent>();
 
@@ -400,7 +388,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             var learnAimRef = "LearnAimRef";
             int? fworkCode = 1;
             int? progType = 2;
-            int? pwayCode = 3;
             IEnumerable<LARSFrameworkCommonComponent> larsFrameworkCommonComponent = new List<LARSFrameworkCommonComponent>();
 
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
