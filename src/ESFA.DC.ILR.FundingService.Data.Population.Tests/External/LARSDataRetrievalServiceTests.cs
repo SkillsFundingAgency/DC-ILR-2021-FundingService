@@ -1013,6 +1013,108 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             larsApprenticeshipFunding.PwayCode.Should().Be(entity.PwayCode);
         }
 
+        [Fact]
+        public void LARSStandardFundingForStandardCodes()
+        {
+            var lars_StandardFunding = new List<LARS_StandardFunding>()
+            {
+                new LARS_StandardFunding()
+                {
+                    AchievementIncentive = 1.0m,
+                    BandNumber = 1,
+                    EffectiveFrom = new DateTime(2017, 1, 1),
+                    EffectiveTo = new DateTime(2018, 1, 1),
+                    CoreGovContributionCap = 2.0m,
+                    FundableWithoutEmployer = "2",
+                    FundingCategory = "Category",
+                    C1618Incentive = 3.0m,
+                    SmallBusinessIncentive = 4.0m,
+                    StandardCode = 3
+                },
+                 new LARS_StandardFunding()
+                {
+                    AchievementIncentive = 1.0m,
+                    BandNumber = 1,
+                    EffectiveFrom = new DateTime(2017, 1, 1),
+                    EffectiveTo = new DateTime(2018, 1, 1),
+                    CoreGovContributionCap = 2.0m,
+                    FundableWithoutEmployer = "2",
+                    FundingCategory = "Category",
+                    C1618Incentive = 3.0m,
+                    SmallBusinessIncentive = 4.0m,
+                    StandardCode = 44
+                },
+                new LARS_StandardFunding()
+                {
+                    AchievementIncentive = 1.0m,
+                    BandNumber = 1,
+                    EffectiveFrom = new DateTime(2017, 1, 1),
+                    EffectiveTo = new DateTime(2018, 1, 1),
+                    CoreGovContributionCap = 2.0m,
+                    FundableWithoutEmployer = "2",
+                    FundingCategory = "Category",
+                    C1618Incentive = 3.0m,
+                    SmallBusinessIncentive = 4.0m,
+                    StandardCode = 3
+                },
+                new LARS_StandardFunding()
+                {
+                    AchievementIncentive = 1.0m,
+                    BandNumber = 1,
+                    EffectiveFrom = new DateTime(2017, 1, 1),
+                    EffectiveTo = new DateTime(2018, 1, 1),
+                    CoreGovContributionCap = 2.0m,
+                    FundableWithoutEmployer = "2",
+                    FundingCategory = "Category",
+                    C1618Incentive = 3.0m,
+                    SmallBusinessIncentive = 4.0m,
+                    StandardCode = 55
+                }
+            }.AsQueryable();
+
+            var larsDataRetrievalServiceMock = NewMock();
+
+            larsDataRetrievalServiceMock.SetupGet(l => l.LARSStandardFundings).Returns(lars_StandardFunding);
+
+            var standardCodes = new List<int> { 3, 44 };
+
+            var larsStamdardFundings = larsDataRetrievalServiceMock.Object.LARSStandardFundingForStandardCodes(standardCodes);
+
+            larsStamdardFundings.Should().HaveCount(2);
+            larsStamdardFundings.SelectMany(l => l.Value).Should().HaveCount(3);
+        }
+
+        [Fact]
+        public void LARSStandardFundingFromEntity()
+        {
+            var entity = new LARS_StandardFunding()
+            {
+                AchievementIncentive = 1.0m,
+                BandNumber = 1,
+                EffectiveFrom = new DateTime(2017, 1, 1),
+                EffectiveTo = new DateTime(2018, 1, 1),
+                CoreGovContributionCap = 2.0m,
+                FundableWithoutEmployer = "2",
+                FundingCategory = "Category",
+                C1618Incentive = 3.0m,
+                SmallBusinessIncentive = 4.0m,
+                StandardCode = 3
+            };
+
+            var larsApprenticeshipFunding = NewService().LARSStandardFundingFromEntity(entity);
+
+            larsApprenticeshipFunding.AchievementIncentive.Should().Be(entity.AchievementIncentive);
+            larsApprenticeshipFunding.BandNumber.Should().Be(entity.BandNumber);
+            larsApprenticeshipFunding.CoreGovContributionCap.Should().Be(entity.CoreGovContributionCap);
+            larsApprenticeshipFunding.EffectiveFrom.Should().Be(entity.EffectiveFrom);
+            larsApprenticeshipFunding.EffectiveTo.Should().Be(entity.EffectiveTo);
+            larsApprenticeshipFunding.FundableWithoutEmployer.Should().Be(entity.FundableWithoutEmployer);
+            larsApprenticeshipFunding.FundingCategory.Should().Be(entity.FundingCategory);
+            larsApprenticeshipFunding.SixteenToEighteenIncentive.Should().Be(entity.C1618Incentive);
+            larsApprenticeshipFunding.SmallBusinessIncentive.Should().Be(entity.SmallBusinessIncentive);
+            larsApprenticeshipFunding.StandardCode.Should().Be(entity.StandardCode);
+        }
+
         private LARSDataRetrievalService NewService(ILARS lars = null)
         {
             return new LARSDataRetrievalService(lars);
