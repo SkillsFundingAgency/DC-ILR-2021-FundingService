@@ -70,6 +70,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             referenceDataCache.LARSFrameworkCommonComponent = _larsDataRetrievalService.LARSFrameworkCommonComponentForLearnAimRefs(frameworks);
             referenceDataCache.LARSApprenticeshipFundingStandards = _larsDataRetrievalService.LARSApprenticeshipFundingStandards(apprenticeshipFundingStandards);
             referenceDataCache.LARSApprenticeshipFundingFrameworks = _larsDataRetrievalService.LARSApprenticeshipFundingFrameworks(apprenticeshipFundingFrameworks);
+            referenceDataCache.LARSStandardFundings = _larsDataRetrievalService.LARSStandardFundingForStandardCodes(standardCodes);
 
             referenceDataCache.PostcodeCurrentVersion = _postcodesDataRetrievalService.CurrentVersion();
             referenceDataCache.DasDisadvantage = _postcodesDataRetrievalService.DasDisadvantagesForPostcodes(uniquePostcodes);

@@ -83,6 +83,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             var larsFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>();
             var larsApprenticeshipFundingStandards = new List<LARSStandardApprenticeshipFunding>();
             var larsApprenticeshipFundingFrameworks = new List<LARSFrameworkApprenticeshipFunding>();
+            var larsStandardFundings = new Dictionary<int, IEnumerable<LARSStandardFunding>>();
 
             larsDataRetrievalServiceMock.Setup(l => l.UniqueLearnAimRefs(message)).Returns(new List<string>()).Verifiable();
             larsDataRetrievalServiceMock.Setup(l => l.UniqueStandardCodes(message)).Returns(new List<int>()).Verifiable();
@@ -99,6 +100,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             larsDataRetrievalServiceMock.Setup(l => l.LARSFrameworkCommonComponentForLearnAimRefs(It.IsAny<List<LARSFrameworkKey>>())).Returns(larsFrameworkCommonComponents).Verifiable();
             larsDataRetrievalServiceMock.Setup(l => l.LARSApprenticeshipFundingStandards(It.IsAny<List<LARSApprenticeshipFundingKey>>())).Returns(larsApprenticeshipFundingStandards).Verifiable();
             larsDataRetrievalServiceMock.Setup(l => l.LARSApprenticeshipFundingFrameworks(It.IsAny<List<LARSApprenticeshipFundingKey>>())).Returns(larsApprenticeshipFundingFrameworks).Verifiable();
+            larsDataRetrievalServiceMock.Setup(l => l.LARSStandardFundingForStandardCodes(It.IsAny<List<int>>())).Returns(larsStandardFundings).Verifiable();
 
             var organisationDataRetrievalServiceMock = new Mock<IOrganisationDataRetrievalService>();
 
@@ -154,6 +156,11 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             externalDataCache.LARSFunding.Should().BeSameAs(larsFundings);
             externalDataCache.LARSLearningDelivery.Should().BeSameAs(larsLearningDeliveries);
             externalDataCache.LARSLearningDeliveryCategory.Should().BeSameAs(larsLearningDeliveryCategories);
+            externalDataCache.LARSStandardFundings.Should().BeSameAs(larsStandardFundings);
+            externalDataCache.LARSFrameworkCommonComponent.Should().BeSameAs(larsFrameworkCommonComponents);
+            externalDataCache.LARSStandardCommonComponent.Should().BeSameAs(larsStandardCommonComponents);
+            externalDataCache.LARSApprenticeshipFundingFrameworks.Should().BeSameAs(larsApprenticeshipFundingFrameworks);
+            externalDataCache.LARSApprenticeshipFundingStandards.Should().BeSameAs(larsApprenticeshipFundingStandards);
 
             externalDataCache.OrgVersion.Should().Be(organisationCurrentVersion);
             externalDataCache.OrgFunding.Should().BeSameAs(orgFundings);

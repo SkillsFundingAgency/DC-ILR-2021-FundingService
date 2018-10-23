@@ -38,6 +38,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public virtual IQueryable<LARS_FrameworkCmnComp> LARSFrameworkCommonComponents => _lars.LARS_FrameworkCmnComp;
 
+        public virtual IQueryable<LARS_StandardFunding> LARSStandardFundings => _lars.LARS_StandardFunding;
+
         public virtual IQueryable<LARS_ApprenticeshipFunding> LARSApprenticeshipFundings => _lars.LARS_ApprenticeshipFunding;
 
         public string CurrentVersion()
@@ -299,6 +301,31 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             }
 
             return larsFrameworkCommonComponents;
+        }
+
+        public IDictionary<int, IEnumerable<LARSStandardFunding>> LARSStandardFundingForStandardCodes(IEnumerable<int> standardCodes)
+        {
+            return LARSStandardFundings
+                .Where(sc => standardCodes.Contains(sc.StandardCode))
+                .GroupBy(s => s.StandardCode)
+                .ToDictionary(a => a.Key, a => a.Select(LARSStandardFundingFromEntity).ToList() as IEnumerable<LARSStandardFunding>);
+        }
+
+        public LARSStandardFunding LARSStandardFundingFromEntity(LARS_StandardFunding entity)
+        {
+            return new LARSStandardFunding()
+            {
+                StandardCode = entity.StandardCode,
+                FundingCategory = entity.FundingCategory,
+                EffectiveFrom = entity.EffectiveFrom,
+                EffectiveTo = entity.EffectiveTo,
+                AchievementIncentive = entity.AchievementIncentive,
+                BandNumber = entity.BandNumber,
+                CoreGovContributionCap = entity.CoreGovContributionCap,
+                FundableWithoutEmployer = entity.FundableWithoutEmployer,
+                SixteenToEighteenIncentive = entity.C1618Incentive,
+                SmallBusinessIncentive = entity.SmallBusinessIncentive
+            };
         }
 
         public IEnumerable<LARSStandardApprenticeshipFunding> LARSApprenticeshipFundingStandards(IEnumerable<LARSApprenticeshipFundingKey> apprenticeshipFundingKeys)
