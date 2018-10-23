@@ -16,7 +16,7 @@
 
         public string RES { get; set; }
 
-        public string SOP { get; set; }
+        public string SOF { get; set; }
 
         public string SPP { get; set; }
     }

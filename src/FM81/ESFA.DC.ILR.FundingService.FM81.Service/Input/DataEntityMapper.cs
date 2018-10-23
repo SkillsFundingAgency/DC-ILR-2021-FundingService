@@ -99,7 +99,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Input
                     { Attributes.LrnDelFAM_LDM3, new AttributeData(learningDeliveryFAMDenormalized.LDM3) },
                     { Attributes.LrnDelFAM_LDM4, new AttributeData(learningDeliveryFAMDenormalized.LDM4) },
                     { Attributes.LrnDelFAM_RES, new AttributeData(learningDeliveryFAMDenormalized.RES) },
-                    { Attributes.LrnDelFAM_SOP, new AttributeData(learningDeliveryFAMDenormalized.SOP) },
+                    { Attributes.LrnDelFAM_SOF, new AttributeData(learningDeliveryFAMDenormalized.SOF) },
                     { Attributes.LrnDelFAM_SPP, new AttributeData(learningDeliveryFAMDenormalized.SPP) },
                     { Attributes.OrigLearnStartDate, new AttributeData(learningDelivery.OrigLearnStartDateNullable) },
                     { Attributes.OtherFundAdj, new AttributeData(learningDelivery.OtherFundAdjNullable) },
@@ -241,7 +241,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Input
                 learningDeliveryFam.LDM3 = ldmArray[2];
                 learningDeliveryFam.LDM4 = ldmArray[3];
                 learningDeliveryFam.RES = learningDeliveryFams.Where(f => f.LearnDelFAMType == Attributes.RES).Select(f => f.LearnDelFAMCode).FirstOrDefault();
-                learningDeliveryFam.SOP = learningDeliveryFams.Where(f => f.LearnDelFAMType == Attributes.SOP).Select(f => f.LearnDelFAMCode).FirstOrDefault();
+                learningDeliveryFam.SOF = learningDeliveryFams.Where(f => f.LearnDelFAMType == Attributes.SOF).Select(f => f.LearnDelFAMCode).FirstOrDefault();
                 learningDeliveryFam.SPP = learningDeliveryFams.Where(f => f.LearnDelFAMType == Attributes.SPP).Select(f => f.LearnDelFAMCode).FirstOrDefault();
             }
 

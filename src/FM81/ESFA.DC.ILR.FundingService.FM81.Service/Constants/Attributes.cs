@@ -13,7 +13,7 @@
         public const string EntityLearnerEmploymentStatus = "LearnerEmploymentStatus";
         public const string EntityLearningDeliveryFAM = "LearningDeliveryFAM";
         public const string EntityStandardCommonComponent = "LARS_StandardCommonComponent";
-        public const string EntityLearningDeliveryLARS_StandardFunding = "LearningDeliveryLARS_StandardFunding";
+        public const string EntityLearningDeliveryLARS_StandardFunding = "LARS_StandardFunding";
 
         // Global Names
         public const string LARSVersion = "LARSVersion";
@@ -58,7 +58,7 @@
         public const string LrnDelFAM_LDM3 = "LrnDelFAM_LDM3";
         public const string LrnDelFAM_LDM4 = "LrnDelFAM_LDM4";
         public const string LrnDelFAM_RES = "LrnDelFAM_RES";
-        public const string LrnDelFAM_SOP = "LrnDelFAM_SOP";
+        public const string LrnDelFAM_SOF = "LrnDelFAM_SOF";
         public const string LrnDelFAM_SPP = "LrnDelFAM_SPP";
         public const string OrigLearnStartDate = "OrigLearnStartDate";
         public const string OtherFundAdj = "OtherFundAdj";
@@ -140,7 +140,7 @@
         public const string FFI = "FFI";
         public const string LDM = "LDM";
         public const string RES = "RES";
-        public const string SOP = "SOP";
+        public const string SOF = "SOF";
         public const string SPP = "SPP";
 
         // ApprenticeshipFinancialRecord
@@ -159,7 +159,7 @@
         public const string LARSStandardCommonComponentCode = "LARSCommonComponent";
         public const string LARSStandardCommonComponentStandardCode = "LARSStandardCode";
         public const string LARSStandardCommonComponentEffectiveFrom = "LARSEffectiveFrom";
-        public const string LARSStandardCommonComponentEffectiveTo = "LARSEffectiveFromTo";
+        public const string LARSStandardCommonComponentEffectiveTo = "LARSEffectiveTo";
 
         // LARS_StandardFunding
         public const string SFFundableWithoutEmployer = "FundableWithoutEmployer";
