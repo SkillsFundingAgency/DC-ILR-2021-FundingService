@@ -77,7 +77,10 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
 
             stopWatch.Restart();
 
-            await _keyValuePersistenceService.SaveAsync(outputKey, _jsonSerializationService.Serialize(_fundingOutputCondenserService.Condense(results)), cancellationToken).ConfigureAwait(false);
+            var output = _jsonSerializationService.Serialize(_fundingOutputCondenserService.Condense(results));
+            _logger.LogDebug($"Persisting {_actorName} bytes:{output.Length}");
+
+            await _keyValuePersistenceService.SaveAsync(outputKey, output, cancellationToken).ConfigureAwait(false);
 
             _logger.LogDebug($"Persisted {_actorName} results - {stopWatch.ElapsedMilliseconds}");
         }
