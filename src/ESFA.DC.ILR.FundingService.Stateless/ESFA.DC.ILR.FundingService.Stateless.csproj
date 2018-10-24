@@ -116,14 +116,14 @@
     <Reference Include="ESFA.DC.IO.Redis, Version=0.1.13.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.IO.Redis.0.1.13-beta0001\lib\netstandard2.0\ESFA.DC.IO.Redis.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.JobContext.Interface, Version=0.2.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.JobContext.Interface.0.2.2-beta0001\lib\netstandard2.0\ESFA.DC.JobContext.Interface.dll</HintPath>
+    <Reference Include="ESFA.DC.JobContext.Interface, Version=0.2.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.JobContext.Interface.0.2.4-beta0001\lib\netstandard2.0\ESFA.DC.JobContext.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.JobContextManager, Version=0.2.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.JobContextManager.0.2.2-beta0001\lib\netstandard2.0\ESFA.DC.JobContextManager.dll</HintPath>
+    <Reference Include="ESFA.DC.JobContextManager, Version=0.2.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.JobContextManager.0.2.4-beta0001\lib\netstandard2.0\ESFA.DC.JobContextManager.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.JobStatus.Interface, Version=0.2.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.JobStatus.Interface.0.2.2-beta0001\lib\netstandard2.0\ESFA.DC.JobStatus.Interface.dll</HintPath>
+    <Reference Include="ESFA.DC.JobStatus.Interface, Version=0.2.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.JobStatus.Interface.0.2.4-beta0001\lib\netstandard2.0\ESFA.DC.JobStatus.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.Logging, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Logging.0.1.1-beta0001\lib\netstandard2.0\ESFA.DC.Logging.dll</HintPath>
@@ -537,6 +537,14 @@
     <ProjectReference Include="..\FM70\ESFA.DC.ILR.FundingService.FM70Actor.Interfaces\ESFA.DC.ILR.FundingService.FM70Actor.Interfaces.csproj">
       <Project>{2C7AA0A7-536A-464A-B7E6-2E5C57F72E86}</Project>
       <Name>ESFA.DC.ILR.FundingService.FM70Actor.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FM81\ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.csproj">
+      <Project>{159894D1-43A0-4F81-B52A-734B7F15C1A7}</Project>
+      <Name>ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FM81\ESFA.DC.ILR.FundingService.FM81Actor.Interfaces\ESFA.DC.ILR.FundingService.FM81Actor.Interfaces.csproj">
+      <Project>{8be7515b-fb45-47ea-9b2c-a5fa61252aeb}</Project>
+      <Name>ESFA.DC.ILR.FundingService.FM81Actor.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
