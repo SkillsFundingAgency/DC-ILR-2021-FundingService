@@ -81,6 +81,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FM81FundingOutputCondenserServiceTests.cs" />
     <Compile Include="FM70FundingOutputCondenserServiceTests.cs" />
     <Compile Include="FM36FundingOutputCondenserServiceTests.cs" />
     <Compile Include="FM35FundingOutputCondenserServiceTests.cs" />
@@ -112,6 +113,10 @@
     <ProjectReference Include="..\FM70\ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model.csproj">
       <Project>{CE34CD36-5367-4832-A1B3-C05CF63B7680}</Project>
       <Name>ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FM81\ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.csproj">
+      <Project>{159894D1-43A0-4F81-B52A-734B7F15C1A7}</Project>
+      <Name>ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -18,6 +18,8 @@ using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FM36Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FM70Actor.Interfaces;
+using ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.Output;
+using ESFA.DC.ILR.FundingService.FM81Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers.Interfaces;
@@ -38,6 +40,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         private readonly IFundingServiceDto _fundingServiceDto;
         private readonly IPopulationService _populationService;
         private readonly IActorTask<IALBActor, ALBGlobal> _albActorTask;
+        private readonly IActorTask<IFM81Actor, FM81Global> _fm81ActorTask;
         private readonly IActorTask<IFM70Actor, FM70Global> _fm70ActorTask;
         private readonly IActorTask<IFM35Actor, FM35Global> _fm35ActorTask;
         private readonly IActorTask<IFM36Actor, FM36Global> _fm36ActorTask;
@@ -56,6 +59,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             IFundingServiceDto fundingServiceDto,
             IPopulationService populationService,
             IActorTask<IALBActor, ALBGlobal> albActorTask,
+            IActorTask<IFM81Actor, FM81Global> fm81ActorTask,
             IActorTask<IFM70Actor, FM70Global> fm70ActorTask,
             IActorTask<IFM35Actor, FM35Global> fm35ActorTask,
             IActorTask<IFM36Actor, FM36Global> fm36ActorTask,
@@ -73,6 +77,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             _fundingServiceDto = fundingServiceDto;
             _populationService = populationService;
             _albActorTask = albActorTask;
+            _fm81ActorTask = fm81ActorTask;
             _fm70ActorTask = fm70ActorTask;
             _fm35ActorTask = fm35ActorTask;
             _fm36ActorTask = fm36ActorTask;
@@ -139,6 +144,13 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             List<string> taskNames = jobContextMessage.Topics[jobContextMessage.TopicPointer].Tasks.SelectMany(t => t.Tasks).ToList();
 
             List<Task> fundingTasks = new List<Task>();
+
+            if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformFM81Calculation))
+            {
+                List<FundingActorDto> fundingActorDtos = GetFundingModelPages(new List<int> { 81 }, jobContextMessage, externalDataCache, internalDataCache, fileDataCache);
+                _logger.LogDebug($"Funding Service FM81 {fundingActorDtos.Count} pages");
+                fundingTasks.Add(_fm81ActorTask.Execute(fundingActorDtos, jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm81Output].ToString(), cancellationToken));
+            }
 
             if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformFM70Calculation))
             {
