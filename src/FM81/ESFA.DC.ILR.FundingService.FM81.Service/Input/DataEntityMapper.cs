@@ -15,7 +15,8 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Input
 {
     public class DataEntityMapper : IDataEntityMapper<ILearner>
     {
-        private readonly HashSet<int> _fundModels = new HashSet<int> { Attributes.FundModel_81 };
+        private readonly int _fundModels = Attributes.FundModel_81;
+        private readonly int? _progType = Attributes.ProgType_25;
 
         private readonly ILARSReferenceDataService _larsReferenceDataService;
         private readonly IFileDataService _fileDataService;
@@ -32,7 +33,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Input
         {
             var global = BuildGlobal();
 
-            var entities = inputModels.Where(l => l.LearningDeliveries.Any(ld => _fundModels.Contains(ld.FundModel))).Select(l => BuildGlobalDataEntity(l, global));
+            var entities = inputModels.Where(l => l.LearningDeliveries.Any(ld => _fundModels == ld.FundModel && _progType == ld.ProgTypeNullable)).Select(l => BuildGlobalDataEntity(l, global));
 
             return entities.Any() ? entities : new List<IDataEntity> { BuildGlobalDataEntity(null, global) };
         }
