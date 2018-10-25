@@ -72,8 +72,12 @@ namespace ESFA.DC.ILR.FundingService.Stateless
                     KeyExpiry = new TimeSpan(14, 0, 0, 0)
                 }).As<IRedisKeyValuePersistenceServiceConfig>().SingleInstance();
 
-            builder.RegisterType<RedisKeyValuePersistenceService>().As<IKeyValuePersistenceService>().InstancePerLifetimeScope();
-            builder.RegisterType<AzureStorageKeyValuePersistenceService>().Keyed<IKeyValuePersistenceService>(IOPersistenceKeys.Blob).As<IStreamableKeyValuePersistenceService>().InstancePerLifetimeScope();
+            builder.RegisterType<AzureStorageKeyValuePersistenceService>()
+                .As<IKeyValuePersistenceService>().InstancePerLifetimeScope();
+
+            builder.RegisterType<AzureStorageKeyValuePersistenceService>()
+                .Keyed<IKeyValuePersistenceService>(IOPersistenceKeys.Blob)
+                .As<IStreamableKeyValuePersistenceService>().InstancePerLifetimeScope();
 
             // register reference data configs
             var referenceDataConfig = configHelper.GetSectionValues<ReferenceDataConfig>("ReferenceDataSection");
