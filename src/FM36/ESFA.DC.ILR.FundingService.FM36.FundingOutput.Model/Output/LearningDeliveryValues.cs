@@ -26,6 +26,8 @@ namespace ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output
 
         public bool? FundStart { get; set; }
 
+        public int? FworkCode { get; set; }
+
         public decimal? LDApplic1618FrameworkUpliftBalancingValue { get; set; }
 
         public decimal? LDApplic1618FrameworkUpliftCompElement { get; set; }
@@ -90,7 +92,13 @@ namespace ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output
 
         public int? PlannedTotalDaysIL { get; set; }
 
+        public int? ProgType { get; set; }
+
+        public int? PwayCode { get; set; }
+
         public DateTime? SecondIncentiveThresholdDate { get; set; }
+
+        public int? StdCode { get; set; }
 
         public int? ThresholdDays { get; set; }
 

@@ -44,6 +44,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         public void LearnerFromDataEntity()
         {
             var learnRefNumber = "LearnRefNumber";
+            var uln = 1234567890;
 
             var dataEntity = new DataEntity(string.Empty)
             {
@@ -53,10 +54,12 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
 
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "LearnRefNumber")).Returns(learnRefNumber);
+            dataEntityAttributeServiceMock.Setup(s => s.GetLongAttributeValue(dataEntity, "ULN")).Returns(uln);
 
             var learner = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).MapLearner(dataEntity);
 
             learner.LearnRefNumber = learnRefNumber;
+            learner.ULN = uln;
         }
 
         [Fact]
@@ -254,7 +257,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "PlannedNumOnProgInstalm")).Returns(plannedNumOnProgInstalm);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "PlannedTotalDaysIL")).Returns(plannedTotalDaysIL);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "PriorLearnFundAdj")).Returns(priorLearnFundAdj);
-            dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "PriorLearnFundAdj")).Returns(progType);
+            dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "ProgType")).Returns(progType);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "PwayCode")).Returns(pwayCode);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "SecondIncentiveThresholdDate")).Returns(secondIncentiveThresholdDate);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "STDCode")).Returns(stdCode);
@@ -273,6 +276,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             learningDelivery.Completed.Should().Be(completed);
             learningDelivery.FirstIncentiveThresholdDate.Should().Be(firstIncentiveThresholdDate);
             learningDelivery.FundStart.Should().Be(fundStart);
+            learningDelivery.FworkCode.Should().Be(fworkCode);
             learningDelivery.LDApplic1618FrameworkUpliftBalancingValue.Should().Be(ldApplic1618FrameworkUpliftBalancingValue);
             learningDelivery.LDApplic1618FrameworkUpliftCompElement.Should().Be(ldApplic1618FrameworkUpliftCompElement);
             learningDelivery.LDApplic1618FRameworkUpliftCompletionValue.Should().Be(ldApplic1618FRameworkUpliftCompletionValue);
@@ -312,7 +316,10 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             learningDelivery.OutstandNumOnProgInstalm.Should().Be(outstandNumOnProgInstalm);
             learningDelivery.PlannedNumOnProgInstalm.Should().Be(plannedNumOnProgInstalm);
             learningDelivery.PlannedTotalDaysIL.Should().Be(plannedTotalDaysIL);
+            learningDelivery.ProgType.Should().Be(progType);
+            learningDelivery.PwayCode.Should().Be(pwayCode);
             learningDelivery.SecondIncentiveThresholdDate.Should().Be(secondIncentiveThresholdDate);
+            learningDelivery.StdCode.Should().Be(stdCode);
             learningDelivery.ThresholdDays.Should().Be(thresholdDays);
         }
 
