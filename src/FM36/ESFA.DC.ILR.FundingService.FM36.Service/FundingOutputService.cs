@@ -56,6 +56,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
             return new FM36Learner()
             {
                 LearnRefNumber = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.LearnRefNumber),
+                ULN = _dataEntityAttributeService.GetLongAttributeValue(dataEntity, Attributes.ULN),
                 LearningDeliveries = dataEntity
                         .Children
                         .Where(e => e.EntityName == Attributes.EntityLearningDelivery)
@@ -96,6 +97,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 Completed = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, Attributes.Completed),
                 FirstIncentiveThresholdDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.FirstIncentiveThresholdDate),
                 FundStart = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, Attributes.FundStart),
+                FworkCode = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.FworkCode),
                 LDApplic1618FrameworkUpliftBalancingValue = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.LDApplic1618FrameworkUpliftBalancingValue),
                 LDApplic1618FrameworkUpliftCompElement = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.LDApplic1618FrameworkUpliftCompElement),
                 LDApplic1618FRameworkUpliftCompletionValue = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.LDApplic1618FRameworkUpliftCompletionValue),
@@ -135,7 +137,10 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 OutstandNumOnProgInstalm = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.OutstandNumOnProgInstalm),
                 PlannedNumOnProgInstalm = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.PlannedNumOnProgInstalm),
                 PlannedTotalDaysIL = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.PlannedTotalDaysIL),
+                ProgType = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.ProgType),
+                PwayCode = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.PwayCode),
                 SecondIncentiveThresholdDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.SecondIncentiveThresholdDate),
+                StdCode = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.STDCode),
                 ThresholdDays = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.ThresholdDays)
             };
         }
