@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.ALB.Service.Constants;
@@ -246,7 +247,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service
                     return stringValue == "true" ? 1.0m : 0.0m;
                 }
 
-                return decimal.Parse(stringValue);
+                return decimal.Parse(stringValue, NumberStyles.Float);
             }
 
             return null;

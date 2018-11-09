@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.Output;
@@ -222,7 +223,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service
                     return stringValue == "true" ? 1.0m : 0.0m;
                 }
 
-                return decimal.Parse(stringValue);
+                return decimal.Parse(stringValue, NumberStyles.Float);
             }
 
             return null;

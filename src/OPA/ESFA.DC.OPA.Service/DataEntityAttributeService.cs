@@ -89,7 +89,7 @@ namespace ESFA.DC.OPA.Service
 
                 if (attributeString != Uncertain)
                 {
-                    return decimal.Parse(attributeString);
+                    return decimal.Parse(attributeString, NumberStyles.Float);
                 }
             }
 
