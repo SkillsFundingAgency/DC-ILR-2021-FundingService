@@ -771,6 +771,11 @@
           <base>the learning delivery's earliest price episode start date</base>
         </text>
       </attribute>
+      <attribute name="p664" type="date" public-name="LearnDelEarlSDAnyAppThisFundYear">
+        <text>
+          <base>the learning delivery's earliest start date on any apprenticeship this funding year</base>
+        </text>
+      </attribute>
     </entity>
     <entity id="learningdeliveryfam" name="the learning delivery FAM" containment-relationship-id="learningdeliverysfams" containment-parent-id="learningdelivery">
       <attribute name="p169" type="date" public-name="FAMFromDatePeriodStart">
