@@ -17,7 +17,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
 {
     public class DataEntityMapper : IDataEntityMapper<ILearner>
     {
-        private readonly HashSet<int> _fundModels = new HashSet<int> { 81, 99 };
+        private readonly HashSet<int> _fundModels = new HashSet<int> { Attributes.FundModel_81, Attributes.FundModel_99 };
 
         private readonly ILARSReferenceDataService _larsReferenceDataService;
         private readonly IPostcodesReferenceDataService _postcodesReferenceDataService;
@@ -64,6 +64,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
                 Children =
                     (learner
                         .LearningDeliveries?
+                        .Where(ld => _fundModels.Contains(ld.FundModel))
                         .Select(BuildLearningDeliveryDataEntity) ?? new List<IDataEntity>())
                         .ToList()
             };

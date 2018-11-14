@@ -435,6 +435,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                         AimSeqNumber = 2,
                         AimType = 3,
                         CompStatus = 4,
+                        FundModel = 36,
                         PwayCodeNullable = 5,
                         ProgTypeNullable = 6,
                         FworkCodeNullable = 7,

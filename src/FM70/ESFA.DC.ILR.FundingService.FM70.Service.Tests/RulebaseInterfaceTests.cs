@@ -376,6 +376,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
                         CompStatus = 4,
                         ConRefNumber = "Conref",
                         DelLocPostCode = "Postcode",
+                        FundModel = 70,
                         PwayCodeNullable = 5,
                         ProgTypeNullable = 6,
                         FworkCodeNullable = 7,
