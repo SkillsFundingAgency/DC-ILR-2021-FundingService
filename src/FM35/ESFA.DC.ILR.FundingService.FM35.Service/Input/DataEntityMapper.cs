@@ -21,7 +21,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
 {
     public class DataEntityMapper : IDataEntityMapper<ILearner>
     {
-        private readonly HashSet<int> _fundModels = new HashSet<int> { Attributes.FundModel_35 };
+        private readonly int _fundModel = Attributes.FundModel_35;
 
         private readonly ILargeEmployersReferenceDataService _largeEmployersReferenceDataService;
         private readonly ILARSReferenceDataService _larsReferenceDataService;
@@ -47,7 +47,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
         {
             var global = BuildGlobal();
 
-            var entities = inputModels.Where(l => l.LearningDeliveries.Any(ld => _fundModels.Contains(ld.FundModel))).Select(l => BuildGlobalDataEntity(l, global));
+            var entities = inputModels.Where(l => l.LearningDeliveries.Any(ld => ld.FundModel == _fundModel)).Select(l => BuildGlobalDataEntity(l, global));
 
             return entities.Any() ? entities : new List<IDataEntity> { BuildGlobalDataEntity(null, global) };
         }
@@ -92,6 +92,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                 Children =
                     (learner
                         .LearningDeliveries?
+                        .Where(ld => ld.FundModel == _fundModel)
                         .Select(BuildLearningDeliveryDataEntity) ?? new List<IDataEntity>())
                         .Union(
                             learner.LearnerEmploymentStatuses?

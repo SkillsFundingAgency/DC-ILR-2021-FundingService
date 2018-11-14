@@ -402,6 +402,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                         PwayCodeNullable = 5,
                         ProgTypeNullable = 6,
                         FworkCodeNullable = 7,
+                        FundModel = 35,
                         StdCodeNullable = 8,
                         LearnStartDate = new DateTime(2018, 8, 1),
                         LearnPlanEndDate = new DateTime(2019, 8, 1),
