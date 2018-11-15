@@ -46,6 +46,8 @@ namespace ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output
 
         public string LearnAimRef { get; set; }
 
+        public DateTime LearnStartDate { get; set; }
+
         public bool? LearnDel1618AtStart { get; set; }
 
         public decimal? LearnDelAppAccDaysIL { get; set; }
