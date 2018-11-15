@@ -66,6 +66,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         public void LearningDeliveryFromDataEntity()
         {
             var aimSeqNumber = 1;
+            var learnStartDate = new DateTime(2018, 08, 01);
 
             var dataEntity = new DataEntity(string.Empty)
             {
@@ -106,6 +107,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
 
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "AimSeqNumber")).Returns(aimSeqNumber);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "LearnStartDate")).Returns(learnStartDate);
 
             var learningDelivery = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).LearningDeliveryFromDataEntity(dataEntity);
 
@@ -187,7 +189,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
            var stdCode = 16;
            var thresholdDays = 12;
 
-        var dataEntity = new DataEntity(string.Empty);
+            var dataEntity = new DataEntity(string.Empty);
 
             var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
 

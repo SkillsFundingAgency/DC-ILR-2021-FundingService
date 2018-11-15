@@ -6,7 +6,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output
     {
         public string LearnRefNumber { get; set; }
 
-        public long? ULN { get; set; }
+        public long ULN { get; set; }
 
         public List<PriceEpisode> PriceEpisodes { get; set; }
 

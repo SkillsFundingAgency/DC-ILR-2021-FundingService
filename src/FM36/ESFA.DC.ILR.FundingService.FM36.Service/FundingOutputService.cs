@@ -57,7 +57,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
             return new FM36Learner()
             {
                 LearnRefNumber = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.LearnRefNumber),
-                ULN = _dataEntityAttributeService.GetLongAttributeValue(dataEntity, Attributes.ULN),
+                ULN = _dataEntityAttributeService.GetLongAttributeValue(dataEntity, Attributes.ULN).Value,
                 LearningDeliveries = dataEntity
                         .Children
                         .Where(e => e.EntityName == Attributes.EntityLearningDelivery)
@@ -134,6 +134,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 LearnDelLearnerAddPayThresholdDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.LearnDelLearnerAddPayThresholdDate),
                 LearnDelRedCode = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.LearnDelRedCode),
                 LearnDelRedStartDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.LearnDelRedStartDate),
+                LearnStartDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.LearnStartDate).Value,
                 MathEngAimValue = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.MathEngAimValue),
                 OutstandNumOnProgInstalm = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.OutstandNumOnProgInstalm),
                 PlannedNumOnProgInstalm = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.PlannedNumOnProgInstalm),
