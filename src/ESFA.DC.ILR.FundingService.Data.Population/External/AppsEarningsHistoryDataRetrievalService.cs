@@ -36,7 +36,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 .SelectMany(l => AecLatestInYearHistory
                     .Where(a =>
                             a.LatestInYear == true
-                        && a.LearnRefNumber == l.LearnRefNumber
+                        && a.LearnRefNumber.CaseInsensitiveEquals(l.LearnRefNumber)
                         && a.UKPRN == providerUKPRN
                         && a.ULN < 9999999999
                         && a.ULN == l.ULN))

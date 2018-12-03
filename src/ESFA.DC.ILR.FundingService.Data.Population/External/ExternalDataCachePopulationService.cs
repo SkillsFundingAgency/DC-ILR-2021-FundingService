@@ -46,21 +46,20 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         {
             var providerUKPRN = _fundingServiceDto.Message.LearningProviderEntity.UKPRN;
 
-            var uniquePostcodes = _postcodesDataRetrievalService.UniquePostcodes(_fundingServiceDto.Message).ToCaseInsensitiveHashSet(); // new
-            var learnAimRefs = _larsDataRetrievalService.UniqueLearnAimRefs(_fundingServiceDto.Message).ToCaseInsensitiveHashSet(); // new
+            var uniquePostcodes = _postcodesDataRetrievalService.UniquePostcodes(_fundingServiceDto.Message).ToCaseInsensitiveHashSet();
+            var learnAimRefs = _larsDataRetrievalService.UniqueLearnAimRefs(_fundingServiceDto.Message).ToCaseInsensitiveHashSet();
             var standardCodes = _larsDataRetrievalService.UniqueStandardCodes(_fundingServiceDto.Message).ToList();
-
             var frameworks = _larsDataRetrievalService.UniqueFrameworkCommonComponents(_fundingServiceDto.Message);
             var apprenticeshipFundingStandards = _larsDataRetrievalService.UniqueApprenticeshipFundingStandards(_fundingServiceDto.Message);
             var apprenticeshipFundingFrameworks = _larsDataRetrievalService.UniqueApprenticeshipFundingFrameworks(_fundingServiceDto.Message);
+
             var uniqueEmployerIds = _largeEmployersDataRetrievalService.UniqueEmployerIds(_fundingServiceDto.Message).ToList();
+
             var ukprns = new List<long>() { providerUKPRN };
 
-            // maybe something here
-            // check this. do postcodes tests. apps earnings tests, fcs tests
             var learnRefNumberAndULN = _fundingServiceDto.Message.Learners.Select(l => new LearnRefNumberULNKey(l.LearnRefNumber, l.ULN));
 
-            var conRefNumbers = _fcsDataRetrievalService.UniqueConRefNumbers(_fundingServiceDto.Message).ToCaseInsensitiveHashSet(); // new
+            var conRefNumbers = _fcsDataRetrievalService.UniqueConRefNumbers(_fundingServiceDto.Message).ToCaseInsensitiveHashSet();
 
             var referenceDataCache = (ExternalDataCache)_externalDataCache;
 

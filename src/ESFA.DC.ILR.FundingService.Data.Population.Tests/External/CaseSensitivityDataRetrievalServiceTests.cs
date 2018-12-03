@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ESFA.DC.Data.AppsEarningsHistory.Model;
 using ESFA.DC.Data.LARS.Model;
 using ESFA.DC.Data.LARS.Model.Interfaces;
+using ESFA.DC.Data.Postcodes.Model;
+using ESFA.DC.Data.Postcodes.Model.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.Population.External;
 using ESFA.DC.ILR.FundingService.Data.Population.Helpers;
 using ESFA.DC.ILR.FundingService.Data.Population.Keys;
 using ESFA.DC.ILR.FundingService.Tests.Common;
 using ESFA.DC.ILR.Tests.Model;
+using ESFA.DC.ReferenceData.FCS.Model;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -319,14 +323,291 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             larsFramworkCommonComponents.Select(l => l.LearnAimRef).ToList().Should().Contain("ABC123", "abc456");
         }
 
-        private LARSDataRetrievalService NewLARSService(ILARS lars = null)
+        [Fact]
+        public void PostcodeRetrieval()
         {
-            return new LARSDataRetrievalService(lars);
+            var sfaPostcodeAreaCosts = new List<SFA_PostcodeAreaCost>()
+            {
+                new SFA_PostcodeAreaCost()
+                {
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2WT" },
+                    Postcode = "CV1 2WT",
+                    AreaCostFactor = 1.2m,
+                    EffectiveFrom = new DateTime(2000, 01, 01),
+                    EffectiveTo = null,
+                },
+                new SFA_PostcodeAreaCost()
+                {
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2TT" },
+                    Postcode = "CV1 2TT",
+                    AreaCostFactor = 1.5m,
+                    EffectiveFrom = new DateTime(2000, 01, 01),
+                    EffectiveTo = new DateTime(2015, 12, 31)
+                },
+                new SFA_PostcodeAreaCost()
+                {
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2TT" },
+                    Postcode = "CV1 2TT",
+                    AreaCostFactor = 2.1m,
+                    EffectiveFrom = new DateTime(2016, 01, 01),
+                    EffectiveTo = null,
+                },
+                new SFA_PostcodeAreaCost()
+                {
+                    MasterPostcode = new MasterPostcode { Postcode = "cv1 1dd" },
+                    Postcode = "cv1 1dd",
+                    AreaCostFactor = 2.1m,
+                    EffectiveFrom = new DateTime(2016, 01, 01),
+                    EffectiveTo = null,
+                },
+                new SFA_PostcodeAreaCost()
+                {
+                    Postcode = "Fictional"
+                }
+            }.AsQueryable();
+
+            var postcodesDataRetrievalServiceMock = NewPostcodesMock();
+
+            postcodesDataRetrievalServiceMock.SetupGet(p => p.SfaPostcodeAreaCosts).Returns(sfaPostcodeAreaCosts);
+
+            var postcodes = new List<string>() { "CV1 2Wt", "cv1 2tt", "CV1 1DD" }.ToCaseInsensitiveHashSet();
+
+            var sfaAreaCosts = postcodesDataRetrievalServiceMock.Object.SfaAreaCostsForPostcodes(postcodes);
+
+            sfaAreaCosts.Should().HaveCount(3);
+            sfaAreaCosts.Should().ContainKeys("CV1 2WT", "CV1 2TT", "cv1 1dd");
+            sfaAreaCosts.Should().NotContainKey("Fictional");
+
+            sfaAreaCosts["CV1 2TT"].Should().HaveCount(2);
+            sfaAreaCosts["CV1 2WT"].Should().HaveCount(1);
+            sfaAreaCosts["cv1 1dd"].Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void FCSContracts()
+        {
+            var contractors = new List<Contractor>()
+            {
+                new Contractor()
+                {
+                    Ukprn = 1,
+                    Contracts = new List<Contract>
+                    {
+                        new Contract
+                        {
+                            ContractAllocations = new List<ContractAllocation>
+                            {
+                                new ContractAllocation
+                                {
+                                    FundingStreamPeriodCode = "7",
+                                    ContractAllocationNumber = "aa",
+                                    TenderSpecReference = "T1",
+                                    LotReference = "L1",
+                                    ContractDeliverables = new List<ContractDeliverable>
+                                    {
+                                        new ContractDeliverable
+                                        {
+                                            DeliverableCode = 1,
+                                            UnitCost = 2.0m
+                                        },
+                                         new ContractDeliverable
+                                        {
+                                            DeliverableCode = 2,
+                                            UnitCost = 3.0m
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                new Contractor()
+                {
+                    Ukprn = 1,
+                    Contracts = new List<Contract>
+                    {
+                        new Contract
+                        {
+                            ContractAllocations = new List<ContractAllocation>
+                            {
+                                new ContractAllocation
+                                {
+                                    ContractAllocationNumber = "BB",
+                                    TenderSpecReference = "T2",
+                                    LotReference = "L2",
+                                    FundingStreamPeriodCode = "5",
+                                    ContractDeliverables = new List<ContractDeliverable>
+                                    {
+                                        new ContractDeliverable
+                                        {
+                                            DeliverableCode = 1,
+                                            UnitCost = 2.0m
+                                        },
+                                        new ContractDeliverable
+                                        {
+                                            DeliverableCode = 2,
+                                            UnitCost = 3.0m
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }.AsQueryable();
+
+            var eligibilityRules = new List<EsfEligibilityRule>()
+            {
+                new EsfEligibilityRule()
+                {
+                    TenderSpecReference = "T1",
+                    LotReference = "L1",
+                    CalcMethod = 1
+                },
+                new EsfEligibilityRule()
+                {
+                    TenderSpecReference = "T2",
+                    LotReference = "L2",
+                    CalcMethod = 2
+                }
+            }.AsQueryable();
+
+            var codeMappings = new List<ContractDeliverableCodeMapping>()
+            {
+                new ContractDeliverableCodeMapping()
+                {
+                    FundingStreamPeriodCode = "4",
+                    ExternalDeliverableCode = "ST2",
+                    FCSDeliverableCode = "2"
+                },
+                new ContractDeliverableCodeMapping()
+                {
+                    FundingStreamPeriodCode = "5",
+                    ExternalDeliverableCode = "ST1",
+                    FCSDeliverableCode = "1"
+                },
+                new ContractDeliverableCodeMapping()
+                {
+                    FundingStreamPeriodCode = "5",
+                    ExternalDeliverableCode = "ST2",
+                    FCSDeliverableCode = "2"
+                },
+                new ContractDeliverableCodeMapping()
+                {
+                    FundingStreamPeriodCode = "5",
+                    ExternalDeliverableCode = "ST3",
+                    FCSDeliverableCode = "3"
+                },
+            }.AsQueryable();
+
+            var fcsDataRetrievalServiceMock = NewFCSMock();
+
+            fcsDataRetrievalServiceMock.SetupGet(l => l.Contractors).Returns(contractors);
+            fcsDataRetrievalServiceMock.SetupGet(l => l.EsfEligibilityRules).Returns(eligibilityRules);
+            fcsDataRetrievalServiceMock.SetupGet(l => l.DeliverableCodeMappings).Returns(codeMappings);
+
+            var conRefNumbers = new List<string>() { "AA", "bb", "Cc" }.ToCaseInsensitiveHashSet();
+
+            var fcs = fcsDataRetrievalServiceMock.Object.FCSContractsForUKPRN(1, conRefNumbers);
+
+            fcs.Should().HaveCount(2);
+
+            fcs.Select(c => c.ContractAllocationNumber).Should().Contain("aa", "BB");
+
+            fcs.Where(c => c.ContractAllocationNumber == "aa").Select(cm => cm.CalcMethod).Should().BeEquivalentTo(1);
+            fcs.Where(c => c.ContractAllocationNumber == "BB").Select(cm => cm.CalcMethod).Should().BeEquivalentTo(2);
+        }
+
+        [Fact]
+        public void AppsEarningsHistory()
+        {
+            var apps_Histories = new List<AppsEarningsHistory>()
+            {
+                new AppsEarningsHistory()
+                {
+                    LearnRefNumber = "ABC123",
+                    ULN = 1234567890,
+                    UKPRN = 123456,
+                    LatestInYear = true,
+                    HistoricTNP1Input = 1
+                },
+                new AppsEarningsHistory()
+                {
+                    LearnRefNumber = "ABC123",
+                    ULN = 1234567890,
+                    UKPRN = 123456,
+                    LatestInYear = true,
+                    HistoricTNP1Input = 2
+                },
+                new AppsEarningsHistory()
+                {
+                    LearnRefNumber = "ABC123",
+                    ULN = 12345678,
+                    UKPRN = 123456,
+                    LatestInYear = true,
+                    HistoricTNP1Input = 2
+                },
+                new AppsEarningsHistory()
+                {
+                    LearnRefNumber = "abc456",
+                    ULN = 1234567899,
+                    UKPRN = 123456,
+                    LatestInYear = true,
+                    HistoricTNP1Input = 1
+                },
+                new AppsEarningsHistory()
+                {
+                    LearnRefNumber = "abc456",
+                    ULN = 1234567890,
+                    UKPRN = 1234,
+                    LatestInYear = true,
+                    HistoricTNP1Input = 1
+                },
+                new AppsEarningsHistory()
+                {
+                    LearnRefNumber = "abc456",
+                    ULN = 1234567890,
+                    UKPRN = 123456,
+                    LatestInYear = false,
+                    HistoricTNP1Input = 1
+                },
+                new AppsEarningsHistory(),
+            }.AsQueryable();
+
+            var appsEarningHistoryDataRetrievalServiceMock = NewAppsHistoryMock();
+
+            appsEarningHistoryDataRetrievalServiceMock.SetupGet(a => a.AecLatestInYearHistory).Returns(apps_Histories);
+
+            var ukprn = 123456;
+            var learners = new List<LearnRefNumberULNKey> { new LearnRefNumberULNKey("ABC123", 1234567890), new LearnRefNumberULNKey("ABC456", 1234567899) };
+
+            var aecHistories = appsEarningHistoryDataRetrievalServiceMock.Object.AppsEarningsHistoryForLearners(ukprn, learners);
+
+            aecHistories.Should().HaveCount(2);
+            aecHistories.Should().ContainKeys(1234567890, 1234567899);
+            aecHistories.SelectMany(v => v.Value).Should().HaveCount(3);
+            aecHistories[1234567890].Should().HaveCount(2);
+            aecHistories[1234567899].Should().HaveCount(1);
+        }
+
+        private Mock<PostcodesDataRetrievalService> NewPostcodesMock()
+        {
+            return new Mock<PostcodesDataRetrievalService>();
         }
 
         private Mock<LARSDataRetrievalService> NewLARSMock()
         {
             return new Mock<LARSDataRetrievalService>();
+        }
+
+        private Mock<AppsEarningsHistoryDataRetrievalService> NewAppsHistoryMock()
+        {
+            return new Mock<AppsEarningsHistoryDataRetrievalService>();
+        }
+
+        private Mock<FCSDataRetrievalService> NewFCSMock()
+        {
+            return new Mock<FCSDataRetrievalService>();
         }
     }
 }
