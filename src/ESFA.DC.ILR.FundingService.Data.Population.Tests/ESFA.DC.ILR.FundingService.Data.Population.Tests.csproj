@@ -152,6 +152,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Data.Extensions\ESFA.DC.ILR.FundingService.Data.Extensions.csproj">
+      <Project>{3b3d8772-4b66-4b95-b094-933bba6f9997}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Data.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Data.Population\ESFA.DC.ILR.FundingService.Data.Population.csproj">
       <Project>{CB179664-339B-4877-B208-1007AE42FD7C}</Project>
       <Name>ESFA.DC.ILR.FundingService.Data.Population</Name>

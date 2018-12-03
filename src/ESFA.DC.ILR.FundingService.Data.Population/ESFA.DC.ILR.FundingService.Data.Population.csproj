@@ -141,8 +141,6 @@
     <Compile Include="File\FileDataRetrievalService.cs" />
     <Compile Include="Context\ValidLearnersDataRetrievalService.cs" />
     <Compile Include="File\FileDataCachePopulationService.cs" />
-    <Compile Include="Helpers\StringExtensions.cs" />
-    <Compile Include="Helpers\EnumerableExtensions.cs" />
     <Compile Include="Interface\IAppsEarningsHistoryDataRetrievalService.cs" />
     <Compile Include="Interface\IFileDataCachePopulationService.cs" />
     <Compile Include="Interface\IFundingContextPopulationService.cs" />
@@ -172,6 +170,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Data.Extensions\ESFA.DC.ILR.FundingService.Data.Extensions.csproj">
+      <Project>{3b3d8772-4b66-4b95-b094-933bba6f9997}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Data.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Data\ESFA.DC.ILR.FundingService.Data.csproj">
       <Project>{69B93B19-4FD0-4205-AFFA-8B71122A3C65}</Project>
       <Name>ESFA.DC.ILR.FundingService.Data</Name>

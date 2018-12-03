@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace ESFA.DC.ILR.FundingService.Data.Population.Helpers
+namespace ESFA.DC.ILR.FundingService.Data.Extensions
 {
     public static class StringExtensions
     {
