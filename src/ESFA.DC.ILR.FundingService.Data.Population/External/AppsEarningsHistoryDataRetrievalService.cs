@@ -29,19 +29,21 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         {
             IDictionary<long, IEnumerable<AECEarningsHistory>> result = new Dictionary<long, IEnumerable<AECEarningsHistory>>();
 
+            var learnRefs = learners.Select(l => l.LearnRefNumber).ToCaseInsensitiveHashSet();
+            var ulns = learners.Select(l => l.ULN).ToCaseInsensitiveHashSet();
+
             var learnerShards = learners.SplitList(5000);
             foreach (var shard in learnerShards)
             {
-                var data = shard
-                .SelectMany(l => AecLatestInYearHistory
-                    .Where(a =>
-                            a.LatestInYear == true
-                        && a.LearnRefNumber.CaseInsensitiveEquals(l.LearnRefNumber)
-                        && a.UKPRN == providerUKPRN
-                        && a.ULN < 9999999999
-                        && a.ULN == l.ULN))
-                .GroupBy(u => u.ULN)
-                .ToDictionary(k => k.Key, v => v.Select(AECLatestInYearEarningsFromEntity));
+               var data = AecLatestInYearHistory
+               .Where(a =>
+                      a.LatestInYear == true
+                   && a.UKPRN == providerUKPRN
+                   && a.ULN < 9999999999
+                   && ulns.Contains(a.ULN)
+                   && learnRefs.Contains(a.LearnRefNumber))
+                   .GroupBy(u => u.ULN)
+                   .ToDictionary(k => k.Key, v => v.Select(AECLatestInYearEarningsFromEntity));
 
                 foreach (var kvp in data)
                 {
