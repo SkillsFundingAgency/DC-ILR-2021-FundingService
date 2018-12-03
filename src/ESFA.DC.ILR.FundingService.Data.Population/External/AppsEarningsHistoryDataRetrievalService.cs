@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.Data.AppsEarningsHistory.Model;
 using ESFA.DC.Data.AppsEarningsHistory.Model.Interfaces;
+using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory.Model;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Keys;
@@ -28,19 +29,21 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         {
             IDictionary<long, IEnumerable<AECEarningsHistory>> result = new Dictionary<long, IEnumerable<AECEarningsHistory>>();
 
-            var learnerShards = SplitList(learners, 5000);
+            var learnRefs = learners.Select(l => l.LearnRefNumber).ToCaseInsensitiveHashSet();
+            var ulns = learners.Select(l => l.ULN).ToCaseInsensitiveHashSet();
+
+            var learnerShards = learners.SplitList(5000);
             foreach (var shard in learnerShards)
             {
-                var data = shard
-                .SelectMany(l => AecLatestInYearHistory
-                    .Where(a =>
-                            a.LatestInYear == true
-                        && a.LearnRefNumber == l.LearnRefNumber
-                        && a.UKPRN == providerUKPRN
-                        && a.ULN < 9999999999
-                        && a.ULN == l.ULN))
-                .GroupBy(u => u.ULN)
-                .ToDictionary(k => k.Key, v => v.Select(AECLatestInYearEarningsFromEntity));
+               var data = AecLatestInYearHistory
+               .Where(a =>
+                      a.LatestInYear == true
+                   && a.UKPRN == providerUKPRN
+                   && a.ULN < 9999999999
+                   && ulns.Contains(a.ULN)
+                   && learnRefs.Contains(a.LearnRefNumber))
+                   .GroupBy(u => u.ULN)
+                   .ToDictionary(k => k.Key, v => v.Select(AECLatestInYearEarningsFromEntity));
 
                 foreach (var kvp in data)
                 {
@@ -86,16 +89,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 UKPRN = entity.UKPRN,
                 ULN = entity.ULN
             };
-        }
-
-        private IEnumerable<IEnumerable<LearnRefNumberULNKey>> SplitList(IEnumerable<LearnRefNumberULNKey> learners, int nSize = 30)
-        {
-            var l = learners.ToList();
-
-            for (var i = 0; i < l.Count; i += nSize)
-            {
-                yield return l.GetRange(i, Math.Min(nSize, l.Count - i));
-            }
         }
     }
 }

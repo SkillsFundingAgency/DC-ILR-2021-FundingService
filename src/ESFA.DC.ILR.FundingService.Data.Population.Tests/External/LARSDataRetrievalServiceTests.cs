@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.Data.LARS.Model;
 using ESFA.DC.Data.LARS.Model.Interfaces;
+using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Data.Population.External;
 using ESFA.DC.ILR.FundingService.Data.Population.Keys;
 using ESFA.DC.ILR.FundingService.Tests.Common;
@@ -702,6 +703,45 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             larsFrameworkAims.Should().ContainKeys("123", "456");
             larsFrameworkAims["123"].Should().HaveCount(2);
             larsFrameworkAims["456"].Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void LARSFrameworkAimsForLearnAimRefs_MixedCase()
+        {
+            var lars_FrameworkAims = new List<LARS_FrameworkAims>()
+            {
+                new LARS_FrameworkAims()
+                {
+                    LearnAimRef = "AAA",
+                },
+                new LARS_FrameworkAims()
+                {
+                    LearnAimRef = "AAA",
+                },
+                new LARS_FrameworkAims()
+                {
+                    LearnAimRef = "Aa",
+                },
+                new LARS_FrameworkAims()
+                {
+                    LearnAimRef = "AAb",
+                },
+                new LARS_FrameworkAims(),
+            }.AsQueryable();
+
+            var larsDataRetrievalServiceMock = NewMock();
+
+            larsDataRetrievalServiceMock.SetupGet(l => l.LARSFrameworkAims).Returns(lars_FrameworkAims);
+
+            var learnAimRefs = new List<string>() { "AAA", "AA", "AAb", "AAB" }.ToCaseInsensitiveHashSet();
+
+            var larsFrameworkAims = larsDataRetrievalServiceMock.Object.LARSFrameworkAimsForLearnAimRefs(learnAimRefs);
+
+            larsFrameworkAims.Should().HaveCount(3);
+            larsFrameworkAims.Should().ContainKeys("AAA", "Aa", "AAb");
+            larsFrameworkAims["AAA"].Should().HaveCount(2);
+            larsFrameworkAims["AAA"].Should().HaveCount(2);
+            larsFrameworkAims["AAb"].Should().HaveCount(1);
         }
 
         [Fact]

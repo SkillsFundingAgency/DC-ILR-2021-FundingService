@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.Data.LargeEmployer.Model;
 using ESFA.DC.Data.LargeEmployer.Model.Interface;
+using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Model;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.Model.Interface;
@@ -38,7 +39,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         {
             IDictionary<int, IEnumerable<LargeEmployers>> employersDictionary = new Dictionary<int, IEnumerable<LargeEmployers>>();
 
-            var employerShards = SplitList(employerIds, 5000);
+            var employerShards = employerIds.SplitList(5000);
 
             foreach (var shard in employerShards)
             {
@@ -64,16 +65,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 EffectiveFrom = entity.EffectiveFrom,
                 EffectiveTo = entity.EffectiveTo,
             };
-        }
-
-        private IEnumerable<IEnumerable<int>> SplitList(IEnumerable<int> employers, int nSize = 30)
-        {
-            var l = employers.ToList();
-
-            for (var i = 0; i < l.Count; i += nSize)
-            {
-                yield return l.GetRange(i, Math.Min(nSize, l.Count - i));
-            }
         }
     }
 }

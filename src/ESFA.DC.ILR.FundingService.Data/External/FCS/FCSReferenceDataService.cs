@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Data.External.FCS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.FCS.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
@@ -22,7 +23,7 @@ namespace ESFA.DC.ILR.FundingService.Data.External.FCS
                 return null;
             }
 
-            return _referenceDataCache.FCSContractAllocations.Where(f => f.ContractAllocationNumber == conRefNumber);
+            return _referenceDataCache.FCSContractAllocations.Where(f => f.ContractAllocationNumber.CaseInsensitiveEquals(conRefNumber));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Data.Population.External;
 using ESFA.DC.ILR.Tests.Model;
 using ESFA.DC.ReferenceData.FCS.Model;
@@ -197,7 +198,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             fcsDataRetrievalServiceMock.SetupGet(l => l.EsfEligibilityRules).Returns(eligibilityRules);
             fcsDataRetrievalServiceMock.SetupGet(l => l.DeliverableCodeMappings).Returns(codeMappings);
 
-            var conRefNumbers = new List<string>() { "1", "2" };
+            var conRefNumbers = new List<string>() { "1", "2" }.ToCaseInsensitiveHashSet();
 
             var fcs = fcsDataRetrievalServiceMock.Object.FCSContractsForUKPRN(1, conRefNumbers);
 

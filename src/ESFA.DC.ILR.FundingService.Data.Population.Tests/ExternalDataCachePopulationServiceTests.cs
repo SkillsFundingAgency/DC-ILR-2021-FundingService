@@ -56,13 +56,13 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             var efaDisadvantages = new Dictionary<string, IEnumerable<EfaDisadvantage>>();
             var careerLearningPilots = new Dictionary<string, IEnumerable<CareerLearningPilot>>();
 
-            postcodesDataRetrievalServiceMock.Setup(p => p.UniquePostcodes(message)).Returns(new List<string>()).Verifiable();
+            postcodesDataRetrievalServiceMock.Setup(p => p.UniquePostcodes(message)).Returns(new HashSet<string>()).Verifiable();
             postcodesDataRetrievalServiceMock.Setup(p => p.CurrentVersion()).Returns(postcodesCurrentVersion).Verifiable();
-            postcodesDataRetrievalServiceMock.Setup(p => p.SfaAreaCostsForPostcodes(It.IsAny<List<string>>())).Returns(sfaAreaCosts).Verifiable();
-            postcodesDataRetrievalServiceMock.Setup(p => p.SfaDisadvantagesForPostcodes(It.IsAny<List<string>>())).Returns(sfaDisadvantages).Verifiable();
-            postcodesDataRetrievalServiceMock.Setup(p => p.DasDisadvantagesForPostcodes(It.IsAny<List<string>>())).Returns(dasDisadvantages).Verifiable();
-            postcodesDataRetrievalServiceMock.Setup(p => p.EfaDisadvantagesForPostcodes(It.IsAny<List<string>>())).Returns(efaDisadvantages).Verifiable();
-            postcodesDataRetrievalServiceMock.Setup(p => p.CareerLearningPilotsForPostcodes(It.IsAny<List<string>>())).Returns(careerLearningPilots).Verifiable();
+            postcodesDataRetrievalServiceMock.Setup(p => p.SfaAreaCostsForPostcodes(It.IsAny<IEnumerable<string>>())).Returns(sfaAreaCosts).Verifiable();
+            postcodesDataRetrievalServiceMock.Setup(p => p.SfaDisadvantagesForPostcodes(It.IsAny<IEnumerable<string>>())).Returns(sfaDisadvantages).Verifiable();
+            postcodesDataRetrievalServiceMock.Setup(p => p.DasDisadvantagesForPostcodes(It.IsAny<IEnumerable<string>>())).Returns(dasDisadvantages).Verifiable();
+            postcodesDataRetrievalServiceMock.Setup(p => p.EfaDisadvantagesForPostcodes(It.IsAny<IEnumerable<string>>())).Returns(efaDisadvantages).Verifiable();
+            postcodesDataRetrievalServiceMock.Setup(p => p.CareerLearningPilotsForPostcodes(It.IsAny<IEnumerable<string>>())).Returns(careerLearningPilots).Verifiable();
 
             var largeEmployersDataRetrievalServiceMock = new Mock<ILargeEmployersDataRetrievalService>();
 
@@ -85,19 +85,19 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             var larsApprenticeshipFundingFrameworks = new List<LARSFrameworkApprenticeshipFunding>();
             var larsStandardFundings = new Dictionary<int, IEnumerable<LARSStandardFunding>>();
 
-            larsDataRetrievalServiceMock.Setup(l => l.UniqueLearnAimRefs(message)).Returns(new List<string>()).Verifiable();
+            larsDataRetrievalServiceMock.Setup(l => l.UniqueLearnAimRefs(message)).Returns(new HashSet<string>()).Verifiable();
             larsDataRetrievalServiceMock.Setup(l => l.UniqueStandardCodes(message)).Returns(new List<int>()).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.UniqueFrameworkCommonComponents(message)).Returns(new List<LARSFrameworkKey>()).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.UniqueApprenticeshipFundingStandards(message)).Returns(It.IsAny<List<LARSApprenticeshipFundingKey>>).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.UniqueApprenticeshipFundingFrameworks(message)).Returns(It.IsAny<List<LARSApprenticeshipFundingKey>>).Verifiable();
+            larsDataRetrievalServiceMock.Setup(l => l.UniqueFrameworkCommonComponents(message)).Returns(new HashSet<LARSFrameworkKey>()).Verifiable();
+            larsDataRetrievalServiceMock.Setup(l => l.UniqueApprenticeshipFundingStandards(message)).Returns(It.IsAny<IEnumerable<LARSApprenticeshipFundingKey>>).Verifiable();
+            larsDataRetrievalServiceMock.Setup(l => l.UniqueApprenticeshipFundingFrameworks(message)).Returns(It.IsAny<IEnumerable<LARSApprenticeshipFundingKey>>).Verifiable();
             larsDataRetrievalServiceMock.Setup(l => l.CurrentVersion()).Returns(larsCurrentVersion).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.LARSAnnualValuesForLearnAimRefs(It.IsAny<List<string>>())).Returns(larsAnnualValues).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.LARSFrameworkAimsForLearnAimRefs(It.IsAny<List<string>>())).Returns(larsFrameworkAims).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.LARSLearningDeliveryCategoriesForLearnAimRefs(It.IsAny<List<string>>())).Returns(larsLearningDeliveryCategories).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.LARSFundingsForLearnAimRefs(It.IsAny<List<string>>())).Returns(larsFundings).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.LARSLearningDeliveriesForLearnAimRefs(It.IsAny<List<string>>())).Returns(larsLearningDeliveries).Verifiable();
+            larsDataRetrievalServiceMock.Setup(l => l.LARSAnnualValuesForLearnAimRefs(It.IsAny<IEnumerable<string>>())).Returns(larsAnnualValues).Verifiable();
+            larsDataRetrievalServiceMock.Setup(l => l.LARSFrameworkAimsForLearnAimRefs(It.IsAny<IEnumerable<string>>())).Returns(larsFrameworkAims).Verifiable();
+            larsDataRetrievalServiceMock.Setup(l => l.LARSLearningDeliveryCategoriesForLearnAimRefs(It.IsAny<HashSet<string>>())).Returns(larsLearningDeliveryCategories).Verifiable();
+            larsDataRetrievalServiceMock.Setup(l => l.LARSFundingsForLearnAimRefs(It.IsAny<IEnumerable<string>>())).Returns(larsFundings).Verifiable();
+            larsDataRetrievalServiceMock.Setup(l => l.LARSLearningDeliveriesForLearnAimRefs(It.IsAny<IEnumerable<string>>())).Returns(larsLearningDeliveries).Verifiable();
             larsDataRetrievalServiceMock.Setup(l => l.LARSStandardCommonComponentForStandardCode(It.IsAny<List<int>>())).Returns(larsStandardCommonComponents).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.LARSFrameworkCommonComponentForLearnAimRefs(It.IsAny<List<LARSFrameworkKey>>())).Returns(larsFrameworkCommonComponents).Verifiable();
+            larsDataRetrievalServiceMock.Setup(l => l.LARSFrameworkCommonComponentForLearnAimRefs(It.IsAny<IEnumerable<LARSFrameworkKey>>())).Returns(larsFrameworkCommonComponents).Verifiable();
             larsDataRetrievalServiceMock.Setup(l => l.LARSApprenticeshipFundingStandards(It.IsAny<List<LARSApprenticeshipFundingKey>>())).Returns(larsApprenticeshipFundingStandards).Verifiable();
             larsDataRetrievalServiceMock.Setup(l => l.LARSApprenticeshipFundingFrameworks(It.IsAny<List<LARSApprenticeshipFundingKey>>())).Returns(larsApprenticeshipFundingFrameworks).Verifiable();
             larsDataRetrievalServiceMock.Setup(l => l.LARSStandardFundingForStandardCodes(It.IsAny<List<int>>())).Returns(larsStandardFundings).Verifiable();
@@ -120,8 +120,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
 
             var fcsContractAllocations = new List<FCSContractAllocation>();
 
-            fcsDataRetrievalServiceMock.Setup(f => f.UniqueConRefNumbers(message)).Returns(new List<string>()).Verifiable();
-            fcsDataRetrievalServiceMock.Setup(f => f.FCSContractsForUKPRN(It.IsAny<int>(), It.IsAny<List<string>>())).Returns(fcsContractAllocations).Verifiable();
+            fcsDataRetrievalServiceMock.Setup(f => f.UniqueConRefNumbers(message)).Returns(new HashSet<string>()).Verifiable();
+            fcsDataRetrievalServiceMock.Setup(f => f.FCSContractsForUKPRN(It.IsAny<int>(), It.IsAny<IEnumerable<string>>())).Returns(fcsContractAllocations).Verifiable();
 
             await NewService(
                 externalDataCache,

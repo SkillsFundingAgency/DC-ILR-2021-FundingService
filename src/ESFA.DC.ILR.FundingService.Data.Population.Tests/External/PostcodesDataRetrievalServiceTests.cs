@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.Data.Postcodes.Model;
 using ESFA.DC.Data.Postcodes.Model.Interfaces;
+using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Data.Population.External;
 using ESFA.DC.ILR.Tests.Model;
 using FluentAssertions;
@@ -150,6 +151,66 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
 
             sfaAreaCosts["CV1 2TT"].Should().HaveCount(2);
             sfaAreaCosts["CV1 2WT"].Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void SfaPostcodeAreaCostsForPostcodes_MixedCase()
+        {
+            var sfaPostcodeAreaCosts = new List<SFA_PostcodeAreaCost>()
+            {
+                new SFA_PostcodeAreaCost()
+                {
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2Wt" },
+                    Postcode = "CV1 2Wt",
+                    AreaCostFactor = 1.2m,
+                    EffectiveFrom = new DateTime(2000, 01, 01),
+                    EffectiveTo = null,
+                },
+                new SFA_PostcodeAreaCost()
+                {
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2TT" },
+                    Postcode = "CV1 2TT",
+                    AreaCostFactor = 1.5m,
+                    EffectiveFrom = new DateTime(2000, 01, 01),
+                    EffectiveTo = new DateTime(2015, 12, 31)
+                },
+                new SFA_PostcodeAreaCost()
+                {
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2TT" },
+                    Postcode = "CV1 2TT",
+                    AreaCostFactor = 2.1m,
+                    EffectiveFrom = new DateTime(2016, 01, 01),
+                    EffectiveTo = null,
+                },
+                 new SFA_PostcodeAreaCost()
+                {
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2BB" },
+                    Postcode = "CV1 2BB",
+                    AreaCostFactor = 2.1m,
+                    EffectiveFrom = new DateTime(2016, 01, 01),
+                    EffectiveTo = null,
+                },
+                new SFA_PostcodeAreaCost()
+                {
+                    Postcode = "Fictional"
+                }
+            }.AsQueryable();
+
+            var postcodesDataRetrievalServiceMock = NewMock();
+
+            postcodesDataRetrievalServiceMock.SetupGet(p => p.SfaPostcodeAreaCosts).Returns(sfaPostcodeAreaCosts);
+
+            var postcodes = new List<string>() { "CV1 2WT", "CV1 2TT", "CV1 2bb" }.ToCaseInsensitiveHashSet();
+
+            var sfaAreaCosts = postcodesDataRetrievalServiceMock.Object.SfaAreaCostsForPostcodes(postcodes);
+
+            sfaAreaCosts.Should().HaveCount(3);
+            sfaAreaCosts.Should().ContainKeys("CV1 2Wt", "CV1 2TT", "CV1 2BB");
+            sfaAreaCosts.Should().NotContainKey("Fictional");
+
+            sfaAreaCosts["CV1 2TT"].Should().HaveCount(2);
+            sfaAreaCosts["CV1 2Wt"].Should().HaveCount(1);
+            sfaAreaCosts["CV1 2BB"].Should().HaveCount(1);
         }
 
         [Fact]
@@ -408,6 +469,14 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                 },
                 new CareerLearningPilot_Postcode()
                 {
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2bb" },
+                    Postcode = "CV1 2bb",
+                    AreaCode = "AreaCode",
+                    EffectiveFrom = new DateTime(2000, 01, 01),
+                    EffectiveTo = new DateTime(2015, 12, 31)
+                },
+                new CareerLearningPilot_Postcode()
+                {
                     Postcode = "Fictional"
                 }
             }.AsQueryable();
@@ -416,16 +485,17 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
 
             postcodesDataRetrievalServiceMock.SetupGet(p => p.CareerLearningPilot_Postcodes).Returns(careerLearningPilotsPostocde);
 
-            var postcodes = new List<string>() { "CV1 2WT", "CV1 2TT" };
+            var postcodes = new List<string>() { "CV1 2WT", "CV1 2tT", "CV1 2BB" }.ToCaseInsensitiveHashSet();
 
             var careerLearningPilots = postcodesDataRetrievalServiceMock.Object.CareerLearningPilotsForPostcodes(postcodes);
 
-            careerLearningPilots.Should().HaveCount(2);
-            careerLearningPilots.Should().ContainKeys("CV1 2WT", "CV1 2TT");
+            careerLearningPilots.Should().HaveCount(3);
+            careerLearningPilots.Should().ContainKeys("CV1 2WT", "CV1 2TT", "CV1 2bb");
             careerLearningPilots.Should().NotContainKey("Fictional");
 
             careerLearningPilots["CV1 2TT"].Should().HaveCount(1);
             careerLearningPilots["CV1 2WT"].Should().HaveCount(1);
+            careerLearningPilots["CV1 2bb"].Should().HaveCount(1);
         }
 
         [Fact]
