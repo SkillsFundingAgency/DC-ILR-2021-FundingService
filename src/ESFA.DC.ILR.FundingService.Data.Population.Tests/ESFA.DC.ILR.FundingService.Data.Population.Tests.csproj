@@ -133,6 +133,7 @@
     <Compile Include="External\FCSDataRetrievalServiceTests.cs" />
     <Compile Include="External\LargeEmployersDataRetrievalServiceTests.cs" />
     <Compile Include="External\AppsEarningsHistoryDataRetrievalServiceTests.cs" />
+    <Compile Include="External\CaseSensitivityDataRetrievalServiceTests.cs" />
     <Compile Include="External\LARSDataRetrievalServiceTests.cs" />
     <Compile Include="External\OrganisationDataRetrievalServiceTests.cs" />
     <Compile Include="External\PostcodesDataRetrievalServiceTests.cs" />

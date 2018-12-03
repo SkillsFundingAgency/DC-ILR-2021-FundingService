@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Data.Population.Helpers;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Keys;
 using ESFA.DC.ILR.FundingService.Dto.Interfaces;
@@ -45,18 +46,21 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         {
             var providerUKPRN = _fundingServiceDto.Message.LearningProviderEntity.UKPRN;
 
-            var uniquePostcodes = _postcodesDataRetrievalService.UniquePostcodes(_fundingServiceDto.Message).ToList();
-            var learnAimRefs = _larsDataRetrievalService.UniqueLearnAimRefs(_fundingServiceDto.Message).ToList();
+            var uniquePostcodes = _postcodesDataRetrievalService.UniquePostcodes(_fundingServiceDto.Message).ToCaseInsensitiveHashSet(); // new
+            var learnAimRefs = _larsDataRetrievalService.UniqueLearnAimRefs(_fundingServiceDto.Message).ToCaseInsensitiveHashSet(); // new
             var standardCodes = _larsDataRetrievalService.UniqueStandardCodes(_fundingServiceDto.Message).ToList();
+
             var frameworks = _larsDataRetrievalService.UniqueFrameworkCommonComponents(_fundingServiceDto.Message);
             var apprenticeshipFundingStandards = _larsDataRetrievalService.UniqueApprenticeshipFundingStandards(_fundingServiceDto.Message);
             var apprenticeshipFundingFrameworks = _larsDataRetrievalService.UniqueApprenticeshipFundingFrameworks(_fundingServiceDto.Message);
-
             var uniqueEmployerIds = _largeEmployersDataRetrievalService.UniqueEmployerIds(_fundingServiceDto.Message).ToList();
             var ukprns = new List<long>() { providerUKPRN };
+
+            // maybe something here
+            // check this. do postcodes tests. apps earnings tests, fcs tests
             var learnRefNumberAndULN = _fundingServiceDto.Message.Learners.Select(l => new LearnRefNumberULNKey(l.LearnRefNumber, l.ULN));
 
-            var conRefNumbers = _fcsDataRetrievalService.UniqueConRefNumbers(_fundingServiceDto.Message);
+            var conRefNumbers = _fcsDataRetrievalService.UniqueConRefNumbers(_fundingServiceDto.Message).ToCaseInsensitiveHashSet(); // new
 
             var referenceDataCache = (ExternalDataCache)_externalDataCache;
 

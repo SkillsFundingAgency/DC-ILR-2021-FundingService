@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ESFA.DC.ILR.FundingService.Data.External.LARS;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
@@ -159,6 +160,22 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             referenceDataCacheMock.SetupGet(rdc => rdc.LARSFrameworkAims).Returns(new Dictionary<string, IEnumerable<LARSFrameworkAims>>()
             {
                 { learnAimRef, frameworkAims },
+            });
+
+            NewService(referenceDataCacheMock.Object).LARSFFrameworkAimsForLearnAimRef(learnAimRef).Should().BeSameAs(frameworkAims);
+        }
+
+        [Fact]
+        public void LARSFrameworkAims_CaseMisMatch()
+        {
+            var learnAimRef = "LEARNAIMREF";
+            var frameworkAims = new List<LARSFrameworkAims>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSFrameworkAims).Returns(new Dictionary<string, IEnumerable<LARSFrameworkAims>>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "LearnAimRef", frameworkAims },
             });
 
             NewService(referenceDataCacheMock.Object).LARSFFrameworkAimsForLearnAimRef(learnAimRef).Should().BeSameAs(frameworkAims);

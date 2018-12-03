@@ -4,6 +4,7 @@ using System.Linq;
 using ESFA.DC.Data.AppsEarningsHistory.Model;
 using ESFA.DC.Data.AppsEarningsHistory.Model.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory.Model;
+using ESFA.DC.ILR.FundingService.Data.Population.Helpers;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Keys;
 
@@ -28,7 +29,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         {
             IDictionary<long, IEnumerable<AECEarningsHistory>> result = new Dictionary<long, IEnumerable<AECEarningsHistory>>();
 
-            var learnerShards = SplitList(learners, 5000);
+            var learnerShards = learners.SplitList(5000);
             foreach (var shard in learnerShards)
             {
                 var data = shard
@@ -86,16 +87,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 UKPRN = entity.UKPRN,
                 ULN = entity.ULN
             };
-        }
-
-        private IEnumerable<IEnumerable<LearnRefNumberULNKey>> SplitList(IEnumerable<LearnRefNumberULNKey> learners, int nSize = 30)
-        {
-            var l = learners.ToList();
-
-            for (var i = 0; i < l.Count; i += nSize)
-            {
-                yield return l.GetRange(i, Math.Min(nSize, l.Count - i));
-            }
         }
     }
 }

@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.Data.LARS.Model;
 using ESFA.DC.Data.LARS.Model.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
+using ESFA.DC.ILR.FundingService.Data.Population.Helpers;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Keys;
 using ESFA.DC.ILR.Model.Interface;
@@ -90,7 +92,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                      s => s.StdCodeNullable != null
                      && s.ProgTypeNullable != null))
                  .Select(ld => new LARSApprenticeshipFundingKey((int)ld.StdCodeNullable, (int)ld.ProgTypeNullable, 0))
-                 .Distinct().ToList() as IEnumerable<LARSApprenticeshipFundingKey>;
+                 .Distinct();
         }
 
         public IEnumerable<LARSApprenticeshipFundingKey> UniqueApprenticeshipFundingFrameworks(IMessage message)
@@ -104,7 +106,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                      && s.ProgTypeNullable != null
                      && s.PwayCodeNullable != null))
                  .Select(ld => new LARSApprenticeshipFundingKey((int)ld.FworkCodeNullable, (int)ld.ProgTypeNullable, (int)ld.PwayCodeNullable))
-                 .Distinct().ToList() as IEnumerable<LARSApprenticeshipFundingKey>;
+                 .Distinct();
         }
 
         public IDictionary<string, IEnumerable<LARSFunding>> LARSFundingsForLearnAimRefs(IEnumerable<string> learnAimRefs)
@@ -112,7 +114,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             return LARSFundings
                 .Where(lf => learnAimRefs.Contains(lf.LearnAimRef))
                 .GroupBy(a => a.LearnAimRef)
-                .ToDictionary(a => a.Key, a => a.Select(LARSFundingFromEntity).ToList() as IEnumerable<LARSFunding>);
+                .ToCaseInsensitiveDictionary(a => a.Key, a => a.Select(LARSFundingFromEntity).ToList() as IEnumerable<LARSFunding>);
         }
 
         public LARSFunding LARSFundingFromEntity(LARS_Funding entity)
@@ -133,7 +135,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         {
             return LARSLearningDeliveries
                     .Where(ld => learnAimRefs.Contains(ld.LearnAimRef))
-                    .ToDictionary(a => a.LearnAimRef, LARSLearningDeliveryFromEntity);
+                    .ToCaseInsensitiveDictionary(a => a.LearnAimRef, LARSLearningDeliveryFromEntity);
         }
 
         public LARSLearningDelivery LARSLearningDeliveryFromEntity(LARS_LearningDelivery entity)
@@ -184,7 +186,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             return LARSAnnualValues
                 .Where(la => learnAimRefs.Contains(la.LearnAimRef))
                 .GroupBy(a => a.LearnAimRef)
-                .ToDictionary(a => a.Key, a => a.Select(LARSAnnualValueFromEntity).ToList() as IEnumerable<LARSAnnualValue>);
+                .ToCaseInsensitiveDictionary(a => a.Key, a => a.Select(LARSAnnualValueFromEntity).ToList() as IEnumerable<LARSAnnualValue>);
         }
 
         public LARSAnnualValue LARSAnnualValueFromEntity(LARS_AnnualValue entity)
@@ -203,7 +205,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             return LARSLearningDeliveryCategories
                 .Where(ld => learnAimRefs.Contains(ld.LearnAimRef))
                 .GroupBy(a => a.LearnAimRef)
-                .ToDictionary(a => a.Key, a => a.Select(LARSLearningDeliveryCategoryFromEntity).ToList() as IEnumerable<LARSLearningDeliveryCategory>);
+                .ToCaseInsensitiveDictionary(a => a.Key, a => a.Select(LARSLearningDeliveryCategoryFromEntity).ToList() as IEnumerable<LARSLearningDeliveryCategory>);
         }
 
         public LARSLearningDeliveryCategory LARSLearningDeliveryCategoryFromEntity(LARS_LearningDeliveryCategory entity)
@@ -219,10 +221,10 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public IDictionary<string, IEnumerable<LARSFrameworkAims>> LARSFrameworkAimsForLearnAimRefs(IEnumerable<string> learnAimRefs)
         {
-                return LARSFrameworkAims
-                    .Where(lf => learnAimRefs.Contains(lf.LearnAimRef))
-                    .GroupBy(a => a.LearnAimRef)
-                    .ToDictionary(a => a.Key, a => a.Select(LARSFrameworkAimsFromEntity).ToList() as IEnumerable<LARSFrameworkAims>);
+            return LARSFrameworkAims
+              .Where(lf => learnAimRefs.Contains(lf.LearnAimRef))
+              .GroupBy(a => a.LearnAimRef)
+              .ToCaseInsensitiveDictionary(a => a.Key, a => a.Select(LARSFrameworkAimsFromEntity).ToList() as IEnumerable<LARSFrameworkAims>);
         }
 
         public LARSFrameworkAims LARSFrameworkAimsFromEntity(LARS_FrameworkAims entity)
@@ -260,7 +262,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public IEnumerable<LARSFrameworkCommonComponent> LARSFrameworkCommonComponentForLearnAimRefs(IEnumerable<LARSFrameworkKey> larsFrameworkKeys)
         {
-            var learnAimRefsFromKey = larsFrameworkKeys.Select(lfk => lfk.LearnAimRef).Distinct();
+            var learnAimRefsFromKey = larsFrameworkKeys.Select(lfk => lfk.LearnAimRef).Distinct().ToCaseInsensitiveHashSet();
 
             var larsFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>();
 
@@ -288,7 +290,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 var larsFramework =
                 larsFrameworksCmnComponents?
                     .Where(
-                        fc => fc.LearnAimRef == larsFrameworkKey.LearnAimRef
+                        fc => fc.LearnAimRef.CaseInsensitiveEquals(larsFrameworkKey.LearnAimRef)
                         && fc.FworkCode == larsFrameworkKey.FworkCode
                         && fc.ProgType == larsFrameworkKey.ProgType
                         && fc.PwayCode == larsFrameworkKey.PwayCode)
@@ -351,7 +353,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 }
             }
 
-            return apprenticeshipFundings;
+            return apprenticeshipFundings.ToCaseInsensitiveHashSet();
         }
 
         public LARSStandardApprenticeshipFunding LARSStandardApprenticeshipFundingFromEntity(LARS_ApprenticeshipFunding entity)
@@ -403,7 +405,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 }
             }
 
-            return apprenticeshipFundings;
+            return apprenticeshipFundings.ToCaseInsensitiveHashSet();
         }
 
         public LARSFrameworkApprenticeshipFunding LARSFrameworkApprenticeshipFundingFromEntity(LARS_ApprenticeshipFunding entity)

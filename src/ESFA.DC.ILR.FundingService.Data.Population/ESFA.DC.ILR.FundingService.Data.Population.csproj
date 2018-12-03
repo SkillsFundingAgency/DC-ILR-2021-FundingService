@@ -141,6 +141,8 @@
     <Compile Include="File\FileDataRetrievalService.cs" />
     <Compile Include="Context\ValidLearnersDataRetrievalService.cs" />
     <Compile Include="File\FileDataCachePopulationService.cs" />
+    <Compile Include="Helpers\StringExtensions.cs" />
+    <Compile Include="Helpers\EnumerableExtensions.cs" />
     <Compile Include="Interface\IAppsEarningsHistoryDataRetrievalService.cs" />
     <Compile Include="Interface\IFileDataCachePopulationService.cs" />
     <Compile Include="Interface\IFundingContextPopulationService.cs" />
