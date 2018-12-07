@@ -144,7 +144,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
            var learnAimRef = "LearnAimRef";
            var learnActEndDate = new DateTime(2018, 8, 1);
            var learnDel1618AtStart = false;
-           var learnDelAppAccDaysIL = 1.0m;
+           var learnDelAppAccDaysIL = 1;
            var learnDelApplicDisadvAmount = 1.0m;
            var learnDelApplicEmp1618Incentive = 1.0m;
            var learnDelApplicEmpDate = new DateTime(2018, 8, 1);
@@ -154,8 +154,8 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
            var learnDelDaysIL = 5;
            var learnDelDisadAmount = 1.0m;
            var learnDelEligDisadvPayment = false;
-           var learnDelEmpIdFirstAdditionalPaymentThreshold = 1.0m;
-           var learnDelEmpIdSecondAdditionalPaymentThreshold = 1.0m;
+           var learnDelEmpIdFirstAdditionalPaymentThreshold = 20;
+           var learnDelEmpIdSecondAdditionalPaymentThreshold = 30;
            var learnDelHistDaysThisApp = 6;
            var learnDelHistProgEarnings = 1.0m;
            var learnDelInitialFundLineType = "LearnDelInitialFundLineType";
@@ -220,7 +220,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "LearnAimRef")).Returns(learnAimRef);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "LearnActEndDate")).Returns(learnActEndDate);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "LearnDel1618AtStart")).Returns(learnDel1618AtStart);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LearnDelAppAccDaysIL")).Returns(learnDelAppAccDaysIL);
+            dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "LearnDelAppAccDaysIL")).Returns(learnDelAppAccDaysIL);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LearnDelApplicDisadvAmount")).Returns(learnDelApplicDisadvAmount);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LearnDelApplicEmp1618Incentive")).Returns(learnDelApplicEmp1618Incentive);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "LearnDelApplicEmpDate")).Returns(learnDelApplicEmpDate);
@@ -230,8 +230,8 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "LearnDelDaysIL")).Returns(learnDelDaysIL);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LearnDelDisadAmount")).Returns(learnDelDisadAmount);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "LearnDelEligDisadvPayment")).Returns(learnDelEligDisadvPayment);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LearnDelEmpIdFirstAdditionalPaymentThreshold")).Returns(learnDelEmpIdFirstAdditionalPaymentThreshold);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LearnDelEmpIdSecondAdditionalPaymentThreshold")).Returns(learnDelEmpIdSecondAdditionalPaymentThreshold);
+            dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "LearnDelEmpIdFirstAdditionalPaymentThreshold")).Returns(learnDelEmpIdFirstAdditionalPaymentThreshold);
+            dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "LearnDelEmpIdSecondAdditionalPaymentThreshold")).Returns(learnDelEmpIdSecondAdditionalPaymentThreshold);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "LearnDelHistDaysThisApp")).Returns(learnDelHistDaysThisApp);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LearnDelHistProgEarnings")).Returns(learnDelHistProgEarnings);
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "LearnDelInitialFundLineType")).Returns(learnDelInitialFundLineType);
