@@ -80,6 +80,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 AimSeqNumber = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.AimSeqNumber).Value,
                 LearningDeliveryValues = LearningDeliveryAttributeData(dataEntity),
                 LearningDeliveryPeriodisedValues = LearningDeliveryPeriodisedValues(dataEntity),
+                LearningDeliveryPeriodisedTextValues = LearningDeliveryPeriodisedTextValues(dataEntity),
             };
         }
 
@@ -154,11 +155,9 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 Attributes.DisadvFirstPayment,
                 Attributes.DisadvSecondPayment,
                 Attributes.InstPerPeriod,
-                Attributes.FundLineType,
                 Attributes.LDApplic1618FrameworkUpliftBalancingPayment,
                 Attributes.LDApplic1618FrameworkUpliftCompletionPayment,
                 Attributes.LDApplic1618FrameworkUpliftOnProgPayment,
-                Attributes.LearnDelContType,
                 Attributes.LearnDelFirstEmp1618Pay,
                 Attributes.LearnDelFirstProv1618Pay,
                 Attributes.LearnDelLearnAddPayment,
@@ -191,7 +190,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
 
                 if (!changePoints.Any())
                 {
-                    var value = ConvertValue(attributeValue.Value);
+                    var value = ConvertDecimalValue(attributeValue.Value);
 
                     learningDeliveryPeriodisedAttributeList.Add(new LearningDeliveryPeriodisedValues
                     {
@@ -216,18 +215,80 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                     learningDeliveryPeriodisedAttributeList.Add(new LearningDeliveryPeriodisedValues
                     {
                         AttributeName = attribute,
-                        Period1 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period1),
-                        Period2 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period2),
-                        Period3 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period3),
-                        Period4 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period4),
-                        Period5 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period5),
-                        Period6 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period6),
-                        Period7 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period7),
-                        Period8 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period8),
-                        Period9 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period9),
-                        Period10 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period10),
-                        Period11 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period11),
-                        Period12 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period12),
+                        Period1 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period1),
+                        Period2 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period2),
+                        Period3 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period3),
+                        Period4 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period4),
+                        Period5 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period5),
+                        Period6 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period6),
+                        Period7 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period7),
+                        Period8 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period8),
+                        Period9 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period9),
+                        Period10 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period10),
+                        Period11 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period11),
+                        Period12 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period12),
+                    });
+                }
+            }
+
+            return learningDeliveryPeriodisedAttributeList;
+        }
+
+        public List<LearningDeliveryPeriodisedTextValues> LearningDeliveryPeriodisedTextValues(IDataEntity learningDelivery)
+        {
+            List<string> attributeList = new List<string>()
+            {
+                Attributes.FundLineType,
+                Attributes.LearnDelContType,
+            };
+
+            List<LearningDeliveryPeriodisedTextValues> learningDeliveryPeriodisedAttributeList = new List<LearningDeliveryPeriodisedTextValues>();
+
+            foreach (var attribute in attributeList)
+            {
+                var attributeValue = learningDelivery.Attributes[attribute];
+
+                var changePoints = attributeValue.Changepoints;
+
+                if (!changePoints.Any())
+                {
+                    var value = ConvertStringValue(attributeValue.Value);
+
+                    learningDeliveryPeriodisedAttributeList.Add(new LearningDeliveryPeriodisedTextValues
+                    {
+                        AttributeName = attribute,
+                        Period1 = value,
+                        Period2 = value,
+                        Period3 = value,
+                        Period4 = value,
+                        Period5 = value,
+                        Period6 = value,
+                        Period7 = value,
+                        Period8 = value,
+                        Period9 = value,
+                        Period10 = value,
+                        Period11 = value,
+                        Period12 = value,
+                    });
+                }
+
+                if (changePoints.Any())
+                {
+                    learningDeliveryPeriodisedAttributeList.Add(new LearningDeliveryPeriodisedTextValues
+                    {
+                        AttributeName = attribute,
+                        Period1 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period1),
+                        Period2 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period2),
+                        Period3 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period3),
+                        Period4 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period4),
+                        Period5 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period5),
+                        Period6 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period6),
+                        Period7 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period7),
+                        Period8 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period8),
+                        Period9 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period9),
+                        Period10 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period10),
+                        Period11 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period11),
+                        Period12 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period12),
                     });
                 }
             }
@@ -344,7 +405,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
 
                 if (!changePoints.Any())
                 {
-                    var value = ConvertValue(attributeValue.Value);
+                    var value = ConvertDecimalValue(attributeValue.Value);
 
                     priceEpisodePeriodisedAttributeList.Add(new PriceEpisodePeriodisedValues
                     {
@@ -369,18 +430,18 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                     priceEpisodePeriodisedAttributeList.Add(new PriceEpisodePeriodisedValues
                     {
                         AttributeName = attribute,
-                        Period1 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period1),
-                        Period2 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period2),
-                        Period3 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period3),
-                        Period4 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period4),
-                        Period5 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period5),
-                        Period6 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period6),
-                        Period7 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period7),
-                        Period8 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period8),
-                        Period9 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period9),
-                        Period10 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period10),
-                        Period11 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period11),
-                        Period12 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period12),
+                        Period1 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period1),
+                        Period2 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period2),
+                        Period3 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period3),
+                        Period4 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period4),
+                        Period5 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period5),
+                        Period6 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period6),
+                        Period7 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period7),
+                        Period8 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period8),
+                        Period9 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period9),
+                        Period10 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period10),
+                        Period11 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period11),
+                        Period12 = GetPeriodAttributeDecimalValue(attributeValue, _internalDataCache.Period12),
                     });
                 }
             }
@@ -420,14 +481,24 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
             };
         }
 
-        private decimal? GetPeriodAttributeValue(IAttributeData attributes, DateTime periodDate)
+        private string GetPeriodAttributeStringValue(IAttributeData attributes, DateTime periodDate)
         {
-            var value = ConvertValue(attributes.Changepoints.Where(cp => cp.ChangePoint == periodDate).Select(v => v.Value).SingleOrDefault());
+            return ConvertStringValue(attributes.Changepoints.Where(cp => cp.ChangePoint == periodDate).Select(v => v.Value).SingleOrDefault());
+        }
+
+        private string ConvertStringValue(object value)
+        {
+            return value != null && value.ToString() != "uncertain" ? value.ToString() : null;
+        }
+
+        private decimal? GetPeriodAttributeDecimalValue(IAttributeData attributes, DateTime periodDate)
+        {
+            var value = ConvertDecimalValue(attributes.Changepoints.Where(cp => cp.ChangePoint == periodDate).Select(v => v.Value).SingleOrDefault());
 
             return value != null ? decimal.Parse(value.ToString()) : value;
         }
 
-        private decimal? ConvertValue(object value)
+        private decimal? ConvertDecimalValue(object value)
         {
             if (value != null && value.ToString() != "uncertain")
             {
