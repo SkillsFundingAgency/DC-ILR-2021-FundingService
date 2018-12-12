@@ -337,6 +337,17 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         }
 
         [Fact]
+        public void LearningDeliveryPeriodisedTextAttributeData_Correct()
+        {
+            var learningDeliveryPeriodisedTextAttributeData =
+                NewService().LearningDeliveryPeriodisedTextValues(TestLearningDeliveryEntity(null).Single());
+
+            var expectedLearningDeliveryPeriodisedTextAttributeData = TestLearningDeliveryPeriodisedTextAttributesDataArray();
+
+            learningDeliveryPeriodisedTextAttributeData.Should().BeEquivalentTo(expectedLearningDeliveryPeriodisedTextAttributeData);
+        }
+
+        [Fact]
         public void ApprenticeshipPriceEpisodeFromDataEntity()
         {
             var priceEpisodeIdentifier = "1";
@@ -811,12 +822,12 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                     { "ThresholdDays", Attribute(false, "1.0") },
                     { "DisadvFirstPayment", Attribute(false, "1.0") },
                     { "DisadvSecondPayment", Attribute(false, "1.0") },
-                    { "FundLineType", Attribute(false, "1.0") },
+                    { "FundLineType", Attribute(false, "Type") },
                     { "InstPerPeriod", Attribute(false, "1.0") },
                     { "LDApplic1618FrameworkUpliftBalancingPayment", Attribute(false, "1.0") },
                     { "LDApplic1618FrameworkUpliftCompletionPayment", Attribute(false, "1.0") },
                     { "LDApplic1618FrameworkUpliftOnProgPayment", Attribute(false, "1.0") },
-                    { "LearnDelContType", Attribute(false, "1.0") },
+                    { "LearnDelContType", Attribute(false, "Type") },
                     { "LearnDelFirstEmp1618Pay", Attribute(false, "1.0") },
                     { "LearnDelFirstProv1618Pay", Attribute(false, "1.0") },
                     { "LearnDelLevyNonPayInd", Attribute(false, "1.0") },
@@ -854,11 +865,9 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 TestLearningDeliveryPeriodisedAttributesData("DisadvFirstPayment", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("DisadvSecondPayment", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("InstPerPeriod", 1.0m),
-                TestLearningDeliveryPeriodisedAttributesData("FundLineType", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("LDApplic1618FrameworkUpliftBalancingPayment", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("LDApplic1618FrameworkUpliftCompletionPayment", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("LDApplic1618FrameworkUpliftOnProgPayment", 1.0m),
-                TestLearningDeliveryPeriodisedAttributesData("LearnDelContType", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("LearnDelFirstEmp1618Pay", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("LearnDelFirstProv1618Pay", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("LearnDelLearnAddPayment", 1.0m),
@@ -882,9 +891,38 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             };
         }
 
+        private LearningDeliveryPeriodisedTextValues[] TestLearningDeliveryPeriodisedTextAttributesDataArray()
+        {
+            return new LearningDeliveryPeriodisedTextValues[]
+            {
+                TestLearningDeliveryPeriodisedAttributesData("FundLineType", "Type"),
+                TestLearningDeliveryPeriodisedAttributesData("LearnDelContType", "Type"),
+            };
+        }
+
         private LearningDeliveryPeriodisedValues TestLearningDeliveryPeriodisedAttributesData(string attribute, decimal value)
         {
             return new LearningDeliveryPeriodisedValues
+            {
+                AttributeName = attribute,
+                Period1 = value,
+                Period2 = value,
+                Period3 = value,
+                Period4 = value,
+                Period5 = value,
+                Period6 = value,
+                Period7 = value,
+                Period8 = value,
+                Period9 = value,
+                Period10 = value,
+                Period11 = value,
+                Period12 = value,
+            };
+        }
+
+        private LearningDeliveryPeriodisedTextValues TestLearningDeliveryPeriodisedAttributesData(string attribute, string value)
+        {
+            return new LearningDeliveryPeriodisedTextValues
             {
                 AttributeName = attribute,
                 Period1 = value,
