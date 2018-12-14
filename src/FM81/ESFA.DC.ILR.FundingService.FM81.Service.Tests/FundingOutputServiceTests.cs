@@ -70,7 +70,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             var adjProgStartDate = new DateTime(2018, 09, 01);
             var ageStandardStart = 1;
             var applicFundValDate = new DateTime(2018, 09, 01);
-            var combinedAdjProp = 1;
+            var combinedAdjProp = 1.0m;
             var coreGovContCapApplicVal = 1;
             var coreGovContPayment = 1.0m;
             var coreGovContUncapped = 1.0m;
@@ -125,7 +125,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "AdjProgStartDate")).Returns(adjProgStartDate);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "AgeStandardStart")).Returns(ageStandardStart);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "ApplicFundValDate")).Returns(applicFundValDate);
-            dataEntityAttributeServiceMock.Setup(s => s.GetLongAttributeValue(dataEntity, "CombinedAdjProp")).Returns(combinedAdjProp);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "CombinedAdjProp")).Returns(combinedAdjProp);
             dataEntityAttributeServiceMock.Setup(s => s.GetLongAttributeValue(dataEntity, "CoreGovContCapApplicVal")).Returns(coreGovContCapApplicVal);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "CoreGovContPayment")).Returns(coreGovContPayment);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "CoreGovContUncapped")).Returns(coreGovContUncapped);

@@ -24,7 +24,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.Output
 
         public DateTime? ApplicFundValDate { get; set; }
 
-        public long? CombinedAdjProp { get; set; }
+        public decimal? CombinedAdjProp { get; set; }
 
         public long? CoreGovContCapApplicVal { get; set; }
 

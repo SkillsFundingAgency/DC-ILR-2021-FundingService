@@ -88,7 +88,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service
                 AdjProgStartDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.AdjProgStartDate),
                 AgeStandardStart = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.AgeStandardStart),
                 ApplicFundValDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.ApplicFundValDate),
-                CombinedAdjProp = _dataEntityAttributeService.GetLongAttributeValue(dataEntity, Attributes.CombinedAdjProp),
+                CombinedAdjProp = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.CombinedAdjProp),
                 CoreGovContCapApplicVal = _dataEntityAttributeService.GetLongAttributeValue(dataEntity, Attributes.CoreGovContCapApplicVal),
                 CoreGovContPayment = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.CoreGovContPayment),
                 CoreGovContUncapped = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.CoreGovContUncapped),
