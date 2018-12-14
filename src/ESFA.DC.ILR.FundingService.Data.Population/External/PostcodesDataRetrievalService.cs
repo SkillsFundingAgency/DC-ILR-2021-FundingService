@@ -12,6 +12,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 {
     public class PostcodesDataRetrievalService : IPostcodesDataRetrievalService
     {
+        private const int ShardSize = 1000;
         private readonly IPostcodes _postcodes;
 
         public PostcodesDataRetrievalService()
@@ -53,7 +54,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         {
             IDictionary<string, IEnumerable<SfaAreaCost>> result = new Dictionary<string, IEnumerable<SfaAreaCost>>().ToCaseInsensitiveDictionary();
 
-            var postcodeShards = postcodes.SplitList(5000);
+            var postcodeShards = postcodes.SplitList(ShardSize);
             foreach (var shard in postcodeShards)
             {
                 var data = SfaPostcodeAreaCosts
@@ -84,7 +85,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         {
             IDictionary<string, IEnumerable<DasDisadvantage>> result = new Dictionary<string, IEnumerable<DasDisadvantage>>().ToCaseInsensitiveDictionary();
 
-            var postcodeShards = postcodes.SplitList(5000);
+            var postcodeShards = postcodes.SplitList(ShardSize);
             foreach (var shard in postcodeShards)
             {
                 var data = DasPostcodeDisadvantages
@@ -115,7 +116,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         {
             IDictionary<string, IEnumerable<SfaDisadvantage>> result = new Dictionary<string, IEnumerable<SfaDisadvantage>>().ToCaseInsensitiveDictionary();
 
-            var postcodeShards = postcodes.SplitList(5000);
+            var postcodeShards = postcodes.SplitList(ShardSize);
             foreach (var shard in postcodeShards)
             {
                 var data = SfaPostcodeDisadvantages
@@ -146,7 +147,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         {
             IDictionary<string, IEnumerable<EfaDisadvantage>> result = new Dictionary<string, IEnumerable<EfaDisadvantage>>().ToCaseInsensitiveDictionary();
 
-            var postcodeShards = postcodes.SplitList(5000);
+            var postcodeShards = postcodes.SplitList(ShardSize);
             foreach (var shard in postcodeShards)
             {
                 var data = EfaPostcodeDisadvantages
@@ -177,7 +178,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         {
             IDictionary<string, IEnumerable<CareerLearningPilot>> result = new Dictionary<string, IEnumerable<CareerLearningPilot>>().ToCaseInsensitiveDictionary();
 
-            var postcodeShards = postcodes.SplitList(5000);
+            var postcodeShards = postcodes.SplitList(ShardSize);
             foreach (var shard in postcodeShards)
             {
                 var data = CareerLearningPilot_Postcodes
