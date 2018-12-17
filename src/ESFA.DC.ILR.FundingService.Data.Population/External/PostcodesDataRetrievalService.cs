@@ -64,7 +64,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
                 // Retrieve Postcodes using join rather than contains.
                 var data = SfaPostcodeAreaCosts
-                    .Join(
+                    .CaseInsensitiveJoin(
                     shard,
                     p => p.Postcode,
                     s => s,
@@ -77,7 +77,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                         EffectiveTo = pc.shard.EffectiveTo,
                     })
                     .GroupBy(p => p.Postcode)
-                    .ToDictionary(k => k.Key, v => v as IEnumerable<SfaAreaCost>);
+                    .ToCaseInsensitiveDictionary(k => k.Key, v => v as IEnumerable<SfaAreaCost>);
 
                 foreach (var kvp in data)
                 {
