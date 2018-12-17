@@ -57,10 +57,28 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             var postcodeShards = postcodes.SplitList(ShardSize);
             foreach (var shard in postcodeShards)
             {
+                //var data = SfaPostcodeAreaCosts
+                //    .Where(p => postcodes.Contains(p.Postcode))
+                //    .GroupBy(a => a.Postcode)
+                //    .ToCaseInsensitiveDictionary(a => a.Key, a => a.Select(SfaAreaCostFromEntity).ToList() as IEnumerable<SfaAreaCost>);
+
+                // Retrieve Postcodes using join rather than contains.
                 var data = SfaPostcodeAreaCosts
-                    .Where(p => postcodes.Contains(p.Postcode))
-                    .GroupBy(a => a.Postcode)
-                    .ToCaseInsensitiveDictionary(a => a.Key, a => a.Select(SfaAreaCostFromEntity).ToList() as IEnumerable<SfaAreaCost>);
+                    .Join(
+                    shard,
+                    p => p.Postcode,
+                    s => s,
+                    (s, p) => new { shard = s, p })
+                    .Select(pc => new SfaAreaCost
+                    {
+                        Postcode = pc.shard.Postcode,
+                        AreaCostFactor = pc.shard.AreaCostFactor,
+                        EffectiveFrom = pc.shard.EffectiveFrom,
+                        EffectiveTo = pc.shard.EffectiveTo,
+                    })
+                    .GroupBy(p => p.Postcode)
+                    .ToDictionary(k => k.Key, v => v as IEnumerable<SfaAreaCost>);
+
                 foreach (var kvp in data)
                 {
                     result.Add(kvp);
