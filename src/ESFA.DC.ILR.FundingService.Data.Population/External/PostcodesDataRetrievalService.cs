@@ -57,27 +57,21 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             var postcodeShards = postcodes.SplitList(ShardSize);
             foreach (var shard in postcodeShards)
             {
-                //var data = SfaPostcodeAreaCosts
-                //    .Where(p => postcodes.Contains(p.Postcode))
-                //    .GroupBy(a => a.Postcode)
-                //    .ToCaseInsensitiveDictionary(a => a.Key, a => a.Select(SfaAreaCostFromEntity).ToList() as IEnumerable<SfaAreaCost>);
-
-                // Retrieve Postcodes using join rather than contains.
                 var data = SfaPostcodeAreaCosts
-                    .CaseInsensitiveJoin(
+                    .Join(
                     shard,
                     p => p.Postcode,
                     s => s,
-                    (s, p) => new { shard = s, p })
+                    (p, s) => new { shard = s, postcode = p })
                     .Select(pc => new SfaAreaCost
                     {
-                        Postcode = pc.shard.Postcode,
-                        AreaCostFactor = pc.shard.AreaCostFactor,
-                        EffectiveFrom = pc.shard.EffectiveFrom,
-                        EffectiveTo = pc.shard.EffectiveTo,
+                        Postcode = pc.postcode.Postcode,
+                        AreaCostFactor = pc.postcode.AreaCostFactor,
+                        EffectiveFrom = pc.postcode.EffectiveFrom,
+                        EffectiveTo = pc.postcode.EffectiveTo,
                     })
                     .GroupBy(p => p.Postcode)
-                    .ToCaseInsensitiveDictionary(k => k.Key, v => v as IEnumerable<SfaAreaCost>);
+                    .ToDictionary(k => k.Key, v => v.ToList() as IEnumerable<SfaAreaCost>);
 
                 foreach (var kvp in data)
                 {
@@ -106,10 +100,22 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             var postcodeShards = postcodes.SplitList(ShardSize);
             foreach (var shard in postcodeShards)
             {
-                var data = DasPostcodeDisadvantages
-                .Where(p => shard.Contains(p.Postcode))
-                .GroupBy(a => a.Postcode)
-                .ToCaseInsensitiveDictionary(a => a.Key, a => a.Select(DasDisadvantageFromEntity).ToList() as IEnumerable<DasDisadvantage>);
+                 var data = DasPostcodeDisadvantages
+                   .Join(
+                   shard,
+                   p => p.Postcode,
+                   s => s,
+                   (p, s) => new { shard = s, postcode = p })
+                   .Select(pc => new DasDisadvantage
+                   {
+                       Postcode = pc.postcode.Postcode,
+                       Uplift = pc.postcode.Uplift,
+                       EffectiveFrom = pc.postcode.EffectiveFrom,
+                       EffectiveTo = pc.postcode.EffectiveTo,
+                   })
+                   .GroupBy(p => p.Postcode)
+                   .ToDictionary(k => k.Key, v => v.ToList() as IEnumerable<DasDisadvantage>);
+
                 foreach (var kvp in data)
                 {
                     result.Add(kvp);
@@ -138,9 +144,21 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             foreach (var shard in postcodeShards)
             {
                 var data = SfaPostcodeDisadvantages
-                .Where(p => shard.Contains(p.Postcode))
-                .GroupBy(a => a.Postcode)
-                .ToCaseInsensitiveDictionary(a => a.Key, a => a.Select(SfaDisadvantageFromEntity).ToList() as IEnumerable<SfaDisadvantage>);
+                  .Join(
+                  shard,
+                  p => p.Postcode,
+                  s => s,
+                  (p, s) => new { shard = s, postcode = p })
+                  .Select(pc => new SfaDisadvantage
+                  {
+                      Postcode = pc.postcode.Postcode,
+                      Uplift = pc.postcode.Uplift,
+                      EffectiveFrom = pc.postcode.EffectiveFrom,
+                      EffectiveTo = pc.postcode.EffectiveTo,
+                  })
+                  .GroupBy(p => p.Postcode)
+                  .ToDictionary(k => k.Key, v => v.ToList() as IEnumerable<SfaDisadvantage>);
+
                 foreach (var kvp in data)
                 {
                     result.Add(kvp);
@@ -169,9 +187,21 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             foreach (var shard in postcodeShards)
             {
                 var data = EfaPostcodeDisadvantages
-                .Where(p => shard.Contains(p.Postcode))
-                .GroupBy(a => a.Postcode)
-                .ToCaseInsensitiveDictionary(a => a.Key, a => a.Select(EfaDisadvantageFromEntity).ToList() as IEnumerable<EfaDisadvantage>);
+                 .Join(
+                 shard,
+                 p => p.Postcode,
+                 s => s,
+                 (p, s) => new { shard = s, postcode = p })
+                 .Select(pc => new EfaDisadvantage
+                 {
+                     Postcode = pc.postcode.Postcode,
+                     Uplift = pc.postcode.Uplift,
+                     EffectiveFrom = pc.postcode.EffectiveFrom,
+                     EffectiveTo = pc.postcode.EffectiveTo,
+                 })
+                 .GroupBy(p => p.Postcode)
+                 .ToDictionary(k => k.Key, v => v.ToList() as IEnumerable<EfaDisadvantage>);
+
                 foreach (var kvp in data)
                 {
                     result.Add(kvp);
@@ -199,10 +229,22 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             var postcodeShards = postcodes.SplitList(ShardSize);
             foreach (var shard in postcodeShards)
             {
-                var data = CareerLearningPilot_Postcodes
-               .Where(p => shard.Contains(p.Postcode))
-               .GroupBy(a => a.Postcode)
-               .ToCaseInsensitiveDictionary(a => a.Key, a => a.Select(CareerLearningPilotFromEntity).ToList() as IEnumerable<CareerLearningPilot>);
+               var data = CareerLearningPilot_Postcodes
+                 .Join(
+                 shard,
+                 p => p.Postcode,
+                 s => s,
+                 (p, s) => new { shard = s, postcode = p })
+                 .Select(pc => new CareerLearningPilot
+                 {
+                     Postcode = pc.postcode.Postcode,
+                     AreaCode = pc.postcode.AreaCode,
+                     EffectiveFrom = pc.postcode.EffectiveFrom,
+                     EffectiveTo = pc.postcode.EffectiveTo,
+                 })
+                 .GroupBy(p => p.Postcode)
+                 .ToDictionary(k => k.Key, v => v.ToList() as IEnumerable<CareerLearningPilot>);
+
                 foreach (var kvp in data)
                 {
                     result.Add(kvp);
