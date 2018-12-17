@@ -160,8 +160,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             {
                 new SFA_PostcodeAreaCost()
                 {
-                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2Wt" },
-                    Postcode = "CV1 2Wt",
+                    MasterPostcode = new MasterPostcode { Postcode = "CV1 2WT" },
+                    Postcode = "CV1 2WT",
                     AreaCostFactor = 1.2m,
                     EffectiveFrom = new DateTime(2000, 01, 01),
                     EffectiveTo = null,
@@ -200,12 +200,12 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
 
             postcodesDataRetrievalServiceMock.SetupGet(p => p.SfaPostcodeAreaCosts).Returns(sfaPostcodeAreaCosts);
 
-            var postcodes = new List<string>() { "CV1 2WT", "CV1 2TT", "CV1 2bb" }.ToCaseInsensitiveHashSet();
+            var postcodes = new List<string>() { "CV1 2WT", "CV1 2TT", "CV1 2BB" }.ToCaseInsensitiveHashSet();
 
             var sfaAreaCosts = postcodesDataRetrievalServiceMock.Object.SfaAreaCostsForPostcodes(postcodes);
 
             sfaAreaCosts.Should().HaveCount(3);
-            sfaAreaCosts.Should().ContainKeys("CV1 2Wt", "CV1 2TT", "CV1 2BB");
+            sfaAreaCosts.Should().ContainKeys("CV1 2WT", "CV1 2TT", "CV1 2BB");
             sfaAreaCosts.Should().NotContainKey("Fictional");
 
             sfaAreaCosts["CV1 2TT"].Should().HaveCount(2);
@@ -485,7 +485,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
 
             postcodesDataRetrievalServiceMock.SetupGet(p => p.CareerLearningPilot_Postcodes).Returns(careerLearningPilotsPostocde);
 
-            var postcodes = new List<string>() { "CV1 2WT", "CV1 2tT", "CV1 2BB" }.ToCaseInsensitiveHashSet();
+            var postcodes = new List<string>() { "CV1 2WT", "CV1 2TT", "CV1 2bb" }.ToCaseInsensitiveHashSet();
 
             var careerLearningPilots = postcodesDataRetrievalServiceMock.Object.CareerLearningPilotsForPostcodes(postcodes);
 
