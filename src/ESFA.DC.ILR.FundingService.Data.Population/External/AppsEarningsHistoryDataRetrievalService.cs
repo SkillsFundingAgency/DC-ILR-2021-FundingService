@@ -32,7 +32,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             var learnRefs = learners.Select(l => l.LearnRefNumber).ToCaseInsensitiveHashSet();
             var ulns = learners.Select(l => l.ULN).ToCaseInsensitiveHashSet();
 
-            var learnerShards = learners.SplitList(5000);
+            var learnerShards = learners.SplitList(2500);
             foreach (var shard in learnerShards)
             {
                var data = AecLatestInYearHistory
