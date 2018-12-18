@@ -138,7 +138,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             largeEmployersDataRetrievalServiceMock.VerifyAll();
             larsDataRetrievalServiceMock.VerifyAll();
             organisationDataRetrievalServiceMock.VerifyAll();
-            appsEarningsHistoryDataRetrievalServiceMock.VerifyAll();
+            //appsEarningsHistoryDataRetrievalServiceMock.VerifyAll();
             fcsDataRetrievalServiceMock.VerifyAll();
 
             externalDataCache.PostcodeCurrentVersion.Should().Be(postcodesCurrentVersion);

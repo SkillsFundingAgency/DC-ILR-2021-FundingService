@@ -89,7 +89,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
             referenceDataCache.FCSContractAllocations = _fcsDataRetrievalService.FCSContractsForUKPRN(providerUKPRN, conRefNumbers);
 
-            referenceDataCache.AECLatestInYearEarningHistory = _appsEarningsHistoryDataRetrievalService.AppsEarningsHistoryForLearners(providerUKPRN, learnRefNumberAndULN);
+            // bug 66460 - retrieval to be refactored once Apps History data is available.
+            // referenceDataCache.AECLatestInYearEarningHistory = _appsEarningsHistoryDataRetrievalService.AppsEarningsHistoryForLearners(providerUKPRN, learnRefNumberAndULN);
         }
     }
 }
