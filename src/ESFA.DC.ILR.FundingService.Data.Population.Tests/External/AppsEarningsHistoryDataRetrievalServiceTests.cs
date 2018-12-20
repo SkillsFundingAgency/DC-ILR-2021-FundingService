@@ -5,6 +5,7 @@ using ESFA.DC.Data.AppsEarningsHistory.Model;
 using ESFA.DC.Data.AppsEarningsHistory.Model.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.Population.External;
 using ESFA.DC.ILR.FundingService.Data.Population.Keys;
+using ESFA.DC.ILR.Tests.Model;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -13,6 +14,65 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
 {
     public class AppsEarningsHistoryDataRetrievalServiceTests
     {
+        [Fact]
+        public void UniqueFM36Learners()
+        {
+            var message = new TestMessage
+            {
+                Learners = new List<TestLearner>
+                {
+                    new TestLearner
+                    {
+                        LearnRefNumber = "35and36",
+                        ULN = 1,
+                        LearningDeliveries = new List<TestLearningDelivery>
+                        {
+                            new TestLearningDelivery
+                            {
+                                FundModel = 35
+                            },
+                            new TestLearningDelivery
+                            {
+                                FundModel = 36
+                            }
+                        }
+                    },
+                    new TestLearner
+                    {
+                        LearnRefNumber = "36",
+                        ULN = 2,
+                        LearningDeliveries = new List<TestLearningDelivery>
+                        {
+                            new TestLearningDelivery
+                            {
+                                FundModel = 36
+                            }
+                        }
+                    },
+                    new TestLearner
+                    {
+                        LearnRefNumber = "35",
+                        ULN = 3,
+                        LearningDeliveries = new List<TestLearningDelivery>
+                        {
+                            new TestLearningDelivery
+                            {
+                                FundModel = 35
+                            }
+                        }
+                    }
+                }
+            };
+
+            var learners = NewService().UniqueFM36Learners(message);
+
+            learners.Should().HaveCount(2);
+            learners.Select(l => l.LearnRefNumber).Should().Contain("35and36", "36");
+            learners.Select(l => l.LearnRefNumber).Should().NotContain("35");
+            learners.Where(l => l.LearnRefNumber == "35and36").Select(u => u.ULN).Should().BeEquivalentTo(1);
+            learners.Where(l => l.LearnRefNumber == "36").Select(u => u.ULN).Should().BeEquivalentTo(2);
+        }
+
         [Fact]
         public void AppEarningsHistory()
         {
