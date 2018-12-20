@@ -6,7 +6,6 @@ using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
-using ESFA.DC.ILR.FundingService.Data.Population.Keys;
 using ESFA.DC.ILR.FundingService.Dto.Interfaces;
 
 namespace ESFA.DC.ILR.FundingService.Data.Population.External
@@ -57,7 +56,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
             var ukprns = new List<long>() { providerUKPRN };
 
-            var learnRefNumberAndULN = _fundingServiceDto.Message.Learners.Select(l => new LearnRefNumberULNKey(l.LearnRefNumber, l.ULN));
+            var uniqueFM36Learners = _appsEarningsHistoryDataRetrievalService.UniqueFM36Learners(_fundingServiceDto.Message);
 
             var conRefNumbers = _fcsDataRetrievalService.UniqueConRefNumbers(_fundingServiceDto.Message).ToCaseInsensitiveHashSet();
 
@@ -89,8 +88,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
             referenceDataCache.FCSContractAllocations = _fcsDataRetrievalService.FCSContractsForUKPRN(providerUKPRN, conRefNumbers);
 
-            // bug 66460 - retrieval to be refactored once Apps History data is available.
-            // referenceDataCache.AECLatestInYearEarningHistory = _appsEarningsHistoryDataRetrievalService.AppsEarningsHistoryForLearners(providerUKPRN, learnRefNumberAndULN);
+            referenceDataCache.AECLatestInYearEarningHistory = _appsEarningsHistoryDataRetrievalService.AppsEarningsHistoryForLearners(providerUKPRN, uniqueFM36Learners);
         }
     }
 }
