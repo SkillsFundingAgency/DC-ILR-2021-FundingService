@@ -74,12 +74,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             referenceDataCache.LARSApprenticeshipFundingFrameworks = _larsDataRetrievalService.LARSApprenticeshipFundingFrameworks(apprenticeshipFundingFrameworks);
             referenceDataCache.LARSStandardFundings = _larsDataRetrievalService.LARSStandardFundingForStandardCodes(standardCodes);
 
+            referenceDataCache.PostcodeRoots = _postcodesDataRetrievalService.PostcodeRootsForPostcodes(uniquePostcodes);
             referenceDataCache.PostcodeCurrentVersion = _postcodesDataRetrievalService.CurrentVersion();
-            referenceDataCache.DasDisadvantage = _postcodesDataRetrievalService.DasDisadvantagesForPostcodes(uniquePostcodes);
-            referenceDataCache.SfaAreaCost = _postcodesDataRetrievalService.SfaAreaCostsForPostcodes(uniquePostcodes);
-            referenceDataCache.SfaDisadvantage = _postcodesDataRetrievalService.SfaDisadvantagesForPostcodes(uniquePostcodes);
-            referenceDataCache.EfaDisadvantage = _postcodesDataRetrievalService.EfaDisadvantagesForPostcodes(uniquePostcodes);
-            referenceDataCache.CareerLearningPilot = _postcodesDataRetrievalService.CareerLearningPilotsForPostcodes(uniquePostcodes);
 
             referenceDataCache.OrgVersion = _organisationDataRetrievalService.CurrentVersion();
             referenceDataCache.OrgFunding = _organisationDataRetrievalService.OrgFundingsForUkprns(ukprns);

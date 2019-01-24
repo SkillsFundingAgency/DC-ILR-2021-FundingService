@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using ESFA.DC.Data.Postcodes.Model;
 using ESFA.DC.Data.Postcodes.Model.Interfaces;
@@ -12,7 +13,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 {
     public class PostcodesDataRetrievalService : IPostcodesDataRetrievalService
     {
-        private const int ShardSize = 1000;
+        private const int ShardSize = 5000;
         private readonly IPostcodes _postcodes;
 
         public PostcodesDataRetrievalService()
@@ -25,6 +26,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         }
 
         public virtual IQueryable<VersionInfo> VersionInfos => _postcodes.VersionInfos;
+
+        public virtual IQueryable<MasterPostcode> MasterPostcodes => _postcodes.MasterPostcodes;
 
         public virtual IQueryable<SFA_PostcodeAreaCost> SfaPostcodeAreaCosts => _postcodes.SFA_PostcodeAreaCost;
 
@@ -50,219 +53,106 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             return VersionInfos.OrderByDescending(v => v.VersionNumber).Select(v => v.VersionNumber).FirstOrDefault();
         }
 
-        public IDictionary<string, IEnumerable<SfaAreaCost>> SfaAreaCostsForPostcodes(IEnumerable<string> postcodes)
+        public IDictionary<string, PostcodeRoot> PostcodeRootsForPostcodes(IEnumerable<string> postcodes)
         {
-            IDictionary<string, IEnumerable<SfaAreaCost>> result = new Dictionary<string, IEnumerable<SfaAreaCost>>().ToCaseInsensitiveDictionary();
+            var postcodeRoots = new List<PostcodeRoot>();
 
             var postcodeShards = postcodes.SplitList(ShardSize);
+
             foreach (var shard in postcodeShards)
             {
-                var data = SfaPostcodeAreaCosts
-                    .Join(
-                    shard,
-                    p => p.Postcode,
-                    s => s,
-                    (p, s) => new { shard = s, postcode = p })
-                    .Select(pc => new SfaAreaCost
+                postcodeRoots.AddRange(
+                    MasterPostcodes
+                        .Where(p => shard.Contains(p.Postcode))
+                        .Select(p =>
+                            new PostcodeRoot()
+                            {
+                                Postcode = p.Postcode,
+                            }));
+            }
+
+            foreach (var postcodeRootsShard in postcodeRoots.SplitList(ShardSize))
+            {
+                var shardPostcodes = postcodeRootsShard.Select(p => p.Postcode).ToList();
+
+                var careerLearningPilots = CareerLearningPilot_Postcodes
+                    .Where(clp => shardPostcodes.Contains(clp.Postcode))
+                    .Select(clp => new CareerLearningPilot()
                     {
-                        Postcode = pc.postcode.Postcode,
-                        AreaCostFactor = pc.postcode.AreaCostFactor,
-                        EffectiveFrom = pc.postcode.EffectiveFrom,
-                        EffectiveTo = pc.postcode.EffectiveTo,
+                        Postcode = clp.Postcode,
+                        AreaCode = clp.AreaCode,
+                        EffectiveFrom = clp.EffectiveFrom,
+                        EffectiveTo = clp.EffectiveTo,
                     })
-                    .GroupBy(p => p.Postcode)
-                    .ToDictionary(k => k.Key, v => v.ToList() as IEnumerable<SfaAreaCost>);
+                    .ToList()
+                    .GroupBy(d => d.Postcode)
+                    .ToCaseInsensitiveDictionary(d => d.Key, g => g.ToList());
 
-                foreach (var kvp in data)
+                var dasDisadvantages = DasPostcodeDisadvantages
+                    .Where(d => shardPostcodes.Contains(d.Postcode))
+                    .Select(pd => new DasDisadvantage
+                    {
+                        Postcode = pd.Postcode,
+                        Uplift = pd.Uplift,
+                        EffectiveFrom = pd.EffectiveFrom,
+                        EffectiveTo = pd.EffectiveTo,
+                    })
+                    .ToList()
+                    .GroupBy(d => d.Postcode)
+                    .ToCaseInsensitiveDictionary(d => d.Key, g => g.ToList());
+
+                var efaDisadvantages = EfaPostcodeDisadvantages
+                    .Where(d => shardPostcodes.Contains(d.Postcode))
+                    .Select(ed => new EfaDisadvantage()
+                    {
+                        Postcode = ed.Postcode,
+                        Uplift = ed.Uplift,
+                        EffectiveFrom = ed.EffectiveFrom,
+                        EffectiveTo = ed.EffectiveTo,
+                    })
+                    .ToList()
+                    .GroupBy(d => d.Postcode)
+                    .ToCaseInsensitiveDictionary(d => d.Key, g => g.ToList());
+
+                var sfaAreaCosts = SfaPostcodeAreaCosts
+                    .Where(c => shardPostcodes.Contains(c.Postcode))
+                    .Select(ac => new SfaAreaCost()
+                    {
+                        Postcode = ac.Postcode,
+                        AreaCostFactor = ac.AreaCostFactor,
+                        EffectiveFrom = ac.EffectiveFrom,
+                        EffectiveTo = ac.EffectiveTo
+                    })
+                    .ToList()
+                    .GroupBy(d => d.Postcode)
+                    .ToCaseInsensitiveDictionary(d => d.Key, g => g.ToList());
+
+                var sfaDisadvantages = SfaPostcodeDisadvantages
+                    .Where(d => shardPostcodes.Contains(d.Postcode))
+                    .Select(pd => new SfaDisadvantage
+                        {
+                            Postcode = pd.Postcode,
+                            Uplift = pd.Uplift,
+                            EffectiveFrom = pd.EffectiveFrom,
+                            EffectiveTo = pd.EffectiveTo,
+                        })
+                    .ToList()
+                    .GroupBy(d => d.Postcode)
+                    .ToCaseInsensitiveDictionary(d => d.Key, g => g.ToList());
+
+                foreach (var postcodeRoot in postcodeRootsShard)
                 {
-                    result.Add(kvp);
+                    var postcode = postcodeRoot.Postcode;
+
+                    postcodeRoot.CareerLearningPilots = careerLearningPilots.ContainsKey(postcode) ? careerLearningPilots[postcode] : new List<CareerLearningPilot>();
+                    postcodeRoot.DasDisadvantages = dasDisadvantages.ContainsKey(postcode) ? dasDisadvantages[postcode] : new List<DasDisadvantage>();
+                    postcodeRoot.EfaDisadvantages = efaDisadvantages.ContainsKey(postcode) ? efaDisadvantages[postcode] : new List<EfaDisadvantage>();
+                    postcodeRoot.SfaAreaCosts = sfaAreaCosts.ContainsKey(postcode) ? sfaAreaCosts[postcode] : new List<SfaAreaCost>();
+                    postcodeRoot.SfaDisadvantages = sfaDisadvantages.ContainsKey(postcode) ? sfaDisadvantages[postcode] : new List<SfaDisadvantage>();
                 }
             }
 
-            return result;
-        }
-
-        public SfaAreaCost SfaAreaCostFromEntity(SFA_PostcodeAreaCost entity)
-        {
-            return new SfaAreaCost()
-            {
-                Postcode = entity.Postcode,
-                AreaCostFactor = entity.AreaCostFactor,
-                EffectiveFrom = entity.EffectiveFrom,
-                EffectiveTo = entity.EffectiveTo
-            };
-        }
-
-        public IDictionary<string, IEnumerable<DasDisadvantage>> DasDisadvantagesForPostcodes(IEnumerable<string> postcodes)
-        {
-            IDictionary<string, IEnumerable<DasDisadvantage>> result = new Dictionary<string, IEnumerable<DasDisadvantage>>().ToCaseInsensitiveDictionary();
-
-            var postcodeShards = postcodes.SplitList(ShardSize);
-            foreach (var shard in postcodeShards)
-            {
-                 var data = DasPostcodeDisadvantages
-                   .Join(
-                   shard,
-                   p => p.Postcode,
-                   s => s,
-                   (p, s) => new { shard = s, postcode = p })
-                   .Select(pc => new DasDisadvantage
-                   {
-                       Postcode = pc.postcode.Postcode,
-                       Uplift = pc.postcode.Uplift,
-                       EffectiveFrom = pc.postcode.EffectiveFrom,
-                       EffectiveTo = pc.postcode.EffectiveTo,
-                   })
-                   .GroupBy(p => p.Postcode)
-                   .ToDictionary(k => k.Key, v => v.ToList() as IEnumerable<DasDisadvantage>);
-
-                foreach (var kvp in data)
-                {
-                    result.Add(kvp);
-                }
-            }
-
-            return result;
-        }
-
-        public DasDisadvantage DasDisadvantageFromEntity(DAS_PostcodeDisadvantage entity)
-        {
-            return new DasDisadvantage
-            {
-                Postcode = entity.Postcode,
-                Uplift = entity.Uplift,
-                EffectiveFrom = entity.EffectiveFrom,
-                EffectiveTo = entity.EffectiveTo,
-            };
-        }
-
-        public IDictionary<string, IEnumerable<SfaDisadvantage>> SfaDisadvantagesForPostcodes(IEnumerable<string> postcodes)
-        {
-            IDictionary<string, IEnumerable<SfaDisadvantage>> result = new Dictionary<string, IEnumerable<SfaDisadvantage>>().ToCaseInsensitiveDictionary();
-
-            var postcodeShards = postcodes.SplitList(ShardSize);
-            foreach (var shard in postcodeShards)
-            {
-                var data = SfaPostcodeDisadvantages
-                  .Join(
-                  shard,
-                  p => p.Postcode,
-                  s => s,
-                  (p, s) => new { shard = s, postcode = p })
-                  .Select(pc => new SfaDisadvantage
-                  {
-                      Postcode = pc.postcode.Postcode,
-                      Uplift = pc.postcode.Uplift,
-                      EffectiveFrom = pc.postcode.EffectiveFrom,
-                      EffectiveTo = pc.postcode.EffectiveTo,
-                  })
-                  .GroupBy(p => p.Postcode)
-                  .ToDictionary(k => k.Key, v => v.ToList() as IEnumerable<SfaDisadvantage>);
-
-                foreach (var kvp in data)
-                {
-                    result.Add(kvp);
-                }
-            }
-
-            return result;
-        }
-
-        public SfaDisadvantage SfaDisadvantageFromEntity(SFA_PostcodeDisadvantage entity)
-        {
-            return new SfaDisadvantage
-            {
-                Postcode = entity.Postcode,
-                Uplift = entity.Uplift,
-                EffectiveFrom = entity.EffectiveFrom,
-                EffectiveTo = entity.EffectiveTo,
-            };
-        }
-
-        public IDictionary<string, IEnumerable<EfaDisadvantage>> EfaDisadvantagesForPostcodes(IEnumerable<string> postcodes)
-        {
-            IDictionary<string, IEnumerable<EfaDisadvantage>> result = new Dictionary<string, IEnumerable<EfaDisadvantage>>().ToCaseInsensitiveDictionary();
-
-            var postcodeShards = postcodes.SplitList(ShardSize);
-            foreach (var shard in postcodeShards)
-            {
-                var data = EfaPostcodeDisadvantages
-                 .Join(
-                 shard,
-                 p => p.Postcode,
-                 s => s,
-                 (p, s) => new { shard = s, postcode = p })
-                 .Select(pc => new EfaDisadvantage
-                 {
-                     Postcode = pc.postcode.Postcode,
-                     Uplift = pc.postcode.Uplift,
-                     EffectiveFrom = pc.postcode.EffectiveFrom,
-                     EffectiveTo = pc.postcode.EffectiveTo,
-                 })
-                 .GroupBy(p => p.Postcode)
-                 .ToDictionary(k => k.Key, v => v.ToList() as IEnumerable<EfaDisadvantage>);
-
-                foreach (var kvp in data)
-                {
-                    result.Add(kvp);
-                }
-            }
-
-            return result;
-        }
-
-        public EfaDisadvantage EfaDisadvantageFromEntity(EFA_PostcodeDisadvantage entity)
-        {
-            return new EfaDisadvantage()
-            {
-                Postcode = entity.Postcode,
-                Uplift = entity.Uplift,
-                EffectiveFrom = entity.EffectiveFrom,
-                EffectiveTo = entity.EffectiveTo,
-            };
-        }
-
-        public IDictionary<string, IEnumerable<CareerLearningPilot>> CareerLearningPilotsForPostcodes(IEnumerable<string> postcodes)
-        {
-            IDictionary<string, IEnumerable<CareerLearningPilot>> result = new Dictionary<string, IEnumerable<CareerLearningPilot>>().ToCaseInsensitiveDictionary();
-
-            var postcodeShards = postcodes.SplitList(ShardSize);
-            foreach (var shard in postcodeShards)
-            {
-               var data = CareerLearningPilot_Postcodes
-                 .Join(
-                 shard,
-                 p => p.Postcode,
-                 s => s,
-                 (p, s) => new { shard = s, postcode = p })
-                 .Select(pc => new CareerLearningPilot
-                 {
-                     Postcode = pc.postcode.Postcode,
-                     AreaCode = pc.postcode.AreaCode,
-                     EffectiveFrom = pc.postcode.EffectiveFrom,
-                     EffectiveTo = pc.postcode.EffectiveTo,
-                 })
-                 .GroupBy(p => p.Postcode)
-                 .ToDictionary(k => k.Key, v => v.ToList() as IEnumerable<CareerLearningPilot>);
-
-                foreach (var kvp in data)
-                {
-                    result.Add(kvp);
-                }
-            }
-
-            return result;
-        }
-
-        public CareerLearningPilot CareerLearningPilotFromEntity(CareerLearningPilot_Postcode entity)
-        {
-            return new CareerLearningPilot()
-            {
-                Postcode = entity.Postcode,
-                AreaCode = entity.AreaCode,
-                EffectiveFrom = entity.EffectiveFrom,
-                EffectiveTo = entity.EffectiveTo,
-            };
+            return postcodeRoots.ToCaseInsensitiveDictionary(k => k.Postcode, v => v);
         }
     }
 }

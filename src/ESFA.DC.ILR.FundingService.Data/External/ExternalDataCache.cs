@@ -35,16 +35,8 @@ namespace ESFA.DC.ILR.FundingService.Data.External
 
         public string PostcodeCurrentVersion { get; set; }
 
-        public IDictionary<string, IEnumerable<SfaAreaCost>> SfaAreaCost { get; set; }
-       
-        public IDictionary<string, IEnumerable<DasDisadvantage>> DasDisadvantage { get; set; }
-
-        public IDictionary<string, IEnumerable<SfaDisadvantage>> SfaDisadvantage { get; set; }
-
-        public IDictionary<string, IEnumerable<EfaDisadvantage>> EfaDisadvantage { get; set; }
-
-        public IDictionary<string, IEnumerable<CareerLearningPilot>> CareerLearningPilot { get; set; }
-
+        public IDictionary<string, PostcodeRoot> PostcodeRoots { get; set; }
+        
         public string OrgVersion { get; set; }
 
         public IDictionary<long, IEnumerable<OrgFunding>> OrgFunding { get; set; }

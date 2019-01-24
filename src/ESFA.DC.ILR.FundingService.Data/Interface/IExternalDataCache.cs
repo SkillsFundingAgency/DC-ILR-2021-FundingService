@@ -15,16 +15,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Interface
         IDictionary<string, LARSLearningDelivery> LARSLearningDelivery { get; }
 
         string LARSCurrentVersion { get; }
-
-        IDictionary<string, IEnumerable<SfaAreaCost>> SfaAreaCost { get; }
-
-        IDictionary<string, IEnumerable<DasDisadvantage>> DasDisadvantage { get; }
-
-        IDictionary<string, IEnumerable<SfaDisadvantage>> SfaDisadvantage { get; }
-
-        IDictionary<string, IEnumerable<EfaDisadvantage>> EfaDisadvantage { get; }
-
-        IDictionary<string, IEnumerable<CareerLearningPilot>> CareerLearningPilot { get; }
+        
+        IDictionary<string, PostcodeRoot> PostcodeRoots { get; }
 
         string PostcodeCurrentVersion { get; }
 

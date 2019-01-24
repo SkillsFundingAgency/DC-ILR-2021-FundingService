@@ -21,13 +21,13 @@ namespace ESFA.DC.ILR.FundingService.Data.Extensions
             return enumerable.ToDictionary(keySelector, valueSelector, StringComparer.OrdinalIgnoreCase);
         }
 
-        public static IEnumerable<IEnumerable<T>> SplitList<T>(this IEnumerable<T> source, int nSize = 30)
+        public static IEnumerable<IEnumerable<T>> SplitList<T>(this IEnumerable<T> source, int nSize)
         {
             var l = source.ToList();
 
             for (var i = 0; i < l.Count; i += nSize)
             {
-                yield return l.GetRange(i, Math.Min(nSize, l.Count - i)).ToCaseInsensitiveHashSet();
+                yield return l.GetRange(i, Math.Min(nSize, l.Count - i));
             }
         }
     }

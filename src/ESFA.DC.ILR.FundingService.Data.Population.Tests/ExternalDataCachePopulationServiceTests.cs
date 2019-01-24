@@ -55,14 +55,11 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             var dasDisadvantages = new Dictionary<string, IEnumerable<DasDisadvantage>>();
             var efaDisadvantages = new Dictionary<string, IEnumerable<EfaDisadvantage>>();
             var careerLearningPilots = new Dictionary<string, IEnumerable<CareerLearningPilot>>();
+            var postcodeRoots = new Dictionary<string, PostcodeRoot>();
 
             postcodesDataRetrievalServiceMock.Setup(p => p.UniquePostcodes(message)).Returns(new HashSet<string>()).Verifiable();
             postcodesDataRetrievalServiceMock.Setup(p => p.CurrentVersion()).Returns(postcodesCurrentVersion).Verifiable();
-            postcodesDataRetrievalServiceMock.Setup(p => p.SfaAreaCostsForPostcodes(It.IsAny<IEnumerable<string>>())).Returns(sfaAreaCosts).Verifiable();
-            postcodesDataRetrievalServiceMock.Setup(p => p.SfaDisadvantagesForPostcodes(It.IsAny<IEnumerable<string>>())).Returns(sfaDisadvantages).Verifiable();
-            postcodesDataRetrievalServiceMock.Setup(p => p.DasDisadvantagesForPostcodes(It.IsAny<IEnumerable<string>>())).Returns(dasDisadvantages).Verifiable();
-            postcodesDataRetrievalServiceMock.Setup(p => p.EfaDisadvantagesForPostcodes(It.IsAny<IEnumerable<string>>())).Returns(efaDisadvantages).Verifiable();
-            postcodesDataRetrievalServiceMock.Setup(p => p.CareerLearningPilotsForPostcodes(It.IsAny<IEnumerable<string>>())).Returns(careerLearningPilots).Verifiable();
+            postcodesDataRetrievalServiceMock.Setup(p => p.PostcodeRootsForPostcodes(It.IsAny<IEnumerable<string>>())).Returns(postcodeRoots);
 
             var largeEmployersDataRetrievalServiceMock = new Mock<ILargeEmployersDataRetrievalService>();
 
@@ -142,11 +139,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             fcsDataRetrievalServiceMock.VerifyAll();
 
             externalDataCache.PostcodeCurrentVersion.Should().Be(postcodesCurrentVersion);
-            externalDataCache.SfaAreaCost.Should().BeSameAs(sfaAreaCosts);
-            externalDataCache.SfaDisadvantage.Should().BeSameAs(sfaDisadvantages);
-            externalDataCache.DasDisadvantage.Should().BeSameAs(dasDisadvantages);
-            externalDataCache.EfaDisadvantage.Should().BeSameAs(efaDisadvantages);
-            externalDataCache.CareerLearningPilot.Should().BeSameAs(careerLearningPilots);
+            externalDataCache.PostcodeRoots.Should().BeSameAs(postcodeRoots);
 
             externalDataCache.LargeEmployers.Should().BeSameAs(largeEmployers);
 
