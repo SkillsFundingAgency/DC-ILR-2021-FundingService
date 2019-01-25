@@ -2,6 +2,7 @@
 using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.File;
+using ESFA.DC.ILR.FundingService.Data.Internal;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
 using Microsoft.ServiceFabric.Actors;
@@ -52,6 +53,27 @@ namespace ESFA.DC.ILR.FundingService.ServiceFabric.Common
                 OrgVersion = deserialzedCache.OrgVersion,
                 PostcodeCurrentVersion = deserialzedCache.PostcodeCurrentVersion,
                 PostcodeRoots = deserialzedCache.PostcodeRoots.ToCaseInsensitiveDictionary(),
+            };
+        }
+
+        public InternalDataCache BuildInternalDataCache(string serialzedCache)
+        {
+            var deserialzedCache = JsonSerializationService.Deserialize<InternalDataCache>(serialzedCache);
+
+            return new InternalDataCache
+            {
+                Period1 = deserialzedCache.Period1,
+                Period2 = deserialzedCache.Period2,
+                Period3 = deserialzedCache.Period3,
+                Period4 = deserialzedCache.Period4,
+                Period5 = deserialzedCache.Period5,
+                Period6 = deserialzedCache.Period6,
+                Period7 = deserialzedCache.Period7,
+                Period8 = deserialzedCache.Period8,
+                Period9 = deserialzedCache.Period9,
+                Period10 = deserialzedCache.Period10,
+                Period11 = deserialzedCache.Period11,
+                Period12 = deserialzedCache.Period12
             };
         }
 

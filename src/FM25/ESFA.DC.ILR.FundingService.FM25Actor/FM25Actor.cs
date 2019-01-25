@@ -66,7 +66,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
                 logger.LogDebug($"{nameof(FM25Actor)} {ActorId} starting");
 
                 externalDataCache = BuildExternalDataCache(actorModel.ExternalDataCache);
-                internalDataCache = JsonSerializationService.Deserialize<InternalDataCache>(actorModel.InternalDataCache);
+                internalDataCache = BuildInternalDataCache(actorModel.InternalDataCache);
                 fileDataCache = BuildFileDataCache(actorModel.FileDataCache);
 
                 logger.LogDebug($"{nameof(FM25Actor)} {ActorId} finished getting input data");
