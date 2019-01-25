@@ -64,9 +64,9 @@ namespace ESFA.DC.ILR.FundingService.FM70Actor
             {
                 logger.LogDebug($"{nameof(FM70Actor)} {ActorId} {GC.GetGeneration(actorModel)} starting");
 
-                externalDataCache = JsonSerializationService.Deserialize<ExternalDataCache>(actorModel.ExternalDataCache);
+                externalDataCache = BuildExternalDataCache(actorModel.ExternalDataCache);
                 internalDataCache = JsonSerializationService.Deserialize<InternalDataCache>(actorModel.InternalDataCache);
-                fileDataCache = JsonSerializationService.Deserialize<FileDataCache>(actorModel.FileDataCache);
+                fileDataCache = BuildFileDataCache(actorModel.FileDataCache);
 
                 logger.LogDebug($"{nameof(FM70Actor)} {ActorId} {GC.GetGeneration(actorModel)} finished getting input data");
 
