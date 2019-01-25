@@ -40,7 +40,7 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
             GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
 
-            return JsonSerializationService.Serialize(results);
+            return BuildFundingOutput(results);
         }
 
         private FM35Global RunFunding(FundingActorDto actorModel, CancellationToken cancellationToken)

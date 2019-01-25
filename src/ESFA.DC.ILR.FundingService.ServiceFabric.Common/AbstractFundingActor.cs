@@ -25,11 +25,11 @@ namespace ESFA.DC.ILR.FundingService.ServiceFabric.Common
 
         public IExecutionContext ExecutionContext { get; }
 
-        public IJsonSerializationService JsonSerializationService { get; }
-
         protected ActorId ActorId { get; }
 
         protected ILifetimeScope LifetimeScope { get; }
+
+        private IJsonSerializationService JsonSerializationService { get; }
 
         public ExternalDataCache BuildExternalDataCache(string serialzedCache)
         {
@@ -93,6 +93,11 @@ namespace ESFA.DC.ILR.FundingService.ServiceFabric.Common
         public List<MessageLearner> BuildLearners(string serializedLearners)
         {
             return JsonSerializationService.Deserialize<List<MessageLearner>>(serializedLearners);
+        }
+
+        public string BuildFundingOutput<T>(T model)
+        {
+            return JsonSerializationService.Serialize(model);
         }
     }
 }
