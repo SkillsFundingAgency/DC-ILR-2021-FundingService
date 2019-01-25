@@ -1,8 +1,10 @@
-﻿using Autofac;
+﻿using System.Collections.Generic;
+using Autofac;
 using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.Internal;
+using ESFA.DC.ILR.Model;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
 using Microsoft.ServiceFabric.Actors;
@@ -86,6 +88,11 @@ namespace ESFA.DC.ILR.FundingService.ServiceFabric.Common
                 UKPRN = deserialzedCache.UKPRN,
                 DPOutcomes = deserialzedCache.DPOutcomes.ToCaseInsensitiveDictionary()
             };
+        }
+
+        public List<MessageLearner> BuildLearners(string serializedLearners)
+        {
+            return JsonSerializationService.Deserialize<List<MessageLearner>>(serializedLearners);
         }
     }
 }

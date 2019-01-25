@@ -101,8 +101,7 @@ namespace ESFA.DC.ILR.FundingService.FM81Actor
                     IFundingService<ILearner, FM81Global> fundingService =
                         childLifetimeScope.Resolve<IFundingService<ILearner, FM81Global>>();
 
-                    List<MessageLearner> learners =
-                        JsonSerializationService.Deserialize<List<MessageLearner>>(actorModel.ValidLearners);
+                    var learners = BuildLearners(actorModel.ValidLearners);
 
                     results = fundingService.ProcessFunding(learners, cancellationToken);
 

@@ -94,7 +94,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                     jobLogger.LogDebug($"{nameof(ALBActor)} {ActorId} {GC.GetGeneration(actorModel)} started processing");
                     IFundingService<ILearner, ALBGlobal> fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, ALBGlobal>>();
 
-                    List<MessageLearner> learners = JsonSerializationService.Deserialize<List<MessageLearner>>(actorModel.ValidLearners);
+                    var learners = BuildLearners(actorModel.ValidLearners);
 
                     results = fundingService.ProcessFunding(learners, cancellationToken);
 
