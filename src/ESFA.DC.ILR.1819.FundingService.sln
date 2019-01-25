@@ -142,7 +142,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.FundingService.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.FundingService.FM81Actor.Interfaces", "FM81\ESFA.DC.ILR.FundingService.FM81Actor.Interfaces\ESFA.DC.ILR.FundingService.FM81Actor.Interfaces.csproj", "{8BE7515B-FB45-47EA-9B2C-A5FA61252AEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.FundingService.Data.Extensions", "ESFA.DC.ILR.FundingService.Data.Extensions\ESFA.DC.ILR.FundingService.Data.Extensions.csproj", "{3B3D8772-4B66-4B95-B094-933BBA6F9997}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.FundingService.Data.Extensions", "ESFA.DC.ILR.FundingService.Data.Extensions\ESFA.DC.ILR.FundingService.Data.Extensions.csproj", "{3B3D8772-4B66-4B95-B094-933BBA6F9997}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -153,8 +153,6 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D2248984-0D7D-4D77-AFBF-5116C252615C}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{D2248984-0D7D-4D77-AFBF-5116C252615C}.Debug|Any CPU.Build.0 = Debug|x64
-		{D2248984-0D7D-4D77-AFBF-5116C252615C}.Debug|Any CPU.Deploy.0 = Debug|x64
 		{D2248984-0D7D-4D77-AFBF-5116C252615C}.Debug|x64.ActiveCfg = Debug|x64
 		{D2248984-0D7D-4D77-AFBF-5116C252615C}.Debug|x64.Build.0 = Debug|x64
 		{D2248984-0D7D-4D77-AFBF-5116C252615C}.Debug|x64.Deploy.0 = Debug|x64
