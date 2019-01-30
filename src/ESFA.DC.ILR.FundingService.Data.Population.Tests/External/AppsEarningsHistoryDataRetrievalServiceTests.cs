@@ -150,8 +150,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
 
             aecHistories.Should().HaveCount(2);
             aecHistories.Should().ContainKeys(1234567890, 1234567899);
-            aecHistories.SelectMany(v => v.Value).Should().HaveCount(3);
-            aecHistories[1234567890].Should().HaveCount(2);
+            aecHistories.SelectMany(v => v.Value).Should().HaveCount(4);
+            aecHistories[1234567890].Should().HaveCount(3);
             aecHistories[1234567899].Should().HaveCount(1);
         }
 
