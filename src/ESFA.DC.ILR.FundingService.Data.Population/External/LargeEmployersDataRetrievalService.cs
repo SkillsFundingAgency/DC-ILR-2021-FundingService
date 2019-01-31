@@ -37,34 +37,26 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public IDictionary<int, IEnumerable<LargeEmployers>> LargeEmployersForEmployerIds(IEnumerable<int> employerIds)
         {
-            IDictionary<int, IEnumerable<LargeEmployers>> employersDictionary = new Dictionary<int, IEnumerable<LargeEmployers>>();
+           var employersList = new List<LargeEmployers>();
 
             var employerShards = employerIds.SplitList(5000);
 
             foreach (var shard in employerShards)
             {
-                var data = Employers
-               .Where(l => shard.Contains(l.ERN))
-               .GroupBy(e => e.ERN)
-               .ToDictionary(a => a.Key, a => a.Select(LargeEmployersFromEntity).ToList() as IEnumerable<LargeEmployers>);
-
-                foreach (var kvp in data)
-                {
-                    employersDictionary.Add(kvp);
-                }
+                employersList.AddRange(
+                    Employers
+                    .Where(l => shard.Contains(l.ERN))
+                    .Select(lemp => new LargeEmployers
+                    {
+                        ERN = lemp.ERN,
+                        EffectiveFrom = lemp.EffectiveFrom,
+                        EffectiveTo = lemp.EffectiveTo,
+                    }).ToList());
             }
 
-            return employersDictionary;
-        }
-
-        public LargeEmployers LargeEmployersFromEntity(LEMP_Employers entity)
-        {
-            return new LargeEmployers
-            {
-                ERN = entity.ERN,
-                EffectiveFrom = entity.EffectiveFrom,
-                EffectiveTo = entity.EffectiveTo,
-            };
+            return employersList
+                .GroupBy(e => e.ERN)
+               .ToDictionary(k => k.Key, v => v.ToList() as IEnumerable<LargeEmployers>);
         }
     }
 }

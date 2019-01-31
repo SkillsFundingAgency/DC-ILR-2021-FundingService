@@ -150,14 +150,17 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
 
             aecHistories.Should().HaveCount(2);
             aecHistories.Should().ContainKeys(1234567890, 1234567899);
-            aecHistories.SelectMany(v => v.Value).Should().HaveCount(3);
-            aecHistories[1234567890].Should().HaveCount(2);
+            aecHistories.SelectMany(v => v.Value).Should().HaveCount(4);
+            aecHistories[1234567890].Should().HaveCount(3);
             aecHistories[1234567899].Should().HaveCount(1);
         }
 
         [Fact]
-        public void AECLatestInYearEarningsFromEntity()
+        public void AECLatestInYearEarnings_EntityOutputCorrect()
         {
+            var ukprn = 123456;
+            var learners = new List<LearnRefNumberULNKey> { new LearnRefNumberULNKey("123", 1234567890) };
+
             var aec_LatestInYearHistory = new AppsEarningsHistory()
             {
                 AppIdentifier = "1",
@@ -188,11 +191,22 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                 STDCode = 19,
                 TotalProgAimPaymentsInTheYear = 20m,
                 UptoEndDate = new DateTime(2018, 8, 1),
-                UKPRN = 21,
-                ULN = 22,
+                UKPRN = 123456,
+                ULN = 1234567890,
             };
 
-            var aecLatestInYearHistory = NewService().AECLatestInYearEarningsFromEntity(aec_LatestInYearHistory);
+            var apps_Histories = new List<AppsEarningsHistory>()
+            {
+               aec_LatestInYearHistory
+            }.AsQueryable();
+
+            var appsEarningHistoryDataRetrievalServiceMock = NewMock();
+
+            appsEarningHistoryDataRetrievalServiceMock.SetupGet(a => a.AecLatestInYearHistory).Returns(apps_Histories);
+
+            var aecHistories = appsEarningHistoryDataRetrievalServiceMock.Object.AppsEarningsHistoryForLearners(ukprn, learners);
+
+            var aecLatestInYearHistory = aecHistories[1234567890].FirstOrDefault();
 
             aecLatestInYearHistory.AppIdentifier.Should().Be(aec_LatestInYearHistory.AppIdentifier);
             aecLatestInYearHistory.AppProgCompletedInTheYearInput.Should().Be(aec_LatestInYearHistory.AppProgCompletedInTheYearInput);

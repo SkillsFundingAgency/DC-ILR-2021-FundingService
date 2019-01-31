@@ -38,111 +38,58 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public IDictionary<long, IEnumerable<AECEarningsHistory>> AppsEarningsHistoryForLearners(int providerUKPRN, IEnumerable<LearnRefNumberULNKey> learners)
         {
-            IDictionary<long, IEnumerable<AECEarningsHistory>> result = new Dictionary<long, IEnumerable<AECEarningsHistory>>();
+            var aecHistories = new List<AECEarningsHistory>();
 
             var learnerShards = learners.SplitList(2500);
+
             foreach (var shard in learnerShards)
             {
-                var learnRefs = learners.Select(l => l.LearnRefNumber).ToCaseInsensitiveHashSet();
+                var ulns = shard.Select(l => l.ULN).ToList();
 
-                var appsData = AecLatestInYearHistory
-                    .Where(
-                        a => a.UKPRN == providerUKPRN
-                        && a.LatestInYear == true
-                        && a.ULN < 9999999999)
-                   .Join(
-                        learnRefs,
-                        a => a.LearnRefNumber,
-                        l => l,
-                        (a, l) => new { aec = a, learnRefNumber = l })
-                        .Select(a => new AECEarningsHistory
-                        {
-                            AppIdentifier = a.aec.AppIdentifier,
-                            AppProgCompletedInTheYearInput = a.aec.AppProgCompletedInTheYearInput,
-                            CollectionYear = a.aec.CollectionYear,
-                            CollectionReturnCode = a.aec.CollectionReturnCode,
-                            DaysInYear = a.aec.DaysInYear,
-                            FworkCode = a.aec.FworkCode,
-                            HistoricEffectiveTNPStartDateInput = a.aec.HistoricEffectiveTNPStartDateInput,
-                            HistoricEmpIdEndWithinYear = a.aec.HistoricEmpIdEndWithinYear,
-                            HistoricEmpIdStartWithinYear = a.aec.HistoricEmpIdStartWithinYear,
-                            HistoricLearner1618StartInput = a.aec.HistoricLearner1618StartInput,
-                            HistoricPMRAmount = a.aec.HistoricPMRAmount,
-                            HistoricTNP1Input = a.aec.HistoricTNP1Input,
-                            HistoricTNP2Input = a.aec.HistoricTNP2Input,
-                            HistoricTNP3Input = a.aec.HistoricTNP3Input,
-                            HistoricTNP4Input = a.aec.HistoricTNP4Input,
-                            HistoricTotal1618UpliftPaymentsInTheYearInput = a.aec.HistoricTotal1618UpliftPaymentsInTheYearInput,
-                            HistoricVirtualTNP3EndOfTheYearInput = a.aec.HistoricVirtualTNP3EndOfTheYearInput,
-                            HistoricVirtualTNP4EndOfTheYearInput = a.aec.HistoricVirtualTNP4EndOfTheYearInput,
-                            HistoricLearnDelProgEarliestACT2DateInput = a.aec.HistoricLearnDelProgEarliestACT2DateInput,
-                            LatestInYear = a.aec.LatestInYear,
-                            LearnRefNumber = a.learnRefNumber,
-                            ProgrammeStartDateIgnorePathway = a.aec.ProgrammeStartDateIgnorePathway,
-                            ProgrammeStartDateMatchPathway = a.aec.ProgrammeStartDateMatchPathway,
-                            ProgType = a.aec.ProgType,
-                            PwayCode = a.aec.PwayCode,
-                            STDCode = a.aec.STDCode,
-                            TotalProgAimPaymentsInTheYear = a.aec.STDCode,
-                            UptoEndDate = a.aec.UptoEndDate,
-                            UKPRN = a.aec.UKPRN,
-                            ULN = a.aec.ULN
-                        }).ToList();
-
-              var dataULNMatch =
-                    appsData.Join(
-                        shard,
-                        a => new { a.LearnRefNumber, a.ULN },
-                        l => new { l.LearnRefNumber, l.ULN },
-                        (a, l) => new { aec = a, learner = l })
-                         .Select(a => a.aec).ToList()
-                         .GroupBy(u => u.ULN)
-                         .ToDictionary(k => k.Key, v => v.ToList() as IEnumerable<AECEarningsHistory>);
-
-                foreach (var kvp in dataULNMatch)
-                {
-                    result.Add(kvp);
-                }
+                aecHistories.AddRange(
+                    AecLatestInYearHistory
+                    .Where(a => a.LatestInYear == true
+                    && a.ULN < 9999999999
+                    && ulns.Contains(a.ULN))
+                    .Select(aec => new AECEarningsHistory
+                    {
+                        AppIdentifier = aec.AppIdentifier,
+                        AppProgCompletedInTheYearInput = aec.AppProgCompletedInTheYearInput,
+                        CollectionYear = aec.CollectionYear,
+                        CollectionReturnCode = aec.CollectionReturnCode,
+                        DaysInYear = aec.DaysInYear,
+                        FworkCode = aec.FworkCode,
+                        HistoricEffectiveTNPStartDateInput = aec.HistoricEffectiveTNPStartDateInput,
+                        HistoricEmpIdEndWithinYear = aec.HistoricEmpIdEndWithinYear,
+                        HistoricEmpIdStartWithinYear = aec.HistoricEmpIdStartWithinYear,
+                        HistoricLearner1618StartInput = aec.HistoricLearner1618StartInput,
+                        HistoricPMRAmount = aec.HistoricPMRAmount,
+                        HistoricTNP1Input = aec.HistoricTNP1Input,
+                        HistoricTNP2Input = aec.HistoricTNP2Input,
+                        HistoricTNP3Input = aec.HistoricTNP3Input,
+                        HistoricTNP4Input = aec.HistoricTNP4Input,
+                        HistoricTotal1618UpliftPaymentsInTheYearInput = aec.HistoricTotal1618UpliftPaymentsInTheYearInput,
+                        HistoricVirtualTNP3EndOfTheYearInput = aec.HistoricVirtualTNP3EndOfTheYearInput,
+                        HistoricVirtualTNP4EndOfTheYearInput = aec.HistoricVirtualTNP4EndOfTheYearInput,
+                        HistoricLearnDelProgEarliestACT2DateInput = aec.HistoricLearnDelProgEarliestACT2DateInput,
+                        LatestInYear = aec.LatestInYear,
+                        LearnRefNumber = aec.LearnRefNumber,
+                        ProgrammeStartDateIgnorePathway = aec.ProgrammeStartDateIgnorePathway,
+                        ProgrammeStartDateMatchPathway = aec.ProgrammeStartDateMatchPathway,
+                        ProgType = aec.ProgType,
+                        PwayCode = aec.PwayCode,
+                        STDCode = aec.STDCode,
+                        TotalProgAimPaymentsInTheYear = aec.STDCode,
+                        UptoEndDate = aec.UptoEndDate,
+                        UKPRN = aec.UKPRN,
+                        ULN = aec.ULN
+                    }).ToList());
             }
 
-            return result;
-        }
-
-        public AECEarningsHistory AECLatestInYearEarningsFromEntity(AppsEarningsHistory entity)
-        {
-            return new AECEarningsHistory
-            {
-                AppIdentifier = entity.AppIdentifier,
-                AppProgCompletedInTheYearInput = entity.AppProgCompletedInTheYearInput,
-                CollectionYear = entity.CollectionYear,
-                CollectionReturnCode = entity.CollectionReturnCode,
-                DaysInYear = entity.DaysInYear,
-                FworkCode = entity.FworkCode,
-                HistoricEffectiveTNPStartDateInput = entity.HistoricEffectiveTNPStartDateInput,
-                HistoricEmpIdEndWithinYear = entity.HistoricEmpIdEndWithinYear,
-                HistoricEmpIdStartWithinYear = entity.HistoricEmpIdStartWithinYear,
-                HistoricLearner1618StartInput = entity.HistoricLearner1618StartInput,
-                HistoricPMRAmount = entity.HistoricPMRAmount,
-                HistoricTNP1Input = entity.HistoricTNP1Input,
-                HistoricTNP2Input = entity.HistoricTNP2Input,
-                HistoricTNP3Input = entity.HistoricTNP3Input,
-                HistoricTNP4Input = entity.HistoricTNP4Input,
-                HistoricTotal1618UpliftPaymentsInTheYearInput = entity.HistoricTotal1618UpliftPaymentsInTheYearInput,
-                HistoricVirtualTNP3EndOfTheYearInput = entity.HistoricVirtualTNP3EndOfTheYearInput,
-                HistoricVirtualTNP4EndOfTheYearInput = entity.HistoricVirtualTNP4EndOfTheYearInput,
-                HistoricLearnDelProgEarliestACT2DateInput = entity.HistoricLearnDelProgEarliestACT2DateInput,
-                LatestInYear = entity.LatestInYear,
-                LearnRefNumber = entity.LearnRefNumber,
-                ProgrammeStartDateIgnorePathway = entity.ProgrammeStartDateIgnorePathway,
-                ProgrammeStartDateMatchPathway = entity.ProgrammeStartDateMatchPathway,
-                ProgType = entity.ProgType,
-                PwayCode = entity.PwayCode,
-                STDCode = entity.STDCode,
-                TotalProgAimPaymentsInTheYear = entity.STDCode,
-                UptoEndDate = entity.UptoEndDate,
-                UKPRN = entity.UKPRN,
-                ULN = entity.ULN
-            };
+            return
+                aecHistories
+                .GroupBy(a => a.ULN)
+                .ToDictionary(k => k.Key, v => v.ToList() as IEnumerable<AECEarningsHistory>);
         }
     }
 }
