@@ -90,7 +90,6 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                 Children =
                     (learner
                         .LearningDeliveries?
-                        .Where(ld => ld.FundModel == _fundModel)
                         .Select(BuildLearningDeliveryDataEntity) ?? new List<IDataEntity>())
                         .Union(
                             _fileDataService.DPOutcomesForLearnRefNumber(learner.LearnRefNumber)?
