@@ -281,7 +281,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                         PwayCode = fc.LARSFrameworkCommonComponent.PwayCode,
                         ProgType = fc.LARSFrameworkCommonComponent.ProgType,
                         EffectiveFrom = fc.LARSFrameworkCommonComponent.EffectiveFrom,
-                        EffectiveTo = fc.LARSFrameworkCommonComponent.EffectiveFrom
+                        EffectiveTo = fc.LARSFrameworkCommonComponent.EffectiveTo
                     })
                     .ToList();
 
