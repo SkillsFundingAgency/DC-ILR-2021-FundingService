@@ -54,7 +54,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
 
         public IDataEntity BuildGlobalDataEntity(ILearner learner, Global global)
         {
-            var orgFunding = _organisationReferenceDataService.OrganisationFundingForUKPRN(global.UKPRN);
+            var orgFunding = _organisationReferenceDataService.OrganisationFundingForUKPRN(global.UKPRN).Where(f => f.OrgFundFactType == Attributes.OrgFundFactorTypeAdultSkills).ToList();
 
             var globalEntity = new DataEntity(Attributes.EntityGlobal)
             {
