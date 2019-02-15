@@ -79,11 +79,24 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 }
             };
 
-            var uplift = 1.0m;
+            var uplift = 1.1m;
 
             var efaDisadvantages = new List<EfaDisadvantage>()
             {
-                new EfaDisadvantage() { Uplift = uplift }
+                new EfaDisadvantage()
+                {
+                    Postcode = "CV1 2WT",
+                    Uplift = 1.0m,
+                    EffectiveFrom = new DateTime(2000, 01, 01),
+                    EffectiveTo = new DateTime(2015, 07, 31),
+                },
+                new EfaDisadvantage()
+                {
+                   Postcode = "CV1 2WT",
+                   Uplift = uplift,
+                   EffectiveFrom = new DateTime(2015, 08, 01),
+                   EffectiveTo = new DateTime(2019, 07, 31),
+                }
             };
 
             var fileDataServiceMock = new Mock<IFileDataService>();

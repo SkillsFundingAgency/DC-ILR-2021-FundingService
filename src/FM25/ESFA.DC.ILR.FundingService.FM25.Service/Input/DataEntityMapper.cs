@@ -67,7 +67,13 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
         public IDataEntity BuildLearnerDataEntity(ILearner learner)
         {
             var learnerFamDenormalized = BuildLearnerFAMDenormalized(learner.LearnerFAMs);
-            var efaDisadvantage = _postcodesReferenceDataService.EFADisadvantagesForPostcode(learner.Postcode).FirstOrDefault();
+
+            // FM25 input to OPA must be the latest available EFA Postcode Disadvantage record.
+            var efaDisadvantage =
+                _postcodesReferenceDataService
+                .EFADisadvantagesForPostcode(learner.Postcode)
+                .OrderByDescending(ef => ef.EffectiveFrom)
+                .FirstOrDefault();
 
             return new DataEntity(Attributes.EntityLearner)
             {
