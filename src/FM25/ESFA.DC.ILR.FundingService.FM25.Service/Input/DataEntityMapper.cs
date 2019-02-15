@@ -67,7 +67,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
         public IDataEntity BuildLearnerDataEntity(ILearner learner)
         {
             var learnerFamDenormalized = BuildLearnerFAMDenormalized(learner.LearnerFAMs);
-            var efaDisadvantage = _postcodesReferenceDataService.EFADisadvantagesForPostcode(learner.Postcode).FirstOrDefault();
+
+            var efaDisadvantageUplift = _postcodesReferenceDataService.LatestEFADisadvantagesUpliftForPostcode(learner.Postcode);
 
             return new DataEntity(Attributes.EntityLearner)
             {
@@ -85,7 +86,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { Attributes.MathGrade, new AttributeData(learner.MathGrade) },
                     { Attributes.PlanEEPHours, new AttributeData(learner.PlanEEPHoursNullable) },
                     { Attributes.PlanLearnHours, new AttributeData(learner.PlanLearnHoursNullable) },
-                    { Attributes.PostcodeDisadvantageUplift, new AttributeData(efaDisadvantage?.Uplift) },
+                    { Attributes.PostcodeDisadvantageUplift, new AttributeData(efaDisadvantageUplift) },
                     { Attributes.ULN, new AttributeData(learner.ULN) },
                 },
                 Children =

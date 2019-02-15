@@ -79,11 +79,28 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 }
             };
 
-            var uplift = 1.0m;
+            var uplift = 1.1m;
+
+            var efaDisadvantageOne = new EfaDisadvantage
+            {
+                Postcode = "CV1 2WT",
+                Uplift = 1.0m,
+                EffectiveFrom = new DateTime(2000, 01, 01),
+                EffectiveTo = new DateTime(2015, 07, 31),
+            };
+
+            var efaDisadvatageTwo = new EfaDisadvantage
+            {
+                Postcode = "CV1 2WT",
+                Uplift = uplift,
+                EffectiveFrom = new DateTime(2015, 08, 01),
+                EffectiveTo = new DateTime(2019, 07, 31),
+            };
 
             var efaDisadvantages = new List<EfaDisadvantage>()
             {
-                new EfaDisadvantage() { Uplift = uplift }
+               efaDisadvantageOne,
+               efaDisadvatageTwo
             };
 
             var fileDataServiceMock = new Mock<IFileDataService>();
@@ -92,7 +109,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
 
             var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
 
-            postcodesReferenceDataServiceMock.Setup(p => p.EFADisadvantagesForPostcode(learner.Postcode)).Returns(efaDisadvantages);
+            postcodesReferenceDataServiceMock.Setup(p => p.LatestEFADisadvantagesUpliftForPostcode(learner.Postcode)).Returns(efaDisadvatageTwo.Uplift);
 
             var dataEntity = NewService(postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object, fileDataService: fileDataServiceMock.Object).BuildLearnerDataEntity(learner);
 
@@ -123,7 +140,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 Postcode = "postcode",
             };
 
-            var efaDisadvantages = new List<EfaDisadvantage>();
+            decimal? efaDisadvantagesUplift = null;
 
             var fileDataServiceMock = new Mock<IFileDataService>();
 
@@ -131,7 +148,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
 
             var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
 
-            postcodesReferenceDataServiceMock.Setup(p => p.EFADisadvantagesForPostcode(learner.Postcode)).Returns(efaDisadvantages);
+            postcodesReferenceDataServiceMock.Setup(p => p.LatestEFADisadvantagesUpliftForPostcode(learner.Postcode)).Returns(efaDisadvantagesUplift);
 
             var dataEntity = NewService(postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object, fileDataService: fileDataServiceMock.Object).BuildLearnerDataEntity(learner);
 
