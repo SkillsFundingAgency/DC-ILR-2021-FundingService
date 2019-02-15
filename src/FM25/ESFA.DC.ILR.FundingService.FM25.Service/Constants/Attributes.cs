@@ -25,6 +25,14 @@
         public const string SpecialistResources = "SpecialistResources";
         public const string UKPRN = "UKPRN";
 
+        public const string OrgFundFactorTypeEFA1619 = "EFA 16-19";
+        public const string OrgFundFactorHistoricAreaCost = "HISTORIC AREA COST FACTOR";
+        public const string OrgFundFactorHistoricDisadvantageFundingProportion = "HISTORIC DISADVANTAGE FUNDING PROPORTION";
+        public const string OrgFundFactorHistoricLargeProgProportion = "HISTORIC LARGE PROGRAMME PROPORTION";
+        public const string OrgFundFactorHistoriProgCostWeigting = "HISTORIC PROGRAMME COST WEIGHTING FACTOR";
+        public const string OrgFundFactorHistoricRetention = "HISTORIC RETENTION FACTOR";
+        public const string OrgFundFactorSpecialistResources = "SPECIALIST RESOURCES";
+
         // Learner
         public const string LearnRefNumber = "LearnRefNumber";
         public const string AcadMonthPayment = "AcadMonthPayment";
