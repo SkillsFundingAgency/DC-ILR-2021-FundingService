@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
@@ -144,6 +145,97 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
                 });
 
             NewService(referenceDataCacheMock.Object).EFADisadvantagesForPostcode("notPostcode").Should().BeEmpty();
+        }
+
+        [Fact]
+        public void LatestEfaDisadvantage()
+        {
+            var postcode = "postcode";
+            var uplift = 1.1m;
+
+            var efaDisadvantageOne = new EfaDisadvantage
+            {
+                Postcode = "CV1 2WT",
+                Uplift = 1.0m,
+                EffectiveFrom = new DateTime(2000, 01, 01),
+                EffectiveTo = new DateTime(2015, 07, 31),
+            };
+
+            var efaDisadvatageTwo = new EfaDisadvantage
+            {
+                Postcode = "CV1 2WT",
+                Uplift = uplift,
+                EffectiveFrom = new DateTime(2015, 08, 01),
+                EffectiveTo = new DateTime(2019, 07, 31),
+            };
+
+            var efaDisadvantages = new List<EfaDisadvantage>()
+            {
+               efaDisadvantageOne,
+               efaDisadvatageTwo
+            };
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeRoots)
+                .Returns(new Dictionary<string, PostcodeRoot>()
+                {
+                    { postcode, new PostcodeRoot() { EfaDisadvantages = efaDisadvantages } }
+                });
+
+            NewService(referenceDataCacheMock.Object).LatestEFADisadvantagesUpliftForPostcode(postcode).Should().Be(efaDisadvatageTwo.Uplift);
+        }
+
+        [Fact]
+        public void LatestEfaDisadvantage_ReturnsNullDecimal()
+        {
+            var postcode = "postcode";
+
+            var efaDisadvantageOne = new EfaDisadvantage
+            {
+                Postcode = "CV1 2WT",
+
+                EffectiveFrom = new DateTime(2000, 01, 01),
+                EffectiveTo = new DateTime(2015, 07, 31),
+            };
+
+            var efaDisadvatageTwo = new EfaDisadvantage
+            {
+                Postcode = "CV1 2WT",
+
+                EffectiveFrom = new DateTime(2015, 08, 01),
+                EffectiveTo = new DateTime(2019, 07, 31),
+            };
+
+            var efaDisadvantages = new List<EfaDisadvantage>()
+            {
+               efaDisadvantageOne,
+               efaDisadvatageTwo
+            };
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeRoots)
+                .Returns(new Dictionary<string, PostcodeRoot>()
+                {
+                    { postcode, new PostcodeRoot() { EfaDisadvantages = efaDisadvantages } }
+                });
+
+            NewService(referenceDataCacheMock.Object).LatestEFADisadvantagesUpliftForPostcode(postcode).Should().BeNull();
+        }
+
+        [Fact]
+        public void LatestEfaDisadvantage_ReturensNull_NotExists()
+        {
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeRoots)
+                .Returns(new Dictionary<string, PostcodeRoot>()
+                {
+                    { "postcode", null }
+                });
+
+            NewService(referenceDataCacheMock.Object).LatestEFADisadvantagesUpliftForPostcode("notPostcode").Should().BeNull();
         }
 
         [Fact]

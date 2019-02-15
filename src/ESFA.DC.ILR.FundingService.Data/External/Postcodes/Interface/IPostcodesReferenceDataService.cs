@@ -15,6 +15,8 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface
 
         IEnumerable<EfaDisadvantage> EFADisadvantagesForPostcode(string postcode);
 
+        decimal? LatestEFADisadvantagesUpliftForPostcode(string postcode);
+
         IEnumerable<CareerLearningPilot> CareerLearningPilotsForPostcode(string postcode);
     }
 }

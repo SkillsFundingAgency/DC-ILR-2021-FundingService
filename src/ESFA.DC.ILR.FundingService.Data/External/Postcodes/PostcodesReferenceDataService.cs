@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
@@ -51,6 +52,18 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Postcodes
             _referenceDataCache.PostcodeRoots.TryGetValue(postcode, out PostcodeRoot postcodeRoot);
 
             return postcodeRoot?.EfaDisadvantages ?? _emptyEfaDisadvantage;
+        }
+
+        public decimal? LatestEFADisadvantagesUpliftForPostcode(string postcode)
+        {
+            _referenceDataCache.PostcodeRoots.TryGetValue(postcode, out PostcodeRoot postcodeRoot);
+
+            return
+                postcodeRoot?
+                .EfaDisadvantages
+                .OrderByDescending(ef => ef.EffectiveFrom)
+                .Select(u => u.Uplift)
+                .FirstOrDefault();
         }
 
         public IEnumerable<CareerLearningPilot> CareerLearningPilotsForPostcode(string postcode)
