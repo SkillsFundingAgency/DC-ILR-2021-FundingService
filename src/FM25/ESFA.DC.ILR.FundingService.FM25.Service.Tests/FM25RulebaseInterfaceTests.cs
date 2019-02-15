@@ -415,7 +415,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
 
             larsRefererenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
             organisationRefererenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(It.IsAny<int>())).Returns(new List<OrgFunding> { new OrgFunding() });
-            postcodesReferenceDataServiceMock.Setup(p => p.EFADisadvantagesForPostcode(learner.Postcode)).Returns(new List<EfaDisadvantage> { new EfaDisadvantage() });
+            postcodesReferenceDataServiceMock.Setup(p => p.LatestEFADisadvantagesUpliftForPostcode(learner.Postcode)).Returns(1.0m);
             fileDataServiceMock.Setup(dp => dp.DPOutcomesForLearnRefNumber(learner.LearnRefNumber)).Returns(dpOutcome);
 
             return new DataEntityMapper(

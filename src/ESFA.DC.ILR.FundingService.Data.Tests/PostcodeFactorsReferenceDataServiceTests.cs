@@ -117,37 +117,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         }
 
         [Fact]
-        public void EfaDisadvantageCost()
-        {
-            var postcode = "postcode";
-            var efaDisadvantages = new List<EfaDisadvantage>();
-
-            var referenceDataCacheMock = new Mock<IExternalDataCache>();
-
-            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeRoots)
-                .Returns(new Dictionary<string, PostcodeRoot>()
-                {
-                    { postcode, new PostcodeRoot() { EfaDisadvantages = efaDisadvantages } }
-                });
-
-            NewService(referenceDataCacheMock.Object).EFADisadvantagesForPostcode(postcode).Should().BeSameAs(efaDisadvantages);
-        }
-
-        [Fact]
-        public void EfaDisadvantageCost_NotExists()
-        {
-            var referenceDataCacheMock = new Mock<IExternalDataCache>();
-
-            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeRoots)
-                .Returns(new Dictionary<string, PostcodeRoot>()
-                {
-                    { "postcode", null }
-                });
-
-            NewService(referenceDataCacheMock.Object).EFADisadvantagesForPostcode("notPostcode").Should().BeEmpty();
-        }
-
-        [Fact]
         public void LatestEfaDisadvantage()
         {
             var postcode = "postcode";

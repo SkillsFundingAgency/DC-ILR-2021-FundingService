@@ -47,13 +47,6 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Postcodes
             return postcodeRoot?.SfaDisadvantages ?? _emptySfaDisadvantage;
         }
 
-        public IEnumerable<EfaDisadvantage> EFADisadvantagesForPostcode(string postcode)
-        {
-            _referenceDataCache.PostcodeRoots.TryGetValue(postcode, out PostcodeRoot postcodeRoot);
-
-            return postcodeRoot?.EfaDisadvantages ?? _emptyEfaDisadvantage;
-        }
-
         public decimal? LatestEFADisadvantagesUpliftForPostcode(string postcode)
         {
             _referenceDataCache.PostcodeRoots.TryGetValue(postcode, out PostcodeRoot postcodeRoot);
