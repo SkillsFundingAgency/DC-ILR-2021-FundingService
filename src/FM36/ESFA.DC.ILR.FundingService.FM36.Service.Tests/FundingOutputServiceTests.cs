@@ -328,8 +328,27 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         [Fact]
         public void LearningDeliveryPeriodisedAttributeData_Correct()
         {
+            var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
+            var internalDataCacheMock = new Mock<IInternalDataCache>();
+
+            internalDataCacheMock.Setup(p => p.Period1).Returns(new DateTime(2018, 8, 1));
+            internalDataCacheMock.Setup(p => p.Period2).Returns(new DateTime(2018, 9, 1));
+            internalDataCacheMock.Setup(p => p.Period3).Returns(new DateTime(2018, 10, 1));
+            internalDataCacheMock.Setup(p => p.Period4).Returns(new DateTime(2018, 11, 1));
+            internalDataCacheMock.Setup(p => p.Period5).Returns(new DateTime(2018, 12, 1));
+            internalDataCacheMock.Setup(p => p.Period6).Returns(new DateTime(2019, 1, 1));
+            internalDataCacheMock.Setup(p => p.Period7).Returns(new DateTime(2019, 2, 1));
+            internalDataCacheMock.Setup(p => p.Period8).Returns(new DateTime(2019, 3, 1));
+            internalDataCacheMock.Setup(p => p.Period9).Returns(new DateTime(2019, 4, 1));
+            internalDataCacheMock.Setup(p => p.Period10).Returns(new DateTime(2019, 5, 1));
+            internalDataCacheMock.Setup(p => p.Period11).Returns(new DateTime(2019, 6, 1));
+            internalDataCacheMock.Setup(p => p.Period12).Returns(new DateTime(2019, 7, 1));
+
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(It.IsAny<object>())).Returns(1.0m);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValueForPeriod(It.IsAny<IAttributeData>(), It.IsAny<DateTime>())).Returns(1.0m);
+
             var learningDeliveryPeriodisedAttributeData =
-                NewService().LearningDeliveryPeriodisedValues(TestLearningDeliveryEntity(null).Single());
+                NewService(internalDataCacheMock.Object, dataEntityAttributeServiceMock.Object).LearningDeliveryPeriodisedValues(TestLearningDeliveryEntity(null).Single());
 
             var expectedLearningDeliveryPeriodisedAttributeData = TestLearningDeliveryPeriodisedAttributesDataArray();
 
@@ -606,8 +625,27 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         [Fact]
         public void PriceEpisodePeriodisedAttributeData_Correct()
         {
+            var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
+            var internalDataCacheMock = new Mock<IInternalDataCache>();
+
+            internalDataCacheMock.Setup(p => p.Period1).Returns(new DateTime(2018, 8, 1));
+            internalDataCacheMock.Setup(p => p.Period2).Returns(new DateTime(2018, 9, 1));
+            internalDataCacheMock.Setup(p => p.Period3).Returns(new DateTime(2018, 10, 1));
+            internalDataCacheMock.Setup(p => p.Period4).Returns(new DateTime(2018, 11, 1));
+            internalDataCacheMock.Setup(p => p.Period5).Returns(new DateTime(2018, 12, 1));
+            internalDataCacheMock.Setup(p => p.Period6).Returns(new DateTime(2019, 1, 1));
+            internalDataCacheMock.Setup(p => p.Period7).Returns(new DateTime(2019, 2, 1));
+            internalDataCacheMock.Setup(p => p.Period8).Returns(new DateTime(2019, 3, 1));
+            internalDataCacheMock.Setup(p => p.Period9).Returns(new DateTime(2019, 4, 1));
+            internalDataCacheMock.Setup(p => p.Period10).Returns(new DateTime(2019, 5, 1));
+            internalDataCacheMock.Setup(p => p.Period11).Returns(new DateTime(2019, 6, 1));
+            internalDataCacheMock.Setup(p => p.Period12).Returns(new DateTime(2019, 7, 1));
+
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(It.IsAny<object>())).Returns(1.0m);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValueForPeriod(It.IsAny<IAttributeData>(), It.IsAny<DateTime>())).Returns(1.0m);
+
             var priceEpisodePeriodisedAttributeData =
-                NewService().PriceEpisodePeriodisedValues(TestPriceEpisodeEntity(null).Single());
+                NewService(internalDataCacheMock.Object, dataEntityAttributeServiceMock.Object).PriceEpisodePeriodisedValues(TestPriceEpisodeEntity(null).Single());
 
             var expectedPriceEpisodePeriodisedAttributeData = TestPriceEpisodePeriodisedAttributesDataArray();
 
@@ -855,8 +893,8 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                     { "ProgrammeAimOnProgPayment", Attribute(false, "1.0") },
                     { "ProgrammeAimProgFundIndMaxEmpCont", Attribute(false, "1.0") },
                     { "ProgrammeAimProgFundIndMinCoInvest", Attribute(false, "1.0") },
-                    { "ProgrammeAimTotProgFund", Attribute(false, "1.0") },
-                    { "LearnDelLearnAddPayment", Attribute(false, "1.0") },
+                    { "ProgrammeAimTotProgFund", Attribute(true, "1.0") },
+                    { "LearnDelLearnAddPayment", Attribute(true, "1.0") },
                 },
 
                 Parent = parent,
@@ -997,8 +1035,8 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                     { "PriceEpisodeFirstProv1618Pay", Attribute(false, "1.0") },
                     { "PriceEpisodeLSFCash", Attribute(false, "1.0") },
                     { "PriceEpisodeFundLineType", Attribute(false, "1.0") },
-                    { "PriceEpisodeSFAContribPct", Attribute(false, "1.0") },
-                    { "PriceEpisodeLevyNonPayInd", Attribute(false, "1.0") },
+                    { "PriceEpisodeSFAContribPct", Attribute(true, "1.0") },
+                    { "PriceEpisodeLevyNonPayInd", Attribute(true, "1.0") },
                     { "EpisodeEffectiveTNPStartDate", Attribute(false, "1.0") },
                     { "PriceEpisodeFirstAdditionalPaymentThresholdDate", Attribute(false, "1.0") },
                     { "PriceEpisodeSecondAdditionalPaymentThresholdDate", Attribute(false, "1.0") },
@@ -1014,7 +1052,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                     { "PriceEpisodeAgreeId", Attribute(false, "1.0") },
                     { "PriceEpisodeRedStartDate", Attribute(false, "1.0") },
                     { "PriceEpisodeRedStatusCode", Attribute(false, "1.0") },
-                    { "PriceEpisodeLearnerAdditionalPayment", Attribute(false, "1.0") }
+                    { "PriceEpisodeLearnerAdditionalPayment", Attribute(true, "1.0") }
                 },
 
                 Parent = parent,

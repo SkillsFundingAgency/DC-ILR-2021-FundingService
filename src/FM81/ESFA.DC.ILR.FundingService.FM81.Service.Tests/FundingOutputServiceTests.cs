@@ -225,7 +225,11 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
         public void FundingOutput_LearningDeliveryPeriodisedAttributeData_Correct()
         {
             // ARRANGE
-            var fundingOutputService = NewService();
+            var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
+
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(It.IsAny<object>())).Returns(1.0m);
+
+            var fundingOutputService = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object);
 
             // ACT
             var learningDeliveryPeriodisedAttributeData =
@@ -255,8 +259,13 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             internalDataCacheMock.Setup(p => p.Period11).Returns(new DateTime(2019, 6, 1));
             internalDataCacheMock.Setup(p => p.Period12).Returns(new DateTime(2019, 7, 1));
 
+            var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
+
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(It.IsAny<object>())).Returns(1.0m);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValueForPeriod(It.IsAny<IAttributeData>(), It.IsAny<DateTime>())).Returns(1.0m);
+
             var learningDeliveryPeriodisedAttributeData =
-                NewService(internalDataCacheMock.Object).LearningDeliveryPeriodisedValues(TestLearningDeliveryEntityWithChangePoints(null).Single());
+                NewService(internalDataCacheMock.Object, dataEntityAttributeServiceMock.Object).LearningDeliveryPeriodisedValues(TestLearningDeliveryEntityWithChangePoints(null).Single());
 
             // ASSERT
             var expectedLearningDeliveryPeriodisedAttributeData = TestLearningDeliveryPeriodisedAttributesDataArray();
@@ -434,11 +443,11 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
                     { "SmallBusStatusFirstDayStandard", Attribute(false, "1.0") },
                     { "SmallBusStatusThreshold", Attribute(false, "1.0") },
                     { "YoungAppEligible", Attribute(false, "1.0") },
-                    { "YoungAppFirstPayment", Attribute(false, "1.0") },
+                    { "YoungAppFirstPayment", Attribute(true, "1.0") },
                     { "YoungAppFirstThresholdDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
-                    { "YoungAppPayment", Attribute(false, "1.0") },
-                    { "YoungAppSecondPayment", Attribute(false, "1.0") },
-                    { "YoungAppSecondThresholdDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "YoungAppPayment", Attribute(true, "1.0") },
+                    { "YoungAppSecondPayment", Attribute(true, "1.0") },
+                    { "YoungAppSecondThresholdDate", Attribute(true, new Date(new DateTime(2018, 09, 01))) },
                 },
                 Parent = parent,
             };
@@ -453,7 +462,10 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             if (hasChangePoints)
             {
                 var attribute = new AttributeData(null);
-                attribute.AddChangepoints(ChangePoints(decimal.Parse(attributeValue.ToString())));
+                decimal attrValue;
+                decimal.TryParse(attributeValue.ToString(), out attrValue);
+
+                attribute.AddChangepoints(ChangePoints(attrValue));
 
                 return attribute;
             }
