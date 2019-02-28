@@ -157,7 +157,12 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
         public void LearningDeliveryDeliverablePeriodisedValuesFromEntity_Correct()
         {
             // ARRANGE
-            var fundingOutputService = NewService();
+            var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
+
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(It.IsAny<object>())).Returns(1.0m);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValueForPeriod(It.IsAny<IAttributeData>(), It.IsAny<DateTime>())).Returns(1.0m);
+
+            var fundingOutputService = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object);
 
             // ACT
             var learningDeliveryDeliverablePeriodisedValues =
@@ -185,8 +190,13 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
             internalDataCacheMock.Setup(p => p.Period11).Returns(new DateTime(2019, 6, 1));
             internalDataCacheMock.Setup(p => p.Period12).Returns(new DateTime(2019, 7, 1));
 
+            var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
+
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(It.IsAny<object>())).Returns(1.0m);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValueForPeriod(It.IsAny<IAttributeData>(), It.IsAny<DateTime>())).Returns(1.0m);
+
             var learningDeliveryDeliverablePeriodisedValues =
-                NewService(internalDataCacheMock.Object).LearningDeliveryDeliverablePeriodisedValuesFromEntity(TestLearningDeliveryEntityWithChangePoints(null).Single());
+                NewService(internalDataCacheMock.Object, dataEntityAttributeServiceMock.Object).LearningDeliveryDeliverablePeriodisedValuesFromEntity(TestLearningDeliveryEntityWithChangePoints(null).Single());
 
             // ASSERT
             TestLearningDeliveryDeliverablePeriodisedValuesArray().Should().BeEquivalentTo(learningDeliveryDeliverablePeriodisedValues);
@@ -231,7 +241,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
                     { "AchApplicDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
                     { "Achieved", Attribute(false, "1.0") },
                     { "AchieveElement", Attribute(false, "1.0") },
-                    { "AchievementEarnings", Attribute(false, "1.0") },
+                    { "AchievementEarnings", Attribute(true, "1.0") },
                     { "AchievePayPctPreTrans", Attribute(false, "1.0") },
                     { "AchPayTransHeldBack", Attribute(false, "1.0") },
                     { "ActualDaysIL", Attribute(false, "1.0") },
@@ -288,7 +298,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
                     { "ReportingVolume", Attribute(false, "1.0") },
                     { "Residential", Attribute(false, "1.0") },
                     { "Restart", Attribute(false, "1.0") },
-                    { "StartEarnings", Attribute(false, "1.0") },
+                    { "StartEarnings", Attribute(true, "1.0") },
                     { "StartPropTrans", Attribute(false, "1.0") },
                     { "ThresholdDays", Attribute(false, "1.0") },
                     { "Traineeship", Attribute(false, "1.0") },
