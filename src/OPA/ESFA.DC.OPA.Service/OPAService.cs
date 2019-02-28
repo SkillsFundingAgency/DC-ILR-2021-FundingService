@@ -59,7 +59,10 @@ namespace ESFA.DC.OPA.Service
                 var xdsFile =
                     XDSFilePath
                     + "\\PRE_"
-                    + globalEntity.Children.Select(g => g.Attributes.Single(k => k.Key == LearnRefNumberAttribute).Value.Value.ToString()).SingleOrDefault()
+                    + globalEntity.Children
+                    .Where(c => c.EntityName == "Learner")
+                    .Select(g => g.Attributes.Single(k => k.Key == LearnRefNumberAttribute).Value.Value.ToString())
+                    .SingleOrDefault()
                     + ".xds";
 
                 using (FileWriter fileWriter = new FileWriter(xdsFile))

@@ -418,18 +418,18 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 },
             };
 
-            var larsLearningDelivery = new LARSLearningDelivery
+            var larsLearningDelivery = new LARSLearningDelivery();
+
+            var larsFunding = new List<LARSFunding>
             {
-                LARSFunding = new List<LARSFunding>
-                {
-                    new LARSFunding(),
-                },
+                new LARSFunding()
             };
 
             var learningDelivery = learner.LearningDeliveries.First();
 
             largeEmployersRefererenceDataServiceMock.Setup(l => l.LargeEmployersforEmpID(It.IsAny<int>())).Returns(new List<LargeEmployers> { new LargeEmployers() });
             larsRefererenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
+            larsRefererenceDataServiceMock.Setup(l => l.LARSFundingsForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsFunding);
             larsRefererenceDataServiceMock.Setup(l => l.LARSFFrameworkAimsForLearnAimRef(learningDelivery.LearnAimRef)).Returns(new List<LARSFrameworkAims> { new LARSFrameworkAims() });
             larsRefererenceDataServiceMock.Setup(l => l.LARSAnnualValuesForLearnAimRef(learningDelivery.LearnAimRef)).Returns(new List<LARSAnnualValue> { new LARSAnnualValue() });
             larsRefererenceDataServiceMock.Setup(l => l.LARSLearningDeliveryCategoriesForLearnAimRef(learningDelivery.LearnAimRef)).Returns(new List<LARSLearningDeliveryCategory> { new LARSLearningDeliveryCategory() });
