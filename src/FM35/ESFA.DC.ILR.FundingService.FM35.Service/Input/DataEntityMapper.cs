@@ -194,7 +194,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                                    .Select(BuildSFAAreaCost) ?? new List<IDataEntity>())
                             .Union(
                                    larsFunding?
-                                   .Select(BuildLARSFunding))
+                                   .Select(BuildLARSFunding) ?? new List<IDataEntity>())
                             .ToList()
             };
         }

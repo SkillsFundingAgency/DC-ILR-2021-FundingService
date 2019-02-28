@@ -153,7 +153,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
                                     .Select(BuildLARSStandardCommonComponent) ?? new List<IDataEntity>())
                             .Union(
                                    larsFunding?
-                                    .Select(BuildLARSFunding))
+                                    .Select(BuildLARSFunding) ?? new List<IDataEntity>())
                             .ToList()
             };
         }

@@ -109,18 +109,18 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
                             .Union(
                                    larsLearningDelivery?
                                     .LARSCareerLearningPilot?
-                                    .Select(BuildLARSCareerLearningPilot))
+                                    .Select(BuildLARSCareerLearningPilot) ?? new List<IDataEntity>())
                             .Union(
                                    larsFunding?
-                                    .Select(BuildLARSFunding))
+                                    .Select(BuildLARSFunding) ?? new List<IDataEntity>())
                              .Union(
                                    _postcodesReferenceDataService
                                     .SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode)
-                                    .Select(BuildSFAPostcodeAreaCost))
+                                    .Select(BuildSFAPostcodeAreaCost) ?? new List<IDataEntity>())
                              .Union(
                                    _postcodesReferenceDataService
                                     .CareerLearningPilotsForPostcode(learningDelivery.DelLocPostCode)
-                                    .Select(BuildSubsidyPilotPostcodeArea))
+                                    .Select(BuildSubsidyPilotPostcodeArea) ?? new List<IDataEntity>())
                             .ToList()
             };
         }
