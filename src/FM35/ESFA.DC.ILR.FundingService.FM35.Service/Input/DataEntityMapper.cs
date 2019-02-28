@@ -134,15 +134,13 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
             int? frameworkComponentType = null;
 
             if (larsFrameworkAims != null
-                && larsFrameworkAims.Select(l => l.LearnAimRef).Contains(learningDelivery.LearnAimRef)
                 && learningDelivery.FworkCodeNullable != null
                 && learningDelivery.ProgTypeNullable != null
                 && learningDelivery.PwayCodeNullable != null)
             {
                 frameworkComponentType = larsFrameworkAims
                 .Where(fwa =>
-                        learningDelivery.LearnAimRef == fwa.LearnAimRef
-                    && learningDelivery.FworkCodeNullable == fwa.FworkCode
+                       learningDelivery.FworkCodeNullable == fwa.FworkCode
                     && learningDelivery.ProgTypeNullable == fwa.ProgType
                     && learningDelivery.PwayCodeNullable == fwa.PwayCode)
                 .Select(fwct => fwct.FrameworkComponentType).FirstOrDefault();
