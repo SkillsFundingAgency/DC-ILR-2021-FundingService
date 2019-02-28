@@ -104,6 +104,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
             var larsFrameworkAppenticeshipFunding = _larsReferenceDataService.LARSFrameworkApprenticeshipFunding(learningDelivery.FworkCodeNullable, learningDelivery.ProgTypeNullable, learningDelivery.PwayCodeNullable);
             var larsFrameworkCommonComponent = _larsReferenceDataService.LARSFrameworkCommonComponent(learningDelivery.LearnAimRef, learningDelivery.FworkCodeNullable, learningDelivery.ProgTypeNullable, learningDelivery.PwayCodeNullable);
             var larsStandardCommonComponent = _larsReferenceDataService.LARSStandardCommonComponent(learningDelivery.StdCodeNullable);
+            var larsFunding = _larsReferenceDataService.LARSFundingsForLearnAimRef(learningDelivery.LearnAimRef);
 
             return new DataEntity(Attributes.EntityLearningDelivery)
             {
@@ -151,8 +152,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
                                    larsStandardCommonComponent?
                                     .Select(BuildLARSStandardCommonComponent) ?? new List<IDataEntity>())
                             .Union(
-                                   larsLearningDelivery?
-                                    .LARSFunding?
+                                   larsFunding?
                                     .Select(BuildLARSFunding))
                             .ToList()
             };

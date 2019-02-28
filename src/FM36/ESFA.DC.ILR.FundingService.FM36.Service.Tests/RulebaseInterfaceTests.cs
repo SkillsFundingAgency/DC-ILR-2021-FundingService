@@ -454,17 +454,17 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 }
             };
 
-            var larsLearningDelivery = new LARSLearningDelivery
+            var larsLearningDelivery = new LARSLearningDelivery();
+
+            var larsFunding = new List<LARSFunding>
             {
-                LARSFunding = new List<LARSFunding>
-                {
-                    new LARSFunding()
-                }
+                new LARSFunding()
             };
 
             var learningDelivery = learner.LearningDeliveries.First();
 
             larsRefererenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
+            larsRefererenceDataServiceMock.Setup(l => l.LARSFundingsForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsFunding);
             larsRefererenceDataServiceMock.Setup(l => l.LARSStandardApprenticeshipFunding(learningDelivery.StdCodeNullable, learningDelivery.ProgTypeNullable)).Returns(new List<LARSStandardApprenticeshipFunding> { new LARSStandardApprenticeshipFunding() });
             larsRefererenceDataServiceMock.Setup(l => l.LARSFrameworkApprenticeshipFunding(learningDelivery.FworkCodeNullable, learningDelivery.ProgTypeNullable, learningDelivery.PwayCodeNullable)).Returns(new List<LARSFrameworkApprenticeshipFunding> { new LARSFrameworkApprenticeshipFunding() });
             larsRefererenceDataServiceMock.Setup(l => l.LARSFrameworkCommonComponent(learningDelivery.LearnAimRef, learningDelivery.FworkCodeNullable, learningDelivery.ProgTypeNullable, learningDelivery.PwayCodeNullable)).Returns(new List<LARSFrameworkCommonComponent> { new LARSFrameworkCommonComponent() });

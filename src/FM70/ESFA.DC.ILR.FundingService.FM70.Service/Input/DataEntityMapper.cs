@@ -90,6 +90,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
             var learningDeliveryFAMDenormalized = BuildLearningDeliveryFAMDenormalized(learningDelivery.LearningDeliveryFAMs);
             var larsLearningDelivery = _larsReferenceDataService.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef);
             var larsAnnualValue = _larsReferenceDataService.LARSAnnualValuesForLearnAimRef(learningDelivery.LearnAimRef);
+            var larsFunding = _larsReferenceDataService.LARSFundingsForLearnAimRef(learningDelivery.LearnAimRef);
             var sfaAreaCost = _postcodesReferenceDataService.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode);
 
             var fcsContractData = _fcsDataReferenceDataService.FcsContractsForConRef(learningDelivery.ConRefNumber);
@@ -127,8 +128,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
                                    sfaAreaCost?
                                    .Select(BuildSFAAreaCost) ?? new List<IDataEntity>())
                             .Union(
-                                   larsLearningDelivery
-                                   .LARSFunding?
+                                    larsFunding?
                                    .Select(BuildLARSFunding))
                              .Union(
                                     esfData?
