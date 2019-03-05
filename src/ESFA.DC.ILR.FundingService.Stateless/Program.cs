@@ -16,9 +16,6 @@ using ESFA.DC.ILR.FundingService.Stateless.Models;
 using ESFA.DC.IO.AzureStorage;
 using ESFA.DC.IO.AzureStorage.Config.Interfaces;
 using ESFA.DC.IO.Interfaces;
-using ESFA.DC.IO.Redis;
-using ESFA.DC.IO.Redis.Config;
-using ESFA.DC.IO.Redis.Config.Interfaces;
 using ESFA.DC.JobContext.Interface;
 using ESFA.DC.JobContextManager;
 using ESFA.DC.JobContextManager.Interface;
@@ -64,13 +61,6 @@ namespace ESFA.DC.ILR.FundingService.Stateless
         {
             var builder = new ContainerBuilder();
             var configHelper = new ConfigurationHelper();
-
-            var azureRedisCacheOptions = configHelper.GetSectionValues<AzureRedisCacheOptions>("AzureRedisSection");
-            builder.Register(c => new RedisKeyValuePersistenceServiceConfig()
-                {
-                    ConnectionString = azureRedisCacheOptions.RedisCacheConnectionString,
-                    KeyExpiry = new TimeSpan(14, 0, 0, 0)
-                }).As<IRedisKeyValuePersistenceServiceConfig>().SingleInstance();
 
             builder.RegisterType<AzureStorageKeyValuePersistenceService>()
                 .As<IKeyValuePersistenceService>().InstancePerLifetimeScope();
