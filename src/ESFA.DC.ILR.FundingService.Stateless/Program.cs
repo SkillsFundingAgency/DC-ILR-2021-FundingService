@@ -101,7 +101,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless
                 serviceBusOptions.TopicName,
                 serviceBusOptions.FundingCalcSubscriptionName,
                 1,
-                maximumCallbackTimeSpan: TimeSpan.FromMinutes(60));
+                maximumCallbackTimeSpan: TimeSpan.FromHours(12));
 
             // register Jobcontext services
             var topicPublishConfig = new TopicConfiguration(
