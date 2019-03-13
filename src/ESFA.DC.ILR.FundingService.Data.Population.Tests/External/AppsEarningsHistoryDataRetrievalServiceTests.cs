@@ -234,7 +234,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             aecLatestInYearHistory.ProgType.Should().Be(aec_LatestInYearHistory.ProgType);
             aecLatestInYearHistory.PwayCode.Should().Be(aec_LatestInYearHistory.PwayCode);
             aecLatestInYearHistory.STDCode.Should().Be(aec_LatestInYearHistory.STDCode);
-            aecLatestInYearHistory.TotalProgAimPaymentsInTheYear.Should().Be(aec_LatestInYearHistory.STDCode);
+            aecLatestInYearHistory.TotalProgAimPaymentsInTheYear.Should().Be(aec_LatestInYearHistory.TotalProgAimPaymentsInTheYear);
             aecLatestInYearHistory.UptoEndDate.Should().Be(aec_LatestInYearHistory.UptoEndDate);
             aecLatestInYearHistory.UKPRN.Should().Be(aec_LatestInYearHistory.UKPRN);
             aecLatestInYearHistory.ULN.Should().Be(aec_LatestInYearHistory.ULN);
