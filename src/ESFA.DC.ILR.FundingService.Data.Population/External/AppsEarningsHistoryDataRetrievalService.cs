@@ -79,7 +79,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                         ProgType = aec.ProgType,
                         PwayCode = aec.PwayCode,
                         STDCode = aec.STDCode,
-                        TotalProgAimPaymentsInTheYear = aec.STDCode,
+                        TotalProgAimPaymentsInTheYear = aec.TotalProgAimPaymentsInTheYear,
                         UptoEndDate = aec.UptoEndDate,
                         UKPRN = aec.UKPRN,
                         ULN = aec.ULN
