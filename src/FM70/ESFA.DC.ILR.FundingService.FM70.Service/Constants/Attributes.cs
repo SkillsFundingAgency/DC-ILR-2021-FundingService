@@ -103,6 +103,7 @@
         public const string LARSWeightedRate = "LARSWeightedRate";
         public const string LatestPossibleStartDate = "LatestPossibleStartDate";
         public const string LDESFEngagementStartDate = "LDESFEngagementStartDate";
+        public const string LearnDelLearnerEmpAtStart = "LearnDelLearnerEmpAtStart";
         public const string PotentiallyEligibleForProgression = "PotentiallyEligibleForProgression";
         public const string ProgressionEndDate = "ProgressionEndDate";
         public const string Restart = "Restart";

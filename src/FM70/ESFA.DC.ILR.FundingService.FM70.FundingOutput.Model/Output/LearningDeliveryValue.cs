@@ -34,6 +34,8 @@ namespace ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model.Output
 
         public DateTime? LDESFEngagementStartDate { get; set; }
 
+        public bool? LearnDelLearnerEmpAtStart { get; set; }
+
         public bool? PotentiallyEligibleForProgression { get; set; }
 
         public DateTime? ProgressionEndDate { get; set; }
