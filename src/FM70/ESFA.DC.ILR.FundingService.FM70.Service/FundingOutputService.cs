@@ -112,6 +112,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service
                 LARSWeightedRate = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.LARSWeightedRate),
                 LatestPossibleStartDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.LatestPossibleStartDate),
                 LDESFEngagementStartDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.LDESFEngagementStartDate),
+                LearnDelLearnerEmpAtStart = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, Attributes.LearnDelLearnerEmpAtStart),
                 PotentiallyEligibleForProgression = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, Attributes.PotentiallyEligibleForProgression),
                 ProgressionEndDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.ProgressionEndDate),
                 Restart = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, Attributes.Restart),

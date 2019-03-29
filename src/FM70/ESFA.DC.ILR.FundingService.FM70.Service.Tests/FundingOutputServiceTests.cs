@@ -69,6 +69,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
             var lARSWeightedRate = 5.0m;
             var latestPossibleStartDate = new DateTime(2018, 8, 1);
             var lDESFEngagementStartDate = new DateTime(2018, 8, 1);
+            var learnDelLearnerEmpAtStart = true;
             var potentiallyEligibleForProgression = true;
             var progressionEndDate = new DateTime(2018, 8, 1);
             var restart = true;
@@ -93,6 +94,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LARSWeightedRate")).Returns(lARSWeightedRate);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "LatestPossibleStartDate")).Returns(latestPossibleStartDate);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "LDESFEngagementStartDate")).Returns(lDESFEngagementStartDate);
+            dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "LearnDelLearnerEmpAtStart")).Returns(learnDelLearnerEmpAtStart);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "PotentiallyEligibleForProgression")).Returns(potentiallyEligibleForProgression);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "ProgressionEndDate")).Returns(progressionEndDate);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "Restart")).Returns(restart);
@@ -116,6 +118,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
             learningDelivery.LARSWeightedRate.Should().Be(lARSWeightedRate);
             learningDelivery.LatestPossibleStartDate.Should().Be(latestPossibleStartDate);
             learningDelivery.LDESFEngagementStartDate.Should().Be(lDESFEngagementStartDate);
+            learningDelivery.LearnDelLearnerEmpAtStart.Should().Be(learnDelLearnerEmpAtStart);
             learningDelivery.PotentiallyEligibleForProgression.Should().Be(potentiallyEligibleForProgression);
             learningDelivery.ProgressionEndDate.Should().Be(progressionEndDate);
             learningDelivery.Restart.Should().Be(restart);
