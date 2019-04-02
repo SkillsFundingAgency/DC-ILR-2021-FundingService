@@ -15,30 +15,30 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         private readonly IExternalDataCache _externalDataCache;
         private readonly IAppsEarningsHistoryDataRetrievalService _appsEarningsHistoryDataRetrievalService;
         private readonly IFCSDataRetrievalService _fcsDataRetrievalService;
-        private readonly ILargeEmployersDataRetrievalService _largeEmployersDataRetrievalService;
         private readonly ILARSDataRetrievalService _larsDataRetrievalService;
         private readonly IFundingServiceDto _fundingServiceDto;
         private readonly IPostcodesMapperService _postcodesMapperService;
         private readonly IOrganisationsMapperService _organisationsMapperService;
+        private readonly ILargeEmployersMapperService _largeEmployersMapperService;
 
         public ExternalDataCachePopulationService(
             IExternalDataCache externalDataCache,
             IAppsEarningsHistoryDataRetrievalService appsEarningsHistoryDataRetrievalService,
             IFCSDataRetrievalService fcsDataRetrievalService,
-            ILargeEmployersDataRetrievalService largeEmployersDataRetrievalService,
             ILARSDataRetrievalService larsDataRetrievalService,
             IFundingServiceDto fundingServiceDto,
             IPostcodesMapperService postcodesMapperService,
-            IOrganisationsMapperService organisationsMapperService)
+            IOrganisationsMapperService organisationsMapperService,
+            ILargeEmployersMapperService largeEmployersMapperService)
         {
             _externalDataCache = externalDataCache;
             _appsEarningsHistoryDataRetrievalService = appsEarningsHistoryDataRetrievalService;
             _fcsDataRetrievalService = fcsDataRetrievalService;
-            _largeEmployersDataRetrievalService = largeEmployersDataRetrievalService;
             _larsDataRetrievalService = larsDataRetrievalService;
             _fundingServiceDto = fundingServiceDto;
             _postcodesMapperService = postcodesMapperService;
             _organisationsMapperService = organisationsMapperService;
+            _largeEmployersMapperService = largeEmployersMapperService;
         }
 
         public async Task PopulateAsync(CancellationToken cancellationToken)
@@ -50,8 +50,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             var frameworks = _larsDataRetrievalService.UniqueFrameworkCommonComponents(_fundingServiceDto.Message);
             var apprenticeshipFundingStandards = _larsDataRetrievalService.UniqueApprenticeshipFundingStandards(_fundingServiceDto.Message);
             var apprenticeshipFundingFrameworks = _larsDataRetrievalService.UniqueApprenticeshipFundingFrameworks(_fundingServiceDto.Message);
-
-            var uniqueEmployerIds = _largeEmployersDataRetrievalService.UniqueEmployerIds(_fundingServiceDto.Message).ToList();
 
             var uniqueFM36Learners = _appsEarningsHistoryDataRetrievalService.UniqueFM36Learners(_fundingServiceDto.Message);
 
@@ -77,7 +75,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             referenceDataCache.OrgVersion = _fundingServiceDto.ReferenceData.MetaDatas.ReferenceDataVersions.OrganisationsVersion.Version;
             referenceDataCache.OrgFunding = _organisationsMapperService.MapOrgFundings(_fundingServiceDto.ReferenceData.Organisations, providerUKPRN);
 
-            referenceDataCache.LargeEmployers = _largeEmployersDataRetrievalService.LargeEmployersForEmployerIds(uniqueEmployerIds);
+            referenceDataCache.LargeEmployers = _largeEmployersMapperService.MapLargeEmployers(_fundingServiceDto.ReferenceData.Employers);
 
             referenceDataCache.FCSContractAllocations = _fcsDataRetrievalService.FCSContractsForUKPRN(providerUKPRN, conRefNumbers);
 

@@ -62,9 +62,6 @@
     <Reference Include="ESFA.DC.Data.AppsEarningsHistory.Model, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Data.AppsEarningsHistory.Model.0.1.1-beta0001\lib\net461\ESFA.DC.Data.AppsEarningsHistory.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.Data.LargeEmployer.Model, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Data.LargeEmployer.Model.0.1.2-beta0001\lib\net461\ESFA.DC.Data.LargeEmployer.Model.dll</HintPath>
-    </Reference>
     <Reference Include="ESFA.DC.Data.LARS.Model, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Data.LARS.Model.0.1.4-beta0001\lib\net461\ESFA.DC.Data.LARS.Model.dll</HintPath>
     </Reference>
@@ -130,9 +127,9 @@
   <ItemGroup>
     <Compile Include="Context\FundingContextPopulationService.cs" />
     <Compile Include="External\FCSDataRetrievalService.cs" />
-    <Compile Include="External\LargeEmployersDataRetrievalService.cs" />
     <Compile Include="External\LARSDataRetrievalService.cs" />
     <Compile Include="External\AppsEarningsHistoryDataRetrievalService.cs" />
+    <Compile Include="External\LargeEmployersMapperService.cs" />
     <Compile Include="External\OrganisationsMapperService.cs" />
     <Compile Include="External\PostcodesMapperService.cs" />
     <Compile Include="File\FileDataRetrievalService.cs" />
@@ -143,7 +140,7 @@
     <Compile Include="Interface\IFundingContextPopulationService.cs" />
     <Compile Include="Interface\IInternalDataCachePopulationService.cs" />
     <Compile Include="Interface\IFCSDataRetrievalService.cs" />
-    <Compile Include="Interface\ILargeEmployersDataRetrievalService.cs" />
+    <Compile Include="Interface\ILargeEmployersMapperService.cs" />
     <Compile Include="Interface\ILARSDataRetrievalService.cs" />
     <Compile Include="Interface\IPopulationService.cs" />
     <Compile Include="Interface\IExternalDataCachePopulationService.cs" />

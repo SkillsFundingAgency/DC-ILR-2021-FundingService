@@ -10,7 +10,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
     public class OrganisationsMapperServiceTests
     {
         [Fact]
-        public void MapPostcodes()
+        public void MapOrgFundings()
         {
             var expectedOrgFundingDictionary = ExpectedOrgFundingDictionary();
 

@@ -67,9 +67,6 @@
     <Reference Include="ESFA.DC.Data.AppsEarningsHistory.Model, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Data.AppsEarningsHistory.Model.0.1.1-beta0001\lib\net461\ESFA.DC.Data.AppsEarningsHistory.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.Data.LargeEmployer.Model, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Data.LargeEmployer.Model.0.1.2-beta0001\lib\net461\ESFA.DC.Data.LargeEmployer.Model.dll</HintPath>
-    </Reference>
     <Reference Include="ESFA.DC.Data.LARS.Model, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Data.LARS.Model.0.1.4-beta0001\lib\net461\ESFA.DC.Data.LARS.Model.dll</HintPath>
     </Reference>
@@ -128,10 +125,10 @@
     <Compile Include="Context\FundingContextPopulationServiceTests.cs" />
     <Compile Include="Context\ValidLearnersDataRetrievalServiceTests.cs" />
     <Compile Include="External\FCSDataRetrievalServiceTests.cs" />
-    <Compile Include="External\LargeEmployersDataRetrievalServiceTests.cs" />
     <Compile Include="External\AppsEarningsHistoryDataRetrievalServiceTests.cs" />
     <Compile Include="External\CaseSensitivityDataRetrievalServiceTests.cs" />
     <Compile Include="External\LARSDataRetrievalServiceTests.cs" />
+    <Compile Include="External\LargeEmployersMapperServiceTests.cs" />
     <Compile Include="External\OrganisationsMapperServiceTests.cs" />
     <Compile Include="External\PostcodesMapperServiceTests.cs" />
     <Compile Include="File\FileDataCachePopulationServiceTests.cs" />

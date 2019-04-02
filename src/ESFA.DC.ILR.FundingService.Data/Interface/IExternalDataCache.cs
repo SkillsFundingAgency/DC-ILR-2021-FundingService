@@ -40,7 +40,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Interface
 
         IDictionary<int, IReadOnlyCollection<OrgFunding>> OrgFunding { get; }
 
-        IDictionary<int, IEnumerable<LargeEmployers>> LargeEmployers { get; }
+        IDictionary<int, IReadOnlyCollection<LargeEmployers>> LargeEmployers { get; }
 
         IDictionary<long, IEnumerable<AECEarningsHistory>> AECLatestInYearEarningHistory { get; }
 

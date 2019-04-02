@@ -41,7 +41,7 @@ namespace ESFA.DC.ILR.FundingService.Data.External
 
         public IDictionary<int, IReadOnlyCollection<OrgFunding>> OrgFunding { get; set; }
 
-        public IDictionary<int, IEnumerable<LargeEmployers>> LargeEmployers { get; set; }
+        public IDictionary<int, IReadOnlyCollection<LargeEmployers>> LargeEmployers { get; set; }
 
         public IDictionary<long, IEnumerable<AECEarningsHistory>> AECLatestInYearEarningHistory { get; set; }
 
