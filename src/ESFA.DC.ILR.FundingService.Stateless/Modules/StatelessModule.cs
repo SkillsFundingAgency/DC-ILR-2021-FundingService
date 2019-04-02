@@ -10,8 +10,6 @@ using ESFA.DC.Data.LARS.Model;
 using ESFA.DC.Data.LARS.Model.Interfaces;
 using ESFA.DC.Data.Organisatons.Model;
 using ESFA.DC.Data.Organisatons.Model.Interface;
-using ESFA.DC.Data.Postcodes.Model;
-using ESFA.DC.Data.Postcodes.Model.Interfaces;
 using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
@@ -75,12 +73,6 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             builder.Register(c =>
             {
                 var referenceDataConfig = c.Resolve<IReferenceDataConfig>();
-                return new Postcodes(referenceDataConfig.PostcodesConnectionString);
-            }).As<IPostcodes>().InstancePerLifetimeScope();
-
-            builder.Register(c =>
-            {
-                var referenceDataConfig = c.Resolve<IReferenceDataConfig>();
                 return new Organisations(referenceDataConfig.OrganisationConnectionString);
             }).As<IOrganisations>().InstancePerLifetimeScope();
 
@@ -114,12 +106,13 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             builder.RegisterType<FileDataCache>().As<IFileDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<ValidLearnersDataRetrievalService>().As<IValidLearnersDataRetrievalService>().InstancePerLifetimeScope();
             builder.RegisterType<FileDataRetrievalService>().As<IFileDataRetrievalService>().InstancePerLifetimeScope();
-            builder.RegisterType<PostcodesDataRetrievalService>().As<IPostcodesDataRetrievalService>().InstancePerLifetimeScope();
             builder.RegisterType<LargeEmployersDataRetrievalService>().As<ILargeEmployersDataRetrievalService>().InstancePerLifetimeScope();
             builder.RegisterType<LARSDataRetrievalService>().As<ILARSDataRetrievalService>().InstancePerLifetimeScope();
             builder.RegisterType<OrganisationDataRetrievalService>().As<IOrganisationDataRetrievalService>().InstancePerLifetimeScope();
             builder.RegisterType<AppsEarningsHistoryDataRetrievalService>().As<IAppsEarningsHistoryDataRetrievalService>().InstancePerLifetimeScope();
             builder.RegisterType<FCSDataRetrievalService>().As<IFCSDataRetrievalService>().InstancePerLifetimeScope();
+
+            builder.RegisterType<PostcodesMapperService>().As<IPostcodesMapperService>().InstancePerLifetimeScope();
 
             builder.RegisterType<JsonSerializationService>().As<ISerializationService>();
             builder.RegisterType<JsonSerializationService>().As<IJsonSerializationService>();

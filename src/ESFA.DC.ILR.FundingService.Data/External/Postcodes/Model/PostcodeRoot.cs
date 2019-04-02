@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model
 {
@@ -8,14 +6,14 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model
     {
         public string Postcode { get; set; }
 
-        public IEnumerable<CareerLearningPilot> CareerLearningPilots { get; set; }
+        public IReadOnlyCollection<CareerLearningPilot> CareerLearningPilots { get; set; }
 
-        public IEnumerable<DasDisadvantage> DasDisadvantages { get; set; }
+        public IReadOnlyCollection<DasDisadvantage> DasDisadvantages { get; set; }
 
-        public IEnumerable<EfaDisadvantage> EfaDisadvantages { get; set; }
+        public IReadOnlyCollection<EfaDisadvantage> EfaDisadvantages { get; set; }
 
-        public IEnumerable<SfaAreaCost> SfaAreaCosts { get; set; }
+        public IReadOnlyCollection<SfaAreaCost> SfaAreaCosts { get; set; }
 
-        public IEnumerable<SfaDisadvantage> SfaDisadvantages { get; set; }
+        public IReadOnlyCollection<SfaDisadvantage> SfaDisadvantages { get; set; }
     }
 }

@@ -6,8 +6,6 @@ using ESFA.DC.Data.LARS.Model;
 using ESFA.DC.Data.LARS.Model.Interfaces;
 using ESFA.DC.Data.Organisatons.Model;
 using ESFA.DC.Data.Organisatons.Model.Interface;
-using ESFA.DC.Data.Postcodes.Model;
-using ESFA.DC.Data.Postcodes.Model.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.Context;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer;
@@ -56,7 +54,6 @@ namespace ESFA.DC.ILR.FundingService.Console.Modules
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<LARS>().As<ILARS>().InstancePerLifetimeScope();
-            builder.RegisterType<Postcodes>().As<IPostcodes>().InstancePerLifetimeScope();
             builder.RegisterType<Organisations>().As<IOrganisations>().InstancePerLifetimeScope();
             builder.RegisterType<LargeEmployer>().As<ILargeEmployer>().InstancePerLifetimeScope();
             builder.RegisterType<SessionBuilder>().As<ISessionBuilder>().InstancePerLifetimeScope();

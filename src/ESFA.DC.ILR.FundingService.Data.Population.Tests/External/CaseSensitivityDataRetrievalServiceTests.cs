@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.Data.AppsEarningsHistory.Model;
 using ESFA.DC.Data.LARS.Model;
-using ESFA.DC.Data.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Data.Population.External;
 using ESFA.DC.ILR.FundingService.Data.Population.Keys;
@@ -453,11 +452,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
 
             fcs.Where(c => c.ContractAllocationNumber == "aa").Select(cm => cm.CalcMethod).Should().BeEquivalentTo(1);
             fcs.Where(c => c.ContractAllocationNumber == "BB").Select(cm => cm.CalcMethod).Should().BeEquivalentTo(2);
-        }
-
-        private Mock<PostcodesDataRetrievalService> NewPostcodesMock()
-        {
-            return new Mock<PostcodesDataRetrievalService>();
         }
 
         private Mock<LARSDataRetrievalService> NewLARSMock()

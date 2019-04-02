@@ -20,4 +20,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="ESFA.DC.ILR.ReferenceDataService.Model">
+      <HintPath>..\..\..\..\ESFA.DC.ILR.ReferenceDataService.Model.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

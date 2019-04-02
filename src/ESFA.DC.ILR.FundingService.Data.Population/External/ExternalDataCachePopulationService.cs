@@ -15,37 +15,36 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         private readonly IExternalDataCache _externalDataCache;
         private readonly IAppsEarningsHistoryDataRetrievalService _appsEarningsHistoryDataRetrievalService;
         private readonly IFCSDataRetrievalService _fcsDataRetrievalService;
-        private readonly IPostcodesDataRetrievalService _postcodesDataRetrievalService;
         private readonly ILargeEmployersDataRetrievalService _largeEmployersDataRetrievalService;
         private readonly ILARSDataRetrievalService _larsDataRetrievalService;
         private readonly IOrganisationDataRetrievalService _organisationDataRetrievalService;
         private readonly IFundingServiceDto _fundingServiceDto;
+        private readonly IPostcodesMapperService _postcodesMapperService;
 
         public ExternalDataCachePopulationService(
             IExternalDataCache externalDataCache,
             IAppsEarningsHistoryDataRetrievalService appsEarningsHistoryDataRetrievalService,
             IFCSDataRetrievalService fcsDataRetrievalService,
-            IPostcodesDataRetrievalService postcodesDataRetrievalService,
             ILargeEmployersDataRetrievalService largeEmployersDataRetrievalService,
             ILARSDataRetrievalService larsDataRetrievalService,
             IOrganisationDataRetrievalService organisationDataRetrievalService,
-            IFundingServiceDto fundingServiceDto)
+            IFundingServiceDto fundingServiceDto,
+            IPostcodesMapperService postcodesMapperService)
         {
             _externalDataCache = externalDataCache;
             _appsEarningsHistoryDataRetrievalService = appsEarningsHistoryDataRetrievalService;
             _fcsDataRetrievalService = fcsDataRetrievalService;
-            _postcodesDataRetrievalService = postcodesDataRetrievalService;
             _largeEmployersDataRetrievalService = largeEmployersDataRetrievalService;
             _larsDataRetrievalService = larsDataRetrievalService;
             _organisationDataRetrievalService = organisationDataRetrievalService;
             _fundingServiceDto = fundingServiceDto;
+            _postcodesMapperService = postcodesMapperService;
         }
 
         public async Task PopulateAsync(CancellationToken cancellationToken)
         {
             var providerUKPRN = _fundingServiceDto.Message.LearningProviderEntity.UKPRN;
 
-            var uniquePostcodes = _postcodesDataRetrievalService.UniquePostcodes(_fundingServiceDto.Message).ToCaseInsensitiveHashSet();
             var learnAimRefs = _larsDataRetrievalService.UniqueLearnAimRefs(_fundingServiceDto.Message).ToCaseInsensitiveHashSet();
             var standardCodes = _larsDataRetrievalService.UniqueStandardCodes(_fundingServiceDto.Message).ToList();
             var frameworks = _larsDataRetrievalService.UniqueFrameworkCommonComponents(_fundingServiceDto.Message);
@@ -74,8 +73,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             referenceDataCache.LARSApprenticeshipFundingFrameworks = _larsDataRetrievalService.LARSApprenticeshipFundingFrameworks(apprenticeshipFundingFrameworks);
             referenceDataCache.LARSStandardFundings = _larsDataRetrievalService.LARSStandardFundingForStandardCodes(standardCodes);
 
-            referenceDataCache.PostcodeRoots = _postcodesDataRetrievalService.PostcodeRootsForPostcodes(uniquePostcodes);
-            referenceDataCache.PostcodeCurrentVersion = _postcodesDataRetrievalService.CurrentVersion();
+            referenceDataCache.PostcodeRoots = _postcodesMapperService.MapPostcodes(_fundingServiceDto.ReferenceData.Postcodes);
+            referenceDataCache.PostcodeCurrentVersion = _fundingServiceDto.ReferenceData.MetaDatas.ReferenceDataVersions.PostcodesVersion.Version;
 
             referenceDataCache.OrgVersion = _organisationDataRetrievalService.CurrentVersion();
             referenceDataCache.OrgFunding = _organisationDataRetrievalService.OrgFundingsForUkprns(ukprns);

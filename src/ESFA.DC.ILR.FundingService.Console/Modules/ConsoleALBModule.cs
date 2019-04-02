@@ -2,8 +2,6 @@
 using Autofac;
 using ESFA.DC.Data.LARS.Model;
 using ESFA.DC.Data.LARS.Model.Interfaces;
-using ESFA.DC.Data.Postcodes.Model;
-using ESFA.DC.Data.Postcodes.Model.Interfaces;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.ALB.Service;
 using ESFA.DC.ILR.FundingService.ALB.Service.Input;
@@ -56,7 +54,6 @@ namespace ESFA.DC.ILR.FundingService.Console.Modules
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<LARS>().As<ILARS>().InstancePerLifetimeScope();
-            builder.RegisterType<Postcodes>().As<IPostcodes>().InstancePerLifetimeScope();
             builder.RegisterType<SessionBuilder>().As<ISessionBuilder>().InstancePerLifetimeScope();
             builder.RegisterType<OPADataEntityBuilder>().As<IOPADataEntityBuilder>().WithParameter("yearStartDate", new System.DateTime(2017, 8, 1)).InstancePerLifetimeScope();
             builder.RegisterInstance(new RulebaseProvider("Rulebase")).As<IRulebaseProvider>();

@@ -58,4 +58,10 @@
     <ProjectReference Include="..\FM81\ESFA.DC.ILR.FundingService.FM81Actor.Interfaces\ESFA.DC.ILR.FundingService.FM81Actor.Interfaces.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="ESFA.DC.ILR.ReferenceDataService.Model">
+      <HintPath>..\..\..\..\ESFA.DC.ILR.ReferenceDataService.Model.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

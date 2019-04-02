@@ -41,13 +41,27 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
                 }
             };
 
+            var referenceData = new ReferenceDataService.Model.ReferenceDataRoot
+            {
+                MetaDatas = new ReferenceDataService.Model.MetaData.MetaData
+                {
+                    ReferenceDataVersions = new ReferenceDataService.Model.MetaData.ReferenceDataVersion
+                    {
+                        LarsVersion = new ReferenceDataService.Model.MetaData.ReferenceDataVersions.LarsVersion("LarsVersion"),
+                        OrganisationsVersion = new ReferenceDataService.Model.MetaData.ReferenceDataVersions.OrganisationsVersion("OrganisationVersion"),
+                        PostcodesVersion = new ReferenceDataService.Model.MetaData.ReferenceDataVersions.PostcodesVersion("PostcodesVersion"),
+                    }
+                }
+            };
+
             var fundingServiceDtoMock = new Mock<IFundingServiceDto>();
 
             fundingServiceDtoMock.SetupGet(f => f.Message).Returns(message);
+            fundingServiceDtoMock.SetupGet(f => f.ReferenceData).Returns(referenceData);
 
             var externalDataCache = new ExternalDataCache();
 
-            var postcodesDataRetrievalServiceMock = new Mock<IPostcodesDataRetrievalService>();
+            var postcodesMapperServiceMock = new Mock<IPostcodesMapperService>();
 
             var postcodesCurrentVersion = "PostcodesVersion";
             var sfaAreaCosts = new Dictionary<string, IEnumerable<SfaAreaCost>>();
@@ -57,9 +71,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             var careerLearningPilots = new Dictionary<string, IEnumerable<CareerLearningPilot>>();
             var postcodeRoots = new Dictionary<string, PostcodeRoot>();
 
-            postcodesDataRetrievalServiceMock.Setup(p => p.UniquePostcodes(message)).Returns(new HashSet<string>()).Verifiable();
-            postcodesDataRetrievalServiceMock.Setup(p => p.CurrentVersion()).Returns(postcodesCurrentVersion).Verifiable();
-            postcodesDataRetrievalServiceMock.Setup(p => p.PostcodeRootsForPostcodes(It.IsAny<IEnumerable<string>>())).Returns(postcodeRoots);
+            postcodesMapperServiceMock.Setup(p => p.MapPostcodes(It.IsAny<IReadOnlyCollection<ReferenceDataService.Model.Postcodes.Postcode>>())).Returns(postcodeRoots);
 
             var largeEmployersDataRetrievalServiceMock = new Mock<ILargeEmployersDataRetrievalService>();
 
@@ -124,14 +136,14 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
                 externalDataCache,
                 appsEarningsHistoryDataRetrievalServiceMock.Object,
                 fcsDataRetrievalServiceMock.Object,
-                postcodesDataRetrievalServiceMock.Object,
                 largeEmployersDataRetrievalServiceMock.Object,
                 larsDataRetrievalServiceMock.Object,
                 organisationDataRetrievalServiceMock.Object,
-                fundingServiceDtoMock.Object)
+                fundingServiceDtoMock.Object,
+                postcodesMapperServiceMock.Object)
                 .PopulateAsync(CancellationToken.None);
 
-            postcodesDataRetrievalServiceMock.VerifyAll();
+            postcodesMapperServiceMock.VerifyAll();
             largeEmployersDataRetrievalServiceMock.VerifyAll();
             larsDataRetrievalServiceMock.VerifyAll();
             organisationDataRetrievalServiceMock.VerifyAll();
@@ -163,13 +175,21 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             IExternalDataCache externalDataCache = null,
             IAppsEarningsHistoryDataRetrievalService appsEarningsHistoryDataRetrievalService = null,
             IFCSDataRetrievalService fcsDataRetrievalService = null,
-            IPostcodesDataRetrievalService postcodesDataRetrievalService = null,
             ILargeEmployersDataRetrievalService largeEmployersDataRetrievalService = null,
             ILARSDataRetrievalService larsDataRetrievalService = null,
             IOrganisationDataRetrievalService organisationDataRetrievalService = null,
-            IFundingServiceDto fundingServiceDto = null)
+            IFundingServiceDto fundingServiceDto = null,
+            IPostcodesMapperService postcodesMapperService = null)
         {
-            return new ExternalDataCachePopulationService(externalDataCache, appsEarningsHistoryDataRetrievalService, fcsDataRetrievalService, postcodesDataRetrievalService, largeEmployersDataRetrievalService, larsDataRetrievalService, organisationDataRetrievalService, fundingServiceDto);
+            return new ExternalDataCachePopulationService(
+                externalDataCache,
+                appsEarningsHistoryDataRetrievalService,
+                fcsDataRetrievalService,
+                largeEmployersDataRetrievalService,
+                larsDataRetrievalService,
+                organisationDataRetrievalService,
+                fundingServiceDto,
+                postcodesMapperService);
         }
     }
 }
