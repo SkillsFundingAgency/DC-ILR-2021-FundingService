@@ -68,9 +68,6 @@
     <Reference Include="ESFA.DC.Data.LARS.Model, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Data.LARS.Model.0.1.4-beta0001\lib\net461\ESFA.DC.Data.LARS.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.Data.Organisatons.Model, Version=0.1.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Data.Organisations.Model.0.1.5-beta0001\lib\net461\ESFA.DC.Data.Organisatons.Model.dll</HintPath>
-    </Reference>
     <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.1819.Model.Interface.0.1.5-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
@@ -135,8 +132,8 @@
     <Compile Include="External\FCSDataRetrievalService.cs" />
     <Compile Include="External\LargeEmployersDataRetrievalService.cs" />
     <Compile Include="External\LARSDataRetrievalService.cs" />
-    <Compile Include="External\OrganisationDataRetrievalService.cs" />
     <Compile Include="External\AppsEarningsHistoryDataRetrievalService.cs" />
+    <Compile Include="External\OrganisationsMapperService.cs" />
     <Compile Include="External\PostcodesMapperService.cs" />
     <Compile Include="File\FileDataRetrievalService.cs" />
     <Compile Include="Context\ValidLearnersDataRetrievalService.cs" />
@@ -148,10 +145,10 @@
     <Compile Include="Interface\IFCSDataRetrievalService.cs" />
     <Compile Include="Interface\ILargeEmployersDataRetrievalService.cs" />
     <Compile Include="Interface\ILARSDataRetrievalService.cs" />
-    <Compile Include="Interface\IOrganisationDataRetrievalService.cs" />
     <Compile Include="Interface\IPopulationService.cs" />
     <Compile Include="Interface\IExternalDataCachePopulationService.cs" />
     <Compile Include="Interface\IFileDataRetrievalService.cs" />
+    <Compile Include="Interface\IOrganisationsMapperService.cs" />
     <Compile Include="Interface\IPostcodesMapperService.cs" />
     <Compile Include="Interface\IValidLearnersDataRetrievalService.cs" />
     <Compile Include="Internal\InternalDataCachePopulationService.cs" />

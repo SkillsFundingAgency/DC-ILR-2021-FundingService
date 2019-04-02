@@ -16,7 +16,7 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Organisation
 
         public IEnumerable<OrgFunding> OrganisationFundingForUKPRN(int ukprn)
         {
-            _referenceDataCache.OrgFunding.TryGetValue(ukprn, out IEnumerable<OrgFunding> orgFunding);
+            _referenceDataCache.OrgFunding.TryGetValue(ukprn, out IReadOnlyCollection<OrgFunding> orgFunding);
 
             return orgFunding?? new List<OrgFunding>();
         }

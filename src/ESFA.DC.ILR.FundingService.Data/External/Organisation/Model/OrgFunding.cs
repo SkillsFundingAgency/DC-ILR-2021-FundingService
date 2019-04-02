@@ -4,7 +4,7 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Organisation.Model
 {
     public class OrgFunding
     {
-        public long UKPRN { get; set; }
+        public int UKPRN { get; set; }
 
         public DateTime OrgFundEffectiveFrom { get; set; }
 

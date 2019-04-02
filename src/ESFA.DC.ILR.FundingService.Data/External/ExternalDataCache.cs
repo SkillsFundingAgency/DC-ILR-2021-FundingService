@@ -39,7 +39,7 @@ namespace ESFA.DC.ILR.FundingService.Data.External
         
         public string OrgVersion { get; set; }
 
-        public IDictionary<long, IEnumerable<OrgFunding>> OrgFunding { get; set; }
+        public IDictionary<int, IReadOnlyCollection<OrgFunding>> OrgFunding { get; set; }
 
         public IDictionary<int, IEnumerable<LargeEmployers>> LargeEmployers { get; set; }
 

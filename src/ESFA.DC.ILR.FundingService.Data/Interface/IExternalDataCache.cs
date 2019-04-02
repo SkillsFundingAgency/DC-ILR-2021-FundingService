@@ -38,7 +38,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Interface
 
         string OrgVersion { get; }
 
-        IDictionary<long, IEnumerable<OrgFunding>> OrgFunding { get; }
+        IDictionary<int, IReadOnlyCollection<OrgFunding>> OrgFunding { get; }
 
         IDictionary<int, IEnumerable<LargeEmployers>> LargeEmployers { get; }
 

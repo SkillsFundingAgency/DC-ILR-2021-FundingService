@@ -17,9 +17,9 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         private readonly IFCSDataRetrievalService _fcsDataRetrievalService;
         private readonly ILargeEmployersDataRetrievalService _largeEmployersDataRetrievalService;
         private readonly ILARSDataRetrievalService _larsDataRetrievalService;
-        private readonly IOrganisationDataRetrievalService _organisationDataRetrievalService;
         private readonly IFundingServiceDto _fundingServiceDto;
         private readonly IPostcodesMapperService _postcodesMapperService;
+        private readonly IOrganisationsMapperService _organisationsMapperService;
 
         public ExternalDataCachePopulationService(
             IExternalDataCache externalDataCache,
@@ -27,18 +27,18 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             IFCSDataRetrievalService fcsDataRetrievalService,
             ILargeEmployersDataRetrievalService largeEmployersDataRetrievalService,
             ILARSDataRetrievalService larsDataRetrievalService,
-            IOrganisationDataRetrievalService organisationDataRetrievalService,
             IFundingServiceDto fundingServiceDto,
-            IPostcodesMapperService postcodesMapperService)
+            IPostcodesMapperService postcodesMapperService,
+            IOrganisationsMapperService organisationsMapperService)
         {
             _externalDataCache = externalDataCache;
             _appsEarningsHistoryDataRetrievalService = appsEarningsHistoryDataRetrievalService;
             _fcsDataRetrievalService = fcsDataRetrievalService;
             _largeEmployersDataRetrievalService = largeEmployersDataRetrievalService;
             _larsDataRetrievalService = larsDataRetrievalService;
-            _organisationDataRetrievalService = organisationDataRetrievalService;
             _fundingServiceDto = fundingServiceDto;
             _postcodesMapperService = postcodesMapperService;
+            _organisationsMapperService = organisationsMapperService;
         }
 
         public async Task PopulateAsync(CancellationToken cancellationToken)
@@ -52,8 +52,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             var apprenticeshipFundingFrameworks = _larsDataRetrievalService.UniqueApprenticeshipFundingFrameworks(_fundingServiceDto.Message);
 
             var uniqueEmployerIds = _largeEmployersDataRetrievalService.UniqueEmployerIds(_fundingServiceDto.Message).ToList();
-
-            var ukprns = new List<long>() { providerUKPRN };
 
             var uniqueFM36Learners = _appsEarningsHistoryDataRetrievalService.UniqueFM36Learners(_fundingServiceDto.Message);
 
@@ -76,8 +74,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             referenceDataCache.PostcodeRoots = _postcodesMapperService.MapPostcodes(_fundingServiceDto.ReferenceData.Postcodes);
             referenceDataCache.PostcodeCurrentVersion = _fundingServiceDto.ReferenceData.MetaDatas.ReferenceDataVersions.PostcodesVersion.Version;
 
-            referenceDataCache.OrgVersion = _organisationDataRetrievalService.CurrentVersion();
-            referenceDataCache.OrgFunding = _organisationDataRetrievalService.OrgFundingsForUkprns(ukprns);
+            referenceDataCache.OrgVersion = _fundingServiceDto.ReferenceData.MetaDatas.ReferenceDataVersions.OrganisationsVersion.Version;
+            referenceDataCache.OrgFunding = _organisationsMapperService.MapOrgFundings(_fundingServiceDto.ReferenceData.Organisations, providerUKPRN);
 
             referenceDataCache.LargeEmployers = _largeEmployersDataRetrievalService.LargeEmployersForEmployerIds(uniqueEmployerIds);
 

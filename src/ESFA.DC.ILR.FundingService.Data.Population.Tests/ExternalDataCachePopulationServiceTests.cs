@@ -111,13 +111,14 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             larsDataRetrievalServiceMock.Setup(l => l.LARSApprenticeshipFundingFrameworks(It.IsAny<List<LARSApprenticeshipFundingKey>>())).Returns(larsApprenticeshipFundingFrameworks).Verifiable();
             larsDataRetrievalServiceMock.Setup(l => l.LARSStandardFundingForStandardCodes(It.IsAny<List<int>>())).Returns(larsStandardFundings).Verifiable();
 
-            var organisationDataRetrievalServiceMock = new Mock<IOrganisationDataRetrievalService>();
+            var organisationsMapperServiceMock = new Mock<IOrganisationsMapperService>();
 
             var organisationCurrentVersion = "OrganisationVersion";
-            var orgFundings = new Dictionary<long, IEnumerable<OrgFunding>>();
+            var orgFundings = new Dictionary<int, IReadOnlyCollection<OrgFunding>>();
 
-            organisationDataRetrievalServiceMock.Setup(o => o.CurrentVersion()).Returns(organisationCurrentVersion).Verifiable();
-            organisationDataRetrievalServiceMock.Setup(o => o.OrgFundingsForUkprns(It.IsAny<List<long>>())).Returns(orgFundings).Verifiable();
+            organisationsMapperServiceMock.Setup(o => o.MapOrgFundings(
+                It.IsAny<IReadOnlyCollection<ReferenceDataService.Model.Organisations.Organisation>>(),
+                message.LearningProviderEntity.UKPRN)).Returns(orgFundings).Verifiable();
 
             var appsEarningsHistoryDataRetrievalServiceMock = new Mock<IAppsEarningsHistoryDataRetrievalService>();
 
@@ -138,15 +139,15 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
                 fcsDataRetrievalServiceMock.Object,
                 largeEmployersDataRetrievalServiceMock.Object,
                 larsDataRetrievalServiceMock.Object,
-                organisationDataRetrievalServiceMock.Object,
                 fundingServiceDtoMock.Object,
-                postcodesMapperServiceMock.Object)
+                postcodesMapperServiceMock.Object,
+                organisationsMapperServiceMock.Object)
                 .PopulateAsync(CancellationToken.None);
 
             postcodesMapperServiceMock.VerifyAll();
             largeEmployersDataRetrievalServiceMock.VerifyAll();
             larsDataRetrievalServiceMock.VerifyAll();
-            organisationDataRetrievalServiceMock.VerifyAll();
+            organisationsMapperServiceMock.VerifyAll();
             appsEarningsHistoryDataRetrievalServiceMock.VerifyAll();
             fcsDataRetrievalServiceMock.VerifyAll();
 
@@ -177,9 +178,9 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             IFCSDataRetrievalService fcsDataRetrievalService = null,
             ILargeEmployersDataRetrievalService largeEmployersDataRetrievalService = null,
             ILARSDataRetrievalService larsDataRetrievalService = null,
-            IOrganisationDataRetrievalService organisationDataRetrievalService = null,
             IFundingServiceDto fundingServiceDto = null,
-            IPostcodesMapperService postcodesMapperService = null)
+            IPostcodesMapperService postcodesMapperService = null,
+            IOrganisationsMapperService organisationsMapperService = null)
         {
             return new ExternalDataCachePopulationService(
                 externalDataCache,
@@ -187,9 +188,9 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
                 fcsDataRetrievalService,
                 largeEmployersDataRetrievalService,
                 larsDataRetrievalService,
-                organisationDataRetrievalService,
                 fundingServiceDto,
-                postcodesMapperService);
+                postcodesMapperService,
+                organisationsMapperService);
         }
     }
 }

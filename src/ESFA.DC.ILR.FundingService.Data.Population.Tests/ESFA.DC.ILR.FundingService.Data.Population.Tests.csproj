@@ -73,9 +73,6 @@
     <Reference Include="ESFA.DC.Data.LARS.Model, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Data.LARS.Model.0.1.4-beta0001\lib\net461\ESFA.DC.Data.LARS.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.Data.Organisatons.Model, Version=0.1.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Data.Organisations.Model.0.1.5-beta0001\lib\net461\ESFA.DC.Data.Organisatons.Model.dll</HintPath>
-    </Reference>
     <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.1819.Model.Interface.0.1.5-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
@@ -135,7 +132,7 @@
     <Compile Include="External\AppsEarningsHistoryDataRetrievalServiceTests.cs" />
     <Compile Include="External\CaseSensitivityDataRetrievalServiceTests.cs" />
     <Compile Include="External\LARSDataRetrievalServiceTests.cs" />
-    <Compile Include="External\OrganisationDataRetrievalServiceTests.cs" />
+    <Compile Include="External\OrganisationsMapperServiceTests.cs" />
     <Compile Include="External\PostcodesMapperServiceTests.cs" />
     <Compile Include="File\FileDataCachePopulationServiceTests.cs" />
     <Compile Include="File\FileDataRetrievalServiceTests.cs" />
