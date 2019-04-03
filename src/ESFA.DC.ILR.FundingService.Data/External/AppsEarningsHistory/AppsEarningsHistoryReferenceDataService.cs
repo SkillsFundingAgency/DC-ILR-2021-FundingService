@@ -17,7 +17,7 @@ namespace ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory
 
         public IEnumerable<AECEarningsHistory> AECEarningsHistory(long uln)
         {
-            _referenceDataCache.AECLatestInYearEarningHistory.TryGetValue(uln, out IEnumerable<AECEarningsHistory> aecEarningsHistory);
+            _referenceDataCache.AECLatestInYearEarningHistory.TryGetValue(uln, out IReadOnlyCollection<AECEarningsHistory> aecEarningsHistory);
 
             return aecEarningsHistory ?? _emptyAecEarningsHistory;
         }

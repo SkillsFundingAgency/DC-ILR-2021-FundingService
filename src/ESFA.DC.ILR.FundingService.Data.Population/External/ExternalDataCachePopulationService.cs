@@ -13,32 +13,32 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
     public class ExternalDataCachePopulationService : IExternalDataCachePopulationService
     {
         private readonly IExternalDataCache _externalDataCache;
-        private readonly IAppsEarningsHistoryDataRetrievalService _appsEarningsHistoryDataRetrievalService;
         private readonly IFCSDataRetrievalService _fcsDataRetrievalService;
         private readonly ILARSDataRetrievalService _larsDataRetrievalService;
         private readonly IFundingServiceDto _fundingServiceDto;
         private readonly IPostcodesMapperService _postcodesMapperService;
         private readonly IOrganisationsMapperService _organisationsMapperService;
         private readonly ILargeEmployersMapperService _largeEmployersMapperService;
+        private readonly IAppsEarningsHistoryMapperService _appsEarningsHistoryMapperService;
 
         public ExternalDataCachePopulationService(
             IExternalDataCache externalDataCache,
-            IAppsEarningsHistoryDataRetrievalService appsEarningsHistoryDataRetrievalService,
             IFCSDataRetrievalService fcsDataRetrievalService,
             ILARSDataRetrievalService larsDataRetrievalService,
             IFundingServiceDto fundingServiceDto,
             IPostcodesMapperService postcodesMapperService,
             IOrganisationsMapperService organisationsMapperService,
-            ILargeEmployersMapperService largeEmployersMapperService)
+            ILargeEmployersMapperService largeEmployersMapperService,
+             IAppsEarningsHistoryMapperService appsEarningsHistoryMapperService)
         {
             _externalDataCache = externalDataCache;
-            _appsEarningsHistoryDataRetrievalService = appsEarningsHistoryDataRetrievalService;
             _fcsDataRetrievalService = fcsDataRetrievalService;
             _larsDataRetrievalService = larsDataRetrievalService;
             _fundingServiceDto = fundingServiceDto;
             _postcodesMapperService = postcodesMapperService;
             _organisationsMapperService = organisationsMapperService;
             _largeEmployersMapperService = largeEmployersMapperService;
+            _appsEarningsHistoryMapperService = appsEarningsHistoryMapperService;
         }
 
         public async Task PopulateAsync(CancellationToken cancellationToken)
@@ -50,8 +50,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             var frameworks = _larsDataRetrievalService.UniqueFrameworkCommonComponents(_fundingServiceDto.Message);
             var apprenticeshipFundingStandards = _larsDataRetrievalService.UniqueApprenticeshipFundingStandards(_fundingServiceDto.Message);
             var apprenticeshipFundingFrameworks = _larsDataRetrievalService.UniqueApprenticeshipFundingFrameworks(_fundingServiceDto.Message);
-
-            var uniqueFM36Learners = _appsEarningsHistoryDataRetrievalService.UniqueFM36Learners(_fundingServiceDto.Message);
 
             var conRefNumbers = _fcsDataRetrievalService.UniqueConRefNumbers(_fundingServiceDto.Message).ToCaseInsensitiveHashSet();
 
@@ -79,7 +77,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
             referenceDataCache.FCSContractAllocations = _fcsDataRetrievalService.FCSContractsForUKPRN(providerUKPRN, conRefNumbers);
 
-            referenceDataCache.AECLatestInYearEarningHistory = _appsEarningsHistoryDataRetrievalService.AppsEarningsHistoryForLearners(providerUKPRN, uniqueFM36Learners);
+            referenceDataCache.AECLatestInYearEarningHistory = _appsEarningsHistoryMapperService.MapAppsEarningsHistories(_fundingServiceDto.ReferenceData.AppsEarningsHistories);
         }
     }
 }

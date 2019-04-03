@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ESFA.DC.Data.AppsEarningsHistory.Model;
 using ESFA.DC.Data.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Data.Population.External;
 using ESFA.DC.ILR.FundingService.Data.Population.Keys;
-using ESFA.DC.ILR.FundingService.Tests.Common;
 using ESFA.DC.ReferenceData.FCS.Model;
 using FluentAssertions;
 using Moq;
@@ -457,11 +455,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         private Mock<LARSDataRetrievalService> NewLARSMock()
         {
             return new Mock<LARSDataRetrievalService>();
-        }
-
-        private Mock<AppsEarningsHistoryDataRetrievalService> NewAppsHistoryMock()
-        {
-            return new Mock<AppsEarningsHistoryDataRetrievalService>();
         }
 
         private Mock<FCSDataRetrievalService> NewFCSMock()
