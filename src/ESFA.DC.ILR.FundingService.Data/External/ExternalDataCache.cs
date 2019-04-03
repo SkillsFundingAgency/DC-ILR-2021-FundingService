@@ -45,6 +45,6 @@ namespace ESFA.DC.ILR.FundingService.Data.External
 
         public IDictionary<long, IReadOnlyCollection<AECEarningsHistory>> AECLatestInYearEarningHistory { get; set; }
 
-        public IEnumerable<FCSContractAllocation> FCSContractAllocations { get; set; }
+        public IReadOnlyCollection<FCSContractAllocation> FCSContractAllocations { get; set; }
     }
 }

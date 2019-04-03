@@ -5,7 +5,6 @@ using ESFA.DC.Data.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Data.Population.External;
 using ESFA.DC.ILR.FundingService.Data.Population.Keys;
-using ESFA.DC.ReferenceData.FCS.Model;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -317,149 +316,9 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             larsFramworkCommonComponents.Select(l => l.LearnAimRef).ToList().Should().Contain("ABC123", "abc456");
         }
 
-        [Fact]
-        public void FCSContracts()
-        {
-            var contractors = new List<Contractor>()
-            {
-                new Contractor()
-                {
-                    Ukprn = 1,
-                    Contracts = new List<Contract>
-                    {
-                        new Contract
-                        {
-                            ContractAllocations = new List<ContractAllocation>
-                            {
-                                new ContractAllocation
-                                {
-                                    FundingStreamPeriodCode = "7",
-                                    ContractAllocationNumber = "aa",
-                                    TenderSpecReference = "T1",
-                                    LotReference = "L1",
-                                    ContractDeliverables = new List<ContractDeliverable>
-                                    {
-                                        new ContractDeliverable
-                                        {
-                                            DeliverableCode = 1,
-                                            UnitCost = 2.0m
-                                        },
-                                         new ContractDeliverable
-                                        {
-                                            DeliverableCode = 2,
-                                            UnitCost = 3.0m
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                new Contractor()
-                {
-                    Ukprn = 1,
-                    Contracts = new List<Contract>
-                    {
-                        new Contract
-                        {
-                            ContractAllocations = new List<ContractAllocation>
-                            {
-                                new ContractAllocation
-                                {
-                                    ContractAllocationNumber = "BB",
-                                    TenderSpecReference = "T2",
-                                    LotReference = "L2",
-                                    FundingStreamPeriodCode = "5",
-                                    ContractDeliverables = new List<ContractDeliverable>
-                                    {
-                                        new ContractDeliverable
-                                        {
-                                            DeliverableCode = 1,
-                                            UnitCost = 2.0m
-                                        },
-                                        new ContractDeliverable
-                                        {
-                                            DeliverableCode = 2,
-                                            UnitCost = 3.0m
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }.AsQueryable();
-
-            var eligibilityRules = new List<EsfEligibilityRule>()
-            {
-                new EsfEligibilityRule()
-                {
-                    TenderSpecReference = "T1",
-                    LotReference = "L1",
-                    CalcMethod = 1
-                },
-                new EsfEligibilityRule()
-                {
-                    TenderSpecReference = "T2",
-                    LotReference = "L2",
-                    CalcMethod = 2
-                }
-            }.AsQueryable();
-
-            var codeMappings = new List<ContractDeliverableCodeMapping>()
-            {
-                new ContractDeliverableCodeMapping()
-                {
-                    FundingStreamPeriodCode = "4",
-                    ExternalDeliverableCode = "ST2",
-                    FCSDeliverableCode = "2"
-                },
-                new ContractDeliverableCodeMapping()
-                {
-                    FundingStreamPeriodCode = "5",
-                    ExternalDeliverableCode = "ST1",
-                    FCSDeliverableCode = "1"
-                },
-                new ContractDeliverableCodeMapping()
-                {
-                    FundingStreamPeriodCode = "5",
-                    ExternalDeliverableCode = "ST2",
-                    FCSDeliverableCode = "2"
-                },
-                new ContractDeliverableCodeMapping()
-                {
-                    FundingStreamPeriodCode = "5",
-                    ExternalDeliverableCode = "ST3",
-                    FCSDeliverableCode = "3"
-                },
-            }.AsQueryable();
-
-            var fcsDataRetrievalServiceMock = NewFCSMock();
-
-            fcsDataRetrievalServiceMock.SetupGet(l => l.Contractors).Returns(contractors);
-            fcsDataRetrievalServiceMock.SetupGet(l => l.EsfEligibilityRules).Returns(eligibilityRules);
-            fcsDataRetrievalServiceMock.SetupGet(l => l.DeliverableCodeMappings).Returns(codeMappings);
-
-            var conRefNumbers = new List<string>() { "AA", "bb", "Cc" }.ToCaseInsensitiveHashSet();
-
-            var fcs = fcsDataRetrievalServiceMock.Object.FCSContractsForUKPRN(1, conRefNumbers);
-
-            fcs.Should().HaveCount(2);
-
-            fcs.Select(c => c.ContractAllocationNumber).Should().Contain("aa", "BB");
-
-            fcs.Where(c => c.ContractAllocationNumber == "aa").Select(cm => cm.CalcMethod).Should().BeEquivalentTo(1);
-            fcs.Where(c => c.ContractAllocationNumber == "BB").Select(cm => cm.CalcMethod).Should().BeEquivalentTo(2);
-        }
-
         private Mock<LARSDataRetrievalService> NewLARSMock()
         {
             return new Mock<LARSDataRetrievalService>();
-        }
-
-        private Mock<FCSDataRetrievalService> NewFCSMock()
-        {
-            return new Mock<FCSDataRetrievalService>();
         }
     }
 }
