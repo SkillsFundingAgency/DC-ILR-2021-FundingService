@@ -93,6 +93,12 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             result["Postcode3"].Should().BeEquivalentTo(expectedPostcodeDictionary["Postcode3"]);
         }
 
+        [Fact]
+        public void MapPostcodes_Null()
+        {
+            NewService().MapPostcodes(null).Should().BeNull();
+        }
+
         private IDictionary<string, PostcodeRoot> ExpectedPostcodeDictionary()
         {
             return new Dictionary<string, PostcodeRoot>

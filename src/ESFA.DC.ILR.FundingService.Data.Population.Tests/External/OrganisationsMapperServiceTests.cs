@@ -70,7 +70,13 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             result.Should().BeEquivalentTo(expectedOrgFundingDictionary);
         }
 
-        private IDictionary<int, IReadOnlyCollection<OrgFunding>> ExpectedOrgFundingDictionary()
+        [Fact]
+        public void MapOrgFundings_Null()
+        {
+            NewService().MapOrgFundings(null, 1).Should().BeNull();
+        }
+
+            private IDictionary<int, IReadOnlyCollection<OrgFunding>> ExpectedOrgFundingDictionary()
         {
             return new Dictionary<int, IReadOnlyCollection<OrgFunding>>
             {

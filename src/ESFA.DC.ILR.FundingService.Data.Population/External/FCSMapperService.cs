@@ -15,7 +15,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public IReadOnlyCollection<FCSContractAllocation> MapFCSContractAllocations(IReadOnlyCollection<FcsContractAllocation> fcsContractAllocations)
         {
-            return fcsContractAllocations.Select(MapFCSContractAllocation).ToList();
+            return fcsContractAllocations?.Select(MapFCSContractAllocation).ToList();
         }
 
         private FCSContractAllocation MapFCSContractAllocation(FcsContractAllocation fcsContractAllocation)

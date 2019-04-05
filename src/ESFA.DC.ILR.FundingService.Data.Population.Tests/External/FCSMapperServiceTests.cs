@@ -109,6 +109,12 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             result.Should().BeEquivalentTo(expectedContractAllocations);
         }
 
+        [Fact]
+        public void MapFCSContractAllocations_Null()
+        {
+            NewService().MapFCSContractAllocations(null).Should().BeNull();
+        }
+
         private IReadOnlyCollection<FCSContractAllocation> ExpectedContractAllocations()
         {
             return new List<FCSContractAllocation>

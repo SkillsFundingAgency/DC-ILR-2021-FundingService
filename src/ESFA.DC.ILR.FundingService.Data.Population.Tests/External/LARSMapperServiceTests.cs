@@ -195,9 +195,13 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                 }
             };
 
-            var t = NewService().MapLARSLearningDeliveries(larsLearningDeliveries);
+            expectedLarsLearningDeliveries.Should().BeEquivalentTo(NewService().MapLARSLearningDeliveries(larsLearningDeliveries));
+        }
 
-            expectedLarsLearningDeliveries.Should().BeEquivalentTo(t);
+        [Fact]
+        public void MapLARSLearningDeliveries_Null()
+        {
+            NewService().MapLARSLearningDeliveries(null).Should().BeNull();
         }
 
         [Fact]
@@ -365,6 +369,12 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             };
 
             expectedlarsStandards.Should().BeEquivalentTo(NewService().MapLARSStandards(larsStandards));
+        }
+
+        [Fact]
+        public void MapLARSStandards_Null()
+        {
+            NewService().MapLARSStandards(null).Should().BeNull();
         }
 
         private LARSMapperService NewService()

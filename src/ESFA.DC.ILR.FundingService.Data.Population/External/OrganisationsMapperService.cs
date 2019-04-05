@@ -14,7 +14,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public IDictionary<int, IReadOnlyCollection<OrgFunding>> MapOrgFundings(IReadOnlyCollection<Organisation> organisations, int providerUKPRN)
         {
-            return organisations
+            return organisations?
                 .Where(o => o.UKPRN == providerUKPRN)
                     .ToDictionary(
                     u => u.UKPRN,

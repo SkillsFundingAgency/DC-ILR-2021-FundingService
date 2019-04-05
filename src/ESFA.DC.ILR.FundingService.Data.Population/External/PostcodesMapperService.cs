@@ -15,7 +15,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public IDictionary<string, PostcodeRoot> MapPostcodes(IReadOnlyCollection<Postcode> postcodes)
         {
-            return postcodes
+            return postcodes?
                 .ToDictionary(
                 p => p.PostCode,
                 p => new PostcodeRoot

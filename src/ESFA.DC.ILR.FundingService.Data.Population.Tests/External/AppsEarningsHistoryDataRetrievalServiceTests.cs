@@ -159,7 +159,13 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             result.Should().BeEquivalentTo(expectedEarningsHistory);
         }
 
-        private IDictionary<long, IReadOnlyCollection<AECEarningsHistory>> ExpectedAppsEarnings()
+        [Fact]
+        public void AppsEarningsHistoryForLearners_Null()
+        {
+            NewService().MapAppsEarningsHistories(null).Should().BeNull();
+        }
+
+            private IDictionary<long, IReadOnlyCollection<AECEarningsHistory>> ExpectedAppsEarnings()
         {
             return new Dictionary<long, IReadOnlyCollection<AECEarningsHistory>>
             {

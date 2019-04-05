@@ -61,7 +61,13 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             result.Should().BeEquivalentTo(expectedLargeEmployerDictionary);
         }
 
-        private IDictionary<int, IReadOnlyCollection<LargeEmployers>> ExpectedLargeEmployerDictionary()
+        [Fact]
+        public void MapLargeEmployers_Null()
+        {
+            NewService().MapLargeEmployers(null).Should().BeNull();
+        }
+
+            private IDictionary<int, IReadOnlyCollection<LargeEmployers>> ExpectedLargeEmployerDictionary()
         {
             return new Dictionary<int, IReadOnlyCollection<LargeEmployers>>
             {
