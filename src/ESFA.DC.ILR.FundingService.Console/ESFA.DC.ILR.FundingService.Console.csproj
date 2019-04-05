@@ -34,8 +34,8 @@
     <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.Console.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
+    <Reference Include="Autofac, Version=4.9.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.9.2\lib\net45\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -76,11 +76,11 @@
     <Reference Include="ESFA.DC.Queueing.Interface, Version=0.1.14.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Queueing.Interface.0.1.14-beta0001\lib\netstandard2.0\ESFA.DC.Queueing.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.Serialization.Interfaces, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Serialization.Interfaces.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Interfaces.dll</HintPath>
+    <Reference Include="ESFA.DC.Serialization.Interfaces, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.Serialization.Interfaces.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Interfaces.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.Serialization.Xml, Version=0.1.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Serialization.Xml.0.1.5-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Xml.dll</HintPath>
+    <Reference Include="ESFA.DC.Serialization.Xml, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.Serialization.Xml.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Xml.dll</HintPath>
     </Reference>
     <Reference Include="Oracle.Determinations.Engine, Version=10.4.0.0, Culture=neutral, PublicKeyToken=863065c849b9b316, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.OPA.RunTime.DLLs.0.1.1-beta0001\lib\Oracle.Determinations.Engine.dll</HintPath>
