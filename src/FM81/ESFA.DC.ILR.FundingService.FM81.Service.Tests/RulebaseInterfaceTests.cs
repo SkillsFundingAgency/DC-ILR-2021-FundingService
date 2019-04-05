@@ -348,7 +348,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
 
         public IDataEntity GetDataEntityMapperEntity()
         {
-            var larsRefererenceDataServiceMock = new Mock<ILARSReferenceDataService>();
+            var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
             var fileDataServiceMock = new Mock<IFileDataService>();
 
             var learner = new TestLearner
@@ -395,7 +395,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
 
             var larsLearningDelivery = new LARSLearningDelivery
             {
-                LARSFunding = new List<LARSFunding>
+                LARSFundings = new List<LARSFunding>
                 {
                     new LARSFunding(),
                 },
@@ -413,11 +413,16 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
 
             var learningDelivery = learner.LearningDeliveries.First();
 
-            larsRefererenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
-            larsRefererenceDataServiceMock.Setup(l => l.LARSStandardCommonComponent(learningDelivery.StdCodeNullable)).Returns(larsStandardCmnCmpnt);
-            larsRefererenceDataServiceMock.Setup(l => l.LARSStandardFunding(learningDelivery.StdCodeNullable)).Returns(larsStandardFunding);
+            larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
+            larsReferenceDataServiceMock.Setup(l => l.LARSStandardForStandardCode(learningDelivery.StdCodeNullable))
+                .Returns(
+                new LARSStandard
+                {
+                    LARSStandardCommonComponents = larsStandardCmnCmpnt,
+                    LARSStandardFundings = larsStandardFunding
+                });
 
-            return new DataEntityMapper(larsRefererenceDataServiceMock.Object, fileDataServiceMock.Object)
+            return new DataEntityMapper(larsReferenceDataServiceMock.Object, fileDataServiceMock.Object)
                 .BuildGlobalDataEntity(learner, new Global());
         }
 

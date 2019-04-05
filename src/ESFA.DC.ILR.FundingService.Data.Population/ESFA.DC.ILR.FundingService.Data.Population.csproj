@@ -59,9 +59,6 @@
     <Reference Include="ESFA.DC.Auditing.Interface, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Auditing.Interface.0.2.0-beta0001\lib\netstandard2.0\ESFA.DC.Auditing.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.Data.LARS.Model, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Data.LARS.Model.0.1.4-beta0001\lib\net461\ESFA.DC.Data.LARS.Model.dll</HintPath>
-    </Reference>
     <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.1819.Model.Interface.0.1.5-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
@@ -120,7 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\FundingContextPopulationService.cs" />
-    <Compile Include="External\LARSDataRetrievalService.cs" />
+    <Compile Include="External\LARSMapperService.cs" />
     <Compile Include="External\LargeEmployersMapperService.cs" />
     <Compile Include="External\AppsEarningsHistoryMapperService.cs" />
     <Compile Include="External\OrganisationsMapperService.cs" />
@@ -134,12 +131,12 @@
     <Compile Include="Interface\IInternalDataCachePopulationService.cs" />
     <Compile Include="Interface\IFCSMapperService.cs" />
     <Compile Include="Interface\ILargeEmployersMapperService.cs" />
-    <Compile Include="Interface\ILARSDataRetrievalService.cs" />
     <Compile Include="Interface\IAppsEarningsHistoryMapperService.cs" />
     <Compile Include="Interface\IPopulationService.cs" />
     <Compile Include="Interface\IExternalDataCachePopulationService.cs" />
     <Compile Include="Interface\IFileDataRetrievalService.cs" />
     <Compile Include="Interface\IOrganisationsMapperService.cs" />
+    <Compile Include="Interface\ILARSMapperService.cs" />
     <Compile Include="Interface\IPostcodesMapperService.cs" />
     <Compile Include="Interface\IValidLearnersDataRetrievalService.cs" />
     <Compile Include="Internal\InternalDataCachePopulationService.cs" />

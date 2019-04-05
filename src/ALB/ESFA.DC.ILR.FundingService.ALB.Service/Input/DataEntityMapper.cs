@@ -76,7 +76,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
             var sfaPostCodeAreaCost = _postcodesReferenceDataService.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode);
             var subsidyPilotPostcodeArea = _postcodesReferenceDataService.CareerLearningPilotsForPostcode(learningDelivery.DelLocPostCode);
             var learningDeliveryFAMDenormalized = BuildLearningDeliveryFAMDenormalized(learningDelivery.LearningDeliveryFAMs);
-            var larsFunding = _larsReferenceDataService.LARSFundingsForLearnAimRef(learningDelivery.LearnAimRef);
 
             return new DataEntity(Attributes.EntityLearningDelivery)
             {
@@ -108,10 +107,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
                             .Select(BuildLearningDeliveryFAM) ?? new List<IDataEntity>())
                             .Union(
                                    larsLearningDelivery?
-                                    .LARSCareerLearningPilot?
+                                    .LARSCareerLearningPilots?
                                     .Select(BuildLARSCareerLearningPilot) ?? new List<IDataEntity>())
                             .Union(
-                                   larsFunding?
+                                    larsLearningDelivery?
+                                    .LARSFundings?
                                     .Select(BuildLARSFunding) ?? new List<IDataEntity>())
                              .Union(
                                    _postcodesReferenceDataService

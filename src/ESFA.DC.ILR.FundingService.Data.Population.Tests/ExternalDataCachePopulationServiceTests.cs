@@ -79,36 +79,14 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
 
             largeEmployersMapperServiceMock.Setup(l => l.MapLargeEmployers(It.IsAny<List<ReferenceDataService.Model.Employers.Employer>>())).Returns(largeEmployers).Verifiable();
 
-            var larsDataRetrievalServiceMock = new Mock<ILARSDataRetrievalService>();
+            var larsMapperServiceMock = new Mock<ILARSMapperService>();
 
             var larsCurrentVersion = "LarsVersion";
-            var larsAnnualValues = new Dictionary<string, IEnumerable<LARSAnnualValue>>();
-            var larsFrameworkAims = new Dictionary<string, IEnumerable<LARSFrameworkAims>>();
-            var larsLearningDeliveryCategories = new Dictionary<string, IEnumerable<LARSLearningDeliveryCategory>>();
-            var larsFundings = new Dictionary<string, IEnumerable<LARSFunding>>();
             var larsLearningDeliveries = new Dictionary<string, LARSLearningDelivery>();
-            var larsStandardCommonComponents = new Dictionary<int, IEnumerable<LARSStandardCommonComponent>>();
-            var larsFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>();
-            var larsApprenticeshipFundingStandards = new List<LARSStandardApprenticeshipFunding>();
-            var larsApprenticeshipFundingFrameworks = new List<LARSFrameworkApprenticeshipFunding>();
-            var larsStandardFundings = new Dictionary<int, IEnumerable<LARSStandardFunding>>();
+            var larsStandards = new Dictionary<int, LARSStandard>();
 
-            larsDataRetrievalServiceMock.Setup(l => l.UniqueLearnAimRefs(message)).Returns(new HashSet<string>()).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.UniqueStandardCodes(message)).Returns(new List<int>()).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.UniqueFrameworkCommonComponents(message)).Returns(new HashSet<LARSFrameworkKey>()).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.UniqueApprenticeshipFundingStandards(message)).Returns(It.IsAny<IEnumerable<LARSApprenticeshipFundingKey>>).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.UniqueApprenticeshipFundingFrameworks(message)).Returns(It.IsAny<IEnumerable<LARSApprenticeshipFundingKey>>).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.CurrentVersion()).Returns(larsCurrentVersion).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.LARSAnnualValuesForLearnAimRefs(It.IsAny<IEnumerable<string>>())).Returns(larsAnnualValues).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.LARSFrameworkAimsForLearnAimRefs(It.IsAny<IEnumerable<string>>())).Returns(larsFrameworkAims).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.LARSLearningDeliveryCategoriesForLearnAimRefs(It.IsAny<HashSet<string>>())).Returns(larsLearningDeliveryCategories).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.LARSFundingsForLearnAimRefs(It.IsAny<IEnumerable<string>>())).Returns(larsFundings).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.LARSLearningDeliveriesForLearnAimRefs(It.IsAny<IEnumerable<string>>())).Returns(larsLearningDeliveries).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.LARSStandardCommonComponentForStandardCode(It.IsAny<List<int>>())).Returns(larsStandardCommonComponents).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.LARSFrameworkCommonComponentForLearnAimRefs(It.IsAny<IEnumerable<LARSFrameworkKey>>())).Returns(larsFrameworkCommonComponents).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.LARSApprenticeshipFundingStandards(It.IsAny<List<LARSApprenticeshipFundingKey>>())).Returns(larsApprenticeshipFundingStandards).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.LARSApprenticeshipFundingFrameworks(It.IsAny<List<LARSApprenticeshipFundingKey>>())).Returns(larsApprenticeshipFundingFrameworks).Verifiable();
-            larsDataRetrievalServiceMock.Setup(l => l.LARSStandardFundingForStandardCodes(It.IsAny<List<int>>())).Returns(larsStandardFundings).Verifiable();
+            larsMapperServiceMock.Setup(l => l.MapLARSLearningDeliveries(It.IsAny<List<ReferenceDataService.Model.LARS.LARSLearningDelivery>>())).Returns(larsLearningDeliveries).Verifiable();
+            larsMapperServiceMock.Setup(l => l.MapLARSStandards(It.IsAny<List<ReferenceDataService.Model.LARS.LARSStandard>>())).Returns(larsStandards).Verifiable();
 
             var organisationsMapperServiceMock = new Mock<IOrganisationsMapperService>();
 
@@ -135,18 +113,18 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
 
             await NewService(
                 externalDataCache,
-                larsDataRetrievalServiceMock.Object,
                 fundingServiceDtoMock.Object,
                 postcodesMapperServiceMock.Object,
                 organisationsMapperServiceMock.Object,
                 largeEmployersMapperServiceMock.Object,
                 appsEarningsHistoryMapperServiceMock.Object,
-                fcsMapperServiceMock.Object)
+                fcsMapperServiceMock.Object,
+                larsMapperServiceMock.Object)
                 .PopulateAsync(CancellationToken.None);
 
             postcodesMapperServiceMock.VerifyAll();
             largeEmployersMapperServiceMock.VerifyAll();
-            larsDataRetrievalServiceMock.VerifyAll();
+            larsMapperServiceMock.VerifyAll();
             organisationsMapperServiceMock.VerifyAll();
             appsEarningsHistoryMapperServiceMock.VerifyAll();
             fcsMapperServiceMock.VerifyAll();
@@ -157,16 +135,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             externalDataCache.LargeEmployers.Should().BeSameAs(largeEmployers);
 
             externalDataCache.LARSCurrentVersion.Should().Be(larsCurrentVersion);
-            externalDataCache.LARSAnnualValue.Should().BeSameAs(larsAnnualValues);
-            externalDataCache.LARSFrameworkAims.Should().BeSameAs(larsFrameworkAims);
-            externalDataCache.LARSFunding.Should().BeSameAs(larsFundings);
             externalDataCache.LARSLearningDelivery.Should().BeSameAs(larsLearningDeliveries);
-            externalDataCache.LARSLearningDeliveryCategory.Should().BeSameAs(larsLearningDeliveryCategories);
-            externalDataCache.LARSStandardFundings.Should().BeSameAs(larsStandardFundings);
-            externalDataCache.LARSFrameworkCommonComponent.Should().BeSameAs(larsFrameworkCommonComponents);
-            externalDataCache.LARSStandardCommonComponent.Should().BeSameAs(larsStandardCommonComponents);
-            externalDataCache.LARSApprenticeshipFundingFrameworks.Should().BeSameAs(larsApprenticeshipFundingFrameworks);
-            externalDataCache.LARSApprenticeshipFundingStandards.Should().BeSameAs(larsApprenticeshipFundingStandards);
+            externalDataCache.LARSStandards.Should().BeSameAs(larsStandards);
 
             externalDataCache.OrgVersion.Should().Be(organisationCurrentVersion);
             externalDataCache.OrgFunding.Should().BeSameAs(orgFundings);
@@ -174,23 +144,23 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
 
         private ExternalDataCachePopulationService NewService(
             IExternalDataCache externalDataCache = null,
-            ILARSDataRetrievalService larsDataRetrievalService = null,
             IFundingServiceDto fundingServiceDto = null,
             IPostcodesMapperService postcodesMapperService = null,
             IOrganisationsMapperService organisationsMapperService = null,
             ILargeEmployersMapperService largeEmployersMapperService = null,
             IAppsEarningsHistoryMapperService appsEarningsHistoryMapperService = null,
-            IFCSMapperService fcsMapperService = null)
+            IFCSMapperService fcsMapperService = null,
+            ILARSMapperService larsMapperService = null)
         {
             return new ExternalDataCachePopulationService(
                 externalDataCache,
-                larsDataRetrievalService,
                 fundingServiceDto,
                 postcodesMapperService,
                 organisationsMapperService,
                 largeEmployersMapperService,
                 appsEarningsHistoryMapperService,
-                fcsMapperService);
+                fcsMapperService,
+                larsMapperService);
         }
     }
 }

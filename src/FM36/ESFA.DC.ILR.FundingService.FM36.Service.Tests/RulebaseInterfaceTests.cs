@@ -408,7 +408,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
 
         public IDataEntity GetDataEntityMapperEntity()
         {
-            var larsRefererenceDataServiceMock = new Mock<ILARSReferenceDataService>();
+            var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
             var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
             var appsEarningsHistoryReferenceDataServiceMock = new Mock<IAppsEarningsHistoryReferenceDataService>();
             var fileDataServiceMock = new Mock<IFileDataService>();
@@ -454,26 +454,62 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 }
             };
 
-            var larsLearningDelivery = new LARSLearningDelivery();
-
-            var larsFunding = new List<LARSFunding>
+            var frameworkAim = new LARSFrameworkAim
             {
-                new LARSFunding()
+                EffectiveFrom = new DateTime(2018, 1, 1),
+                EffectiveTo = new DateTime(2019, 1, 1),
+                FrameworkComponentType = 1,
+                FworkCode = 7,
+                ProgType = 6,
+                PwayCode = 5,
+                LARSFramework = new LARSFramework
+                {
+                    LARSFrameworkApprenticeshipFundings = new List<LARSFrameworkApprenticeshipFunding>
+                    {
+                        new LARSFrameworkApprenticeshipFunding()
+                    },
+                    LARSFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>
+                    {
+                        new LARSFrameworkCommonComponent()
+                    }
+                }
+            };
+
+            var larsLearningDelivery = new LARSLearningDelivery
+            {
+                LARSFundings = new List<LARSFunding>
+                {
+                    new LARSFunding()
+                },
+                LARSFrameworkAims = new List<LARSFrameworkAim>
+                {
+                   frameworkAim
+                }
+            };
+
+            var larsStandards = new LARSStandard
+            {
+                LARSStandardApprenticeshipFundings = new List<LARSStandardApprenticeshipFunding>
+                {
+                    new LARSStandardApprenticeshipFunding()
+                },
+                LARSStandardCommonComponents = new List<LARSStandardCommonComponent>
+                {
+                    new LARSStandardCommonComponent()
+                }
             };
 
             var learningDelivery = learner.LearningDeliveries.First();
 
-            larsRefererenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
-            larsRefererenceDataServiceMock.Setup(l => l.LARSFundingsForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsFunding);
-            larsRefererenceDataServiceMock.Setup(l => l.LARSStandardApprenticeshipFunding(learningDelivery.StdCodeNullable, learningDelivery.ProgTypeNullable)).Returns(new List<LARSStandardApprenticeshipFunding> { new LARSStandardApprenticeshipFunding() });
-            larsRefererenceDataServiceMock.Setup(l => l.LARSFrameworkApprenticeshipFunding(learningDelivery.FworkCodeNullable, learningDelivery.ProgTypeNullable, learningDelivery.PwayCodeNullable)).Returns(new List<LARSFrameworkApprenticeshipFunding> { new LARSFrameworkApprenticeshipFunding() });
-            larsRefererenceDataServiceMock.Setup(l => l.LARSFrameworkCommonComponent(learningDelivery.LearnAimRef, learningDelivery.FworkCodeNullable, learningDelivery.ProgTypeNullable, learningDelivery.PwayCodeNullable)).Returns(new List<LARSFrameworkCommonComponent> { new LARSFrameworkCommonComponent() });
-            larsRefererenceDataServiceMock.Setup(l => l.LARSStandardCommonComponent(learningDelivery.StdCodeNullable)).Returns(new List<LARSStandardCommonComponent> { new LARSStandardCommonComponent() });
+            larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
+            larsReferenceDataServiceMock.Setup(l => l.LARSStandardForStandardCode(learningDelivery.StdCodeNullable)).Returns(larsStandards);
+            larsReferenceDataServiceMock.Setup(l => l.LARSFrameworkAimForForLearningDelivery(
+               larsLearningDelivery.LARSFrameworkAims, learningDelivery.FworkCodeNullable, learningDelivery.ProgTypeNullable, learningDelivery.PwayCodeNullable)).Returns(frameworkAim);
             postcodesReferenceDataServiceMock.Setup(p => p.DASDisadvantagesForPostcode(learner.PostcodePrior)).Returns(new List<DasDisadvantage> { new DasDisadvantage() });
             appsEarningsHistoryReferenceDataServiceMock.Setup(a => a.AECEarningsHistory(learner.ULN)).Returns(new List<AECEarningsHistory> { new AECEarningsHistory() });
 
             return new DataEntityMapper(
-                larsRefererenceDataServiceMock.Object,
+                larsReferenceDataServiceMock.Object,
                 postcodesReferenceDataServiceMock.Object,
                 appsEarningsHistoryReferenceDataServiceMock.Object,
                 fileDataServiceMock.Object).BuildGlobalDataEntity(learner, new Global());

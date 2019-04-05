@@ -123,29 +123,12 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
         {
             var learningDeliveryFAMDenormalized = BuildLearningDeliveryFAMDenormalized(learningDelivery.LearningDeliveryFAMs);
             var larsLearningDelivery = _larsReferenceDataService.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef);
-            var larsFrameworkAims = _larsReferenceDataService.LARSFFrameworkAimsForLearnAimRef(learningDelivery.LearnAimRef);
-            var larsFunding = _larsReferenceDataService.LARSFundingsForLearnAimRef(learningDelivery.LearnAimRef);
-
-            var larsAnnualValue = _larsReferenceDataService.LARSAnnualValuesForLearnAimRef(learningDelivery.LearnAimRef);
-            var larsLearningDeliveryCategories = _larsReferenceDataService.LARSLearningDeliveryCategoriesForLearnAimRef(learningDelivery.LearnAimRef);
             var sfaAreaCost = _postcodesReferenceDataService.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode);
 
-            var larsFwkAims = larsFrameworkAims?.ToList();
-
-            int? frameworkComponentType = null;
-
-            if (larsFrameworkAims != null
-                && learningDelivery.FworkCodeNullable != null
-                && learningDelivery.ProgTypeNullable != null
-                && learningDelivery.PwayCodeNullable != null)
-            {
-                frameworkComponentType = larsFrameworkAims
-                .Where(fwa =>
-                       learningDelivery.FworkCodeNullable == fwa.FworkCode
-                    && learningDelivery.ProgTypeNullable == fwa.ProgType
-                    && learningDelivery.PwayCodeNullable == fwa.PwayCode)
-                .Select(fwct => fwct.FrameworkComponentType).FirstOrDefault();
-            }
+            int? frameworkComponentType =
+                _larsReferenceDataService
+                .LARSFrameworkAimForForLearningDelivery(larsLearningDelivery.LARSFrameworkAims, learningDelivery.FworkCodeNullable, learningDelivery.ProgTypeNullable, learningDelivery.PwayCodeNullable)
+                .FrameworkComponentType;
 
             return new DataEntity(Attributes.EntityLearningDelivery)
             {
@@ -184,16 +167,19 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                             .LearningDeliveryFAMs?
                             .Select(BuildLearningDeliveryFAM) ?? new List<IDataEntity>())
                             .Union(
-                                   larsAnnualValue?
+                                   larsLearningDelivery?
+                                   .LARSAnnualValues?
                                    .Select(BuildLARSAnnualValue) ?? new List<IDataEntity>())
                             .Union(
-                                   larsLearningDeliveryCategories?
+                                   larsLearningDelivery?
+                                   .LARSLearningDeliveryCategories?
                                    .Select(BuildLARSLearningDeliveryCategories) ?? new List<IDataEntity>())
                             .Union(
                                    sfaAreaCost?
                                    .Select(BuildSFAAreaCost) ?? new List<IDataEntity>())
                             .Union(
-                                   larsFunding?
+                                   larsLearningDelivery?
+                                   .LARSFundings?
                                    .Select(BuildLARSFunding) ?? new List<IDataEntity>())
                             .ToList()
             };

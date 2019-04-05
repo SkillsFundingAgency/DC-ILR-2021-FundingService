@@ -137,7 +137,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
                 RegulatedCreditValue = 3,
                 NotionalNVQLevelv2 = "NVQLevel",
                 LearningDeliveryGenre = "Genre",
-                LARSFunding = new List<LARSFunding>
+                LARSFundings = new List<LARSFunding>
                 {
                     new LARSFunding
                     {
@@ -153,8 +153,13 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
 
             larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
-            larsReferenceDataServiceMock.Setup(l => l.LARSStandardCommonComponent(learningDelivery.StdCodeNullable)).Returns(new List<LARSStandardCommonComponent> { new LARSStandardCommonComponent() });
-            larsReferenceDataServiceMock.Setup(l => l.LARSStandardFunding(learningDelivery.StdCodeNullable)).Returns(new List<LARSStandardFunding> { new LARSStandardFunding() });
+            larsReferenceDataServiceMock.Setup(l => l.LARSStandardForStandardCode(learningDelivery.StdCodeNullable))
+                .Returns(
+                new LARSStandard
+                {
+                    LARSStandardCommonComponents = new List<LARSStandardCommonComponent>(),
+                    LARSStandardFundings = new List<LARSStandardFunding>()
+                });
 
             var dataEntity = NewService(larsReferenceDataService: larsReferenceDataServiceMock.Object)
                 .BuildLearningDeliveryDataEntity(learningDelivery);
@@ -231,22 +236,23 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
         [Fact]
         public void BuildLARSStandardCommonComponent()
         {
+            var stdCode = 2;
+
             var larsStandardCommonComponent = new LARSStandardCommonComponent
             {
                 CommonComponent = 1,
                 EffectiveFrom = new DateTime(2018, 1, 1),
-                EffectiveTo = new DateTime(2019, 1, 1),
-                StandardCode = 2,
+                EffectiveTo = new DateTime(2019, 1, 1)
             };
 
-            var dataEntity = NewService().BuildLARSStandardCommonComponent(larsStandardCommonComponent);
+            var dataEntity = NewService().BuildLARSStandardCommonComponent(larsStandardCommonComponent, stdCode);
 
             dataEntity.EntityName.Should().Be("LARS_StandardCommonComponent");
             dataEntity.Attributes.Should().HaveCount(4);
             dataEntity.Attributes["LARSCommonComponent"].Value.Should().Be(larsStandardCommonComponent.CommonComponent);
             dataEntity.Attributes["LARSEffectiveFrom"].Value.Should().Be(larsStandardCommonComponent.EffectiveFrom);
             dataEntity.Attributes["LARSEffectiveTo"].Value.Should().Be(larsStandardCommonComponent.EffectiveTo);
-            dataEntity.Attributes["LARSStandardCode"].Value.Should().Be(larsStandardCommonComponent.StandardCode);
+            dataEntity.Attributes["LARSStandardCode"].Value.Should().Be(stdCode);
         }
 
         [Fact]

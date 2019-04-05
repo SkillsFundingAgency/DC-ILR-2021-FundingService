@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using Autofac;
-using ESFA.DC.Data.LARS.Model;
-using ESFA.DC.Data.LARS.Model.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.Context;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer;
@@ -49,7 +47,6 @@ namespace ESFA.DC.ILR.FundingService.Console.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<LARS>().As<ILARS>().InstancePerLifetimeScope();
             builder.RegisterType<SessionBuilder>().As<ISessionBuilder>().InstancePerLifetimeScope();
             builder.RegisterType<OPADataEntityBuilder>().As<IOPADataEntityBuilder>().WithParameter("yearStartDate", new System.DateTime(2018, 8, 1)).InstancePerLifetimeScope();
             builder.RegisterInstance(new RulebaseProvider("Rulebase")).As<IRulebaseProvider>().InstancePerLifetimeScope();

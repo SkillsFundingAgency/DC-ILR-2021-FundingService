@@ -1,6 +1,4 @@
 ﻿using Autofac;
-using ESFA.DC.Data.LARS.Model;
-using ESFA.DC.Data.LARS.Model.Interfaces;
 using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
@@ -51,12 +49,6 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(c =>
-            {
-                var referenceDataConfig = c.Resolve<IReferenceDataConfig>();
-                return new LARS(referenceDataConfig.LARSConnectionString);
-            }).As<ILARS>().InstancePerLifetimeScope();
-
             builder.RegisterType<PopulationService>().As<IPopulationService>().InstancePerLifetimeScope();
             builder.RegisterType<FileDataCachePopulationService>().As<IFileDataCachePopulationService>().InstancePerLifetimeScope();
             builder.RegisterType<InternalDataCachePopulationService>().As<IInternalDataCachePopulationService>().InstancePerLifetimeScope();
@@ -69,13 +61,13 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             builder.RegisterType<FileDataCache>().As<IFileDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<ValidLearnersDataRetrievalService>().As<IValidLearnersDataRetrievalService>().InstancePerLifetimeScope();
             builder.RegisterType<FileDataRetrievalService>().As<IFileDataRetrievalService>().InstancePerLifetimeScope();
-            builder.RegisterType<LARSDataRetrievalService>().As<ILARSDataRetrievalService>().InstancePerLifetimeScope();
 
             builder.RegisterType<PostcodesMapperService>().As<IPostcodesMapperService>().InstancePerLifetimeScope();
             builder.RegisterType<OrganisationsMapperService>().As<IOrganisationsMapperService>().InstancePerLifetimeScope();
             builder.RegisterType<LargeEmployersMapperService>().As<ILargeEmployersMapperService>().InstancePerLifetimeScope();
             builder.RegisterType<AppsEarningsHistoryMapperService>().As<IAppsEarningsHistoryMapperService>().InstancePerLifetimeScope();
             builder.RegisterType<FCSMapperService>().As<IFCSMapperService>().InstancePerLifetimeScope();
+            builder.RegisterType<LARSMapperService>().As<ILARSMapperService>().InstancePerLifetimeScope();
 
             builder.RegisterType<JsonSerializationService>().As<ISerializationService>();
             builder.RegisterType<JsonSerializationService>().As<IJsonSerializationService>();

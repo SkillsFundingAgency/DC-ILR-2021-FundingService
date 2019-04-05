@@ -370,7 +370,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
         public IDataEntity GetDataEntityMapperEntity()
         {
             var largeEmployersRefererenceDataServiceMock = new Mock<ILargeEmployersReferenceDataService>();
-            var larsRefererenceDataServiceMock = new Mock<ILARSReferenceDataService>();
+            var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
             var organisationRefererenceDataServiceMock = new Mock<IOrganisationReferenceDataService>();
             var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
             var fileDataServiceMock = new Mock<IFileDataService>();
@@ -418,28 +418,49 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 },
             };
 
-            var larsLearningDelivery = new LARSLearningDelivery();
-
-            var larsFunding = new List<LARSFunding>
+            var frameworkAim = new LARSFrameworkAim
             {
-                new LARSFunding()
+                EffectiveFrom = new DateTime(2018, 1, 1),
+                EffectiveTo = new DateTime(2019, 1, 1),
+                FrameworkComponentType = 1,
+                FworkCode = 7,
+                ProgType = 6,
+                PwayCode = 5,
+            };
+
+            var larsLearningDelivery = new LARSLearningDelivery
+            {
+                LARSAnnualValues = new List<LARSAnnualValue>
+                {
+                    new LARSAnnualValue()
+                },
+                LARSLearningDeliveryCategories = new List<LARSLearningDeliveryCategory>
+                {
+                    new LARSLearningDeliveryCategory()
+                },
+                LARSFundings = new List<LARSFunding>
+                {
+                    new LARSFunding()
+                },
+                LARSFrameworkAims = new List<LARSFrameworkAim>
+                {
+                   frameworkAim
+                }
             };
 
             var learningDelivery = learner.LearningDeliveries.First();
 
             largeEmployersRefererenceDataServiceMock.Setup(l => l.LargeEmployersforEmpID(It.IsAny<int>())).Returns(new List<LargeEmployers> { new LargeEmployers() });
-            larsRefererenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
-            larsRefererenceDataServiceMock.Setup(l => l.LARSFundingsForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsFunding);
-            larsRefererenceDataServiceMock.Setup(l => l.LARSFFrameworkAimsForLearnAimRef(learningDelivery.LearnAimRef)).Returns(new List<LARSFrameworkAims> { new LARSFrameworkAims() });
-            larsRefererenceDataServiceMock.Setup(l => l.LARSAnnualValuesForLearnAimRef(learningDelivery.LearnAimRef)).Returns(new List<LARSAnnualValue> { new LARSAnnualValue() });
-            larsRefererenceDataServiceMock.Setup(l => l.LARSLearningDeliveryCategoriesForLearnAimRef(learningDelivery.LearnAimRef)).Returns(new List<LARSLearningDeliveryCategory> { new LARSLearningDeliveryCategory() });
+            larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
+            larsReferenceDataServiceMock.Setup(l => l.LARSFrameworkAimForForLearningDelivery(
+               larsLearningDelivery.LARSFrameworkAims, learningDelivery.FworkCodeNullable, learningDelivery.ProgTypeNullable, learningDelivery.PwayCodeNullable)).Returns(frameworkAim);
             organisationRefererenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(It.IsAny<int>())).Returns(new List<OrgFunding> { new OrgFunding { OrgFundFactType = Attributes.OrgFundFactorTypeAdultSkills } });
             postcodesReferenceDataServiceMock.Setup(p => p.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode)).Returns(new List<SfaAreaCost> { new SfaAreaCost() });
             postcodesReferenceDataServiceMock.Setup(p => p.SFADisadvantagesForPostcode(learner.PostcodePrior)).Returns(new List<SfaDisadvantage> { new SfaDisadvantage() });
 
             return new DataEntityMapper(
                 largeEmployersRefererenceDataServiceMock.Object,
-                larsRefererenceDataServiceMock.Object,
+                larsReferenceDataServiceMock.Object,
                 organisationRefererenceDataServiceMock.Object,
                 postcodesReferenceDataServiceMock.Object,
                 fileDataServiceMock.Object).BuildGlobalDataEntity(learner, new Global());

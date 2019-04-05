@@ -116,7 +116,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                 LearnAimRefType = "learnAimRefType",
                 RegulatedCreditValue = 2,
                 NotionalNVQLevelv2 = "NVQLevel",
-                LARSFunding = new List<LARSFunding>
+                LARSFundings = new List<LARSFunding>
                 {
                     new LARSFunding
                     {
@@ -127,7 +127,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                         EffectiveTo = new DateTime(2019, 1, 1),
                     }
                 },
-                LARSCareerLearningPilot = new List<LARSCareerLearningPilot>
+                LARSCareerLearningPilots = new List<LARSCareerLearningPilot>
                 {
                     new LARSCareerLearningPilot
                     {
