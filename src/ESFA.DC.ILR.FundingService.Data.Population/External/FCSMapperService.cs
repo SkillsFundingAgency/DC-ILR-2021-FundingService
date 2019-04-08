@@ -29,7 +29,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 LearningRatePremiumFactor = fcsContractAllocation.LearningRatePremiumFactor,
                 TenderSpecReference = fcsContractAllocation.TenderSpecReference,
                 LotReference = fcsContractAllocation.LotReference,
-                CalcMethod = fcsContractAllocation.EsfEligibilityRule.CalcMethod,
+                CalcMethod = fcsContractAllocation.EsfEligibilityRule?.CalcMethod,
                 FCSContractDeliverables = fcsContractAllocation.FCSContractDeliverables?
                 .Select(cd =>
                 new FCSContractDeliverable
