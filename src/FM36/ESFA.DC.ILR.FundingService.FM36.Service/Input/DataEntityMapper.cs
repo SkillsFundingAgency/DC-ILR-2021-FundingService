@@ -102,8 +102,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
             var larsLearningDelivery = _larsReferenceDataService.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef);
             var larsStandard = _larsReferenceDataService.LARSStandardForStandardCode(learningDelivery.StdCodeNullable);
 
-            var larsFrameworkAim = _larsReferenceDataService.LARSFrameworkAimForForLearningDelivery(larsLearningDelivery.LARSFrameworkAims, learningDelivery.FworkCodeNullable, learningDelivery.ProgTypeNullable, learningDelivery.PwayCodeNullable);
-
             return new DataEntity(Attributes.EntityLearningDelivery)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
@@ -138,12 +136,12 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
                                     .AppFinRecords?
                                     .Select(BuildApprenticeshipFinancialRecord) ?? new List<IDataEntity>())
                             .Union(
-                                    larsFrameworkAim?
+                                    larsLearningDelivery?
                                     .LARSFramework?
                                     .LARSFrameworkApprenticeshipFundings?
                                     .Select(BuildLARSFrameworkApprenticeshipFunding) ?? new List<IDataEntity>())
                             .Union(
-                                    larsFrameworkAim?
+                                    larsLearningDelivery?
                                     .LARSFramework?
                                     .LARSFrameworkCommonComponents?
                                     .Select(BuildLARSFrameworkCommonComponent) ?? new List<IDataEntity>())

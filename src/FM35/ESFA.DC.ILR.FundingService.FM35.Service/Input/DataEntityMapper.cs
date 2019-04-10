@@ -125,11 +125,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
             var larsLearningDelivery = _larsReferenceDataService.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef);
             var sfaAreaCost = _postcodesReferenceDataService.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode);
 
-            int? frameworkComponentType =
-                _larsReferenceDataService
-                .LARSFrameworkAimForForLearningDelivery(larsLearningDelivery.LARSFrameworkAims, learningDelivery.FworkCodeNullable, learningDelivery.ProgTypeNullable, learningDelivery.PwayCodeNullable)
-                .FrameworkComponentType;
-
             return new DataEntity(Attributes.EntityLearningDelivery)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
@@ -144,7 +139,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                     { Attributes.EnglPrscID, new AttributeData(larsLearningDelivery.EnglPrscID) },
                     { Attributes.FworkCode, new AttributeData(learningDelivery.FworkCodeNullable) },
                     { Attributes.FrameworkCommonComponent, new AttributeData(larsLearningDelivery.FrameworkCommonComponent) },
-                    { Attributes.FrameworkComponentType, new AttributeData(frameworkComponentType) },
+                    { Attributes.FrameworkComponentType, new AttributeData(larsLearningDelivery.LARSFramework.LARSFrameworkAim.FrameworkComponentType) },
                     { Attributes.LearnActEndDate, new AttributeData(learningDelivery.LearnActEndDateNullable) },
                     { Attributes.LearnPlanEndDate, new AttributeData(learningDelivery.LearnPlanEndDate) },
                     { Attributes.LearnStartDate, new AttributeData(learningDelivery.LearnStartDate) },

@@ -163,14 +163,19 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 },
             };
 
-            var frameworkAim = new LARSFrameworkAim
+            var framework = new LARSFramework
             {
-                EffectiveFrom = new DateTime(2018, 1, 1),
+                EffectiveFromNullable = new DateTime(2018, 1, 1),
                 EffectiveTo = new DateTime(2019, 1, 1),
-                FrameworkComponentType = 1,
-                FworkCode = 5,
-                ProgType = 9,
-                PwayCode = 10,
+                FworkCode = 7,
+                ProgType = 6,
+                PwayCode = 5,
+                LARSFrameworkAim = new LARSFrameworkAim
+                {
+                    EffectiveFrom = new DateTime(2018, 1, 1),
+                    EffectiveTo = new DateTime(2019, 1, 1),
+                    FrameworkComponentType = 1,
+                }
             };
 
             var larsLearningDelivery = new LARSLearningDelivery
@@ -211,18 +216,13 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 {
                     new LARSLearningDeliveryCategory()
                 },
-                LARSFrameworkAims = new List<LARSFrameworkAim>
-                {
-                   frameworkAim
-                }
+                LARSFramework = framework
             };
 
             var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
             var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
 
             larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
-            larsReferenceDataServiceMock.Setup(l => l.LARSFrameworkAimForForLearningDelivery(
-                larsLearningDelivery.LARSFrameworkAims, learningDelivery.FworkCodeNullable, learningDelivery.ProgTypeNullable, learningDelivery.PwayCodeNullable)).Returns(frameworkAim);
             postcodesReferenceDataServiceMock.Setup(p => p.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode)).Returns(new List<SfaAreaCost> { new SfaAreaCost() });
 
             var dataEntity = NewService(larsReferenceDataService: larsReferenceDataServiceMock.Object, postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object).BuildLearningDeliveryDataEntity(learningDelivery);

@@ -37,7 +37,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                     LARSAnnualValues = ld.LARSAnnualValues?.Select(LARSAnnualValueFromEntity).ToList(),
                     LARSCareerLearningPilots = ld.LARSCareerLearningPilots?.Select(LARSCareerLearningPilotFromEntity).ToList(),
                     LARSLearningDeliveryCategories = ld.LARSLearningDeliveryCategories?.Select(LARSLearningDeliveryCategoryFromEntity).ToList(),
-                    LARSFrameworkAims = ld.LARSFrameworkAims?.Select(LARSFrameworkAimFromEntity).ToList(),
+                    LARSFramework = LARSFrameworkFromEntity(ld.LARSFramework),
                     LARSFundings = ld.LARSFundings?.Select(LARSFundingFromEntity).ToList(),
                     LARSValidities = ld.LARSValidities?.Select(LARSValidityFromEntity).ToList()
                 });
@@ -90,28 +90,38 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             };
         }
 
-        private Data.External.LARS.Model.LARSFrameworkAim LARSFrameworkAimFromEntity(LARSFrameworkAim entity)
+        private Data.External.LARS.Model.LARSFramework LARSFrameworkFromEntity(LARSFramework entity)
         {
-            return new Data.External.LARS.Model.LARSFrameworkAim()
+            if (entity == null)
+            {
+                return null;
+            }
+
+            return new Data.External.LARS.Model.LARSFramework
             {
                 FworkCode = entity.FworkCode,
                 ProgType = entity.ProgType,
                 PwayCode = entity.PwayCode,
-                FrameworkComponentType = entity.FrameworkComponentType,
-                EffectiveFrom = entity.EffectiveFrom,
+                EffectiveFromNullable = entity.EffectiveFromNullable,
                 EffectiveTo = entity.EffectiveTo,
-                LARSFramework = LARSFrameworkFromEntity(entity.LARSFramework)
+                LARSFrameworkAim = LARSFrameworkAimFromEntity(entity.LARSFrameworkAim),
+                LARSFrameworkApprenticeshipFundings = entity.LARSFrameworkApprenticeshipFundings?.Select(LARSFrameworkApprenticeshipFundingFromEntity).ToList(),
+                LARSFrameworkCommonComponents = entity.LARSFrameworkCommonComponents?.Select(LARSFrameworkCommonComponentFromEntity).ToList(),
             };
         }
 
-        private Data.External.LARS.Model.LARSFramework LARSFrameworkFromEntity(LARSFramework entity)
+        private Data.External.LARS.Model.LARSFrameworkAim LARSFrameworkAimFromEntity(LARSFrameworkAim entity)
         {
-            return new Data.External.LARS.Model.LARSFramework
+            if (entity == null)
             {
-                EffectiveFromNullable = entity.EffectiveFromNullable,
-                EffectiveTo = entity.EffectiveTo,
-                LARSFrameworkApprenticeshipFundings = entity.LARSFrameworkApprenticeshipFundings?.Select(LARSFrameworkApprenticeshipFundingFromEntity).ToList(),
-                LARSFrameworkCommonComponents = entity.LARSFrameworkCommonComponents?.Select(LARSFrameworkCommonComponentFromEntity).ToList(),
+                return null;
+            }
+
+            return new Data.External.LARS.Model.LARSFrameworkAim()
+            {
+                FrameworkComponentType = entity.FrameworkComponentType,
+                EffectiveFrom = entity.EffectiveFrom,
+                EffectiveTo = entity.EffectiveTo
             };
         }
 

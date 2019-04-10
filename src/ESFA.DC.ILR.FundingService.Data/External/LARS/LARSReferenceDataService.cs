@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
+﻿using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 
@@ -37,16 +35,6 @@ namespace ESFA.DC.ILR.FundingService.Data.External.LARS
             _referenceDataCache.LARSStandards.TryGetValue(standardCode.Value, out LARSStandard stamdard);
 
             return stamdard;
-        }
-
-        public LARSFrameworkAim LARSFrameworkAimForForLearningDelivery(IReadOnlyCollection<LARSFrameworkAim> larsFrameworkAims, int? fworkCode, int? progType, int? pwayCode)
-        {
-            return larsFrameworkAims?
-                 .Where(lfa =>
-                        lfa.FworkCode == fworkCode
-                        && lfa.ProgType == progType
-                        && lfa.PwayCode == pwayCode)
-                        .FirstOrDefault();
         }
     }
 }

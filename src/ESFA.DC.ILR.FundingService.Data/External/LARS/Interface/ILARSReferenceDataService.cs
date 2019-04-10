@@ -10,7 +10,5 @@ namespace ESFA.DC.ILR.FundingService.Data.External.LARS.Interface
         LARSLearningDelivery LARSLearningDeliveryForLearnAimRef(string learnAimRef);
 
         LARSStandard LARSStandardForStandardCode(int? standardCode);
-
-        LARSFrameworkAim LARSFrameworkAimForForLearningDelivery(IReadOnlyCollection<LARSFrameworkAim> larsFrameworkAims, int? fworkCode, int? progType, int? pwayCode);
     }
 }

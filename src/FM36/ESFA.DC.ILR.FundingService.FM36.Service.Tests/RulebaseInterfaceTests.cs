@@ -454,25 +454,27 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 }
             };
 
-            var frameworkAim = new LARSFrameworkAim
+            var framework = new LARSFramework
             {
-                EffectiveFrom = new DateTime(2018, 1, 1),
+                EffectiveFromNullable = new DateTime(2018, 1, 1),
                 EffectiveTo = new DateTime(2019, 1, 1),
-                FrameworkComponentType = 1,
                 FworkCode = 7,
                 ProgType = 6,
                 PwayCode = 5,
-                LARSFramework = new LARSFramework
+                LARSFrameworkAim = new LARSFrameworkAim
                 {
-                    LARSFrameworkApprenticeshipFundings = new List<LARSFrameworkApprenticeshipFunding>
+                    EffectiveFrom = new DateTime(2018, 1, 1),
+                    EffectiveTo = new DateTime(2019, 1, 1),
+                    FrameworkComponentType = 1,
+                },
+                LARSFrameworkApprenticeshipFundings = new List<LARSFrameworkApprenticeshipFunding>
                     {
                         new LARSFrameworkApprenticeshipFunding()
                     },
-                    LARSFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>
+                LARSFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>
                     {
                         new LARSFrameworkCommonComponent()
                     }
-                }
             };
 
             var larsLearningDelivery = new LARSLearningDelivery
@@ -481,10 +483,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 {
                     new LARSFunding()
                 },
-                LARSFrameworkAims = new List<LARSFrameworkAim>
-                {
-                   frameworkAim
-                }
+                LARSFramework = framework
             };
 
             var larsStandards = new LARSStandard
@@ -503,8 +502,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
 
             larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
             larsReferenceDataServiceMock.Setup(l => l.LARSStandardForStandardCode(learningDelivery.StdCodeNullable)).Returns(larsStandards);
-            larsReferenceDataServiceMock.Setup(l => l.LARSFrameworkAimForForLearningDelivery(
-               larsLearningDelivery.LARSFrameworkAims, learningDelivery.FworkCodeNullable, learningDelivery.ProgTypeNullable, learningDelivery.PwayCodeNullable)).Returns(frameworkAim);
             postcodesReferenceDataServiceMock.Setup(p => p.DASDisadvantagesForPostcode(learner.PostcodePrior)).Returns(new List<DasDisadvantage> { new DasDisadvantage() });
             appsEarningsHistoryReferenceDataServiceMock.Setup(a => a.AECEarningsHistory(learner.ULN)).Returns(new List<AECEarningsHistory> { new AECEarningsHistory() });
 
