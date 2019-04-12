@@ -163,18 +163,35 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 },
             };
 
-            var framework = new LARSFramework
+            var frameworks = new List<LARSFramework>
             {
-                EffectiveFromNullable = new DateTime(2018, 1, 1),
-                EffectiveTo = new DateTime(2019, 1, 1),
-                FworkCode = 7,
-                ProgType = 6,
-                PwayCode = 5,
-                LARSFrameworkAim = new LARSFrameworkAim
+                new LARSFramework
                 {
-                    EffectiveFrom = new DateTime(2018, 1, 1),
+                    EffectiveFromNullable = new DateTime(2018, 1, 1),
                     EffectiveTo = new DateTime(2019, 1, 1),
-                    FrameworkComponentType = 1,
+                    FworkCode = 5,
+                    ProgType = 9,
+                    PwayCode = 10,
+                    LARSFrameworkAim = new LARSFrameworkAim
+                    {
+                        EffectiveFrom = new DateTime(2018, 1, 1),
+                        EffectiveTo = new DateTime(2019, 1, 1),
+                        FrameworkComponentType = 1,
+                    }
+                },
+                new LARSFramework
+                {
+                    EffectiveFromNullable = new DateTime(2018, 1, 1),
+                    EffectiveTo = new DateTime(2019, 1, 1),
+                    FworkCode = 9,
+                    ProgType = 9,
+                    PwayCode = 5,
+                    LARSFrameworkAim = new LARSFrameworkAim
+                    {
+                        EffectiveFrom = new DateTime(2018, 1, 1),
+                        EffectiveTo = new DateTime(2019, 1, 1),
+                        FrameworkComponentType = 1,
+                    }
                 }
             };
 
@@ -216,7 +233,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 {
                     new LARSLearningDeliveryCategory()
                 },
-                LARSFramework = framework
+                LARSFrameworks = frameworks
             };
 
             var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();

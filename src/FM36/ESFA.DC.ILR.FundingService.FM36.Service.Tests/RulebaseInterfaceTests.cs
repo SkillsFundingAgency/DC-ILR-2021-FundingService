@@ -454,27 +454,44 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 }
             };
 
-            var framework = new LARSFramework
+            var frameworks = new List<LARSFramework>
             {
-                EffectiveFromNullable = new DateTime(2018, 1, 1),
-                EffectiveTo = new DateTime(2019, 1, 1),
-                FworkCode = 7,
-                ProgType = 6,
-                PwayCode = 5,
-                LARSFrameworkAim = new LARSFrameworkAim
+                new LARSFramework
                 {
-                    EffectiveFrom = new DateTime(2018, 1, 1),
+                    EffectiveFromNullable = new DateTime(2018, 1, 1),
                     EffectiveTo = new DateTime(2019, 1, 1),
-                    FrameworkComponentType = 1,
-                },
-                LARSFrameworkApprenticeshipFundings = new List<LARSFrameworkApprenticeshipFunding>
+                    FworkCode = 7,
+                    ProgType = 6,
+                    PwayCode = 5,
+                    LARSFrameworkAim = new LARSFrameworkAim
+                    {
+                        EffectiveFrom = new DateTime(2018, 1, 1),
+                        EffectiveTo = new DateTime(2019, 1, 1),
+                        FrameworkComponentType = 1,
+                    },
+                    LARSFrameworkApprenticeshipFundings = new List<LARSFrameworkApprenticeshipFunding>
                     {
                         new LARSFrameworkApprenticeshipFunding()
                     },
-                LARSFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>
+                    LARSFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>
                     {
                         new LARSFrameworkCommonComponent()
                     }
+                },
+                new LARSFramework
+                {
+                    EffectiveFromNullable = new DateTime(2018, 1, 1),
+                    EffectiveTo = new DateTime(2019, 1, 1),
+                    FworkCode = 9,
+                    ProgType = 9,
+                    PwayCode = 5,
+                    LARSFrameworkAim = new LARSFrameworkAim
+                    {
+                        EffectiveFrom = new DateTime(2018, 1, 1),
+                        EffectiveTo = new DateTime(2019, 1, 1),
+                        FrameworkComponentType = 1,
+                    }
+                }
             };
 
             var larsLearningDelivery = new LARSLearningDelivery
@@ -483,7 +500,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 {
                     new LARSFunding()
                 },
-                LARSFramework = framework
+                LARSFrameworks = frameworks
             };
 
             var larsStandards = new LARSStandard

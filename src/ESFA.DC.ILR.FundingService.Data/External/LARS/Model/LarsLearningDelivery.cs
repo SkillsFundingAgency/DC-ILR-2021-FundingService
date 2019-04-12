@@ -32,7 +32,7 @@ namespace ESFA.DC.ILR.FundingService.Data.External.LARS.Model
 
         public IReadOnlyCollection<LARSAnnualValue> LARSAnnualValues { get; set; }
 
-        public LARSFramework LARSFramework { get; set; }
+        public IReadOnlyCollection<LARSFramework> LARSFrameworks { get; set; }
 
         public IReadOnlyCollection<LARSFunding> LARSFundings { get; set; }
 

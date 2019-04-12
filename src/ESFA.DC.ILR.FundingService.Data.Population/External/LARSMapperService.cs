@@ -37,7 +37,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                     LARSAnnualValues = ld.LARSAnnualValues?.Select(LARSAnnualValueFromEntity).ToList(),
                     LARSCareerLearningPilots = ld.LARSCareerLearningPilots?.Select(LARSCareerLearningPilotFromEntity).ToList(),
                     LARSLearningDeliveryCategories = ld.LARSLearningDeliveryCategories?.Select(LARSLearningDeliveryCategoryFromEntity).ToList(),
-                    LARSFramework = LARSFrameworkFromEntity(ld.LARSFramework),
+                    LARSFrameworks = ld.LARSFrameworks?.Select(LARSFrameworkFromEntity).ToList(),
                     LARSFundings = ld.LARSFundings?.Select(LARSFundingFromEntity).ToList(),
                     LARSValidities = ld.LARSValidities?.Select(LARSValidityFromEntity).ToList()
                 });
