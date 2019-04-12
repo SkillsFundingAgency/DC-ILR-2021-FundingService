@@ -145,7 +145,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                     { Attributes.EnglPrscID, new AttributeData(larsLearningDelivery.EnglPrscID) },
                     { Attributes.FworkCode, new AttributeData(learningDelivery.FworkCodeNullable) },
                     { Attributes.FrameworkCommonComponent, new AttributeData(larsLearningDelivery.FrameworkCommonComponent) },
-                    { Attributes.FrameworkComponentType, new AttributeData(larsFramework.LARSFrameworkAim.FrameworkComponentType) },
+                    { Attributes.FrameworkComponentType, new AttributeData(larsFramework?.LARSFrameworkAim?.FrameworkComponentType) },
                     { Attributes.LearnActEndDate, new AttributeData(learningDelivery.LearnActEndDateNullable) },
                     { Attributes.LearnPlanEndDate, new AttributeData(learningDelivery.LearnPlanEndDate) },
                     { Attributes.LearnStartDate, new AttributeData(learningDelivery.LearnStartDate) },
