@@ -117,7 +117,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
 
             fundingServiceDto.ReferenceData = _jsonSerializationService.Deserialize<ReferenceDataRoot>(
                 await _keyValuePersistenceService.GetAsync(
-                    jobContextMessage.KeyValuePairs["IlrReferenceData"].ToString(), cancellationToken));
+                    jobContextMessage.KeyValuePairs[JobContextMessageKey.IlrReferenceData].ToString(), cancellationToken));
 
             _logger.LogDebug($"Funding Service got valid learners in: {stopWatchSteps.ElapsedMilliseconds} validlearner(length): {validLearnerString.Length}");
 
