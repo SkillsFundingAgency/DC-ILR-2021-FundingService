@@ -42,7 +42,6 @@ namespace ESFA.DC.ILR.FundingService.Stateless
             {
                 using (var container = ConfigureContainerBuilder().Build())
                 {
-                    var sss = container.Resolve<IReferenceDataConfig>();
                     var ss = container.Resolve<IPreFundingSFOrchestrationService>();
                     ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(Stateless).Name);
 
@@ -68,10 +67,6 @@ namespace ESFA.DC.ILR.FundingService.Stateless
             builder.RegisterType<AzureStorageKeyValuePersistenceService>()
                 .Keyed<IKeyValuePersistenceService>(IOPersistenceKeys.Blob)
                 .As<IStreamableKeyValuePersistenceService>().InstancePerLifetimeScope();
-
-            // register reference data configs
-            var referenceDataConfig = configHelper.GetSectionValues<ReferenceDataConfig>("ReferenceDataSection");
-            builder.RegisterInstance(referenceDataConfig).As<IReferenceDataConfig>().SingleInstance();
 
             // get ServiceBus, Azurestorage config values and register container
             var serviceBusOptions = configHelper.GetSectionValues<ServiceBusConfig>("ServiceBusSettings");
@@ -161,7 +156,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless
             builder.RegisterServiceFabricSupport();
 
             // Register the stateless service.
-            builder.RegisterStatelessService<Stateless>("ESFA.DC.ILR.1819.FundingService.StatelessType");
+            builder.RegisterStatelessService<Stateless>("ESFA.DC.ILR1819.FundingService.StatelessType");
 
             return builder;
         }
