@@ -4,6 +4,10 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	<TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
+	<PackageId>ESFA.DC.ILR1819.FundingService.ALB.FundingOutput.Model</PackageId>
+	<Authors>ESFA.DC.ILR1819.FundingService.ALB.FundingOutput.Model</Authors>
+	<Company>ESFA.DC.ILR1819.FundingService.ALB.FundingOutput.Model</Company>
+	<Product>ESFA.DC.ILR1819.FundingService.ALB.FundingOutput.Model</Product>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

@@ -3,6 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>ESFA.DC.ILR1819.FundingService.FM35.FundingOutput.Model</PackageId>
+    <Authors>ESFA.DC.ILR1819.FundingService.FM35.FundingOutput.Model</Authors>
+    <Company>ESFA.DC.ILR1819.FundingService.FM35.FundingOutput.Model</Company>
+    <Product>ESFA.DC.ILR1819.FundingService.FM35.FundingOutput.Model</Product>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
