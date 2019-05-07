@@ -5,8 +5,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	<TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
 	<PackageId>ESFA.DC.ILR1819.FundingService.ALB.FundingOutput.Model</PackageId>
-	<Authors>ESFA.DC.ILR1819.FundingService.ALB.FundingOutput.Model</Authors>
-	<Company>ESFA.DC.ILR1819.FundingService.ALB.FundingOutput.Model</Company>
+	<Authors>DC</Authors>
+	<Company>ESFA</Company>
 	<Product>ESFA.DC.ILR1819.FundingService.ALB.FundingOutput.Model</Product>
   </PropertyGroup>
 
