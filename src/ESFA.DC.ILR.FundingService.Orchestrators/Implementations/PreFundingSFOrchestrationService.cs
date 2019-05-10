@@ -25,6 +25,7 @@ using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers.Interfaces;
 using ESFA.DC.ILR.FundingService.Stateless.Models;
 using ESFA.DC.ILR.Model.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Model;
 using ESFA.DC.IO.Interfaces;
 using ESFA.DC.JobContext.Interface;
 using ESFA.DC.JobContextManager.Model.Interface;
@@ -113,6 +114,10 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             fundingServiceDto.InvalidLearners = _jsonSerializationService.Deserialize<string[]>(
                 await _keyValuePersistenceService.GetAsync(
                     jobContextMessage.KeyValuePairs[JobContextMessageKey.InvalidLearnRefNumbers].ToString(), cancellationToken));
+
+            fundingServiceDto.ReferenceData = _jsonSerializationService.Deserialize<ReferenceDataRoot>(
+                await _keyValuePersistenceService.GetAsync(
+                    jobContextMessage.KeyValuePairs[JobContextMessageKey.IlrReferenceData].ToString(), cancellationToken));
 
             _logger.LogDebug($"Funding Service got valid learners in: {stopWatchSteps.ElapsedMilliseconds} validlearner(length): {validLearnerString.Length}");
 

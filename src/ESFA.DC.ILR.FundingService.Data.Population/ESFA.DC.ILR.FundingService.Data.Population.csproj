@@ -50,41 +50,23 @@
     <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.Data.Population.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="ESFA.DC.Auditing.Interface, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Auditing.Interface.0.2.0-beta0001\lib\netstandard2.0\ESFA.DC.Auditing.Interface.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.Data.AppsEarningsHistory.Model, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Data.AppsEarningsHistory.Model.0.1.1-beta0001\lib\net461\ESFA.DC.Data.AppsEarningsHistory.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.Data.LargeEmployer.Model, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Data.LargeEmployer.Model.0.1.2-beta0001\lib\net461\ESFA.DC.Data.LargeEmployer.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.Data.LARS.Model, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Data.LARS.Model.0.1.4-beta0001\lib\net461\ESFA.DC.Data.LARS.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.Data.Organisatons.Model, Version=0.1.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Data.Organisations.Model.0.1.5-beta0001\lib\net461\ESFA.DC.Data.Organisatons.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.Data.Postcodes.Model, Version=0.1.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Data.Postcodes.Model.0.1.3-beta0001\lib\net461\ESFA.DC.Data.Postcodes.Model.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.1819.Model.Interface.0.1.5-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.JobContext.Interface, Version=0.2.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.JobContext.Interface.0.2.6-beta0001\lib\netstandard2.0\ESFA.DC.JobContext.Interface.dll</HintPath>
+    <Reference Include="ESFA.DC.ILR.ReferenceDataService.Model, Version=0.1.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR.ReferenceDataService.Model.0.1.7\lib\netstandard2.0\ESFA.DC.ILR.ReferenceDataService.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="ESFA.DC.JobContext.Interface, Version=0.2.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.JobContext.Interface.0.2.8-beta0001\lib\netstandard2.0\ESFA.DC.JobContext.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.JobContextManager, Version=0.2.6.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.JobContextManager.0.2.6-beta0001\lib\netstandard2.0\ESFA.DC.JobContextManager.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.JobStatus.Interface, Version=0.2.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.JobStatus.Interface.0.2.6-beta0001\lib\netstandard2.0\ESFA.DC.JobStatus.Interface.dll</HintPath>
+    <Reference Include="ESFA.DC.JobStatus.Interface, Version=0.2.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.JobStatus.Interface.0.2.8-beta0001\lib\netstandard2.0\ESFA.DC.JobStatus.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.Logging, Version=0.1.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Logging.0.1.3-beta0001\lib\netstandard2.0\ESFA.DC.Logging.dll</HintPath>
@@ -94,9 +76,6 @@
     </Reference>
     <Reference Include="ESFA.DC.Queueing.Interface, Version=0.1.14.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Queueing.Interface.0.1.14-beta0001\lib\netstandard2.0\ESFA.DC.Queueing.Interface.dll</HintPath>
-    </Reference>
-    <Reference Include="ESFA.DC.ReferenceData.FCS.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ReferenceData.FCS.Model.0.1.76\lib\net461\ESFA.DC.ReferenceData.FCS.Model.dll</HintPath>
     </Reference>
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.2.6.0\lib\net46\Serilog.dll</HintPath>
@@ -132,27 +111,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\FundingContextPopulationService.cs" />
-    <Compile Include="External\FCSDataRetrievalService.cs" />
-    <Compile Include="External\LargeEmployersDataRetrievalService.cs" />
-    <Compile Include="External\LARSDataRetrievalService.cs" />
-    <Compile Include="External\OrganisationDataRetrievalService.cs" />
-    <Compile Include="External\AppsEarningsHistoryDataRetrievalService.cs" />
-    <Compile Include="External\PostcodesDataRetrievalService.cs" />
+    <Compile Include="External\LARSMapperService.cs" />
+    <Compile Include="External\LargeEmployersMapperService.cs" />
+    <Compile Include="External\AppsEarningsHistoryMapperService.cs" />
+    <Compile Include="External\OrganisationsMapperService.cs" />
+    <Compile Include="External\FCSMapperService.cs" />
+    <Compile Include="External\PostcodesMapperService.cs" />
     <Compile Include="File\FileDataRetrievalService.cs" />
     <Compile Include="Context\ValidLearnersDataRetrievalService.cs" />
     <Compile Include="File\FileDataCachePopulationService.cs" />
-    <Compile Include="Interface\IAppsEarningsHistoryDataRetrievalService.cs" />
     <Compile Include="Interface\IFileDataCachePopulationService.cs" />
     <Compile Include="Interface\IFundingContextPopulationService.cs" />
     <Compile Include="Interface\IInternalDataCachePopulationService.cs" />
-    <Compile Include="Interface\IFCSDataRetrievalService.cs" />
-    <Compile Include="Interface\ILargeEmployersDataRetrievalService.cs" />
-    <Compile Include="Interface\ILARSDataRetrievalService.cs" />
-    <Compile Include="Interface\IOrganisationDataRetrievalService.cs" />
+    <Compile Include="Interface\IFCSMapperService.cs" />
+    <Compile Include="Interface\ILargeEmployersMapperService.cs" />
+    <Compile Include="Interface\IAppsEarningsHistoryMapperService.cs" />
     <Compile Include="Interface\IPopulationService.cs" />
     <Compile Include="Interface\IExternalDataCachePopulationService.cs" />
-    <Compile Include="Interface\IPostcodesDataRetrievalService.cs" />
     <Compile Include="Interface\IFileDataRetrievalService.cs" />
+    <Compile Include="Interface\IOrganisationsMapperService.cs" />
+    <Compile Include="Interface\ILARSMapperService.cs" />
+    <Compile Include="Interface\IPostcodesMapperService.cs" />
     <Compile Include="Interface\IValidLearnersDataRetrievalService.cs" />
     <Compile Include="Internal\InternalDataCachePopulationService.cs" />
     <Compile Include="Keys\LARSApprenticeshipFundingKey.cs" />

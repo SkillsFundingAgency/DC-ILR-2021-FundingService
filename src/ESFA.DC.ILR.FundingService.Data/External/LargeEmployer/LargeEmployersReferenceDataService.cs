@@ -20,7 +20,7 @@ namespace ESFA.DC.ILR.FundingService.Data.External.LargeEmployer
             {
                 return null;
             }
-            _referenceDataCache.LargeEmployers.TryGetValue((int)lEmpID, out IEnumerable<LargeEmployers> largeEmployers);
+            _referenceDataCache.LargeEmployers.TryGetValue((int)lEmpID, out IReadOnlyCollection<LargeEmployers> largeEmployers);
 
             return largeEmployers;
         }

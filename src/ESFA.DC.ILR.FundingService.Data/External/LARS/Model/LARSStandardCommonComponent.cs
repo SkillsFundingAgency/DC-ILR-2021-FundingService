@@ -6,10 +6,10 @@ namespace ESFA.DC.ILR.FundingService.Data.External.LARS.Model
     {
         public int CommonComponent { get; set; }
 
-        public int StandardCode { get; set; }
-
         public DateTime EffectiveFrom { get; set; }
 
         public DateTime? EffectiveTo { get; set; }
+
+        public LARSStandard LARSStandard { get; set; }
     }
 }

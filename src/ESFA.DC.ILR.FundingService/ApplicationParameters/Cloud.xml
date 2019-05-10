@@ -8,13 +8,6 @@
     <Parameter Name="FundingCalcSubscriptionName" Value="__FundingCalcSubscriptionName__" />
     <Parameter Name="LoggerConnectionstring" Value="__LoggerConnectionString__" />
     <Parameter Name="DataStoreSubscriptionName" Value="__DataStoreSubscriptionName__" />
-    <Parameter Name="LARSConnectionString" Value="__LARSConnectionString__" />
-    <Parameter Name="PostcodesConnectionString" Value="__PostcodesConnectionString__" />
-    <Parameter Name="OrganisationConnectionString" Value="__OrganisationsConnectionString__" />
-    <Parameter Name="LargeEmployersConnectionString" Value="__LargeEmployerDbConnectionString__" />
-    <Parameter Name="AppsEarningsHistoryConnectionString" Value="__AppsEarningsHistoryDbConnectionString__" />
-    <Parameter Name="FCSConnectionString" Value="__FCSDbConnectionString__" />
-    <Parameter Name="RedisCacheConnectionString" Value="__RedisCacheConnectionString__" />
     <Parameter Name="AzureBlobConnectionString" Value="__AzureBlobConnectionString__" />
     <Parameter Name="AzureBlobContainerName" Value="__AzureBlobContainerName__" />
     <Parameter Name="ProcessingServicePlacementConstraints" Value="__ProcessingServicePlacementConstraints__" />

@@ -10,9 +10,11 @@ namespace ESFA.DC.ILR.FundingService.Data.Interface
 {
     public interface IExternalDataCache
     {
-        IDictionary<string, IEnumerable<LARSFunding>> LARSFunding { get; }
+        //IDictionary<string, IEnumerable<LARSFunding>> LARSFunding { get; }
 
         IDictionary<string, LARSLearningDelivery> LARSLearningDelivery { get; }
+
+        IDictionary<int, LARSStandard> LARSStandards { get; }
 
         string LARSCurrentVersion { get; }
         
@@ -20,30 +22,30 @@ namespace ESFA.DC.ILR.FundingService.Data.Interface
 
         string PostcodeCurrentVersion { get; }
 
-        IDictionary<string, IEnumerable<LARSAnnualValue>> LARSAnnualValue { get; }
+        //IDictionary<string, IEnumerable<LARSAnnualValue>> LARSAnnualValue { get; }
 
-        IDictionary<int, IEnumerable<LARSStandardCommonComponent>> LARSStandardCommonComponent { get; }
+        //IDictionary<int, IEnumerable<LARSStandardCommonComponent>> LARSStandardCommonComponent { get; }
 
-        IEnumerable<LARSFrameworkCommonComponent> LARSFrameworkCommonComponent { get; }
+        //IEnumerable<LARSFrameworkCommonComponent> LARSFrameworkCommonComponent { get; }
 
-        IEnumerable<LARSStandardApprenticeshipFunding> LARSApprenticeshipFundingStandards { get; }
+        //IEnumerable<LARSStandardApprenticeshipFunding> LARSApprenticeshipFundingStandards { get; }
 
-        IEnumerable<LARSFrameworkApprenticeshipFunding> LARSApprenticeshipFundingFrameworks { get; }
+        //IEnumerable<LARSFrameworkApprenticeshipFunding> LARSApprenticeshipFundingFrameworks { get; }
 
-        IDictionary<string, IEnumerable<LARSFrameworkAims>> LARSFrameworkAims { get; }
+        //IDictionary<string, IEnumerable<LARSFrameworkAims>> LARSFrameworkAims { get; }
 
-        IDictionary<string, IEnumerable<LARSLearningDeliveryCategory>> LARSLearningDeliveryCategory { get; }
+        //IDictionary<string, IEnumerable<LARSLearningDeliveryCategory>> LARSLearningDeliveryCategory { get; }
 
-        IDictionary<int, IEnumerable<LARSStandardFunding>> LARSStandardFundings { get; }
+        //IDictionary<int, IEnumerable<LARSStandardFunding>> LARSStandardFundings { get; }
 
         string OrgVersion { get; }
 
-        IDictionary<long, IEnumerable<OrgFunding>> OrgFunding { get; }
+        IDictionary<int, IReadOnlyCollection<OrgFunding>> OrgFunding { get; }
 
-        IDictionary<int, IEnumerable<LargeEmployers>> LargeEmployers { get; }
+        IDictionary<int, IReadOnlyCollection<LargeEmployers>> LargeEmployers { get; }
 
-        IDictionary<long, IEnumerable<AECEarningsHistory>> AECLatestInYearEarningHistory { get; }
+        IDictionary<long, IReadOnlyCollection<AECEarningsHistory>> AECLatestInYearEarningHistory { get; }
 
-        IEnumerable<FCSContractAllocation> FCSContractAllocations { get; }
+        IReadOnlyCollection<FCSContractAllocation> FCSContractAllocations { get; }
     }
 }

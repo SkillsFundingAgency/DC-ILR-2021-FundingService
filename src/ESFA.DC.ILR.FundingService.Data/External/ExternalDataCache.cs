@@ -13,25 +13,9 @@ namespace ESFA.DC.ILR.FundingService.Data.External
     {
         public string LARSCurrentVersion { get; set; }
 
-        public IDictionary<string, IEnumerable<LARSFunding>> LARSFunding { get; set; }
-
         public IDictionary<string, LARSLearningDelivery> LARSLearningDelivery { get; set; }
 
-        public IDictionary<string, IEnumerable<LARSAnnualValue>> LARSAnnualValue { get; set; }
-
-        public IDictionary<string, IEnumerable<LARSFrameworkAims>> LARSFrameworkAims { get; set; }
-
-        public IDictionary<int, IEnumerable<LARSStandardCommonComponent>> LARSStandardCommonComponent { get; set; }
-
-        public IEnumerable<LARSFrameworkCommonComponent> LARSFrameworkCommonComponent { get; set; }
-
-        public IEnumerable<LARSStandardApprenticeshipFunding> LARSApprenticeshipFundingStandards { get; set; }
-
-        public IEnumerable<LARSFrameworkApprenticeshipFunding> LARSApprenticeshipFundingFrameworks { get; set; }
-
-        public IDictionary<string, IEnumerable<LARSLearningDeliveryCategory>> LARSLearningDeliveryCategory { get; set; }
-
-        public IDictionary<int, IEnumerable<LARSStandardFunding>> LARSStandardFundings { get; set; }
+        public IDictionary<int, LARSStandard> LARSStandards { get; set; }
 
         public string PostcodeCurrentVersion { get; set; }
 
@@ -39,12 +23,12 @@ namespace ESFA.DC.ILR.FundingService.Data.External
         
         public string OrgVersion { get; set; }
 
-        public IDictionary<long, IEnumerable<OrgFunding>> OrgFunding { get; set; }
+        public IDictionary<int, IReadOnlyCollection<OrgFunding>> OrgFunding { get; set; }
 
-        public IDictionary<int, IEnumerable<LargeEmployers>> LargeEmployers { get; set; }
+        public IDictionary<int, IReadOnlyCollection<LargeEmployers>> LargeEmployers { get; set; }
 
-        public IDictionary<long, IEnumerable<AECEarningsHistory>> AECLatestInYearEarningHistory { get; set; }
+        public IDictionary<long, IReadOnlyCollection<AECEarningsHistory>> AECLatestInYearEarningHistory { get; set; }
 
-        public IEnumerable<FCSContractAllocation> FCSContractAllocations { get; set; }
+        public IReadOnlyCollection<FCSContractAllocation> FCSContractAllocations { get; set; }
     }
 }

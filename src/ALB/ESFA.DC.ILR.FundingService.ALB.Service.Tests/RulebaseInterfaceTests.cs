@@ -385,23 +385,23 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                 }
             };
 
-            var larsLearningDelivery = new LARSLearningDelivery
-            {
-                LARSCareerLearningPilot = new List<LARSCareerLearningPilot>
-                {
-                    new LARSCareerLearningPilot()
-                }
-            };
-
             var larsFunding = new List<LARSFunding>
             {
                 new LARSFunding()
             };
 
+            var larsLearningDelivery = new LARSLearningDelivery
+            {
+                LARSCareerLearningPilots = new List<LARSCareerLearningPilot>
+                {
+                    new LARSCareerLearningPilot()
+                },
+                LARSFundings = larsFunding
+            };
+
             var learningDelivery = learner.LearningDeliveries.First();
 
             larsRefererenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
-            larsRefererenceDataServiceMock.Setup(l => l.LARSFundingsForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsFunding);
             postcodesReferenceDataServiceMock.Setup(p => p.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode)).Returns(new List<SfaAreaCost> { new SfaAreaCost() });
             postcodesReferenceDataServiceMock.Setup(p => p.CareerLearningPilotsForPostcode(learningDelivery.DelLocPostCode)).Returns(new List<CareerLearningPilot> { new CareerLearningPilot() });
 

@@ -158,7 +158,16 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
                 RegulatedCreditValue = 3,
                 NotionalNVQLevelv2 = "NVQLevel",
                 LearningDeliveryGenre = "Genre",
-                LARSFunding = new List<LARSFunding>
+                LARSAnnualValues = new List<LARSAnnualValue>
+                {
+                    new LARSAnnualValue
+                    {
+                        BasicSkillsType = 1,
+                        EffectiveFrom = new DateTime(2018, 1, 1),
+                        EffectiveTo = new DateTime(2019, 1, 1),
+                    }
+                },
+                LARSFundings = new List<LARSFunding>
                 {
                     new LARSFunding
                     {
@@ -188,7 +197,6 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
             var fcsReferenceDataMock = new Mock<IFCSReferenceDataService>();
 
             larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
-            larsReferenceDataServiceMock.Setup(l => l.LARSAnnualValuesForLearnAimRef(learningDelivery.LearnAimRef)).Returns(new List<LARSAnnualValue> { new LARSAnnualValue() });
             postcodesReferenceDataServiceMock.Setup(p => p.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode)).Returns(new List<SfaAreaCost> { new SfaAreaCost() });
             fcsReferenceDataMock.Setup(f => f.FcsContractsForConRef(learningDelivery.ConRefNumber)).Returns(fcsContract);
 

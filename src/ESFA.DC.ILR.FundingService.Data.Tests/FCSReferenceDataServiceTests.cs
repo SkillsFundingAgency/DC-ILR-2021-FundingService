@@ -14,7 +14,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         public void FCSContractAllocation_Exists()
         {
             var conRef = "123";
-            IEnumerable<FCSContractAllocation> contractAllocations = new List<FCSContractAllocation>
+            IReadOnlyCollection<FCSContractAllocation> contractAllocations = new List<FCSContractAllocation>
             {
                 new FCSContractAllocation
                 {

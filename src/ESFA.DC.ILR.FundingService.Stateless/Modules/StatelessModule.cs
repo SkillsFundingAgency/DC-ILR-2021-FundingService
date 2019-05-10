@@ -1,17 +1,4 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Autofac;
-using ESFA.DC.Data.AppsEarningsHistory.Model;
-using ESFA.DC.Data.AppsEarningsHistory.Model.Interfaces;
-using ESFA.DC.Data.LargeEmployer.Model;
-using ESFA.DC.Data.LargeEmployer.Model.Interface;
-using ESFA.DC.Data.LARS.Model;
-using ESFA.DC.Data.LARS.Model.Interfaces;
-using ESFA.DC.Data.Organisatons.Model;
-using ESFA.DC.Data.Organisatons.Model.Interface;
-using ESFA.DC.Data.Postcodes.Model;
-using ESFA.DC.Data.Postcodes.Model.Interfaces;
+﻿using Autofac;
 using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
@@ -48,14 +35,10 @@ using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
 using ESFA.DC.ILR.FundingService.ServiceFabric.Common.Interfaces;
 using ESFA.DC.ILR.FundingService.Stubs;
 using ESFA.DC.ILR.Model.Interface;
-using ESFA.DC.JobContext;
-using ESFA.DC.JobContext.Interface;
 using ESFA.DC.JobContextManager;
 using ESFA.DC.JobContextManager.Interface;
 using ESFA.DC.JobContextManager.Model;
 using ESFA.DC.JobContextManager.Model.Interface;
-using ESFA.DC.ReferenceData.FCS.Model;
-using ESFA.DC.ReferenceData.FCS.Model.Interface;
 using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.Serialization.Json;
 using ESFA.DC.Serialization.Xml;
@@ -66,42 +49,6 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(c =>
-            {
-                var referenceDataConfig = c.Resolve<IReferenceDataConfig>();
-                return new LARS(referenceDataConfig.LARSConnectionString);
-            }).As<ILARS>().InstancePerLifetimeScope();
-
-            builder.Register(c =>
-            {
-                var referenceDataConfig = c.Resolve<IReferenceDataConfig>();
-                return new Postcodes(referenceDataConfig.PostcodesConnectionString);
-            }).As<IPostcodes>().InstancePerLifetimeScope();
-
-            builder.Register(c =>
-            {
-                var referenceDataConfig = c.Resolve<IReferenceDataConfig>();
-                return new Organisations(referenceDataConfig.OrganisationConnectionString);
-            }).As<IOrganisations>().InstancePerLifetimeScope();
-
-            builder.Register(c =>
-            {
-                var referenceDataConfig = c.Resolve<IReferenceDataConfig>();
-                return new LargeEmployer(referenceDataConfig.LargeEmployersConnectionString);
-            }).As<ILargeEmployer>().InstancePerLifetimeScope();
-
-            builder.Register(c =>
-            {
-                var referenceDataConfig = c.Resolve<IReferenceDataConfig>();
-                return new ApprenticeshipsEarningsHistory(referenceDataConfig.AppsEarningsHistoryConnectionString);
-            }).As<IApprenticeshipsEarningsHistory>().InstancePerLifetimeScope();
-
-            builder.Register(c =>
-            {
-                var referenceDataConfig = c.Resolve<IReferenceDataConfig>();
-                return new FcsContext(referenceDataConfig.FCSConnectionString);
-            }).As<IFcsContext>().InstancePerLifetimeScope();
-
             builder.RegisterType<PopulationService>().As<IPopulationService>().InstancePerLifetimeScope();
             builder.RegisterType<FileDataCachePopulationService>().As<IFileDataCachePopulationService>().InstancePerLifetimeScope();
             builder.RegisterType<InternalDataCachePopulationService>().As<IInternalDataCachePopulationService>().InstancePerLifetimeScope();
@@ -114,12 +61,13 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             builder.RegisterType<FileDataCache>().As<IFileDataCache>().InstancePerLifetimeScope();
             builder.RegisterType<ValidLearnersDataRetrievalService>().As<IValidLearnersDataRetrievalService>().InstancePerLifetimeScope();
             builder.RegisterType<FileDataRetrievalService>().As<IFileDataRetrievalService>().InstancePerLifetimeScope();
-            builder.RegisterType<PostcodesDataRetrievalService>().As<IPostcodesDataRetrievalService>().InstancePerLifetimeScope();
-            builder.RegisterType<LargeEmployersDataRetrievalService>().As<ILargeEmployersDataRetrievalService>().InstancePerLifetimeScope();
-            builder.RegisterType<LARSDataRetrievalService>().As<ILARSDataRetrievalService>().InstancePerLifetimeScope();
-            builder.RegisterType<OrganisationDataRetrievalService>().As<IOrganisationDataRetrievalService>().InstancePerLifetimeScope();
-            builder.RegisterType<AppsEarningsHistoryDataRetrievalService>().As<IAppsEarningsHistoryDataRetrievalService>().InstancePerLifetimeScope();
-            builder.RegisterType<FCSDataRetrievalService>().As<IFCSDataRetrievalService>().InstancePerLifetimeScope();
+
+            builder.RegisterType<PostcodesMapperService>().As<IPostcodesMapperService>().InstancePerLifetimeScope();
+            builder.RegisterType<OrganisationsMapperService>().As<IOrganisationsMapperService>().InstancePerLifetimeScope();
+            builder.RegisterType<LargeEmployersMapperService>().As<ILargeEmployersMapperService>().InstancePerLifetimeScope();
+            builder.RegisterType<AppsEarningsHistoryMapperService>().As<IAppsEarningsHistoryMapperService>().InstancePerLifetimeScope();
+            builder.RegisterType<FCSMapperService>().As<IFCSMapperService>().InstancePerLifetimeScope();
+            builder.RegisterType<LARSMapperService>().As<ILARSMapperService>().InstancePerLifetimeScope();
 
             builder.RegisterType<JsonSerializationService>().As<ISerializationService>();
             builder.RegisterType<JsonSerializationService>().As<IJsonSerializationService>();

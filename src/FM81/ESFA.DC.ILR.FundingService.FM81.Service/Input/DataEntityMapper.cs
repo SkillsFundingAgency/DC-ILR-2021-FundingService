@@ -78,8 +78,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Input
         {
             var learningDeliveryFAMDenormalized = BuildLearningDeliveryFAMDenormalized(learningDelivery.LearningDeliveryFAMs);
             var larsLearningDelivery = _larsReferenceDataService.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef);
-            var larsStandardCommonComponent = _larsReferenceDataService.LARSStandardCommonComponent(learningDelivery.StdCodeNullable);
-            var larsStandardFunding = _larsReferenceDataService.LARSStandardFunding(learningDelivery.StdCodeNullable);
+            var larsStandard = _larsReferenceDataService.LARSStandardForStandardCode(learningDelivery.StdCodeNullable);
 
             return new DataEntity(Attributes.EntityLearningDelivery)
             {
@@ -120,10 +119,12 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Input
                                     .AppFinRecords?
                                     .Select(BuildApprenticeshipFinancialRecord) ?? new List<IDataEntity>())
                             .Union(
-                                   larsStandardCommonComponent?
-                                    .Select(BuildLARSStandardCommonComponent) ?? new List<IDataEntity>())
+                                   larsStandard?
+                                   .LARSStandardCommonComponents?
+                                    .Select(ls => BuildLARSStandardCommonComponent(ls, larsStandard.StandardCode)) ?? new List<IDataEntity>())
                             .Union(
-                                    larsStandardFunding?
+                                    larsStandard?
+                                    .LARSStandardFundings?
                                     .Select(BuildLARSStandardFunding) ?? new List<IDataEntity>())
                             .ToList()
             };
@@ -173,14 +174,14 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Input
             };
         }
 
-        public IDataEntity BuildLARSStandardCommonComponent(LARSStandardCommonComponent larsStandardCommonComponent)
+        public IDataEntity BuildLARSStandardCommonComponent(LARSStandardCommonComponent larsStandardCommonComponent, int stdCode)
         {
             return new DataEntity(Attributes.EntityStandardCommonComponent)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
                     { Attributes.LARSStandardCommonComponentCode, new AttributeData(larsStandardCommonComponent.CommonComponent) },
-                    { Attributes.LARSStandardCommonComponentStandardCode, new AttributeData(larsStandardCommonComponent.StandardCode) },
+                    { Attributes.LARSStandardCommonComponentStandardCode, new AttributeData(stdCode) },
                     { Attributes.LARSStandardCommonComponentEffectiveFrom, new AttributeData(larsStandardCommonComponent.EffectiveFrom) },
                     { Attributes.LARSStandardCommonComponentEffectiveTo, new AttributeData(larsStandardCommonComponent.EffectiveTo) },
                 }

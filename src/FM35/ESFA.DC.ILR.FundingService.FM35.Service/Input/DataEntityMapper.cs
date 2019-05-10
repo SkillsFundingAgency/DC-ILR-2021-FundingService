@@ -123,29 +123,13 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
         {
             var learningDeliveryFAMDenormalized = BuildLearningDeliveryFAMDenormalized(learningDelivery.LearningDeliveryFAMs);
             var larsLearningDelivery = _larsReferenceDataService.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef);
-            var larsFrameworkAims = _larsReferenceDataService.LARSFFrameworkAimsForLearnAimRef(learningDelivery.LearnAimRef);
-            var larsFunding = _larsReferenceDataService.LARSFundingsForLearnAimRef(learningDelivery.LearnAimRef);
 
-            var larsAnnualValue = _larsReferenceDataService.LARSAnnualValuesForLearnAimRef(learningDelivery.LearnAimRef);
-            var larsLearningDeliveryCategories = _larsReferenceDataService.LARSLearningDeliveryCategoriesForLearnAimRef(learningDelivery.LearnAimRef);
+            var larsFramework = larsLearningDelivery.LARSFrameworks?
+                .Where(lf => lf.FworkCode == learningDelivery.FworkCodeNullable
+                && lf.ProgType == learningDelivery.ProgTypeNullable
+                && lf.PwayCode == learningDelivery.PwayCodeNullable).FirstOrDefault();
+
             var sfaAreaCost = _postcodesReferenceDataService.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode);
-
-            var larsFwkAims = larsFrameworkAims?.ToList();
-
-            int? frameworkComponentType = null;
-
-            if (larsFrameworkAims != null
-                && learningDelivery.FworkCodeNullable != null
-                && learningDelivery.ProgTypeNullable != null
-                && learningDelivery.PwayCodeNullable != null)
-            {
-                frameworkComponentType = larsFrameworkAims
-                .Where(fwa =>
-                       learningDelivery.FworkCodeNullable == fwa.FworkCode
-                    && learningDelivery.ProgTypeNullable == fwa.ProgType
-                    && learningDelivery.PwayCodeNullable == fwa.PwayCode)
-                .Select(fwct => fwct.FrameworkComponentType).FirstOrDefault();
-            }
 
             return new DataEntity(Attributes.EntityLearningDelivery)
             {
@@ -161,7 +145,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                     { Attributes.EnglPrscID, new AttributeData(larsLearningDelivery.EnglPrscID) },
                     { Attributes.FworkCode, new AttributeData(learningDelivery.FworkCodeNullable) },
                     { Attributes.FrameworkCommonComponent, new AttributeData(larsLearningDelivery.FrameworkCommonComponent) },
-                    { Attributes.FrameworkComponentType, new AttributeData(frameworkComponentType) },
+                    { Attributes.FrameworkComponentType, new AttributeData(larsFramework?.LARSFrameworkAim?.FrameworkComponentType) },
                     { Attributes.LearnActEndDate, new AttributeData(learningDelivery.LearnActEndDateNullable) },
                     { Attributes.LearnPlanEndDate, new AttributeData(learningDelivery.LearnPlanEndDate) },
                     { Attributes.LearnStartDate, new AttributeData(learningDelivery.LearnStartDate) },
@@ -184,16 +168,19 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                             .LearningDeliveryFAMs?
                             .Select(BuildLearningDeliveryFAM) ?? new List<IDataEntity>())
                             .Union(
-                                   larsAnnualValue?
+                                   larsLearningDelivery?
+                                   .LARSAnnualValues?
                                    .Select(BuildLARSAnnualValue) ?? new List<IDataEntity>())
                             .Union(
-                                   larsLearningDeliveryCategories?
+                                   larsLearningDelivery?
+                                   .LARSLearningDeliveryCategories?
                                    .Select(BuildLARSLearningDeliveryCategories) ?? new List<IDataEntity>())
                             .Union(
                                    sfaAreaCost?
                                    .Select(BuildSFAAreaCost) ?? new List<IDataEntity>())
                             .Union(
-                                   larsFunding?
+                                   larsLearningDelivery?
+                                   .LARSFundings?
                                    .Select(BuildLARSFunding) ?? new List<IDataEntity>())
                             .ToList()
             };

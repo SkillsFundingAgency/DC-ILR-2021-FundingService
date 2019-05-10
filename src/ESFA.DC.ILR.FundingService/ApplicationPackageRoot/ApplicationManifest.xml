@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ApplicationManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ApplicationTypeName="ESFA.DC.ILR.FundingServiceType" ApplicationTypeVersion="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+<ApplicationManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ApplicationTypeName="ESFA.DC.ILR1819.FundingServiceType" ApplicationTypeVersion="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
   <Parameters>
     <Parameter Name="ESFA.DC.ILR.FundingService.Stateless_InstanceCount" DefaultValue="-1" />
     <Parameter Name="AuditQueueName" DefaultValue="audit-queue" />
@@ -12,13 +12,6 @@
     <Parameter Name="EndpointUrl" DefaultValue="" />
     <Parameter Name="AuthKeyOrResourceToken" DefaultValue="" />
     <Parameter Name="DataStoreSubscriptionName" DefaultValue="" />
-    <Parameter Name="LARSConnectionString" DefaultValue="metadata=res://*/LARS.csdl|res://*/LARS.ssdl|res://*/LARS.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(local);initial catalog=ESFA.DC.Data.LARS.Database;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
-    <Parameter Name="PostcodesConnectionString" DefaultValue="metadata=res://*/Postcodes.csdl|res://*/Postcodes.ssdl|res://*/Postcodes.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(local);initial catalog=ESFA.DC.Data.Postcodes.Database;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
-    <Parameter Name="OrganisationConnectionString" DefaultValue="__OrganisationConnectionString__" />
-    <Parameter Name="LargeEmployersConnectionString" DefaultValue="__LargeEmployersConnectionString__" />
-    <Parameter Name="AppsEarningsHistoryConnectionString" DefaultValue="__AppsEarningsHistoryConnectionString__" />
-    <Parameter Name="FCSConnectionString" DefaultValue="__FCSDbConnectionString__" />
-    <Parameter Name="RedisCacheConnectionString" DefaultValue="" />
     <Parameter Name="AzureBlobConnectionString" DefaultValue="UseDevelopmentStorage=true" />
     <Parameter Name="AzureBlobContainerName" DefaultValue="ilr1819-files" />
     <Parameter Name="ProcessingServicePlacementConstraints" DefaultValue="" />
@@ -123,7 +116,7 @@
     </ConfigOverrides>
   </ServiceManifestImport>
   <ServiceManifestImport>
-    <ServiceManifestRef ServiceManifestName="ESFA.DC.ILR.FundingService.StatelessPkg" ServiceManifestVersion="1.0.0" />
+    <ServiceManifestRef ServiceManifestName="ESFA.DC.ILR1819.FundingService.StatelessPkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides>
       <ConfigOverride Name="Config">
         <Settings>
@@ -140,17 +133,6 @@
           </Section>
           <Section Name="LoggerSection">
             <Parameter Name="LoggerConnectionstring" Value="[LoggerConnectionstring]" />
-          </Section>
-          <Section Name="AzureRedisSection">
-            <Parameter Name="RedisCacheConnectionString" Value="[RedisCacheConnectionString]" />
-          </Section>
-          <Section Name="ReferenceDataSection">
-            <Parameter Name="LARSConnectionString" Value="[LARSConnectionString]" />
-            <Parameter Name="PostcodesConnectionString" Value="[PostcodesConnectionString]" />
-            <Parameter Name="OrganisationConnectionString" Value="[OrganisationConnectionString]" />
-            <Parameter Name="LargeEmployersConnectionString" Value="[LargeEmployersConnectionString]" />
-            <Parameter Name="AppsEarningsHistoryConnectionString" Value="[AppsEarningsHistoryConnectionString]" />
-            <Parameter Name="FCSConnectionString" Value="[FCSConnectionString]" />
           </Section>
           <Section Name="AzureStorageSection">
             <Parameter Name="AzureBlobConnectionString" Value="[AzureBlobConnectionString]" />
@@ -174,8 +156,8 @@
          ServiceFabric PowerShell module.
          
          The attribute ServiceTypeName below must match the name defined in the imported ServiceManifest.xml file. -->
-    <Service Name="ESFA.DC.ILR.1819.FundingService.Stateless" ServicePackageActivationMode="ExclusiveProcess">
-      <StatelessService ServiceTypeName="ESFA.DC.ILR.1819.FundingService.StatelessType" InstanceCount="[ESFA.DC.ILR.FundingService.Stateless_InstanceCount]">
+    <Service Name="ESFA.DC.ILR1819.FundingService.Stateless" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="ESFA.DC.ILR1819.FundingService.StatelessType" InstanceCount="[ESFA.DC.ILR.FundingService.Stateless_InstanceCount]">
         <SingletonPartition />
         <PlacementConstraints>[ProcessingServicePlacementConstraints]</PlacementConstraints>
       </StatelessService>

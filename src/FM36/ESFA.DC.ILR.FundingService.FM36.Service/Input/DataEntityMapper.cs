@@ -100,11 +100,12 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
         {
             var learningDeliveryFAMDenormalized = BuildLearningDeliveryFAMDenormalized(learningDelivery.LearningDeliveryFAMs);
             var larsLearningDelivery = _larsReferenceDataService.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef);
-            var larsStandardAppenticeshipFunding = _larsReferenceDataService.LARSStandardApprenticeshipFunding(learningDelivery.StdCodeNullable, learningDelivery.ProgTypeNullable);
-            var larsFrameworkAppenticeshipFunding = _larsReferenceDataService.LARSFrameworkApprenticeshipFunding(learningDelivery.FworkCodeNullable, learningDelivery.ProgTypeNullable, learningDelivery.PwayCodeNullable);
-            var larsFrameworkCommonComponent = _larsReferenceDataService.LARSFrameworkCommonComponent(learningDelivery.LearnAimRef, learningDelivery.FworkCodeNullable, learningDelivery.ProgTypeNullable, learningDelivery.PwayCodeNullable);
-            var larsStandardCommonComponent = _larsReferenceDataService.LARSStandardCommonComponent(learningDelivery.StdCodeNullable);
-            var larsFunding = _larsReferenceDataService.LARSFundingsForLearnAimRef(learningDelivery.LearnAimRef);
+            var larsStandard = _larsReferenceDataService.LARSStandardForStandardCode(learningDelivery.StdCodeNullable);
+
+            var larsFramework = larsLearningDelivery.LARSFrameworks?
+                .Where(lf => lf.FworkCode == learningDelivery.FworkCodeNullable
+                && lf.ProgType == learningDelivery.ProgTypeNullable
+                && lf.PwayCode == learningDelivery.PwayCodeNullable).FirstOrDefault();
 
             return new DataEntity(Attributes.EntityLearningDelivery)
             {
@@ -140,19 +141,25 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
                                     .AppFinRecords?
                                     .Select(BuildApprenticeshipFinancialRecord) ?? new List<IDataEntity>())
                             .Union(
-                                   larsStandardAppenticeshipFunding?
-                                    .Select(BuildLARSStandardApprenticeshipFunding) ?? new List<IDataEntity>())
-                            .Union(
-                                   larsFrameworkAppenticeshipFunding?
+                                    larsFramework?
+                                    .LARSFrameworkApprenticeshipFundings?
                                     .Select(BuildLARSFrameworkApprenticeshipFunding) ?? new List<IDataEntity>())
                             .Union(
-                                   larsFrameworkCommonComponent?
+                                    larsFramework?
+                                    .LARSFrameworkCommonComponents?
                                     .Select(BuildLARSFrameworkCommonComponent) ?? new List<IDataEntity>())
-                            .Union(
-                                   larsStandardCommonComponent?
+                             .Union(
+                                   larsStandard?
+                                   .LARSStandardCommonComponents?
                                     .Select(BuildLARSStandardCommonComponent) ?? new List<IDataEntity>())
                             .Union(
-                                   larsFunding?
+                                    larsStandard?
+                                    .LARSStandardApprenticeshipFundings?
+                                    .Select(BuildLARSStandardApprenticeshipFunding) ?? new List<IDataEntity>())
+                            .ToList()
+                            .Union(
+                                    larsLearningDelivery?
+                                    .LARSFundings?
                                     .Select(BuildLARSFunding) ?? new List<IDataEntity>())
                             .ToList()
             };
