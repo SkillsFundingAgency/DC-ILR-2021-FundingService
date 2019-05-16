@@ -17,7 +17,7 @@ namespace ESFA.DC.OPA.Service
         // I am very much aware that hardcoding to the C: Drive is not service fabric aware. - LOCAL DEBUG PURPOSES ONLY.
         // File path to storage will be supplied from job context eventually.
         // I have not been authorised to spend any more time on this. AB 06/02/19.
-        private const bool ProduceXDS = true;
+        private const bool ProduceXDS = false;
         private const string XDSFolder = "C:\\XdsOutput\\";
         private const string LearnRefNumberAttribute = "LearnRefNumber";
 
