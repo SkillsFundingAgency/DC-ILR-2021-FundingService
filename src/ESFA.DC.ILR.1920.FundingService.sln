@@ -69,8 +69,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.FundingService.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.FundingService.Data.Tests", "ESFA.DC.ILR.FundingService.Data.Tests\ESFA.DC.ILR.FundingService.Data.Tests.csproj", "{26FAB064-72B6-40E0-9A01-5C7ECBEE2B85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.FundingService.Console", "ESFA.DC.ILR.FundingService.Console\ESFA.DC.ILR.FundingService.Console.csproj", "{3C6E629F-9203-452A-B96F-6D72C63B73AA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.FundingService.Config", "ESFA.DC.ILR.FundingService.Config\ESFA.DC.ILR.FundingService.Config.csproj", "{29C28BC1-23E2-4FAD-AB74-83CD2D33E7D8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.FundingService.Service", "ESFA.DC.ILR.FundingService.Service\ESFA.DC.ILR.FundingService.Service.csproj", "{652FF283-3708-4DCA-A45E-81297B8BA8A7}"
@@ -398,14 +396,6 @@ Global
 		{26FAB064-72B6-40E0-9A01-5C7ECBEE2B85}.Release|Any CPU.Build.0 = Release|Any CPU
 		{26FAB064-72B6-40E0-9A01-5C7ECBEE2B85}.Release|x64.ActiveCfg = Release|Any CPU
 		{26FAB064-72B6-40E0-9A01-5C7ECBEE2B85}.Release|x64.Build.0 = Release|Any CPU
-		{3C6E629F-9203-452A-B96F-6D72C63B73AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3C6E629F-9203-452A-B96F-6D72C63B73AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3C6E629F-9203-452A-B96F-6D72C63B73AA}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{3C6E629F-9203-452A-B96F-6D72C63B73AA}.Debug|x64.Build.0 = Debug|Any CPU
-		{3C6E629F-9203-452A-B96F-6D72C63B73AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3C6E629F-9203-452A-B96F-6D72C63B73AA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3C6E629F-9203-452A-B96F-6D72C63B73AA}.Release|x64.ActiveCfg = Release|Any CPU
-		{3C6E629F-9203-452A-B96F-6D72C63B73AA}.Release|x64.Build.0 = Release|Any CPU
 		{29C28BC1-23E2-4FAD-AB74-83CD2D33E7D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{29C28BC1-23E2-4FAD-AB74-83CD2D33E7D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29C28BC1-23E2-4FAD-AB74-83CD2D33E7D8}.Debug|x64.ActiveCfg = Debug|Any CPU

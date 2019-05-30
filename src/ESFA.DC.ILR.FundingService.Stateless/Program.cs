@@ -156,7 +156,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless
             builder.RegisterServiceFabricSupport();
 
             // Register the stateless service.
-            builder.RegisterStatelessService<Stateless>("ESFA.DC.ILR1819.FundingService.StatelessType");
+            builder.RegisterStatelessService<Stateless>("ESFA.DC.ILR1920.FundingService.StatelessType");
 
             return builder;
         }
