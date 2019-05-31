@@ -23,10 +23,10 @@ pool:
 
 steps:
 - powershell: |
-   Copy-Item "Cloud.xml" "Local.1Node.xml" -Force
-   Copy-Item "Cloud.xml" "Local.5Node.xml" -Force
+   Copy-Item "Cloud.xml" "Local.1Node.xml" -Recurse -Force
+   Copy-Item "Cloud.xml" "Local.5Node.xml" -Recurse -Force
    
-  workingDirectory: 'src'
+  workingDirectory: 'src\'
   displayName: 'Generate Fake Config Files'
 
 - task: DotNetCoreInstaller@0
