@@ -11,7 +11,7 @@ variables:
   BuildConfiguration: 'Release'
   BuildPlatform: 'Any CPU'
   BuildPlatformX64: 'x64'  
-  ServiceFabricApplicationParametersFolder: 'src\ESFA.DC.ILR.ValidationService\ApplicationParameters'
+  #ServiceFabricApplicationParametersFolder: 'src\ESFA.DC.ILR.ValidationService\ApplicationParameters'
 
 pool:
   name: DCT
@@ -26,7 +26,7 @@ steps:
    Copy-Item "Cloud.xml" "Local.1Node.xml" -Force
    Copy-Item "Cloud.xml" "Local.5Node.xml" -Force
    
-  workingDirectory: '$(ServiceFabricApplicationParametersFolder)'
+  workingDirectory: 'src'
   displayName: 'Generate Fake Config Files'
 
 - task: DotNetCoreInstaller@0
@@ -90,6 +90,19 @@ steps:
     createLogFile: true
         
 - task: DeleteFiles@1
+  displayName: 'Delete Local.*Node.xml As only needed for Build'
+  inputs:
+    SourceFolder: '$(build.artifactstagingdirectory)'
+    Contents: '**\Local.*Node.xml'
+        
+- task: DeleteFiles@1
+  displayName: 'Delete Local.*Node.xml As only needed for Build'
+  inputs:
+    #SourceFolder: ''
+    Contents: '**\Local.*Node.xml'
+
+- task: DeleteFiles@1
+  enabled: fasle
   displayName: 'Delete Symbols files from $(build.artifactstagingdirectory)\ServiceFabric\ApplicationPackage '
   inputs:
     SourceFolder: '$(build.artifactstagingdirectory)\ServiceFabric\ApplicationPackage'
