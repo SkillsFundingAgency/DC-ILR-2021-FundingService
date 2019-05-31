@@ -1,6 +1,6 @@
-﻿namespace ESFA.DC.ILR.FundingService.Stateless.Models
+﻿namespace ESFA.DC.ILR.FundingService.FundingActor
 {
-    public class FundingActorDto
+    public class FundingActorDto : IFundingActorDto
     {
         public long JobId { get; set; }
 

@@ -5,7 +5,6 @@ using Autofac.Integration.ServiceFabric;
 using ESFA.DC.ILR.FundingService.Config;
 using ESFA.DC.ILR.FundingService.Config.Interfaces;
 using ESFA.DC.ILR.FundingService.FM35Actor.Modules;
-using ESFA.DC.ILR.FundingService.Modules;
 using ESFA.DC.ServiceFabric.Helpers;
 using Microsoft.ServiceFabric.Actors.Runtime;
 
@@ -53,7 +52,6 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
             var loggerConfig = configHelper.GetSectionValues<LoggerConfig>("LoggerSection");
 
             containerBuilder.RegisterInstance(loggerConfig).As<ILoggerConfig>().SingleInstance();
-            containerBuilder.RegisterModule<LoggerModule>();
 
             // register serialization
             return containerBuilder;

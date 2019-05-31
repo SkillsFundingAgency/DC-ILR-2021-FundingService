@@ -6,7 +6,6 @@ using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.Config;
 using ESFA.DC.ILR.FundingService.Config.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.ILR.FundingService.Modules;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.Serialization.Json;
@@ -61,7 +60,6 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
             var loggerConfig = configHelper.GetSectionValues<LoggerConfig>("LoggerSection");
 
             containerBuilder.RegisterInstance(loggerConfig).As<ILoggerConfig>().SingleInstance();
-            containerBuilder.RegisterModule<LoggerModule>();
 
             return containerBuilder;
         }

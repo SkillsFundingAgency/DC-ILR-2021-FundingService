@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.2" />
+    <PackageReference Include="ESFA.DC.ILR.1819.Model" Version="0.1.5-beta0001" />
+    <PackageReference Include="ESFA.DC.ServiceFabric.Common" Version="0.1.1-beta0001" />
+    <PackageReference Include="Microsoft.ServiceFabric.Actors" Version="3.3.664" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Data\ESFA.DC.ILR.FundingService.Data.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FundingActor.Interfaces\ESFA.DC.ILR.FundingService.FundingActor.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

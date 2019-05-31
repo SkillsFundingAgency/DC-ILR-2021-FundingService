@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,10 +9,8 @@ using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Internal;
+using ESFA.DC.ILR.FundingService.FundingActor;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
-using ESFA.DC.ILR.FundingService.Stateless.Models;
-using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
@@ -32,7 +29,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
         {
         }
 
-        public async Task<string> Process(FundingActorDto actorModel, CancellationToken cancellationToken)
+        public async Task<string> Process(IFundingActorDto actorModel, CancellationToken cancellationToken)
         {
             ALBGlobal results = RunFunding(actorModel, cancellationToken);
             actorModel = null;
@@ -43,7 +40,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
             return BuildFundingOutput(results);
         }
 
-        private ALBGlobal RunFunding(FundingActorDto actorModel, CancellationToken cancellationToken)
+        private ALBGlobal RunFunding(IFundingActorDto actorModel, CancellationToken cancellationToken)
         {
             if (ExecutionContext is ExecutionContext executionContextObj)
             {

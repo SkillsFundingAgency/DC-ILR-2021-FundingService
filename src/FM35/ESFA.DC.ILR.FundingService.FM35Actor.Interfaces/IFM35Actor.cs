@@ -1,4 +1,4 @@
-﻿using ESFA.DC.ILR.FundingService.ServiceFabric.Common.Interfaces;
+﻿using ESFA.DC.ILR.FundingService.FundingActor.Interfaces;
 using Microsoft.ServiceFabric.Actors.Remoting.FabricTransport;
 using Microsoft.ServiceFabric.Services.Remoting;
 

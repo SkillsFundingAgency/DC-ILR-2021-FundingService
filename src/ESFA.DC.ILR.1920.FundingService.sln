@@ -7,8 +7,6 @@ Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "ESFA.DC.ILR.FundingService"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.FundingService.Stateless", "ESFA.DC.ILR.FundingService.Stateless\ESFA.DC.ILR.FundingService.Stateless.csproj", "{1478B042-E0E2-459A-841A-D0014C51CFBD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.FundingService.Stateless.Models", "ESFA.DC.ILR.FundingService.Stateless.Models\ESFA.DC.ILR.FundingService.Stateless.Models.csproj", "{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.FundingService.Modules", "ESFA.DC.ILR.FundingService.Modules\ESFA.DC.ILR.FundingService.Modules.csproj", "{79748ECD-E5D4-4D1E-BE10-32588B2F625C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.FundingService.Orchestrators", "ESFA.DC.ILR.FundingService.Orchestrators\ESFA.DC.ILR.FundingService.Orchestrators.csproj", "{C72DB578-ECFD-4281-936E-26C6F4D2B3DB}"
@@ -80,8 +78,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.FundingService.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.FundingService.FM35Actor.Interfaces", "FM35\ESFA.DC.ILR.FundingService.FM35Actor.Interfaces\ESFA.DC.ILR.FundingService.FM35Actor.Interfaces.csproj", "{479E2521-1924-41DB-9CB7-CF8EA6DECD18}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.FundingService.ServiceFabric.Common", "ESFA.DC.ILR.FundingService.ServiceFabric.Common\ESFA.DC.ILR.FundingService.ServiceFabric.Common.csproj", "{21BA0741-5975-4902-8D7A-567A50873CFA}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XSRC", "XSRC", "{96BF454A-ACA6-45FC-B752-FBC51ABC5AD0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.FundingService.FM25Actor", "FM25\ESFA.DC.ILR.FundingService.FM25Actor\ESFA.DC.ILR.FundingService.FM25Actor.csproj", "{F32513D1-B309-49E8-BFB8-03A1EE05970C}"
@@ -145,6 +141,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__Solution Items", "__Solut
 		..\azure-pipelines.yml = ..\azure-pipelines.yml
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.FundingService.FundingActor.Interfaces", "ESFA.DC.ILR.FundingService.FundingActor.Interfaces\ESFA.DC.ILR.FundingService.FundingActor.Interfaces.csproj", "{B2EC7FFE-2E94-422A-BD8B-31C92C74A061}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.FundingService.FundingActor", "ESFA.DC.ILR.FundingService.FundingActor\ESFA.DC.ILR.FundingService.FundingActor.csproj", "{54A23742-B9BB-427D-A0A3-DF1E1A6F9859}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -172,14 +172,6 @@ Global
 		{1478B042-E0E2-459A-841A-D0014C51CFBD}.Release|Any CPU.Build.0 = Release|x64
 		{1478B042-E0E2-459A-841A-D0014C51CFBD}.Release|x64.ActiveCfg = Release|x64
 		{1478B042-E0E2-459A-841A-D0014C51CFBD}.Release|x64.Build.0 = Release|x64
-		{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}.Debug|Any CPU.Build.0 = Debug|x64
-		{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}.Debug|x64.ActiveCfg = Debug|x64
-		{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}.Debug|x64.Build.0 = Debug|x64
-		{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}.Release|x64.ActiveCfg = Release|Any CPU
-		{0FAAAAB8-443B-47BF-9E96-C3069E8789F9}.Release|x64.Build.0 = Release|Any CPU
 		{79748ECD-E5D4-4D1E-BE10-32588B2F625C}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{79748ECD-E5D4-4D1E-BE10-32588B2F625C}.Debug|Any CPU.Build.0 = Debug|x64
 		{79748ECD-E5D4-4D1E-BE10-32588B2F625C}.Debug|x64.ActiveCfg = Debug|x64
@@ -428,14 +420,6 @@ Global
 		{479E2521-1924-41DB-9CB7-CF8EA6DECD18}.Release|Any CPU.Build.0 = Release|x64
 		{479E2521-1924-41DB-9CB7-CF8EA6DECD18}.Release|x64.ActiveCfg = Release|x64
 		{479E2521-1924-41DB-9CB7-CF8EA6DECD18}.Release|x64.Build.0 = Release|x64
-		{21BA0741-5975-4902-8D7A-567A50873CFA}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{21BA0741-5975-4902-8D7A-567A50873CFA}.Debug|Any CPU.Build.0 = Debug|x64
-		{21BA0741-5975-4902-8D7A-567A50873CFA}.Debug|x64.ActiveCfg = Debug|x64
-		{21BA0741-5975-4902-8D7A-567A50873CFA}.Debug|x64.Build.0 = Debug|x64
-		{21BA0741-5975-4902-8D7A-567A50873CFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21BA0741-5975-4902-8D7A-567A50873CFA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{21BA0741-5975-4902-8D7A-567A50873CFA}.Release|x64.ActiveCfg = Release|x64
-		{21BA0741-5975-4902-8D7A-567A50873CFA}.Release|x64.Build.0 = Release|x64
 		{F32513D1-B309-49E8-BFB8-03A1EE05970C}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{F32513D1-B309-49E8-BFB8-03A1EE05970C}.Debug|Any CPU.Build.0 = Debug|x64
 		{F32513D1-B309-49E8-BFB8-03A1EE05970C}.Debug|x64.ActiveCfg = Debug|x64
@@ -628,6 +612,22 @@ Global
 		{3B3D8772-4B66-4B95-B094-933BBA6F9997}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3B3D8772-4B66-4B95-B094-933BBA6F9997}.Release|x64.ActiveCfg = Release|Any CPU
 		{3B3D8772-4B66-4B95-B094-933BBA6F9997}.Release|x64.Build.0 = Release|Any CPU
+		{B2EC7FFE-2E94-422A-BD8B-31C92C74A061}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2EC7FFE-2E94-422A-BD8B-31C92C74A061}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2EC7FFE-2E94-422A-BD8B-31C92C74A061}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B2EC7FFE-2E94-422A-BD8B-31C92C74A061}.Debug|x64.Build.0 = Debug|Any CPU
+		{B2EC7FFE-2E94-422A-BD8B-31C92C74A061}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2EC7FFE-2E94-422A-BD8B-31C92C74A061}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2EC7FFE-2E94-422A-BD8B-31C92C74A061}.Release|x64.ActiveCfg = Release|Any CPU
+		{B2EC7FFE-2E94-422A-BD8B-31C92C74A061}.Release|x64.Build.0 = Release|Any CPU
+		{54A23742-B9BB-427D-A0A3-DF1E1A6F9859}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54A23742-B9BB-427D-A0A3-DF1E1A6F9859}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54A23742-B9BB-427D-A0A3-DF1E1A6F9859}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{54A23742-B9BB-427D-A0A3-DF1E1A6F9859}.Debug|x64.Build.0 = Debug|Any CPU
+		{54A23742-B9BB-427D-A0A3-DF1E1A6F9859}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54A23742-B9BB-427D-A0A3-DF1E1A6F9859}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54A23742-B9BB-427D-A0A3-DF1E1A6F9859}.Release|x64.ActiveCfg = Release|Any CPU
+		{54A23742-B9BB-427D-A0A3-DF1E1A6F9859}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

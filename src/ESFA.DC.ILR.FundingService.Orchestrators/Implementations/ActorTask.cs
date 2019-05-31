@@ -3,10 +3,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.FundingService.FundingActor;
+using ESFA.DC.ILR.FundingService.FundingActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
-using ESFA.DC.ILR.FundingService.ServiceFabric.Common.Interfaces;
-using ESFA.DC.ILR.FundingService.Stateless.Models;
 using ESFA.DC.IO.Interfaces;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
@@ -40,7 +40,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         }
 
         public async Task Execute(
-            IEnumerable<FundingActorDto> fundingActorDtos,
+            IEnumerable<IFundingActorDto> fundingActorDtos,
             string outputKey,
             CancellationToken cancellationToken)
         {
@@ -52,7 +52,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             List<Task<string>> taskList = new List<Task<string>>();
             List<TActor> actors = new List<TActor>();
 
-            foreach (FundingActorDto fundingActorDto in fundingActorDtos)
+            foreach (IFundingActorDto fundingActorDto in fundingActorDtos)
             {
                 TActor actor = _fundingActorProvider.Provide();
                 actors.Add(actor);
