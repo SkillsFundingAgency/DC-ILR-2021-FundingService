@@ -8,8 +8,6 @@
 
         string ExternalDataCache { get; }
 
-        string InternalDataCache { get; }
-
         string FileDataCache { get; }
     }
 }

@@ -12,12 +12,11 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         {
         }
 
-        public IDictionary<int, IReadOnlyCollection<OrgFunding>> MapOrgFundings(IReadOnlyCollection<Organisation> organisations, int providerUKPRN)
+        public IDictionary<int, IReadOnlyCollection<OrgFunding>> MapOrgFundings(IReadOnlyCollection<Organisation> organisations)
         {
             return organisations?
-                .Where(o => o.UKPRN == providerUKPRN)
                     .ToDictionary(
-                    u => u.UKPRN,
+                    o => o.UKPRN,
                     o => o.OrganisationFundings?.Select(of => OrgFundingFromEntity(of, o.UKPRN)).ToList() as IReadOnlyCollection<OrgFunding>);
         }
 

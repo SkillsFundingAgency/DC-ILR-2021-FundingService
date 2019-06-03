@@ -48,7 +48,6 @@ namespace ESFA.DC.ILR.FundingService.FM70Actor
             ILogger logger = LifetimeScope.Resolve<ILogger>();
 
             IExternalDataCache externalDataCache;
-            IInternalDataCache internalDataCache;
             IFileDataCache fileDataCache;
             FM70Global results;
 
@@ -57,7 +56,6 @@ namespace ESFA.DC.ILR.FundingService.FM70Actor
                 logger.LogDebug($"{nameof(FM70Actor)} {ActorId} {GC.GetGeneration(actorModel)} starting");
 
                 externalDataCache = BuildExternalDataCache(actorModel.ExternalDataCache);
-                internalDataCache = BuildInternalDataCache(actorModel.InternalDataCache);
                 fileDataCache = BuildFileDataCache(actorModel.FileDataCache);
 
                 logger.LogDebug($"{nameof(FM70Actor)} {ActorId} {GC.GetGeneration(actorModel)} finished getting input data");
@@ -74,7 +72,6 @@ namespace ESFA.DC.ILR.FundingService.FM70Actor
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
                 c.RegisterInstance(externalDataCache).As<IExternalDataCache>();
-                c.RegisterInstance(internalDataCache).As<IInternalDataCache>();
                 c.RegisterInstance(fileDataCache).As<IFileDataCache>();
             }))
             {
@@ -109,7 +106,6 @@ namespace ESFA.DC.ILR.FundingService.FM70Actor
             }
 
             externalDataCache = null;
-            internalDataCache = null;
             fileDataCache = null;
 
             return results;

@@ -25,7 +25,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless
 
                 using (var container = builder.Build())
                 {
-                    var ss = container.Resolve<IPreFundingSFOrchestrationService>();
+                    var ss = container.Resolve<IFundingOrchestrationService>();
                     ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(ServiceFabric.Common.Stateless).Name);
 
                     // Prevents this host process from terminating so services keep running.

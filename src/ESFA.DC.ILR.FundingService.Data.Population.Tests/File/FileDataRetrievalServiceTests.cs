@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.Population.File;
-using ESFA.DC.ILR.FundingService.Dto.Interfaces;
-using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.ILR.Tests.Model;
 using FluentAssertions;
-using Moq;
 using Xunit;
 
 namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.File
@@ -25,11 +22,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.File
                 },
             };
 
-            var fundingServiceDto = new Mock<IFundingServiceDto>();
-
-            fundingServiceDto.SetupGet(fs => fs.Message).Returns(message);
-
-            NewService(fundingServiceDto.Object).RetrieveUKPRN().Should().Be(ukprn);
+            NewService().RetrieveUKPRN(message).Should().Be(ukprn);
         }
 
         [Fact]
@@ -68,11 +61,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.File
                 }
             };
 
-            var fundingServiceDto = new Mock<IFundingServiceDto>();
-
-            fundingServiceDto.SetupGet(fs => fs.Message).Returns(message);
-
-            var dpOutcomes = NewService(fundingServiceDto.Object).RetrieveDPOutcomes();
+            var dpOutcomes = NewService().RetrieveDPOutcomes(message);
 
             dpOutcomes.Should().HaveCount(2);
             dpOutcomes.Should().ContainKeys(learnRefNumber1, learnRefNumber2);
@@ -92,11 +81,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.File
         [Fact]
         public void RetrieveDPOutcomes_NullMessage()
         {
-            var fundingServiceDto = new Mock<IFundingServiceDto>();
-
-            fundingServiceDto.SetupGet(fs => fs.Message).Returns(null as IMessage);
-
-            var dpOutcomes = NewService(fundingServiceDto.Object).RetrieveDPOutcomes();
+            var dpOutcomes = NewService().RetrieveDPOutcomes(null);
 
             dpOutcomes.Should().NotBeNull();
             dpOutcomes.Should().BeEmpty();
@@ -110,11 +95,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.File
                 LearnerDestinationAndProgressions = null
             };
 
-            var fundingServiceDto = new Mock<IFundingServiceDto>();
-
-            fundingServiceDto.SetupGet(fs => fs.Message).Returns(message);
-
-            var dpOutcomes = NewService(fundingServiceDto.Object).RetrieveDPOutcomes();
+            var dpOutcomes = NewService().RetrieveDPOutcomes(message);
 
             dpOutcomes.Should().NotBeNull();
             dpOutcomes.Should().BeEmpty();
@@ -137,11 +118,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.File
                 }
             };
 
-            var fundingServiceDto = new Mock<IFundingServiceDto>();
-
-            fundingServiceDto.SetupGet(fs => fs.Message).Returns(message);
-
-            var dpOutcomes = NewService(fundingServiceDto.Object).RetrieveDPOutcomes();
+            var dpOutcomes = NewService().RetrieveDPOutcomes(message);
 
             dpOutcomes.Should().HaveCount(1);
 
@@ -187,32 +164,24 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.File
                 }
             };
 
-            var invalidLearners = new string[] { learnRefNumber2 };
+            var dpOutcomes = NewService().RetrieveDPOutcomes(message);
 
-            var fundingServiceDto = new Mock<IFundingServiceDto>();
+            dpOutcomes.Should().HaveCount(2);
+            dpOutcomes.Should().ContainKey(learnRefNumber1);
+            dpOutcomes.Should().ContainKey(learnRefNumber2);
 
-            fundingServiceDto.SetupGet(fs => fs.Message).Returns(message);
-            fundingServiceDto.SetupGet(fs => fs.InvalidLearners).Returns(invalidLearners);
+            dpOutcomes[learnRefNumber1].Should().HaveCount(1);
+            dpOutcomes[learnRefNumber2].Should().HaveCount(2);
 
-            var dpOutcomes = NewService(fundingServiceDto.Object).RetrieveDPOutcomes();
-
-            dpOutcomes.Should().HaveCount(1);
-            dpOutcomes.Should().ContainKeys(learnRefNumber1);
-            dpOutcomes.Should().NotContainKey(learnRefNumber2);
-
-            var learnRefNumber1DpOutcomes = dpOutcomes[learnRefNumber1];
-
-            learnRefNumber1DpOutcomes.Should().HaveCount(1);
-
-            var learnRefNumber1DpOutcome = learnRefNumber1DpOutcomes.First();
+            var learnRefNumber1DpOutcome = dpOutcomes[learnRefNumber1].First();
 
             learnRefNumber1DpOutcome.OutCode.Should().Be(outCode);
             learnRefNumber1DpOutcome.OutType.Should().Be(outType);
         }
 
-        private FileDataRetrievalService NewService(IFundingServiceDto fundingServiceDto = null)
+        private FileDataRetrievalService NewService()
         {
-            return new FileDataRetrievalService(fundingServiceDto);
+            return new FileDataRetrievalService();
         }
     }
 }

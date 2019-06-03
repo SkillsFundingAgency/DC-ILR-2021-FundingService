@@ -1,30 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Interfaces;
+using ESFA.DC.ILR.Model.Interface;
 
-namespace ESFA.DC.ILR.FundingService.Stubs
+namespace ESFA.DC.ILR.FundingService.Providers
 {
-    public class LearnerPagingService<T> : IPagingService<T>
-        where T : class
+    public class LearnerPagingService : ILearnerPagingService
     {
         private const int PageSize = 500;
 
-        private readonly IFundingContext _fundingContext;
-
-        public LearnerPagingService(IFundingContext fundingContext)
+        public IEnumerable<IEnumerable<ILearner>> BuildPages(IEnumerable<int> fundModelFilter, IEnumerable<ILearner> learners)
         {
-            _fundingContext = fundingContext;
+            var pagedLearners = learners.Where(l => l.LearningDeliveries.Any(ld => fundModelFilter.Contains(ld.FundModel))).ToList().Cast<ILearner>();
+
+            return SplitList(pagedLearners, PageSize);
         }
 
-        public IEnumerable<IEnumerable<T>> BuildPages(IEnumerable<int> fundModelFilter)
-        {
-            var validLearners = _fundingContext.ValidLearners.Where(l => l.LearningDeliveries.Any(ld => fundModelFilter.Contains(ld.FundModel))).ToList().Cast<T>();
-
-            return SplitList(validLearners, PageSize);
-        }
-
-        private IEnumerable<IEnumerable<T>> SplitList(IEnumerable<T> learners, int pageSize)
+        private IEnumerable<IEnumerable<ILearner>> SplitList(IEnumerable<ILearner> learners, int pageSize)
         {
             var learnerList = learners.ToList();
 

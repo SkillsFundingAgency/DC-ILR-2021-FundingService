@@ -36,35 +36,12 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                            OrgFundFactType = "Type",
                            OrgFundFactor = "Factor",
                            EffectiveFrom = new DateTime(2018, 9, 2)
-                       },
-                    },
-                },
-                new ReferenceDataService.Model.Organisations.Organisation
-                {
-                    UKPRN = 2,
-                    PartnerUKPRN = false,
-                    OrganisationFundings = new List<ReferenceDataService.Model.Organisations.OrganisationFunding>
-                    {
-                        new ReferenceDataService.Model.Organisations.OrganisationFunding
-                        {
-                           OrgFundFactValue = "1.0",
-                           OrgFundFactType = "Type",
-                           OrgFundFactor = "Factor",
-                           EffectiveFrom = new DateTime(2018, 8, 1),
-                           EffectiveTo = new DateTime(2018, 9, 1)
                         },
-                        new ReferenceDataService.Model.Organisations.OrganisationFunding
-                        {
-                           OrgFundFactValue = "2.0",
-                           OrgFundFactType = "Type",
-                           OrgFundFactor = "Factor",
-                           EffectiveFrom = new DateTime(2018, 9, 2)
-                       },
                     },
                 }
             };
 
-            var result = NewService().MapOrgFundings(organisations, 1);
+            var result = NewService().MapOrgFundings(organisations);
 
             result.Should().HaveCount(1);
             result.Should().BeEquivalentTo(expectedOrgFundingDictionary);
@@ -73,7 +50,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         [Fact]
         public void MapOrgFundings_Null()
         {
-            NewService().MapOrgFundings(null, 1).Should().BeNull();
+            NewService().MapOrgFundings(null).Should().BeNull();
         }
 
             private IDictionary<int, IReadOnlyCollection<OrgFunding>> ExpectedOrgFundingDictionary()

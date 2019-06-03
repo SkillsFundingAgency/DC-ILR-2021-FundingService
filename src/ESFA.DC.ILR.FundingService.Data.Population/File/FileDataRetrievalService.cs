@@ -2,25 +2,16 @@
 using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.File.Model;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
-using ESFA.DC.ILR.FundingService.Dto.Interfaces;
+using ESFA.DC.ILR.Model.Interface;
 
 namespace ESFA.DC.ILR.FundingService.Data.Population.File
 {
     public class FileDataRetrievalService : IFileDataRetrievalService
     {
-        private readonly IFundingServiceDto _fundingServiceDto;
-
-        public FileDataRetrievalService(IFundingServiceDto fundingServiceDto)
+        public IDictionary<string, IEnumerable<DPOutcome>> RetrieveDPOutcomes(IMessage message)
         {
-            _fundingServiceDto = fundingServiceDto;
-        }
-
-        public IDictionary<string, IEnumerable<DPOutcome>> RetrieveDPOutcomes()
-        {
-            return _fundingServiceDto
-                .Message?
+            return message?
                 .LearnerDestinationAndProgressions?
-                .Where(dp => !_fundingServiceDto.InvalidLearners.Contains(dp.LearnRefNumber))
                 .ToDictionary(
                     l => l.LearnRefNumber,
                     l => l.DPOutcomes?
@@ -35,9 +26,9 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.File
                 ?? new Dictionary<string, IEnumerable<DPOutcome>>();
         }
 
-        public int RetrieveUKPRN()
+        public int RetrieveUKPRN(IMessage message)
         {
-            return _fundingServiceDto.Message.LearningProviderEntity.UKPRN;
+            return message.LearningProviderEntity.UKPRN;
         }
     }
 }

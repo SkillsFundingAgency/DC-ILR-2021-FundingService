@@ -1,28 +1,28 @@
 ﻿using System.Threading;
-using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
+using ESFA.DC.ILR.Model.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Model;
 
 namespace ESFA.DC.ILR.FundingService.Data.Population.File
 {
     public class FileDataCachePopulationService : IFileDataCachePopulationService
     {
-        private readonly IFileDataCache _fileDataCache;
         private readonly IFileDataRetrievalService _fileDataRetrievalService;
 
-        public FileDataCachePopulationService(IFileDataCache fileDataCache, IFileDataRetrievalService ukprnDataRetrievalService)
+        public FileDataCachePopulationService(IFileDataRetrievalService fileDataRetrievalService)
         {
-            _fileDataCache = fileDataCache;
-            _fileDataRetrievalService = ukprnDataRetrievalService;
+            _fileDataRetrievalService = fileDataRetrievalService;
         }
 
-        public async Task PopulateAsync(CancellationToken cancellationToken)
+        public IFileDataCache PopulateAsync(IMessage message, CancellationToken cancellationToken)
         {
-            FileDataCache fileDataCache = (FileDataCache)_fileDataCache;
-
-            fileDataCache.UKPRN = _fileDataRetrievalService.RetrieveUKPRN();
-            fileDataCache.DPOutcomes = _fileDataRetrievalService.RetrieveDPOutcomes();
+            return new FileDataCache
+            {
+                UKPRN = _fileDataRetrievalService.RetrieveUKPRN(message),
+                DPOutcomes = _fileDataRetrievalService.RetrieveDPOutcomes(message),
+            };
         }
     }
 }

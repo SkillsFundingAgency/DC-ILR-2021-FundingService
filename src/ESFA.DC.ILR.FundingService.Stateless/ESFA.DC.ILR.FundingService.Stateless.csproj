@@ -89,6 +89,9 @@
     <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.1819.Model.Interface.0.1.5-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
+    <Reference Include="ESFA.DC.ILR.ReferenceDataService.Model, Version=0.1.59.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR.ReferenceDataService.Model.0.1.59\lib\netstandard2.0\ESFA.DC.ILR.ReferenceDataService.Model.dll</HintPath>
+    </Reference>
     <Reference Include="ESFA.DC.IO.AzureStorage, Version=0.1.15.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.IO.AzureStorage.0.1.15-beta0001\lib\netstandard2.0\ESFA.DC.IO.AzureStorage.dll</HintPath>
     </Reference>
@@ -428,6 +431,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\IOConfiguration.cs" />
+    <Compile Include="Context\FundingServiceContext.cs" />
     <Compile Include="Handlers\MessageHandler.cs" />
     <Compile Include="Modules\ActorModule.cs" />
     <Compile Include="Modules\PopulationModule.cs" />
@@ -478,10 +482,6 @@
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Data\ESFA.DC.ILR.FundingService.Data.csproj">
       <Project>{69B93B19-4FD0-4205-AFFA-8B71122A3C65}</Project>
       <Name>ESFA.DC.ILR.FundingService.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Dto\ESFA.DC.ILR.FundingService.Dto.csproj">
-      <Project>{0021C0BF-4592-40C8-9272-82AC3A1339FA}</Project>
-      <Name>ESFA.DC.ILR.FundingService.Dto</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FundingActor.Interfaces\ESFA.DC.ILR.FundingService.FundingActor.Interfaces.csproj">
       <Project>{B2EC7FFE-2E94-422A-BD8B-31C92C74A061}</Project>

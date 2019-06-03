@@ -8,7 +8,7 @@ using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.Interface;
-using ESFA.DC.ILR.FundingService.Data.Internal;
+
 using ESFA.DC.ILR.FundingService.FundingActor;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model.Interface;
@@ -51,7 +51,6 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
             ILogger logger = LifetimeScope.Resolve<ILogger>();
 
             ExternalDataCache externalDataCache;
-            InternalDataCache internalDataCache;
             FileDataCache fileDataCache;
             ALBGlobal results;
 
@@ -60,7 +59,6 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                 logger.LogDebug($"{nameof(ALBActor)} {ActorId} {GC.GetGeneration(actorModel)} starting");
 
                 externalDataCache = BuildExternalDataCache(actorModel.ExternalDataCache);
-                internalDataCache = BuildInternalDataCache(actorModel.InternalDataCache);
                 fileDataCache = BuildFileDataCache(actorModel.FileDataCache);
 
                 logger.LogDebug($"{nameof(ALBActor)} {ActorId} {GC.GetGeneration(actorModel)} finished getting input data");
@@ -77,7 +75,6 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
                 c.RegisterInstance(externalDataCache).As<IExternalDataCache>();
-                c.RegisterInstance(internalDataCache).As<IInternalDataCache>();
                 c.RegisterInstance(fileDataCache).As<IFileDataCache>();
             }))
             {
@@ -106,7 +103,6 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
             }
 
             externalDataCache = null;
-            internalDataCache = null;
             fileDataCache = null;
 
             return results;

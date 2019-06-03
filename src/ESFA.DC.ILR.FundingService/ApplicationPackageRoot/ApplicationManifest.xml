@@ -2,18 +2,18 @@
 <ApplicationManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ApplicationTypeName="ESFA.DC.ILR1920.FundingServiceType" ApplicationTypeVersion="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
   <Parameters>
     <Parameter Name="ESFA.DC.ILR.FundingService.Stateless_InstanceCount" DefaultValue="-1" />
-    <Parameter Name="AuditQueueName" DefaultValue="audit-queue" />
     <Parameter Name="ServiceBusConnectionString" DefaultValue="" />
     <Parameter Name="TopicName" DefaultValue="" />
-    <Parameter Name="FundingCalcSubscriptionName" DefaultValue="fundingcalc-init" />
-    <Parameter Name="JobStatusQueueName" DefaultValue="jobstatusqueue" />
-    <Parameter Name="MaxMessageSize" DefaultValue="1073741824" />
-    <Parameter Name="LoggerConnectionstring" DefaultValue="Server=localhost;Database=logs;User Id=loguser;Password=password1;" />
-    <Parameter Name="EndpointUrl" DefaultValue="" />
-    <Parameter Name="AuthKeyOrResourceToken" DefaultValue="" />
-    <Parameter Name="DataStoreSubscriptionName" DefaultValue="" />
-    <Parameter Name="AzureBlobConnectionString" DefaultValue="UseDevelopmentStorage=true" />
-    <Parameter Name="AzureBlobContainerName" DefaultValue="ilr1920-files" />
+    <Parameter Name="SubscriptionName" DefaultValue="" />
+    <Parameter Name="TopicMaxConcurrentCalls" DefaultValue="" />
+    <Parameter Name="TopicMaxCallbackTimeSpanMinutes" DefaultValue="" />
+    <Parameter Name="JobStatusQueueName" DefaultValue="" />
+    <Parameter Name="JobStatusMaxConcurrentCalls" DefaultValue="" />
+    <Parameter Name="AuditQueueName" DefaultValue="" />
+    <Parameter Name="AuditMaxConcurrentCalls" DefaultValue="" />
+    <Parameter Name="LoggerConnectionString" DefaultValue="" />
+    <Parameter Name="AzureStorageConnectionString" DefaultValue="" />
+    <Parameter Name="AzureStorageContainerName" DefaultValue="" />
     <Parameter Name="ProcessingServicePlacementConstraints" DefaultValue="" />
     <Parameter Name="ALBActorService_PartitionCount" DefaultValue="100" />
     <Parameter Name="ALBActorService_MinReplicaSetSize" DefaultValue="1" />
@@ -24,12 +24,6 @@
     <Parameter Name="FM25ActorService_PartitionCount" DefaultValue="100" />
     <Parameter Name="FM25ActorService_MinReplicaSetSize" DefaultValue="1" />
     <Parameter Name="FM25ActorService_TargetReplicaSetSize" DefaultValue="1" />
-    <Parameter Name="TopicFunding_TaskPerformALBCalculation" DefaultValue="ALB" />
-    <Parameter Name="TopicFunding_TaskPerformFM25Calculation" DefaultValue="FM25" />
-    <Parameter Name="TopicFunding_TaskPerformFM35Calculation" DefaultValue="FM35" />
-    <Parameter Name="TopicFunding_TaskPerformFM36Calculation" DefaultValue="FM36" />
-    <Parameter Name="TopicFunding_TaskPerformFM70Calculation" DefaultValue="FM70" />
-    <Parameter Name="TopicFunding_TaskPerformFM81Calculation" DefaultValue="FM81" />
     <Parameter Name="FM36ActorService_PartitionCount" DefaultValue="100" />
     <Parameter Name="FM36ActorService_MinReplicaSetSize" DefaultValue="1" />
     <Parameter Name="FM36ActorService_TargetReplicaSetSize" DefaultValue="1" />
@@ -120,31 +114,27 @@
     <ConfigOverrides>
       <ConfigOverride Name="Config">
         <Settings>
-          <Section Name="ServiceBusSettings">
-            <Parameter Name="AuditQueueName" Value="[AuditQueueName]" />
+          <Section Name="StatelessServiceConfiguration">
             <Parameter Name="ServiceBusConnectionString" Value="[ServiceBusConnectionString]" />
             <Parameter Name="TopicName" Value="[TopicName]" />
-            <Parameter Name="FundingCalcSubscriptionName" Value="[FundingCalcSubscriptionName]" />
-            <Parameter Name="DataStoreSubscriptionName" Value="[DataStoreSubscriptionName]" />
+            <Parameter Name="SubscriptionName" Value="[SubscriptionName]" />
+            <Parameter Name="TopicMaxConcurrentCalls" Value="[TopicMaxConcurrentCalls]" />
+            <Parameter Name="TopicMaxCallbackTimeSpanMinutes" Value="[TopicMaxCallbackTimeSpanMinutes]" />
             <Parameter Name="JobStatusQueueName" Value="[JobStatusQueueName]" />
-          </Section>
-          <Section Name="DataTransportSettings">
-            <Parameter Name="MaxMessageSize" Value="[MaxMessageSize]" />
+            <Parameter Name="JobStatusMaxConcurrentCalls" Value="[TopicMaxConcurrentCalls]" />
+            <Parameter Name="AuditQueueName" Value="[AuditQueueName]" />
+            <Parameter Name="AuditMaxConcurrentCalls" Value="[AuditMaxConcurrentCalls]" />
+            <Parameter Name="LoggerConnectionString" Value="[LoggerConnectionString]" />
           </Section>
           <Section Name="LoggerSection">
             <Parameter Name="LoggerConnectionstring" Value="[LoggerConnectionstring]" />
           </Section>
-          <Section Name="AzureStorageSection">
-            <Parameter Name="AzureBlobConnectionString" Value="[AzureBlobConnectionString]" />
-            <Parameter Name="AzureBlobContainerName" Value="[AzureBlobContainerName]" />
+          <Section Name="AzureStorageFileServiceConfiguration">
+            <Parameter Name="ConnectionString" Value="[AzureStorageConnectionString]" />
           </Section>
-          <Section Name="TopicAndTaskSection">
-            <Parameter Name="TopicFunding_TaskPerformALBCalculation" Value="[TopicFunding_TaskPerformALBCalculation]" />
-            <Parameter Name="TopicFunding_TaskPerformFM25Calculation" Value="[TopicFunding_TaskPerformFM25Calculation]" />
-            <Parameter Name="TopicFunding_TaskPerformFM35Calculation" Value="[TopicFunding_TaskPerformFM35Calculation]" />
-            <Parameter Name="TopicFunding_TaskPerformFM36Calculation" Value="[TopicFunding_TaskPerformFM36Calculation]" />
-            <Parameter Name="TopicFunding_TaskPerformFM70Calculation" Value="[TopicFunding_TaskPerformFM70Calculation]" />
-            <Parameter Name="TopicFunding_TaskPerformFM81Calculation" Value="[TopicFunding_TaskPerformFM81Calculation]" />
+          <Section Name="IOConfiguration">
+            <Parameter Name="ConnectionString" Value="[AzureStorageConnectionString]" />
+            <Parameter Name="ContainerName" Value="[AzureStorageContainerName]" />
           </Section>
         </Settings>
       </ConfigOverride>

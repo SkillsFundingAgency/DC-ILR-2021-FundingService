@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="ESFA.DC.ILR.1819.Model.Interface" Version="0.1.5-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.ReferenceDataService.Model" Version="0.1.59" />
   </ItemGroup>
 
   <ItemGroup>
