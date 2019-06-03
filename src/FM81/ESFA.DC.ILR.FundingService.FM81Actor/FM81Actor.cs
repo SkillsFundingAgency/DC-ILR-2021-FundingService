@@ -14,9 +14,10 @@ using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
 using ExecutionContext = ESFA.DC.Logging.ExecutionContext;
 using ESFA.DC.ILR.FundingService.FundingActor;
+using ESFA.DC.ILR.FundingService.Config;
 
 namespace ESFA.DC.ILR.FundingService.FM81Actor
-{
+{  
     [StatePersistence(StatePersistence.None)]
     [ActorService(Name = ActorServiceNameConstants.FM81)]
     public class FM81Actor : AbstractFundingActor, IFM81Actor
@@ -26,7 +27,7 @@ namespace ESFA.DC.ILR.FundingService.FM81Actor
         {
         }
 
-        public async Task<string> Process(IFundingActorDto actorModel, CancellationToken cancellationToken)
+        public async Task<string> Process(FundingActorDto actorModel, CancellationToken cancellationToken)
         {
             FM81Global results = RunFunding(actorModel, cancellationToken);
             actorModel = null;
@@ -37,7 +38,7 @@ namespace ESFA.DC.ILR.FundingService.FM81Actor
             return BuildFundingOutput(results);
         }
 
-        private FM81Global RunFunding(IFundingActorDto actorModel, CancellationToken cancellationToken)
+        private FM81Global RunFunding(FundingActorDto actorModel, CancellationToken cancellationToken)
         {
             if (ExecutionContext is ExecutionContext executionContextObj)
             {

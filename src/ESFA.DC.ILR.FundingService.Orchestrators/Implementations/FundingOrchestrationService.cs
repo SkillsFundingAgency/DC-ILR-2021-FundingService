@@ -5,9 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
+using ESFA.DC.ILR.FundingService.Config;
 using ESFA.DC.ILR.FundingService.Config.Interfaces;
-using ESFA.DC.ILR.FundingService.Data.Interface;
-using ESFA.DC.ILR.FundingService.Data.Population.File;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.FM25.Model.Output;
 using ESFA.DC.ILR.FundingService.FM25Actor.Interfaces;
@@ -23,6 +22,7 @@ using ESFA.DC.ILR.FundingService.FundingActor;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers.Interfaces;
+using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model;
 using ESFA.DC.IO.Interfaces;
@@ -33,7 +33,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
 {
     public class FundingOrchestrationService : IFundingOrchestrationService
     {
-        private readonly ISerializationService _jsonSerializationService;
+        private readonly IJsonSerializationService _jsonSerializationService;
         private readonly IFileProviderService<IMessage> _ilrFileProviderService;
         private readonly IFileProviderService<ReferenceDataRoot> _ilrReferenceDataProviderService;
         private readonly IExternalDataCachePopulationService _externalCachePopulationService;
@@ -46,7 +46,6 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
         private readonly IActorTask<IFM25Actor, FM25Global> _fm25ActorTask;
         private readonly IKeyValuePersistenceService _keyValuePersistenceService;
         private readonly ILearnerPagingService _learnerPagingService;
-        private readonly ITopicAndTaskSectionConfig _topicAndTaskSectionConfig;
         private readonly ILogger _logger;
 
         public FundingOrchestrationService(
@@ -63,7 +62,6 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             IActorTask<IFM25Actor, FM25Global> fm25ActorTask,
             IKeyValuePersistenceService keyValuePersistenceService,
             ILearnerPagingService learnerPagingService,
-            ITopicAndTaskSectionConfig topicAndTaskSectionConfig,
             ILogger logger)
         {
             _jsonSerializationService = jsonSerializationService;
@@ -79,7 +77,6 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             _fm25ActorTask = fm25ActorTask;
             _keyValuePersistenceService = keyValuePersistenceService;
             _learnerPagingService = learnerPagingService;
-            _topicAndTaskSectionConfig = topicAndTaskSectionConfig;
             _logger = logger;
         }
 
@@ -113,44 +110,44 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
 
             List<Task> fundingTasks = new List<Task>();
 
-            if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformFM81Calculation))
+            if (taskNames.Contains("FM81"))
             {
-                List<IFundingActorDto> fundingActorDtos = GetFundingModelPages(new List<int> { 81 }, fundingServiceContext, message.Learners, externalDataCache, fileDataCache);
+                List<FundingActorDto> fundingActorDtos = GetFundingModelPages(new List<int> { 81 }, fundingServiceContext, message.Learners, externalDataCache, fileDataCache);
                 _logger.LogDebug($"Funding Service FM81 {fundingActorDtos.Count} pages");
                 fundingTasks.Add(_fm81ActorTask.Execute(fundingActorDtos, fundingServiceContext.FundingFm81OutputKey.ToString(), cancellationToken));
             }
 
-            if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformFM70Calculation))
+            if (taskNames.Contains("FM70"))
             {
-                List<IFundingActorDto> fundingActorDtos = GetFundingModelPages(new List<int> { 70 }, fundingServiceContext, message.Learners, externalDataCache, fileDataCache);
+                List<FundingActorDto> fundingActorDtos = GetFundingModelPages(new List<int> { 70 }, fundingServiceContext, message.Learners, externalDataCache, fileDataCache);
                 _logger.LogDebug($"Funding Service FM70 {fundingActorDtos.Count} pages");
                 fundingTasks.Add(_fm70ActorTask.Execute(fundingActorDtos, fundingServiceContext.FundingFm70OutputKey, cancellationToken));
             }
 
-            if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformFM35Calculation))
+            if (taskNames.Contains("FM35"))
             {
-                List<IFundingActorDto> fundingActorDtos = GetFundingModelPages(new List<int> { 35 }, fundingServiceContext, message.Learners, externalDataCache, fileDataCache);
+                List<FundingActorDto> fundingActorDtos = GetFundingModelPages(new List<int> { 35 }, fundingServiceContext, message.Learners, externalDataCache, fileDataCache);
                 _logger.LogDebug($"Funding Service FM35 {fundingActorDtos.Count} pages");
                 fundingTasks.Add(_fm35ActorTask.Execute(fundingActorDtos, fundingServiceContext.FundingFm35OutputKey, cancellationToken));
             }
 
-            if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformFM36Calculation))
+            if (taskNames.Contains("FM36"))
             {
-                List<IFundingActorDto> fundingActorDtos = GetFundingModelPages(new List<int> { 36 }, fundingServiceContext, message.Learners, externalDataCache, fileDataCache);
+                List<FundingActorDto> fundingActorDtos = GetFundingModelPages(new List<int> { 36 }, fundingServiceContext, message.Learners, externalDataCache, fileDataCache);
                 _logger.LogDebug($"Funding Service FM36 {fundingActorDtos.Count} pages");
                 fundingTasks.Add(_fm36ActorTask.Execute(fundingActorDtos, fundingServiceContext.FundingFm36OutputKey, cancellationToken));
             }
 
-            if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformFM25Calculation))
+            if (taskNames.Contains("FM25"))
             {
-                List<IFundingActorDto> fundingActorDtos = GetFundingModelPages(new List<int> { 25 }, fundingServiceContext, message.Learners, externalDataCache, fileDataCache);
+                List<FundingActorDto> fundingActorDtos = GetFundingModelPages(new List<int> { 25 }, fundingServiceContext, message.Learners, externalDataCache, fileDataCache);
                 _logger.LogDebug($"Funding Service FM25 {fundingActorDtos.Count} pages");
                 fundingTasks.Add(_fm25ActorTask.Execute(fundingActorDtos, fundingServiceContext.FundingFm25OutputKey, cancellationToken));
             }
 
-            if (taskNames.Contains(_topicAndTaskSectionConfig.TopicFunding_TaskPerformALBCalculation))
+            if (taskNames.Contains("ALB"))
             {
-                List<IFundingActorDto> fundingActorDtos = GetFundingModelPages(new List<int> { 99, 81 }, fundingServiceContext, message.Learners, externalDataCache, fileDataCache);
+                List<FundingActorDto> fundingActorDtos = GetFundingModelPages(new List<int> { 99, 81 }, fundingServiceContext, message.Learners, externalDataCache, fileDataCache);
                 _logger.LogDebug($"Funding Service FM99/81 {fundingActorDtos.Count} pages");
                 fundingTasks.Add(_albActorTask.Execute(fundingActorDtos, fundingServiceContext.FundingALBOutputKey, cancellationToken));
             }
@@ -160,7 +157,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             _logger.LogDebug($"Completed Funding Service for given rule bases in: {stopWatch.ElapsedMilliseconds}");
         }
 
-        private List<IFundingActorDto> GetFundingModelPages(IEnumerable<int> filter, IFundingServiceContext fundingServiceContext, IEnumerable<ILearner> learners, string externalDataCache, string fileDataCache)
+        private List<FundingActorDto> GetFundingModelPages(IEnumerable<int> filter, IFundingServiceContext fundingServiceContext, IEnumerable<ILearner> learners, string externalDataCache, string fileDataCache)
         {
             return _learnerPagingService
                 .BuildPages(filter, learners)
@@ -171,7 +168,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
                         ExternalDataCache = externalDataCache,
                         FileDataCache = fileDataCache,
                         ValidLearners = _jsonSerializationService.Serialize(p)
-                    } as IFundingActorDto).ToList();
+                    }).ToList();
         }
     }
 }

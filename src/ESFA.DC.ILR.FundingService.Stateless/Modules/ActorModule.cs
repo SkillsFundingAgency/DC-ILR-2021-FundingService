@@ -17,6 +17,8 @@ using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Implementations;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Output;
+using ESFA.DC.Logging;
+using ESFA.DC.Logging.Interfaces;
 
 namespace ESFA.DC.ILR.FundingService.Stateless.Modules
 {
@@ -46,6 +48,8 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             containerBuilder.RegisterInstance(new ActorProvider<IFM36Actor>(ActorServiceNameConstants.FM36)).As<IActorProvider<IFM36Actor>>();
             containerBuilder.RegisterInstance(new ActorProvider<IALBActor>(ActorServiceNameConstants.ALB)).As<IActorProvider<IALBActor>>();
             containerBuilder.RegisterInstance(new ActorProvider<IFM25Actor>(ActorServiceNameConstants.FM25)).As<IActorProvider<IFM25Actor>>();
+
+            containerBuilder.RegisterType<ExecutionContext>().As<IExecutionContext>();
         }
     }
 }

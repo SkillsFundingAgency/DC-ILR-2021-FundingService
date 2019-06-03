@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.Interfaces;
+using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 
 namespace ESFA.DC.ILR.FundingService.Providers
@@ -9,14 +10,14 @@ namespace ESFA.DC.ILR.FundingService.Providers
     {
         private const int PageSize = 500;
 
-        public IEnumerable<IEnumerable<ILearner>> BuildPages(IEnumerable<int> fundModelFilter, IEnumerable<ILearner> learners)
+        public IEnumerable<IEnumerable<MessageLearner>> BuildPages(IEnumerable<int> fundModelFilter, IEnumerable<ILearner> learners)
         {
-            var pagedLearners = learners.Where(l => l.LearningDeliveries.Any(ld => fundModelFilter.Contains(ld.FundModel))).ToList().Cast<ILearner>();
+            var pagedLearners = learners.Where(l => l.LearningDeliveries.Any(ld => fundModelFilter.Contains(ld.FundModel))).ToList().Cast<MessageLearner>();
 
             return SplitList(pagedLearners, PageSize);
         }
 
-        private IEnumerable<IEnumerable<ILearner>> SplitList(IEnumerable<ILearner> learners, int pageSize)
+        private IEnumerable<IEnumerable<MessageLearner>> SplitList(IEnumerable<MessageLearner> learners, int pageSize)
         {
             var learnerList = learners.ToList();
 

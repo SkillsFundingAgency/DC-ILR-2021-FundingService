@@ -8,4 +8,8 @@
     <PackageReference Include="Microsoft.ServiceFabric.Actors" Version="3.3.664" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Config\ESFA.DC.ILR.FundingService.Config.csproj" />
+  </ItemGroup>
+
 </Project>

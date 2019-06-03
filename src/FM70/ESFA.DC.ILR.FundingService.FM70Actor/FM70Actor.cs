@@ -3,6 +3,7 @@ using System.Runtime;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
+using ESFA.DC.ILR.FundingService.Config;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FM70Actor.Interfaces;
@@ -26,7 +27,7 @@ namespace ESFA.DC.ILR.FundingService.FM70Actor
         {
         }
 
-        public async Task<string> Process(IFundingActorDto actorModel, CancellationToken cancellationToken)
+        public async Task<string> Process(FundingActorDto actorModel, CancellationToken cancellationToken)
         {
             FM70Global results = RunFunding(actorModel, cancellationToken);
             actorModel = null;
@@ -37,7 +38,7 @@ namespace ESFA.DC.ILR.FundingService.FM70Actor
             return BuildFundingOutput(results);
         }
 
-        private FM70Global RunFunding(IFundingActorDto actorModel, CancellationToken cancellationToken)
+        private FM70Global RunFunding(FundingActorDto actorModel, CancellationToken cancellationToken)
         {
             if (ExecutionContext is ExecutionContext executionContextObj)
             {

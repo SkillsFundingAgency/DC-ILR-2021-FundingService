@@ -1,6 +1,6 @@
-﻿namespace ESFA.DC.ILR.FundingService.FundingActor
+﻿namespace ESFA.DC.ILR.FundingService.Config
 {
-    public class FundingActorDto : IFundingActorDto
+    public class FundingActorDto
     {
         public long JobId { get; set; }
 
