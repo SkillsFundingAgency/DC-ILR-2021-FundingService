@@ -16,11 +16,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Context
 
         public long JobId => _jobContextMessage.JobId;
 
-        public string FileReference
-        {
-            get => _jobContextMessage.KeyValuePairs[ILRContextKeys.Filename].ToString();
-            set => _jobContextMessage.KeyValuePairs[ILRContextKeys.Filename] = value;
-        }
+        public string FileReference => _jobContextMessage.KeyValuePairs[ILRContextKeys.Filename].ToString();
 
         public string Container => _jobContextMessage.KeyValuePairs[ILRContextKeys.Container].ToString();
 
