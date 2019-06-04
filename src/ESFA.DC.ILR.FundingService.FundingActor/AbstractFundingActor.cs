@@ -57,7 +57,7 @@ namespace ESFA.DC.ILR.FundingService.FundingActor
             return new FileDataCache
             {
                 UKPRN = deserialzedCache.UKPRN,
-                DPOutcomes = deserialzedCache.DPOutcomes.ToCaseInsensitiveDictionary()
+                DPOutcomes = deserialzedCache.DPOutcomes.ToCaseInsensitiveDictionary(),
             };
         }
 

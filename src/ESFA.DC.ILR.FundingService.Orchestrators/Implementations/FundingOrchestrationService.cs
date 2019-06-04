@@ -167,7 +167,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
                         JobId = fundingServiceContext.JobId,
                         ExternalDataCache = externalDataCache,
                         FileDataCache = fileDataCache,
-                        ValidLearners = _jsonSerializationService.Serialize(p)
+                        ValidLearners = _jsonSerializationService.Serialize(p),
                     }).ToList();
         }
     }
