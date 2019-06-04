@@ -1,110 +1,61 @@
 ﻿using Autofac;
 using ESFA.DC.DateTimeProvider.Interface;
-using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
-using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
-using ESFA.DC.ILR.FundingService.Config.Interfaces;
-using ESFA.DC.ILR.FundingService.Data.Context;
-using ESFA.DC.ILR.FundingService.Data.External;
-using ESFA.DC.ILR.FundingService.Data.File;
-using ESFA.DC.ILR.FundingService.Data.Interface;
-using ESFA.DC.ILR.FundingService.Data.Internal;
-using ESFA.DC.ILR.FundingService.Data.Population;
-using ESFA.DC.ILR.FundingService.Data.Population.Context;
-using ESFA.DC.ILR.FundingService.Data.Population.External;
+using ESFA.DC.FileService.Config;
 using ESFA.DC.ILR.FundingService.Data.Population.File;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
-using ESFA.DC.ILR.FundingService.Data.Population.Internal;
-using ESFA.DC.ILR.FundingService.Dto;
-using ESFA.DC.ILR.FundingService.Dto.Interfaces;
-using ESFA.DC.ILR.FundingService.FM25.Model.Output;
-using ESFA.DC.ILR.FundingService.FM25.Service.Output;
-using ESFA.DC.ILR.FundingService.FM25Actor.Interfaces;
-using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Output;
-using ESFA.DC.ILR.FundingService.FM35Actor.Interfaces;
-using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output;
-using ESFA.DC.ILR.FundingService.FM36Actor.Interfaces;
-using ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model.Output;
-using ESFA.DC.ILR.FundingService.FM70Actor.Interfaces;
-using ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.Output;
-using ESFA.DC.ILR.FundingService.FM81Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Implementations;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
-using ESFA.DC.ILR.FundingService.Orchestrators.Output;
-using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
-using ESFA.DC.ILR.FundingService.ServiceFabric.Common.Interfaces;
-using ESFA.DC.ILR.FundingService.Stubs;
+using ESFA.DC.ILR.FundingService.Providers;
+using ESFA.DC.ILR.FundingService.Providers.Interfaces;
+using ESFA.DC.ILR.FundingService.Stateless.Config;
+using ESFA.DC.ILR.FundingService.Stateless.Context;
+using ESFA.DC.ILR.FundingService.Stateless.Handlers;
 using ESFA.DC.ILR.Model.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Model;
 using ESFA.DC.JobContextManager;
 using ESFA.DC.JobContextManager.Interface;
 using ESFA.DC.JobContextManager.Model;
-using ESFA.DC.JobContextManager.Model.Interface;
-using ESFA.DC.Serialization.Interfaces;
-using ESFA.DC.Serialization.Json;
-using ESFA.DC.Serialization.Xml;
+using ESFA.DC.Mapping.Interface;
+using ESFA.DC.ServiceFabric.Common.Config;
+using ESFA.DC.ServiceFabric.Common.Modules;
 
 namespace ESFA.DC.ILR.FundingService.Stateless.Modules
 {
     public class StatelessModule : Module
     {
-        protected override void Load(ContainerBuilder builder)
+        protected override void Load(ContainerBuilder containerBuilder)
         {
-            builder.RegisterType<PopulationService>().As<IPopulationService>().InstancePerLifetimeScope();
-            builder.RegisterType<FileDataCachePopulationService>().As<IFileDataCachePopulationService>().InstancePerLifetimeScope();
-            builder.RegisterType<InternalDataCachePopulationService>().As<IInternalDataCachePopulationService>().InstancePerLifetimeScope();
-            builder.RegisterType<ExternalDataCachePopulationService>().As<IExternalDataCachePopulationService>().InstancePerLifetimeScope();
-            builder.RegisterType<LearnerPagingService<ILearner>>().As<IPagingService<ILearner>>().InstancePerLifetimeScope();
-            builder.RegisterType<FundingContext>().As<IFundingContext>().InstancePerLifetimeScope();
-            builder.RegisterType<FundingContextPopulationService>().As<IFundingContextPopulationService>().InstancePerLifetimeScope();
-            builder.RegisterType<ExternalDataCache>().As<IExternalDataCache>().InstancePerLifetimeScope();
-            builder.RegisterType<InternalDataCache>().As<IInternalDataCache>().InstancePerLifetimeScope();
-            builder.RegisterType<FileDataCache>().As<IFileDataCache>().InstancePerLifetimeScope();
-            builder.RegisterType<ValidLearnersDataRetrievalService>().As<IValidLearnersDataRetrievalService>().InstancePerLifetimeScope();
-            builder.RegisterType<FileDataRetrievalService>().As<IFileDataRetrievalService>().InstancePerLifetimeScope();
+            var serviceFabricConfigurationService = new ServiceFabricConfigurationService();
 
-            builder.RegisterType<PostcodesMapperService>().As<IPostcodesMapperService>().InstancePerLifetimeScope();
-            builder.RegisterType<OrganisationsMapperService>().As<IOrganisationsMapperService>().InstancePerLifetimeScope();
-            builder.RegisterType<LargeEmployersMapperService>().As<ILargeEmployersMapperService>().InstancePerLifetimeScope();
-            builder.RegisterType<AppsEarningsHistoryMapperService>().As<IAppsEarningsHistoryMapperService>().InstancePerLifetimeScope();
-            builder.RegisterType<FCSMapperService>().As<IFCSMapperService>().InstancePerLifetimeScope();
-            builder.RegisterType<LARSMapperService>().As<ILARSMapperService>().InstancePerLifetimeScope();
+            var statelessServiceConfiguration = serviceFabricConfigurationService.GetConfigSectionAsStatelessServiceConfiguration();
+            var azureStorageFileServiceConfiguration = serviceFabricConfigurationService.GetConfigSectionAs<AzureStorageFileServiceConfiguration>("AzureStorageFileServiceConfiguration");
+            var ioConfiguration = serviceFabricConfigurationService.GetConfigSectionAs<IOConfiguration>("IOConfiguration");
 
-            builder.RegisterType<JsonSerializationService>().As<ISerializationService>();
-            builder.RegisterType<JsonSerializationService>().As<IJsonSerializationService>();
-            builder.RegisterType<XmlSerializationService>().As<IXmlSerializationService>();
+            containerBuilder.RegisterModule(new StatelessServiceModule(statelessServiceConfiguration));
+            containerBuilder.RegisterModule(new IOModule(azureStorageFileServiceConfiguration, ioConfiguration));
 
-            builder.RegisterType<DateTimeProvider.DateTimeProvider>().As<IDateTimeProvider>();
+            containerBuilder.RegisterModule<DataCacheModule>();
+            containerBuilder.RegisterModule<SerializationModule>();
+            containerBuilder.RegisterModule<PopulationModule>();
+            containerBuilder.RegisterModule<StatelessActorModule>();
 
-            // register the  callback handle when a new message is received from ServiceBus
-            builder.RegisterType<JobContextManager<JobContextMessage>>().As<IJobContextManager<JobContextMessage>>().InstancePerLifetimeScope();
-            builder.RegisterType<JobContextMessage>().As<IJobContextMessage>().InstancePerLifetimeScope();
+            // register MessageHandler
+            containerBuilder.RegisterType<MessageHandler>().As<IMessageHandler<JobContextMessage>>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultJobContextMessageMapper<JobContextMessage>>().As<IMapper<JobContextMessage, JobContextMessage>>().InstancePerLifetimeScope();
 
-            builder.RegisterType<PreFundingSFOrchestrationService>().As<IPreFundingSFOrchestrationService>().InstancePerLifetimeScope();
+            // register providers
+            containerBuilder.RegisterType<IlrFileProviderService>().As<IFileProviderService<IMessage>>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<IlrReferenceDataProviderService>().As<IFileProviderService<ReferenceDataRoot>>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<LearnerPagingService>().As<ILearnerPagingService>().InstancePerLifetimeScope();
 
-            builder.RegisterType<FundingServiceDto>().As<IFundingServiceDto>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FileDataRetrievalService>().As<IFileDataRetrievalService>().InstancePerLifetimeScope();
 
-            var actorNameParameter = "actorName";
+            containerBuilder.RegisterType<DateTimeProvider.DateTimeProvider>().As<IDateTimeProvider>();
 
-            builder.RegisterType<ActorTask<IALBActor, ALBGlobal>>().As<IActorTask<IALBActor, ALBGlobal>>().WithParameter(actorNameParameter, ActorServiceNameConstants.ALB).InstancePerLifetimeScope();
-            builder.RegisterType<ActorTask<IFM81Actor, FM81Global>>().As<IActorTask<IFM81Actor, FM81Global>>().WithParameter(actorNameParameter, ActorServiceNameConstants.FM81).InstancePerLifetimeScope();
-            builder.RegisterType<ActorTask<IFM70Actor, FM70Global>>().As<IActorTask<IFM70Actor, FM70Global>>().WithParameter(actorNameParameter, ActorServiceNameConstants.FM70).InstancePerLifetimeScope();
-            builder.RegisterType<ActorTask<IFM35Actor, FM35Global>>().As<IActorTask<IFM35Actor, FM35Global>>().WithParameter(actorNameParameter, ActorServiceNameConstants.FM35).InstancePerLifetimeScope();
-            builder.RegisterType<ActorTask<IFM36Actor, FM36Global>>().As<IActorTask<IFM36Actor, FM36Global>>().WithParameter(actorNameParameter, ActorServiceNameConstants.FM36).InstancePerLifetimeScope();
-            builder.RegisterType<ActorTask<IFM25Actor, FM25Global>>().As<IActorTask<IFM25Actor, FM25Global>>().WithParameter(actorNameParameter, ActorServiceNameConstants.FM25).InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FundingOrchestrationService>().As<IFundingOrchestrationService>().InstancePerLifetimeScope();
 
-            builder.RegisterType<FM81FundingOutputCondenserService>().As<IFundingOutputCondenserService<FM81Global>>().InstancePerLifetimeScope();
-            builder.RegisterType<FM70FundingOutputCondenserService>().As<IFundingOutputCondenserService<FM70Global>>().InstancePerLifetimeScope();
-            builder.RegisterType<FM35FundingOutputCondenserService>().As<IFundingOutputCondenserService<FM35Global>>().InstancePerLifetimeScope();
-            builder.RegisterType<FM36FundingOutputCondenserService>().As<IFundingOutputCondenserService<FM36Global>>().InstancePerLifetimeScope();
-            builder.RegisterType<ALBFundingOutputCondenserService>().As<IFundingOutputCondenserService<ALBGlobal>>().InstancePerLifetimeScope();
-            builder.RegisterType<FM25FundingOutputCondenserService>().As<IFundingOutputCondenserService<FM25Global>>().InstancePerLifetimeScope();
-
-            builder.RegisterInstance(new ActorProvider<IFM81Actor>(ActorServiceNameConstants.FM81)).As<IActorProvider<IFM81Actor>>();
-            builder.RegisterInstance(new ActorProvider<IFM70Actor>(ActorServiceNameConstants.FM70)).As<IActorProvider<IFM70Actor>>();
-            builder.RegisterInstance(new ActorProvider<IFM35Actor>(ActorServiceNameConstants.FM35)).As<IActorProvider<IFM35Actor>>();
-            builder.RegisterInstance(new ActorProvider<IFM36Actor>(ActorServiceNameConstants.FM36)).As<IActorProvider<IFM36Actor>>();
-            builder.RegisterInstance(new ActorProvider<IALBActor>(ActorServiceNameConstants.ALB)).As<IActorProvider<IALBActor>>();
-            builder.RegisterInstance(new ActorProvider<IFM25Actor>(ActorServiceNameConstants.FM25)).As<IActorProvider<IFM25Actor>>();
+            containerBuilder.RegisterType<FundingServiceContext>().As<IFundingServiceContext>().InstancePerLifetimeScope();
         }
     }
 }

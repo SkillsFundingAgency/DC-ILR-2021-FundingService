@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
+using ESFA.DC.ILR.FundingService.Config;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.Interface;
-using ESFA.DC.ILR.FundingService.Data.Internal;
+using ESFA.DC.ILR.FundingService.FundingActor;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
-using ESFA.DC.ILR.FundingService.Stateless.Models;
-using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
@@ -54,7 +51,6 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
             ILogger logger = LifetimeScope.Resolve<ILogger>();
 
             ExternalDataCache externalDataCache;
-            InternalDataCache internalDataCache;
             FileDataCache fileDataCache;
             ALBGlobal results;
 
@@ -63,7 +59,6 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                 logger.LogDebug($"{nameof(ALBActor)} {ActorId} {GC.GetGeneration(actorModel)} starting");
 
                 externalDataCache = BuildExternalDataCache(actorModel.ExternalDataCache);
-                internalDataCache = BuildInternalDataCache(actorModel.InternalDataCache);
                 fileDataCache = BuildFileDataCache(actorModel.FileDataCache);
 
                 logger.LogDebug($"{nameof(ALBActor)} {ActorId} {GC.GetGeneration(actorModel)} finished getting input data");
@@ -80,7 +75,6 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
                 c.RegisterInstance(externalDataCache).As<IExternalDataCache>();
-                c.RegisterInstance(internalDataCache).As<IInternalDataCache>();
                 c.RegisterInstance(fileDataCache).As<IFileDataCache>();
             }))
             {
@@ -109,7 +103,6 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
             }
 
             externalDataCache = null;
-            internalDataCache = null;
             fileDataCache = null;
 
             return results;

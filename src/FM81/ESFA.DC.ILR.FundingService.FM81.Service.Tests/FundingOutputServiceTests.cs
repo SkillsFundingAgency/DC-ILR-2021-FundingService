@@ -244,28 +244,13 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
         [Fact]
         public void FundingOutput_LearningDeliveryPeriodisedAttributeData_WithChangePoints_Correct()
         {
-            var internalDataCacheMock = new Mock<IInternalDataCache>();
-
-            internalDataCacheMock.Setup(p => p.Period1).Returns(new DateTime(2018, 8, 1));
-            internalDataCacheMock.Setup(p => p.Period2).Returns(new DateTime(2018, 9, 1));
-            internalDataCacheMock.Setup(p => p.Period3).Returns(new DateTime(2018, 10, 1));
-            internalDataCacheMock.Setup(p => p.Period4).Returns(new DateTime(2018, 11, 1));
-            internalDataCacheMock.Setup(p => p.Period5).Returns(new DateTime(2018, 12, 1));
-            internalDataCacheMock.Setup(p => p.Period6).Returns(new DateTime(2019, 1, 1));
-            internalDataCacheMock.Setup(p => p.Period7).Returns(new DateTime(2019, 2, 1));
-            internalDataCacheMock.Setup(p => p.Period8).Returns(new DateTime(2019, 3, 1));
-            internalDataCacheMock.Setup(p => p.Period9).Returns(new DateTime(2019, 4, 1));
-            internalDataCacheMock.Setup(p => p.Period10).Returns(new DateTime(2019, 5, 1));
-            internalDataCacheMock.Setup(p => p.Period11).Returns(new DateTime(2019, 6, 1));
-            internalDataCacheMock.Setup(p => p.Period12).Returns(new DateTime(2019, 7, 1));
-
             var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
 
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(It.IsAny<object>())).Returns(1.0m);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValueForPeriod(It.IsAny<IAttributeData>(), It.IsAny<DateTime>())).Returns(1.0m);
 
             var learningDeliveryPeriodisedAttributeData =
-                NewService(internalDataCacheMock.Object, dataEntityAttributeServiceMock.Object).LearningDeliveryPeriodisedValues(TestLearningDeliveryEntityWithChangePoints(null).Single());
+                NewService(dataEntityAttributeServiceMock.Object).LearningDeliveryPeriodisedValues(TestLearningDeliveryEntityWithChangePoints(null).Single());
 
             // ASSERT
             var expectedLearningDeliveryPeriodisedAttributeData = TestLearningDeliveryPeriodisedAttributesDataArray();
@@ -539,9 +524,9 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             };
         }
 
-        private FundingOutputService NewService(IInternalDataCache internalDataCache = null, IDataEntityAttributeService dataEntityAttributeService = null)
+        private FundingOutputService NewService(IDataEntityAttributeService dataEntityAttributeService = null)
         {
-            return new FundingOutputService(internalDataCache, dataEntityAttributeService);
+            return new FundingOutputService(dataEntityAttributeService);
         }
     }
 }

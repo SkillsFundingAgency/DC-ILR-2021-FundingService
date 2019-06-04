@@ -8,8 +8,8 @@ using ESFA.DC.ILR.FundingService.Config.Interfaces;
 using ESFA.DC.ILR.FundingService.FM25.Model.Output;
 using ESFA.DC.ILR.FundingService.FM25Actor.Modules;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.ILR.FundingService.Modules;
 using ESFA.DC.ILR.Model.Interface;
+using ESFA.DC.ServiceFabric.Common.Modules;
 using ESFA.DC.ServiceFabric.Helpers;
 using Microsoft.ServiceFabric.Actors.Runtime;
 
@@ -58,7 +58,6 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
             var loggerConfig = configHelper.GetSectionValues<LoggerConfig>("LoggerSection");
 
             containerBuilder.RegisterInstance(loggerConfig).As<ILoggerConfig>().SingleInstance();
-            containerBuilder.RegisterModule<LoggerModule>();
 
             // register serialization
             return containerBuilder;

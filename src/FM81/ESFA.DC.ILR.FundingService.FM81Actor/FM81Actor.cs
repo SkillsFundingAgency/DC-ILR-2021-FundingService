@@ -1,30 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
-using Autofac.Core.Lifetime;
-using ESFA.DC.ILR.FundingService.Data.External;
-using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.Interface;
-using ESFA.DC.ILR.FundingService.Data.Internal;
 using ESFA.DC.ILR.FundingService.FM81Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
-using ESFA.DC.ILR.FundingService.Stateless.Models;
-using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
-using ESFA.DC.Serialization.Json;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
 using ExecutionContext = ESFA.DC.Logging.ExecutionContext;
+using ESFA.DC.ILR.FundingService.FundingActor;
+using ESFA.DC.ILR.FundingService.Config;
 
 namespace ESFA.DC.ILR.FundingService.FM81Actor
-{
+{  
     [StatePersistence(StatePersistence.None)]
     [ActorService(Name = ActorServiceNameConstants.FM81)]
     public class FM81Actor : AbstractFundingActor, IFM81Actor
@@ -56,7 +49,6 @@ namespace ESFA.DC.ILR.FundingService.FM81Actor
             ILogger logger = LifetimeScope.Resolve<ILogger>();
 
             IExternalDataCache externalDataCache;
-            IInternalDataCache internalDataCache;
             IFileDataCache fileDataCache;
             FM81Global results;
 
@@ -65,7 +57,6 @@ namespace ESFA.DC.ILR.FundingService.FM81Actor
                 logger.LogDebug($"{nameof(FM81Actor)} {ActorId} {GC.GetGeneration(actorModel)} starting");
 
                 externalDataCache = BuildExternalDataCache(actorModel.ExternalDataCache);
-                internalDataCache = BuildInternalDataCache(actorModel.InternalDataCache);
                 fileDataCache = BuildFileDataCache(actorModel.FileDataCache);
 
                 logger.LogDebug($"{nameof(FM81Actor)} {ActorId} {GC.GetGeneration(actorModel)} finished getting input data");
@@ -82,7 +73,6 @@ namespace ESFA.DC.ILR.FundingService.FM81Actor
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
                 c.RegisterInstance(externalDataCache).As<IExternalDataCache>();
-                c.RegisterInstance(internalDataCache).As<IInternalDataCache>();
                 c.RegisterInstance(fileDataCache).As<IFileDataCache>();
             }))
             {
@@ -117,7 +107,6 @@ namespace ESFA.DC.ILR.FundingService.FM81Actor
             }
 
             externalDataCache = null;
-            internalDataCache = null;
             fileDataCache = null;
 
             return results;

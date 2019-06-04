@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.FundingService.Stateless.Models;
+using ESFA.DC.ILR.FundingService.Config;
 
 namespace ESFA.DC.ILR.FundingService.Orchestrators.Interfaces
 {

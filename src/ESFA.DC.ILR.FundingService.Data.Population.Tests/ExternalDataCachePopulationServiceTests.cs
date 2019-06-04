@@ -11,8 +11,7 @@ using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.External;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
-using ESFA.DC.ILR.FundingService.Data.Population.Keys;
-using ESFA.DC.ILR.FundingService.Dto.Interfaces;
+using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Tests.Model;
 using FluentAssertions;
 using Moq;
@@ -54,13 +53,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
                 }
             };
 
-            var fundingServiceDtoMock = new Mock<IFundingServiceDto>();
-
-            fundingServiceDtoMock.SetupGet(f => f.Message).Returns(message);
-            fundingServiceDtoMock.SetupGet(f => f.ReferenceData).Returns(referenceData);
-
-            var externalDataCache = new ExternalDataCache();
-
             var postcodesMapperServiceMock = new Mock<IPostcodesMapperService>();
 
             var postcodesCurrentVersion = "PostcodesVersion";
@@ -94,8 +86,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             var orgFundings = new Dictionary<int, IReadOnlyCollection<OrgFunding>>();
 
             organisationsMapperServiceMock.Setup(o => o.MapOrgFundings(
-                It.IsAny<IReadOnlyCollection<ReferenceDataService.Model.Organisations.Organisation>>(),
-                message.LearningProviderEntity.UKPRN)).Returns(orgFundings).Verifiable();
+                It.IsAny<IReadOnlyCollection<ReferenceDataService.Model.Organisations.Organisation>>())).Returns(orgFundings).Verifiable();
 
             var appsEarningsHistoryMapperServiceMock = new Mock<IAppsEarningsHistoryMapperService>();
 
@@ -111,16 +102,14 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
 
             fcsMapperServiceMock.Setup(f => f.MapFCSContractAllocations(It.IsAny<IReadOnlyCollection<ReferenceDataService.Model.FCS.FcsContractAllocation>>())).Returns(fcsContractAllocations).Verifiable();
 
-            await NewService(
-                externalDataCache,
-                fundingServiceDtoMock.Object,
+            var externalDataCache = NewService(
                 postcodesMapperServiceMock.Object,
                 organisationsMapperServiceMock.Object,
                 largeEmployersMapperServiceMock.Object,
                 appsEarningsHistoryMapperServiceMock.Object,
                 fcsMapperServiceMock.Object,
                 larsMapperServiceMock.Object)
-                .PopulateAsync(CancellationToken.None);
+                .PopulateAsync(referenceData, CancellationToken.None);
 
             postcodesMapperServiceMock.VerifyAll();
             largeEmployersMapperServiceMock.VerifyAll();
@@ -143,8 +132,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
         }
 
         private ExternalDataCachePopulationService NewService(
-            IExternalDataCache externalDataCache = null,
-            IFundingServiceDto fundingServiceDto = null,
             IPostcodesMapperService postcodesMapperService = null,
             IOrganisationsMapperService organisationsMapperService = null,
             ILargeEmployersMapperService largeEmployersMapperService = null,
@@ -153,8 +140,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             ILARSMapperService larsMapperService = null)
         {
             return new ExternalDataCachePopulationService(
-                externalDataCache,
-                fundingServiceDto,
                 postcodesMapperService,
                 organisationsMapperService,
                 largeEmployersMapperService,

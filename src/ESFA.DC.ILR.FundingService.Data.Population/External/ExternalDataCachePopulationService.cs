@@ -1,19 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
-using ESFA.DC.ILR.FundingService.Dto.Interfaces;
+using ESFA.DC.ILR.FundingService.Interfaces;
+using ESFA.DC.ILR.ReferenceDataService.Model;
 
 namespace ESFA.DC.ILR.FundingService.Data.Population.External
 {
     public class ExternalDataCachePopulationService : IExternalDataCachePopulationService
     {
-        private readonly IExternalDataCache _externalDataCache;
-        private readonly IFundingServiceDto _fundingServiceDto;
         private readonly IPostcodesMapperService _postcodesMapperService;
         private readonly IOrganisationsMapperService _organisationsMapperService;
         private readonly ILargeEmployersMapperService _largeEmployersMapperService;
@@ -22,8 +21,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         private readonly ILARSMapperService _larsMapperService;
 
         public ExternalDataCachePopulationService(
-            IExternalDataCache externalDataCache,
-            IFundingServiceDto fundingServiceDto,
             IPostcodesMapperService postcodesMapperService,
             IOrganisationsMapperService organisationsMapperService,
             ILargeEmployersMapperService largeEmployersMapperService,
@@ -31,8 +28,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             IFCSMapperService fcsMapperService,
             ILARSMapperService larsMapperService)
         {
-            _externalDataCache = externalDataCache;
-            _fundingServiceDto = fundingServiceDto;
             _postcodesMapperService = postcodesMapperService;
             _organisationsMapperService = organisationsMapperService;
             _largeEmployersMapperService = largeEmployersMapperService;
@@ -41,25 +36,28 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             _larsMapperService = larsMapperService;
         }
 
-        public async Task PopulateAsync(CancellationToken cancellationToken)
+        public IExternalDataCache PopulateAsync(ReferenceDataRoot referenceDataRoot, CancellationToken cancellationToken)
         {
-            var referenceDataCache = (ExternalDataCache)_externalDataCache;
+            return new ExternalDataCache
+            {
+                LARSCurrentVersion = referenceDataRoot.MetaDatas.ReferenceDataVersions.LarsVersion.Version,
+                LARSLearningDelivery = _larsMapperService.MapLARSLearningDeliveries(referenceDataRoot.LARSLearningDeliveries),
+                LARSStandards = _larsMapperService.MapLARSStandards(referenceDataRoot.LARSStandards),
 
-            referenceDataCache.LARSCurrentVersion = _fundingServiceDto.ReferenceData.MetaDatas.ReferenceDataVersions.LarsVersion.Version;
-            referenceDataCache.LARSLearningDelivery = _larsMapperService.MapLARSLearningDeliveries(_fundingServiceDto.ReferenceData.LARSLearningDeliveries);
-            referenceDataCache.LARSStandards = _larsMapperService.MapLARSStandards(_fundingServiceDto.ReferenceData.LARSStandards);
+                PostcodeRoots = _postcodesMapperService.MapPostcodes(referenceDataRoot.Postcodes),
+                PostcodeCurrentVersion = referenceDataRoot.MetaDatas.ReferenceDataVersions.PostcodesVersion.Version,
 
-            referenceDataCache.PostcodeRoots = _postcodesMapperService.MapPostcodes(_fundingServiceDto.ReferenceData.Postcodes);
-            referenceDataCache.PostcodeCurrentVersion = _fundingServiceDto.ReferenceData.MetaDatas.ReferenceDataVersions.PostcodesVersion.Version;
+                OrgVersion = referenceDataRoot.MetaDatas.ReferenceDataVersions.OrganisationsVersion.Version,
+                OrgFunding = _organisationsMapperService.MapOrgFundings(referenceDataRoot.Organisations),
 
-            referenceDataCache.OrgVersion = _fundingServiceDto.ReferenceData.MetaDatas.ReferenceDataVersions.OrganisationsVersion.Version;
-            referenceDataCache.OrgFunding = _organisationsMapperService.MapOrgFundings(_fundingServiceDto.ReferenceData.Organisations, _fundingServiceDto.Message.LearningProviderEntity.UKPRN);
+                LargeEmployers = _largeEmployersMapperService.MapLargeEmployers(referenceDataRoot.Employers),
 
-            referenceDataCache.LargeEmployers = _largeEmployersMapperService.MapLargeEmployers(_fundingServiceDto.ReferenceData.Employers);
+                FCSContractAllocations = _fcsMapperService.MapFCSContractAllocations(referenceDataRoot.FCSContractAllocations),
 
-            referenceDataCache.FCSContractAllocations = _fcsMapperService.MapFCSContractAllocations(_fundingServiceDto.ReferenceData.FCSContractAllocations);
+                AECLatestInYearEarningHistory = _appsEarningsHistoryMapperService.MapAppsEarningsHistories(referenceDataRoot.AppsEarningsHistories),
 
-            referenceDataCache.AECLatestInYearEarningHistory = _appsEarningsHistoryMapperService.MapAppsEarningsHistories(_fundingServiceDto.ReferenceData.AppsEarningsHistories);
+                Periods = new Periods(),
+            };
         }
     }
 }
