@@ -629,9 +629,9 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         {
             var appIdentifierOutput = "Id";
             var appProgCompletedInTheYearOutput = false;
-            var BalancingProgAimPaymentsInTheYearOutput = 1.0m;
-            var CompletionProgAimPaymentsInTheYearOutput = 1.0m;
-            var OnProgProgAimPaymentsInTheYearOutput = 1.0m;
+            var balancingProgAimPaymentsInTheYearOutput = 1.0m;
+            var completionProgAimPaymentsInTheYearOutput = 1.0m;
+            var onProgProgAimPaymentsInTheYearOutput = 1.0m;
             var historicDaysInYearOutput = 1;
             var historicEffectiveTNPStartDateOutput = new DateTime(2018, 8, 1);
             var historicEmpIdEndWithinYearOutput = 2;
@@ -662,15 +662,15 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
 
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "AppIdentifierOutput")).Returns(appIdentifierOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "AppProgCompletedInTheYearOutput")).Returns(appProgCompletedInTheYearOutput);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "HistoricBalancingProgAimPaymentsInTheYear")).Returns(BalancingProgAimPaymentsInTheYearOutput);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "HistoricCompletionProgAimPaymentsInTheYear")).Returns(CompletionProgAimPaymentsInTheYearOutput);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "HistoricBalancingProgAimPaymentsInTheYear")).Returns(balancingProgAimPaymentsInTheYearOutput);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "HistoricCompletionProgAimPaymentsInTheYear")).Returns(completionProgAimPaymentsInTheYearOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "HistoricDaysInYearOutput")).Returns(historicDaysInYearOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "HistoricEffectiveTNPStartDateOutput")).Returns(historicEffectiveTNPStartDateOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "HistoricEmpIdEndWithinYearOutput")).Returns(historicEmpIdEndWithinYearOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "HistoricEmpIdStartWithinYearOutput")).Returns(historicEmpIdStartWithinYearOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "HistoricFworkCodeOutput")).Returns(historicFworkCodeOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "HistoricLearner1618AtStartOutput")).Returns(historicLearner1618AtStartOutput);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "HistoricOnProgProgAimPaymentsInTheYear")).Returns(OnProgProgAimPaymentsInTheYearOutput);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "HistoricOnProgProgAimPaymentsInTheYear")).Returns(onProgProgAimPaymentsInTheYearOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "HistoricPMRAmountOutput")).Returns(historicPMRAmountOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "HistoricProgrammeStartDateIgnorePathwayOutput")).Returns(historicProgrammeStartDateIgnorePathwayOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "HistoricProgrammeStartDateMatchPathwayOutput")).Returns(historicProgrammeStartDateMatchPathwayOutput);
@@ -693,15 +693,15 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
 
             historicEarningOutput.AppIdentifierOutput.Should().Be(appIdentifierOutput);
             historicEarningOutput.AppProgCompletedInTheYearOutput.Should().Be(appProgCompletedInTheYearOutput);
-            historicEarningOutput.BalancingProgAimPaymentsInTheYear.Should().Be(BalancingProgAimPaymentsInTheYearOutput);
-            historicEarningOutput.CompletionProgAimPaymentsInTheYear.Should().Be(CompletionProgAimPaymentsInTheYearOutput);
+            historicEarningOutput.BalancingProgAimPaymentsInTheYear.Should().Be(balancingProgAimPaymentsInTheYearOutput);
+            historicEarningOutput.CompletionProgAimPaymentsInTheYear.Should().Be(completionProgAimPaymentsInTheYearOutput);
             historicEarningOutput.HistoricDaysInYearOutput.Should().Be(historicDaysInYearOutput);
             historicEarningOutput.HistoricEffectiveTNPStartDateOutput.Should().Be(historicEffectiveTNPStartDateOutput);
             historicEarningOutput.HistoricEmpIdEndWithinYearOutput.Should().Be(historicEmpIdEndWithinYearOutput);
             historicEarningOutput.HistoricEmpIdStartWithinYearOutput.Should().Be(historicEmpIdStartWithinYearOutput);
             historicEarningOutput.HistoricFworkCodeOutput.Should().Be(historicFworkCodeOutput);
             historicEarningOutput.HistoricLearner1618AtStartOutput.Should().Be(historicLearner1618AtStartOutput);
-            historicEarningOutput.OnProgProgAimPaymentsInTheYear.Should().Be(OnProgProgAimPaymentsInTheYearOutput);
+            historicEarningOutput.OnProgProgAimPaymentsInTheYear.Should().Be(onProgProgAimPaymentsInTheYearOutput);
             historicEarningOutput.HistoricPMRAmountOutput.Should().Be(historicPMRAmountOutput);
             historicEarningOutput.HistoricProgrammeStartDateIgnorePathwayOutput.Should().Be(historicProgrammeStartDateIgnorePathwayOutput);
             historicEarningOutput.HistoricProgrammeStartDateMatchPathwayOutput.Should().Be(historicProgrammeStartDateMatchPathwayOutput);
