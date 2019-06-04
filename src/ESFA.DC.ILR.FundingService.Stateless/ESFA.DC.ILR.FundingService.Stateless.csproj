@@ -83,6 +83,9 @@
     <Reference Include="ESFA.DC.FileService.Interface, Version=0.1.18.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.FileService.Interface.0.1.18-beta0001\lib\netstandard2.0\ESFA.DC.FileService.Interface.dll</HintPath>
     </Reference>
+    <Reference Include="ESFA.DC.ILR.Constants, Version=0.1.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR.1920.Constants.0.1.5-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Constants.dll</HintPath>
+    </Reference>
     <Reference Include="ESFA.DC.ILR.Model, Version=0.1.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.1819.Model.0.1.5-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.dll</HintPath>
     </Reference>
@@ -459,10 +462,6 @@
     <None Include="Scripts\setup.bat" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.csproj">
       <Project>{7D044D8C-64BE-48A0-A2F2-1284FC7395F5}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model</Name>
@@ -555,6 +554,10 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

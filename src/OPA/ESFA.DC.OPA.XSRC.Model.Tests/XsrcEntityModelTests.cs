@@ -8,7 +8,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
     public class XsrcEntityModelTests
     {
         /// <summary>
-        /// Return XsrcGlobal
+        /// Return XsrcGlobal.
         /// </summary>
         [Fact(DisplayName = "XSRCEntity - XsrcGlobal Exists"), Trait("XSRCEntity Model", "Unit")]
         public void XSRC_XsrcGlobal_Exists()
@@ -24,7 +24,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return XsrcGlobalGlobal
+        /// Return XsrcGlobalGlobal.
         /// </summary>
         [Fact(DisplayName = "XSRCEntity - XsrcGlobal GlobalEntity"), Trait("XSRCEntity Model", "Unit")]
         public void XSRC_XsrcGlobal_Name()
@@ -40,7 +40,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return XsrcEntity
+        /// Return XsrcEntity.
         /// </summary>
         [Fact(DisplayName = "XSRCEntity - XsrcEntity Exists"), Trait("XSRCEntity Model", "Unit")]
         public void XSRC_XSRCEntity_Exists()
@@ -56,7 +56,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return XsrcEntity
+        /// Return XsrcEntity.
         /// </summary>
         [Fact(DisplayName = "XSRCEntity - XsrcEntity Name"), Trait("XSRCEntity Model", "Unit")]
         public void XSRC_XsrcEntity_Name()
@@ -72,7 +72,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return XsrcEntity
+        /// Return XsrcEntity.
         /// </summary>
         [Fact(DisplayName = "XSRCEntity - XsrcEntity PublicName"), Trait("XSRCEntity Model", "Unit")]
         public void XSRC_XsrcEntity_PublicName()
@@ -88,7 +88,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return XsrcEntity
+        /// Return XsrcEntity.
         /// </summary>
         [Fact(DisplayName = "XSRCEntity - XsrcEntity Parent"), Trait("XSRCEntity Model", "Unit")]
         public void XSRC_XsrcEntity_Parent()
@@ -104,7 +104,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return XsrcEntity
+        /// Return XsrcEntity.
         /// </summary>
         [Fact(DisplayName = "XSRCEntity - XsrcEntity Attributes"), Trait("XSRCEntity Model", "Unit")]
         public void XSRC_XsrcEntity_Attributes()
@@ -120,7 +120,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return XsrcEntity
+        /// Return XsrcEntity.
         /// </summary>
         [Fact(DisplayName = "XSRCEntity - XsrcEntity Children"), Trait("XSRCEntity Model", "Unit")]
         public void XSRC_XsrcEntity_Children()
@@ -136,7 +136,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return XsrcAttribute
+        /// Return XsrcAttribute.
         /// </summary>
         [Fact(DisplayName = "XSRCEntity - XsrcAttribute Exists"), Trait("XSRCEntity Model", "Unit")]
         public void XSRC_XsrcAttribute_Exists()
@@ -152,7 +152,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return XsrcAttribute
+        /// Return XsrcAttribute.
         /// </summary>
         [Fact(DisplayName = "XSRCEntity - XsrcAttribute PublicName"), Trait("XSRCEntity Model", "Unit")]
         public void XSRC_XsrcAttribute_PublicName()
@@ -168,7 +168,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return XsrcAttribute
+        /// Return XsrcAttribute.
         /// </summary>
         [Fact(DisplayName = "XSRCEntity - XsrcAttribute Value"), Trait("XSRCEntity Model", "Unit")]
         public void XSRC_XsrcAttribute_Type()
@@ -184,7 +184,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return XsrcAttributeProperty
+        /// Return XsrcAttributeProperty.
         /// </summary>
         [Fact(DisplayName = "XSRCEntity - XsrcAttributeProperty Exists"), Trait("XSRCEntity Model", "Unit")]
         public void XSRC_XsrcAttributeProperty_Exists()
@@ -200,7 +200,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return XsrcAttributeProperty
+        /// Return XsrcAttributeProperty.
         /// </summary>
         [Fact(DisplayName = "XSRCEntity - XsrcAttributeProperty Name"), Trait("XSRCEntity Model", "Unit")]
         public void XSRC_XsrcAttributeProperty_Name()
@@ -216,7 +216,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return XsrcAttributeProperty
+        /// Return XsrcAttributeProperty.
         /// </summary>
         [Fact(DisplayName = "XSRCEntity - XsrcAttributeProperty Value"), Trait("XSRCEntity Model", "Unit")]
         public void XSRC_XsrcAttributeProperty_Value()

@@ -1,13 +1,10 @@
-﻿using ESFA.DC.ILR.Model.Interface;
-using ESFA.DC.ILR.ReferenceDataService.Model;
-
-namespace ESFA.DC.ILR.FundingService.Interfaces
+﻿namespace ESFA.DC.ILR.FundingService.Interfaces
 {
     public interface IFundingServiceContext
     {
         long JobId { get; }
 
-        string FileReference { get; set; }
+        string FileReference { get; }
 
         string Container { get; }
 

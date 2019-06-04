@@ -165,7 +165,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             NewService().MapAppsEarningsHistories(null).Should().BeNull();
         }
 
-            private IDictionary<long, IReadOnlyCollection<AECEarningsHistory>> ExpectedAppsEarnings()
+        private IDictionary<long, IReadOnlyCollection<AECEarningsHistory>> ExpectedAppsEarnings()
         {
             return new Dictionary<long, IReadOnlyCollection<AECEarningsHistory>>
             {

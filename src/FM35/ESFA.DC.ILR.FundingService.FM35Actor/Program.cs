@@ -24,7 +24,7 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
                 builder.RegisterServiceFabricSupport();
                 builder.RegisterActor<FM35Actor>(settings: new ActorServiceSettings
                 {
-                    ActorGarbageCollectionSettings = new ActorGarbageCollectionSettings(30, 30)
+                    ActorGarbageCollectionSettings = new ActorGarbageCollectionSettings(30, 30),
                 });
 
                 using (var container = builder.Build())

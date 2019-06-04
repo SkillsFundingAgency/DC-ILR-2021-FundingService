@@ -162,7 +162,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                         }
                     }
                 },
-                 {
+                {
                     "Postcode3",
                     new PostcodeRoot
                     {

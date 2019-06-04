@@ -32,7 +32,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                 // Register the actor service.
                 builder.RegisterActor<ALBActor>(settings: new ActorServiceSettings
                 {
-                    ActorGarbageCollectionSettings = new ActorGarbageCollectionSettings(30, 30)
+                    ActorGarbageCollectionSettings = new ActorGarbageCollectionSettings(30, 30),
                 });
 
                 using (var container = builder.Build())

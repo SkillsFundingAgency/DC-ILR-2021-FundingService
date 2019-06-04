@@ -27,7 +27,10 @@
     <PackageReference Include="ESFA.DC.IO.Interfaces" Version="0.1.15-beta0001" />
     <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.6-beta0001" />
     <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.6-beta0001" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>

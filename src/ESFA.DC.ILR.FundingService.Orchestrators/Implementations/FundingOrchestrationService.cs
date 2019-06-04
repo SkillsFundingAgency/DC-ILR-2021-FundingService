@@ -18,11 +18,9 @@ using ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FM70Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FM81Actor.Interfaces;
-using ESFA.DC.ILR.FundingService.FundingActor;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers.Interfaces;
-using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model;
 using ESFA.DC.IO.Interfaces;
@@ -167,7 +165,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
                         JobId = fundingServiceContext.JobId,
                         ExternalDataCache = externalDataCache,
                         FileDataCache = fileDataCache,
-                        ValidLearners = _jsonSerializationService.Serialize(p)
+                        ValidLearners = _jsonSerializationService.Serialize(p),
                     }).ToList();
         }
     }
