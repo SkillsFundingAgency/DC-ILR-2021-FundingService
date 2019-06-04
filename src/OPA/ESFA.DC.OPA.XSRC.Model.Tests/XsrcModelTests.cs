@@ -7,9 +7,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
 {
     public class XsrcModelTests
     {
-        /// <summary>
-        /// Return Root
-        /// </summary>
         [Fact(DisplayName = "XSRC - Root Exists"), Trait("XSRC Model", "Unit")]
         public void XSRC_Root_Exists()
         {
@@ -23,9 +20,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.Should().NotBeNull();
         }
 
-        /// <summary>
-        /// Return Root
-        /// </summary>
         [Fact(DisplayName = "XSRC - Root - Entities"), Trait("XSRC Model", "Unit")]
         public void XSRC_Root_Entities()
         {
@@ -39,9 +33,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.RootEntities.Should().BeEquivalentTo(TestRootEntities());
         }
 
-        /// <summary>
-        /// Return Root
-        /// </summary>
         [Fact(DisplayName = "XSRC - Root - Rules"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntity_Rules()
         {
@@ -55,9 +46,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.Rules.Should().Be("Rules");
         }
 
-        /// <summary>
-        /// Return Root
-        /// </summary>
         [Fact(DisplayName = "XSRC - Root - InteractiveItems"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntity_InteractiveItems()
         {
@@ -71,9 +59,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.RootInteractiveItems.Should().BeEquivalentTo(TestRootInteractiveitems());
         }
 
-        /// <summary>
-        /// Return Root
-        /// </summary>
         [Fact(DisplayName = "XSRC - Root - Relationship"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntity_Relationship()
         {
@@ -87,9 +72,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.RootRelationship.Should().BeEquivalentTo(TestRootRelationships());
         }
 
-        /// <summary>
-        /// Return Root
-        /// </summary>
         [Fact(DisplayName = "XSRC - Root - RuleFolders"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntity_RuleFolders()
         {
@@ -103,9 +85,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.RuleFolders.Should().Be("Folders");
         }
 
-        /// <summary>
-        /// Return Root
-        /// </summary>
         [Fact(DisplayName = "XSRC - Root - SchemaVersion"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntity_SchemaVersion()
         {
@@ -119,9 +98,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.SchemaVersion.Should().Be(1);
         }
 
-        /// <summary>
-        /// Return Root
-        /// </summary>
         [Fact(DisplayName = "XSRC - Root - SchemaVersionSpecified True"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntity_SchemaVersionSpecified_True()
         {
@@ -135,9 +111,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.SchemaVersionSpecified.Should().Be(true);
         }
 
-        /// <summary>
-        /// Return Root
-        /// </summary>
         [Fact(DisplayName = "XSRC - Root - SchemaVersionSpecified False"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntity_SchemaVersionSpecified_False()
         {
@@ -159,9 +132,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.SchemaVersionSpecified.Should().Be(false);
         }
 
-        /// <summary>
-        /// Return Root
-        /// </summary>
         [Fact(DisplayName = "XSRC - Root - SchemaVersionNullable"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntity_SchemaVersionNullable()
         {
@@ -175,9 +145,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.SchemaVersionNullable.Should().Be(1);
         }
 
-        /// <summary>
-        /// Return Root
-        /// </summary>
         [Fact(DisplayName = "XSRC - Root - SchemaVersionNullable Null"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntity_SchemaVersionNullable_Null()
         {
@@ -199,9 +166,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.SchemaVersionNullable.Should().BeNull();
         }
 
-        /// <summary>
-        /// Return Root
-        /// </summary>
         [Fact(DisplayName = "XSRC - Root - ProductVersion"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntity_ProductVersion()
         {
@@ -216,7 +180,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return RootEntity
+        /// Return RootEntity.
         /// </summary>
         [Fact(DisplayName = "XSRC - RootEntity Exists"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntity_Exists()
@@ -232,7 +196,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return RootEntity
+        /// Return RootEntity.
         /// </summary>
         [Fact(DisplayName = "XSRC - RootEntity - Attribute"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntity_Attribute()
@@ -248,7 +212,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return RootEntity
+        /// Return RootEntity.
         /// </summary>
         [Fact(DisplayName = "XSRC - RootEntity - Ref"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntity_Ref()
@@ -264,7 +228,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return RootEntity
+        /// Return RootEntity.
         /// </summary>
         [Fact(DisplayName = "XSRC - RootEntity - ID"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntity_ID()
@@ -280,7 +244,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return RootEntity
+        /// Return RootEntity.
         /// </summary>
         [Fact(DisplayName = "XSRC - RootEntity - ContainmentRelationshipID"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntity_ContainmentRelationshipID()
@@ -296,7 +260,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return RootEntity
+        /// Return RootEntity.
         /// </summary>
         [Fact(DisplayName = "XSRC - RootEntity - ContainmentParentID"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntity_ContainmentParentID()
@@ -312,7 +276,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return RootEntity
+        /// Return RootEntity.
         /// </summary>
         [Fact(DisplayName = "XSRC - RootEntity - PublicID"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntity_PublicID()
@@ -328,7 +292,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return RootEntityAttribute
+        /// Return RootEntityAttribute.
         /// </summary>
         [Fact(DisplayName = "XSRC - RootEntityAttribute Exists"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntityAttribute_Exists()
@@ -344,7 +308,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return RootEntityAttribute
+        /// Return RootEntityAttribute.
         /// </summary>
         [Fact(DisplayName = "XSRC - RootEntityAttribute - Text"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntityAttribute_Text()
@@ -360,7 +324,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return RootEntityAttribute
+        /// Return RootEntityAttribute.
         /// </summary>
         [Fact(DisplayName = "XSRC - RootEntityAttribute - Props"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntityAttribute_Props()
@@ -376,7 +340,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return RootEntityAttribute
+        /// Return RootEntityAttribute.
         /// </summary>
         [Fact(DisplayName = "XSRC - RootEntityAttribute - Name"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntityAttribute_Name()
@@ -392,7 +356,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return RootEntityAttribute
+        /// Return RootEntityAttribute.
         /// </summary>
         [Fact(DisplayName = "XSRC - RootEntityAttribute - Type"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntityAttribute_Type()
@@ -408,7 +372,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return RootEntityAttribute
+        /// Return RootEntityAttribute.
         /// </summary>
         [Fact(DisplayName = "XSRC - RootEntityAttribute - PublicName"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntityAttribute_PublicName()
@@ -424,7 +388,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return RootEntityAttributeProp
+        /// Return RootEntityAttributeProp.
         /// </summary>
         [Fact(DisplayName = "XSRC - RootEntityAttributeProp Exists"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntityAttributeProp_Exists()
@@ -440,7 +404,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         }
 
         /// <summary>
-        /// Return RootEntityAttributeProp
+        /// Return RootEntityAttributeProp.
         /// </summary>
         [Fact(DisplayName = "XSRC - RootEntityAttributeProp - Name"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntityAttributeProp_Name()
@@ -455,9 +419,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.Name.Should().Be("Name");
         }
 
-        /// <summary>
-        /// Return RootEntityAttributeProp
-        /// </summary>
         [Fact(DisplayName = "XSRC - RootEntityAttributeProp - Values"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntityAttributeProp_Values()
         {
@@ -471,9 +432,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.Values.Should().Be("Value");
         }
 
-        /// <summary>
-        /// Return RootEntityAttributeText
-        /// </summary>
         [Fact(DisplayName = "XSRC - RootEntityAttributeText Exists"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntityAttributeText_Exists()
         {
@@ -487,9 +445,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.Should().NotBeNull();
         }
 
-        /// <summary>
-        /// Return RootEntityAttributeText
-        /// </summary>
         [Fact(DisplayName = "XSRC - RootEntityAttributeText - Base"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntityAttributeText_Base()
         {
@@ -503,9 +458,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.Base.Should().Be("Base");
         }
 
-        /// <summary>
-        /// Return RootEntityAttributeText
-        /// </summary>
         [Fact(DisplayName = "XSRC - RootEntityAttributeText - Parse"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootEntityAttributeText_Parse()
         {
@@ -519,9 +471,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.Parse.Should().Be("Parse");
         }
 
-        /// <summary>
-        /// Return RootInteractiveItems
-        /// </summary>
         [Fact(DisplayName = "XSRC - RootInteractiveItems Exists"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootInteractiveItems_Exists()
         {
@@ -535,9 +484,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.Should().NotBeNull();
         }
 
-        /// <summary>
-        /// Return RootRelationship
-        /// </summary>
         [Fact(DisplayName = "XSRC - RootInteractiveItems - Folders"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootInteractiveItems_Folders()
         {
@@ -551,9 +497,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.Folders.Should().Be("Folders");
         }
 
-        /// <summary>
-        /// Return RootRelationship
-        /// </summary>
         [Fact(DisplayName = "XSRC - RootInteractiveItems - Screens"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootInteractiveItems_Screens()
         {
@@ -567,9 +510,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.Screens.Should().Be("Screens");
         }
 
-        /// <summary>
-        /// Return RootRelationship
-        /// </summary>
         [Fact(DisplayName = "XSRC - RootInteractiveItems - Documents"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootInteractiveItems_Documents()
         {
@@ -583,9 +523,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.Documents.Should().Be("Documents");
         }
 
-        /// <summary>
-        /// Return RootRelationship
-        /// </summary>
         [Fact(DisplayName = "XSRC - RootRelationship Exists"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootRelationship_Exists()
         {
@@ -599,9 +536,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.Should().NotBeNull();
         }
 
-        /// <summary>
-        /// Return RootRelationship
-        /// </summary>
         [Fact(DisplayName = "XSRC - RootRelationship - Source"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootRelationship_Source()
         {
@@ -615,9 +549,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.Source.Should().Be("Source");
         }
 
-        /// <summary>
-        /// Return RootRelationship
-        /// </summary>
         [Fact(DisplayName = "XSRC - RootRelationship - Target"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootRelationship_Target()
         {
@@ -631,9 +562,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.Target.Should().Be("Target");
         }
 
-        /// <summary>
-        /// Return RootRelationship
-        /// </summary>
         [Fact(DisplayName = "XSRC - RootRelationship - Text"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootRelationship_Text()
         {
@@ -647,9 +575,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.Text.Should().Be("Text");
         }
 
-        /// <summary>
-        /// Return RootRelationship
-        /// </summary>
         [Fact(DisplayName = "XSRC - RootRelationship - RelationshipID"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootRelationship_RelationshipID()
         {
@@ -663,9 +588,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.RelationshipId.Should().Be("RelationshipID");
         }
 
-        /// <summary>
-        /// Return RootRelationship
-        /// </summary>
         [Fact(DisplayName = "XSRC - RootRelationship - ReverseText"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootRelationship_ReverseText()
         {
@@ -679,9 +601,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.ReverseText.Should().Be("ReverseText");
         }
 
-        /// <summary>
-        /// Return RootRelationship
-        /// </summary>
         [Fact(DisplayName = "XSRC - RootRelationship - ReverseRelationshipID"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootRelationship_ReverseRelationshipID()
         {
@@ -695,9 +614,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.ReverseRelationshipId.Should().Be("ReverseRelationshipID");
         }
 
-        /// <summary>
-        /// Return RootRelationship
-        /// </summary>
         [Fact(DisplayName = "XSRC - RootRelationship - Type"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootRelationship_Type()
         {
@@ -711,9 +627,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.Type.Should().Be("Type");
         }
 
-        /// <summary>
-        /// Return RootRelationship
-        /// </summary>
         [Fact(DisplayName = "XSRC - RootRelationship - IsComputed"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootRelationship_IsComputed()
         {
@@ -727,9 +640,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.IsComputed.Should().Be("IsComputed");
         }
 
-        /// <summary>
-        /// Return RootRelationship
-        /// </summary>
         [Fact(DisplayName = "XSRC - RootRelationship - IsContainment"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootRelationship_IsContainment()
         {
@@ -743,9 +653,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.IsContainment.Should().Be("IsContainment");
         }
 
-        /// <summary>
-        /// Return RootRelationship
-        /// </summary>
         [Fact(DisplayName = "XSRC - RootRelationship - PublicID"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootRelationship_PublicID()
         {
@@ -759,9 +666,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.PublicId.Should().Be("PublicID");
         }
 
-        /// <summary>
-        /// Return RootRelationship
-        /// </summary>
         [Fact(DisplayName = "XSRC - RootRelationship - ReversePublicID"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootRelationship_ReversePublicID()
         {
@@ -775,9 +679,6 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             entity.ReversePublicId.Should().Be("ReversePublicID");
         }
 
-        /// <summary>
-        /// Return RootRelationship
-        /// </summary>
         [Fact(DisplayName = "XSRC - RootRelationship - Values"), Trait("XSRC Model", "Unit")]
         public void XSRC_RootRelationship_Values()
         {
