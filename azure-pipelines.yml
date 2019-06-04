@@ -11,7 +11,7 @@ variables:
   BuildConfiguration: 'Release'
   BuildPlatform: 'Any CPU'
   BuildPlatformX64: 'x64'  
-  ServiceFabricApplicationParametersFolder: 'src\ESFA.DC.ILR.ValidationService\ApplicationParameters'
+  ServiceFabricApplicationParametersFolder: 'src\ESFA.DC.ILR.FundingService\ApplicationParameters'
 
 pool:
   name: DCT
