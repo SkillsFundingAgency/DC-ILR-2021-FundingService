@@ -1,6 +1,6 @@
 ﻿using System.Linq;
+using ESFA.DC.ILR.Constants;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.JobContext.Interface;
 using ESFA.DC.JobContextManager.Model;
 
 namespace ESFA.DC.ILR.FundingService.Stateless.Context
@@ -18,26 +18,26 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Context
 
         public string FileReference
         {
-            get => _jobContextMessage.KeyValuePairs[JobContextMessageKey.Filename].ToString();
-            set => _jobContextMessage.KeyValuePairs[JobContextMessageKey.Filename] = value;
+            get => _jobContextMessage.KeyValuePairs[ILRContextKeys.Filename].ToString();
+            set => _jobContextMessage.KeyValuePairs[ILRContextKeys.Filename] = value;
         }
 
-        public string Container => _jobContextMessage.KeyValuePairs[JobContextMessageKey.Container].ToString();
+        public string Container => _jobContextMessage.KeyValuePairs[ILRContextKeys.Container].ToString();
 
-        public string IlrReferenceDataKey => _jobContextMessage.KeyValuePairs[JobContextMessageKey.IlrReferenceData].ToString();
+        public string IlrReferenceDataKey => _jobContextMessage.KeyValuePairs[ILRContextKeys.IlrReferenceData].ToString();
 
         public string[] TaskKeys => _jobContextMessage.Topics[_jobContextMessage.TopicPointer].Tasks.SelectMany(x => x.Tasks).ToArray();
 
-        public string FundingALBOutputKey => _jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingAlbOutput].ToString();
+        public string FundingALBOutputKey => _jobContextMessage.KeyValuePairs[ILRContextKeys.FundingAlbOutput].ToString();
 
-        public string FundingFm25OutputKey => _jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm25Output].ToString();
+        public string FundingFm25OutputKey => _jobContextMessage.KeyValuePairs[ILRContextKeys.FundingFm25Output].ToString();
 
-        public string FundingFm35OutputKey => _jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm35Output].ToString();
+        public string FundingFm35OutputKey => _jobContextMessage.KeyValuePairs[ILRContextKeys.FundingFm35Output].ToString();
 
-        public string FundingFm36OutputKey => _jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm36Output].ToString();
+        public string FundingFm36OutputKey => _jobContextMessage.KeyValuePairs[ILRContextKeys.FundingFm36Output].ToString();
 
-        public string FundingFm70OutputKey => _jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm70Output].ToString();
+        public string FundingFm70OutputKey => _jobContextMessage.KeyValuePairs[ILRContextKeys.FundingFm70Output].ToString();
 
-        public string FundingFm81OutputKey => _jobContextMessage.KeyValuePairs[JobContextMessageKey.FundingFm81Output].ToString();
+        public string FundingFm81OutputKey => _jobContextMessage.KeyValuePairs[ILRContextKeys.FundingFm81Output].ToString();
     }
 }
