@@ -50,7 +50,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service
         public FM70Learner MapLearner(IDataEntity dataEntity)
         {
             return new FM70Learner()
-                {
+            {
                     LearnRefNumber = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.LearnRefNumber),
                     LearningDeliveries = dataEntity
                         .Children
@@ -89,7 +89,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service
                         .Children
                         .Where(e => e.EntityName == Attributes.EntityLearningDeliveryDeliverable)
                         .Select(LearningDeliveryDeliverablesFromDataEntity).ToList()
-                };
+            };
         }
 
         public LearningDeliveryValue LearningDeliveryValue(IDataEntity dataEntity)

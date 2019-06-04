@@ -378,7 +378,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
                         }
                     }
                 },
-                 new TestLearnerEmploymentStatus
+                new TestLearnerEmploymentStatus
                 {
                     AgreeId = "Id",
                     DateEmpStatApp = new DateTime(2018, 8, 1),

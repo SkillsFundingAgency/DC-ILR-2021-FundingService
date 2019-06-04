@@ -73,7 +73,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
                     AimSeqNumber = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.AimSeqNumber),
                     LearningDeliveryValue = LearningDeliveryValue(dataEntity),
                     LearningDeliveryPeriodisedValues = LearningDeliveryPeriodisedValues(dataEntity),
-                };
+            };
         }
 
         public LearningDeliveryValue LearningDeliveryValue(IDataEntity dataEntity)

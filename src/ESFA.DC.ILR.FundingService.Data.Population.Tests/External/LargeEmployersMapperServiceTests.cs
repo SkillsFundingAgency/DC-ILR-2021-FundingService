@@ -29,7 +29,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                         new ReferenceDataService.Model.Employers.LargeEmployerEffectiveDates
                         {
                            EffectiveFrom = new DateTime(2018, 9, 2)
-                       },
+                        },
                     },
                 },
                 new ReferenceDataService.Model.Employers.Employer
@@ -67,7 +67,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             NewService().MapLargeEmployers(null).Should().BeNull();
         }
 
-            private IDictionary<int, IReadOnlyCollection<LargeEmployers>> ExpectedLargeEmployerDictionary()
+        private IDictionary<int, IReadOnlyCollection<LargeEmployers>> ExpectedLargeEmployerDictionary()
         {
             return new Dictionary<int, IReadOnlyCollection<LargeEmployers>>
             {

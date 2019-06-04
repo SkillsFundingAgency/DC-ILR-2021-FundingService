@@ -53,7 +53,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             NewService().MapOrgFundings(null).Should().BeNull();
         }
 
-            private IDictionary<int, IReadOnlyCollection<OrgFunding>> ExpectedOrgFundingDictionary()
+        private IDictionary<int, IReadOnlyCollection<OrgFunding>> ExpectedOrgFundingDictionary()
         {
             return new Dictionary<int, IReadOnlyCollection<OrgFunding>>
             {
