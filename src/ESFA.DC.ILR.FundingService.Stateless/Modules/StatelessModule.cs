@@ -38,7 +38,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             containerBuilder.RegisterModule<DataCacheModule>();
             containerBuilder.RegisterModule<SerializationModule>();
             containerBuilder.RegisterModule<PopulationModule>();
-            containerBuilder.RegisterModule<ActorModule>();
+            containerBuilder.RegisterModule<StatelessActorModule>();
 
             // register MessageHandler
             containerBuilder.RegisterType<MessageHandler>().As<IMessageHandler<JobContextMessage>>().InstancePerLifetimeScope();

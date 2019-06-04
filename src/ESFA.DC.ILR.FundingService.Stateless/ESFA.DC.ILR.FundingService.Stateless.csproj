@@ -433,7 +433,7 @@
     <Compile Include="Config\IOConfiguration.cs" />
     <Compile Include="Context\FundingServiceContext.cs" />
     <Compile Include="Handlers\MessageHandler.cs" />
-    <Compile Include="Modules\ActorModule.cs" />
+    <Compile Include="Modules\StatelessActorModule.cs" />
     <Compile Include="Modules\PopulationModule.cs" />
     <Compile Include="Modules\DataCacheModule.cs" />
     <Compile Include="Modules\IOModule.cs" />

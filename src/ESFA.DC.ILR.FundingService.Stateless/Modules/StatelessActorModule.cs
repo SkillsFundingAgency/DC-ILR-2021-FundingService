@@ -22,7 +22,7 @@ using ESFA.DC.Logging.Interfaces;
 
 namespace ESFA.DC.ILR.FundingService.Stateless.Modules
 {
-    public class ActorModule : Module
+    public class StatelessActorModule : Module
     {
         protected override void Load(ContainerBuilder containerBuilder)
         {
