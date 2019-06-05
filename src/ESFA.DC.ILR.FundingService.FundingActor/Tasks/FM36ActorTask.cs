@@ -4,45 +4,42 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.Config;
+using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output;
+using ESFA.DC.ILR.FundingService.FM36Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.FundingActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
-using ESFA.DC.IO.Interfaces;
+using ESFA.DC.ILR.FundingService.Providers.Interfaces;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
 
-namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
+namespace ESFA.DC.ILR.FundingService.FundingActor.Tasks
 {
-    public class ActorTask<TActor, TActorReturn> : IActorTask<TActor, TActorReturn>
-        where TActor : IFundingActor
+    public class FM36ActorTask : IActorTask
     {
         private readonly IJsonSerializationService _jsonSerializationService;
         private readonly ILogger _logger;
-        private readonly IActorProvider<TActor> _fundingActorProvider;
-        private readonly IKeyValuePersistenceService _keyValuePersistenceService;
-        private readonly IFundingOutputCondenserService<TActorReturn> _fundingOutputCondenserService;
+        private readonly IActorProvider<IFM36Actor> _fundingActorProvider;
+        private readonly IFilePersistanceService _filePersistanceService;
+        private readonly IFundingOutputCondenserService<FM36Global> _fundingOutputCondenserService;
         private readonly string _actorName;
 
-        public ActorTask(
+        public FM36ActorTask(
             IJsonSerializationService jsonSerializationService,
-            IActorProvider<TActor> fundingActorProvider,
-            IKeyValuePersistenceService keyValuePersistenceService,
-            IFundingOutputCondenserService<TActorReturn> fundingOutputCondenserService,
+            IActorProvider<IFM36Actor> fundingActorProvider,
+            IFilePersistanceService filePersistanceService,
+            IFundingOutputCondenserService<FM36Global> fundingOutputCondenserService,
             ILogger logger,
             string actorName)
         {
             _jsonSerializationService = jsonSerializationService;
             _fundingActorProvider = fundingActorProvider;
-            _keyValuePersistenceService = keyValuePersistenceService;
+            _filePersistanceService = filePersistanceService;
             _fundingOutputCondenserService = fundingOutputCondenserService;
             _logger = logger;
             _actorName = actorName;
         }
 
-        public async Task Execute(
-            IEnumerable<FundingActorDto> fundingActorDtos,
-            string outputKey,
-            CancellationToken cancellationToken)
+        public async Task Execute(IEnumerable<FundingActorDto> fundingActorDtos, IFundingServiceContext fundingServiceContext, CancellationToken cancellationToken)
         {
             _logger.LogDebug($"Starting {_actorName} Actors");
 
@@ -50,23 +47,23 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             stopWatch.Start();
 
             List<Task<string>> taskList = new List<Task<string>>();
-            List<TActor> actors = new List<TActor>();
+            List<IFM36Actor> actors = new List<IFM36Actor>();
 
             foreach (FundingActorDto fundingActorDto in fundingActorDtos)
             {
-                TActor actor = _fundingActorProvider.Provide();
+                IFM36Actor actor = _fundingActorProvider.Provide();
                 actors.Add(actor);
                 taskList.Add(actor.Process(fundingActorDto, cancellationToken));
             }
 
             await Task.WhenAll(taskList).ConfigureAwait(false);
 
-            IEnumerable<TActorReturn> results = taskList.Select(t => _jsonSerializationService.Deserialize<TActorReturn>(t.Result));
+            IEnumerable<FM36Global> results = taskList.Select(t => _jsonSerializationService.Deserialize<FM36Global>(t.Result));
 
             _logger.LogDebug($"Completed {taskList.Count} {_actorName} Actors - {stopWatch.ElapsedMilliseconds}");
 
             List<Task> tasksDestroy = new List<Task>();
-            foreach (TActor actor in actors)
+            foreach (IFM36Actor actor in actors)
             {
                 tasksDestroy.Add(_fundingActorProvider.DestroyAsync(actor, cancellationToken));
             }
@@ -80,7 +77,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             var output = _jsonSerializationService.Serialize(_fundingOutputCondenserService.Condense(results));
             _logger.LogDebug($"Persisting {_actorName} bytes:{output.Length}");
 
-            await _keyValuePersistenceService.SaveAsync(outputKey, output, cancellationToken).ConfigureAwait(false);
+            await _filePersistanceService.PersistAsync(fundingServiceContext.FundingFm36OutputKey, fundingServiceContext.Container, output, cancellationToken).ConfigureAwait(false);
 
             _logger.LogDebug($"Persisted {_actorName} results - {stopWatch.ElapsedMilliseconds}");
         }

@@ -48,6 +48,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             containerBuilder.RegisterType<IlrFileProviderService>().As<IFileProviderService<IMessage>>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<IlrReferenceDataProviderService>().As<IFileProviderService<ReferenceDataRoot>>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<LearnerPagingService>().As<ILearnerPagingService>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FilePersistanceService>().As<IFilePersistanceService>().InstancePerLifetimeScope();
 
             containerBuilder.RegisterType<FileDataRetrievalService>().As<IFileDataRetrievalService>().InstancePerLifetimeScope();
 

@@ -1,4 +1,4 @@
-﻿namespace ESFA.DC.ILR.FundingService.FundingActor
+﻿namespace ESFA.DC.ILR.FundingService.FundingActor.Constants
 {
     public static class ActorServiceNameConstants
     {
