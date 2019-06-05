@@ -19,7 +19,7 @@ namespace ESFA.DC.ILR.FundingService.Providers
             _jsonSerializationService = jsonSerializationService;
         }
 
-        public async Task<ReferenceDataRoot> Provide(IFundingServiceContext fundingServiceContext, CancellationToken cancellationToken)
+        public async Task<ReferenceDataRoot> ProvideAsync(IFundingServiceContext fundingServiceContext, CancellationToken cancellationToken)
         {
             ReferenceDataRoot referenceData;
 

@@ -74,8 +74,7 @@ namespace ESFA.DC.ILR.FundingService.FundingActor.Tasks
 
             stopWatch.Restart();
 
-            var output = _jsonSerializationService.Serialize(_fundingOutputCondenserService.Condense(results));
-            _logger.LogDebug($"Persisting {_actorName} bytes:{output.Length}");
+            var output = _fundingOutputCondenserService.Condense(results);
 
             await _filePersistanceService.PersistAsync(fundingServiceContext.FundingFm36OutputKey, fundingServiceContext.Container, output, cancellationToken).ConfigureAwait(false);
 

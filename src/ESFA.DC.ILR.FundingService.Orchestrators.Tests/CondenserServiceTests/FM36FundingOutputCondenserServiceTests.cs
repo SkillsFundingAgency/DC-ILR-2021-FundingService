@@ -1,52 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
-using ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model.Output;
+using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.Orchestrators.Output;
 using FluentAssertions;
 using Xunit;
 
-namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
+namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests.CondenserServiceTests
 {
-    public class FM70FundingOutputCondenserServiceTests
+    public class FM36FundingOutputCondenserServiceTests
     {
         [Fact]
         public void Condense()
         {
-            var learnerOne = new FM70Learner();
-            var learnerTwo = new FM70Learner();
-            var learnerThree = new FM70Learner();
-            var learnerFour = new FM70Learner();
-            var learnerFive = new FM70Learner();
-            var learnerSix = new FM70Learner();
+            var learnerOne = new FM36Learner();
+            var learnerTwo = new FM36Learner();
+            var learnerThree = new FM36Learner();
+            var learnerFour = new FM36Learner();
+            var learnerFive = new FM36Learner();
+            var learnerSix = new FM36Learner();
 
-            var globalOne = new FM70Global()
+            var globalOne = new FM36Global()
             {
-                Learners = new List<FM70Learner>()
+                Learners = new List<FM36Learner>()
                 {
                     learnerOne,
                     learnerTwo,
                 },
             };
 
-            var globalTwo = new FM70Global()
+            var globalTwo = new FM36Global()
             {
-                Learners = new List<FM70Learner>
+                Learners = new List<FM36Learner>
                 {
                     learnerThree,
                     learnerFour,
                 },
             };
 
-            var globalThree = new FM70Global()
+            var globalThree = new FM36Global()
             {
-                Learners = new List<FM70Learner>
+                Learners = new List<FM36Learner>
                 {
                     learnerFive,
                     learnerSix,
                 },
             };
 
-            var fundingOutputs = new List<FM70Global>()
+            var fundingOutputs = new List<FM36Global>()
             {
                 globalOne,
                 globalTwo,
@@ -71,22 +71,22 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
         [Fact]
         public void Condense_NullLearners()
         {
-            var globalOne = new FM70Global()
+            var globalOne = new FM36Global()
             {
                 Learners = null
             };
 
-            var globalTwo = new FM70Global()
+            var globalTwo = new FM36Global()
             {
                 Learners = null
             };
 
-            var globalThree = new FM70Global()
+            var globalThree = new FM36Global()
             {
                 Learners = null
             };
 
-            var fundingOutputs = new List<FM70Global>()
+            var fundingOutputs = new List<FM36Global>()
             {
                 globalOne,
                 globalTwo,
@@ -102,35 +102,35 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
         [Fact]
         public void Condense_MixedNullLearners()
         {
-            var learnerOne = new FM70Learner();
-            var learnerTwo = new FM70Learner();
-            var learnerFive = new FM70Learner();
-            var learnerSix = new FM70Learner();
+            var learnerOne = new FM36Learner();
+            var learnerTwo = new FM36Learner();
+            var learnerFive = new FM36Learner();
+            var learnerSix = new FM36Learner();
 
-            var globalOne = new FM70Global()
+            var globalOne = new FM36Global()
             {
-                Learners = new List<FM70Learner>()
+                Learners = new List<FM36Learner>()
                 {
                     learnerOne,
                     learnerTwo,
                 },
             };
 
-            var globalTwo = new FM70Global()
+            var globalTwo = new FM36Global()
             {
                 Learners = null,
             };
 
-            var globalThree = new FM70Global()
+            var globalThree = new FM36Global()
             {
-                Learners = new List<FM70Learner>
+                Learners = new List<FM36Learner>
                 {
                     learnerFive,
                     learnerSix,
                 },
             };
 
-            var fundingOutputs = new List<FM70Global>()
+            var fundingOutputs = new List<FM36Global>()
             {
                 globalOne,
                 globalTwo,
@@ -145,9 +145,9 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
         }
 
 
-        private FM70FundingOutputCondenserService NewService()
+        private FM36FundingOutputCondenserService NewService()
         {
-            return new FM70FundingOutputCondenserService();
+            return new FM36FundingOutputCondenserService();
         }
     }
 }

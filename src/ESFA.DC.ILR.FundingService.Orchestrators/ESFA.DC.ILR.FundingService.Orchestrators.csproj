@@ -30,12 +30,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ESFA.DC.ILR.ReferenceDataService.Model" Version="0.1.59" />
-    <PackageReference Include="ESFA.DC.JobContext.Interface" Version="0.2.8-beta0001" />
-    <PackageReference Include="ESFA.DC.JobContextManager" Version="0.2.9-beta0001" />
     <PackageReference Include="ESFA.DC.Logging" Version="0.1.4-beta0001" />
     <PackageReference Include="ESFA.DC.Serialization.Json" Version="0.1.6-beta0001" />
-    <PackageReference Include="Microsoft.ServiceFabric.Actors" Version="3.3.664" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -44,23 +40,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model\ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.csproj" />
-    <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALBActor.Interfaces\ESFA.DC.ILR.FundingService.ALBActor.Interfaces.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Config\ESFA.DC.ILR.FundingService.Config.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Data.Population\ESFA.DC.ILR.FundingService.Data.Population.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Data\ESFA.DC.ILR.FundingService.Data.csproj" />
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FundingActor.Interfaces\ESFA.DC.ILR.FundingService.FundingActor.Interfaces.csproj" />
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FundingActor\ESFA.DC.ILR.FundingService.FundingActor.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Providers\ESFA.DC.ILR.FundingService.Providers.csproj" />
     <ProjectReference Include="..\FM25\ESFA.DC.ILR.FundingService.FM25.Model\ESFA.DC.ILR.FundingService.FM25.Model.csproj" />
-    <ProjectReference Include="..\FM25\ESFA.DC.ILR.FundingService.FM25Actor.Interfaces\ESFA.DC.ILR.FundingService.FM25Actor.Interfaces.csproj" />
     <ProjectReference Include="..\FM35\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.csproj" />
-    <ProjectReference Include="..\FM35\ESFA.DC.ILR.FundingService.FM35Actor.Interfaces\ESFA.DC.ILR.FundingService.FM35Actor.Interfaces.csproj" />
     <ProjectReference Include="..\FM36\ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.csproj" />
-    <ProjectReference Include="..\FM36\ESFA.DC.ILR.FundingService.FM36Actor.Interfaces\ESFA.DC.ILR.FundingService.FM36Actor.Interfaces.csproj" />
     <ProjectReference Include="..\FM70\ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model.csproj" />
-    <ProjectReference Include="..\FM70\ESFA.DC.ILR.FundingService.FM70Actor.Interfaces\ESFA.DC.ILR.FundingService.FM70Actor.Interfaces.csproj" />
     <ProjectReference Include="..\FM81\ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.csproj" />
-    <ProjectReference Include="..\FM81\ESFA.DC.ILR.FundingService.FM81Actor.Interfaces\ESFA.DC.ILR.FundingService.FM81Actor.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>

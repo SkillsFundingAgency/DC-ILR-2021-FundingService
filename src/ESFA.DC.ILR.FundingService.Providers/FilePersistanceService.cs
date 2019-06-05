@@ -17,11 +17,11 @@ namespace ESFA.DC.ILR.FundingService.Providers
             _fileService = fileService;
         }
 
-        public async Task PersistAsync(string fileReference, string container, string fileData, CancellationToken cancellationToken)
+        public async Task PersistAsync<T>(string fileReference, string container, T output, CancellationToken cancellationToken)
         {
             using (var fileStream = await _fileService.OpenWriteStreamAsync(fileReference, container, cancellationToken))
             {
-                _jsonSerializationService.Serialize(fileData, fileStream);
+                _jsonSerializationService.Serialize(output, fileStream);
             }
         }
     }

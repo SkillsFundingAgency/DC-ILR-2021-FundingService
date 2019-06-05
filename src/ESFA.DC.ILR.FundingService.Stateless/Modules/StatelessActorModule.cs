@@ -28,12 +28,12 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
         {
             var actorNameParameter = "actorName";
 
-            containerBuilder.RegisterType<ALBActorTask>().Keyed<IActorTask>(TaskKeys.ALB).WithParameter(actorNameParameter, ActorServiceNameConstants.ALB).InstancePerLifetimeScope();
-            containerBuilder.RegisterType<FM25ActorTask>().Keyed<IActorTask>(TaskKeys.FM25).WithParameter(actorNameParameter, ActorServiceNameConstants.FM25).InstancePerLifetimeScope();
-            containerBuilder.RegisterType<FM35ActorTask>().Keyed<IActorTask>(TaskKeys.FM35).WithParameter(actorNameParameter, ActorServiceNameConstants.FM35).InstancePerLifetimeScope();
-            containerBuilder.RegisterType<FM36ActorTask>().Keyed<IActorTask>(TaskKeys.FM36).WithParameter(actorNameParameter, ActorServiceNameConstants.FM36).InstancePerLifetimeScope();
-            containerBuilder.RegisterType<FM70ActorTask>().Keyed<IActorTask>(TaskKeys.FM70).WithParameter(actorNameParameter, ActorServiceNameConstants.FM70).InstancePerLifetimeScope();
-            containerBuilder.RegisterType<FM81ActorTask>().Keyed<IActorTask>(TaskKeys.FM81).WithParameter(actorNameParameter, ActorServiceNameConstants.FM81).InstancePerLifetimeScope();
+            containerBuilder.RegisterType<ALBActorTask>().Keyed<IActorTask>(FundingTaskConstants.ALB).WithParameter(actorNameParameter, ActorServiceNameConstants.ALB).InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FM25ActorTask>().Keyed<IActorTask>(FundingTaskConstants.FM25).WithParameter(actorNameParameter, ActorServiceNameConstants.FM25).InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FM35ActorTask>().Keyed<IActorTask>(FundingTaskConstants.FM35).WithParameter(actorNameParameter, ActorServiceNameConstants.FM35).InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FM36ActorTask>().Keyed<IActorTask>(FundingTaskConstants.FM36).WithParameter(actorNameParameter, ActorServiceNameConstants.FM36).InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FM70ActorTask>().Keyed<IActorTask>(FundingTaskConstants.FM70).WithParameter(actorNameParameter, ActorServiceNameConstants.FM70).InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FM81ActorTask>().Keyed<IActorTask>(FundingTaskConstants.FM81).WithParameter(actorNameParameter, ActorServiceNameConstants.FM81).InstancePerLifetimeScope();
 
             containerBuilder.RegisterType<FM81FundingOutputCondenserService>().As<IFundingOutputCondenserService<FM81Global>>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<FM70FundingOutputCondenserService>().As<IFundingOutputCondenserService<FM70Global>>().InstancePerLifetimeScope();

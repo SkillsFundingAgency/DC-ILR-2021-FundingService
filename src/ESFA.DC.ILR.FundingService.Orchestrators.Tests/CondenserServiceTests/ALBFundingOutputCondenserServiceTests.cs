@@ -1,52 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
-using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Output;
+using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.Orchestrators.Output;
 using FluentAssertions;
 using Xunit;
 
-namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
+namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests.CondenserServiceTests
 {
-    public class FM35FundingOutputCondenserServiceTests
+    public class ALBFundingOutputCondenserServiceTests
     {
         [Fact]
         public void Condense()
         {
-            var learnerOne = new FM35Learner();
-            var learnerTwo = new FM35Learner();
-            var learnerThree = new FM35Learner();
-            var learnerFour = new FM35Learner();
-            var learnerFive = new FM35Learner();
-            var learnerSix = new FM35Learner();
+            var learnerOne = new ALBLearner();
+            var learnerTwo = new ALBLearner();
+            var learnerThree = new ALBLearner();
+            var learnerFour = new ALBLearner();
+            var learnerFive = new ALBLearner();
+            var learnerSix = new ALBLearner();
 
-            var globalOne = new FM35Global()
+            var globalOne = new ALBGlobal()
             {
-                Learners = new List<FM35Learner>()
+                Learners = new List<ALBLearner>()
                 {
                     learnerOne,
                     learnerTwo,
                 },
             };
 
-            var globalTwo = new FM35Global()
+            var globalTwo = new ALBGlobal()
             {
-                Learners = new List<FM35Learner>
+                Learners = new List<ALBLearner>
                 {
                     learnerThree,
                     learnerFour,
                 },
             };
 
-            var globalThree = new FM35Global()
+            var globalThree = new ALBGlobal()
             {
-                Learners = new List<FM35Learner>
+                Learners = new List<ALBLearner>
                 {
                     learnerFive,
                     learnerSix,
                 },
             };
 
-            var fundingOutputs = new List<FM35Global>()
+            var fundingOutputs = new List<ALBGlobal>()
             {
                 globalOne,
                 globalTwo,
@@ -71,22 +71,22 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
         [Fact]
         public void Condense_NullLearners()
         {
-            var globalOne = new FM35Global()
+            var globalOne = new ALBGlobal()
             {
                 Learners = null
             };
 
-            var globalTwo = new FM35Global()
+            var globalTwo = new ALBGlobal()
             {
                 Learners = null
             };
 
-            var globalThree = new FM35Global()
+            var globalThree = new ALBGlobal()
             {
                 Learners = null
             };
 
-            var fundingOutputs = new List<FM35Global>()
+            var fundingOutputs = new List<ALBGlobal>()
             {
                 globalOne,
                 globalTwo,
@@ -102,35 +102,35 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
         [Fact]
         public void Condense_MixedNullLearners()
         {
-            var learnerOne = new FM35Learner();
-            var learnerTwo = new FM35Learner();
-            var learnerFive = new FM35Learner();
-            var learnerSix = new FM35Learner();
+            var learnerOne = new ALBLearner();
+            var learnerTwo = new ALBLearner();
+            var learnerFive = new ALBLearner();
+            var learnerSix = new ALBLearner();
 
-            var globalOne = new FM35Global()
+            var globalOne = new ALBGlobal()
             {
-                Learners = new List<FM35Learner>()
+                Learners = new List<ALBLearner>()
                 {
                     learnerOne,
                     learnerTwo,
                 },
             };
 
-            var globalTwo = new FM35Global()
+            var globalTwo = new ALBGlobal()
             {
                 Learners = null,
             };
 
-            var globalThree = new FM35Global()
+            var globalThree = new ALBGlobal()
             {
-                Learners = new List<FM35Learner>
+                Learners = new List<ALBLearner>
                 {
                     learnerFive,
                     learnerSix,
                 },
             };
 
-            var fundingOutputs = new List<FM35Global>()
+            var fundingOutputs = new List<ALBGlobal>()
             {
                 globalOne,
                 globalTwo,
@@ -144,10 +144,9 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
             fundingOutput.Learners.Should().Contain(new[] { learnerOne, learnerTwo, learnerFive, learnerSix });
         }
 
-
-        private FM35FundingOutputCondenserService NewService()
+        private ALBFundingOutputCondenserService NewService()
         {
-            return new FM35FundingOutputCondenserService();
+            return new ALBFundingOutputCondenserService();
         }
     }
 }

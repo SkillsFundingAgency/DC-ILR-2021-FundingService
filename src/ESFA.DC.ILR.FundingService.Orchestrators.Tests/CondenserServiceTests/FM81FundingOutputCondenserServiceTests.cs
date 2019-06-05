@@ -1,52 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
-using ESFA.DC.ILR.FundingService.FM25.Model.Output;
+using ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.Orchestrators.Output;
 using FluentAssertions;
 using Xunit;
 
-namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
+namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests.CondenserServiceTests
 {
-    public class FundingOutputCondenserServiceTests
+    public class FM81FundingOutputCondenserServiceTests
     {
         [Fact]
         public void Condense()
         {
-            var learnerOne = new FM25Learner();
-            var learnerTwo = new FM25Learner();
-            var learnerThree = new FM25Learner();
-            var learnerFour = new FM25Learner();
-            var learnerFive = new FM25Learner();
-            var learnerSix = new FM25Learner();
+            var learnerOne = new FM81Learner();
+            var learnerTwo = new FM81Learner();
+            var learnerThree = new FM81Learner();
+            var learnerFour = new FM81Learner();
+            var learnerFive = new FM81Learner();
+            var learnerSix = new FM81Learner();
 
-            var globalOne = new FM25Global()
+            var globalOne = new FM81Global()
             {
-                Learners = new List<FM25Learner>()
+                Learners = new List<FM81Learner>()
                 {
                     learnerOne,
                     learnerTwo,
                 },
             };
 
-            var globalTwo = new FM25Global()
+            var globalTwo = new FM81Global()
             {
-                Learners = new List<FM25Learner>
+                Learners = new List<FM81Learner>
                 {
                     learnerThree,
                     learnerFour,
                 },
             };
 
-            var globalThree = new FM25Global()
+            var globalThree = new FM81Global()
             {
-                Learners = new List<FM25Learner>
+                Learners = new List<FM81Learner>
                 {
                     learnerFive,
                     learnerSix,
                 },
             };
 
-            var fundingOutputs = new List<FM25Global>()
+            var fundingOutputs = new List<FM81Global>()
             {
                 globalOne,
                 globalTwo,
@@ -71,22 +71,22 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
         [Fact]
         public void Condense_NullLearners()
         {
-            var globalOne = new FM25Global()
+            var globalOne = new FM81Global()
             {
                 Learners = null
             };
 
-            var globalTwo = new FM25Global()
+            var globalTwo = new FM81Global()
             {
                 Learners = null
             };
 
-            var globalThree = new FM25Global()
+            var globalThree = new FM81Global()
             {
                 Learners = null
             };
 
-            var fundingOutputs = new List<FM25Global>()
+            var fundingOutputs = new List<FM81Global>()
             {
                 globalOne,
                 globalTwo,
@@ -102,35 +102,35 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
         [Fact]
         public void Condense_MixedNullLearners()
         {
-            var learnerOne = new FM25Learner();
-            var learnerTwo = new FM25Learner();
-            var learnerFive = new FM25Learner();
-            var learnerSix = new FM25Learner();
+            var learnerOne = new FM81Learner();
+            var learnerTwo = new FM81Learner();
+            var learnerFive = new FM81Learner();
+            var learnerSix = new FM81Learner();
 
-            var globalOne = new FM25Global()
+            var globalOne = new FM81Global()
             {
-                Learners = new List<FM25Learner>()
+                Learners = new List<FM81Learner>()
                 {
                     learnerOne,
                     learnerTwo,
                 },
             };
 
-            var globalTwo = new FM25Global()
+            var globalTwo = new FM81Global()
             {
                 Learners = null,
             };
 
-            var globalThree = new FM25Global()
+            var globalThree = new FM81Global()
             {
-                Learners = new List<FM25Learner>
+                Learners = new List<FM81Learner>
                 {
                     learnerFive,
                     learnerSix,
                 },
             };
 
-            var fundingOutputs = new List<FM25Global>()
+            var fundingOutputs = new List<FM81Global>()
             {
                 globalOne,
                 globalTwo,
@@ -144,9 +144,10 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests
             fundingOutput.Learners.Should().Contain(new[] { learnerOne, learnerTwo, learnerFive, learnerSix });
         }
 
-        private FM25FundingOutputCondenserService NewService()
+
+        private FM81FundingOutputCondenserService NewService()
         {
-            return new FM25FundingOutputCondenserService();
+            return new FM81FundingOutputCondenserService();
         }
     }
 }

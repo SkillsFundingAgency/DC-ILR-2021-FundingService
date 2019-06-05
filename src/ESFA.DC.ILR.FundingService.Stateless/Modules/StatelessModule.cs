@@ -3,8 +3,9 @@ using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.FileService.Config;
 using ESFA.DC.ILR.FundingService.Data.Population.File;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
+using ESFA.DC.ILR.FundingService.FundingActor;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.ILR.FundingService.Orchestrators.Implementations;
+using ESFA.DC.ILR.FundingService.Orchestrators;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers;
 using ESFA.DC.ILR.FundingService.Providers.Interfaces;
@@ -57,6 +58,8 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             containerBuilder.RegisterType<FundingOrchestrationService>().As<IFundingOrchestrationService>().InstancePerLifetimeScope();
 
             containerBuilder.RegisterType<FundingServiceContext>().As<IFundingServiceContext>().InstancePerLifetimeScope();
+
+            containerBuilder.RegisterType<FundingTaskProvider>().As<IFundingTaskProvider>().InstancePerLifetimeScope();
         }
     }
 }

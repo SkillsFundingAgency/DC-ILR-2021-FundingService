@@ -5,6 +5,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.Interfaces
 {
     public interface IFilePersistanceService
     {
-        Task PersistAsync(string fileReference, string container, string fileData, CancellationToken cancellationToken);
+        Task PersistAsync<T>(string fileReference, string container, T output, CancellationToken cancellationToken);
     }
 }
