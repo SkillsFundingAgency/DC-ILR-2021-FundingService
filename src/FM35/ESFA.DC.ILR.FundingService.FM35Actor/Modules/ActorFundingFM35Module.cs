@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FM35.Service;
 using ESFA.DC.ILR.FundingService.FM35.Service.Input;
@@ -19,7 +20,7 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor.Modules
             builder.RegisterModule<ActorModule>();
 
             builder.RegisterInstance(new RulebaseProvider("FM35 Funding Calc 18_19")).As<IRulebaseProvider>();
-            builder.RegisterType<DataEntityMapper>().As<IDataEntityMapper<ILearner>>().InstancePerLifetimeScope();
+            builder.RegisterType<DataEntityMapper>().As<IDataEntityMapper<FM35LearnerDto>>().InstancePerLifetimeScope();
             builder.RegisterType<FundingOutputService>().As<IOutputService<FM35Global>>().InstancePerLifetimeScope();
             builder.RegisterType<FundingService<ILearner, FM35Global>>().As<IFundingService<ILearner, FM35Global>>().InstancePerLifetimeScope();
         }

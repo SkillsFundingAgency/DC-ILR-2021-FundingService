@@ -9,12 +9,12 @@ using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Organisation.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
-using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
-using ESFA.DC.ILR.FundingService.Data.File.Interface;
-using ESFA.DC.ILR.FundingService.Data.File.Model;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM25.Service.Constants;
 using ESFA.DC.ILR.FundingService.FM25.Service.Input;
 using ESFA.DC.ILR.FundingService.FM25.Service.Model;
+using ESFA.DC.ILR.Model;
+using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.ILR.Tests.Model;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
@@ -349,54 +349,43 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             var larsRefererenceDataServiceMock = new Mock<ILARSReferenceDataService>();
             var organisationRefererenceDataServiceMock = new Mock<IOrganisationReferenceDataService>();
             var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
-            var fileDataServiceMock = new Mock<IFileDataService>();
 
-            var learner = new TestLearner
+            var learner = new FM25LearnerDto
             {
                 LearnRefNumber = "Learner1",
                 ULN = 1234567890,
-                PostcodePrior = "Postcode",
-                LearnerEmploymentStatuses = new List<TestLearnerEmploymentStatus>
+                Postcode = "Postcode",
+                LearningDeliveries = new List<MessageLearnerLearningDelivery>
                 {
-                    new TestLearnerEmploymentStatus
-                    {
-                        EmpIdNullable = 10,
-                        AgreeId = "1",
-                        DateEmpStatApp = new DateTime(2018, 8, 1),
-                        EmpStat = 2,
-                    },
-                },
-                LearningDeliveries = new List<TestLearningDelivery>
-                {
-                    new TestLearningDelivery
+                    new MessageLearnerLearningDelivery
                     {
                         LearnAimRef = "1",
                         AimSeqNumber = 2,
                         AimType = 3,
                         CompStatus = 4,
-                        DelLocPostCode = "Postcode",
-                        PwayCodeNullable = 5,
-                        ProgTypeNullable = 6,
-                        FworkCodeNullable = 7,
-                        FundModel = 25,
-                        StdCodeNullable = 8,
+                        PwayCode = 5,
+                        PwayCodeSpecified = true,
+                        ProgType = 6,
+                        ProgTypeSpecified = true,
+                        FworkCode = 7,
+                        FworkCodeSpecified = true,
+                        FundModel = 99,
+                        StdCode = 8,
+                        StdCodeSpecified = true,
                         LearnStartDate = new DateTime(2018, 8, 1),
                         LearnPlanEndDate = new DateTime(2019, 8, 1),
-                        LearningDeliveryFAMs = new List<TestLearningDeliveryFAM>
+                        DelLocPostCode = "Postcode",
+                        LearningDeliveryFAM = new MessageLearnerLearningDeliveryLearningDeliveryFAM[]
                         {
-                            new TestLearningDeliveryFAM()
-                        },
-                        AppFinRecords = new List<TestAppFinRecord>
-                        {
-                            new TestAppFinRecord(),
+                            new MessageLearnerLearningDeliveryLearningDeliveryFAM()
                         },
                     },
                 },
             };
 
-            var dpOutcome = new List<DPOutcome>
+            var dpOutcome = new List<IDPOutcome>
             {
-                new DPOutcome
+                new TestDPOutcome
                 {
                     OutCode = 1,
                     OutType = "2",
@@ -416,13 +405,11 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             larsRefererenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
             organisationRefererenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(It.IsAny<int>())).Returns(new List<OrgFunding> { new OrgFunding() });
             postcodesReferenceDataServiceMock.Setup(p => p.LatestEFADisadvantagesUpliftForPostcode(learner.Postcode)).Returns(1.0m);
-            fileDataServiceMock.Setup(dp => dp.DPOutcomesForLearnRefNumber(learner.LearnRefNumber)).Returns(dpOutcome);
 
             return new DataEntityMapper(
                 larsRefererenceDataServiceMock.Object,
                 organisationRefererenceDataServiceMock.Object,
-                postcodesReferenceDataServiceMock.Object,
-                fileDataServiceMock.Object).BuildGlobalDataEntity(learner, new Global());
+                postcodesReferenceDataServiceMock.Object).BuildGlobalDataEntity(learner, new Global());
         }
 
         public string GetRulebaseVersion(string folderName)

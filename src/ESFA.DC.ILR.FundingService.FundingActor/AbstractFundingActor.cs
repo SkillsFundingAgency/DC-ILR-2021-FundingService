@@ -2,7 +2,6 @@
 using Autofac;
 using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Data.External;
-using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
@@ -47,17 +46,6 @@ namespace ESFA.DC.ILR.FundingService.FundingActor
                 PostcodeCurrentVersion = deserialzedCache.PostcodeCurrentVersion,
                 PostcodeRoots = deserialzedCache.PostcodeRoots.ToCaseInsensitiveDictionary(),
                 Periods = deserialzedCache.Periods,
-            };
-        }
-
-        public FileDataCache BuildFileDataCache(string serialzedCache)
-        {
-            var deserialzedCache = JsonSerializationService.Deserialize<FileDataCache>(serialzedCache);
-
-            return new FileDataCache
-            {
-                UKPRN = deserialzedCache.UKPRN,
-                DPOutcomes = deserialzedCache.DPOutcomes.ToCaseInsensitiveDictionary(),
             };
         }
 

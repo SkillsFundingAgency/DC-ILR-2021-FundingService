@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
-using ESFA.DC.ILR.FundingService.Data.File.Interface;
-using ESFA.DC.ILR.FundingService.Data.File.Model;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM81.Service.Input;
 using ESFA.DC.ILR.FundingService.FM81.Service.Model;
 using ESFA.DC.ILR.Model;
@@ -26,7 +25,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
                 LARSVersion = "Version"
             };
 
-            var dataEntity = NewService().BuildGlobalDataEntity(null, global);
+            var dataEntity = NewService().BuildGlobalDataEntity(new FM81LearnerDto(), global);
 
             dataEntity.EntityName.Should().Be("global");
             dataEntity.Attributes.Should().HaveCount(2);
@@ -41,12 +40,9 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             var ukprn = 1234;
 
             var larsRefererenceDataServiceMock = new Mock<ILARSReferenceDataService>();
-            var fileDataServiceMock = new Mock<IFileDataService>();
-
             larsRefererenceDataServiceMock.Setup(l => l.LARSCurrentVersion()).Returns(larsCurrentVersion);
-            fileDataServiceMock.Setup(f => f.UKPRN()).Returns(ukprn);
 
-            var global = NewService(larsRefererenceDataServiceMock.Object, fileDataService: fileDataServiceMock.Object).BuildGlobal();
+            var global = NewService(larsRefererenceDataServiceMock.Object).BuildGlobal(ukprn);
 
             global.LARSVersion.Should().Be(larsCurrentVersion);
             global.UKPRN.Should().Be(ukprn);
@@ -55,10 +51,10 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
         [Fact]
         public void BuildLearner()
         {
-            var learner = new TestLearner()
+            var learner = new FM81LearnerDto()
             {
                 LearnRefNumber = "ABC",
-                DateOfBirthNullable = new DateTime(2000, 8, 1),
+                DateOfBirth = new DateTime(2000, 8, 1),
             };
 
             var dataEntity = NewService().BuildLearnerDataEntity(learner);
@@ -66,7 +62,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             dataEntity.EntityName.Should().Be("Learner");
             dataEntity.Attributes.Should().HaveCount(2);
             dataEntity.Attributes["LearnRefNumber"].Value.Should().Be(learner.LearnRefNumber);
-            dataEntity.Attributes["DateOfBirth"].Value.Should().Be(learner.DateOfBirthNullable);
+            dataEntity.Attributes["DateOfBirth"].Value.Should().Be(learner.DateOfBirth);
 
             dataEntity.Children.Should().BeEmpty();
         }
@@ -411,10 +407,9 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
         }
 
         private DataEntityMapper NewService(
-            ILARSReferenceDataService larsReferenceDataService = null,
-            IFileDataService fileDataService = null)
+            ILARSReferenceDataService larsReferenceDataService = null)
         {
-            return new DataEntityMapper(larsReferenceDataService, fileDataService);
+            return new DataEntityMapper(larsReferenceDataService);
         }
     }
 }

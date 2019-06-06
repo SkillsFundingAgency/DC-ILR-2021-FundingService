@@ -6,11 +6,9 @@ using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
-using ESFA.DC.ILR.FundingService.Data.File.Interface;
-using ESFA.DC.ILR.FundingService.Data.File.Model;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM70.Service.Input;
 using ESFA.DC.ILR.FundingService.FM70.Service.Models;
-using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Tests.Model;
 using FluentAssertions;
 using Moq;
@@ -28,7 +26,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
                 UKPRN = 1234,
             };
 
-            var dataEntity = NewService().BuildGlobalDataEntity(null, global);
+            var dataEntity = NewService().BuildGlobalDataEntity(new FM70LearnerDto(), global);
 
             dataEntity.EntityName.Should().Be("global");
             dataEntity.Attributes.Should().HaveCount(1);
@@ -40,37 +38,24 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
         {
             var ukprn = 1234;
 
-            var fileDataServiceMock = new Mock<IFileDataService>();
-
-            fileDataServiceMock.Setup(f => f.UKPRN()).Returns(ukprn);
-
-            var global = NewService(
-                fileDataService: fileDataServiceMock.Object)
-                .BuildGlobal();
-
-            global.UKPRN.Should().Be(ukprn);
+            NewService().BuildGlobal(ukprn).UKPRN.Should().Be(ukprn);
         }
 
         [Fact]
         public void BuildLearner()
         {
-            var learner = new TestLearner()
+            var learner = new FM70LearnerDto()
             {
                 LearnRefNumber = "ABC",
-                DateOfBirthNullable = new DateTime(2000, 8, 1),
-                ULN = 1234567890,
+                DateOfBirth = new DateTime(2000, 8, 1)
             };
 
-            var fileDataDataServiceMock = new Mock<IFileDataService>();
-
-            fileDataDataServiceMock.Setup(dp => dp.DPOutcomesForLearnRefNumber(learner.LearnRefNumber)).Returns(new List<DPOutcome>());
-
-            var dataEntity = NewService(fileDataDataServiceMock.Object).BuildLearnerDataEntity(learner);
+            var dataEntity = NewService().BuildLearnerDataEntity(learner);
 
             dataEntity.EntityName.Should().Be("Learner");
             dataEntity.Attributes.Should().HaveCount(2);
             dataEntity.Attributes["LearnRefNumber"].Value.Should().Be(learner.LearnRefNumber);
-            dataEntity.Attributes["DateOfBirth"].Value.Should().Be(learner.DateOfBirthNullable);
+            dataEntity.Attributes["DateOfBirth"].Value.Should().Be(learner.DateOfBirth);
 
             dataEntity.Children.Should().BeEmpty();
         }
@@ -97,7 +82,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
         [Fact]
         public void BuildDPOutcome()
         {
-            var dpOutcome = new DPOutcome
+            var dpOutcome = new TestDPOutcome
             {
                 OutCode = 100,
                 OutType = "Type",
@@ -113,7 +98,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
             dataEntity.Attributes["OutType"].Value.Should().Be(dpOutcome.OutType);
             dataEntity.Attributes["OutCollDate"].Value.Should().Be(dpOutcome.OutCollDate);
             dataEntity.Attributes["OutStartDate"].Value.Should().Be(dpOutcome.OutStartDate);
-            dataEntity.Attributes["OutEndDate"].Value.Should().Be(dpOutcome.OutEndDate);
+            dataEntity.Attributes["OutEndDate"].Value.Should().Be(dpOutcome.OutEndDateNullable);
 
             dataEntity.Children.Should().BeNullOrEmpty();
         }
@@ -384,12 +369,11 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
         }
 
         private DataEntityMapper NewService(
-            IFileDataService fileDataService = null,
             IFCSReferenceDataService fcsReferenceDataService = null,
             ILARSReferenceDataService larsReferenceDataService = null,
             IPostcodesReferenceDataService postcodesReferenceDataService = null)
         {
-            return new DataEntityMapper(fileDataService, fcsReferenceDataService, larsReferenceDataService, postcodesReferenceDataService);
+            return new DataEntityMapper(fcsReferenceDataService, larsReferenceDataService, postcodesReferenceDataService);
         }
     }
 }

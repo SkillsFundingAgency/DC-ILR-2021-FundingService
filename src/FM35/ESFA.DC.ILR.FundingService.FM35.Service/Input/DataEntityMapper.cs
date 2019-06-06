@@ -9,7 +9,7 @@ using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Organisation.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
-using ESFA.DC.ILR.FundingService.Data.File.Interface;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM35.Service.Constants;
 using ESFA.DC.ILR.FundingService.FM35.Service.Models;
 using ESFA.DC.ILR.Model.Interface;
@@ -19,7 +19,7 @@ using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
 {
-    public class DataEntityMapper : IDataEntityMapper<ILearner>
+    public class DataEntityMapper : IDataEntityMapper<FM35LearnerDto>
     {
         private readonly int _fundModel = Attributes.FundModel_35;
 
@@ -27,32 +27,29 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
         private readonly ILARSReferenceDataService _larsReferenceDataService;
         private readonly IOrganisationReferenceDataService _organisationReferenceDataService;
         private readonly IPostcodesReferenceDataService _postcodesReferenceDataService;
-        private readonly IFileDataService _fileDataService;
 
         public DataEntityMapper(
                     ILargeEmployersReferenceDataService largeEmployersReferenceDataService,
                     ILARSReferenceDataService larsReferenceDataService,
                     IOrganisationReferenceDataService organisationReferenceDataService,
-                    IPostcodesReferenceDataService postcodesReferenceDataService,
-                    IFileDataService fileDataService)
+                    IPostcodesReferenceDataService postcodesReferenceDataService)
         {
             _largeEmployersReferenceDataService = largeEmployersReferenceDataService;
             _larsReferenceDataService = larsReferenceDataService;
             _organisationReferenceDataService = organisationReferenceDataService;
             _postcodesReferenceDataService = postcodesReferenceDataService;
-            _fileDataService = fileDataService;
         }
 
-        public IEnumerable<IDataEntity> MapTo(IEnumerable<ILearner> inputModels)
+        public IEnumerable<IDataEntity> MapTo(IEnumerable<FM35LearnerDto> inputModels)
         {
-            var global = BuildGlobal();
+            var global = BuildGlobal(inputModels.Select(u => u.UKPRN).Single());
 
             var entities = inputModels.Where(l => l.LearningDeliveries.Any(ld => ld.FundModel == _fundModel)).Select(l => BuildGlobalDataEntity(l, global));
 
             return entities.Any() ? entities : new List<IDataEntity> { BuildGlobalDataEntity(null, global) };
         }
 
-        public IDataEntity BuildGlobalDataEntity(ILearner learner, Global global)
+        public IDataEntity BuildGlobalDataEntity(FM35LearnerDto learner, Global global)
         {
             var orgFunding = _organisationReferenceDataService.OrganisationFundingForUKPRN(global.UKPRN).Where(f => f.OrgFundFactType == Attributes.OrgFundFactorTypeAdultSkills).ToList();
 
@@ -78,7 +75,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
             return globalEntity;
         }
 
-        public IDataEntity BuildLearnerDataEntity(ILearner learner)
+        public IDataEntity BuildLearnerDataEntity(FM35LearnerDto learner)
         {
             var sfaPostDisadvantage = _postcodesReferenceDataService.SFADisadvantagesForPostcode(learner.PostcodePrior);
 
@@ -87,7 +84,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
                     { Attributes.LearnRefNumber, new AttributeData(learner.LearnRefNumber) },
-                    { Attributes.DateOfBirth, new AttributeData(learner.DateOfBirthNullable) },
+                    { Attributes.DateOfBirth, new AttributeData(learner.DateOfBirth) },
                 },
                 Children =
                     (learner
@@ -298,14 +295,14 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
             };
         }
 
-        public Global BuildGlobal()
+        public Global BuildGlobal(int ukprn)
         {
             return new Global()
             {
                 LARSVersion = _larsReferenceDataService.LARSCurrentVersion(),
                 OrgVersion = _organisationReferenceDataService.OrganisationVersion(),
                 PostcodeDisadvantageVersion = _postcodesReferenceDataService.PostcodesCurrentVersion(),
-                UKPRN = _fileDataService.UKPRN()
+                UKPRN = ukprn
             };
         }
 

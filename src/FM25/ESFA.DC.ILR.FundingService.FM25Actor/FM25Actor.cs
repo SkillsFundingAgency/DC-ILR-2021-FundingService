@@ -54,7 +54,6 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
             ILogger logger = LifetimeScope.Resolve<ILogger>();
 
             IExternalDataCache externalDataCache;
-            IFileDataCache fileDataCache;
             FM25Global condensedResults;
 
             try
@@ -62,7 +61,6 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
                 logger.LogDebug($"{nameof(FM25Actor)} {ActorId} starting");
 
                 externalDataCache = BuildExternalDataCache(actorModel.ExternalDataCache);
-                fileDataCache = BuildFileDataCache(actorModel.FileDataCache);
 
                 logger.LogDebug($"{nameof(FM25Actor)} {ActorId} finished getting input data");
 
@@ -78,7 +76,6 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
                 c.RegisterInstance(externalDataCache).As<IExternalDataCache>();
-                c.RegisterInstance(fileDataCache).As<IFileDataCache>();
             }))
             {
                 ExecutionContext executionContext = (ExecutionContext)childLifetimeScope.Resolve<IExecutionContext>();
@@ -106,6 +103,15 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
 
                         fm25Results = fundingService.ProcessFunding(learners, cancellationToken).ToList();
 
+                        if (learners == null)
+                        {
+                            fm25Results = null;
+                        }
+                        else
+                        {
+                            fm25Results = fundingService.ProcessFunding(learners, cancellationToken).ToList();
+                        }
+
                         jobLogger.LogDebug("FM25 Rulebase Finishing");
                     }
 
@@ -118,7 +124,14 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
 
                         IFundingService<FM25Global, IEnumerable<PeriodisationGlobal>> periodisationService = fundingServiceLifetimeScope.Resolve<IFundingService<FM25Global, IEnumerable<PeriodisationGlobal>>>();
 
-                        fm25PeriodisationResults = periodisationService.ProcessFunding(fm25Results, cancellationToken).ToList();
+                        if (fm25Results == null)
+                        {
+                            fm25PeriodisationResults = null;
+                        }
+                        else
+                        {
+                            fm25PeriodisationResults = periodisationService.ProcessFunding(fm25Results, cancellationToken).ToList();
+                        }
 
                         jobLogger.LogDebug("FM25 Periodisation Rulebase Finishing");
                     }
@@ -136,7 +149,6 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
             }
 
             externalDataCache = null;
-            fileDataCache = null;
 
             return condensedResults;
         }

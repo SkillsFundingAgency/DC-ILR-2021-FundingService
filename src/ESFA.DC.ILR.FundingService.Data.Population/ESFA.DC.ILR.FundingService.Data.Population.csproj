@@ -119,14 +119,10 @@
     <Compile Include="External\OrganisationsMapperService.cs" />
     <Compile Include="External\FCSMapperService.cs" />
     <Compile Include="External\PostcodesMapperService.cs" />
-    <Compile Include="File\FileDataRetrievalService.cs" />
-    <Compile Include="File\FileDataCachePopulationService.cs" />
-    <Compile Include="Interface\IFileDataCachePopulationService.cs" />
     <Compile Include="Interface\IFCSMapperService.cs" />
     <Compile Include="Interface\ILargeEmployersMapperService.cs" />
     <Compile Include="Interface\IAppsEarningsHistoryMapperService.cs" />
     <Compile Include="Interface\IExternalDataCachePopulationService.cs" />
-    <Compile Include="Interface\IFileDataRetrievalService.cs" />
     <Compile Include="Interface\IOrganisationsMapperService.cs" />
     <Compile Include="Interface\ILARSMapperService.cs" />
     <Compile Include="Interface\IPostcodesMapperService.cs" />

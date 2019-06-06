@@ -1,8 +1,6 @@
 ﻿using Autofac;
 using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.FileService.Config;
-using ESFA.DC.ILR.FundingService.Data.Population.File;
-using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.FundingActor;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators;
@@ -48,10 +46,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             // register providers
             containerBuilder.RegisterType<IlrFileProviderService>().As<IFileProviderService<IMessage>>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<IlrReferenceDataProviderService>().As<IFileProviderService<ReferenceDataRoot>>().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<LearnerPagingService>().As<ILearnerPagingService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<FilePersistanceService>().As<IFilePersistanceService>().InstancePerLifetimeScope();
-
-            containerBuilder.RegisterType<FileDataRetrievalService>().As<IFileDataRetrievalService>().InstancePerLifetimeScope();
 
             containerBuilder.RegisterType<DateTimeProvider.DateTimeProvider>().As<IDateTimeProvider>();
 

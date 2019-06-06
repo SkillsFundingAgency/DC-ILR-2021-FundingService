@@ -283,6 +283,10 @@
     <EmbeddedResource Include="Resources\Loans Bursary 18_19.zip" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Dto\ESFA.DC.ILR.FundingService.Dto.csproj">
+      <Project>{2813A893-D574-4CCE-8D1C-4B6D84FA0915}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Dto</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.FundingActor.Interfaces\ESFA.DC.ILR.FundingService.FundingActor.Interfaces.csproj">
       <Project>{B2EC7FFE-2E94-422A-BD8B-31C92C74A061}</Project>
       <Name>ESFA.DC.ILR.FundingService.FundingActor.Interfaces</Name>

@@ -7,7 +7,7 @@ using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
-using ESFA.DC.ILR.FundingService.Data.File.Interface;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM36.Service.Constants;
 using ESFA.DC.ILR.FundingService.FM36.Service.Model;
 using ESFA.DC.ILR.Model.Interface;
@@ -17,37 +17,34 @@ using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
 {
-    public class DataEntityMapper : IDataEntityMapper<ILearner>
+    public class DataEntityMapper : IDataEntityMapper<FM36LearnerDto>
     {
         private readonly int _fundModel = Attributes.FundModel_36;
 
         private readonly ILARSReferenceDataService _larsReferenceDataService;
         private readonly IPostcodesReferenceDataService _postcodesReferenceDataService;
         private readonly IAppsEarningsHistoryReferenceDataService _appsEarningsHistoryReferenceDataService;
-        private readonly IFileDataService _fileDataService;
 
         public DataEntityMapper(
             ILARSReferenceDataService larsReferenceDataService,
             IPostcodesReferenceDataService postcodesReferenceDataService,
-            IAppsEarningsHistoryReferenceDataService appsEarningsHistoryReferenceDataService,
-            IFileDataService fileDataService)
+            IAppsEarningsHistoryReferenceDataService appsEarningsHistoryReferenceDataService)
         {
             _larsReferenceDataService = larsReferenceDataService;
             _postcodesReferenceDataService = postcodesReferenceDataService;
             _appsEarningsHistoryReferenceDataService = appsEarningsHistoryReferenceDataService;
-            _fileDataService = fileDataService;
         }
 
-        public IEnumerable<IDataEntity> MapTo(IEnumerable<ILearner> inputModels)
+        public IEnumerable<IDataEntity> MapTo(IEnumerable<FM36LearnerDto> inputModels)
         {
-            var global = BuildGlobal();
+            var global = BuildGlobal(inputModels.Select(u => u.UKPRN).Single());
 
             var entities = inputModels.Where(l => l.LearningDeliveries.Any(ld => ld.FundModel == _fundModel)).Select(l => BuildGlobalDataEntity(l, global));
 
             return entities.Any() ? entities : new List<IDataEntity> { BuildGlobalDataEntity(null, global) };
         }
 
-        public IDataEntity BuildGlobalDataEntity(ILearner learner, Global global)
+        public IDataEntity BuildGlobalDataEntity(FM36LearnerDto learner, Global global)
         {
             return new DataEntity(Attributes.EntityGlobal)
             {
@@ -62,7 +59,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
             };
         }
 
-        public IDataEntity BuildLearnerDataEntity(ILearner learner)
+        public IDataEntity BuildLearnerDataEntity(FM36LearnerDto learner)
         {
             var learnerEmploymentStatusDenormalized = BuildLearnerEmploymentStatusDenormalized(learner.LearnerEmploymentStatuses);
             var dasPostDisadvantage = _postcodesReferenceDataService.DASDisadvantagesForPostcode(learner.PostcodePrior);
@@ -73,10 +70,10 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
                     { Attributes.LearnRefNumber, new AttributeData(learner.LearnRefNumber) },
-                    { Attributes.DateOfBirth, new AttributeData(learner.DateOfBirthNullable) },
+                    { Attributes.DateOfBirth, new AttributeData(learner.DateOfBirth) },
                     { Attributes.ULN, new AttributeData(learner.ULN) },
-                    { Attributes.PrevUKPRN, new AttributeData(learner.PrevUKPRNNullable) },
-                    { Attributes.PMUKPRN, new AttributeData(learner.PMUKPRNNullable) }
+                    { Attributes.PrevUKPRN, new AttributeData(learner.PrevUKPRN) },
+                    { Attributes.PMUKPRN, new AttributeData(learner.PMUKPRN) }
                 },
                 Children =
                     (learner
@@ -342,7 +339,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
             };
         }
 
-        public Global BuildGlobal()
+        public Global BuildGlobal(int ukprn)
         {
             return new Global()
             {
@@ -352,7 +349,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
                 // ToDo: implement AcademicYear service over InternalCache for "CollectionPeriod" to calculate value.
                 // This attribute is not used by rulebase at present 10/09/18.
                 CollectionPeriod = Attributes.CollectionPeriodValue,
-                UKPRN = _fileDataService.UKPRN()
+                UKPRN = ukprn
             };
         }
 

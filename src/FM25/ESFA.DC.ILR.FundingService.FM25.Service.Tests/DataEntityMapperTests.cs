@@ -6,10 +6,10 @@ using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Organisation.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
-using ESFA.DC.ILR.FundingService.Data.File.Interface;
-using ESFA.DC.ILR.FundingService.Data.File.Model;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM25.Service.Input;
 using ESFA.DC.ILR.FundingService.FM25.Service.Model;
+using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Tests.Model;
 using FluentAssertions;
 using Moq;
@@ -22,7 +22,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
         [Fact]
         public void BuildDPOutcome()
         {
-            var dpOutcome = new DPOutcome()
+            var dpOutcome = new TestDPOutcome()
             {
                 OutCode = 1,
                 OutType = "Type",
@@ -58,24 +58,24 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
         [Fact]
         public void BuildLearner()
         {
-            var learner = new TestLearner()
+            var learner = new FM25LearnerDto()
             {
-                DateOfBirthNullable = new DateTime(1990, 12, 25),
+                DateOfBirth = new DateTime(1990, 12, 25),
                 EngGrade = "A",
                 LearnRefNumber = "ABC",
                 MathGrade = "B",
-                PlanEEPHoursNullable = 2,
-                PlanLearnHoursNullable = 3,
+                PlanEEPHours = 2,
+                PlanLearnHours = 3,
                 Postcode = "postcode",
                 ULN = 123456,
-                LearnerFAMs = new List<TestLearnerFAM>()
+                LearnerFAMs = new List<MessageLearnerLearnerFAM>()
                 {
-                    new TestLearnerFAM() { LearnFAMType = "ECF", LearnFAMCode = 1 },
-                    new TestLearnerFAM() { LearnFAMType = "EDF", LearnFAMCode = 2 },
-                    new TestLearnerFAM() { LearnFAMType = "EDF", LearnFAMCode = 3 },
-                    new TestLearnerFAM() { LearnFAMType = "EHC", LearnFAMCode = 4 },
-                    new TestLearnerFAM() { LearnFAMType = "HNS", LearnFAMCode = 5 },
-                    new TestLearnerFAM() { LearnFAMType = "MCF", LearnFAMCode = 6 },
+                    new MessageLearnerLearnerFAM() { LearnFAMType = "ECF", LearnFAMCode = 1 },
+                    new MessageLearnerLearnerFAM() { LearnFAMType = "EDF", LearnFAMCode = 2 },
+                    new MessageLearnerLearnerFAM() { LearnFAMType = "EDF", LearnFAMCode = 3 },
+                    new MessageLearnerLearnerFAM() { LearnFAMType = "EHC", LearnFAMCode = 4 },
+                    new MessageLearnerLearnerFAM() { LearnFAMType = "HNS", LearnFAMCode = 5 },
+                    new MessageLearnerLearnerFAM() { LearnFAMType = "MCF", LearnFAMCode = 6 },
                 }
             };
 
@@ -103,19 +103,15 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                efaDisadvatageTwo
             };
 
-            var fileDataServiceMock = new Mock<IFileDataService>();
-
-            fileDataServiceMock.Setup(fds => fds.DPOutcomesForLearnRefNumber(learner.LearnRefNumber)).Returns(new List<DPOutcome>());
-
             var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
 
             postcodesReferenceDataServiceMock.Setup(p => p.LatestEFADisadvantagesUpliftForPostcode(learner.Postcode)).Returns(efaDisadvatageTwo.Uplift);
 
-            var dataEntity = NewService(postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object, fileDataService: fileDataServiceMock.Object).BuildLearnerDataEntity(learner);
+            var dataEntity = NewService(postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object).BuildLearnerDataEntity(learner);
 
             dataEntity.EntityName.Should().Be("Learner");
             dataEntity.Attributes.Should().HaveCount(14);
-            dataEntity.Attributes["DateOfBirth"].Value.Should().Be(learner.DateOfBirthNullable);
+            dataEntity.Attributes["DateOfBirth"].Value.Should().Be(learner.DateOfBirth);
             dataEntity.Attributes["EngGrade"].Value.Should().Be(learner.EngGrade);
             dataEntity.Attributes["LearnRefNumber"].Value.Should().Be(learner.LearnRefNumber);
             dataEntity.Attributes["LrnFAM_ECF"].Value.Should().Be(1);
@@ -125,7 +121,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             dataEntity.Attributes["LrnFAM_HNS"].Value.Should().Be(5);
             dataEntity.Attributes["LrnFAM_MCF"].Value.Should().Be(6);
             dataEntity.Attributes["MathGrade"].Value.Should().Be(learner.MathGrade);
-            dataEntity.Attributes["PlanEEPHours"].Value.Should().Be(learner.PlanEEPHoursNullable);
+            dataEntity.Attributes["PlanEEPHours"].Value.Should().Be(learner.PlanEEPHours);
+            dataEntity.Attributes["PlanLearnHours"].Value.Should().Be(learner.PlanLearnHours);
             dataEntity.Attributes["PostcodeDisadvantageUplift"].Value.Should().Be(uplift);
             dataEntity.Attributes["ULN"].Value.Should().Be(learner.ULN);
 
@@ -135,22 +132,18 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
         [Fact]
         public void BuildLearner_NoPostcodeUplifts()
         {
-            var learner = new TestLearner()
+            var learner = new FM25LearnerDto()
             {
                 Postcode = "postcode",
             };
 
             decimal? efaDisadvantagesUplift = null;
 
-            var fileDataServiceMock = new Mock<IFileDataService>();
-
-            fileDataServiceMock.Setup(fds => fds.DPOutcomesForLearnRefNumber(learner.LearnRefNumber)).Returns(new List<DPOutcome>());
-
             var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
 
             postcodesReferenceDataServiceMock.Setup(p => p.LatestEFADisadvantagesUpliftForPostcode(learner.Postcode)).Returns(efaDisadvantagesUplift);
 
-            var dataEntity = NewService(postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object, fileDataService: fileDataServiceMock.Object).BuildLearnerDataEntity(learner);
+            var dataEntity = NewService(postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object).BuildLearnerDataEntity(learner);
 
             dataEntity.Attributes["PostcodeDisadvantageUplift"].Value.Should().BeNull();
         }
@@ -210,7 +203,6 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             var larsRefererenceDataServiceMock = new Mock<ILARSReferenceDataService>();
             var orgReferenceDataServiceMock = new Mock<IOrganisationReferenceDataService>();
             var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
-            var fileDataServiceMock = new Mock<IFileDataService>();
             var orgFundings = new List<OrgFunding>()
             {
                 new OrgFunding() { OrgFundFactType = fundFactorType, OrgFundEffectiveFrom = effectiveFrom, OrgFundFactor = "HISTORIC AREA COST FACTOR", OrgFundFactValue = historicAreaCostFactorValue },
@@ -228,9 +220,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             orgReferenceDataServiceMock.Setup(o => o.OrganisationVersion()).Returns(orgCurrentVersion);
             orgReferenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(ukprn)).Returns(orgFundings);
             postcodesReferenceDataServiceMock.Setup(p => p.PostcodesCurrentVersion()).Returns(postcodesCurrentVersion);
-            fileDataServiceMock.Setup(f => f.UKPRN()).Returns(ukprn);
 
-            var global = NewService(larsRefererenceDataServiceMock.Object, orgReferenceDataServiceMock.Object, postcodesReferenceDataServiceMock.Object, fileDataServiceMock.Object).BuildGlobal();
+            var global = NewService(larsRefererenceDataServiceMock.Object, orgReferenceDataServiceMock.Object, postcodesReferenceDataServiceMock.Object).BuildGlobal(ukprn);
 
             global.AreaCostFactor1618.Should().Be(historicAreaCostFactorValue);
             global.DisadvantageProportion.Should().Be(historicDisadvantageFundingProportionValue);
@@ -255,16 +246,14 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             var larsRefererenceDataServiceMock = new Mock<ILARSReferenceDataService>();
             var orgReferenceDataServiceMock = new Mock<IOrganisationReferenceDataService>();
             var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
-            var fileDataServiceMock = new Mock<IFileDataService>();
             var orgFundings = new List<OrgFunding>();
 
             larsRefererenceDataServiceMock.Setup(l => l.LARSCurrentVersion()).Returns(larsCurrentVersion);
             orgReferenceDataServiceMock.Setup(o => o.OrganisationVersion()).Returns(orgCurrentVersion);
             orgReferenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(ukprn)).Returns(orgFundings);
             postcodesReferenceDataServiceMock.Setup(p => p.PostcodesCurrentVersion()).Returns(postcodesCurrentVersion);
-            fileDataServiceMock.Setup(f => f.UKPRN()).Returns(ukprn);
 
-            var global = NewService(larsRefererenceDataServiceMock.Object, orgReferenceDataServiceMock.Object, postcodesReferenceDataServiceMock.Object, fileDataServiceMock.Object).BuildGlobal();
+            var global = NewService(larsRefererenceDataServiceMock.Object, orgReferenceDataServiceMock.Object, postcodesReferenceDataServiceMock.Object).BuildGlobal(ukprn);
 
             global.AreaCostFactor1618.Should().Be(null);
             global.DisadvantageProportion.Should().Be(null);
@@ -481,9 +470,9 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             learningDeliveryFAMDenormalized.LDM4.Should().BeNull();
         }
 
-        private DataEntityMapper NewService(ILARSReferenceDataService larsReferenceDataService = null, IOrganisationReferenceDataService organisationReferenceDataService = null, IPostcodesReferenceDataService postcodesReferenceDataService = null, IFileDataService fileDataService = null)
+        private DataEntityMapper NewService(ILARSReferenceDataService larsReferenceDataService = null, IOrganisationReferenceDataService organisationReferenceDataService = null, IPostcodesReferenceDataService postcodesReferenceDataService = null)
         {
-            return new DataEntityMapper(larsReferenceDataService, organisationReferenceDataService, postcodesReferenceDataService, fileDataService);
+            return new DataEntityMapper(larsReferenceDataService, organisationReferenceDataService, postcodesReferenceDataService);
         }
     }
 }

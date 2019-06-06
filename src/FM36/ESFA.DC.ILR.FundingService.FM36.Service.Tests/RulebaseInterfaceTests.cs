@@ -10,10 +10,11 @@ using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
-using ESFA.DC.ILR.FundingService.Data.File.Interface;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM36.Service.Constants;
 using ESFA.DC.ILR.FundingService.FM36.Service.Input;
 using ESFA.DC.ILR.FundingService.FM36.Service.Model;
+using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Tests.Model;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
@@ -411,47 +412,53 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
             var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
             var appsEarningsHistoryReferenceDataServiceMock = new Mock<IAppsEarningsHistoryReferenceDataService>();
-            var fileDataServiceMock = new Mock<IFileDataService>();
 
-            var learner = new TestLearner
+            var learner = new FM36LearnerDto
             {
                 LearnRefNumber = "Learner1",
-                ULN = 1234567890,
                 PostcodePrior = "Postcode",
-                LearnerEmploymentStatuses = new List<TestLearnerEmploymentStatus>
+                ULN = 1234567890,
+                LearnerEmploymentStatuses = new List<MessageLearnerLearnerEmploymentStatus>
                 {
-                    new TestLearnerEmploymentStatus
+                    new MessageLearnerLearnerEmploymentStatus
                     {
+                        EmpId = 10,
+                        EmpIdSpecified = true,
                         AgreeId = "1",
                         DateEmpStatApp = new DateTime(2018, 8, 1),
-                        EmpStat = 2
-                    }
+                        EmpStat = 2,
+                    },
                 },
-                LearningDeliveries = new List<TestLearningDelivery>
+                LearningDeliveries = new List<MessageLearnerLearningDelivery>
                 {
-                    new TestLearningDelivery
+                    new MessageLearnerLearningDelivery
                     {
                         LearnAimRef = "1",
                         AimSeqNumber = 2,
                         AimType = 3,
                         CompStatus = 4,
-                        FundModel = 36,
-                        PwayCodeNullable = 5,
-                        ProgTypeNullable = 6,
-                        FworkCodeNullable = 7,
-                        StdCodeNullable = 8,
+                        PwayCode = 5,
+                        PwayCodeSpecified = true,
+                        ProgType = 6,
+                        ProgTypeSpecified = true,
+                        FworkCode = 7,
+                        FworkCodeSpecified = true,
+                        FundModel = 99,
+                        StdCode = 8,
+                        StdCodeSpecified = true,
                         LearnStartDate = new DateTime(2018, 8, 1),
                         LearnPlanEndDate = new DateTime(2019, 8, 1),
-                        LearningDeliveryFAMs = new List<TestLearningDeliveryFAM>
+                        DelLocPostCode = "Postcode",
+                        LearningDeliveryFAM = new MessageLearnerLearningDeliveryLearningDeliveryFAM[]
                         {
-                            new TestLearningDeliveryFAM()
+                            new MessageLearnerLearningDeliveryLearningDeliveryFAM()
                         },
-                        AppFinRecords = new List<TestAppFinRecord>
+                        AppFinRecord = new MessageLearnerLearningDeliveryAppFinRecord[]
                         {
-                            new TestAppFinRecord()
+                            new MessageLearnerLearningDeliveryAppFinRecord()
                         }
-                    }
-                }
+                    },
+                },
             };
 
             var frameworks = new List<LARSFramework>
@@ -525,8 +532,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             return new DataEntityMapper(
                 larsReferenceDataServiceMock.Object,
                 postcodesReferenceDataServiceMock.Object,
-                appsEarningsHistoryReferenceDataServiceMock.Object,
-                fileDataServiceMock.Object).BuildGlobalDataEntity(learner, new Global());
+                appsEarningsHistoryReferenceDataServiceMock.Object).BuildGlobalDataEntity(learner, new Global());
         }
 
         public string GetRulebaseVersion(string folderName)

@@ -13,6 +13,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Model\**" />
+    <EmbeddedResource Remove="Model\**" />
+    <None Remove="Model\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.2" />
     <PackageReference Include="ESFA.DC.FileService.Interface" Version="0.1.18-beta0001" />
     <PackageReference Include="ESFA.DC.ILR.1819.Model" Version="0.1.5-beta0001" />

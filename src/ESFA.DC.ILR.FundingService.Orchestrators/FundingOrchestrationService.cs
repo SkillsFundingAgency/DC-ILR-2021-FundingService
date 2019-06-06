@@ -18,7 +18,6 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators
         private readonly IFileProviderService<IMessage> _ilrFileProviderService;
         private readonly IFileProviderService<ReferenceDataRoot> _ilrReferenceDataProviderService;
         private readonly IExternalDataCachePopulationService _externalCachePopulationService;
-        private readonly IFileDataCachePopulationService _fileCachePopulationService;
         private readonly ILogger _logger;
         private readonly IFundingTaskProvider _fundingTaskProvider;
 
@@ -27,7 +26,6 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators
             IFileProviderService<IMessage> ilrFileProviderService,
             IFileProviderService<ReferenceDataRoot> ilrReferenceDataProviderService,
             IExternalDataCachePopulationService externalCachePopulationService,
-            IFileDataCachePopulationService fileCachePopulationService,
             IFundingTaskProvider fundingTaskProvider,
             ILogger logger)
         {
@@ -35,7 +33,6 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators
             _ilrFileProviderService = ilrFileProviderService;
             _ilrReferenceDataProviderService = ilrReferenceDataProviderService;
             _externalCachePopulationService = externalCachePopulationService;
-            _fileCachePopulationService = fileCachePopulationService;
             _logger = logger;
             _fundingTaskProvider = fundingTaskProvider;
         }
@@ -62,11 +59,10 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators
             cancellationToken.ThrowIfCancellationRequested();
 
             string externalDataCache = _jsonSerializationService.Serialize(_externalCachePopulationService.PopulateAsync(refereceData, cancellationToken));
-            string fileDataCache = _jsonSerializationService.Serialize(_fileCachePopulationService.PopulateAsync(message, cancellationToken));
 
             _logger.LogDebug($"Funding Service got external data: {stopWatchSteps.ElapsedMilliseconds}");
 
-            await _fundingTaskProvider.ProvideAsync(fundingServiceContext, message, externalDataCache, fileDataCache, cancellationToken);
+            await _fundingTaskProvider.ProvideAsync(fundingServiceContext, message, externalDataCache, cancellationToken);
 
             _logger.LogDebug($"Completed Funding Service for given rule bases in: {stopWatch.ElapsedMilliseconds}");
         }

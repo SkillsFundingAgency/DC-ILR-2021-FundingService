@@ -6,8 +6,12 @@
 
         public string ValidLearners { get; set; }
 
+        public string ValidLearnerDPOutcomes { get; set; }
+
         public string ExternalDataCache { get; set; }
 
-        public string FileDataCache { get; set; }
+        public string OutputKey { get; set; }
+
+        public string Container { get; set; }
     }
 }

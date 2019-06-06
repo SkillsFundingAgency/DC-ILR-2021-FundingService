@@ -137,6 +137,10 @@
       <Project>{69B93B19-4FD0-4205-AFFA-8B71122A3C65}</Project>
       <Name>ESFA.DC.ILR.FundingService.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Dto\ESFA.DC.ILR.FundingService.Dto.csproj">
+      <Project>{2813A893-D574-4CCE-8D1C-4B6D84FA0915}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Dto</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model.Interface\ESFA.DC.OPA.Model.Interface.csproj">
       <Project>{7C69290E-B03C-490B-9821-04E2B0B9CDF7}</Project>
       <Name>ESFA.DC.OPA.Model.Interface</Name>

@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using ESFA.DC.ILR.FundingService.ALB.Service.Input;
 using ESFA.DC.ILR.FundingService.ALB.Service.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
-using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
-using ESFA.DC.ILR.FundingService.Data.External.Organisation.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
-using ESFA.DC.ILR.FundingService.Data.File.Interface;
-using ESFA.DC.ILR.FundingService.Data.File.Model;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.Tests.Model;
-using ESFA.DC.OPA.Model.Interface;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -31,7 +26,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                 UKPRN = 1234
             };
 
-            var dataEntity = NewService().BuildGlobalDataEntity(null, global);
+            var dataEntity = NewService().BuildGlobalDataEntity(new ALBLearnerDto(), global);
 
             dataEntity.EntityName.Should().Be("global");
             dataEntity.Attributes.Should().HaveCount(3);
@@ -49,13 +44,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
 
             var larsRefererenceDataServiceMock = new Mock<ILARSReferenceDataService>();
             var postcodeReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
-            var fileDataServiceMock = new Mock<IFileDataService>();
 
             larsRefererenceDataServiceMock.Setup(l => l.LARSCurrentVersion()).Returns(larsCurrentVersion);
             postcodeReferenceDataServiceMock.Setup(o => o.PostcodesCurrentVersion()).Returns(postcodesCurrentVersion);
-            fileDataServiceMock.Setup(f => f.UKPRN()).Returns(ukprn);
 
-            var global = NewService(larsRefererenceDataServiceMock.Object, postcodeReferenceDataServiceMock.Object, fileDataServiceMock.Object).BuildGlobal();
+            var global = NewService(larsRefererenceDataServiceMock.Object, postcodeReferenceDataServiceMock.Object).BuildGlobal(ukprn);
 
             global.PostcodesVersion.Should().Be(postcodesCurrentVersion);
             global.LARSVersion.Should().Be(larsCurrentVersion);
@@ -65,7 +58,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
         [Fact]
         public void BuildLearner()
         {
-            var learner = new TestLearner()
+            var learner = new ALBLearnerDto()
             {
                 LearnRefNumber = "ABC",
             };
@@ -345,9 +338,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             learningDeliveryFAMDenormalized.RES.Should().BeNull();
         }
 
-        private DataEntityMapper NewService(ILARSReferenceDataService larsReferenceDataService = null, IPostcodesReferenceDataService postcodesReferenceDataService = null, IFileDataService fileDataService = null)
+        private DataEntityMapper NewService(ILARSReferenceDataService larsReferenceDataService = null, IPostcodesReferenceDataService postcodesReferenceDataService = null)
         {
-            return new DataEntityMapper(larsReferenceDataService, postcodesReferenceDataService, fileDataService);
+            return new DataEntityMapper(larsReferenceDataService, postcodesReferenceDataService);
         }
     }
 }

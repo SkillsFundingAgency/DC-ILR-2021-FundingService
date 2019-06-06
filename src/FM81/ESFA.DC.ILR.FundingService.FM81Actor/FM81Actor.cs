@@ -50,7 +50,6 @@ namespace ESFA.DC.ILR.FundingService.FM81Actor
             ILogger logger = LifetimeScope.Resolve<ILogger>();
 
             IExternalDataCache externalDataCache;
-            IFileDataCache fileDataCache;
             FM81Global results;
 
             try
@@ -58,7 +57,6 @@ namespace ESFA.DC.ILR.FundingService.FM81Actor
                 logger.LogDebug($"{nameof(FM81Actor)} {ActorId} {GC.GetGeneration(actorModel)} starting");
 
                 externalDataCache = BuildExternalDataCache(actorModel.ExternalDataCache);
-                fileDataCache = BuildFileDataCache(actorModel.FileDataCache);
 
                 logger.LogDebug($"{nameof(FM81Actor)} {ActorId} {GC.GetGeneration(actorModel)} finished getting input data");
 
@@ -74,7 +72,6 @@ namespace ESFA.DC.ILR.FundingService.FM81Actor
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
                 c.RegisterInstance(externalDataCache).As<IExternalDataCache>();
-                c.RegisterInstance(fileDataCache).As<IFileDataCache>();
             }))
             {
                 var executionContext = (ExecutionContext)childLifetimeScope.Resolve<IExecutionContext>();
@@ -94,10 +91,17 @@ namespace ESFA.DC.ILR.FundingService.FM81Actor
 
                     var learners = BuildLearners(actorModel.ValidLearners);
 
-                    results = fundingService.ProcessFunding(learners, cancellationToken);
+                    if (learners == null)
+                    {
+                        results = null;
 
-                    jobLogger.LogDebug(
-                        $"{nameof(FM81Actor)} {ActorId} {GC.GetGeneration(actorModel)} completed processing");
+                        jobLogger.LogDebug($"{nameof(FM81Actor)} {ActorId} {GC.GetGeneration(actorModel)} completed processing - Zero learners");
+                    }
+                    else
+                    {
+                        results = fundingService.ProcessFunding(learners, cancellationToken);
+                        jobLogger.LogDebug($"{nameof(FM81Actor)} {ActorId} {GC.GetGeneration(actorModel)} completed processing");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -108,7 +112,6 @@ namespace ESFA.DC.ILR.FundingService.FM81Actor
             }
 
             externalDataCache = null;
-            fileDataCache = null;
 
             return results;
         }

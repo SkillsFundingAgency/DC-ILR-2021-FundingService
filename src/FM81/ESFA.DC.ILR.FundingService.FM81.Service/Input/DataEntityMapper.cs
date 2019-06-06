@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
-using ESFA.DC.ILR.FundingService.Data.File.Interface;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM81.Service.Constants;
 using ESFA.DC.ILR.FundingService.FM81.Service.Model;
 using ESFA.DC.ILR.Model.Interface;
@@ -13,32 +13,28 @@ using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM81.Service.Input
 {
-    public class DataEntityMapper : IDataEntityMapper<ILearner>
+    public class DataEntityMapper : IDataEntityMapper<FM81LearnerDto>
     {
         private readonly int _fundModel = Attributes.FundModel_81;
         private readonly int? _progType = Attributes.ProgType_25;
 
         private readonly ILARSReferenceDataService _larsReferenceDataService;
-        private readonly IFileDataService _fileDataService;
 
-        public DataEntityMapper(
-            ILARSReferenceDataService larsReferenceDataService,
-            IFileDataService fileDataService)
+        public DataEntityMapper(ILARSReferenceDataService larsReferenceDataService)
         {
             _larsReferenceDataService = larsReferenceDataService;
-            _fileDataService = fileDataService;
         }
 
-        public IEnumerable<IDataEntity> MapTo(IEnumerable<ILearner> inputModels)
+        public IEnumerable<IDataEntity> MapTo(IEnumerable<FM81LearnerDto> inputModels)
         {
-            var global = BuildGlobal();
+            var global = BuildGlobal(inputModels.Select(u => u.UKPRN).Single());
 
             var entities = inputModels.Where(l => l.LearningDeliveries.Any(ld => _fundModel == ld.FundModel && _progType == ld.ProgTypeNullable)).Select(l => BuildGlobalDataEntity(l, global));
 
             return entities.Any() ? entities : new List<IDataEntity> { BuildGlobalDataEntity(null, global) };
         }
 
-        public IDataEntity BuildGlobalDataEntity(ILearner learner, Global global)
+        public IDataEntity BuildGlobalDataEntity(FM81LearnerDto learner, Global global)
         {
             return new DataEntity(Attributes.EntityGlobal)
             {
@@ -51,7 +47,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Input
             };
         }
 
-        public IDataEntity BuildLearnerDataEntity(ILearner learner)
+        public IDataEntity BuildLearnerDataEntity(FM81LearnerDto learner)
         {
             var learnerEmploymentStatusDenormalized = BuildLearnerEmploymentStatusDenormalized(learner.LearnerEmploymentStatuses);
 
@@ -60,7 +56,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Input
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
                     { Attributes.LearnRefNumber, new AttributeData(learner.LearnRefNumber) },
-                    { Attributes.DateOfBirth, new AttributeData(learner.DateOfBirthNullable) },
+                    { Attributes.DateOfBirth, new AttributeData(learner.DateOfBirth) },
                 },
                 Children =
                     (learner
@@ -205,12 +201,12 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Input
             };
         }
 
-        public Global BuildGlobal()
+        public Global BuildGlobal(int ukprn)
         {
             return new Global()
             {
                 LARSVersion = _larsReferenceDataService.LARSCurrentVersion(),
-                UKPRN = _fileDataService.UKPRN()
+                UKPRN = ukprn
             };
         }
 

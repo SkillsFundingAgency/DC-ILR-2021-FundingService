@@ -5,8 +5,7 @@ using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
-using ESFA.DC.ILR.FundingService.Data.File.Interface;
-using ESFA.DC.ILR.FundingService.Data.File.Model;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM25.Service.Constants;
 using ESFA.DC.ILR.FundingService.FM25.Service.Model;
 using ESFA.DC.ILR.Model.Interface;
@@ -16,7 +15,7 @@ using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
 {
-    public class DataEntityMapper : IDataEntityMapper<ILearner>
+    public class DataEntityMapper : IDataEntityMapper<FM25LearnerDto>
     {
         private readonly int _fundModel = Attributes.FundModel_25;
         private readonly DateTime _orgFundingAppliesFrom = new DateTime(2018, 8, 1);
@@ -24,26 +23,24 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
         private readonly ILARSReferenceDataService _larsReferenceDataService;
         private readonly IOrganisationReferenceDataService _organisationReferenceDataService;
         private readonly IPostcodesReferenceDataService _postcodesReferenceDataService;
-        private readonly IFileDataService _fileDataService;
 
-        public DataEntityMapper(ILARSReferenceDataService larsReferenceDataService, IOrganisationReferenceDataService organisationReferenceDataService, IPostcodesReferenceDataService postcodesReferenceDataService, IFileDataService fileDataService)
+        public DataEntityMapper(ILARSReferenceDataService larsReferenceDataService, IOrganisationReferenceDataService organisationReferenceDataService, IPostcodesReferenceDataService postcodesReferenceDataService)
         {
             _larsReferenceDataService = larsReferenceDataService;
             _organisationReferenceDataService = organisationReferenceDataService;
             _postcodesReferenceDataService = postcodesReferenceDataService;
-            _fileDataService = fileDataService;
         }
 
-        public IEnumerable<IDataEntity> MapTo(IEnumerable<ILearner> inputModels)
+        public IEnumerable<IDataEntity> MapTo(IEnumerable<FM25LearnerDto> inputModels)
         {
-            var global = BuildGlobal();
+            var global = BuildGlobal(inputModels.Select(u => u.UKPRN).Single());
 
             var entities = inputModels.Where(l => l.LearningDeliveries.Any(ld => ld.FundModel == _fundModel)).Select(l => BuildGlobalDataEntity(l, global));
 
             return entities.Any() ? entities : new List<IDataEntity> { BuildGlobalDataEntity(null, global) };
         }
 
-        public IDataEntity BuildGlobalDataEntity(ILearner learner, Global global)
+        public IDataEntity BuildGlobalDataEntity(FM25LearnerDto learner, Global global)
         {
             return new DataEntity(Attributes.EntityGlobal)
             {
@@ -64,7 +61,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
             };
         }
 
-        public IDataEntity BuildLearnerDataEntity(ILearner learner)
+        public IDataEntity BuildLearnerDataEntity(FM25LearnerDto learner)
         {
             var learnerFamDenormalized = BuildLearnerFAMDenormalized(learner.LearnerFAMs);
 
@@ -74,7 +71,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    { Attributes.DateOfBirth, new AttributeData(learner.DateOfBirthNullable) },
+                    { Attributes.DateOfBirth, new AttributeData(learner.DateOfBirth) },
                     { Attributes.EngGrade, new AttributeData(learner.EngGrade) },
                     { Attributes.LearnRefNumber, new AttributeData(learner.LearnRefNumber) },
                     { Attributes.LrnFAM_ECF, new AttributeData(learnerFamDenormalized.ECF) },
@@ -84,8 +81,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { Attributes.LrnFAM_HNS, new AttributeData(learnerFamDenormalized.HNS) },
                     { Attributes.LrnFAM_MCF, new AttributeData(learnerFamDenormalized.MCF) },
                     { Attributes.MathGrade, new AttributeData(learner.MathGrade) },
-                    { Attributes.PlanEEPHours, new AttributeData(learner.PlanEEPHoursNullable) },
-                    { Attributes.PlanLearnHours, new AttributeData(learner.PlanLearnHoursNullable) },
+                    { Attributes.PlanEEPHours, new AttributeData(learner.PlanEEPHours) },
+                    { Attributes.PlanLearnHours, new AttributeData(learner.PlanLearnHours) },
                     { Attributes.PostcodeDisadvantageUplift, new AttributeData(efaDisadvantageUplift) },
                     { Attributes.ULN, new AttributeData(learner.ULN) },
                 },
@@ -94,7 +91,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                         .LearningDeliveries?
                         .Select(BuildLearningDeliveryDataEntity) ?? new List<IDataEntity>())
                         .Union(
-                            _fileDataService.DPOutcomesForLearnRefNumber(learner.LearnRefNumber)?
+                            learner.DPOutcomes?
                                 .Select(BuildDPOutcome) ?? new List<IDataEntity>())
                         .ToList()
             };
@@ -138,7 +135,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
             };
         }
 
-        public IDataEntity BuildDPOutcome(DPOutcome dpOutcome)
+        public IDataEntity BuildDPOutcome(IDPOutcome dpOutcome)
         {
             return new DataEntity(Attributes.EntityDPOutcome)
             {
@@ -163,9 +160,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
             };
         }
 
-        public Global BuildGlobal()
+        public Global BuildGlobal(int ukprn)
         {
-            var ukprn = _fileDataService.UKPRN();
             var orgFundings = _organisationReferenceDataService.OrganisationFundingForUKPRN(ukprn).Where(f => f.OrgFundFactType == Attributes.OrgFundFactorTypeEFA1619).ToList();
 
             return new Global()

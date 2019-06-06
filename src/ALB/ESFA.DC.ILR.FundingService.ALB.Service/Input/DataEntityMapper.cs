@@ -7,7 +7,7 @@ using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
-using ESFA.DC.ILR.FundingService.Data.File.Interface;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
@@ -15,31 +15,29 @@ using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
 {
-    public class DataEntityMapper : IDataEntityMapper<ILearner>
+    public class DataEntityMapper : IDataEntityMapper<ALBLearnerDto>
     {
         private readonly HashSet<int> _fundModels = new HashSet<int> { Attributes.FundModel_81, Attributes.FundModel_99 };
 
         private readonly ILARSReferenceDataService _larsReferenceDataService;
         private readonly IPostcodesReferenceDataService _postcodesReferenceDataService;
-        private readonly IFileDataService _fileDataService;
 
-        public DataEntityMapper(ILARSReferenceDataService larsReferenceDataService, IPostcodesReferenceDataService postcodesReferenceDataService, IFileDataService fileDataService)
+        public DataEntityMapper(ILARSReferenceDataService larsReferenceDataService, IPostcodesReferenceDataService postcodesReferenceDataService)
         {
             _larsReferenceDataService = larsReferenceDataService;
             _postcodesReferenceDataService = postcodesReferenceDataService;
-            _fileDataService = fileDataService;
         }
 
-        public IEnumerable<IDataEntity> MapTo(IEnumerable<ILearner> inputModels)
+        public IEnumerable<IDataEntity> MapTo(IEnumerable<ALBLearnerDto> inputModels)
         {
-            var global = BuildGlobal();
+            var global = BuildGlobal(inputModels.Select(u => u.UKPRN).Single());
 
             var entities = inputModels.Where(l => l.LearningDeliveries.Any(ld => _fundModels.Contains(ld.FundModel))).Select(l => BuildGlobalDataEntity(l, global));
 
             return entities.Any() ? entities : new List<IDataEntity> { BuildGlobalDataEntity(null, global) };
         }
 
-        public IDataEntity BuildGlobalDataEntity(ILearner learner, Global global)
+        public IDataEntity BuildGlobalDataEntity(ALBLearnerDto learner, Global global)
         {
             return new DataEntity(Attributes.EntityGlobal)
             {
@@ -53,7 +51,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
             };
         }
 
-        public IDataEntity BuildLearnerDataEntity(ILearner learner)
+        public IDataEntity BuildLearnerDataEntity(ALBLearnerDto learner)
         {
             return new DataEntity(Attributes.EntityLearner)
             {
@@ -194,13 +192,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
             };
         }
 
-        public Global BuildGlobal()
+        public Global BuildGlobal(int ukprn)
         {
             return new Global()
             {
                 LARSVersion = _larsReferenceDataService.LARSCurrentVersion(),
                 PostcodesVersion = _postcodesReferenceDataService.PostcodesCurrentVersion(),
-                UKPRN = _fileDataService.UKPRN()
+                UKPRN = ukprn
             };
         }
 

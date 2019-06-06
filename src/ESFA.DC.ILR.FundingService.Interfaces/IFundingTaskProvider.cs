@@ -6,6 +6,6 @@ namespace ESFA.DC.ILR.FundingService.Interfaces
 {
     public interface IFundingTaskProvider
     {
-        Task ProvideAsync(IFundingServiceContext fundingServiceContext, IMessage message, string externalDataCache, string fileDataCache, CancellationToken cancellationToken);
+        Task ProvideAsync(IFundingServiceContext fundingServiceContext, IMessage message, string externalDataCache, CancellationToken cancellationToken);
     }
 }

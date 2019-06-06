@@ -7,7 +7,7 @@ using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
-using ESFA.DC.ILR.FundingService.Data.File.Interface;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM36.Service.Input;
 using ESFA.DC.ILR.FundingService.FM36.Service.Model;
 using ESFA.DC.ILR.Tests.Model;
@@ -22,15 +22,31 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         [Fact]
         public void BuildGlobalDataEntity()
         {
+            var ukprn = 1234;
+
+            var learner = new FM36LearnerDto
+            {
+                UKPRN = ukprn,
+                PostcodePrior = "Postcode",
+                ULN = 123456789
+            };
+
             var global = new Global
             {
                 LARSVersion = "1.0.0",
-                CollectionPeriod = "DefaultPeriod",
-                Year = "1819",
-                UKPRN = 1234,
+                UKPRN = ukprn
             };
 
-            var dataEntity = NewService().BuildGlobalDataEntity(null, global);
+            var postcodesRefererenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
+            var appsHistoryRefererenceDataServiceMock = new Mock<IAppsEarningsHistoryReferenceDataService>();
+
+            postcodesRefererenceDataServiceMock.Setup(l => l.SFADisadvantagesForPostcode(It.IsAny<string>())).Returns(new List<SfaDisadvantage>());
+            appsHistoryRefererenceDataServiceMock.Setup(l => l.AECEarningsHistory(It.IsAny<long>())).Returns(new List<AECEarningsHistory>());
+
+            var dataEntity = NewService(
+                postcodesReferenceDataService: postcodesRefererenceDataServiceMock.Object,
+                appsEarningsHistoryReferenceDataService: appsHistoryRefererenceDataServiceMock.Object)
+                .BuildGlobalDataEntity(learner, global);
 
             dataEntity.EntityName.Should().Be("global");
             dataEntity.Attributes.Should().HaveCount(4);
@@ -49,12 +65,10 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             var ukprn = 1234;
 
             var larsRefererenceDataServiceMock = new Mock<ILARSReferenceDataService>();
-            var fileDataServiceMock = new Mock<IFileDataService>();
 
             larsRefererenceDataServiceMock.Setup(l => l.LARSCurrentVersion()).Returns(larsCurrentVersion);
-            fileDataServiceMock.Setup(f => f.UKPRN()).Returns(ukprn);
 
-            var global = NewService(larsRefererenceDataServiceMock.Object, fileDataService: fileDataServiceMock.Object).BuildGlobal();
+            var global = NewService(larsRefererenceDataServiceMock.Object).BuildGlobal(ukprn);
 
             global.LARSVersion.Should().Be(larsCurrentVersion);
             global.UKPRN.Should().Be(ukprn);
@@ -65,13 +79,13 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         [Fact]
         public void BuildLearner()
         {
-            var learner = new TestLearner()
+            var learner = new FM36LearnerDto()
             {
                 LearnRefNumber = "ABC",
-                DateOfBirthNullable = new DateTime(2000, 8, 1),
+                DateOfBirth = new DateTime(2000, 8, 1),
                 ULN = 1234567890,
-                PrevUKPRNNullable = 12345678,
-                PMUKPRNNullable = 99999999
+                PrevUKPRN = 12345678,
+                PMUKPRN = 99999999,
             };
 
             var postcodesRefererenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
@@ -88,6 +102,10 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             dataEntity.EntityName.Should().Be("Learner");
             dataEntity.Attributes.Should().HaveCount(5);
             dataEntity.Attributes["LearnRefNumber"].Value.Should().Be(learner.LearnRefNumber);
+            dataEntity.Attributes["DateOfBirth"].Value.Should().Be(learner.DateOfBirth);
+            dataEntity.Attributes["PrevUKPRN"].Value.Should().Be(learner.PrevUKPRN);
+            dataEntity.Attributes["PMUKPRN"].Value.Should().Be(learner.PMUKPRN);
+            dataEntity.Attributes["ULN"].Value.Should().Be(learner.ULN);
 
             dataEntity.Children.Should().BeEmpty();
         }
@@ -574,10 +592,9 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         private DataEntityMapper NewService(
             ILARSReferenceDataService larsReferenceDataService = null,
             IPostcodesReferenceDataService postcodesReferenceDataService = null,
-            IAppsEarningsHistoryReferenceDataService appsEarningsHistoryReferenceDataService = null,
-            IFileDataService fileDataService = null)
+            IAppsEarningsHistoryReferenceDataService appsEarningsHistoryReferenceDataService = null)
         {
-            return new DataEntityMapper(larsReferenceDataService, postcodesReferenceDataService, appsEarningsHistoryReferenceDataService, fileDataService);
+            return new DataEntityMapper(larsReferenceDataService, postcodesReferenceDataService, appsEarningsHistoryReferenceDataService);
         }
     }
 }

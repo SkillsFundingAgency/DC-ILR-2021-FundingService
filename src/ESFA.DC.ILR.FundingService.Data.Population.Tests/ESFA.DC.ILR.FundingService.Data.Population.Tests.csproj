@@ -112,8 +112,6 @@
     <Compile Include="External\OrganisationsMapperServiceTests.cs" />
     <Compile Include="External\FCSMapperServiceTests.cs" />
     <Compile Include="External\PostcodesMapperServiceTests.cs" />
-    <Compile Include="File\FileDataCachePopulationServiceTests.cs" />
-    <Compile Include="File\FileDataRetrievalServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExternalDataCachePopulationServiceTests.cs" />
   </ItemGroup>
