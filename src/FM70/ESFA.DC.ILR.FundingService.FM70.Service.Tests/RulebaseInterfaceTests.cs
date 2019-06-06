@@ -141,7 +141,10 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
             var xsrcEntities = GetXSRCEntity(RulebaseFolder).GlobalEntity;
             var dateEntityMapperEntities = GetDataEntityMapperEntity();
 
-            GetAttributeList(dateEntityMapperEntities).Should().BeEquivalentTo(GetAttributeList(xsrcEntities));
+            var t = GetAttributeList(dateEntityMapperEntities).OrderBy(a => a);
+            var y = GetAttributeList(xsrcEntities).OrderBy(a => a);
+
+            t.Should().BeEquivalentTo(y);
         }
 
         [Fact]
@@ -372,13 +375,14 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
                         AimSeqNumber = 2,
                         AimType = 3,
                         CompStatus = 4,
+                        ConRefNumber = "Conref",
                         PwayCode = 5,
                         PwayCodeSpecified = true,
                         ProgType = 6,
                         ProgTypeSpecified = true,
                         FworkCode = 7,
                         FworkCodeSpecified = true,
-                        FundModel = 99,
+                        FundModel = 70,
                         StdCode = 8,
                         StdCodeSpecified = true,
                         LearnStartDate = new DateTime(2018, 8, 1),
@@ -394,6 +398,14 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
                         }
                     },
                 },
+                DPOutcomes = new List<MessageLearnerDestinationandProgressionDPOutcome>
+                {
+                    new MessageLearnerDestinationandProgressionDPOutcome
+                    {
+                        OutCode = 1,
+                        OutType = "2",
+                    }
+                }
             };
 
             var fcsContract = new List<FCSContractAllocation>

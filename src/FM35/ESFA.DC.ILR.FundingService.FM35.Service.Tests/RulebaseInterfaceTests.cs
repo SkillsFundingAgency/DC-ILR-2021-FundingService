@@ -404,7 +404,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                         ProgTypeSpecified = true,
                         FworkCode = 7,
                         FworkCodeSpecified = true,
-                        FundModel = 99,
+                        FundModel = 35,
                         StdCode = 8,
                         StdCodeSpecified = true,
                         LearnStartDate = new DateTime(2018, 8, 1),

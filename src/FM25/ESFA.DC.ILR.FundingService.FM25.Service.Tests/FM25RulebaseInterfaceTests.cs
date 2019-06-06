@@ -355,6 +355,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 LearnRefNumber = "Learner1",
                 ULN = 1234567890,
                 Postcode = "Postcode",
+                EngGrade = "Grade",
+                MathGrade = "Grade",
                 LearningDeliveries = new List<MessageLearnerLearningDelivery>
                 {
                     new MessageLearnerLearningDelivery
@@ -369,7 +371,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                         ProgTypeSpecified = true,
                         FworkCode = 7,
                         FworkCodeSpecified = true,
-                        FundModel = 99,
+                        FundModel = 25,
                         StdCode = 8,
                         StdCodeSpecified = true,
                         LearnStartDate = new DateTime(2018, 8, 1),
@@ -381,14 +383,13 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                         },
                     },
                 },
-            };
-
-            var dpOutcome = new List<IDPOutcome>
-            {
-                new TestDPOutcome
+                DPOutcomes = new List<MessageLearnerDestinationandProgressionDPOutcome>
                 {
-                    OutCode = 1,
-                    OutType = "2",
+                    new MessageLearnerDestinationandProgressionDPOutcome
+                    {
+                        OutCode = 1,
+                        OutType = "2",
+                    }
                 }
             };
 
