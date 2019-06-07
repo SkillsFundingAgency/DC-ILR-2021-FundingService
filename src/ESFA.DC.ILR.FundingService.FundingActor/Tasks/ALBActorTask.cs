@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
-using ESFA.DC.ILR.FundingService.Config;
+using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.FundingActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers.Interfaces;
@@ -39,7 +39,7 @@ namespace ESFA.DC.ILR.FundingService.FundingActor.Tasks
             _actorName = actorName;
         }
 
-        public async Task Execute(IEnumerable<FundingActorDto> fundingActorDtos, IFundingServiceContext fundingServiceContext, CancellationToken cancellationToken)
+        public async Task Execute(IEnumerable<FundingDto> fundingActorDtos, IFundingServiceContext fundingServiceContext, CancellationToken cancellationToken)
         {
             _logger.LogDebug($"Starting {_actorName} Actors");
 
@@ -49,7 +49,7 @@ namespace ESFA.DC.ILR.FundingService.FundingActor.Tasks
             List<Task<string>> taskList = new List<Task<string>>();
             List<IALBActor> actors = new List<IALBActor>();
 
-            foreach (FundingActorDto fundingActorDto in fundingActorDtos)
+            foreach (FundingDto fundingActorDto in fundingActorDtos)
             {
                 IALBActor actor = _fundingActorProvider.Provide();
                 actors.Add(actor);

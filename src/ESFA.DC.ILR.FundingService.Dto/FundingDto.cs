@@ -1,12 +1,10 @@
-﻿namespace ESFA.DC.ILR.FundingService.Config
+﻿namespace ESFA.DC.ILR.FundingService.Dto
 {
-    public class FundingActorDto
+    public class FundingDto
     {
         public long JobId { get; set; }
 
         public string ValidLearners { get; set; }
-
-        public string ValidLearnerDPOutcomes { get; set; }
 
         public string ExternalDataCache { get; set; }
 

@@ -95,6 +95,12 @@
     <Compile Include="FilePersistanceServiceTests.cs" />
     <Compile Include="IlrReferenceDataProviderServiceTests.cs" />
     <Compile Include="IlrFileProviderServiceTests.cs" />
+    <Compile Include="LearnerPagingTests\FM35LearnerPagingServiceTests.cs" />
+    <Compile Include="LearnerPagingTests\FM81LearnerPagingServiceTests.cs" />
+    <Compile Include="LearnerPagingTests\FM36LearnerPagingServiceTests.cs" />
+    <Compile Include="LearnerPagingTests\FM70LearnerPagingServiceTests.cs" />
+    <Compile Include="LearnerPagingTests\FM25LearnerPagingServiceTests.cs" />
+    <Compile Include="LearnerPagingTests\ALBLearnerPagingServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

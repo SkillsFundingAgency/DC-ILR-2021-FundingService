@@ -2,38 +2,38 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using ESFA.DC.ILR.FundingService.Config;
+using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FundingActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.Serialization.Interfaces;
 
-namespace ESFA.DC.ILR.FundingService.Dto.Providers
+namespace ESFA.DC.ILR.FundingService.FundingActor.Providers
 {
-    public class FM81ActorDtoProvider : IActorDtoProvider
+    public class FM36ActorDtoProvider : IActorDtoProvider
     {
-        private readonly int fundModelFilter = 81;
+        private readonly int fundModelFilter = 36;
 
-        private readonly ILearnerPagingService<FM81LearnerDto> _learnerPagingService;
+        private readonly ILearnerPagingService<FM36LearnerDto> _learnerPagingService;
         private readonly IJsonSerializationService _jsonSerializationService;
 
-        public FM81ActorDtoProvider(ILearnerPagingService<FM81LearnerDto> learnerPagingService, IJsonSerializationService jsonSerializationService)
+        public FM36ActorDtoProvider(ILearnerPagingService<FM36LearnerDto> learnerPagingService, IJsonSerializationService jsonSerializationService)
         {
             _learnerPagingService = learnerPagingService;
             _jsonSerializationService = jsonSerializationService;
         }
 
-        public List<FundingActorDto> Provide(IFundingServiceContext fundingServiceContext, IMessage message, string externalDataCache, CancellationToken cancellationToken)
+        public List<FundingDto> Provide(IFundingServiceContext fundingServiceContext, IMessage message, string externalDataCache, CancellationToken cancellationToken)
         {
             return _learnerPagingService
                 .ProvideDtos(fundModelFilter, message)
                 .Select(p =>
-                    new FundingActorDto
+                    new FundingDto
                     {
                         JobId = fundingServiceContext.JobId,
                         Container = fundingServiceContext.Container,
-                        OutputKey = fundingServiceContext.FundingFm70OutputKey,
+                        OutputKey = fundingServiceContext.FundingFm36OutputKey,
                         ExternalDataCache = externalDataCache,
                         ValidLearners = _jsonSerializationService.Serialize(p)
                     }).ToList();

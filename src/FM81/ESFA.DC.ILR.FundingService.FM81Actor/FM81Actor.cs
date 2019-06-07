@@ -4,8 +4,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.FM81Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.Output;
+using ESFA.DC.ILR.FundingService.FundingActor;
+using ESFA.DC.ILR.FundingService.FundingActor.Constants;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.Logging.Interfaces;
@@ -13,9 +16,7 @@ using ESFA.DC.Serialization.Interfaces;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
 using ExecutionContext = ESFA.DC.Logging.ExecutionContext;
-using ESFA.DC.ILR.FundingService.FundingActor;
-using ESFA.DC.ILR.FundingService.Config;
-using ESFA.DC.ILR.FundingService.FundingActor.Constants;
+
 
 namespace ESFA.DC.ILR.FundingService.FM81Actor
 {  
@@ -28,7 +29,7 @@ namespace ESFA.DC.ILR.FundingService.FM81Actor
         {
         }
 
-        public async Task<string> Process(FundingActorDto actorModel, CancellationToken cancellationToken)
+        public async Task<string> Process(FundingDto actorModel, CancellationToken cancellationToken)
         {
             FM81Global results = RunFunding(actorModel, cancellationToken);
             actorModel = null;
@@ -39,7 +40,7 @@ namespace ESFA.DC.ILR.FundingService.FM81Actor
             return BuildFundingOutput(results);
         }
 
-        private FM81Global RunFunding(FundingActorDto actorModel, CancellationToken cancellationToken)
+        private FM81Global RunFunding(FundingDto actorModel, CancellationToken cancellationToken)
         {
             if (ExecutionContext is ExecutionContext executionContextObj)
             {

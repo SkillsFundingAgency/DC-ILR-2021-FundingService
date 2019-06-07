@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.FundingService.Config;
+using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.FM25.Model.Output;
 using ESFA.DC.ILR.FundingService.FM25Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.FundingActor.Interfaces;
@@ -39,7 +39,7 @@ namespace ESFA.DC.ILR.FundingService.FundingActor.Tasks
             _actorName = actorName;
         }
 
-        public async Task Execute(IEnumerable<FundingActorDto> fundingActorDtos, IFundingServiceContext fundingServiceContext, CancellationToken cancellationToken)
+        public async Task Execute(IEnumerable<FundingDto> fundingActorDtos, IFundingServiceContext fundingServiceContext, CancellationToken cancellationToken)
         {
             _logger.LogDebug($"Starting {_actorName} Actors");
 
@@ -49,7 +49,7 @@ namespace ESFA.DC.ILR.FundingService.FundingActor.Tasks
             List<Task<string>> taskList = new List<Task<string>>();
             List<IFM25Actor> actors = new List<IFM25Actor>();
 
-            foreach (FundingActorDto fundingActorDto in fundingActorDtos)
+            foreach (FundingDto fundingActorDto in fundingActorDtos)
             {
                 IFM25Actor actor = _fundingActorProvider.Provide();
                 actors.Add(actor);
