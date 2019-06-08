@@ -5,6 +5,7 @@ using Autofac;
 using Autofac.Integration.ServiceFabric;
 using ESFA.DC.ILR.FundingService.Config;
 using ESFA.DC.ILR.FundingService.Config.Interfaces;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM25.Model.Output;
 using ESFA.DC.ILR.FundingService.FM25Actor.Modules;
 using ESFA.DC.ILR.FundingService.Interfaces;
@@ -35,8 +36,8 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
                 using (var container = builder.Build())
                 {
                     // Not sure why this is being resolved here, to review
-                    var fm25 = container.Resolve<IFundingService<ILearner, IEnumerable<FM25Global>>>();
-                    var actor = container.Resolve<IFundingService<FM25Global, IEnumerable<PeriodisationGlobal>>>();
+                    //var fm25 = container.Resolve<IFundingService<FM25LearnerDto, IEnumerable<FM25Global>>>();
+                    //var actor = container.Resolve<IFundingService<FM25Global, IEnumerable<PeriodisationGlobal>>>();
                     Thread.Sleep(Timeout.Infinite);
                 }
             }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ESFA.DC.ILR.FundingService.ALB.Service.Input;
 using ESFA.DC.ILR.FundingService.ALB.Service.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
@@ -16,6 +17,177 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
 {
     public class DataEntityMapperTests
     {
+        [Fact]
+        public void MapTo()
+        {
+            var ukprn = 1;
+            var learnAimRef = "LearnAImRef";
+            var delLocPostCode = "Postcode";
+
+            var global = new Global
+            {
+                LARSVersion = "1.0.0",
+                PostcodesVersion = "2.0.0",
+                UKPRN = 1234
+            };
+
+            var learnerDtos = new List<ALBLearnerDto>
+            {
+                new ALBLearnerDto
+                {
+                    LearningDeliveries = new List<ILR.Model.MessageLearnerLearningDelivery>
+                    {
+                        new ILR.Model.MessageLearnerLearningDelivery
+                        {
+                            LearnAimRef = learnAimRef,
+                            DelLocPostCode = delLocPostCode,
+                            FundModel = 99
+                        }
+                    }
+                },
+                new ALBLearnerDto
+                {
+                    LearningDeliveries = new List<ILR.Model.MessageLearnerLearningDelivery>
+                    {
+                        new ILR.Model.MessageLearnerLearningDelivery
+                        {
+                            LearnAimRef = learnAimRef,
+                            DelLocPostCode = delLocPostCode,
+                            FundModel = 99
+                        }
+                    }
+                },
+            };
+
+            var larsLearningDelivery = new LARSLearningDelivery
+            {
+                AwardOrgCode = "awardOrgCode",
+                EFACOFType = 1,
+                LearnAimRefTitle = "learnAimRefTitle",
+                LearnAimRefType = "learnAimRefType",
+                RegulatedCreditValue = 2,
+                NotionalNVQLevelv2 = "NVQLevel",
+                LARSFundings = new List<LARSFunding>
+                {
+                    new LARSFunding
+                    {
+                        FundingCategory = "Matrix",
+                        RateWeighted = 1.0m,
+                        WeightingFactor = "G",
+                        EffectiveFrom = new DateTime(2018, 1, 1),
+                        EffectiveTo = new DateTime(2019, 1, 1),
+                    }
+                },
+                LARSCareerLearningPilots = new List<LARSCareerLearningPilot>
+                {
+                    new LARSCareerLearningPilot
+                    {
+                        AreaCode = "DelLocPostcode",
+                        SubsidyRate = 1.2m,
+                        EffectiveFrom = new DateTime(2018, 1, 1),
+                        EffectiveTo = new DateTime(2019, 1, 1)
+                    }
+                }
+            };
+
+            var sfaAreaCost = new List<SfaAreaCost>
+            {
+                new SfaAreaCost
+                {
+                    Postcode = "DelLocPostcode",
+                    EffectiveFrom = new DateTime(2018, 1, 1),
+                    EffectiveTo = new DateTime(2019, 1, 1),
+                    AreaCostFactor = 1.2m
+                }
+            };
+
+            var subsidyPilotPostcodeArea = new List<CareerLearningPilot>
+            {
+                new CareerLearningPilot
+                {
+                    Postcode = "DelLocPostcode",
+                    EffectiveFrom = new DateTime(2018, 1, 1),
+                    EffectiveTo = new DateTime(2019, 1, 1),
+                    AreaCode = "AreaCode"
+                }
+            };
+
+            var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
+            var postcodeReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
+
+            larsReferenceDataServiceMock.Setup(l => l.LARSCurrentVersion()).Returns(global.LARSVersion);
+            postcodeReferenceDataServiceMock.Setup(o => o.PostcodesCurrentVersion()).Returns(global.PostcodesVersion);
+
+            larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learnAimRef)).Returns(larsLearningDelivery);
+            postcodeReferenceDataServiceMock.Setup(o => o.SFAAreaCostsForPostcode(delLocPostCode)).Returns(sfaAreaCost);
+            postcodeReferenceDataServiceMock.Setup(o => o.CareerLearningPilotsForPostcode(delLocPostCode)).Returns(subsidyPilotPostcodeArea);
+
+            var dataEntities = NewService(larsReferenceDataServiceMock.Object, postcodeReferenceDataServiceMock.Object).MapTo(ukprn, learnerDtos);
+
+            dataEntities.Should().HaveCount(2);
+            dataEntities.SelectMany(d => d.Children).Should().NotBeNullOrEmpty();
+        }
+
+        [Fact]
+        public void MapTo_NullLearnerDto()
+        {
+            var ukprn = 1;
+
+            var global = new Global
+            {
+                LARSVersion = "1.0.0",
+                PostcodesVersion = "2.0.0",
+                UKPRN = 1
+            };
+
+            var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
+            var postcodeReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
+
+            larsReferenceDataServiceMock.Setup(l => l.LARSCurrentVersion()).Returns(global.LARSVersion);
+            postcodeReferenceDataServiceMock.Setup(o => o.PostcodesCurrentVersion()).Returns(global.PostcodesVersion);
+
+            var dataEntities = NewService(larsReferenceDataServiceMock.Object, postcodeReferenceDataServiceMock.Object).MapTo(ukprn, null);
+
+            dataEntities.Should().HaveCount(1);
+            dataEntities.Select(d => d.IsGlobal).First().Should().Be(true);
+            dataEntities.Select(d => d.Children).First().Should().HaveCount(0);
+            dataEntities.Select(d => d.EntityName).First().Should().Be("global");
+            dataEntities.Select(d => d.Attributes).First().Should().HaveCount(3);
+            dataEntities.Select(d => d.Attributes).First()["LARSVersion"].Value.Should().Be(global.LARSVersion);
+            dataEntities.Select(d => d.Attributes).First()["PostcodeAreaCostVersion"].Value.Should().Be(global.PostcodesVersion);
+            dataEntities.Select(d => d.Attributes).First()["UKPRN"].Value.Should().Be(global.UKPRN);
+        }
+
+        [Fact]
+        public void MapTo_EmptyLearners()
+        {
+            var ukprn = 1;
+
+            var global = new Global
+            {
+                LARSVersion = "1.0.0",
+                PostcodesVersion = "2.0.0",
+                UKPRN = 1
+            };
+
+            var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
+            var postcodeReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
+
+            larsReferenceDataServiceMock.Setup(l => l.LARSCurrentVersion()).Returns(global.LARSVersion);
+            postcodeReferenceDataServiceMock.Setup(o => o.PostcodesCurrentVersion()).Returns(global.PostcodesVersion);
+
+            var dataEntities = NewService(larsReferenceDataServiceMock.Object, postcodeReferenceDataServiceMock.Object).MapTo(ukprn, new List<ALBLearnerDto>());
+
+            dataEntities.Should().HaveCount(1);
+            dataEntities.Select(d => d.IsGlobal).First().Should().Be(true);
+            dataEntities.Select(d => d.Children).First().Should().HaveCount(0);
+            dataEntities.Select(d => d.EntityName).First().Should().Be("global");
+            dataEntities.Select(d => d.Attributes).First().Should().HaveCount(3);
+            dataEntities.Select(d => d.Attributes).First()["LARSVersion"].Value.Should().Be(global.LARSVersion);
+            dataEntities.Select(d => d.Attributes).First()["PostcodeAreaCostVersion"].Value.Should().Be(global.PostcodesVersion);
+            dataEntities.Select(d => d.Attributes).First()["UKPRN"].Value.Should().Be(global.UKPRN);
+        }
+
         [Fact]
         public void BuildGlobalDataEntity()
         {

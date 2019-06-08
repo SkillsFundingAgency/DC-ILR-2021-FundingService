@@ -11,7 +11,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
 {
     public class PeriodisationDataEntityMapper : IDataEntityMapper<FM25Global>
     {
-        public IEnumerable<IDataEntity> MapTo(IEnumerable<FM25Global> inputModels)
+        public IEnumerable<IDataEntity> MapTo(int ukprn, IEnumerable<FM25Global> inputModels)
         {
             return inputModels.Select(BuildGlobalDataEntity);
         }

@@ -10,13 +10,12 @@ using ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FundingActor;
 using ESFA.DC.ILR.FundingService.FundingActor.Constants;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
 using ExecutionContext = ESFA.DC.Logging.ExecutionContext;
-
+using ESFA.DC.ILR.FundingService.Dto.Model;
 
 namespace ESFA.DC.ILR.FundingService.FM81Actor
 {  
@@ -87,22 +86,13 @@ namespace ESFA.DC.ILR.FundingService.FM81Actor
 
 
 
-                    IFundingService<ILearner, FM81Global> fundingService =
-                        childLifetimeScope.Resolve<IFundingService<ILearner, FM81Global>>();
+                    IFundingService<FM81LearnerDto, FM81Global> fundingService =
+                        childLifetimeScope.Resolve<IFundingService<FM81LearnerDto, FM81Global>>();
 
-                    var learners = BuildLearners(actorModel.ValidLearners);
+                    var learners = BuildLearners<FM81LearnerDto>(actorModel.ValidLearners);
 
-                    if (learners == null)
-                    {
-                        results = null;
-
-                        jobLogger.LogDebug($"{nameof(FM81Actor)} {ActorId} {GC.GetGeneration(actorModel)} completed processing - Zero learners");
-                    }
-                    else
-                    {
-                        results = fundingService.ProcessFunding(learners, cancellationToken);
-                        jobLogger.LogDebug($"{nameof(FM81Actor)} {ActorId} {GC.GetGeneration(actorModel)} completed processing");
-                    }
+                    results = fundingService.ProcessFunding(actorModel.UKPRN, learners, cancellationToken);
+                    jobLogger.LogDebug($"{nameof(FM81Actor)} {ActorId} {GC.GetGeneration(actorModel)} completed processing");
                 }
                 catch (Exception ex)
                 {

@@ -11,5 +11,7 @@
         public string OutputKey { get; set; }
 
         public string Container { get; set; }
+
+        public int UKPRN { get; set; }
     }
 }

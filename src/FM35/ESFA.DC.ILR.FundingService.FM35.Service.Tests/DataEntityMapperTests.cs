@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
@@ -21,13 +22,214 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
     public class DataEntityMapperTests
     {
         [Fact]
+        public void MapTo()
+        {
+            var ukprn = 1;
+            var larsVersion = "1.0.0";
+            var orgVersion = "1.0.0";
+            var postcodeVersion = "1.0.0";
+            var learnAimRef = "LearnAimRef";
+            var postcodePrior = "Postcode";
+            var empIdNullable = 1;
+
+            var global = new Global
+            {
+                LARSVersion = larsVersion,
+                UKPRN = ukprn,
+                OrgVersion = orgVersion,
+                PostcodeDisadvantageVersion = postcodeVersion
+            };
+
+            var learnerDtos = new List<FM35LearnerDto>
+            {
+                new FM35LearnerDto
+                {
+                    PostcodePrior = postcodePrior,
+                    LearnerEmploymentStatuses = new List<Model.MessageLearnerLearnerEmploymentStatus>
+                    {
+                        new Model.MessageLearnerLearnerEmploymentStatus
+                        {
+                            EmpIdSpecified = true,
+                            EmpId = empIdNullable
+                        }
+                    },
+                    LearningDeliveries = new List<ILR.Model.MessageLearnerLearningDelivery>
+                    {
+                        new ILR.Model.MessageLearnerLearningDelivery
+                        {
+                            LearnAimRef = learnAimRef,
+                            FundModel = 35,
+                        }
+                    }
+                },
+                new FM35LearnerDto
+                {
+                    PostcodePrior = postcodePrior,
+                    LearnerEmploymentStatuses = new List<Model.MessageLearnerLearnerEmploymentStatus>
+                    {
+                        new Model.MessageLearnerLearnerEmploymentStatus
+                        {
+                            EmpIdSpecified = true,
+                            EmpId = empIdNullable
+                        }
+                    },
+                    LearningDeliveries = new List<ILR.Model.MessageLearnerLearningDelivery>
+                    {
+                        new ILR.Model.MessageLearnerLearningDelivery
+                        {
+                            LearnAimRef = learnAimRef,
+                            FundModel = 35,
+                        }
+                    }
+                },
+            };
+
+            var larsLearningDelivery = new LARSLearningDelivery
+            {
+                AwardOrgCode = "awardOrgCode",
+                EFACOFType = 1,
+                LearnAimRefTitle = "learnAimRefTitle",
+                LearnAimRefType = "learnAimRefType",
+                RegulatedCreditValue = 2,
+                NotionalNVQLevelv2 = "NVQLevel",
+                LARSFundings = new List<LARSFunding>
+                {
+                    new LARSFunding
+                    {
+                        FundingCategory = "Matrix",
+                        RateWeighted = 1.0m,
+                        WeightingFactor = "G",
+                        EffectiveFrom = new DateTime(2018, 1, 1),
+                        EffectiveTo = new DateTime(2019, 1, 1),
+                    }
+                }
+            };
+
+            var larsStandard = new LARSStandard
+            {
+                StandardCode = 1,
+            };
+
+            IEnumerable<DasDisadvantage> dasDisadvantage = new List<DasDisadvantage>
+            {
+                new DasDisadvantage
+                {
+                    Postcode = "DelLocPostcode",
+                    EffectiveFrom = new DateTime(2018, 1, 1),
+                    EffectiveTo = new DateTime(2019, 1, 1),
+                    Uplift = 1.2m
+                }
+            };
+
+            var largeEmployersReferenceDataServiceMock = new Mock<ILargeEmployersReferenceDataService>();
+            var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
+            var orgReferenceDataServiceMock = new Mock<IOrganisationReferenceDataService>();
+            var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
+
+            largeEmployersReferenceDataServiceMock.Setup(l => l.LargeEmployersforEmpID(empIdNullable)).Returns(new List<LargeEmployers> { new LargeEmployers() });
+            larsReferenceDataServiceMock.Setup(l => l.LARSCurrentVersion()).Returns(global.LARSVersion);
+            larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learnAimRef)).Returns(larsLearningDelivery);
+            orgReferenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(global.UKPRN)).Returns(new List<OrgFunding> { new OrgFunding() });
+            postcodesReferenceDataServiceMock.Setup(o => o.SFADisadvantagesForPostcode(postcodePrior)).Returns(new List<SfaDisadvantage>());
+
+            var dataEntities = NewService(
+                largeEmployersReferenceDataServiceMock.Object,
+                larsReferenceDataServiceMock.Object,
+                orgReferenceDataServiceMock.Object,
+                postcodesReferenceDataServiceMock.Object)
+                .MapTo(ukprn, learnerDtos);
+
+            dataEntities.Should().HaveCount(2);
+            dataEntities.SelectMany(d => d.Children).Should().NotBeNullOrEmpty();
+        }
+
+        [Fact]
+        public void MapTo_NullLearnerDto()
+        {
+            var ukprn = 1;
+            var larsVersion = "1.0.0";
+            var orgVersion = "1.0.0";
+            var postcodeVersion = "1.0.0";
+
+            var global = new Global
+            {
+                LARSVersion = larsVersion,
+                UKPRN = ukprn,
+                OrgVersion = orgVersion,
+                PostcodeDisadvantageVersion = postcodeVersion
+            };
+
+            var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
+            var orgReferenceDataServiceMock = new Mock<IOrganisationReferenceDataService>();
+            var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
+
+            larsReferenceDataServiceMock.Setup(l => l.LARSCurrentVersion()).Returns(larsVersion);
+            orgReferenceDataServiceMock.Setup(o => o.OrganisationVersion()).Returns(orgVersion);
+            postcodesReferenceDataServiceMock.Setup(p => p.PostcodesCurrentVersion()).Returns(postcodeVersion);
+
+            var dataEntities = NewService(
+                larsReferenceDataService: larsReferenceDataServiceMock.Object,
+                organisationReferenceDataService: orgReferenceDataServiceMock.Object,
+                postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object).MapTo(ukprn, null);
+
+            dataEntities.Should().HaveCount(1);
+            dataEntities.Select(d => d.IsGlobal).First().Should().Be(true);
+            dataEntities.Select(d => d.Children).First().Should().HaveCount(0);
+            dataEntities.Select(d => d.EntityName).First().Should().Be("global");
+            dataEntities.Select(d => d.Attributes).First().Should().HaveCount(4);
+            dataEntities.Select(d => d.Attributes).First()["OrgVersion"].Value.Should().Be(global.OrgVersion);
+            dataEntities.Select(d => d.Attributes).First()["LARSVersion"].Value.Should().Be(global.LARSVersion);
+            dataEntities.Select(d => d.Attributes).First()["PostcodeDisadvantageVersion"].Value.Should().Be(global.PostcodeDisadvantageVersion);
+            dataEntities.Select(d => d.Attributes).First()["UKPRN"].Value.Should().Be(global.UKPRN);
+        }
+
+        [Fact]
+        public void MapTo_EmptyLearners()
+        {
+            var ukprn = 1;
+            var larsVersion = "1.0.0";
+            var orgVersion = "1.0.0";
+            var postcodeVersion = "1.0.0";
+
+            var global = new Global
+            {
+                LARSVersion = larsVersion,
+                UKPRN = ukprn,
+                OrgVersion = orgVersion,
+                PostcodeDisadvantageVersion = postcodeVersion
+            };
+
+            var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
+            var orgReferenceDataServiceMock = new Mock<IOrganisationReferenceDataService>();
+            var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
+
+            larsReferenceDataServiceMock.Setup(l => l.LARSCurrentVersion()).Returns(larsVersion);
+            orgReferenceDataServiceMock.Setup(o => o.OrganisationVersion()).Returns(orgVersion);
+            postcodesReferenceDataServiceMock.Setup(p => p.PostcodesCurrentVersion()).Returns(postcodeVersion);
+
+            var dataEntities = NewService(
+                larsReferenceDataService: larsReferenceDataServiceMock.Object,
+                organisationReferenceDataService: orgReferenceDataServiceMock.Object,
+                postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object).MapTo(ukprn, new List<FM35LearnerDto>());
+
+            dataEntities.Should().HaveCount(1);
+            dataEntities.Select(d => d.IsGlobal).First().Should().Be(true);
+            dataEntities.Select(d => d.Children).First().Should().HaveCount(0);
+            dataEntities.Select(d => d.EntityName).First().Should().Be("global");
+            dataEntities.Select(d => d.Attributes).First().Should().HaveCount(4);
+            dataEntities.Select(d => d.Attributes).First()["OrgVersion"].Value.Should().Be(global.OrgVersion);
+            dataEntities.Select(d => d.Attributes).First()["LARSVersion"].Value.Should().Be(global.LARSVersion);
+            dataEntities.Select(d => d.Attributes).First()["PostcodeDisadvantageVersion"].Value.Should().Be(global.PostcodeDisadvantageVersion);
+            dataEntities.Select(d => d.Attributes).First()["UKPRN"].Value.Should().Be(global.UKPRN);
+        }
+
+        [Fact]
         public void BuildGlobalDataEntity()
         {
             var ukprn = 1234;
 
             var learner = new FM35LearnerDto
             {
-                UKPRN = ukprn,
                 PostcodePrior = "Postcode"
             };
 

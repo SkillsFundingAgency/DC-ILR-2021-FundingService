@@ -31,13 +31,16 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
             _postcodesReferenceDataService = postcodesReferenceDataService;
         }
 
-        public IEnumerable<IDataEntity> MapTo(IEnumerable<FM25LearnerDto> inputModels)
+        public IEnumerable<IDataEntity> MapTo(int ukprn, IEnumerable<FM25LearnerDto> inputModels)
         {
-            var global = BuildGlobal(inputModels.Select(u => u.UKPRN).Single());
+            var global = BuildGlobal(ukprn);
 
-            var entities = inputModels.Where(l => l.LearningDeliveries.Any(ld => ld.FundModel == _fundModel)).Select(l => BuildGlobalDataEntity(l, global));
+            var entities = inputModels?
+                .Where(l => l.LearningDeliveries
+                .Any(ld => ld.FundModel == _fundModel))
+                .Select(l => BuildGlobalDataEntity(l, global)) ?? new List<IDataEntity>();
 
-            return entities.Any() ? entities : new List<IDataEntity> { BuildGlobalDataEntity(null, global) };
+            return entities.Any() ? entities : new List<IDataEntity> { BuildDefaultGlobalDataEntity(global) };
         }
 
         public IDataEntity BuildGlobalDataEntity(FM25LearnerDto learner, Global global)
@@ -58,6 +61,26 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { Attributes.UKPRN, new AttributeData(global.UKPRN) }
                 },
                 Children = learner != null ? new List<IDataEntity>() { BuildLearnerDataEntity(learner) } : new List<IDataEntity>()
+            };
+        }
+
+        public IDataEntity BuildDefaultGlobalDataEntity(Global global)
+        {
+            return new DataEntity(Attributes.EntityGlobal)
+            {
+                Attributes = new Dictionary<string, IAttributeData>()
+                {
+                    { Attributes.AreaCostFactor1618, new AttributeData(global.AreaCostFactor1618) },
+                    { Attributes.DisadvantageProportion, new AttributeData(global.DisadvantageProportion) },
+                    { Attributes.HistoricLargeProgrammeProportion, new AttributeData(global.HistoricLargeProgrammeProportion) },
+                    { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
+                    { Attributes.OrgVersion, new AttributeData(global.OrgVersion) },
+                    { Attributes.PostcodeDisadvantageVersion, new AttributeData(global.PostcodesVersion) },
+                    { Attributes.ProgrammeWeighting, new AttributeData(global.ProgrammeWeighting) },
+                    { Attributes.RetentionFactor, new AttributeData(global.RetentionFactor) },
+                    { Attributes.SpecialistResources, new AttributeData(global.SpecialistResources) },
+                    { Attributes.UKPRN, new AttributeData(global.UKPRN) }
+                }
             };
         }
 

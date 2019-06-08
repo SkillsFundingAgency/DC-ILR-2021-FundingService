@@ -22,7 +22,7 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor.Modules
             builder.RegisterInstance(new RulebaseProvider("FM35 Funding Calc 18_19")).As<IRulebaseProvider>();
             builder.RegisterType<DataEntityMapper>().As<IDataEntityMapper<FM35LearnerDto>>().InstancePerLifetimeScope();
             builder.RegisterType<FundingOutputService>().As<IOutputService<FM35Global>>().InstancePerLifetimeScope();
-            builder.RegisterType<FundingService<ILearner, FM35Global>>().As<IFundingService<ILearner, FM35Global>>().InstancePerLifetimeScope();
+            builder.RegisterType<FundingService<FM35LearnerDto, FM35Global>>().As<IFundingService<FM35LearnerDto, FM35Global>>().InstancePerLifetimeScope();
         }
     }
 }

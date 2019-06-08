@@ -40,20 +40,22 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
             _postcodesReferenceDataService = postcodesReferenceDataService;
         }
 
-        public IEnumerable<IDataEntity> MapTo(IEnumerable<FM35LearnerDto> inputModels)
+        public IEnumerable<IDataEntity> MapTo(int ukprn, IEnumerable<FM35LearnerDto> inputModels)
         {
-            var global = BuildGlobal(inputModels.Select(u => u.UKPRN).Single());
+            var global = BuildGlobal(ukprn);
 
-            var entities = inputModels.Where(l => l.LearningDeliveries.Any(ld => ld.FundModel == _fundModel)).Select(l => BuildGlobalDataEntity(l, global));
+            var entities = inputModels?
+                .Where(l => l.LearningDeliveries.Any(ld => ld.FundModel == _fundModel))
+                .Select(l => BuildGlobalDataEntity(l, global)) ?? new List<IDataEntity>();
 
-            return entities.Any() ? entities : new List<IDataEntity> { BuildGlobalDataEntity(null, global) };
+            return entities.Any() ? entities : new List<IDataEntity> { BuildDefaultGlobalDataEntity(global) };
         }
 
         public IDataEntity BuildGlobalDataEntity(FM35LearnerDto learner, Global global)
         {
             var orgFunding = _organisationReferenceDataService.OrganisationFundingForUKPRN(global.UKPRN).Where(f => f.OrgFundFactType == Attributes.OrgFundFactorTypeAdultSkills).ToList();
 
-            var globalEntity = new DataEntity(Attributes.EntityGlobal)
+            return new DataEntity(Attributes.EntityGlobal)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
@@ -71,8 +73,20 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                          .ToList()
                      : new List<IDataEntity>()
             };
+        }
 
-            return globalEntity;
+        public IDataEntity BuildDefaultGlobalDataEntity(Global global)
+        {
+            return new DataEntity(Attributes.EntityGlobal)
+            {
+                Attributes = new Dictionary<string, IAttributeData>()
+                {
+                    { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
+                    { Attributes.OrgVersion, new AttributeData(global.OrgVersion) },
+                    { Attributes.PostcodeDisadvantageVersion, new AttributeData(global.PostcodeDisadvantageVersion) },
+                    { Attributes.UKPRN, new AttributeData(global.UKPRN) }
+                }
+            };
         }
 
         public IDataEntity BuildLearnerDataEntity(FM35LearnerDto learner)

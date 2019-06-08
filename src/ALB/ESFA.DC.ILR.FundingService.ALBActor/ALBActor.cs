@@ -8,10 +8,10 @@ using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Dto;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FundingActor;
 using ESFA.DC.ILR.FundingService.FundingActor.Constants;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
 using Microsoft.ServiceFabric.Actors;
@@ -83,21 +83,12 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                 try
                 {
                     jobLogger.LogDebug($"{nameof(ALBActor)} {ActorId} {GC.GetGeneration(actorModel)} started processing");
-                    IFundingService<ILearner, ALBGlobal> fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, ALBGlobal>>();
+                    IFundingService<ALBLearnerDto, ALBGlobal> fundingService = childLifetimeScope.Resolve<IFundingService<ALBLearnerDto, ALBGlobal>>();
 
-                    var learners = BuildLearners(actorModel.ValidLearners);
+                    var learners = BuildLearners<ALBLearnerDto>(actorModel.ValidLearners);
 
-                    if (learners == null)
-                    {
-                        results = null;
-
-                        jobLogger.LogDebug($"{nameof(ALBActor)} {ActorId} {GC.GetGeneration(actorModel)} completed processing - Zero learners");
-                    }
-                    else
-                    {
-                        results = fundingService.ProcessFunding(learners, cancellationToken);
-                        jobLogger.LogDebug($"{nameof(ALBActor)} {ActorId} {GC.GetGeneration(actorModel)} completed processing");
-                    }
+                    results = fundingService.ProcessFunding(actorModel.UKPRN, learners, cancellationToken);
+                    jobLogger.LogDebug($"{nameof(ALBActor)} {ActorId} {GC.GetGeneration(actorModel)} completed processing");
                 }
                 catch (Exception ex)
                 {

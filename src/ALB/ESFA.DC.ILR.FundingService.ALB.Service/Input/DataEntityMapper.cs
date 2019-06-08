@@ -28,13 +28,15 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
             _postcodesReferenceDataService = postcodesReferenceDataService;
         }
 
-        public IEnumerable<IDataEntity> MapTo(IEnumerable<ALBLearnerDto> inputModels)
+        public IEnumerable<IDataEntity> MapTo(int ukprn, IEnumerable<ALBLearnerDto> inputModels)
         {
-            var global = BuildGlobal(inputModels.Select(u => u.UKPRN).Single());
+            var global = BuildGlobal(ukprn);
 
-            var entities = inputModels.Where(l => l.LearningDeliveries.Any(ld => _fundModels.Contains(ld.FundModel))).Select(l => BuildGlobalDataEntity(l, global));
+            var entities = inputModels?
+                .Where(l => l.LearningDeliveries.Any(ld => _fundModels.Contains(ld.FundModel)))
+                .Select(l => BuildGlobalDataEntity(l, global)) ?? new List<IDataEntity>();
 
-            return entities.Any() ? entities : new List<IDataEntity> { BuildGlobalDataEntity(null, global) };
+            return entities.Any() ? entities : new List<IDataEntity> { BuildDefaultGlobalDataEntity(global) };
         }
 
         public IDataEntity BuildGlobalDataEntity(ALBLearnerDto learner, Global global)
@@ -48,6 +50,19 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
                     { Attributes.UKPRN, new AttributeData(global.UKPRN) }
                 },
                 Children = learner != null ? new List<IDataEntity>() { BuildLearnerDataEntity(learner) } : new List<IDataEntity>()
+            };
+        }
+
+        public IDataEntity BuildDefaultGlobalDataEntity(Global global)
+        {
+            return new DataEntity(Attributes.EntityGlobal)
+            {
+                Attributes = new Dictionary<string, IAttributeData>()
+                {
+                    { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
+                    { Attributes.PostcodeAreaCostVersion, new AttributeData(global.PostcodesVersion) },
+                    { Attributes.UKPRN, new AttributeData(global.UKPRN) }
+                }
             };
         }
 
@@ -112,11 +127,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
                                     .LARSFundings?
                                     .Select(BuildLARSFunding) ?? new List<IDataEntity>())
                              .Union(
-                                   _postcodesReferenceDataService
+                                   _postcodesReferenceDataService?
                                     .SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode)
                                     .Select(BuildSFAPostcodeAreaCost) ?? new List<IDataEntity>())
                              .Union(
-                                   _postcodesReferenceDataService
+                                   _postcodesReferenceDataService?
                                     .CareerLearningPilotsForPostcode(learningDelivery.DelLocPostCode)
                                     .Select(BuildSubsidyPilotPostcodeArea) ?? new List<IDataEntity>())
                             .ToList()

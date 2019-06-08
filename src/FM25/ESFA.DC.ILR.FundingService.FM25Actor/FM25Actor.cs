@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Autofac;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Dto;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM25.Model.Output;
 using ESFA.DC.ILR.FundingService.FM25Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.FundingActor;
 using ESFA.DC.ILR.FundingService.FundingActor.Constants;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.OPA.Service.Interface.Rulebase;
 using ESFA.DC.OPA.Service.Rulebase;
@@ -97,20 +97,11 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
                     {
                         jobLogger.LogDebug("FM25 Rulebase Starting");
 
-                        IFundingService<ILearner, IEnumerable<FM25Global>> fundingService = fundingServiceLifetimeScope.Resolve<IFundingService<ILearner, IEnumerable<FM25Global>>>();
+                        IFundingService<FM25LearnerDto, IEnumerable<FM25Global>> fundingService = fundingServiceLifetimeScope.Resolve<IFundingService<FM25LearnerDto, IEnumerable<FM25Global>>>();
 
-                        var learners = BuildLearners(actorModel.ValidLearners);
+                        var learners = BuildLearners<FM25LearnerDto>(actorModel.ValidLearners);
 
-                        fm25Results = fundingService.ProcessFunding(learners, cancellationToken).ToList();
-
-                        if (learners == null)
-                        {
-                            fm25Results = null;
-                        }
-                        else
-                        {
-                            fm25Results = fundingService.ProcessFunding(learners, cancellationToken).ToList();
-                        }
+                        fm25Results = fundingService.ProcessFunding(actorModel.UKPRN, learners, cancellationToken).ToList();
 
                         jobLogger.LogDebug("FM25 Rulebase Finishing");
                     }
@@ -124,14 +115,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
 
                         IFundingService<FM25Global, IEnumerable<PeriodisationGlobal>> periodisationService = fundingServiceLifetimeScope.Resolve<IFundingService<FM25Global, IEnumerable<PeriodisationGlobal>>>();
 
-                        if (fm25Results == null)
-                        {
-                            fm25PeriodisationResults = null;
-                        }
-                        else
-                        {
-                            fm25PeriodisationResults = periodisationService.ProcessFunding(fm25Results, cancellationToken).ToList();
-                        }
+                        fm25PeriodisationResults = periodisationService.ProcessFunding(actorModel.UKPRN, fm25Results, cancellationToken).ToList();
 
                         jobLogger.LogDebug("FM25 Periodisation Rulebase Finishing");
                     }

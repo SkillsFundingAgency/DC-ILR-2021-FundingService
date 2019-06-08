@@ -34,6 +34,7 @@ namespace ESFA.DC.ILR.FundingService.FundingActor.Providers
                         JobId = fundingServiceContext.JobId,
                         Container = fundingServiceContext.Container,
                         OutputKey = fundingServiceContext.FundingFm70OutputKey,
+                        UKPRN = message.LearningProviderEntity.UKPRN,
                         ExternalDataCache = externalDataCache,
                         ValidLearners = _jsonSerializationService.Serialize(p)
                     }).ToList();

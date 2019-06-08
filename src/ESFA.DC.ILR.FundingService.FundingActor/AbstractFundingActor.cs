@@ -49,9 +49,9 @@ namespace ESFA.DC.ILR.FundingService.FundingActor
             };
         }
 
-        public List<MessageLearner> BuildLearners(string serializedLearners)
+        public List<T> BuildLearners<T>(string serializedLearners)
         {
-            return JsonSerializationService.Deserialize<List<MessageLearner>>(serializedLearners);
+            return JsonSerializationService.Deserialize<List<T>>(serializedLearners);
         }
 
         public string BuildFundingOutput<T>(T model)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.External.FCS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.FCS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
@@ -18,6 +19,172 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
 {
     public class DataEntityMapperTests
     {
+        [Fact]
+        public void MapTo()
+        {
+            var ukprn = 1;
+            var learnAimRef = "LearnAimRef";
+            var delLocPostCode = "Postcode";
+            var conRefNumber = "ConRefNumber";
+
+            var global = new Global
+            {
+                UKPRN = 1
+            };
+
+            var learnerDtos = new List<FM70LearnerDto>
+            {
+                new FM70LearnerDto
+                {
+                    LearningDeliveries = new List<ILR.Model.MessageLearnerLearningDelivery>
+                    {
+                        new ILR.Model.MessageLearnerLearningDelivery
+                        {
+                            LearnAimRef = learnAimRef,
+                            DelLocPostCode = delLocPostCode,
+                            FundModel = 70,
+                            ConRefNumber = conRefNumber
+                        }
+                    }
+                },
+                new FM70LearnerDto
+                {
+                    LearningDeliveries = new List<ILR.Model.MessageLearnerLearningDelivery>
+                    {
+                        new ILR.Model.MessageLearnerLearningDelivery
+                        {
+                            LearnAimRef = learnAimRef,
+                            DelLocPostCode = delLocPostCode,
+                            FundModel = 70,
+                            ConRefNumber = conRefNumber
+                        }
+                    }
+                },
+            };
+
+            var larsLearningDelivery = new LARSLearningDelivery
+            {
+                AwardOrgCode = "awardOrgCode",
+                EFACOFType = 1,
+                LearnAimRefTitle = "learnAimRefTitle",
+                LearnAimRefType = "learnAimRefType",
+                RegulatedCreditValue = 2,
+                NotionalNVQLevelv2 = "NVQLevel",
+                LARSFundings = new List<LARSFunding>
+                {
+                    new LARSFunding
+                    {
+                        FundingCategory = "Matrix",
+                        RateWeighted = 1.0m,
+                        WeightingFactor = "G",
+                        EffectiveFrom = new DateTime(2018, 1, 1),
+                        EffectiveTo = new DateTime(2019, 1, 1),
+                    }
+                },
+                LARSCareerLearningPilots = new List<LARSCareerLearningPilot>
+                {
+                    new LARSCareerLearningPilot
+                    {
+                        AreaCode = "DelLocPostcode",
+                        SubsidyRate = 1.2m,
+                        EffectiveFrom = new DateTime(2018, 1, 1),
+                        EffectiveTo = new DateTime(2019, 1, 1)
+                    }
+                }
+            };
+
+            var sfaAreaCost = new List<SfaAreaCost>
+            {
+                new SfaAreaCost
+                {
+                    Postcode = "DelLocPostcode",
+                    EffectiveFrom = new DateTime(2018, 1, 1),
+                    EffectiveTo = new DateTime(2019, 1, 1),
+                    AreaCostFactor = 1.2m
+                }
+            };
+
+            var subsidyPilotPostcodeArea = new List<CareerLearningPilot>
+            {
+                new CareerLearningPilot
+                {
+                    Postcode = "DelLocPostcode",
+                    EffectiveFrom = new DateTime(2018, 1, 1),
+                    EffectiveTo = new DateTime(2019, 1, 1),
+                    AreaCode = "AreaCode"
+                }
+            };
+
+            var fcsContract = new List<FCSContractAllocation>
+            {
+                new FCSContractAllocation
+                {
+                    CalcMethod = 1,
+                    FCSContractDeliverables = new List<FCSContractDeliverable>
+                    {
+                        new FCSContractDeliverable()
+                    }
+                }
+            };
+
+            var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
+            var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
+            var fcsReferenceDataMock = new Mock<IFCSReferenceDataService>();
+
+            larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learnAimRef)).Returns(larsLearningDelivery);
+            postcodesReferenceDataServiceMock.Setup(p => p.SFAAreaCostsForPostcode(delLocPostCode)).Returns(new List<SfaAreaCost> { new SfaAreaCost() });
+            fcsReferenceDataMock.Setup(f => f.FcsContractsForConRef(conRefNumber)).Returns(fcsContract);
+
+            var dataEntities = NewService(
+                fcsReferenceDataService: fcsReferenceDataMock.Object,
+                larsReferenceDataService: larsReferenceDataServiceMock.Object,
+                postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object)
+                .MapTo(ukprn, learnerDtos);
+
+            dataEntities.Should().HaveCount(2);
+            dataEntities.SelectMany(d => d.Children).Should().NotBeNullOrEmpty();
+        }
+
+        [Fact]
+        public void MapTo_NullLearnerDto()
+        {
+            var ukprn = 1;
+
+            var global = new Global
+            {
+                UKPRN = 1
+            };
+
+            var dataEntities = NewService().MapTo(ukprn, null);
+
+            dataEntities.Should().HaveCount(1);
+            dataEntities.Select(d => d.IsGlobal).First().Should().Be(true);
+            dataEntities.SelectMany(d => d.Children).Should().BeNullOrEmpty();
+            dataEntities.Select(d => d.EntityName).First().Should().Be("global");
+            dataEntities.Select(d => d.Attributes).First().Should().HaveCount(1);
+            dataEntities.Select(d => d.Attributes).First()["UKPRN"].Value.Should().Be(global.UKPRN);
+        }
+
+        [Fact]
+        public void MapTo_EmptyLearners()
+        {
+            var ukprn = 1;
+
+            var global = new Global
+            {
+                UKPRN = 1
+            };
+
+            var dataEntities = NewService().MapTo(ukprn, new List<FM70LearnerDto>());
+
+            dataEntities.Should().HaveCount(1);
+            dataEntities.Select(d => d.IsGlobal).First().Should().Be(true);
+            dataEntities.Select(d => d.Children).First().Should().HaveCount(0);
+            dataEntities.Select(d => d.EntityName).First().Should().Be("global");
+            dataEntities.Select(d => d.Attributes).First().Should().HaveCount(1);
+            dataEntities.Select(d => d.Attributes).First()["UKPRN"].Value.Should().Be(global.UKPRN);
+        }
+
         [Fact]
         public void BuildGlobalDataEntity()
         {

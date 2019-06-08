@@ -32,18 +32,21 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
             _postcodesReferenceDataService = postcodesReferenceDataService;
         }
 
-        public IEnumerable<IDataEntity> MapTo(IEnumerable<FM70LearnerDto> inputModels)
+        public IEnumerable<IDataEntity> MapTo(int ukprn, IEnumerable<FM70LearnerDto> inputModels)
         {
-            var global = BuildGlobal(inputModels.Select(u => u.UKPRN).Single());
+            var global = BuildGlobal(ukprn);
 
-            var entities = inputModels.Where(l => l.LearningDeliveries.Any(ld => _fundModel == ld.FundModel)).Select(l => BuildGlobalDataEntity(l, global));
+            var entities = inputModels?
+                .Where(l => l.LearningDeliveries
+                .Any(ld => _fundModel == ld.FundModel))
+                .Select(l => BuildGlobalDataEntity(l, global)) ?? new List<IDataEntity>();
 
-            return entities.Any() ? entities : new List<IDataEntity> { BuildGlobalDataEntity(null, global) };
+            return entities.Any() ? entities : new List<IDataEntity> { BuildDefaultGlobalDataEntity(global) };
         }
 
         public IDataEntity BuildGlobalDataEntity(FM70LearnerDto learner, Global global)
         {
-            var globalEntity = new DataEntity(Attributes.EntityGlobal)
+           return new DataEntity(Attributes.EntityGlobal)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
@@ -52,8 +55,17 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
                 Children =
                     learner != null ? new List<IDataEntity> { BuildLearnerDataEntity(learner) } : new List<IDataEntity>()
             };
+        }
 
-            return globalEntity;
+        public IDataEntity BuildDefaultGlobalDataEntity(Global global)
+        {
+            return new DataEntity(Attributes.EntityGlobal)
+            {
+                Attributes = new Dictionary<string, IAttributeData>()
+                {
+                    { Attributes.UKPRN, new AttributeData(global.UKPRN) }
+                },
+            };
         }
 
         public IDataEntity BuildLearnerDataEntity(FM70LearnerDto learner)

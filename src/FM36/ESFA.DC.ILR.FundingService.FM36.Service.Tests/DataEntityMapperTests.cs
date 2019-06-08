@@ -20,13 +20,188 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
     public class DataEntityMapperTests
     {
         [Fact]
+        public void MapTo()
+        {
+            var ukprn = 1;
+            var learnAimRef = "LearnAimRef";
+            var delLocPostCode = "Postcode";
+            var stdCode = 1;
+
+            var larsVersion = "1.0.0";
+            var year = "1819";
+            var collectionPeriod = "DefaultPeriod";
+
+            var global = new Global
+            {
+                LARSVersion = larsVersion,
+                UKPRN = ukprn,
+                Year = year,
+                CollectionPeriod = collectionPeriod
+            };
+
+            var learnerDtos = new List<FM36LearnerDto>
+            {
+                new FM36LearnerDto
+                {
+                    ULN = 1,
+                    LearningDeliveries = new List<ILR.Model.MessageLearnerLearningDelivery>
+                    {
+                        new ILR.Model.MessageLearnerLearningDelivery
+                        {
+                            LearnAimRef = learnAimRef,
+                            DelLocPostCode = delLocPostCode,
+                            FundModel = 36,
+                            StdCode = stdCode
+                        }
+                    }
+                },
+                new FM36LearnerDto
+                {
+                    ULN = 1,
+                    LearningDeliveries = new List<ILR.Model.MessageLearnerLearningDelivery>
+                    {
+                        new ILR.Model.MessageLearnerLearningDelivery
+                        {
+                            LearnAimRef = learnAimRef,
+                            DelLocPostCode = delLocPostCode,
+                            FundModel = 36,
+                            StdCode = stdCode
+                        }
+                    }
+                },
+            };
+
+            var larsLearningDelivery = new LARSLearningDelivery
+            {
+                AwardOrgCode = "awardOrgCode",
+                EFACOFType = 1,
+                LearnAimRefTitle = "learnAimRefTitle",
+                LearnAimRefType = "learnAimRefType",
+                RegulatedCreditValue = 2,
+                NotionalNVQLevelv2 = "NVQLevel",
+                LARSFundings = new List<LARSFunding>
+                {
+                    new LARSFunding
+                    {
+                        FundingCategory = "Matrix",
+                        RateWeighted = 1.0m,
+                        WeightingFactor = "G",
+                        EffectiveFrom = new DateTime(2018, 1, 1),
+                        EffectiveTo = new DateTime(2019, 1, 1),
+                    }
+                }
+            };
+
+            var larsStandard = new LARSStandard
+            {
+                StandardCode = 1,
+            };
+
+            IEnumerable<DasDisadvantage> dasDisadvantage = new List<DasDisadvantage>
+            {
+                new DasDisadvantage
+                {
+                    Postcode = "DelLocPostcode",
+                    EffectiveFrom = new DateTime(2018, 1, 1),
+                    EffectiveTo = new DateTime(2019, 1, 1),
+                    Uplift = 1.2m
+                }
+            };
+
+            var postcodesRefererenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
+            var appsHistoryRefererenceDataServiceMock = new Mock<IAppsEarningsHistoryReferenceDataService>();
+            var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
+
+            larsReferenceDataServiceMock.Setup(l => l.LARSCurrentVersion()).Returns(global.LARSVersion);
+            larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learnAimRef)).Returns(larsLearningDelivery);
+            larsReferenceDataServiceMock.Setup(l => l.LARSStandardForStandardCode(stdCode)).Returns(larsStandard);
+
+            postcodesRefererenceDataServiceMock.Setup(l => l.DASDisadvantagesForPostcode(It.IsAny<string>())).Returns(dasDisadvantage);
+            appsHistoryRefererenceDataServiceMock.Setup(l => l.AECEarningsHistory(It.IsAny<long>())).Returns(new List<AECEarningsHistory>());
+
+            var dataEntities = NewService(
+                larsReferenceDataServiceMock.Object,
+                postcodesRefererenceDataServiceMock.Object,
+                appsHistoryRefererenceDataServiceMock.Object)
+                .MapTo(ukprn, learnerDtos);
+
+            dataEntities.Should().HaveCount(2);
+            dataEntities.SelectMany(d => d.Children).Should().NotBeNullOrEmpty();
+        }
+
+        [Fact]
+        public void MapTo_NullLearnerDto()
+        {
+            var ukprn = 1;
+            var larsVersion = "1.0.0";
+            var year = "1819";
+            var collectionPeriod = "DefaultPeriod";
+
+            var global = new Global
+            {
+                LARSVersion = larsVersion,
+                UKPRN = ukprn,
+                Year = year,
+                CollectionPeriod = collectionPeriod
+            };
+
+            var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
+
+            larsReferenceDataServiceMock.Setup(l => l.LARSCurrentVersion()).Returns(larsVersion);
+
+            var dataEntities = NewService(larsReferenceDataServiceMock.Object).MapTo(ukprn, null);
+
+            dataEntities.Should().HaveCount(1);
+            dataEntities.Select(d => d.IsGlobal).First().Should().Be(true);
+            dataEntities.Select(d => d.Children).First().Should().HaveCount(0);
+            dataEntities.Select(d => d.EntityName).First().Should().Be("global");
+            dataEntities.Select(d => d.Attributes).First().Should().HaveCount(4);
+            dataEntities.Select(d => d.Attributes).First()["CollectionPeriod"].Value.Should().Be(global.CollectionPeriod);
+            dataEntities.Select(d => d.Attributes).First()["LARSVersion"].Value.Should().Be(global.LARSVersion);
+            dataEntities.Select(d => d.Attributes).First()["Year"].Value.Should().Be(global.Year);
+            dataEntities.Select(d => d.Attributes).First()["UKPRN"].Value.Should().Be(global.UKPRN);
+        }
+
+        [Fact]
+        public void MapTo_EmptyLearners()
+        {
+            var ukprn = 1;
+            var larsVersion = "1.0.0";
+            var year = "1819";
+            var collectionPeriod = "DefaultPeriod";
+
+            var global = new Global
+            {
+                LARSVersion = larsVersion,
+                UKPRN = ukprn,
+                Year = year,
+                CollectionPeriod = collectionPeriod
+            };
+
+            var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
+
+            larsReferenceDataServiceMock.Setup(l => l.LARSCurrentVersion()).Returns(larsVersion);
+
+            var dataEntities = NewService(larsReferenceDataServiceMock.Object).MapTo(ukprn, new List<FM36LearnerDto>());
+
+            dataEntities.Should().HaveCount(1);
+            dataEntities.Select(d => d.IsGlobal).First().Should().Be(true);
+            dataEntities.Select(d => d.Children).First().Should().HaveCount(0);
+            dataEntities.Select(d => d.EntityName).First().Should().Be("global");
+            dataEntities.Select(d => d.Attributes).First().Should().HaveCount(4);
+            dataEntities.Select(d => d.Attributes).First()["CollectionPeriod"].Value.Should().Be(global.CollectionPeriod);
+            dataEntities.Select(d => d.Attributes).First()["LARSVersion"].Value.Should().Be(global.LARSVersion);
+            dataEntities.Select(d => d.Attributes).First()["Year"].Value.Should().Be(global.Year);
+            dataEntities.Select(d => d.Attributes).First()["UKPRN"].Value.Should().Be(global.UKPRN);
+        }
+
+        [Fact]
         public void BuildGlobalDataEntity()
         {
             var ukprn = 1234;
 
             var learner = new FM36LearnerDto
             {
-                UKPRN = ukprn,
                 PostcodePrior = "Postcode",
                 ULN = 123456789
             };
@@ -40,7 +215,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             var postcodesRefererenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
             var appsHistoryRefererenceDataServiceMock = new Mock<IAppsEarningsHistoryReferenceDataService>();
 
-            postcodesRefererenceDataServiceMock.Setup(l => l.SFADisadvantagesForPostcode(It.IsAny<string>())).Returns(new List<SfaDisadvantage>());
+            postcodesRefererenceDataServiceMock.Setup(l => l.DASDisadvantagesForPostcode(It.IsAny<string>())).Returns(new List<DasDisadvantage>());
             appsHistoryRefererenceDataServiceMock.Setup(l => l.AECEarningsHistory(It.IsAny<long>())).Returns(new List<AECEarningsHistory>());
 
             var dataEntity = NewService(
@@ -91,7 +266,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             var postcodesRefererenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
             var appsHistoryRefererenceDataServiceMock = new Mock<IAppsEarningsHistoryReferenceDataService>();
 
-            postcodesRefererenceDataServiceMock.Setup(l => l.SFADisadvantagesForPostcode(It.IsAny<string>())).Returns(new List<SfaDisadvantage>());
+            postcodesRefererenceDataServiceMock.Setup(l => l.DASDisadvantagesForPostcode(It.IsAny<string>())).Returns(new List<DasDisadvantage>());
             appsHistoryRefererenceDataServiceMock.Setup(l => l.AECEarningsHistory(It.IsAny<long>())).Returns(new List<AECEarningsHistory>());
 
             var dataEntity = NewService(
@@ -249,20 +424,20 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         [Fact]
         public void BuildSFAPostcodeDisadvantage()
         {
-            var sfaDisadvantage = new DasDisadvantage
+            var dasDisadvantage = new DasDisadvantage
             {
                 Uplift = 1.2m,
                 EffectiveFrom = new DateTime(2018, 1, 1),
                 EffectiveTo = new DateTime(2018, 1, 1)
             };
 
-            var dataEntity = NewService().BuildDASPostcodeDisadvantage(sfaDisadvantage);
+            var dataEntity = NewService().BuildDASPostcodeDisadvantage(dasDisadvantage);
 
             dataEntity.EntityName.Should().Be("SFA_PostcodeDisadvantage");
             dataEntity.Attributes.Should().HaveCount(3);
-            dataEntity.Attributes["DisApprenticeshipUplift"].Value.Should().Be(sfaDisadvantage.Uplift);
-            dataEntity.Attributes["DisUpEffectiveFrom"].Value.Should().Be(sfaDisadvantage.EffectiveFrom);
-            dataEntity.Attributes["DisUpEffectiveTo"].Value.Should().Be(sfaDisadvantage.EffectiveTo);
+            dataEntity.Attributes["DisApprenticeshipUplift"].Value.Should().Be(dasDisadvantage.Uplift);
+            dataEntity.Attributes["DisUpEffectiveFrom"].Value.Should().Be(dasDisadvantage.EffectiveFrom);
+            dataEntity.Attributes["DisUpEffectiveTo"].Value.Should().Be(dasDisadvantage.EffectiveTo);
         }
 
         [Fact]

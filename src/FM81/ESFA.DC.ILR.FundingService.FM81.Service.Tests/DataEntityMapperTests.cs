@@ -17,6 +17,154 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
     public class DataEntityMapperTests
     {
         [Fact]
+        public void MapTo()
+        {
+            var ukprn = 1;
+            var learnAimRef = "LearnAImRef";
+            var stdCode = 1;
+
+            var global = new Global
+            {
+                LARSVersion = "1.0.0",
+                UKPRN = 1234
+            };
+
+            var learnerDtos = new List<FM81LearnerDto>
+            {
+                new FM81LearnerDto
+                {
+                    LearningDeliveries = new List<ILR.Model.MessageLearnerLearningDelivery>
+                    {
+                        new MessageLearnerLearningDelivery
+                        {
+                            LearnAimRef = learnAimRef,
+                            FundModel = 81,
+                            ProgTypeSpecified = true,
+                            ProgType = 25,
+                            StdCode = stdCode
+                        }
+                    }
+                },
+                new FM81LearnerDto
+                {
+                    LearningDeliveries = new List<ILR.Model.MessageLearnerLearningDelivery>
+                    {
+                        new MessageLearnerLearningDelivery
+                        {
+                            LearnAimRef = learnAimRef,
+                            FundModel = 81,
+                            ProgTypeSpecified = true,
+                            ProgType = 25,
+                            StdCode = stdCode
+                        }
+                    }
+                },
+            };
+
+            var larsLearningDelivery = new LARSLearningDelivery
+            {
+                AwardOrgCode = "awardOrgCode",
+                EFACOFType = 1,
+                LearnAimRefTitle = "learnAimRefTitle",
+                LearnAimRefType = "learnAimRefType",
+                RegulatedCreditValue = 2,
+                NotionalNVQLevelv2 = "NVQLevel",
+                LARSFundings = new List<LARSFunding>
+                {
+                    new LARSFunding
+                    {
+                        FundingCategory = "Matrix",
+                        RateWeighted = 1.0m,
+                        WeightingFactor = "G",
+                        EffectiveFrom = new DateTime(2018, 1, 1),
+                        EffectiveTo = new DateTime(2019, 1, 1),
+                    }
+                },
+                LARSCareerLearningPilots = new List<LARSCareerLearningPilot>
+                {
+                    new LARSCareerLearningPilot
+                    {
+                        AreaCode = "DelLocPostcode",
+                        SubsidyRate = 1.2m,
+                        EffectiveFrom = new DateTime(2018, 1, 1),
+                        EffectiveTo = new DateTime(2019, 1, 1)
+                    }
+                }
+            };
+
+            var larsStandard = new LARSStandard
+            {
+                StandardCode = 1,
+            };
+
+            var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
+
+            larsReferenceDataServiceMock.Setup(l => l.LARSCurrentVersion()).Returns(global.LARSVersion);
+
+            larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learnAimRef)).Returns(larsLearningDelivery);
+            larsReferenceDataServiceMock.Setup(l => l.LARSStandardForStandardCode(stdCode)).Returns(larsStandard);
+
+            var dataEntities = NewService(larsReferenceDataServiceMock.Object).MapTo(ukprn, learnerDtos);
+
+            dataEntities.Should().HaveCount(2);
+            dataEntities.SelectMany(d => d.Children).Should().NotBeNullOrEmpty();
+        }
+
+        [Fact]
+        public void MapTo_NullLearnerDto()
+        {
+            var ukprn = 1234;
+            var larsVersion = "1.0.0";
+
+            var global = new Global
+            {
+                LARSVersion = larsVersion,
+                UKPRN = 1234
+            };
+
+            var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
+
+            larsReferenceDataServiceMock.Setup(l => l.LARSCurrentVersion()).Returns(larsVersion);
+
+            var dataEntities = NewService(larsReferenceDataServiceMock.Object).MapTo(ukprn, null);
+
+            dataEntities.Should().HaveCount(1);
+            dataEntities.Select(d => d.IsGlobal).First().Should().Be(true);
+            dataEntities.SelectMany(d => d.Children).Should().BeNullOrEmpty();
+            dataEntities.Select(d => d.EntityName).First().Should().Be("global");
+            dataEntities.Select(d => d.Attributes).First().Should().HaveCount(2);
+            dataEntities.Select(d => d.Attributes).First()["LARSVersion"].Value.Should().Be(global.LARSVersion);
+            dataEntities.Select(d => d.Attributes).First()["UKPRN"].Value.Should().Be(global.UKPRN);
+        }
+
+        [Fact]
+        public void MapTo_EmptyLearners()
+        {
+            var ukprn = 1234;
+            var larsVersion = "1.0.0";
+
+            var global = new Global
+            {
+                LARSVersion = larsVersion,
+                UKPRN = 1234
+            };
+
+            var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
+
+            larsReferenceDataServiceMock.Setup(l => l.LARSCurrentVersion()).Returns(larsVersion);
+
+            var dataEntities = NewService(larsReferenceDataServiceMock.Object).MapTo(ukprn, new List<FM81LearnerDto>());
+
+            dataEntities.Should().HaveCount(1);
+            dataEntities.Select(d => d.IsGlobal).First().Should().Be(true);
+            dataEntities.SelectMany(d => d.Children).Should().BeNullOrEmpty();
+            dataEntities.Select(d => d.EntityName).First().Should().Be("global");
+            dataEntities.Select(d => d.Attributes).First().Should().HaveCount(2);
+            dataEntities.Select(d => d.Attributes).First()["LARSVersion"].Value.Should().Be(global.LARSVersion);
+            dataEntities.Select(d => d.Attributes).First()["UKPRN"].Value.Should().Be(global.UKPRN);
+        }
+
+        [Fact]
         public void BuildGlobalDataEntity()
         {
             var global = new Global

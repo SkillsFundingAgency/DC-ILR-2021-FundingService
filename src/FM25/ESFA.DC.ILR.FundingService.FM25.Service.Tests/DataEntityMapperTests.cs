@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
@@ -19,6 +20,266 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
 {
     public class DataEntityMapperTests
     {
+        [Fact]
+        public void MapTo()
+        {
+            var ukprn = 1;
+            var larsVersion = "1.0.0";
+            var orgVersion = "1.0.0";
+            var postcodeVersion = "1.0.0";
+            var learnAimRef = "LearnAimRef";
+            var postcode = "Postcode";
+            var uplift = 1.2m;
+
+            var historicAreaCostFactorValue = "HISTORIC AREA COST FACTOR VALUE";
+            var historicDisadvantageFundingProportionValue = "HISTORIC DISADVANTAGE FUNDING PROPORTION VALUE";
+            var historicLargeProgrammeProportionValue = "HISTORIC LARGE PROGRAMME PROPORTION VALUE";
+            var historicProgrammeCostWeightingFactorValue = "HISTORIC PROGRAMME COST WEIGHTING FACTOR VALUE";
+            var historicRetentionFactorValue = "HISTORIC RETENTION FACTOR VALUE";
+            var specialistResources = true;
+
+            var global = new Global
+            {
+                LARSVersion = larsVersion,
+                UKPRN = ukprn,
+                OrgVersion = orgVersion,
+                PostcodesVersion = postcodeVersion,
+                AreaCostFactor1618 = historicAreaCostFactorValue,
+                DisadvantageProportion = historicDisadvantageFundingProportionValue,
+                HistoricLargeProgrammeProportion = historicLargeProgrammeProportionValue,
+                ProgrammeWeighting = historicProgrammeCostWeightingFactorValue,
+                RetentionFactor = historicRetentionFactorValue,
+                SpecialistResources = specialistResources
+            };
+
+            var learnerDtos = new List<FM25LearnerDto>
+            {
+                new FM25LearnerDto
+                {
+                    Postcode = postcode,
+                    LearningDeliveries = new List<ILR.Model.MessageLearnerLearningDelivery>
+                    {
+                        new ILR.Model.MessageLearnerLearningDelivery
+                        {
+                            LearnAimRef = learnAimRef,
+                            FundModel = 25,
+                        }
+                    }
+                },
+                new FM25LearnerDto
+                {
+                    Postcode = postcode,
+                    LearningDeliveries = new List<ILR.Model.MessageLearnerLearningDelivery>
+                    {
+                        new ILR.Model.MessageLearnerLearningDelivery
+                        {
+                            LearnAimRef = learnAimRef,
+                            FundModel = 25,
+                        }
+                    }
+                },
+            };
+
+            var larsLearningDelivery = new LARSLearningDelivery
+            {
+                AwardOrgCode = "awardOrgCode",
+                EFACOFType = 1,
+                LearnAimRefTitle = "learnAimRefTitle",
+                LearnAimRefType = "learnAimRefType",
+                RegulatedCreditValue = 2,
+                NotionalNVQLevelv2 = "NVQLevel",
+                LARSFundings = new List<LARSFunding>
+                {
+                    new LARSFunding
+                    {
+                        FundingCategory = "Matrix",
+                        RateWeighted = 1.0m,
+                        WeightingFactor = "G",
+                        EffectiveFrom = new DateTime(2018, 1, 1),
+                        EffectiveTo = new DateTime(2019, 1, 1),
+                    }
+                }
+            };
+
+            var orgFundings = new List<OrgFunding>()
+            {
+                new OrgFunding() { OrgFundFactType = "EFA 16-19", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC AREA COST FACTOR", OrgFundFactValue = historicAreaCostFactorValue },
+                new OrgFunding() { OrgFundFactType = "EFA 16-19", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC DISADVANTAGE FUNDING PROPORTION", OrgFundFactValue = historicDisadvantageFundingProportionValue },
+                new OrgFunding() { OrgFundFactType = "EFA 16-19", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC LARGE PROGRAMME PROPORTION", OrgFundFactValue = historicLargeProgrammeProportionValue },
+                new OrgFunding() { OrgFundFactType = "EFA 16-19", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC PROGRAMME COST WEIGHTING FACTOR", OrgFundFactValue = historicProgrammeCostWeightingFactorValue },
+                new OrgFunding() { OrgFundFactType = "EFA 16-19", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC RETENTION FACTOR", OrgFundFactValue = historicRetentionFactorValue },
+                new OrgFunding() { OrgFundFactType = "EFA 16-19", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "SPECIALIST RESOURCES", OrgFundFactValue = "1" },
+                new OrgFunding() { OrgFundFactType = "EFA 16-19", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC AREA COST FACTOR" },
+                new OrgFunding() { OrgFundFactType = "NOT EFA", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC AREA COST FACTOR" },
+                new OrgFunding() { OrgFundFactType = "NOT EFA",  OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC AREA COST FACTOR" },
+            };
+
+            var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
+            var orgReferenceDataServiceMock = new Mock<IOrganisationReferenceDataService>();
+            var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
+
+            larsReferenceDataServiceMock.Setup(l => l.LARSCurrentVersion()).Returns(larsVersion);
+            larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learnAimRef)).Returns(larsLearningDelivery);
+            orgReferenceDataServiceMock.Setup(o => o.OrganisationVersion()).Returns(orgVersion);
+            orgReferenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(ukprn)).Returns(orgFundings);
+            postcodesReferenceDataServiceMock.Setup(p => p.PostcodesCurrentVersion()).Returns(postcodeVersion);
+            postcodesReferenceDataServiceMock.Setup(p => p.LatestEFADisadvantagesUpliftForPostcode(postcode)).Returns(uplift);
+
+            var dataEntities = NewService(
+                larsReferenceDataService: larsReferenceDataServiceMock.Object,
+                organisationReferenceDataService: orgReferenceDataServiceMock.Object,
+                postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object).MapTo(ukprn, learnerDtos);
+
+            dataEntities.Should().HaveCount(2);
+            dataEntities.SelectMany(d => d.Children).Should().NotBeNullOrEmpty();
+        }
+
+        [Fact]
+        public void MapTo_NullLearnerDto()
+        {
+            var ukprn = 1;
+            var larsVersion = "1.0.0";
+            var orgVersion = "1.0.0";
+            var postcodeVersion = "1.0.0";
+
+            var historicAreaCostFactorValue = "HISTORIC AREA COST FACTOR VALUE";
+            var historicDisadvantageFundingProportionValue = "HISTORIC DISADVANTAGE FUNDING PROPORTION VALUE";
+            var historicLargeProgrammeProportionValue = "HISTORIC LARGE PROGRAMME PROPORTION VALUE";
+            var historicProgrammeCostWeightingFactorValue = "HISTORIC PROGRAMME COST WEIGHTING FACTOR VALUE";
+            var historicRetentionFactorValue = "HISTORIC RETENTION FACTOR VALUE";
+            var specialistResources = true;
+
+            var global = new Global
+            {
+                LARSVersion = larsVersion,
+                UKPRN = ukprn,
+                OrgVersion = orgVersion,
+                PostcodesVersion = postcodeVersion,
+                AreaCostFactor1618 = historicAreaCostFactorValue,
+                DisadvantageProportion = historicDisadvantageFundingProportionValue,
+                HistoricLargeProgrammeProportion = historicLargeProgrammeProportionValue,
+                ProgrammeWeighting = historicProgrammeCostWeightingFactorValue,
+                RetentionFactor = historicRetentionFactorValue,
+                SpecialistResources = specialistResources
+            };
+
+            var orgFundings = new List<OrgFunding>()
+            {
+                new OrgFunding() { OrgFundFactType = "EFA 16-19", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC AREA COST FACTOR", OrgFundFactValue = historicAreaCostFactorValue },
+                new OrgFunding() { OrgFundFactType = "EFA 16-19", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC DISADVANTAGE FUNDING PROPORTION", OrgFundFactValue = historicDisadvantageFundingProportionValue },
+                new OrgFunding() { OrgFundFactType = "EFA 16-19", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC LARGE PROGRAMME PROPORTION", OrgFundFactValue = historicLargeProgrammeProportionValue },
+                new OrgFunding() { OrgFundFactType = "EFA 16-19", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC PROGRAMME COST WEIGHTING FACTOR", OrgFundFactValue = historicProgrammeCostWeightingFactorValue },
+                new OrgFunding() { OrgFundFactType = "EFA 16-19", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC RETENTION FACTOR", OrgFundFactValue = historicRetentionFactorValue },
+                new OrgFunding() { OrgFundFactType = "EFA 16-19", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "SPECIALIST RESOURCES", OrgFundFactValue = "1" },
+                new OrgFunding() { OrgFundFactType = "EFA 16-19", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC AREA COST FACTOR" },
+                new OrgFunding() { OrgFundFactType = "NOT EFA", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC AREA COST FACTOR" },
+                new OrgFunding() { OrgFundFactType = "NOT EFA",  OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC AREA COST FACTOR" },
+            };
+
+            var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
+            var orgReferenceDataServiceMock = new Mock<IOrganisationReferenceDataService>();
+            var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
+
+            larsReferenceDataServiceMock.Setup(l => l.LARSCurrentVersion()).Returns(larsVersion);
+            orgReferenceDataServiceMock.Setup(o => o.OrganisationVersion()).Returns(orgVersion);
+            orgReferenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(ukprn)).Returns(orgFundings);
+            postcodesReferenceDataServiceMock.Setup(p => p.PostcodesCurrentVersion()).Returns(postcodeVersion);
+
+            var dataEntities = NewService(
+                larsReferenceDataService: larsReferenceDataServiceMock.Object,
+                organisationReferenceDataService: orgReferenceDataServiceMock.Object,
+                postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object).MapTo(ukprn, null);
+
+            dataEntities.Should().HaveCount(1);
+            dataEntities.Select(d => d.IsGlobal).First().Should().Be(true);
+            dataEntities.Select(d => d.Children).First().Should().HaveCount(0);
+            dataEntities.Select(d => d.EntityName).First().Should().Be("global");
+            dataEntities.Select(d => d.Attributes).First().Should().HaveCount(10);
+            dataEntities.Select(d => d.Attributes).First()["OrgVersion"].Value.Should().Be(global.OrgVersion);
+            dataEntities.Select(d => d.Attributes).First()["LARSVersion"].Value.Should().Be(global.LARSVersion);
+            dataEntities.Select(d => d.Attributes).First()["PostcodeDisadvantageVersion"].Value.Should().Be(global.PostcodesVersion);
+            dataEntities.Select(d => d.Attributes).First()["UKPRN"].Value.Should().Be(global.UKPRN);
+            dataEntities.Select(d => d.Attributes).First()["AreaCostFactor1618"].Value.Should().Be(global.AreaCostFactor1618);
+            dataEntities.Select(d => d.Attributes).First()["DisadvantageProportion"].Value.Should().Be(global.DisadvantageProportion);
+            dataEntities.Select(d => d.Attributes).First()["HistoricLargeProgrammeProportion"].Value.Should().Be(global.HistoricLargeProgrammeProportion);
+            dataEntities.Select(d => d.Attributes).First()["ProgrammeWeighting"].Value.Should().Be(global.ProgrammeWeighting);
+            dataEntities.Select(d => d.Attributes).First()["RetentionFactor"].Value.Should().Be(global.RetentionFactor);
+            dataEntities.Select(d => d.Attributes).First()["SpecialistResources"].Value.Should().Be(global.SpecialistResources);
+        }
+
+        [Fact]
+        public void MapTo_EmptyLearners()
+        {
+            var ukprn = 1;
+            var larsVersion = "1.0.0";
+            var orgVersion = "1.0.0";
+            var postcodeVersion = "1.0.0";
+
+            var historicAreaCostFactorValue = "HISTORIC AREA COST FACTOR VALUE";
+            var historicDisadvantageFundingProportionValue = "HISTORIC DISADVANTAGE FUNDING PROPORTION VALUE";
+            var historicLargeProgrammeProportionValue = "HISTORIC LARGE PROGRAMME PROPORTION VALUE";
+            var historicProgrammeCostWeightingFactorValue = "HISTORIC PROGRAMME COST WEIGHTING FACTOR VALUE";
+            var historicRetentionFactorValue = "HISTORIC RETENTION FACTOR VALUE";
+            var specialistResources = true;
+
+            var global = new Global
+            {
+                LARSVersion = larsVersion,
+                UKPRN = ukprn,
+                OrgVersion = orgVersion,
+                PostcodesVersion = postcodeVersion,
+                AreaCostFactor1618 = historicAreaCostFactorValue,
+                DisadvantageProportion = historicDisadvantageFundingProportionValue,
+                HistoricLargeProgrammeProportion = historicLargeProgrammeProportionValue,
+                ProgrammeWeighting = historicProgrammeCostWeightingFactorValue,
+                RetentionFactor = historicRetentionFactorValue,
+                SpecialistResources = specialistResources
+            };
+
+            var orgFundings = new List<OrgFunding>()
+            {
+                new OrgFunding() { OrgFundFactType = "EFA 16-19", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC AREA COST FACTOR", OrgFundFactValue = historicAreaCostFactorValue },
+                new OrgFunding() { OrgFundFactType = "EFA 16-19", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC DISADVANTAGE FUNDING PROPORTION", OrgFundFactValue = historicDisadvantageFundingProportionValue },
+                new OrgFunding() { OrgFundFactType = "EFA 16-19", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC LARGE PROGRAMME PROPORTION", OrgFundFactValue = historicLargeProgrammeProportionValue },
+                new OrgFunding() { OrgFundFactType = "EFA 16-19", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC PROGRAMME COST WEIGHTING FACTOR", OrgFundFactValue = historicProgrammeCostWeightingFactorValue },
+                new OrgFunding() { OrgFundFactType = "EFA 16-19", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC RETENTION FACTOR", OrgFundFactValue = historicRetentionFactorValue },
+                new OrgFunding() { OrgFundFactType = "EFA 16-19", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "SPECIALIST RESOURCES", OrgFundFactValue = "1" },
+                new OrgFunding() { OrgFundFactType = "EFA 16-19", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC AREA COST FACTOR" },
+                new OrgFunding() { OrgFundFactType = "NOT EFA", OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC AREA COST FACTOR" },
+                new OrgFunding() { OrgFundFactType = "NOT EFA",  OrgFundEffectiveFrom = new DateTime(2018, 8, 1), OrgFundFactor = "HISTORIC AREA COST FACTOR" },
+            };
+
+            var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
+            var orgReferenceDataServiceMock = new Mock<IOrganisationReferenceDataService>();
+            var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
+
+            larsReferenceDataServiceMock.Setup(l => l.LARSCurrentVersion()).Returns(larsVersion);
+            orgReferenceDataServiceMock.Setup(o => o.OrganisationVersion()).Returns(orgVersion);
+            orgReferenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(ukprn)).Returns(orgFundings);
+            postcodesReferenceDataServiceMock.Setup(p => p.PostcodesCurrentVersion()).Returns(postcodeVersion);
+
+            var dataEntities = NewService(
+                larsReferenceDataService: larsReferenceDataServiceMock.Object,
+                organisationReferenceDataService: orgReferenceDataServiceMock.Object,
+                postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object).MapTo(ukprn, new List<FM25LearnerDto>());
+
+            dataEntities.Should().HaveCount(1);
+            dataEntities.Select(d => d.IsGlobal).First().Should().Be(true);
+            dataEntities.Select(d => d.Children).First().Should().HaveCount(0);
+            dataEntities.Select(d => d.EntityName).First().Should().Be("global");
+            dataEntities.Select(d => d.Attributes).First().Should().HaveCount(10);
+            dataEntities.Select(d => d.Attributes).First()["OrgVersion"].Value.Should().Be(global.OrgVersion);
+            dataEntities.Select(d => d.Attributes).First()["LARSVersion"].Value.Should().Be(global.LARSVersion);
+            dataEntities.Select(d => d.Attributes).First()["PostcodeDisadvantageVersion"].Value.Should().Be(global.PostcodesVersion);
+            dataEntities.Select(d => d.Attributes).First()["UKPRN"].Value.Should().Be(global.UKPRN);
+            dataEntities.Select(d => d.Attributes).First()["AreaCostFactor1618"].Value.Should().Be(global.AreaCostFactor1618);
+            dataEntities.Select(d => d.Attributes).First()["DisadvantageProportion"].Value.Should().Be(global.DisadvantageProportion);
+            dataEntities.Select(d => d.Attributes).First()["HistoricLargeProgrammeProportion"].Value.Should().Be(global.HistoricLargeProgrammeProportion);
+            dataEntities.Select(d => d.Attributes).First()["ProgrammeWeighting"].Value.Should().Be(global.ProgrammeWeighting);
+            dataEntities.Select(d => d.Attributes).First()["RetentionFactor"].Value.Should().Be(global.RetentionFactor);
+            dataEntities.Select(d => d.Attributes).First()["SpecialistResources"].Value.Should().Be(global.SpecialistResources);
+        }
+
         [Fact]
         public void BuildDPOutcome()
         {

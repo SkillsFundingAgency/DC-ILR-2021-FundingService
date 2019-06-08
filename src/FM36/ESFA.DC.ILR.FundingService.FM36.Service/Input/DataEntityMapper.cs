@@ -35,13 +35,16 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
             _appsEarningsHistoryReferenceDataService = appsEarningsHistoryReferenceDataService;
         }
 
-        public IEnumerable<IDataEntity> MapTo(IEnumerable<FM36LearnerDto> inputModels)
+        public IEnumerable<IDataEntity> MapTo(int ukprn, IEnumerable<FM36LearnerDto> inputModels)
         {
-            var global = BuildGlobal(inputModels.Select(u => u.UKPRN).Single());
+            var global = BuildGlobal(ukprn);
 
-            var entities = inputModels.Where(l => l.LearningDeliveries.Any(ld => ld.FundModel == _fundModel)).Select(l => BuildGlobalDataEntity(l, global));
+            var entities = inputModels?
+                .Where(l => l.LearningDeliveries
+                .Any(ld => ld.FundModel == _fundModel))
+                .Select(l => BuildGlobalDataEntity(l, global)) ?? new List<IDataEntity>();
 
-            return entities.Any() ? entities : new List<IDataEntity> { BuildGlobalDataEntity(null, global) };
+            return entities.Any() ? entities : new List<IDataEntity> { BuildDefaultGlobalDataEntity(global) };
         }
 
         public IDataEntity BuildGlobalDataEntity(FM36LearnerDto learner, Global global)
@@ -56,6 +59,20 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
                     { Attributes.UKPRN, new AttributeData(global.UKPRN) }
                 },
                 Children = learner != null ? new List<IDataEntity>() { BuildLearnerDataEntity(learner) } : new List<IDataEntity>()
+            };
+        }
+
+        public IDataEntity BuildDefaultGlobalDataEntity(Global global)
+        {
+            return new DataEntity(Attributes.EntityGlobal)
+            {
+                Attributes = new Dictionary<string, IAttributeData>()
+                {
+                    { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
+                    { Attributes.Year, new AttributeData(global.Year) },
+                    { Attributes.CollectionPeriod, new AttributeData(global.CollectionPeriod) },
+                    { Attributes.UKPRN, new AttributeData(global.UKPRN) }
+                }
             };
         }
 

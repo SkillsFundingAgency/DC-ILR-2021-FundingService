@@ -11,22 +11,19 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
     {
         public IEnumerable<IEnumerable<FM36LearnerDto>> ProvideDtos(int fundModelFilter, IMessage message)
         {
-            var ukprn = message.LearningProviderEntity.UKPRN;
-
             List<IEnumerable<FM36LearnerDto>> dtos = new List<IEnumerable<FM36LearnerDto>>();
 
             var pagedLearners = BuildPages(fundModelFilter, message.Learners).ToList();
 
-            pagedLearners.ForEach(page => dtos.Add(BuildDtos(page, ukprn)));
+            pagedLearners.ForEach(page => dtos.Add(BuildDtos(page)));
 
             return dtos;
         }
 
-        private IEnumerable<FM36LearnerDto> BuildDtos(IEnumerable<ILearner> learners, int ukprn)
+        private IEnumerable<FM36LearnerDto> BuildDtos(IEnumerable<ILearner> learners)
         {
             return learners.Select(l => new FM36LearnerDto
             {
-                UKPRN = ukprn,
                 LearnRefNumber = l.LearnRefNumber,
                 DateOfBirth = l.DateOfBirthNullable,
                 PostcodePrior = l.PostcodePrior,

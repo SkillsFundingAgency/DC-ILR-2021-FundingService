@@ -33,7 +33,7 @@ namespace ESFA.DC.ILR.FundingService.FundingActor.Tests.TaskTests
                 new FundingDto()
             };
 
-            var FM36Actor = new Mock<IFM36Actor>();
+            var fm36Actor = new Mock<IFM36Actor>();
             var condenserOutput = new FM36Global();
 
             var jsonSerializationServiceMock = new Mock<IJsonSerializationService>();
@@ -42,9 +42,9 @@ namespace ESFA.DC.ILR.FundingService.FundingActor.Tests.TaskTests
             var fundingOutputCondenserServiceMock = new Mock<IFundingOutputCondenserService<FM36Global>>();
             var loggerMock = new Mock<ILogger>();
 
-            FM36Actor.Setup(a => a.Process(fundingActorDtos.FirstOrDefault(), cancellationToken)).Returns(() => Task<string>.Factory.StartNew(() => "string"));
+            fm36Actor.Setup(a => a.Process(fundingActorDtos.FirstOrDefault(), cancellationToken)).Returns(() => Task<string>.Factory.StartNew(() => "string"));
             jsonSerializationServiceMock.Setup(sm => sm.Deserialize<FM36Global>(It.IsAny<string>())).Returns(new FM36Global()).Verifiable();
-            fundingActorProviderMock.Setup(pm => pm.Provide()).Returns(FM36Actor.Object).Verifiable();
+            fundingActorProviderMock.Setup(pm => pm.Provide()).Returns(fm36Actor.Object).Verifiable();
             filePersistanceServiceMock.Setup(sm => sm.PersistAsync(fundingServiceContextMock.Object.FundingFm36OutputKey, fundingServiceContextMock.Object.Container, condenserOutput, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
             fundingOutputCondenserServiceMock.Setup(sm => sm.Condense(It.IsAny<IEnumerable<FM36Global>>())).Returns(condenserOutput).Verifiable();
 

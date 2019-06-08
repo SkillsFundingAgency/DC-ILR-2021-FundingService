@@ -24,7 +24,14 @@ namespace ESFA.DC.ILR.FundingService.FundingActor.Tests.ProviderTests
             fundingServiceContextMock.Setup(f => f.Container).Returns("Container");
             fundingServiceContextMock.Setup(f => f.FundingFm70OutputKey).Returns("Key");
 
-            IMessage message = new TestMessage();
+            IMessage message = new TestMessage
+            {
+                LearningProviderEntity = new TestLearningProvider
+                {
+                    UKPRN = 1
+                }
+            };
+
             var externalDataCache = "ExternalDataCache";
             var cancellationToken = CancellationToken.None;
             var learnerPagingReturn = new List<List<FM70LearnerDto>>
@@ -48,6 +55,7 @@ namespace ESFA.DC.ILR.FundingService.FundingActor.Tests.ProviderTests
                     JobId = 1,
                     Container = "Container",
                     OutputKey = "Key",
+                    UKPRN = 1,
                     ExternalDataCache = externalDataCache,
                     ValidLearners = string.Empty
                 },
@@ -56,6 +64,7 @@ namespace ESFA.DC.ILR.FundingService.FundingActor.Tests.ProviderTests
                     JobId = 1,
                     Container = "Container",
                     OutputKey = "Key",
+                    UKPRN = 1,
                     ExternalDataCache = externalDataCache,
                     ValidLearners = string.Empty
                 },

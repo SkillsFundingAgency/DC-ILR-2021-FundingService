@@ -5,6 +5,6 @@ namespace ESFA.DC.OPA.Service.Interface
 {
     public interface IDataEntityMapper<T>
     {
-        IEnumerable<IDataEntity> MapTo(IEnumerable<T> inputModels);
+        IEnumerable<IDataEntity> MapTo(int ukprn, IEnumerable<T> inputModels);
     }
 }

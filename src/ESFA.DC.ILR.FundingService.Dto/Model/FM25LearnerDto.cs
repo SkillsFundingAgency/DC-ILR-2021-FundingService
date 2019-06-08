@@ -6,8 +6,6 @@ namespace ESFA.DC.ILR.FundingService.Dto.Model
 {
     public class FM25LearnerDto
     {
-        public int UKPRN { get; set; }
-
         public string LearnRefNumber { get; set; }
 
         public DateTime? DateOfBirth { get; set; }

@@ -6,7 +6,6 @@ using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FundingActor.Modules;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Service;
-using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Service.Interface;
 using ESFA.DC.OPA.Service.Interface.Rulebase;
 using ESFA.DC.OPA.Service.Rulebase;
@@ -22,7 +21,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor.Modules
             builder.RegisterInstance(new RulebaseProvider("Loans Bursary 18_19")).As<IRulebaseProvider>();
             builder.RegisterType<DataEntityMapper>().As<IDataEntityMapper<ALBLearnerDto>>().InstancePerLifetimeScope();
             builder.RegisterType<FundingOutputService>().As<IOutputService<ALBGlobal>>().InstancePerLifetimeScope();
-            builder.RegisterType<FundingService<ILearner, ALBGlobal>>().As<IFundingService<ILearner, ALBGlobal>>().InstancePerLifetimeScope();
+            builder.RegisterType<FundingService<ALBLearnerDto, ALBGlobal>>().As<IFundingService<ALBLearnerDto, ALBGlobal>>().InstancePerLifetimeScope();
         }
     }
 }

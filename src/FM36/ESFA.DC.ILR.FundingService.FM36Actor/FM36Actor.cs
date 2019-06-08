@@ -10,12 +10,12 @@ using ESFA.DC.ILR.FundingService.FM36Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.FundingActor;
 using ESFA.DC.ILR.FundingService.FundingActor.Constants;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
 using ExecutionContext = ESFA.DC.Logging.ExecutionContext;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 
 namespace ESFA.DC.ILR.FundingService.FM36Actor
 {
@@ -84,24 +84,13 @@ namespace ESFA.DC.ILR.FundingService.FM36Actor
                     jobLogger.LogDebug(
                         $"{nameof(FM36Actor)} {ActorId} {GC.GetGeneration(actorModel)} started processing");
 
-            
+                    IFundingService<FM36LearnerDto, FM36Global> fundingService =
+                        childLifetimeScope.Resolve<IFundingService<FM36LearnerDto, FM36Global>>();
 
-                    IFundingService<ILearner, FM36Global> fundingService =
-                        childLifetimeScope.Resolve<IFundingService<ILearner, FM36Global>>();
+                    var learners = BuildLearners<FM36LearnerDto>(actorModel.ValidLearners);
 
-                    var learners = BuildLearners(actorModel.ValidLearners);
-
-                    if (learners == null)
-                    {
-                        results = null;
-
-                        jobLogger.LogDebug($"{nameof(FM36Actor)} {ActorId} {GC.GetGeneration(actorModel)} completed processing - Zero learners");
-                    }
-                    else
-                    {
-                        results = fundingService.ProcessFunding(learners, cancellationToken);
-                        jobLogger.LogDebug($"{nameof(FM36Actor)} {ActorId} {GC.GetGeneration(actorModel)} completed processing");
-                    }
+                    results = fundingService.ProcessFunding(actorModel.UKPRN, learners, cancellationToken);
+                    jobLogger.LogDebug($"{nameof(FM36Actor)} {ActorId} {GC.GetGeneration(actorModel)} completed processing");
                 }
                 catch (Exception ex)
                 {
