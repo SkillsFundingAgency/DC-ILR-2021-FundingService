@@ -2,6 +2,7 @@
 using System.Linq;
 using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.Interfaces;
+using ESFA.DC.ILR.FundingService.Providers.Constants;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 
@@ -30,7 +31,14 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                 PMUKPRN = l.PMUKPRNNullable,
                 PrevUKPRN = l.PrevUKPRNNullable,
                 ULN = l.ULN,
-                LearnerEmploymentStatuses = (List<MessageLearnerLearnerEmploymentStatus>)l.LearnerEmploymentStatuses,
+                LearnerEmploymentStatuses = l.LearnerEmploymentStatuses.Select(les => new LearnerEmploymentStatus
+                {
+                    AgreeId = les.AgreeId,
+                    DateEmpStatApp = les.DateEmpStatApp,
+                    EmpId = les.EmpIdNullable,
+                    EmpStat = les.EmpStat,
+                    SEM = les.EmploymentStatusMonitorings?.Where(e => e.ESMType == LearnerPagingConstants.SEM).Select(e => (int?)e.ESMCode).FirstOrDefault()
+                }).ToList(),
                 LearningDeliveries = (List<MessageLearnerLearningDelivery>)l.LearningDeliveries
             });
         }

@@ -27,7 +27,12 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                 LearnRefNumber = l.LearnRefNumber,
                 DateOfBirth = l.DateOfBirthNullable,
                 PostcodePrior = l.PostcodePrior,
-                LearnerEmploymentStatuses = (List<MessageLearnerLearnerEmploymentStatus>)l.LearnerEmploymentStatuses,
+                LearnerEmploymentStatuses = l.LearnerEmploymentStatuses.Select(les => new LearnerEmploymentStatus
+                {
+                    DateEmpStatApp = les.DateEmpStatApp,
+                    EmpId = les.EmpIdNullable,
+                    EmpStat = les.EmpStat
+                }).ToList(),
                 LearningDeliveries = (List<MessageLearnerLearningDelivery>)l.LearningDeliveries
             });
         }

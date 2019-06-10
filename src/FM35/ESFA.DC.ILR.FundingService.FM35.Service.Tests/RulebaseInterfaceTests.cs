@@ -379,12 +379,11 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             {
                 LearnRefNumber = "Learner1",
                 PostcodePrior = "Postcode",
-                LearnerEmploymentStatuses = new List<MessageLearnerLearnerEmploymentStatus>
+                LearnerEmploymentStatuses = new List<LearnerEmploymentStatus>
                 {
-                    new MessageLearnerLearnerEmploymentStatus
+                    new LearnerEmploymentStatus
                     {
                         EmpId = 10,
-                        EmpIdSpecified = true,
                         AgreeId = "1",
                         DateEmpStatApp = new DateTime(2018, 8, 1),
                         EmpStat = 2,

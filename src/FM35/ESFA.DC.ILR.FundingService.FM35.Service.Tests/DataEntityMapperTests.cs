@@ -30,7 +30,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             var postcodeVersion = "1.0.0";
             var learnAimRef = "LearnAimRef";
             var postcodePrior = "Postcode";
-            var empIdNullable = 1;
+            var empId = 1;
 
             var global = new Global
             {
@@ -45,12 +45,11 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 new FM35LearnerDto
                 {
                     PostcodePrior = postcodePrior,
-                    LearnerEmploymentStatuses = new List<Model.MessageLearnerLearnerEmploymentStatus>
+                    LearnerEmploymentStatuses = new List<LearnerEmploymentStatus>
                     {
-                        new Model.MessageLearnerLearnerEmploymentStatus
+                        new LearnerEmploymentStatus
                         {
-                            EmpIdSpecified = true,
-                            EmpId = empIdNullable
+                            EmpId = empId
                         }
                     },
                     LearningDeliveries = new List<ILR.Model.MessageLearnerLearningDelivery>
@@ -65,12 +64,11 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 new FM35LearnerDto
                 {
                     PostcodePrior = postcodePrior,
-                    LearnerEmploymentStatuses = new List<Model.MessageLearnerLearnerEmploymentStatus>
+                    LearnerEmploymentStatuses = new List<LearnerEmploymentStatus>
                     {
-                        new Model.MessageLearnerLearnerEmploymentStatus
+                        new LearnerEmploymentStatus
                         {
-                            EmpIdSpecified = true,
-                            EmpId = empIdNullable
+                            EmpId = empId
                         }
                     },
                     LearningDeliveries = new List<ILR.Model.MessageLearnerLearningDelivery>
@@ -126,7 +124,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             var orgReferenceDataServiceMock = new Mock<IOrganisationReferenceDataService>();
             var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
 
-            largeEmployersReferenceDataServiceMock.Setup(l => l.LargeEmployersforEmpID(empIdNullable)).Returns(new List<LargeEmployers> { new LargeEmployers() });
+            largeEmployersReferenceDataServiceMock.Setup(l => l.LargeEmployersforEmpID(empId)).Returns(new List<LargeEmployers> { new LargeEmployers() });
             larsReferenceDataServiceMock.Setup(l => l.LARSCurrentVersion()).Returns(global.LARSVersion);
             larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learnAimRef)).Returns(larsLearningDelivery);
             orgReferenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(global.UKPRN)).Returns(new List<OrgFunding> { new OrgFunding() });
@@ -504,24 +502,24 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
         [Fact]
         public void BuildLearnerEmploymentStatus()
         {
-            var learnerEmploymentStatus = new TestLearnerEmploymentStatus
+            var learnerEmploymentStatus = new LearnerEmploymentStatus
             {
                 AgreeId = "Id",
                 DateEmpStatApp = new DateTime(2018, 1, 1),
-                EmpIdNullable = 1,
+                EmpId = 1,
                 EmpStat = 2,
             };
 
             var largeEmployersReferenceDataServiceMock = new Mock<ILargeEmployersReferenceDataService>();
 
-            largeEmployersReferenceDataServiceMock.Setup(l => l.LargeEmployersforEmpID(learnerEmploymentStatus.EmpIdNullable)).Returns(new List<LargeEmployers> { new LargeEmployers() });
+            largeEmployersReferenceDataServiceMock.Setup(l => l.LargeEmployersforEmpID(learnerEmploymentStatus.EmpId)).Returns(new List<LargeEmployers> { new LargeEmployers() });
 
             var dataEntity = NewService(largeEmployersReferenceDataService: largeEmployersReferenceDataServiceMock.Object).BuildLearnerEmploymentStatus(learnerEmploymentStatus);
 
             dataEntity.EntityName.Should().Be("LearnerEmploymentStatus");
             dataEntity.Attributes.Should().HaveCount(2);
             dataEntity.Attributes["DateEmpStatApp"].Value.Should().Be(learnerEmploymentStatus.DateEmpStatApp);
-            dataEntity.Attributes["EmpId"].Value.Should().Be(learnerEmploymentStatus.EmpIdNullable);
+            dataEntity.Attributes["EmpId"].Value.Should().Be(learnerEmploymentStatus.EmpId);
         }
 
         [Fact]

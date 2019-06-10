@@ -401,12 +401,12 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         [Fact]
         public void BuildLearnerEmploymentStatus()
         {
-            var learnerEmploymentStatus = new LearnerEmploymentStatusDenormalized
+            var learnerEmploymentStatus = new LearnerEmploymentStatus
             {
                 AgreeId = "Id",
                 DateEmpStatApp = new DateTime(2018, 1, 1),
                 EmpId = 1,
-                EMPStat = 2,
+                EmpStat = 2,
                 SEM = 3
             };
 
@@ -417,7 +417,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             dataEntity.Attributes["AgreeId"].Value.Should().Be(learnerEmploymentStatus.AgreeId);
             dataEntity.Attributes["DateEmpStatApp"].Value.Should().Be(learnerEmploymentStatus.DateEmpStatApp);
             dataEntity.Attributes["EmpId"].Value.Should().Be(learnerEmploymentStatus.EmpId);
-            dataEntity.Attributes["EMPStat"].Value.Should().Be(learnerEmploymentStatus.EMPStat);
+            dataEntity.Attributes["EMPStat"].Value.Should().Be(learnerEmploymentStatus.EmpStat);
             dataEntity.Attributes["EmpStatMon_SEM"].Value.Should().Be(learnerEmploymentStatus.SEM);
         }
 
@@ -697,71 +697,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             learningDeliveryFAMDenormalized.LDM2.Should().BeNull();
             learningDeliveryFAMDenormalized.LDM3.Should().BeNull();
             learningDeliveryFAMDenormalized.LDM4.Should().BeNull();
-        }
-
-        [Fact]
-        public void BuildLearnerEmploymentStatusDenormalized()
-        {
-            var learnerEmploymentStatus = new List<TestLearnerEmploymentStatus>()
-            {
-                new TestLearnerEmploymentStatus
-                {
-                    AgreeId = "Id",
-                    DateEmpStatApp = new DateTime(2018, 8, 1),
-                    EmpStat = 1,
-                    EmploymentStatusMonitorings = new List<TestEmploymentStatusMonitoring>
-                    {
-                        new TestEmploymentStatusMonitoring
-                        {
-                            ESMCode = 1,
-                            ESMType = "SEM"
-                        }
-                    }
-                },
-                new TestLearnerEmploymentStatus
-                {
-                    AgreeId = "Id",
-                    DateEmpStatApp = new DateTime(2018, 8, 1),
-                    EmpStat = 1,
-                    EmploymentStatusMonitorings = new List<TestEmploymentStatusMonitoring>
-                    {
-                        new TestEmploymentStatusMonitoring
-                        {
-                            ESMCode = 1,
-                            ESMType = "SEM"
-                        }
-                    }
-                },
-                new TestLearnerEmploymentStatus
-                {
-                    AgreeId = "Id",
-                    DateEmpStatApp = new DateTime(2018, 8, 1),
-                    EmpStat = 1,
-                    EmploymentStatusMonitorings = new List<TestEmploymentStatusMonitoring>
-                    {
-                        new TestEmploymentStatusMonitoring
-                        {
-                            ESMCode = 1,
-                            ESMType = "DEE"
-                        }
-                    }
-                },
-            };
-
-            var learnerEmploymentStatusDenormalized = NewService().BuildLearnerEmploymentStatusDenormalized(learnerEmploymentStatus);
-
-            learnerEmploymentStatusDenormalized.Should().HaveCount(3);
-            learnerEmploymentStatusDenormalized.ToArray()[0].SEM.Should().Be(1);
-            learnerEmploymentStatusDenormalized.ToArray()[1].SEM.Should().Be(1);
-            learnerEmploymentStatusDenormalized.ToArray()[2].SEM.Should().Be(null);
-        }
-
-        [Fact]
-        public void BuildLearnerEmploymentStatusDenormalized_Null()
-        {
-            var learnerEmploymentStatusDenormalized = NewService().BuildLearnerEmploymentStatusDenormalized(null);
-
-            learnerEmploymentStatusDenormalized.Should().BeNullOrEmpty();
         }
 
         private DataEntityMapper NewService(

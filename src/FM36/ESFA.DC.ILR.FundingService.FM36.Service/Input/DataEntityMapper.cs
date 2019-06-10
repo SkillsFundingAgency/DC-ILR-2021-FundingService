@@ -78,7 +78,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
 
         public IDataEntity BuildLearnerDataEntity(FM36LearnerDto learner)
         {
-            var learnerEmploymentStatusDenormalized = BuildLearnerEmploymentStatusDenormalized(learner.LearnerEmploymentStatuses);
             var dasPostDisadvantage = _postcodesReferenceDataService.DASDisadvantagesForPostcode(learner.PostcodePrior);
             var appsEarningsHistory = _appsEarningsHistoryReferenceDataService.AECEarningsHistory(learner.ULN);
 
@@ -98,7 +97,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
                         .Where(ld => ld.FundModel == _fundModel)
                         .Select(BuildLearningDeliveryDataEntity) ?? new List<IDataEntity>())
                         .Union(
-                            learnerEmploymentStatusDenormalized?
+                            learner.LearnerEmploymentStatuses?
                             .Select(BuildLearnerEmploymentStatus) ?? new List<IDataEntity>())
                         .Union(
                             dasPostDisadvantage?
@@ -193,10 +192,8 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
             };
         }
 
-        public IDataEntity BuildLearnerEmploymentStatus(LearnerEmploymentStatusDenormalized learnerEmploymentStatus)
+        public IDataEntity BuildLearnerEmploymentStatus(LearnerEmploymentStatus learnerEmploymentStatus)
         {
-            var l = learnerEmploymentStatus;
-
             return new DataEntity(Attributes.EntityLearnerEmploymentStatus)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
@@ -204,7 +201,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
                     { Attributes.AgreeId, new AttributeData(learnerEmploymentStatus.AgreeId) },
                     { Attributes.DateEmpStatApp, new AttributeData(learnerEmploymentStatus.DateEmpStatApp) },
                     { Attributes.EmpId, new AttributeData(learnerEmploymentStatus.EmpId) },
-                    { Attributes.EMPStat, new AttributeData(learnerEmploymentStatus.EMPStat) },
+                    { Attributes.EMPStat, new AttributeData(learnerEmploymentStatus.EmpStat) },
                     { Attributes.EmpStatMon_SEM, new AttributeData(learnerEmploymentStatus.SEM) }
                 }
             };
@@ -368,18 +365,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
                 CollectionPeriod = Attributes.CollectionPeriodValue,
                 UKPRN = ukprn
             };
-        }
-
-        public IEnumerable<LearnerEmploymentStatusDenormalized> BuildLearnerEmploymentStatusDenormalized(IEnumerable<ILearnerEmploymentStatus> learnerEmploymentStatuses)
-        {
-            return learnerEmploymentStatuses?.Select(les => new LearnerEmploymentStatusDenormalized
-            {
-                AgreeId = les.AgreeId,
-                DateEmpStatApp = les.DateEmpStatApp,
-                EmpId = les.EmpIdNullable,
-                EMPStat = les.EmpStat,
-                SEM = les.EmploymentStatusMonitorings?.Where(e => e.ESMType == Attributes.SEM).Select(e => (int?)e.ESMCode).FirstOrDefault()
-            });
         }
 
         public LearningDeliveryFAMDenormalized BuildLearningDeliveryFAMDenormalized(IEnumerable<ILearningDeliveryFAM> learningDeliveryFams)

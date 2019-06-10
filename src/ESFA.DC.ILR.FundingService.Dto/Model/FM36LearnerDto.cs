@@ -18,7 +18,7 @@ namespace ESFA.DC.ILR.FundingService.Dto.Model
 
         public long ULN { get; set; }
 
-        public List<MessageLearnerLearnerEmploymentStatus> LearnerEmploymentStatuses { get; set; }
+        public List<LearnerEmploymentStatus> LearnerEmploymentStatuses { get; set; }
 
         public List<MessageLearnerLearningDelivery> LearningDeliveries { get; set; }
     }

@@ -211,16 +211,16 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
             };
         }
 
-        public IDataEntity BuildLearnerEmploymentStatus(ILearnerEmploymentStatus learnerEmploymentStatus)
+        public IDataEntity BuildLearnerEmploymentStatus(LearnerEmploymentStatus learnerEmploymentStatus)
         {
-            var largeEmployer = _largeEmployersReferenceDataService.LargeEmployersforEmpID(learnerEmploymentStatus.EmpIdNullable);
+            var largeEmployer = _largeEmployersReferenceDataService.LargeEmployersforEmpID(learnerEmploymentStatus.EmpId);
 
             return new DataEntity(Attributes.EntityLearnerEmploymentStatus)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
                     { Attributes.DateEmpStatApp, new AttributeData(learnerEmploymentStatus.DateEmpStatApp) },
-                    { Attributes.EmpId, new AttributeData(learnerEmploymentStatus.EmpIdNullable) }
+                    { Attributes.EmpId, new AttributeData(learnerEmploymentStatus.EmpId) }
                 },
                 Children = (
                             largeEmployer?
