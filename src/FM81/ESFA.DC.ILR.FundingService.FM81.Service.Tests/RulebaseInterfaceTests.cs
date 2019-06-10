@@ -10,8 +10,6 @@ using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM81.Service.Constants;
 using ESFA.DC.ILR.FundingService.FM81.Service.Input;
 using ESFA.DC.ILR.FundingService.FM81.Service.Model;
-using ESFA.DC.ILR.Model;
-using ESFA.DC.ILR.Tests.Model;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.XSRC.Model.Interface.XSRCEntity;

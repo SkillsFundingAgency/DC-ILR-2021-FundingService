@@ -12,7 +12,6 @@ using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Dto.Model;
-using ESFA.DC.ILR.Model;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.XSRC.Model.Interface.XSRCEntity;

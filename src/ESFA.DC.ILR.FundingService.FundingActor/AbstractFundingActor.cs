@@ -2,7 +2,6 @@
 using Autofac;
 using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Data.External;
-using ESFA.DC.ILR.Model;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
 using Microsoft.ServiceFabric.Actors;

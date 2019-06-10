@@ -14,8 +14,6 @@ using ESFA.DC.ILR.FundingService.FM25.Service.Constants;
 using ESFA.DC.ILR.FundingService.FM25.Service.Input;
 using ESFA.DC.ILR.FundingService.FM25.Service.Model;
 using ESFA.DC.ILR.Model;
-using ESFA.DC.ILR.Model.Interface;
-using ESFA.DC.ILR.Tests.Model;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.XSRC.Model.Interface.XSRCEntity;

@@ -10,7 +10,6 @@ using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM36.Service.Input;
 using ESFA.DC.ILR.FundingService.FM36.Service.Model;
-using ESFA.DC.ILR.Tests.Model;
 using FluentAssertions;
 using Moq;
 using Xunit;
