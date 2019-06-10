@@ -24,6 +24,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
 
         private IEnumerable<FM70LearnerDto> BuildDtos(IEnumerable<ILearner> learners, IEnumerable<ILearnerDestinationAndProgression> learnerDestinationAndProgressions)
         {
+            var learnerDPOutcomeDictionary = BuildLearnerDPOutcomeDictionary(learnerDestinationAndProgressions);
             var ldFams = BuildLearningDeliveryFAMDictionary(learners);
 
             var learnerDto = learners.Select(l => new FM70LearnerDto
@@ -36,7 +37,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                     EmpId = les.EmpIdNullable,
                     EmpStat = les.EmpStat
                 }).ToList(),
-                DPOutcomes = BuildDPOutcomes(l.LearnRefNumber, learnerDestinationAndProgressions).ToList(),
+                DPOutcomes = learnerDPOutcomeDictionary[l.LearnRefNumber].ToList() ?? null,
                 LearningDeliveries = l.LearningDeliveries.Select(ld => new LearningDelivery
                 {
                     AchDate = ld.AchDateNullable,

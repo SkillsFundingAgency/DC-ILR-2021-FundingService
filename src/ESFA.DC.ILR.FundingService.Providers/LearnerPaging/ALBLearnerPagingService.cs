@@ -2,7 +2,6 @@
 using System.Linq;
 using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 
 namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging

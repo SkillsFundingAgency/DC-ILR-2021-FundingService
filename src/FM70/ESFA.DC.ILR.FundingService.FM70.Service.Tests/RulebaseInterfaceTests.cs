@@ -388,9 +388,9 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
                         },
                     },
                 },
-                DPOutcomes = new List<MessageLearnerDestinationandProgressionDPOutcome>
+                DPOutcomes = new List<DPOutcome>
                 {
-                    new MessageLearnerDestinationandProgressionDPOutcome
+                    new DPOutcome
                     {
                         OutCode = 1,
                         OutType = "2",

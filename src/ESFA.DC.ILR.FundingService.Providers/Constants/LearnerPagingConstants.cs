@@ -15,5 +15,11 @@
         public const string LearningDeliveryFAMTypeLDM4 = "LDM4";
 
         public const string LearnerEmploymentStatusSEM = "SEM";
+
+        public const string LearnerFAMTypeECF = "ECF";
+        public const string LearnerFAMTypeEHC = "EHC";
+        public const string LearnerFAMTypeHNS = "HNS";
+        public const string LearnerFAMTypeMCF = "MCF";
+        public const string LearnerFAMTypeEDF = "EDF";
     }
 }

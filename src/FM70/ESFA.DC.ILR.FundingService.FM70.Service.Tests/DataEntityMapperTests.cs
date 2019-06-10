@@ -249,7 +249,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
         [Fact]
         public void BuildDPOutcome()
         {
-            var dpOutcome = new TestDPOutcome
+            var dpOutcome = new DPOutcome
             {
                 OutCode = 100,
                 OutType = "Type",
@@ -265,7 +265,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
             dataEntity.Attributes["OutType"].Value.Should().Be(dpOutcome.OutType);
             dataEntity.Attributes["OutCollDate"].Value.Should().Be(dpOutcome.OutCollDate);
             dataEntity.Attributes["OutStartDate"].Value.Should().Be(dpOutcome.OutStartDate);
-            dataEntity.Attributes["OutEndDate"].Value.Should().Be(dpOutcome.OutEndDateNullable);
+            dataEntity.Attributes["OutEndDate"].Value.Should().Be(dpOutcome.OutEndDate);
 
             dataEntity.Children.Should().BeNullOrEmpty();
         }

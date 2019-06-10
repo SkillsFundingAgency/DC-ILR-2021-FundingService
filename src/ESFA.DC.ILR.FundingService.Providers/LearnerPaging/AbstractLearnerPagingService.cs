@@ -19,12 +19,20 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
             return SplitList(pagedLearners, PageSize);
         }
 
-        protected IEnumerable<MessageLearnerDestinationandProgressionDPOutcome> BuildDPOutcomes(string learnRefNumber, IEnumerable<ILearnerDestinationAndProgression> learnerDestinationAndProgressions)
+        protected IDictionary<string, IEnumerable<DPOutcome>> BuildLearnerDPOutcomeDictionary(IEnumerable<ILearnerDestinationAndProgression> learnerDestinationAndProgressions)
         {
             return
                 learnerDestinationAndProgressions
-                .Where(l => l.LearnRefNumber.Equals(learnRefNumber, StringComparison.OrdinalIgnoreCase))
-                .SelectMany(dp => dp.DPOutcomes).ToList() as IEnumerable<MessageLearnerDestinationandProgressionDPOutcome>;
+                .ToDictionary(
+                    l => l.LearnRefNumber,
+                    dp => dp.DPOutcomes.Select(dpo => new DPOutcome
+                    {
+                        OutCode = dpo.OutCode,
+                        OutCollDate = dpo.OutCollDate,
+                        OutType = dpo.OutType,
+                        OutStartDate = dpo.OutStartDate,
+                        OutEndDate = dpo.OutEndDateNullable
+                    }).ToList() as IEnumerable<DPOutcome>, StringComparer.OrdinalIgnoreCase);
         }
 
         protected IDictionary<string, IDictionary<int, LearningDeliveryFAMDenormalized>> BuildLearningDeliveryFAMDictionary(IEnumerable<ILearner> learners)

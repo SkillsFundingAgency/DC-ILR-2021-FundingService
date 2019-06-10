@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ESFA.DC.ILR.Model;
 
 namespace ESFA.DC.ILR.FundingService.Dto.Model
 {
@@ -22,9 +21,19 @@ namespace ESFA.DC.ILR.FundingService.Dto.Model
 
         public long ULN { get; set; }
 
-        public List<MessageLearnerDestinationandProgressionDPOutcome> DPOutcomes { get; set; }
+        public int? LrnFAM_ECF { get; set; }
 
-        public List<MessageLearnerLearnerFAM> LearnerFAMs { get; set; }
+        public int? LrnFAM_EDF1 { get; set; }
+
+        public int? LrnFAM_EDF2 { get; set; }
+
+        public int? LrnFAM_EHC { get; set; }
+
+        public int? LrnFAM_HNS { get; set; }
+
+        public int? LrnFAM_MCF { get; set; }
+
+        public List<DPOutcome> DPOutcomes { get; set; }
 
         public List<LearningDelivery> LearningDeliveries { get; set; }
     }

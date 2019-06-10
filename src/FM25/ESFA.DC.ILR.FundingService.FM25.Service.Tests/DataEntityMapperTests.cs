@@ -283,7 +283,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
         [Fact]
         public void BuildDPOutcome()
         {
-            var dpOutcome = new TestDPOutcome()
+            var dpOutcome = new DPOutcome()
             {
                 OutCode = 1,
                 OutType = "Type",
@@ -329,15 +329,12 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 PlanLearnHours = 3,
                 Postcode = "postcode",
                 ULN = 123456,
-                LearnerFAMs = new List<MessageLearnerLearnerFAM>()
-                {
-                    new MessageLearnerLearnerFAM() { LearnFAMType = "ECF", LearnFAMCode = 1 },
-                    new MessageLearnerLearnerFAM() { LearnFAMType = "EDF", LearnFAMCode = 2 },
-                    new MessageLearnerLearnerFAM() { LearnFAMType = "EDF", LearnFAMCode = 3 },
-                    new MessageLearnerLearnerFAM() { LearnFAMType = "EHC", LearnFAMCode = 4 },
-                    new MessageLearnerLearnerFAM() { LearnFAMType = "HNS", LearnFAMCode = 5 },
-                    new MessageLearnerLearnerFAM() { LearnFAMType = "MCF", LearnFAMCode = 6 },
-                }
+                LrnFAM_ECF = 1,
+                LrnFAM_EDF1 = 2,
+                LrnFAM_EDF2 = 3,
+                LrnFAM_EHC = 4,
+                LrnFAM_HNS = 5,
+                LrnFAM_MCF = 6,
             };
 
             var uplift = 1.1m;
@@ -595,79 +592,6 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             dataEntity.Attributes["ProgType"].Value.Should().Be(learningDelivery.ProgType);
             dataEntity.Attributes["SectorSubjectAreaTier2"].Value.Should().Be(larsLearningDelivery.SectorSubjectAreaTier2);
             dataEntity.Attributes["WithdrawReason"].Value.Should().Be(learningDelivery.WithdrawReason);
-        }
-
-        [Fact]
-        public void BuildLearnerFAMDenormalized()
-        {
-            var learnerFams = new List<TestLearnerFAM>()
-            {
-                new TestLearnerFAM() { LearnFAMType = "ECF", LearnFAMCode = 1 },
-                new TestLearnerFAM() { LearnFAMType = "EDF", LearnFAMCode = 2 },
-                new TestLearnerFAM() { LearnFAMType = "EDF", LearnFAMCode = 3 },
-                new TestLearnerFAM() { LearnFAMType = "EHC", LearnFAMCode = 4 },
-                new TestLearnerFAM() { LearnFAMType = "HNS", LearnFAMCode = 5 },
-                new TestLearnerFAM() { LearnFAMType = "MCF", LearnFAMCode = 6 },
-            };
-
-            var learnerFamDenormalized = NewService().BuildLearnerFAMDenormalized(learnerFams);
-
-            learnerFamDenormalized.ECF.Should().Be(1);
-            learnerFamDenormalized.EDF1.Should().Be(2);
-            learnerFamDenormalized.EDF2.Should().Be(3);
-            learnerFamDenormalized.EHC.Should().Be(4);
-            learnerFamDenormalized.HNS.Should().Be(5);
-            learnerFamDenormalized.MCF.Should().Be(6);
-        }
-
-        [Fact]
-        public void BuildLearnerFAMDenormalized_Null()
-        {
-            var learnerFamDenormalized = NewService().BuildLearnerFAMDenormalized(null);
-
-            learnerFamDenormalized.ECF.Should().BeNull();
-            learnerFamDenormalized.EDF1.Should().BeNull();
-            learnerFamDenormalized.EDF2.Should().BeNull();
-            learnerFamDenormalized.EHC.Should().BeNull();
-            learnerFamDenormalized.HNS.Should().BeNull();
-            learnerFamDenormalized.MCF.Should().BeNull();
-        }
-
-        [Fact]
-        public void BuildLearnerFAMDenormalized_NoMatches()
-        {
-            var learnerFams = new List<TestLearnerFAM>();
-
-            var learnerFamDenormalized = NewService().BuildLearnerFAMDenormalized(learnerFams);
-
-            learnerFamDenormalized.ECF.Should().BeNull();
-            learnerFamDenormalized.EDF1.Should().BeNull();
-            learnerFamDenormalized.EDF2.Should().BeNull();
-            learnerFamDenormalized.EHC.Should().BeNull();
-            learnerFamDenormalized.HNS.Should().BeNull();
-            learnerFamDenormalized.MCF.Should().BeNull();
-        }
-
-        [Fact]
-        public void BuildLearnerFAMDenormalized_EDF2()
-        {
-            var learnerFams = new List<TestLearnerFAM>()
-            {
-                new TestLearnerFAM() { LearnFAMType = "ECF", LearnFAMCode = 1 },
-                new TestLearnerFAM() { LearnFAMType = "EDF", LearnFAMCode = 2 },
-                new TestLearnerFAM() { LearnFAMType = "EHC", LearnFAMCode = 4 },
-                new TestLearnerFAM() { LearnFAMType = "HNS", LearnFAMCode = 5 },
-                new TestLearnerFAM() { LearnFAMType = "MCF", LearnFAMCode = 6 },
-            };
-
-            var learnerFamDenormalized = NewService().BuildLearnerFAMDenormalized(learnerFams);
-
-            learnerFamDenormalized.ECF.Should().Be(1);
-            learnerFamDenormalized.EDF1.Should().Be(2);
-            learnerFamDenormalized.EDF2.Should().BeNull();
-            learnerFamDenormalized.EHC.Should().Be(4);
-            learnerFamDenormalized.HNS.Should().Be(5);
-            learnerFamDenormalized.MCF.Should().Be(6);
         }
 
         private DataEntityMapper NewService(ILARSReferenceDataService larsReferenceDataService = null, IOrganisationReferenceDataService organisationReferenceDataService = null, IPostcodesReferenceDataService postcodesReferenceDataService = null)

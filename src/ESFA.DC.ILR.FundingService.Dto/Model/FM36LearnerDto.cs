@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ESFA.DC.ILR.Model;
 
 namespace ESFA.DC.ILR.FundingService.Dto.Model
 {

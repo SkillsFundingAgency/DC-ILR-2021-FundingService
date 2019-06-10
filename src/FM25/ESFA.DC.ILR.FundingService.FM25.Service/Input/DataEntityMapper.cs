@@ -86,8 +86,6 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
 
         public IDataEntity BuildLearnerDataEntity(FM25LearnerDto learner)
         {
-            var learnerFamDenormalized = BuildLearnerFAMDenormalized(learner.LearnerFAMs);
-
             var efaDisadvantageUplift = _postcodesReferenceDataService.LatestEFADisadvantagesUpliftForPostcode(learner.Postcode);
 
             return new DataEntity(Attributes.EntityLearner)
@@ -97,12 +95,12 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { Attributes.DateOfBirth, new AttributeData(learner.DateOfBirth) },
                     { Attributes.EngGrade, new AttributeData(learner.EngGrade) },
                     { Attributes.LearnRefNumber, new AttributeData(learner.LearnRefNumber) },
-                    { Attributes.LrnFAM_ECF, new AttributeData(learnerFamDenormalized.ECF) },
-                    { Attributes.LrnFAM_EDF1, new AttributeData(learnerFamDenormalized.EDF1) },
-                    { Attributes.LrnFAM_EDF2, new AttributeData(learnerFamDenormalized.EDF2) },
-                    { Attributes.LrnFAM_EHC, new AttributeData(learnerFamDenormalized.EHC) },
-                    { Attributes.LrnFAM_HNS, new AttributeData(learnerFamDenormalized.HNS) },
-                    { Attributes.LrnFAM_MCF, new AttributeData(learnerFamDenormalized.MCF) },
+                    { Attributes.LrnFAM_ECF, new AttributeData(learner.LrnFAM_ECF) },
+                    { Attributes.LrnFAM_EDF1, new AttributeData(learner.LrnFAM_EDF1) },
+                    { Attributes.LrnFAM_EDF2, new AttributeData(learner.LrnFAM_EDF2) },
+                    { Attributes.LrnFAM_EHC, new AttributeData(learner.LrnFAM_EHC) },
+                    { Attributes.LrnFAM_HNS, new AttributeData(learner.LrnFAM_HNS) },
+                    { Attributes.LrnFAM_MCF, new AttributeData(learner.LrnFAM_MCF) },
                     { Attributes.MathGrade, new AttributeData(learner.MathGrade) },
                     { Attributes.PlanEEPHours, new AttributeData(learner.PlanEEPHours) },
                     { Attributes.PlanLearnHours, new AttributeData(learner.PlanLearnHours) },
@@ -157,7 +155,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
             };
         }
 
-        public IDataEntity BuildDPOutcome(IDPOutcome dpOutcome)
+        public IDataEntity BuildDPOutcome(DPOutcome dpOutcome)
         {
             return new DataEntity(Attributes.EntityDPOutcome)
             {
@@ -199,29 +197,6 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                 SpecialistResources = orgFundings.FirstOrDefault(f => f.OrgFundFactor == Attributes.OrgFundFactorSpecialistResources)?.OrgFundFactValue == "1" ? true : false,
                 UKPRN = ukprn
             };
-        }
-
-        public LearnerFAMDenormalized BuildLearnerFAMDenormalized(IEnumerable<ILearnerFAM> learnerFams)
-        {
-            var learnerFam = new LearnerFAMDenormalized();
-
-            if (learnerFams != null)
-            {
-                learnerFams = learnerFams.ToList();
-
-                var edfArray = learnerFams.Where(f => f.LearnFAMType == Attributes.EDF).Select(f => (int?)f.LearnFAMCode).ToArray();
-
-                Array.Resize(ref edfArray, 2);
-
-                learnerFam.ECF = learnerFams.Where(f => f.LearnFAMType == Attributes.ECF).Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
-                learnerFam.EDF1 = edfArray[0];
-                learnerFam.EDF2 = edfArray[1];
-                learnerFam.EHC = learnerFams.Where(f => f.LearnFAMType == Attributes.EHC).Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
-                learnerFam.HNS = learnerFams.Where(f => f.LearnFAMType == Attributes.HNS).Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
-                learnerFam.MCF = learnerFams.Where(f => f.LearnFAMType == Attributes.MCF).Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
-            }
-
-            return learnerFam;
         }
     }
 }

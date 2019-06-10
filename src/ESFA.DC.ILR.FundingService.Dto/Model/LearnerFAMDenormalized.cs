@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ESFA.DC.ILR.FundingService.FM25.Service.Model
+﻿namespace ESFA.DC.ILR.FundingService.Dto.Model
 {
     public class LearnerFAMDenormalized
     {

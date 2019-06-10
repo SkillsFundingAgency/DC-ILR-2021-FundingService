@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ESFA.DC.ILR.Model;
 
 namespace ESFA.DC.ILR.FundingService.Dto.Model
 {
@@ -10,7 +9,7 @@ namespace ESFA.DC.ILR.FundingService.Dto.Model
 
         public DateTime? DateOfBirth { get; set; }
 
-        public List<MessageLearnerDestinationandProgressionDPOutcome> DPOutcomes { get; set; }
+        public List<DPOutcome> DPOutcomes { get; set; }
 
         public List<LearnerEmploymentStatus> LearnerEmploymentStatuses { get; set; }
 

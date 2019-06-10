@@ -155,7 +155,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
             };
         }
 
-        public IDataEntity BuildDPOutcomes(IDPOutcome dpOutcome)
+        public IDataEntity BuildDPOutcomes(DPOutcome dpOutcome)
         {
             return new DataEntity(Attributes.EntityDPOutcome)
             {
@@ -165,7 +165,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
                     { Attributes.OutType, new AttributeData(dpOutcome.OutType) },
                     { Attributes.OutCollDate, new AttributeData(dpOutcome.OutCollDate) },
                     { Attributes.OutStartDate,  new AttributeData(dpOutcome.OutStartDate) },
-                    { Attributes.OutEndDate,  new AttributeData(dpOutcome.OutEndDateNullable) },
+                    { Attributes.OutEndDate,  new AttributeData(dpOutcome.OutEndDate) },
                 }
             };
         }
