@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using ESFA.DC.ILR.Model;
 
 namespace ESFA.DC.ILR.FundingService.Dto.Model
 {
@@ -7,6 +6,6 @@ namespace ESFA.DC.ILR.FundingService.Dto.Model
     {
         public string LearnRefNumber { get; set; }
 
-        public List<MessageLearnerLearningDelivery> LearningDeliveries { get; set; }
+        public List<LearningDelivery> LearningDeliveries { get; set; }
     }
 }

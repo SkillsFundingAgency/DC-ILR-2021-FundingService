@@ -33,13 +33,12 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             {
                 new FM81LearnerDto
                 {
-                    LearningDeliveries = new List<ILR.Model.MessageLearnerLearningDelivery>
+                    LearningDeliveries = new List<LearningDelivery>
                     {
-                        new MessageLearnerLearningDelivery
+                        new LearningDelivery
                         {
                             LearnAimRef = learnAimRef,
                             FundModel = 81,
-                            ProgTypeSpecified = true,
                             ProgType = 25,
                             StdCode = stdCode
                         }
@@ -47,13 +46,12 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
                 },
                 new FM81LearnerDto
                 {
-                    LearningDeliveries = new List<ILR.Model.MessageLearnerLearningDelivery>
+                    LearningDeliveries = new List<LearningDelivery>
                     {
-                        new MessageLearnerLearningDelivery
+                        new LearningDelivery
                         {
                             LearnAimRef = learnAimRef,
                             FundModel = 81,
-                            ProgTypeSpecified = true,
                             ProgType = 25,
                             StdCode = stdCode
                         }
@@ -239,7 +237,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
         [Fact]
         public void BuildLearningDelivery()
         {
-            var learningDelivery = new TestLearningDelivery()
+            var learningDelivery = new LearningDelivery()
             {
                 AimSeqNumber = 1,
                 AimType = 2,
@@ -247,27 +245,36 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
                 ConRefNumber = "ConRef1",
                 DelLocPostCode = "DelLocPostcode",
                 FundModel = 4,
-                FworkCodeNullable = 5,
-                LearnActEndDateNullable = new DateTime(2017, 1, 1),
+                FworkCode = 5,
+                LearnActEndDate = new DateTime(2017, 1, 1),
                 LearnAimRef = "LearnAimRef",
                 LearnPlanEndDate = new DateTime(2018, 1, 1),
                 LearnStartDate = new DateTime(2019, 1, 1),
-                OrigLearnStartDateNullable = new DateTime(2019, 1, 1),
-                OtherFundAdjNullable = 6,
-                OutcomeNullable = 7,
-                PriorLearnFundAdjNullable = 8,
-                StdCodeNullable = 9,
-                LearningDeliveryFAMs = new List<TestLearningDeliveryFAM>()
+                OrigLearnStartDate = new DateTime(2019, 1, 1),
+                OtherFundAdj = 6,
+                Outcome = 7,
+                PriorLearnFundAdj = 8,
+                StdCode = 9,
+                LrnDelFAM_LDM1 = "LDM1",
+                LrnDelFAM_LDM2 = "LDM2",
+                LrnDelFAM_LDM3 = "LDM3",
+                LrnDelFAM_LDM4 = "LDM4",
+                LrnDelFAM_EEF = "EEF",
+                LrnDelFAM_RES = "RES",
+                LrnDelFAM_FFI = "FFI",
+                LrnDelFAM_SPP = "SPP",
+                LrnDelFAM_SOF = "SOF",
+                LearningDeliveryFAMs = new List<LearningDeliveryFAM>()
                 {
-                    new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "LDM1" },
-                    new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "LDM2" },
-                    new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "LDM3" },
-                    new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "LDM4" },
-                    new TestLearningDeliveryFAM() { LearnDelFAMType = "EEF", LearnDelFAMCode = "EEF" },
-                    new TestLearningDeliveryFAM() { LearnDelFAMType = "FFI", LearnDelFAMCode = "FFI" },
-                    new TestLearningDeliveryFAM() { LearnDelFAMType = "RES", LearnDelFAMCode = "RES" },
-                    new TestLearningDeliveryFAM() { LearnDelFAMType = "SOF", LearnDelFAMCode = "SOF" },
-                    new TestLearningDeliveryFAM() { LearnDelFAMType = "SPP", LearnDelFAMCode = "SPP" },
+                    new LearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "LDM1" },
+                    new LearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "LDM2" },
+                    new LearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "LDM3" },
+                    new LearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "LDM4" },
+                    new LearningDeliveryFAM() { LearnDelFAMType = "EEF", LearnDelFAMCode = "EEF" },
+                    new LearningDeliveryFAM() { LearnDelFAMType = "FFI", LearnDelFAMCode = "FFI" },
+                    new LearningDeliveryFAM() { LearnDelFAMType = "RES", LearnDelFAMCode = "RES" },
+                    new LearningDeliveryFAM() { LearnDelFAMType = "SOF", LearnDelFAMCode = "SOF" },
+                    new LearningDeliveryFAM() { LearnDelFAMType = "SPP", LearnDelFAMCode = "SPP" },
                 },
             };
 
@@ -297,7 +304,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
 
             larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
-            larsReferenceDataServiceMock.Setup(l => l.LARSStandardForStandardCode(learningDelivery.StdCodeNullable))
+            larsReferenceDataServiceMock.Setup(l => l.LARSStandardForStandardCode(learningDelivery.StdCode))
                 .Returns(
                 new LARSStandard
                 {
@@ -310,13 +317,13 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
 
             dataEntity.EntityName.Should().Be("LearningDelivery");
             dataEntity.Attributes.Should().HaveCount(25);
-            dataEntity.Attributes["AchDate"].Value.Should().Be(learningDelivery.AchDateNullable);
+            dataEntity.Attributes["AchDate"].Value.Should().Be(learningDelivery.AchDate);
             dataEntity.Attributes["AimSeqNumber"].Value.Should().Be(learningDelivery.AimSeqNumber);
             dataEntity.Attributes["AimType"].Value.Should().Be(learningDelivery.AimType);
             dataEntity.Attributes["CompStatus"].Value.Should().Be(learningDelivery.CompStatus);
             dataEntity.Attributes["FrameworkCommonComponent"].Value.Should().Be(larsLearningDelivery.FrameworkCommonComponent);
             dataEntity.Attributes["LearnAimRef"].Value.Should().Be(learningDelivery.LearnAimRef);
-            dataEntity.Attributes["LearnActEndDate"].Value.Should().Be(learningDelivery.LearnActEndDateNullable);
+            dataEntity.Attributes["LearnActEndDate"].Value.Should().Be(learningDelivery.LearnActEndDate);
             dataEntity.Attributes["LearnPlanEndDate"].Value.Should().Be(learningDelivery.LearnPlanEndDate);
             dataEntity.Attributes["LearnStartDate"].Value.Should().Be(learningDelivery.LearnStartDate);
             dataEntity.Attributes["LrnDelFAM_EEF"].Value.Should().Be("EEF");
@@ -328,19 +335,19 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             dataEntity.Attributes["LrnDelFAM_RES"].Value.Should().Be("RES");
             dataEntity.Attributes["LrnDelFAM_SOF"].Value.Should().Be("SOF");
             dataEntity.Attributes["LrnDelFAM_SPP"].Value.Should().Be("SPP");
-            dataEntity.Attributes["OrigLearnStartDate"].Value.Should().Be(learningDelivery.OrigLearnStartDateNullable);
-            dataEntity.Attributes["OtherFundAdj"].Value.Should().Be(learningDelivery.OtherFundAdjNullable);
-            dataEntity.Attributes["Outcome"].Value.Should().Be(learningDelivery.OutcomeNullable);
-            dataEntity.Attributes["PriorLearnFundAdj"].Value.Should().Be(learningDelivery.PriorLearnFundAdjNullable);
-            dataEntity.Attributes["ProgType"].Value.Should().Be(learningDelivery.ProgTypeNullable);
-            dataEntity.Attributes["STDCode"].Value.Should().Be(learningDelivery.StdCodeNullable);
-            dataEntity.Attributes["WithdrawReason"].Value.Should().Be(learningDelivery.WithdrawReasonNullable);
+            dataEntity.Attributes["OrigLearnStartDate"].Value.Should().Be(learningDelivery.OrigLearnStartDate);
+            dataEntity.Attributes["OtherFundAdj"].Value.Should().Be(learningDelivery.OtherFundAdj);
+            dataEntity.Attributes["Outcome"].Value.Should().Be(learningDelivery.Outcome);
+            dataEntity.Attributes["PriorLearnFundAdj"].Value.Should().Be(learningDelivery.PriorLearnFundAdj);
+            dataEntity.Attributes["ProgType"].Value.Should().Be(learningDelivery.ProgType);
+            dataEntity.Attributes["STDCode"].Value.Should().Be(learningDelivery.StdCode);
+            dataEntity.Attributes["WithdrawReason"].Value.Should().Be(learningDelivery.WithdrawReason);
         }
 
         [Fact]
         public void BuildLearningDeliveryFAM()
         {
-            var learningDeliveryFAM = new TestLearningDeliveryFAM
+            var learningDeliveryFAM = new LearningDeliveryFAM
             {
                 LearnDelFAMType = "EEF",
                 LearnDelFAMCode = "1"
@@ -351,15 +358,15 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             dataEntity.EntityName.Should().Be("LearningDeliveryFAM");
             dataEntity.Attributes.Should().HaveCount(4);
             dataEntity.Attributes["LearnDelFAMCode"].Value.Should().Be(learningDeliveryFAM.LearnDelFAMCode);
-            dataEntity.Attributes["LearnDelFAMDateFrom"].Value.Should().Be(learningDeliveryFAM.LearnDelFAMDateFromNullable);
-            dataEntity.Attributes["LearnDelFAMDateTo"].Value.Should().Be(learningDeliveryFAM.LearnDelFAMDateToNullable);
+            dataEntity.Attributes["LearnDelFAMDateFrom"].Value.Should().Be(learningDeliveryFAM.LearnDelFAMDateFrom);
+            dataEntity.Attributes["LearnDelFAMDateTo"].Value.Should().Be(learningDeliveryFAM.LearnDelFAMDateTo);
             dataEntity.Attributes["LearnDelFAMType"].Value.Should().Be(learningDeliveryFAM.LearnDelFAMType);
         }
 
         [Fact]
         public void BuildApprenticeshipFinancialRecord()
         {
-            var appFinRecord = new TestAppFinRecord
+            var appFinRecord = new AppFinRecord
             {
                 AFinCode = 1,
                 AFinAmount = 2,
@@ -424,69 +431,6 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             dataEntity.Attributes["SFEffectiveFromDate"].Value.Should().Be(larsStandardFunding.EffectiveFrom);
             dataEntity.Attributes["SFEffectiveToDate"].Value.Should().Be(larsStandardFunding.EffectiveTo);
             dataEntity.Attributes["SFSmallBusIncentive"].Value.Should().Be(larsStandardFunding.SmallBusinessIncentive);
-        }
-
-        [Fact]
-        public void BuildLearningDeliveryFAMDenormalized()
-        {
-            var learningDeliveryFams = new List<TestLearningDeliveryFAM>()
-            {
-                new TestLearningDeliveryFAM() { LearnDelFAMType = "RES", LearnDelFAMCode = "1" },
-                new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "2" },
-                new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "3" },
-                new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "4" },
-                new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "5" },
-                new TestLearningDeliveryFAM() { LearnDelFAMType = "EEF", LearnDelFAMCode = "6" },
-                new TestLearningDeliveryFAM() { LearnDelFAMType = "FFI", LearnDelFAMCode = "7" },
-                new TestLearningDeliveryFAM() { LearnDelFAMType = "SOF", LearnDelFAMCode = "8" },
-                new TestLearningDeliveryFAM() { LearnDelFAMType = "SPP", LearnDelFAMCode = "9" },
-            };
-
-            var learningDeliveryFAMDenormalized = NewService().BuildLearningDeliveryFAMDenormalized(learningDeliveryFams);
-
-            learningDeliveryFAMDenormalized.RES.Should().Be("1");
-            learningDeliveryFAMDenormalized.LDM1.Should().Be("2");
-            learningDeliveryFAMDenormalized.LDM2.Should().Be("3");
-            learningDeliveryFAMDenormalized.LDM3.Should().Be("4");
-            learningDeliveryFAMDenormalized.LDM4.Should().Be("5");
-            learningDeliveryFAMDenormalized.EEF.Should().Be("6");
-            learningDeliveryFAMDenormalized.FFI.Should().Be("7");
-            learningDeliveryFAMDenormalized.SOF.Should().Be("8");
-            learningDeliveryFAMDenormalized.SPP.Should().Be("9");
-        }
-
-        [Fact]
-        public void BuildLearningDeliveryFAMDenormalized_Null()
-        {
-            var learningDeliveryFAMDenormalized = NewService().BuildLearningDeliveryFAMDenormalized(null);
-
-            learningDeliveryFAMDenormalized.RES.Should().BeNull();
-            learningDeliveryFAMDenormalized.LDM1.Should().BeNull();
-            learningDeliveryFAMDenormalized.LDM2.Should().BeNull();
-            learningDeliveryFAMDenormalized.LDM3.Should().BeNull();
-            learningDeliveryFAMDenormalized.LDM4.Should().BeNull();
-            learningDeliveryFAMDenormalized.EEF.Should().BeNull();
-            learningDeliveryFAMDenormalized.FFI.Should().BeNull();
-            learningDeliveryFAMDenormalized.SOF.Should().BeNull();
-            learningDeliveryFAMDenormalized.SPP.Should().BeNull();
-        }
-
-        [Fact]
-        public void BuildLearningDeliveryFAMDenormalized_NoMatches()
-        {
-            var learningDeliveryFams = new List<TestLearningDeliveryFAM>();
-
-            var learningDeliveryFAMDenormalized = NewService().BuildLearningDeliveryFAMDenormalized(learningDeliveryFams);
-
-            learningDeliveryFAMDenormalized.RES.Should().BeNull();
-            learningDeliveryFAMDenormalized.LDM1.Should().BeNull();
-            learningDeliveryFAMDenormalized.LDM2.Should().BeNull();
-            learningDeliveryFAMDenormalized.LDM3.Should().BeNull();
-            learningDeliveryFAMDenormalized.LDM4.Should().BeNull();
-            learningDeliveryFAMDenormalized.EEF.Should().BeNull();
-            learningDeliveryFAMDenormalized.FFI.Should().BeNull();
-            learningDeliveryFAMDenormalized.SOF.Should().BeNull();
-            learningDeliveryFAMDenormalized.SPP.Should().BeNull();
         }
 
         private DataEntityMapper NewService(

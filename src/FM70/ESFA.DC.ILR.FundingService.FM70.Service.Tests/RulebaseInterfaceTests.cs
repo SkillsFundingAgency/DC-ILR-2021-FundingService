@@ -356,20 +356,19 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
             var learner = new FM70LearnerDto
             {
                 LearnRefNumber = "Learner1",
-                LearnerEmploymentStatuses = new List<MessageLearnerLearnerEmploymentStatus>
+                LearnerEmploymentStatuses = new List<LearnerEmploymentStatus>
                 {
-                    new MessageLearnerLearnerEmploymentStatus
+                    new LearnerEmploymentStatus
                     {
                         EmpId = 10,
-                        EmpIdSpecified = true,
                         AgreeId = "1",
                         DateEmpStatApp = new DateTime(2018, 8, 1),
                         EmpStat = 2,
                     },
                 },
-                LearningDeliveries = new List<MessageLearnerLearningDelivery>
+                LearningDeliveries = new List<LearningDelivery>
                 {
-                    new MessageLearnerLearningDelivery
+                    new LearningDelivery
                     {
                         LearnAimRef = "1",
                         AimSeqNumber = 2,
@@ -377,25 +376,17 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
                         CompStatus = 4,
                         ConRefNumber = "Conref",
                         PwayCode = 5,
-                        PwayCodeSpecified = true,
                         ProgType = 6,
-                        ProgTypeSpecified = true,
                         FworkCode = 7,
-                        FworkCodeSpecified = true,
                         FundModel = 70,
                         StdCode = 8,
-                        StdCodeSpecified = true,
                         LearnStartDate = new DateTime(2018, 8, 1),
                         LearnPlanEndDate = new DateTime(2019, 8, 1),
                         DelLocPostCode = "Postcode",
-                        LearningDeliveryFAM = new MessageLearnerLearningDeliveryLearningDeliveryFAM[]
+                        LearningDeliveryFAMs = new List<LearningDeliveryFAM>
                         {
-                            new MessageLearnerLearningDeliveryLearningDeliveryFAM()
+                            new LearningDeliveryFAM()
                         },
-                        AppFinRecord = new MessageLearnerLearningDeliveryAppFinRecord[]
-                        {
-                            new MessageLearnerLearningDeliveryAppFinRecord()
-                        }
                     },
                 },
                 DPOutcomes = new List<MessageLearnerDestinationandProgressionDPOutcome>

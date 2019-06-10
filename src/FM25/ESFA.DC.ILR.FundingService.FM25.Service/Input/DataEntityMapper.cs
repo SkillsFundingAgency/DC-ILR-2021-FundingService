@@ -120,10 +120,9 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
             };
         }
 
-        public IDataEntity BuildLearningDeliveryDataEntity(ILearningDelivery learningDelivery)
+        public IDataEntity BuildLearningDeliveryDataEntity(LearningDelivery learningDelivery)
         {
             var larsLearningDelivery = _larsReferenceDataService.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef);
-            var learningDeliveryFAMDenormalized = BuildLearningDeliveryFAMDenormalized(learningDelivery.LearningDeliveryFAMs);
 
             return new DataEntity(Attributes.EntityLearningDelivery)
             {
@@ -135,20 +134,20 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { Attributes.CompStatus, new AttributeData(learningDelivery.CompStatus) },
                     { Attributes.EFACOFType, new AttributeData(larsLearningDelivery.EFACOFType) },
                     { Attributes.FundModel, new AttributeData(learningDelivery.FundModel) },
-                    { Attributes.LearnActEndDate, new AttributeData(learningDelivery.LearnActEndDateNullable) },
+                    { Attributes.LearnActEndDate, new AttributeData(learningDelivery.LearnActEndDate) },
                     { Attributes.LearnAimRef, new AttributeData(learningDelivery.LearnAimRef) },
                     { Attributes.LearnAimRefTitle, new AttributeData(larsLearningDelivery.LearnAimRefTitle) },
                     { Attributes.LearnAimRefType, new AttributeData(larsLearningDelivery.LearnAimRefType) },
                     { Attributes.LearnPlanEndDate, new AttributeData(learningDelivery.LearnPlanEndDate) },
                     { Attributes.LearnStartDate, new AttributeData(learningDelivery.LearnStartDate) },
-                    { Attributes.LrnDelFAM_SOF, new AttributeData(learningDeliveryFAMDenormalized.SOF) },
-                    { Attributes.LrnDelFAM_LDM1, new AttributeData(learningDeliveryFAMDenormalized.LDM1) },
-                    { Attributes.LrnDelFAM_LDM2, new AttributeData(learningDeliveryFAMDenormalized.LDM2) },
-                    { Attributes.LrnDelFAM_LDM3, new AttributeData(learningDeliveryFAMDenormalized.LDM3) },
-                    { Attributes.LrnDelFAM_LDM4, new AttributeData(learningDeliveryFAMDenormalized.LDM4) },
-                    { Attributes.ProgType, new AttributeData(learningDelivery.ProgTypeNullable) },
+                    { Attributes.LrnDelFAM_SOF, new AttributeData(learningDelivery.LrnDelFAM_SOF) },
+                    { Attributes.LrnDelFAM_LDM1, new AttributeData(learningDelivery.LrnDelFAM_LDM1) },
+                    { Attributes.LrnDelFAM_LDM2, new AttributeData(learningDelivery.LrnDelFAM_LDM2) },
+                    { Attributes.LrnDelFAM_LDM3, new AttributeData(learningDelivery.LrnDelFAM_LDM3) },
+                    { Attributes.LrnDelFAM_LDM4, new AttributeData(learningDelivery.LrnDelFAM_LDM4) },
+                    { Attributes.ProgType, new AttributeData(learningDelivery.ProgType) },
                     { Attributes.SectorSubjectAreaTier2, new AttributeData(larsLearningDelivery.SectorSubjectAreaTier2) },
-                    { Attributes.WithdrawReason, new AttributeData(learningDelivery.WithdrawReasonNullable) },
+                    { Attributes.WithdrawReason, new AttributeData(learningDelivery.WithdrawReason) },
                 },
                 Children = larsLearningDelivery?
                         .LARSValidities?
@@ -223,28 +222,6 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
             }
 
             return learnerFam;
-        }
-
-        public LearningDeliveryFAMDenormalized BuildLearningDeliveryFAMDenormalized(IEnumerable<ILearningDeliveryFAM> learningDeliveryFams)
-        {
-            var learningDeliveryFam = new LearningDeliveryFAMDenormalized();
-
-            if (learningDeliveryFams != null)
-            {
-                learningDeliveryFams = learningDeliveryFams.ToList();
-
-                var ldmArray = learningDeliveryFams.Where(f => f.LearnDelFAMType == Attributes.LDM).Select(f => f.LearnDelFAMCode).ToArray();
-
-                Array.Resize(ref ldmArray, 4);
-
-                learningDeliveryFam.SOF = learningDeliveryFams.Where(f => f.LearnDelFAMType == Attributes.SOF).Select(f => f.LearnDelFAMCode).FirstOrDefault();
-                learningDeliveryFam.LDM1 = ldmArray[0];
-                learningDeliveryFam.LDM2 = ldmArray[1];
-                learningDeliveryFam.LDM3 = ldmArray[2];
-                learningDeliveryFam.LDM4 = ldmArray[3];
-            }
-
-            return learningDeliveryFam;
         }
     }
 }

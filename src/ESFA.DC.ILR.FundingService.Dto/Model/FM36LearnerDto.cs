@@ -20,6 +20,6 @@ namespace ESFA.DC.ILR.FundingService.Dto.Model
 
         public List<LearnerEmploymentStatus> LearnerEmploymentStatuses { get; set; }
 
-        public List<MessageLearnerLearningDelivery> LearningDeliveries { get; set; }
+        public List<LearningDelivery> LearningDeliveries { get; set; }
     }
 }

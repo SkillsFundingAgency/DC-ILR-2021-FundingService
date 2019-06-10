@@ -16,8 +16,6 @@ using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM35.Service.Constants;
 using ESFA.DC.ILR.FundingService.FM35.Service.Input;
 using ESFA.DC.ILR.FundingService.FM35.Service.Models;
-using ESFA.DC.ILR.Model;
-using ESFA.DC.ILR.Tests.Model;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.XSRC.Model.Interface.XSRCEntity;
@@ -389,34 +387,26 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                         EmpStat = 2,
                     },
                 },
-                LearningDeliveries = new List<MessageLearnerLearningDelivery>
+                LearningDeliveries = new List<LearningDelivery>
                 {
-                    new MessageLearnerLearningDelivery
+                    new LearningDelivery
                     {
                         LearnAimRef = "1",
                         AimSeqNumber = 2,
                         AimType = 3,
                         CompStatus = 4,
                         PwayCode = 5,
-                        PwayCodeSpecified = true,
                         ProgType = 6,
-                        ProgTypeSpecified = true,
                         FworkCode = 7,
-                        FworkCodeSpecified = true,
                         FundModel = 35,
                         StdCode = 8,
-                        StdCodeSpecified = true,
                         LearnStartDate = new DateTime(2018, 8, 1),
                         LearnPlanEndDate = new DateTime(2019, 8, 1),
                         DelLocPostCode = "Postcode",
-                        LearningDeliveryFAM = new MessageLearnerLearningDeliveryLearningDeliveryFAM[]
+                        LearningDeliveryFAMs = new List<LearningDeliveryFAM>
                         {
-                            new MessageLearnerLearningDeliveryLearningDeliveryFAM()
+                            new LearningDeliveryFAM()
                         },
-                        AppFinRecord = new MessageLearnerLearningDeliveryAppFinRecord[]
-                        {
-                            new MessageLearnerLearningDeliveryAppFinRecord()
-                        }
                     },
                 },
             };

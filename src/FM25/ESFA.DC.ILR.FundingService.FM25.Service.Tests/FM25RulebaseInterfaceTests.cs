@@ -357,29 +357,25 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 Postcode = "Postcode",
                 EngGrade = "Grade",
                 MathGrade = "Grade",
-                LearningDeliveries = new List<MessageLearnerLearningDelivery>
+                LearningDeliveries = new List<LearningDelivery>
                 {
-                    new MessageLearnerLearningDelivery
+                    new LearningDelivery
                     {
                         LearnAimRef = "1",
                         AimSeqNumber = 2,
                         AimType = 3,
                         CompStatus = 4,
                         PwayCode = 5,
-                        PwayCodeSpecified = true,
                         ProgType = 6,
-                        ProgTypeSpecified = true,
                         FworkCode = 7,
-                        FworkCodeSpecified = true,
                         FundModel = 25,
                         StdCode = 8,
-                        StdCodeSpecified = true,
                         LearnStartDate = new DateTime(2018, 8, 1),
                         LearnPlanEndDate = new DateTime(2019, 8, 1),
                         DelLocPostCode = "Postcode",
-                        LearningDeliveryFAM = new MessageLearnerLearningDeliveryLearningDeliveryFAM[]
+                        LearningDeliveryFAMs = new List<LearningDeliveryFAM>
                         {
-                            new MessageLearnerLearningDeliveryLearningDeliveryFAM()
+                            new LearningDeliveryFAM()
                         },
                     },
                 },
