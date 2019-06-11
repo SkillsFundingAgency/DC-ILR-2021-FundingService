@@ -23,7 +23,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
         {
             var ldFams = BuildLearningDeliveryFAMDictionary(learners);
 
-            var learnerDto = learners.Select(l => new ALBLearnerDto
+            return learners.Select(l => new ALBLearnerDto
             {
                 LearnRefNumber = l.LearnRefNumber,
                 LearningDeliveries = l.LearningDeliveries.Select(ld => new LearningDelivery
@@ -40,7 +40,13 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                     OtherFundAdj = ld.OtherFundAdjNullable,
                     Outcome = ld.OutcomeNullable,
                     PriorLearnFundAdj = ld.PriorLearnFundAdjNullable,
-                    LearningDeliveryFAMs = ld.LearningDeliveryFAMs.Select(ldf => new LearningDeliveryFAM
+                    LrnDelFAM_ADL = ldFams[l.LearnRefNumber][ld.AimSeqNumber].ADL,
+                    LrnDelFAM_RES = ldFams[l.LearnRefNumber][ld.AimSeqNumber].RES,
+                    LrnDelFAM_LDM1 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM1,
+                    LrnDelFAM_LDM2 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM2,
+                    LrnDelFAM_LDM3 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM3,
+                    LrnDelFAM_LDM4 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM4,
+                    LearningDeliveryFAMs = ld.LearningDeliveryFAMs?.Select(ldf => new LearningDeliveryFAM
                     {
                         LearnDelFAMCode = ldf.LearnDelFAMCode,
                         LearnDelFAMType = ldf.LearnDelFAMType,
@@ -49,25 +55,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                     }).ToList()
                 }).ToList()
             });
-
-            foreach (var learner in learnerDto)
-            {
-                foreach (var learningDelivery in learner.LearningDeliveries)
-                {
-                    ldFams.TryGetValue(learner.LearnRefNumber, out var delivery);
-
-                    delivery.TryGetValue(learningDelivery.AimSeqNumber, out var learningDeliveryFams);
-
-                    learningDelivery.LrnDelFAM_ADL = learningDeliveryFams.ADL;
-                    learningDelivery.LrnDelFAM_RES = learningDeliveryFams.RES;
-                    learningDelivery.LrnDelFAM_LDM1 = learningDeliveryFams.LDM1;
-                    learningDelivery.LrnDelFAM_LDM2 = learningDeliveryFams.LDM2;
-                    learningDelivery.LrnDelFAM_LDM3 = learningDeliveryFams.LDM3;
-                    learningDelivery.LrnDelFAM_LDM4 = learningDeliveryFams.LDM4;
-                }
-            }
-
-            return learnerDto;
         }
     }
 }

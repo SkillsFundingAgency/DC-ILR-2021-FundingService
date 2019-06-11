@@ -26,18 +26,18 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
         {
             var ldFams = BuildLearningDeliveryFAMDictionary(learners);
 
-            var learnerDto = learners.Select(l => new FM35LearnerDto
+            return learners.Select(l => new FM35LearnerDto
             {
                 LearnRefNumber = l.LearnRefNumber,
                 DateOfBirth = l.DateOfBirthNullable,
                 PostcodePrior = l.PostcodePrior,
-                LearnerEmploymentStatuses = l.LearnerEmploymentStatuses.Select(les => new LearnerEmploymentStatus
+                LearnerEmploymentStatuses = l.LearnerEmploymentStatuses?.Select(les => new LearnerEmploymentStatus
                 {
                     DateEmpStatApp = les.DateEmpStatApp,
                     EmpId = les.EmpIdNullable,
                     EmpStat = les.EmpStat
                 }).ToList(),
-                LearningDeliveries = l.LearningDeliveries.Select(ld => new LearningDelivery
+                LearningDeliveries = l.LearningDeliveries?.Select(ld => new LearningDelivery
                 {
                     AchDate = ld.AchDateNullable,
                     AddHours = ld.AddHoursNullable,
@@ -58,7 +58,14 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                     PriorLearnFundAdj = ld.PriorLearnFundAdjNullable,
                     ProgType = ld.ProgTypeNullable,
                     PwayCode = ld.PwayCodeNullable,
-                    LearningDeliveryFAMs = ld.LearningDeliveryFAMs.Select(ldf => new LearningDeliveryFAM
+                    LrnDelFAM_EEF = ldFams[l.LearnRefNumber][ld.AimSeqNumber].EEF,
+                    LrnDelFAM_FFI = ldFams[l.LearnRefNumber][ld.AimSeqNumber].FFI,
+                    LrnDelFAM_RES = ldFams[l.LearnRefNumber][ld.AimSeqNumber].RES,
+                    LrnDelFAM_LDM1 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM1,
+                    LrnDelFAM_LDM2 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM2,
+                    LrnDelFAM_LDM3 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM3,
+                    LrnDelFAM_LDM4 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM4,
+                    LearningDeliveryFAMs = ld.LearningDeliveryFAMs?.Select(ldf => new LearningDeliveryFAM
                     {
                         LearnDelFAMCode = ldf.LearnDelFAMCode,
                         LearnDelFAMType = ldf.LearnDelFAMType,
@@ -67,26 +74,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                     }).ToList()
                 }).ToList()
             });
-
-            foreach (var learner in learnerDto)
-            {
-                foreach (var learningDelivery in learner.LearningDeliveries)
-                {
-                    ldFams.TryGetValue(learner.LearnRefNumber, out var delivery);
-
-                    delivery.TryGetValue(learningDelivery.AimSeqNumber, out var learningDeliveryFams);
-
-                    learningDelivery.LrnDelFAM_EEF = learningDeliveryFams.EEF;
-                    learningDelivery.LrnDelFAM_FFI = learningDeliveryFams.FFI;
-                    learningDelivery.LrnDelFAM_RES = learningDeliveryFams.RES;
-                    learningDelivery.LrnDelFAM_LDM1 = learningDeliveryFams.LDM1;
-                    learningDelivery.LrnDelFAM_LDM2 = learningDeliveryFams.LDM2;
-                    learningDelivery.LrnDelFAM_LDM3 = learningDeliveryFams.LDM3;
-                    learningDelivery.LrnDelFAM_LDM4 = learningDeliveryFams.LDM4;
-                }
-            }
-
-            return learnerDto;
         }
     }
 }

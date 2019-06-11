@@ -24,20 +24,20 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
 
         private IEnumerable<FM70LearnerDto> BuildDtos(IEnumerable<ILearner> learners, IEnumerable<ILearnerDestinationAndProgression> learnerDestinationAndProgressions)
         {
-            var learnerDPOutcomeDictionary = BuildLearnerDPOutcomeDictionary(learnerDestinationAndProgressions);
+            var learnerDPOutcomes = BuildLearnerDPOutcomeDictionary(learnerDestinationAndProgressions);
             var ldFams = BuildLearningDeliveryFAMDictionary(learners);
 
-            var learnerDto = learners.Select(l => new FM70LearnerDto
+            return learners.Select(l => new FM70LearnerDto
             {
                 LearnRefNumber = l.LearnRefNumber,
                 DateOfBirth = l.DateOfBirthNullable,
-                LearnerEmploymentStatuses = l.LearnerEmploymentStatuses.Select(les => new LearnerEmploymentStatus
+                LearnerEmploymentStatuses = l.LearnerEmploymentStatuses?.Select(les => new LearnerEmploymentStatus
                 {
                     DateEmpStatApp = les.DateEmpStatApp,
                     EmpId = les.EmpIdNullable,
                     EmpStat = les.EmpStat
                 }).ToList(),
-                DPOutcomes = learnerDPOutcomeDictionary[l.LearnRefNumber].ToList() ?? null,
+                DPOutcomes = learnerDPOutcomes.TryGetValue(l.LearnRefNumber, out var index) ? learnerDPOutcomes[l.LearnRefNumber] : null,
                 LearningDeliveries = l.LearningDeliveries.Select(ld => new LearningDelivery
                 {
                     AchDate = ld.AchDateNullable,
@@ -54,27 +54,14 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                     OrigLearnStartDate = ld.OrigLearnStartDateNullable,
                     OtherFundAdj = ld.OtherFundAdjNullable,
                     Outcome = ld.OutcomeNullable,
-                    PriorLearnFundAdj = ld.PriorLearnFundAdjNullable
+                    PriorLearnFundAdj = ld.PriorLearnFundAdjNullable,
+                    LrnDelFAM_RES = ldFams[l.LearnRefNumber][ld.AimSeqNumber].RES,
+                    LrnDelFAM_LDM1 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM1,
+                    LrnDelFAM_LDM2 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM2,
+                    LrnDelFAM_LDM3 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM3,
+                    LrnDelFAM_LDM4 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM4,
                 }).ToList()
             });
-
-            foreach (var learner in learnerDto)
-            {
-                foreach (var learningDelivery in learner.LearningDeliveries)
-                {
-                    ldFams.TryGetValue(learner.LearnRefNumber, out var delivery);
-
-                    delivery.TryGetValue(learningDelivery.AimSeqNumber, out var learningDeliveryFams);
-
-                    learningDelivery.LrnDelFAM_RES = learningDeliveryFams.RES;
-                    learningDelivery.LrnDelFAM_LDM1 = learningDeliveryFams.LDM1;
-                    learningDelivery.LrnDelFAM_LDM2 = learningDeliveryFams.LDM2;
-                    learningDelivery.LrnDelFAM_LDM3 = learningDeliveryFams.LDM3;
-                    learningDelivery.LrnDelFAM_LDM4 = learningDeliveryFams.LDM4;
-                }
-            }
-
-            return learnerDto;
         }
     }
 }

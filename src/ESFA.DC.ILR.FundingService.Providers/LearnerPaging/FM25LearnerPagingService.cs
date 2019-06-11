@@ -25,11 +25,11 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
 
         private IEnumerable<FM25LearnerDto> BuildDtos(IEnumerable<ILearner> learners, IEnumerable<ILearnerDestinationAndProgression> learnerDestinationAndProgressions)
         {
-            var learnerDPOutcomeDictionary = BuildLearnerDPOutcomeDictionary(learnerDestinationAndProgressions);
-            var learnerFamsDictionary = BuildLearnerFAMDictionary(learners);
-            var ldFamDictionarys = BuildLearningDeliveryFAMDictionary(learners);
+            var learnerDPOutcomes = BuildLearnerDPOutcomeDictionary(learnerDestinationAndProgressions);
+            var learnerFams = BuildLearnerFAMDictionary(learners);
+            var ldFams = BuildLearningDeliveryFAMDictionary(learners);
 
-            var learnerDto = learners.Select(l => new FM25LearnerDto
+            return learners.Select(l => new FM25LearnerDto
             {
                 LearnRefNumber = l.LearnRefNumber,
                 DateOfBirth = l.DateOfBirthNullable,
@@ -39,7 +39,13 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                 PlanLearnHours = l.PlanLearnHoursNullable,
                 Postcode = l.Postcode,
                 ULN = l.ULN,
-                DPOutcomes = learnerDPOutcomeDictionary[l.LearnRefNumber].ToList() ?? null,
+                LrnFAM_ECF = learnerFams[l.LearnRefNumber].ECF,
+                LrnFAM_EDF1 = learnerFams[l.LearnRefNumber].EDF1,
+                LrnFAM_EDF2 = learnerFams[l.LearnRefNumber].EDF2,
+                LrnFAM_EHC = learnerFams[l.LearnRefNumber].EHC,
+                LrnFAM_HNS = learnerFams[l.LearnRefNumber].HNS,
+                LrnFAM_MCF = learnerFams[l.LearnRefNumber].MCF,
+                DPOutcomes = learnerDPOutcomes.TryGetValue(l.LearnRefNumber, out var index) ? learnerDPOutcomes[l.LearnRefNumber] : null,
                 LearningDeliveries = l.LearningDeliveries.Select(ld => new LearningDelivery
                 {
                     AimSeqNumber = ld.AimSeqNumber,
@@ -52,7 +58,12 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                     LearnStartDate = ld.LearnStartDate,
                     ProgType = ld.ProgTypeNullable,
                     WithdrawReason = ld.WithdrawReasonNullable,
-                    LearningDeliveryFAMs = ld.LearningDeliveryFAMs.Select(ldf => new LearningDeliveryFAM
+                    LrnDelFAM_SOF = ldFams[l.LearnRefNumber][ld.AimSeqNumber].SOF,
+                    LrnDelFAM_LDM1 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM1,
+                    LrnDelFAM_LDM2 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM2,
+                    LrnDelFAM_LDM3 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM3,
+                    LrnDelFAM_LDM4 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM4,
+                    LearningDeliveryFAMs = ld.LearningDeliveryFAMs?.Select(ldf => new LearningDeliveryFAM
                     {
                         LearnDelFAMCode = ldf.LearnDelFAMCode,
                         LearnDelFAMType = ldf.LearnDelFAMType,
@@ -61,70 +72,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                     }).ToList()
                 }).ToList()
             });
-
-            foreach (var learner in learnerDto)
-            {
-                learnerFamsDictionary.TryGetValue(learner.LearnRefNumber, out var learnerFams);
-
-                learner.LrnFAM_ECF = learnerFams.ECF;
-                learner.LrnFAM_EDF1 = learnerFams.EDF1;
-                learner.LrnFAM_EDF2 = learnerFams.EDF2;
-                learner.LrnFAM_EHC = learnerFams.EHC;
-                learner.LrnFAM_HNS = learnerFams.HNS;
-                learner.LrnFAM_MCF = learnerFams.MCF;
-
-                foreach (var learningDelivery in learner.LearningDeliveries)
-                {
-                    ldFamDictionarys.TryGetValue(learner.LearnRefNumber, out var delivery);
-
-                    delivery.TryGetValue(learningDelivery.AimSeqNumber, out var learningDeliveryFams);
-
-                    learningDelivery.LrnDelFAM_SOF = learningDeliveryFams.SOF;
-                    learningDelivery.LrnDelFAM_LDM1 = learningDeliveryFams.LDM1;
-                    learningDelivery.LrnDelFAM_LDM2 = learningDeliveryFams.LDM2;
-                    learningDelivery.LrnDelFAM_LDM3 = learningDeliveryFams.LDM3;
-                    learningDelivery.LrnDelFAM_LDM4 = learningDeliveryFams.LDM4;
-                }
-            }
-
-            return learnerDto;
-        }
-
-        private IDictionary<string, LearnerFAMDenormalized> BuildLearnerFAMDictionary(IEnumerable<ILearner> learners)
-        {
-            var learnerFamsDictionary = new Dictionary<string, LearnerFAMDenormalized>();
-
-            foreach (var learner in learners)
-            {
-                var fams = BuildLearnerFAMDenormalized(learner.LearnerFAMs);
-
-                learnerFamsDictionary.Add(learner.LearnRefNumber, fams);
-            }
-
-            return learnerFamsDictionary;
-        }
-
-        private LearnerFAMDenormalized BuildLearnerFAMDenormalized(IEnumerable<ILearnerFAM> learnerFams)
-        {
-            var learnerFam = new LearnerFAMDenormalized();
-
-            if (learnerFams != null)
-            {
-                learnerFams = learnerFams.ToList();
-
-                var edfArray = learnerFams.Where(f => f.LearnFAMType == LearnerPagingConstants.LearnerFAMTypeEDF).Select(f => (int?)f.LearnFAMCode).ToArray();
-
-                Array.Resize(ref edfArray, 2);
-
-                learnerFam.ECF = learnerFams.Where(f => f.LearnFAMType == LearnerPagingConstants.LearnerFAMTypeECF).Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
-                learnerFam.EDF1 = edfArray[0];
-                learnerFam.EDF2 = edfArray[1];
-                learnerFam.EHC = learnerFams.Where(f => f.LearnFAMType == LearnerPagingConstants.LearnerFAMTypeEHC).Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
-                learnerFam.HNS = learnerFams.Where(f => f.LearnFAMType == LearnerPagingConstants.LearnerFAMTypeHNS).Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
-                learnerFam.MCF = learnerFams.Where(f => f.LearnFAMType == LearnerPagingConstants.LearnerFAMTypeMCF).Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
-            }
-
-            return learnerFam;
         }
     }
 }

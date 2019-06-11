@@ -114,6 +114,10 @@
       <Project>{7D044D8C-64BE-48A0-A2F2-1284FC7395F5}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Dto\ESFA.DC.ILR.FundingService.Dto.csproj">
+      <Project>{2813A893-D574-4CCE-8D1C-4B6D84FA0915}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Dto</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Interfaces\ESFA.DC.ILR.FundingService.Interfaces.csproj">
       <Project>{81FA550D-DD5E-4F5B-AC66-1DCA51824E9C}</Project>
       <Name>ESFA.DC.ILR.FundingService.Interfaces</Name>
