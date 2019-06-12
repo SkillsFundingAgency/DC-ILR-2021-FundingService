@@ -167,7 +167,7 @@ steps:
   inputs:
     command: test
     projects: 'src/*Tests/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+    arguments: '--configuration $(buildConfiguration) --platform $(BuildPlatformX64) --collect "Code coverage"'
     
 - task: VSTest@2
   displayName: 'VsTest - testAssemblies'
