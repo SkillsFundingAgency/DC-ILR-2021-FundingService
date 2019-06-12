@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.External.FCS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.FCS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
-using ESFA.DC.ILR.FundingService.Data.File.Interface;
-using ESFA.DC.ILR.FundingService.Data.File.Model;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM70.Service.Input;
 using ESFA.DC.ILR.FundingService.FM70.Service.Models;
-using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Tests.Model;
 using FluentAssertions;
 using Moq;
@@ -21,6 +20,172 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
     public class DataEntityMapperTests
     {
         [Fact]
+        public void MapTo()
+        {
+            var ukprn = 1;
+            var learnAimRef = "LearnAimRef";
+            var delLocPostCode = "Postcode";
+            var conRefNumber = "ConRefNumber";
+
+            var global = new Global
+            {
+                UKPRN = 1
+            };
+
+            var learnerDtos = new List<FM70LearnerDto>
+            {
+                new FM70LearnerDto
+                {
+                    LearningDeliveries = new List<LearningDelivery>
+                    {
+                        new LearningDelivery
+                        {
+                            LearnAimRef = learnAimRef,
+                            DelLocPostCode = delLocPostCode,
+                            FundModel = 70,
+                            ConRefNumber = conRefNumber
+                        }
+                    }
+                },
+                new FM70LearnerDto
+                {
+                    LearningDeliveries = new List<LearningDelivery>
+                    {
+                        new LearningDelivery
+                        {
+                            LearnAimRef = learnAimRef,
+                            DelLocPostCode = delLocPostCode,
+                            FundModel = 70,
+                            ConRefNumber = conRefNumber
+                        }
+                    }
+                },
+            };
+
+            var larsLearningDelivery = new LARSLearningDelivery
+            {
+                AwardOrgCode = "awardOrgCode",
+                EFACOFType = 1,
+                LearnAimRefTitle = "learnAimRefTitle",
+                LearnAimRefType = "learnAimRefType",
+                RegulatedCreditValue = 2,
+                NotionalNVQLevelv2 = "NVQLevel",
+                LARSFundings = new List<LARSFunding>
+                {
+                    new LARSFunding
+                    {
+                        FundingCategory = "Matrix",
+                        RateWeighted = 1.0m,
+                        WeightingFactor = "G",
+                        EffectiveFrom = new DateTime(2018, 1, 1),
+                        EffectiveTo = new DateTime(2019, 1, 1),
+                    }
+                },
+                LARSCareerLearningPilots = new List<LARSCareerLearningPilot>
+                {
+                    new LARSCareerLearningPilot
+                    {
+                        AreaCode = "DelLocPostcode",
+                        SubsidyRate = 1.2m,
+                        EffectiveFrom = new DateTime(2018, 1, 1),
+                        EffectiveTo = new DateTime(2019, 1, 1)
+                    }
+                }
+            };
+
+            var sfaAreaCost = new List<SfaAreaCost>
+            {
+                new SfaAreaCost
+                {
+                    Postcode = "DelLocPostcode",
+                    EffectiveFrom = new DateTime(2018, 1, 1),
+                    EffectiveTo = new DateTime(2019, 1, 1),
+                    AreaCostFactor = 1.2m
+                }
+            };
+
+            var subsidyPilotPostcodeArea = new List<CareerLearningPilot>
+            {
+                new CareerLearningPilot
+                {
+                    Postcode = "DelLocPostcode",
+                    EffectiveFrom = new DateTime(2018, 1, 1),
+                    EffectiveTo = new DateTime(2019, 1, 1),
+                    AreaCode = "AreaCode"
+                }
+            };
+
+            var fcsContract = new List<FCSContractAllocation>
+            {
+                new FCSContractAllocation
+                {
+                    CalcMethod = 1,
+                    FCSContractDeliverables = new List<FCSContractDeliverable>
+                    {
+                        new FCSContractDeliverable()
+                    }
+                }
+            };
+
+            var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
+            var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
+            var fcsReferenceDataMock = new Mock<IFCSReferenceDataService>();
+
+            larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learnAimRef)).Returns(larsLearningDelivery);
+            postcodesReferenceDataServiceMock.Setup(p => p.SFAAreaCostsForPostcode(delLocPostCode)).Returns(new List<SfaAreaCost> { new SfaAreaCost() });
+            fcsReferenceDataMock.Setup(f => f.FcsContractsForConRef(conRefNumber)).Returns(fcsContract);
+
+            var dataEntities = NewService(
+                fcsReferenceDataService: fcsReferenceDataMock.Object,
+                larsReferenceDataService: larsReferenceDataServiceMock.Object,
+                postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object)
+                .MapTo(ukprn, learnerDtos);
+
+            dataEntities.Should().HaveCount(2);
+            dataEntities.SelectMany(d => d.Children).Should().NotBeNullOrEmpty();
+        }
+
+        [Fact]
+        public void MapTo_NullLearnerDto()
+        {
+            var ukprn = 1;
+
+            var global = new Global
+            {
+                UKPRN = 1
+            };
+
+            var dataEntities = NewService().MapTo(ukprn, null);
+
+            dataEntities.Should().HaveCount(1);
+            dataEntities.Select(d => d.IsGlobal).First().Should().Be(true);
+            dataEntities.SelectMany(d => d.Children).Should().BeNullOrEmpty();
+            dataEntities.Select(d => d.EntityName).First().Should().Be("global");
+            dataEntities.Select(d => d.Attributes).First().Should().HaveCount(1);
+            dataEntities.Select(d => d.Attributes).First()["UKPRN"].Value.Should().Be(global.UKPRN);
+        }
+
+        [Fact]
+        public void MapTo_EmptyLearners()
+        {
+            var ukprn = 1;
+
+            var global = new Global
+            {
+                UKPRN = 1
+            };
+
+            var dataEntities = NewService().MapTo(ukprn, new List<FM70LearnerDto>());
+
+            dataEntities.Should().HaveCount(1);
+            dataEntities.Select(d => d.IsGlobal).First().Should().Be(true);
+            dataEntities.Select(d => d.Children).First().Should().HaveCount(0);
+            dataEntities.Select(d => d.EntityName).First().Should().Be("global");
+            dataEntities.Select(d => d.Attributes).First().Should().HaveCount(1);
+            dataEntities.Select(d => d.Attributes).First()["UKPRN"].Value.Should().Be(global.UKPRN);
+        }
+
+        [Fact]
         public void BuildGlobalDataEntity()
         {
             var global = new Global
@@ -28,7 +193,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
                 UKPRN = 1234,
             };
 
-            var dataEntity = NewService().BuildGlobalDataEntity(null, global);
+            var dataEntity = NewService().BuildGlobalDataEntity(new FM70LearnerDto(), global);
 
             dataEntity.EntityName.Should().Be("global");
             dataEntity.Attributes.Should().HaveCount(1);
@@ -40,37 +205,24 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
         {
             var ukprn = 1234;
 
-            var fileDataServiceMock = new Mock<IFileDataService>();
-
-            fileDataServiceMock.Setup(f => f.UKPRN()).Returns(ukprn);
-
-            var global = NewService(
-                fileDataService: fileDataServiceMock.Object)
-                .BuildGlobal();
-
-            global.UKPRN.Should().Be(ukprn);
+            NewService().BuildGlobal(ukprn).UKPRN.Should().Be(ukprn);
         }
 
         [Fact]
         public void BuildLearner()
         {
-            var learner = new TestLearner()
+            var learner = new FM70LearnerDto()
             {
                 LearnRefNumber = "ABC",
-                DateOfBirthNullable = new DateTime(2000, 8, 1),
-                ULN = 1234567890,
+                DateOfBirth = new DateTime(2000, 8, 1)
             };
 
-            var fileDataDataServiceMock = new Mock<IFileDataService>();
-
-            fileDataDataServiceMock.Setup(dp => dp.DPOutcomesForLearnRefNumber(learner.LearnRefNumber)).Returns(new List<DPOutcome>());
-
-            var dataEntity = NewService(fileDataDataServiceMock.Object).BuildLearnerDataEntity(learner);
+            var dataEntity = NewService().BuildLearnerDataEntity(learner);
 
             dataEntity.EntityName.Should().Be("Learner");
             dataEntity.Attributes.Should().HaveCount(2);
             dataEntity.Attributes["LearnRefNumber"].Value.Should().Be(learner.LearnRefNumber);
-            dataEntity.Attributes["DateOfBirth"].Value.Should().Be(learner.DateOfBirthNullable);
+            dataEntity.Attributes["DateOfBirth"].Value.Should().Be(learner.DateOfBirth);
 
             dataEntity.Children.Should().BeEmpty();
         }
@@ -78,11 +230,11 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
         [Fact]
         public void BuildLearnerEmploymentStatus()
         {
-            var learnerEmploymentStatus = new TestLearnerEmploymentStatus
+            var learnerEmploymentStatus = new LearnerEmploymentStatus
             {
                 AgreeId = "Id",
                 DateEmpStatApp = new DateTime(2018, 1, 1),
-                EmpIdNullable = 1,
+                EmpId = 1,
                 EmpStat = 2,
             };
 
@@ -121,7 +273,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
         [Fact]
         public void BuildLearningDelivery()
         {
-            var learningDelivery = new TestLearningDelivery()
+            var learningDelivery = new LearningDelivery()
             {
                 AimSeqNumber = 1,
                 AimType = 2,
@@ -129,22 +281,27 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
                 ConRefNumber = "ConRef1",
                 DelLocPostCode = "DelLocPostcode",
                 FundModel = 4,
-                FworkCodeNullable = 5,
-                LearnActEndDateNullable = new DateTime(2017, 1, 1),
+                FworkCode = 5,
+                LearnActEndDate = new DateTime(2017, 1, 1),
                 LearnAimRef = "LearnAimRef",
                 LearnPlanEndDate = new DateTime(2018, 1, 1),
                 LearnStartDate = new DateTime(2019, 1, 1),
-                OrigLearnStartDateNullable = new DateTime(2019, 1, 1),
-                OtherFundAdjNullable = 6,
-                OutcomeNullable = 7,
-                PriorLearnFundAdjNullable = 8,
-                LearningDeliveryFAMs = new List<TestLearningDeliveryFAM>()
+                OrigLearnStartDate = new DateTime(2019, 1, 1),
+                OtherFundAdj = 6,
+                Outcome = 7,
+                PriorLearnFundAdj = 8,
+                LrnDelFAM_LDM1 = "LDM1",
+                LrnDelFAM_LDM2 = "LDM2",
+                LrnDelFAM_LDM3 = "LDM3",
+                LrnDelFAM_LDM4 = "LDM4",
+                LrnDelFAM_RES = "RES",
+                LearningDeliveryFAMs = new List<LearningDeliveryFAM>()
                 {
-                    new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "LDM1" },
-                    new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "LDM2" },
-                    new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "LDM3" },
-                    new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "LDM4" },
-                    new TestLearningDeliveryFAM() { LearnDelFAMType = "RES", LearnDelFAMCode = "RES" },
+                    new LearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "LDM1" },
+                    new LearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "LDM2" },
+                    new LearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "LDM3" },
+                    new LearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "LDM4" },
+                    new LearningDeliveryFAM() { LearnDelFAMType = "RES", LearnDelFAMCode = "RES" },
                 },
             };
 
@@ -208,14 +365,14 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
 
             dataEntity.EntityName.Should().Be("LearningDelivery");
             dataEntity.Attributes.Should().HaveCount(20);
-            dataEntity.Attributes["AchDate"].Value.Should().Be(learningDelivery.AchDateNullable);
-            dataEntity.Attributes["AddHours"].Value.Should().Be(learningDelivery.AddHoursNullable);
+            dataEntity.Attributes["AchDate"].Value.Should().Be(learningDelivery.AchDate);
+            dataEntity.Attributes["AddHours"].Value.Should().Be(learningDelivery.AddHours);
             dataEntity.Attributes["AimSeqNumber"].Value.Should().Be(learningDelivery.AimSeqNumber);
             dataEntity.Attributes["CalcMethod"].Value.Should().Be(1);
             dataEntity.Attributes["CompStatus"].Value.Should().Be(learningDelivery.CompStatus);
             dataEntity.Attributes["ConRefNumber"].Value.Should().Be(learningDelivery.ConRefNumber);
             dataEntity.Attributes["GenreCode"].Value.Should().Be(larsLearningDelivery.LearningDeliveryGenre);
-            dataEntity.Attributes["LearnActEndDate"].Value.Should().Be(learningDelivery.LearnActEndDateNullable);
+            dataEntity.Attributes["LearnActEndDate"].Value.Should().Be(learningDelivery.LearnActEndDate);
             dataEntity.Attributes["LearnAimRef"].Value.Should().Be(learningDelivery.LearnAimRef);
             dataEntity.Attributes["LearnPlanEndDate"].Value.Should().Be(learningDelivery.LearnPlanEndDate);
             dataEntity.Attributes["LearnStartDate"].Value.Should().Be(learningDelivery.LearnStartDate);
@@ -224,10 +381,10 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
             dataEntity.Attributes["LrnDelFAM_LDM3"].Value.Should().Be("LDM3");
             dataEntity.Attributes["LrnDelFAM_LDM4"].Value.Should().Be("LDM4");
             dataEntity.Attributes["LrnDelFAM_RES"].Value.Should().Be("RES");
-            dataEntity.Attributes["OrigLearnStartDate"].Value.Should().Be(learningDelivery.OrigLearnStartDateNullable);
-            dataEntity.Attributes["OtherFundAdj"].Value.Should().Be(learningDelivery.OtherFundAdjNullable);
-            dataEntity.Attributes["Outcome"].Value.Should().Be(learningDelivery.OutcomeNullable);
-            dataEntity.Attributes["PriorLearnFundAdj"].Value.Should().Be(learningDelivery.PriorLearnFundAdjNullable);
+            dataEntity.Attributes["OrigLearnStartDate"].Value.Should().Be(learningDelivery.OrigLearnStartDate);
+            dataEntity.Attributes["OtherFundAdj"].Value.Should().Be(learningDelivery.OtherFundAdj);
+            dataEntity.Attributes["Outcome"].Value.Should().Be(learningDelivery.Outcome);
+            dataEntity.Attributes["PriorLearnFundAdj"].Value.Should().Be(learningDelivery.PriorLearnFundAdj);
         }
 
         [Fact]
@@ -336,60 +493,12 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
             esfData.Should().HaveCount(2);
         }
 
-        [Fact]
-        public void BuildLearningDeliveryFAMDenormalized()
-        {
-            var learningDeliveryFams = new List<TestLearningDeliveryFAM>()
-            {
-                new TestLearningDeliveryFAM() { LearnDelFAMType = "RES", LearnDelFAMCode = "1" },
-                new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "2" },
-                new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "3" },
-                new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "4" },
-                new TestLearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "5" },
-            };
-
-            var learningDeliveryFAMDenormalized = NewService().BuildLearningDeliveryFAMDenormalized(learningDeliveryFams);
-
-            learningDeliveryFAMDenormalized.RES.Should().Be("1");
-            learningDeliveryFAMDenormalized.LDM1.Should().Be("2");
-            learningDeliveryFAMDenormalized.LDM2.Should().Be("3");
-            learningDeliveryFAMDenormalized.LDM3.Should().Be("4");
-            learningDeliveryFAMDenormalized.LDM4.Should().Be("5");
-        }
-
-        [Fact]
-        public void BuildLearningDeliveryFAMDenormalized_Null()
-        {
-            var learningDeliveryFAMDenormalized = NewService().BuildLearningDeliveryFAMDenormalized(null);
-
-            learningDeliveryFAMDenormalized.RES.Should().BeNull();
-            learningDeliveryFAMDenormalized.LDM1.Should().BeNull();
-            learningDeliveryFAMDenormalized.LDM2.Should().BeNull();
-            learningDeliveryFAMDenormalized.LDM3.Should().BeNull();
-            learningDeliveryFAMDenormalized.LDM4.Should().BeNull();
-        }
-
-        [Fact]
-        public void BuildLearningDeliveryFAMDenormalized_NoMatches()
-        {
-            var learningDeliveryFams = new List<TestLearningDeliveryFAM>();
-
-            var learningDeliveryFAMDenormalized = NewService().BuildLearningDeliveryFAMDenormalized(learningDeliveryFams);
-
-            learningDeliveryFAMDenormalized.RES.Should().BeNull();
-            learningDeliveryFAMDenormalized.LDM1.Should().BeNull();
-            learningDeliveryFAMDenormalized.LDM2.Should().BeNull();
-            learningDeliveryFAMDenormalized.LDM3.Should().BeNull();
-            learningDeliveryFAMDenormalized.LDM4.Should().BeNull();
-        }
-
         private DataEntityMapper NewService(
-            IFileDataService fileDataService = null,
             IFCSReferenceDataService fcsReferenceDataService = null,
             ILARSReferenceDataService larsReferenceDataService = null,
             IPostcodesReferenceDataService postcodesReferenceDataService = null)
         {
-            return new DataEntityMapper(fileDataService, fcsReferenceDataService, larsReferenceDataService, postcodesReferenceDataService);
+            return new DataEntityMapper(fcsReferenceDataService, larsReferenceDataService, postcodesReferenceDataService);
         }
     }
 }

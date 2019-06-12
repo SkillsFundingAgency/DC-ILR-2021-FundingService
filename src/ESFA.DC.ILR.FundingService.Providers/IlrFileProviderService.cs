@@ -20,7 +20,7 @@ namespace ESFA.DC.ILR.FundingService.Providers
             _xmlSerializationService = xmlSerializationService;
         }
 
-        public async Task<IMessage> Provide(IFundingServiceContext fundingServiceContext, CancellationToken cancellationToken)
+        public async Task<IMessage> ProvideAsync(IFundingServiceContext fundingServiceContext, CancellationToken cancellationToken)
         {
             Message message;
 

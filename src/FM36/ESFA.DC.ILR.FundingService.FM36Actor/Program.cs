@@ -30,7 +30,7 @@ namespace ESFA.DC.ILR.FundingService.FM36Actor
                 using (var container = builder.Build())
                 {
                     // Not sure why this is being resolved here, to review
-                    //  var ss = container.Resolve<IFundingService<ILearner, FM35FundingOutputs>>();
+                    //  var ss = container.Resolve<IFundingService<FM36LearnerDto, FM35FundingOutputs>>();
                     Thread.Sleep(Timeout.Infinite);
                 }
             }

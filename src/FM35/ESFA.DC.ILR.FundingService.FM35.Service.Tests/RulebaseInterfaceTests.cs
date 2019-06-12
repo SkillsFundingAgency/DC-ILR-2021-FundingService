@@ -12,11 +12,10 @@ using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Organisation.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
-using ESFA.DC.ILR.FundingService.Data.File.Interface;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM35.Service.Constants;
 using ESFA.DC.ILR.FundingService.FM35.Service.Input;
 using ESFA.DC.ILR.FundingService.FM35.Service.Models;
-using ESFA.DC.ILR.Tests.Model;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.XSRC.Model.Interface.XSRCEntity;
@@ -373,46 +372,40 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
             var organisationRefererenceDataServiceMock = new Mock<IOrganisationReferenceDataService>();
             var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
-            var fileDataServiceMock = new Mock<IFileDataService>();
 
-            var learner = new TestLearner
+            var learner = new FM35LearnerDto
             {
                 LearnRefNumber = "Learner1",
-                ULN = 1234567890,
                 PostcodePrior = "Postcode",
-                LearnerEmploymentStatuses = new List<TestLearnerEmploymentStatus>
+                LearnerEmploymentStatuses = new List<LearnerEmploymentStatus>
                 {
-                    new TestLearnerEmploymentStatus
+                    new LearnerEmploymentStatus
                     {
-                        EmpIdNullable = 10,
+                        EmpId = 10,
                         AgreeId = "1",
                         DateEmpStatApp = new DateTime(2018, 8, 1),
                         EmpStat = 2,
                     },
                 },
-                LearningDeliveries = new List<TestLearningDelivery>
+                LearningDeliveries = new List<LearningDelivery>
                 {
-                    new TestLearningDelivery
+                    new LearningDelivery
                     {
                         LearnAimRef = "1",
                         AimSeqNumber = 2,
                         AimType = 3,
                         CompStatus = 4,
-                        DelLocPostCode = "Postcode",
-                        PwayCodeNullable = 5,
-                        ProgTypeNullable = 6,
-                        FworkCodeNullable = 7,
+                        PwayCode = 5,
+                        ProgType = 6,
+                        FworkCode = 7,
                         FundModel = 35,
-                        StdCodeNullable = 8,
+                        StdCode = 8,
                         LearnStartDate = new DateTime(2018, 8, 1),
                         LearnPlanEndDate = new DateTime(2019, 8, 1),
-                        LearningDeliveryFAMs = new List<TestLearningDeliveryFAM>
+                        DelLocPostCode = "Postcode",
+                        LearningDeliveryFAMs = new List<LearningDeliveryFAM>
                         {
-                            new TestLearningDeliveryFAM()
-                        },
-                        AppFinRecords = new List<TestAppFinRecord>
-                        {
-                            new TestAppFinRecord(),
+                            new LearningDeliveryFAM()
                         },
                     },
                 },
@@ -487,8 +480,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 largeEmployersRefererenceDataServiceMock.Object,
                 larsReferenceDataServiceMock.Object,
                 organisationRefererenceDataServiceMock.Object,
-                postcodesReferenceDataServiceMock.Object,
-                fileDataServiceMock.Object).BuildGlobalDataEntity(learner, new Global());
+                postcodesReferenceDataServiceMock.Object).BuildGlobalDataEntity(learner, new Global());
         }
 
         public string GetRulebaseVersion(string folderName)

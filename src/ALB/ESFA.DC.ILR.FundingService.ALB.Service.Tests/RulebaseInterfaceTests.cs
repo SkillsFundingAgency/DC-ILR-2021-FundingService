@@ -11,8 +11,7 @@ using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
-using ESFA.DC.ILR.FundingService.Data.File.Interface;
-using ESFA.DC.ILR.Tests.Model;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.XSRC.Model.Interface.XSRCEntity;
@@ -341,46 +340,30 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
         {
             var larsRefererenceDataServiceMock = new Mock<ILARSReferenceDataService>();
             var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
-            var fileDataServiceMock = new Mock<IFileDataService>();
 
-            var learner = new TestLearner
+            var learner = new ALBLearnerDto
             {
                 LearnRefNumber = "Learner1",
-                ULN = 1234567890,
-                PostcodePrior = "Postcode",
-                LearnerEmploymentStatuses = new List<TestLearnerEmploymentStatus>
+                LearningDeliveries = new List<LearningDelivery>
                 {
-                    new TestLearnerEmploymentStatus
-                    {
-                        AgreeId = "1",
-                        DateEmpStatApp = new DateTime(2018, 8, 1),
-                        EmpStat = 2
-                    }
-                },
-                LearningDeliveries = new List<TestLearningDelivery>
-                {
-                    new TestLearningDelivery
+                    new LearningDelivery
                     {
                         LearnAimRef = "1",
                         AimSeqNumber = 2,
                         AimType = 3,
                         CompStatus = 4,
-                        PwayCodeNullable = 5,
-                        ProgTypeNullable = 6,
-                        FworkCodeNullable = 7,
+                        PwayCode = 5,
+                        ProgType = 6,
+                        FworkCode = 7,
                         FundModel = 99,
-                        StdCodeNullable = 8,
+                        StdCode = 8,
                         LearnStartDate = new DateTime(2018, 8, 1),
                         LearnPlanEndDate = new DateTime(2019, 8, 1),
                         DelLocPostCode = "Postcode",
-                        LearningDeliveryFAMs = new List<TestLearningDeliveryFAM>
+                        LearningDeliveryFAMs = new List<LearningDeliveryFAM>
                         {
-                            new TestLearningDeliveryFAM()
+                            new LearningDeliveryFAM()
                         },
-                        AppFinRecords = new List<TestAppFinRecord>
-                        {
-                            new TestAppFinRecord()
-                        }
                     }
                 }
             };
@@ -407,8 +390,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
 
             return new DataEntityMapper(
                 larsRefererenceDataServiceMock.Object,
-                postcodesReferenceDataServiceMock.Object,
-                fileDataServiceMock.Object).BuildGlobalDataEntity(learner, new Global());
+                postcodesReferenceDataServiceMock.Object).BuildGlobalDataEntity(learner, new Global());
         }
 
         public string GetRulebaseVersion(string folderName)

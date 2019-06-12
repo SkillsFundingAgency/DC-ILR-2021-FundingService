@@ -86,11 +86,11 @@
     <Reference Include="ESFA.DC.ILR.Constants, Version=0.1.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.1920.Constants.0.1.5-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Constants.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ILR.Model, Version=0.1.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.1819.Model.0.1.5-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.dll</HintPath>
+    <Reference Include="ESFA.DC.ILR.Model, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR.1920.Model.0.1.2-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.1819.Model.Interface.0.1.5-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
+    <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR.1920.Model.Interface.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.ReferenceDataService.Model, Version=0.1.59.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.ReferenceDataService.Model.0.1.59\lib\netstandard2.0\ESFA.DC.ILR.ReferenceDataService.Model.dll</HintPath>
@@ -482,6 +482,10 @@
       <Project>{69B93B19-4FD0-4205-AFFA-8B71122A3C65}</Project>
       <Name>ESFA.DC.ILR.FundingService.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Dto\ESFA.DC.ILR.FundingService.Dto.csproj">
+      <Project>{2813A893-D574-4CCE-8D1C-4B6D84FA0915}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Dto</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FundingActor.Interfaces\ESFA.DC.ILR.FundingService.FundingActor.Interfaces.csproj">
       <Project>{B2EC7FFE-2E94-422A-BD8B-31C92C74A061}</Project>
       <Name>ESFA.DC.ILR.FundingService.FundingActor.Interfaces</Name>
@@ -501,6 +505,10 @@
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Providers\ESFA.DC.ILR.FundingService.Providers.csproj">
       <Project>{e6cf1460-4ef0-4579-b022-dc2d3f383568}</Project>
       <Name>ESFA.DC.ILR.FundingService.Providers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Service\ESFA.DC.ILR.FundingService.Service.csproj">
+      <Project>{652FF283-3708-4DCA-A45E-81297B8BA8A7}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\FM25\ESFA.DC.ILR.FundingService.FM25.Model\ESFA.DC.ILR.FundingService.FM25.Model.csproj">
       <Project>{3215BE00-4548-4D0F-A38E-77974B44E49E}</Project>

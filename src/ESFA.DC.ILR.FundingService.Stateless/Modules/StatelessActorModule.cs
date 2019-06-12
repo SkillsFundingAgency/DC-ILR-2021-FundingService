@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM25.Model.Output;
 using ESFA.DC.ILR.FundingService.FM25Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Output;
@@ -12,11 +13,13 @@ using ESFA.DC.ILR.FundingService.FM70Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FM81Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.FundingActor;
+using ESFA.DC.ILR.FundingService.FundingActor.Constants;
 using ESFA.DC.ILR.FundingService.FundingActor.Interfaces;
+using ESFA.DC.ILR.FundingService.FundingActor.Providers;
+using ESFA.DC.ILR.FundingService.FundingActor.Tasks;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.ILR.FundingService.Orchestrators.Implementations;
-using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Output;
+using ESFA.DC.ILR.FundingService.Providers.LearnerPaging;
 using ESFA.DC.Logging;
 using ESFA.DC.Logging.Interfaces;
 
@@ -28,12 +31,19 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
         {
             var actorNameParameter = "actorName";
 
-            containerBuilder.RegisterType<ActorTask<IALBActor, ALBGlobal>>().As<IActorTask<IALBActor, ALBGlobal>>().WithParameter(actorNameParameter, ActorServiceNameConstants.ALB).InstancePerLifetimeScope();
-            containerBuilder.RegisterType<ActorTask<IFM81Actor, FM81Global>>().As<IActorTask<IFM81Actor, FM81Global>>().WithParameter(actorNameParameter, ActorServiceNameConstants.FM81).InstancePerLifetimeScope();
-            containerBuilder.RegisterType<ActorTask<IFM70Actor, FM70Global>>().As<IActorTask<IFM70Actor, FM70Global>>().WithParameter(actorNameParameter, ActorServiceNameConstants.FM70).InstancePerLifetimeScope();
-            containerBuilder.RegisterType<ActorTask<IFM35Actor, FM35Global>>().As<IActorTask<IFM35Actor, FM35Global>>().WithParameter(actorNameParameter, ActorServiceNameConstants.FM35).InstancePerLifetimeScope();
-            containerBuilder.RegisterType<ActorTask<IFM36Actor, FM36Global>>().As<IActorTask<IFM36Actor, FM36Global>>().WithParameter(actorNameParameter, ActorServiceNameConstants.FM36).InstancePerLifetimeScope();
-            containerBuilder.RegisterType<ActorTask<IFM25Actor, FM25Global>>().As<IActorTask<IFM25Actor, FM25Global>>().WithParameter(actorNameParameter, ActorServiceNameConstants.FM25).InstancePerLifetimeScope();
+            containerBuilder.RegisterType<ALBActorTask>().Keyed<IActorTask>(FundingTaskConstants.ALB).WithParameter(actorNameParameter, ActorServiceNameConstants.ALB).InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FM25ActorTask>().Keyed<IActorTask>(FundingTaskConstants.FM25).WithParameter(actorNameParameter, ActorServiceNameConstants.FM25).InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FM35ActorTask>().Keyed<IActorTask>(FundingTaskConstants.FM35).WithParameter(actorNameParameter, ActorServiceNameConstants.FM35).InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FM36ActorTask>().Keyed<IActorTask>(FundingTaskConstants.FM36).WithParameter(actorNameParameter, ActorServiceNameConstants.FM36).InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FM70ActorTask>().Keyed<IActorTask>(FundingTaskConstants.FM70).WithParameter(actorNameParameter, ActorServiceNameConstants.FM70).InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FM81ActorTask>().Keyed<IActorTask>(FundingTaskConstants.FM81).WithParameter(actorNameParameter, ActorServiceNameConstants.FM81).InstancePerLifetimeScope();
+
+            containerBuilder.RegisterType<ALBActorDtoProvider>().Keyed<IActorDtoProvider>(FundingTaskConstants.ALB).InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FM25ActorDtoProvider>().Keyed<IActorDtoProvider>(FundingTaskConstants.FM25).InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FM35ActorDtoProvider>().Keyed<IActorDtoProvider>(FundingTaskConstants.FM35).InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FM36ActorDtoProvider>().Keyed<IActorDtoProvider>(FundingTaskConstants.FM36).InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FM70ActorDtoProvider>().Keyed<IActorDtoProvider>(FundingTaskConstants.FM70).InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FM81ActorDtoProvider>().Keyed<IActorDtoProvider>(FundingTaskConstants.FM81).InstancePerLifetimeScope();
 
             containerBuilder.RegisterType<FM81FundingOutputCondenserService>().As<IFundingOutputCondenserService<FM81Global>>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<FM70FundingOutputCondenserService>().As<IFundingOutputCondenserService<FM70Global>>().InstancePerLifetimeScope();
@@ -49,7 +59,16 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             containerBuilder.RegisterInstance(new ActorProvider<IALBActor>(ActorServiceNameConstants.ALB)).As<IActorProvider<IALBActor>>();
             containerBuilder.RegisterInstance(new ActorProvider<IFM25Actor>(ActorServiceNameConstants.FM25)).As<IActorProvider<IFM25Actor>>();
 
+            containerBuilder.RegisterType<ALBLearnerPagingService>().As<ILearnerPagingService<ALBLearnerDto>>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FM25LearnerPagingService>().As<ILearnerPagingService<FM25LearnerDto>>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FM35LearnerPagingService>().As<ILearnerPagingService<FM35LearnerDto>>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FM36LearnerPagingService>().As<ILearnerPagingService<FM36LearnerDto>>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FM70LearnerPagingService>().As<ILearnerPagingService<FM70LearnerDto>>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FM81LearnerPagingService>().As<ILearnerPagingService<FM81LearnerDto>>().InstancePerLifetimeScope();
+
             containerBuilder.RegisterType<ExecutionContext>().As<IExecutionContext>();
+
+            //containerBuilder.RegisterAssemblyTypes(ThisAssembly).Where(s => s.IsAssignableTo<IMapper>).AsImplementedInterfaces
         }
     }
 }

@@ -23,8 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ESFA.DC.ILR.1819.Model" Version="0.1.5-beta0001" />
-    <PackageReference Include="ESFA.DC.ILR.1819.Model.Interface" Version="0.1.5-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.1920.Model" Version="0.1.2-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.1920.Model.Interface" Version="0.1.0-beta0001" />
     <PackageReference Include="ESFA.DC.IO.Interfaces" Version="0.1.15-beta0001" />
     <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.6-beta0001" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
@@ -35,6 +35,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Data\ESFA.DC.ILR.FundingService.Data.csproj" />
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Dto\ESFA.DC.ILR.FundingService.Dto.csproj" />
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model\ESFA.DC.OPA.Model.csproj" />
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service.Interface\ESFA.DC.OPA.Service.Interface.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model.csproj" />

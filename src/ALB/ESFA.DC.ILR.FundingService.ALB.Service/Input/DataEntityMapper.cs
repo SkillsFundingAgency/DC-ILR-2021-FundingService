@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.ALB.Service.Constants;
 using ESFA.DC.ILR.FundingService.ALB.Service.Model;
@@ -7,39 +6,38 @@ using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
-using ESFA.DC.ILR.FundingService.Data.File.Interface;
-using ESFA.DC.ILR.Model.Interface;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
 {
-    public class DataEntityMapper : IDataEntityMapper<ILearner>
+    public class DataEntityMapper : IDataEntityMapper<ALBLearnerDto>
     {
         private readonly HashSet<int> _fundModels = new HashSet<int> { Attributes.FundModel_81, Attributes.FundModel_99 };
 
         private readonly ILARSReferenceDataService _larsReferenceDataService;
         private readonly IPostcodesReferenceDataService _postcodesReferenceDataService;
-        private readonly IFileDataService _fileDataService;
 
-        public DataEntityMapper(ILARSReferenceDataService larsReferenceDataService, IPostcodesReferenceDataService postcodesReferenceDataService, IFileDataService fileDataService)
+        public DataEntityMapper(ILARSReferenceDataService larsReferenceDataService, IPostcodesReferenceDataService postcodesReferenceDataService)
         {
             _larsReferenceDataService = larsReferenceDataService;
             _postcodesReferenceDataService = postcodesReferenceDataService;
-            _fileDataService = fileDataService;
         }
 
-        public IEnumerable<IDataEntity> MapTo(IEnumerable<ILearner> inputModels)
+        public IEnumerable<IDataEntity> MapTo(int ukprn, IEnumerable<ALBLearnerDto> inputModels)
         {
-            var global = BuildGlobal();
+            var global = BuildGlobal(ukprn);
 
-            var entities = inputModels.Where(l => l.LearningDeliveries.Any(ld => _fundModels.Contains(ld.FundModel))).Select(l => BuildGlobalDataEntity(l, global));
+            var entities = inputModels?
+                .Where(l => l.LearningDeliveries.Any(ld => _fundModels.Contains(ld.FundModel)))
+                .Select(l => BuildGlobalDataEntity(l, global)) ?? new List<IDataEntity>();
 
-            return entities.Any() ? entities : new List<IDataEntity> { BuildGlobalDataEntity(null, global) };
+            return entities.Any() ? entities : new List<IDataEntity> { BuildDefaultGlobalDataEntity(global) };
         }
 
-        public IDataEntity BuildGlobalDataEntity(ILearner learner, Global global)
+        public IDataEntity BuildGlobalDataEntity(ALBLearnerDto learner, Global global)
         {
             return new DataEntity(Attributes.EntityGlobal)
             {
@@ -53,7 +51,20 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
             };
         }
 
-        public IDataEntity BuildLearnerDataEntity(ILearner learner)
+        public IDataEntity BuildDefaultGlobalDataEntity(Global global)
+        {
+            return new DataEntity(Attributes.EntityGlobal)
+            {
+                Attributes = new Dictionary<string, IAttributeData>()
+                {
+                    { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
+                    { Attributes.PostcodeAreaCostVersion, new AttributeData(global.PostcodesVersion) },
+                    { Attributes.UKPRN, new AttributeData(global.UKPRN) }
+                }
+            };
+        }
+
+        public IDataEntity BuildLearnerDataEntity(ALBLearnerDto learner)
         {
             return new DataEntity(Attributes.EntityLearner)
             {
@@ -70,12 +81,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
             };
         }
 
-        public IDataEntity BuildLearningDeliveryDataEntity(ILearningDelivery learningDelivery)
+        public IDataEntity BuildLearningDeliveryDataEntity(LearningDelivery learningDelivery)
         {
             var larsLearningDelivery = _larsReferenceDataService.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef);
             var sfaPostCodeAreaCost = _postcodesReferenceDataService.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode);
             var subsidyPilotPostcodeArea = _postcodesReferenceDataService.CareerLearningPilotsForPostcode(learningDelivery.DelLocPostCode);
-            var learningDeliveryFAMDenormalized = BuildLearningDeliveryFAMDenormalized(learningDelivery.LearningDeliveryFAMs);
 
             return new DataEntity(Attributes.EntityLearningDelivery)
             {
@@ -83,22 +93,22 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
                 {
                     { Attributes.AimSeqNumber, new AttributeData(learningDelivery.AimSeqNumber) },
                     { Attributes.CompStatus, new AttributeData(learningDelivery.CompStatus) },
-                    { Attributes.LearnActEndDate, new AttributeData(learningDelivery.LearnActEndDateNullable) },
+                    { Attributes.LearnActEndDate, new AttributeData(learningDelivery.LearnActEndDate) },
                     { Attributes.LearnAimRefType, new AttributeData(larsLearningDelivery.LearnAimRefType) },
                     { Attributes.LearnDelFundModel, new AttributeData(learningDelivery.FundModel) },
                     { Attributes.LearnPlanEndDate, new AttributeData(learningDelivery.LearnPlanEndDate) },
                     { Attributes.LearnStartDate, new AttributeData(learningDelivery.LearnStartDate) },
-                    { Attributes.LrnDelFAM_ADL, new AttributeData(learningDeliveryFAMDenormalized.ADL) },
-                    { Attributes.LrnDelFAM_LDM1, new AttributeData(learningDeliveryFAMDenormalized.LDM1) },
-                    { Attributes.LrnDelFAM_LDM2, new AttributeData(learningDeliveryFAMDenormalized.LDM2) },
-                    { Attributes.LrnDelFAM_LDM3, new AttributeData(learningDeliveryFAMDenormalized.LDM3) },
-                    { Attributes.LrnDelFAM_LDM4, new AttributeData(learningDeliveryFAMDenormalized.LDM4) },
-                    { Attributes.LrnDelFAM_RES, new AttributeData(learningDeliveryFAMDenormalized.RES) },
+                    { Attributes.LrnDelFAM_ADL, new AttributeData(learningDelivery.LrnDelFAM_ADL) },
+                    { Attributes.LrnDelFAM_LDM1, new AttributeData(learningDelivery.LrnDelFAM_LDM1) },
+                    { Attributes.LrnDelFAM_LDM2, new AttributeData(learningDelivery.LrnDelFAM_LDM2) },
+                    { Attributes.LrnDelFAM_LDM3, new AttributeData(learningDelivery.LrnDelFAM_LDM3) },
+                    { Attributes.LrnDelFAM_LDM4, new AttributeData(learningDelivery.LrnDelFAM_LDM4) },
+                    { Attributes.LrnDelFAM_RES, new AttributeData(learningDelivery.LrnDelFAM_RES) },
                     { Attributes.NotionalNVQLevelv2, new AttributeData(larsLearningDelivery.NotionalNVQLevelv2) },
-                    { Attributes.OrigLearnStartDate, new AttributeData(learningDelivery.OrigLearnStartDateNullable) },
-                    { Attributes.OtherFundAdj, new AttributeData(learningDelivery.OtherFundAdjNullable) },
-                    { Attributes.Outcome, new AttributeData(learningDelivery.OutcomeNullable) },
-                    { Attributes.PriorLearnFundAdj, new AttributeData(learningDelivery.PriorLearnFundAdjNullable) },
+                    { Attributes.OrigLearnStartDate, new AttributeData(learningDelivery.OrigLearnStartDate) },
+                    { Attributes.OtherFundAdj, new AttributeData(learningDelivery.OtherFundAdj) },
+                    { Attributes.Outcome, new AttributeData(learningDelivery.Outcome) },
+                    { Attributes.PriorLearnFundAdj, new AttributeData(learningDelivery.PriorLearnFundAdj) },
                     { Attributes.RegulatedCreditValue, new AttributeData(larsLearningDelivery.RegulatedCreditValue) },
                 },
                 Children = (
@@ -114,26 +124,26 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
                                     .LARSFundings?
                                     .Select(BuildLARSFunding) ?? new List<IDataEntity>())
                              .Union(
-                                   _postcodesReferenceDataService
+                                   _postcodesReferenceDataService?
                                     .SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode)
                                     .Select(BuildSFAPostcodeAreaCost) ?? new List<IDataEntity>())
                              .Union(
-                                   _postcodesReferenceDataService
+                                   _postcodesReferenceDataService?
                                     .CareerLearningPilotsForPostcode(learningDelivery.DelLocPostCode)
                                     .Select(BuildSubsidyPilotPostcodeArea) ?? new List<IDataEntity>())
                             .ToList()
             };
         }
 
-        public IDataEntity BuildLearningDeliveryFAM(ILearningDeliveryFAM learningDeliveryFAM)
+        public IDataEntity BuildLearningDeliveryFAM(LearningDeliveryFAM learningDeliveryFAM)
         {
             return new DataEntity(Attributes.EntityLearningDeliveryFAM)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
                     { Attributes.LearnDelFAMCode, new AttributeData(learningDeliveryFAM.LearnDelFAMCode) },
-                    { Attributes.LearnDelFAMDateTo, new AttributeData(learningDeliveryFAM.LearnDelFAMDateToNullable) },
-                    { Attributes.LearnDelFAMDateFrom, new AttributeData(learningDeliveryFAM.LearnDelFAMDateFromNullable) },
+                    { Attributes.LearnDelFAMDateTo, new AttributeData(learningDeliveryFAM.LearnDelFAMDateTo) },
+                    { Attributes.LearnDelFAMDateFrom, new AttributeData(learningDeliveryFAM.LearnDelFAMDateFrom) },
                     { Attributes.LearnDelFAMType, new AttributeData(learningDeliveryFAM.LearnDelFAMType) },
                 }
             };
@@ -194,37 +204,14 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
             };
         }
 
-        public Global BuildGlobal()
+        public Global BuildGlobal(int ukprn)
         {
             return new Global()
             {
                 LARSVersion = _larsReferenceDataService.LARSCurrentVersion(),
                 PostcodesVersion = _postcodesReferenceDataService.PostcodesCurrentVersion(),
-                UKPRN = _fileDataService.UKPRN()
+                UKPRN = ukprn
             };
-        }
-
-        public LearningDeliveryFAMDenormalized BuildLearningDeliveryFAMDenormalized(IEnumerable<ILearningDeliveryFAM> learningDeliveryFams)
-        {
-            var learningDeliveryFam = new Service.Model.LearningDeliveryFAMDenormalized();
-
-            if (learningDeliveryFams != null)
-            {
-                learningDeliveryFams = learningDeliveryFams.ToList();
-
-                var ldmArray = learningDeliveryFams.Where(f => f.LearnDelFAMType == Attributes.LDM).Select(f => f.LearnDelFAMCode).ToArray();
-
-                Array.Resize(ref ldmArray, 4);
-
-                learningDeliveryFam.ADL = learningDeliveryFams.Where(f => f.LearnDelFAMType == Attributes.ADL).Select(f => f.LearnDelFAMCode).FirstOrDefault();
-                learningDeliveryFam.RES = learningDeliveryFams.Where(f => f.LearnDelFAMType == Attributes.RES).Select(f => f.LearnDelFAMCode).FirstOrDefault();
-                learningDeliveryFam.LDM1 = ldmArray[0];
-                learningDeliveryFam.LDM2 = ldmArray[1];
-                learningDeliveryFam.LDM3 = ldmArray[2];
-                learningDeliveryFam.LDM4 = ldmArray[3];
-            }
-
-            return learningDeliveryFam;
         }
     }
 }

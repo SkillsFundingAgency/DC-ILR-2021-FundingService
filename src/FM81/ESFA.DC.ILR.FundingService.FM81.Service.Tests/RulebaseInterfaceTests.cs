@@ -6,12 +6,10 @@ using System.Linq;
 using System.Xml;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
-using ESFA.DC.ILR.FundingService.Data.File.Interface;
-using ESFA.DC.ILR.FundingService.Data.File.Model;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM81.Service.Constants;
 using ESFA.DC.ILR.FundingService.FM81.Service.Input;
 using ESFA.DC.ILR.FundingService.FM81.Service.Model;
-using ESFA.DC.ILR.Tests.Model;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.XSRC.Model.Interface.XSRCEntity;
@@ -349,46 +347,44 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
         public IDataEntity GetDataEntityMapperEntity()
         {
             var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
-            var fileDataServiceMock = new Mock<IFileDataService>();
 
-            var learner = new TestLearner
+            var learner = new FM81LearnerDto
             {
                 LearnRefNumber = "Learner1",
-                LearnerEmploymentStatuses = new List<TestLearnerEmploymentStatus>
+                LearnerEmploymentStatuses = new List<LearnerEmploymentStatus>
                 {
-                    new TestLearnerEmploymentStatus
+                    new LearnerEmploymentStatus
                     {
-                        EmpIdNullable = 10,
+                        EmpId = 10,
                         AgreeId = "1",
                         DateEmpStatApp = new DateTime(2018, 8, 1),
                         EmpStat = 2,
                     },
                 },
-                LearningDeliveries = new List<TestLearningDelivery>
+                LearningDeliveries = new List<LearningDelivery>
                 {
-                    new TestLearningDelivery
+                    new LearningDelivery
                     {
                         LearnAimRef = "1",
                         AimSeqNumber = 2,
                         AimType = 3,
                         CompStatus = 4,
-                        ConRefNumber = "Conref",
-                        DelLocPostCode = "Postcode",
+                        PwayCode = 5,
+                        ProgType = 25,
+                        FworkCode = 7,
                         FundModel = 81,
-                        PwayCodeNullable = 5,
-                        ProgTypeNullable = 25,
-                        FworkCodeNullable = 7,
-                        StdCodeNullable = 8,
+                        StdCode = 8,
                         LearnStartDate = new DateTime(2018, 8, 1),
                         LearnPlanEndDate = new DateTime(2019, 8, 1),
-                        LearningDeliveryFAMs = new List<TestLearningDeliveryFAM>
+                        DelLocPostCode = "Postcode",
+                        LearningDeliveryFAMs = new List<LearningDeliveryFAM>
                         {
-                            new TestLearningDeliveryFAM()
+                            new LearningDeliveryFAM()
                         },
-                        AppFinRecords = new List<TestAppFinRecord>
+                        AppFinRecords = new List<AppFinRecord>
                         {
-                            new TestAppFinRecord(),
-                        },
+                            new AppFinRecord()
+                        }
                     },
                 },
             };
@@ -414,7 +410,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             var learningDelivery = learner.LearningDeliveries.First();
 
             larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
-            larsReferenceDataServiceMock.Setup(l => l.LARSStandardForStandardCode(learningDelivery.StdCodeNullable))
+            larsReferenceDataServiceMock.Setup(l => l.LARSStandardForStandardCode(learningDelivery.StdCode))
                 .Returns(
                 new LARSStandard
                 {
@@ -422,8 +418,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
                     LARSStandardFundings = larsStandardFunding
                 });
 
-            return new DataEntityMapper(larsReferenceDataServiceMock.Object, fileDataServiceMock.Object)
-                .BuildGlobalDataEntity(learner, new Global());
+            return new DataEntityMapper(larsReferenceDataServiceMock.Object).BuildGlobalDataEntity(learner, new Global());
         }
 
         public string GetRulebaseVersion(string folderName)
