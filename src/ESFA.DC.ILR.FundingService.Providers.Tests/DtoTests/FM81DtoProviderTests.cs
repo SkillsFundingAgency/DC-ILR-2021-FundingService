@@ -2,8 +2,8 @@
 using System.Threading;
 using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Dto.Model;
-using ESFA.DC.ILR.FundingService.FundingActor.Providers;
 using ESFA.DC.ILR.FundingService.Interfaces;
+using ESFA.DC.ILR.FundingService.Providers.Dtos;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.ILR.Tests.Model;
 using ESFA.DC.Serialization.Interfaces;
@@ -11,9 +11,9 @@ using FluentAssertions;
 using Moq;
 using Xunit;
 
-namespace ESFA.DC.ILR.FundingService.FundingActor.Tests.ProviderTests
+namespace ESFA.DC.ILR.FundingService.Providers.Tests.DtoTests
 {
-    public class FM35ActorDtoProviderTests
+    public class FM81ActorDtoProviderTests
     {
         [Fact]
         public void Provide()
@@ -22,7 +22,7 @@ namespace ESFA.DC.ILR.FundingService.FundingActor.Tests.ProviderTests
 
             fundingServiceContextMock.Setup(f => f.JobId).Returns(1);
             fundingServiceContextMock.Setup(f => f.Container).Returns("Container");
-            fundingServiceContextMock.Setup(f => f.FundingFm35OutputKey).Returns("Key");
+            fundingServiceContextMock.Setup(f => f.FundingFm81OutputKey).Returns("Key");
 
             IMessage message = new TestMessage
             {
@@ -34,17 +34,17 @@ namespace ESFA.DC.ILR.FundingService.FundingActor.Tests.ProviderTests
 
             var externalDataCache = "ExternalDataCache";
             var cancellationToken = CancellationToken.None;
-            var learnerPagingReturn = new List<List<FM35LearnerDto>>
+            var learnerPagingReturn = new List<List<FM81LearnerDto>>
             {
-                new List<FM35LearnerDto>
+                new List<FM81LearnerDto>
                 {
-                    new FM35LearnerDto(),
-                    new FM35LearnerDto()
+                    new FM81LearnerDto(),
+                    new FM81LearnerDto()
                 },
-                new List<FM35LearnerDto>
+                new List<FM81LearnerDto>
                 {
-                    new FM35LearnerDto(),
-                    new FM35LearnerDto()
+                    new FM81LearnerDto(),
+                    new FM81LearnerDto()
                 }
             };
 
@@ -70,19 +70,19 @@ namespace ESFA.DC.ILR.FundingService.FundingActor.Tests.ProviderTests
                 },
             };
 
-            var learnerPagingServiceMock = new Mock<ILearnerPagingService<FM35LearnerDto>>();
+            var learnerPagingServiceMock = new Mock<ILearnerPagingService<FM81LearnerDto>>();
             var jsonSerializationServiceMock = new Mock<IJsonSerializationService>();
 
-            learnerPagingServiceMock.Setup(lpm => lpm.ProvideDtos(35, message)).Returns(learnerPagingReturn);
-            jsonSerializationServiceMock.Setup(jsm => jsm.Serialize(It.IsAny<IEnumerable<FM35LearnerDto>>())).Returns(string.Empty);
+            learnerPagingServiceMock.Setup(lpm => lpm.ProvideDtos(81, message)).Returns(learnerPagingReturn);
+            jsonSerializationServiceMock.Setup(jsm => jsm.Serialize(It.IsAny<IEnumerable<FM81LearnerDto>>())).Returns(string.Empty);
 
             NewProvider(learnerPagingServiceMock.Object, jsonSerializationServiceMock.Object)
                 .Provide(fundingServiceContextMock.Object, message, externalDataCache, cancellationToken).Should().BeEquivalentTo(expectedResult);
         }
 
-        private FM35ActorDtoProvider NewProvider(ILearnerPagingService<FM35LearnerDto> learnerPagingService = null, IJsonSerializationService jsonSerializationService = null)
+        private FM81DtoProvider NewProvider(ILearnerPagingService<FM81LearnerDto> learnerPagingService = null, IJsonSerializationService jsonSerializationService = null)
         {
-            return new FM35ActorDtoProvider(learnerPagingService, jsonSerializationService);
+            return new FM81DtoProvider(learnerPagingService, jsonSerializationService);
         }
     }
 }

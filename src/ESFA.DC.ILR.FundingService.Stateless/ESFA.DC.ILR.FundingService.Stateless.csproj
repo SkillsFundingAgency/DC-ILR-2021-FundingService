@@ -83,8 +83,8 @@
     <Reference Include="ESFA.DC.FileService.Interface, Version=0.1.18.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.FileService.Interface.0.1.18-beta0001\lib\netstandard2.0\ESFA.DC.FileService.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ILR.Constants, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.1920.Constants.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Constants.dll</HintPath>
+    <Reference Include="ESFA.DC.ILR.Constants, Version=0.1.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR.1920.Constants.0.1.7-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Constants.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.Model, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.1920.Model.0.1.2-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.dll</HintPath>
@@ -437,8 +437,6 @@
     <Compile Include="Context\FundingServiceContext.cs" />
     <Compile Include="Handlers\MessageHandler.cs" />
     <Compile Include="Modules\StatelessActorModule.cs" />
-    <Compile Include="Modules\PopulationModule.cs" />
-    <Compile Include="Modules\DataCacheModule.cs" />
     <Compile Include="Modules\IOModule.cs" />
     <Compile Include="Modules\StatelessModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -497,6 +495,10 @@
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Interfaces\ESFA.DC.ILR.FundingService.Interfaces.csproj">
       <Project>{81FA550D-DD5E-4F5B-AC66-1DCA51824E9C}</Project>
       <Name>ESFA.DC.ILR.FundingService.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Modules\ESFA.DC.ILR.FundingService.Modules.csproj">
+      <Project>{79748ECD-E5D4-4D1E-BE10-32588B2F625C}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Modules</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Orchestrators\ESFA.DC.ILR.FundingService.Orchestrators.csproj">
       <Project>{c72db578-ecfd-4281-936e-26c6f4d2b3db}</Project>

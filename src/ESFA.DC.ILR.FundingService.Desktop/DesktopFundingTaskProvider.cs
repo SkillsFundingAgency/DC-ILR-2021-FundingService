@@ -4,20 +4,19 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac.Features.Indexed;
-using ESFA.DC.ILR.FundingService.FundingActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.Logging.Interfaces;
 
-namespace ESFA.DC.ILR.FundingService.FundingActor
+namespace ESFA.DC.ILR.FundingService.Desktop
 {
-    public class FundingTaskProvider : IFundingTaskProvider
+    public class DesktopFundingTaskProvider : IFundingTaskProvider
     {
         private readonly ILogger _logger;
         private readonly IIndex<string, IFundingTask> _taskIndex;
         private readonly IIndex<string, IFundingDtoProvider> _taskProviderIndex;
 
-        public FundingTaskProvider(
+        public DesktopFundingTaskProvider(
             ILogger logger,
             IIndex<string, IFundingTask> taskIndex,
             IIndex<string, IFundingDtoProvider> taskProviderIndex)

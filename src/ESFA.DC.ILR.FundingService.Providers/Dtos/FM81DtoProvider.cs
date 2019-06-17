@@ -3,21 +3,20 @@ using System.Linq;
 using System.Threading;
 using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Dto.Model;
-using ESFA.DC.ILR.FundingService.FundingActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.Serialization.Interfaces;
 
-namespace ESFA.DC.ILR.FundingService.FundingActor.Providers
+namespace ESFA.DC.ILR.FundingService.Providers.Dtos
 {
-    public class ALBActorDtoProvider : IActorDtoProvider
+    public class FM81DtoProvider : IFundingDtoProvider
     {
-        private readonly int fundModelFilter = 99;
+        private readonly int fundModelFilter = 81;
 
-        private readonly ILearnerPagingService<ALBLearnerDto> _learnerPagingService;
+        private readonly ILearnerPagingService<FM81LearnerDto> _learnerPagingService;
         private readonly IJsonSerializationService _jsonSerializationService;
 
-        public ALBActorDtoProvider(ILearnerPagingService<ALBLearnerDto> learnerPagingService, IJsonSerializationService jsonSerializationService)
+        public FM81DtoProvider(ILearnerPagingService<FM81LearnerDto> learnerPagingService, IJsonSerializationService jsonSerializationService)
         {
             _learnerPagingService = learnerPagingService;
             _jsonSerializationService = jsonSerializationService;
@@ -32,7 +31,7 @@ namespace ESFA.DC.ILR.FundingService.FundingActor.Providers
                     {
                         JobId = fundingServiceContext.JobId,
                         Container = fundingServiceContext.Container,
-                        OutputKey = fundingServiceContext.FundingALBOutputKey,
+                        OutputKey = fundingServiceContext.FundingFm81OutputKey,
                         UKPRN = message.LearningProviderEntity.UKPRN,
                         ExternalDataCache = externalDataCache,
                         ValidLearners = _jsonSerializationService.Serialize(p)

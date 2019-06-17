@@ -1,13 +1,17 @@
 ﻿using Autofac;
+using ESFA.DC.ILR.FundingService.Data.External;
+using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.External;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 
-namespace ESFA.DC.ILR.FundingService.Stateless.Modules
+namespace ESFA.DC.ILR.FundingService.Modules
 {
-    public class PopulationModule : Module
+    public class DataCacheModule : Module
     {
         protected override void Load(ContainerBuilder containerBuilder)
         {
+            containerBuilder.RegisterType<ExternalDataCache>().As<IExternalDataCache>().InstancePerLifetimeScope();
+
             containerBuilder.RegisterType<ExternalDataCachePopulationService>().As<IExternalDataCachePopulationService>().InstancePerLifetimeScope();
 
             containerBuilder.RegisterType<PostcodesMapperService>().As<IPostcodesMapperService>().InstancePerLifetimeScope();
