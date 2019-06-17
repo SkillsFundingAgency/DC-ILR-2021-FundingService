@@ -35,11 +35,14 @@ namespace ESFA.DC.ILR.FundingService.Desktop
 
             List<Task> fundingTasks = new List<Task>();
 
-            foreach (var taskName in fundingServiceContext.TaskKeys.ToList())
-            {
-                fundingTasks.Add(_taskIndex[taskName].Execute(
-                    _taskProviderIndex[taskName].Provide(fundingServiceContext, message, externalDataCache, cancellationToken), fundingServiceContext, cancellationToken));
-            }
+            //foreach (var taskName in fundingServiceContext.TaskKeys.ToList())
+            //{
+            //    fundingTasks.Add(_taskIndex[taskName].Execute(
+            //        _taskProviderIndex[taskName].Provide(fundingServiceContext, message, externalDataCache, cancellationToken), fundingServiceContext, cancellationToken));
+            //}
+
+            fundingTasks.Add(_taskIndex["ALB"].Execute(
+                    _taskProviderIndex["ALB"].Provide(fundingServiceContext, message, externalDataCache, cancellationToken), fundingServiceContext, cancellationToken));
 
             await Task.WhenAll(fundingTasks).ConfigureAwait(false);
 
