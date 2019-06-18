@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.0.15</Version>
+    <Version>0.0.18</Version>
     <PackageId>ESFA.DC.ILR1920.FundingService.Desktop</PackageId>
     <Authors>DC</Authors>
     <Company>ESFA</Company>

@@ -9,13 +9,13 @@ using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM25.Model.Output;
+using ESFA.DC.ILR.FundingService.FM25.Service.Rulebase;
 using ESFA.DC.ILR.FundingService.FM25Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.FundingActor;
 using ESFA.DC.ILR.FundingService.FundingActor.Constants;
 using ESFA.DC.ILR.FundingService.Service.Interfaces;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.OPA.Service.Interface.Rulebase;
-using ESFA.DC.OPA.Service.Rulebase;
 using ESFA.DC.Serialization.Interfaces;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
@@ -92,7 +92,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
 
                     using (var fundingServiceLifetimeScope = childLifetimeScope.BeginLifetimeScope(c =>
                     {
-                        c.RegisterInstance(new RulebaseProvider("FM25 Funding Calc 18_19")).As<IRulebaseProvider>();
+                        c.RegisterInstance(new FM25RulebaseProvider()).As<IRulebaseStreamProvider<FM25LearnerDto>>();
                     }))
                     {
                         jobLogger.LogDebug("FM25 Rulebase Starting");
@@ -108,7 +108,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
 
                     using (var fundingServiceLifetimeScope = childLifetimeScope.BeginLifetimeScope(c =>
                     {
-                        c.RegisterInstance(new RulebaseProvider("FM25 Periodisation")).As<IRulebaseProvider>();
+                        c.RegisterInstance(new FM25PeriodisationRulebaseProvider()).As<IRulebaseStreamProvider<FM25LearnerDto>>();
                     }))
                     {
                         jobLogger.LogDebug("FM25 Periodisation Rulebase Starting");

@@ -2,7 +2,7 @@
 
 namespace ESFA.DC.OPA.Service.Interface.Rulebase
 {
-    public interface IRulebaseProvider
+    public interface IRulebaseStreamProvider<T>
     {
         Stream GetStream();
     }

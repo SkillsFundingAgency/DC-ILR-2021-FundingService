@@ -1,9 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Interface;
 using ESFA.DC.OPA.Service.Interface.Builders;
-using ESFA.DC.OPA.Service.Interface.Rulebase;
 using Oracle.Determinations.Engine;
 using Oracle.Determinations.Masquerade.IO;
 
@@ -23,24 +23,22 @@ namespace ESFA.DC.OPA.Service
 
         private readonly ISessionBuilder _sessionBuilder;
         private readonly IOPADataEntityBuilder _dataEntityBuilder;
-        private readonly IRulebaseProvider _rulebaseProvider;
 
-        public OPAService(ISessionBuilder sessionBuilder, IOPADataEntityBuilder dataEntityBuilder, IRulebaseProvider rulebaseProvider)
+        public OPAService(ISessionBuilder sessionBuilder, IOPADataEntityBuilder dataEntityBuilder)
         {
             _sessionBuilder = sessionBuilder;
             _dataEntityBuilder = dataEntityBuilder;
-            _rulebaseProvider = rulebaseProvider;
         }
 
         internal bool XDSDirectorySetup { get; set; }
 
         internal string XDSFilePath { get; set; }
 
-        public IDataEntity ExecuteSession(IDataEntity globalEntity)
+        public IDataEntity ExecuteSession(IDataEntity globalEntity, Func<Stream> rulebaseStreamProvider)
         {
             Session session;
 
-            using (Stream stream = _rulebaseProvider.GetStream())
+            using (Stream stream = rulebaseStreamProvider())
             {
                 session = _sessionBuilder.CreateOPASession(stream, globalEntity);
             }
