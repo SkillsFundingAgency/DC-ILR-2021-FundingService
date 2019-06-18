@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac.Features.Indexed;
@@ -8,7 +7,7 @@ using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.Logging.Interfaces;
 
-namespace ESFA.DC.ILR.FundingService.Desktop
+namespace ESFA.DC.ILR.FundingService.Desktop.Services
 {
     public class DesktopFundingTaskProvider : IFundingTaskProvider
     {

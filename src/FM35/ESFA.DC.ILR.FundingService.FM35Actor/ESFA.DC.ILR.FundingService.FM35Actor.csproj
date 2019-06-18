@@ -301,6 +301,10 @@
       <Project>{81FA550D-DD5E-4F5B-AC66-1DCA51824E9C}</Project>
       <Name>ESFA.DC.ILR.FundingService.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Modules\ESFA.DC.ILR.FundingService.Modules.csproj">
+      <Project>{79748ECD-E5D4-4D1E-BE10-32588B2F625C}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Modules</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Providers\ESFA.DC.ILR.FundingService.Providers.csproj">
       <Project>{E6CF1460-4EF0-4579-B022-DC2D3F383568}</Project>
       <Name>ESFA.DC.ILR.FundingService.Providers</Name>

@@ -41,6 +41,6 @@ namespace ESFA.DC.ILR.FundingService.Desktop.Context
 
         public string FundingFm81OutputKey => _desktopContext.KeyValuePairs[ILRContextKeys.FundingFm81Output].ToString();
 
-        public long JobId => throw new System.NotImplementedException();
+        public long JobId => 0;
     }
 }

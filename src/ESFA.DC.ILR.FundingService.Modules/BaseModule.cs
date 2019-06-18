@@ -35,7 +35,9 @@ namespace ESFA.DC.ILR.FundingService.Modules
 
             containerBuilder.RegisterModule<DataCacheModule>();
             containerBuilder.RegisterModule<ProviderModule>();
+            containerBuilder.RegisterModule<ReferenceDataServiceModule>();
             containerBuilder.RegisterModule<CondenserModule>();
+            containerBuilder.RegisterModule<OpaModule>();
         }
     }
 }

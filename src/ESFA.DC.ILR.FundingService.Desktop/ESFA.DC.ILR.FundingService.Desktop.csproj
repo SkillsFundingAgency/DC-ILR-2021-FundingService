@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.1.0</Version>
+    <Version>0.0.15</Version>
     <PackageId>ESFA.DC.ILR1920.FundingService.Desktop</PackageId>
     <Authors>DC</Authors>
     <Company>ESFA</Company>
@@ -25,10 +25,19 @@
     </ItemGroup>
   </Target>
 
+<ItemGroup>
+  <None Remove="Rulebase\Loans Bursary 18_19.zip" />
+</ItemGroup>
+
+<ItemGroup>
+  <EmbeddedResource Include="Rulebase\Loans Bursary 18_19.zip" />
+</ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.2" />
     <PackageReference Include="ESFA.DC.ILR.1920.Constants" Version="0.1.7-beta0001" />
     <PackageReference Include="ESFA.DC.ILR.1920.Desktop.Interface" Version="0.1.0-beta0001" />
+    <PackageReference Include="ESFA.DC.OPA.RunTime.DLLs" Version="0.1.1-beta0001" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
