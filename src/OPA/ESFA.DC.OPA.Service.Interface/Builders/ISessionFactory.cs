@@ -4,8 +4,8 @@ using Oracle.Determinations.Engine;
 
 namespace ESFA.DC.OPA.Service.Interface.Builders
 {
-    public interface ISessionBuilder
+    public interface ISessionFactory<T>
     {
-        Session ProcessOPASession(Session session, IDataEntity globalEntity);
+        Session CreateSession();
     }
 }

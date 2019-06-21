@@ -9,7 +9,7 @@ using Oracle.Determinations.Masquerade.IO;
 
 namespace ESFA.DC.OPA.Service
 {
-    public class OPAService : IOPAService
+    public class OPAService<T> : IOPAService<T>
     {
         // Produce XDS Files.
         // Set ProduceXDS to true to produce XDS input.
@@ -21,11 +21,13 @@ namespace ESFA.DC.OPA.Service
         private const string XDSFolder = "C:\\XdsOutput\\";
         private const string LearnRefNumberAttribute = "LearnRefNumber";
 
+        private readonly ISessionFactory<T> _sessionFactory;
         private readonly ISessionBuilder _sessionBuilder;
         private readonly IOPADataEntityBuilder _dataEntityBuilder;
 
-        public OPAService(ISessionBuilder sessionBuilder, IOPADataEntityBuilder dataEntityBuilder)
+        public OPAService(ISessionFactory<T> sessionFactory, ISessionBuilder sessionBuilder, IOPADataEntityBuilder dataEntityBuilder)
         {
+            _sessionFactory = sessionFactory;
             _sessionBuilder = sessionBuilder;
             _dataEntityBuilder = dataEntityBuilder;
         }
@@ -34,14 +36,11 @@ namespace ESFA.DC.OPA.Service
 
         internal string XDSFilePath { get; set; }
 
-        public IDataEntity ExecuteSession(IDataEntity globalEntity, Func<Stream> rulebaseStreamProvider)
+        public IDataEntity ExecuteSession(IDataEntity globalEntity)
         {
-            Session session;
+            var sessionInstance = _sessionFactory.CreateSession();
 
-            using (Stream stream = rulebaseStreamProvider())
-            {
-                session = _sessionBuilder.CreateOPASession(stream, globalEntity);
-            }
+            var session = _sessionBuilder.ProcessOPASession(sessionInstance, globalEntity);
 
             // XDS PRE
             if (ProduceXDS)

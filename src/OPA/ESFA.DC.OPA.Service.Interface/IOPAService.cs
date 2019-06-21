@@ -4,8 +4,8 @@ using ESFA.DC.OPA.Model.Interface;
 
 namespace ESFA.DC.OPA.Service.Interface
 {
-    public interface IOPAService
+    public interface IOPAService<T>
     {
-        IDataEntity ExecuteSession(IDataEntity globalEntity, Func<Stream> rulebaseStream);
+        IDataEntity ExecuteSession(IDataEntity globalEntity);
     }
 }
