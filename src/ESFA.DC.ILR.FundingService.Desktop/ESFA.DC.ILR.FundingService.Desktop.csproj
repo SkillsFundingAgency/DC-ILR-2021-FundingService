@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.0.29</Version>
+    <Version>0.0.1</Version>
     <PackageId>ESFA.DC.ILR1920.FundingService.Desktop</PackageId>
     <Authors>DC</Authors>
     <Company>ESFA</Company>
@@ -24,14 +24,6 @@
       <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />
     </ItemGroup>
   </Target>
-
-<ItemGroup>
-  <None Remove="Rulebase\Loans Bursary 18_19.zip" />
-</ItemGroup>
-
-<ItemGroup>
-  <EmbeddedResource Include="Rulebase\Loans Bursary 18_19.zip" />
-</ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.2" />

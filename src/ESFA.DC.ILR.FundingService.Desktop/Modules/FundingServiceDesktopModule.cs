@@ -3,9 +3,7 @@ using Autofac;
 using Autofac.Core;
 using ESFA.DC.ILR.Constants;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
-using ESFA.DC.ILR.FundingService.Desktop.Services;
 using ESFA.DC.ILR.FundingService.Dto.Model;
-using ESFA.DC.ILR.FundingService.FM25.Model.Output;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model.Output;
@@ -24,7 +22,6 @@ namespace ESFA.DC.ILR.FundingService.Desktop.Modules
             var outputKey = "outputKey";
 
             containerBuilder.RegisterModule<BaseModule>();
-            containerBuilder.RegisterType<DesktopFundingTaskProvider>().As<IFundingTaskProvider>();
 
             containerBuilder.RegisterModule<ALBModule>();
            // containerBuilder.RegisterModule<FM25Module>();

@@ -18,9 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Rulebase\Trailblazer Funding Calc 18_19.zip">
+    <EmbeddedResource Include="Rulebase\Trailblazer Funding Calc 18_19.zip">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
     <Content Include="Rulebase\XSRC\Input.xsrc">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>

@@ -2,6 +2,7 @@
 using ESFA.DC.ILR.Constants;
 using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.Interfaces;
+using ESFA.DC.ILR.FundingService.Providers;
 using ESFA.DC.ILR.FundingService.Providers.Dtos;
 using ESFA.DC.ILR.FundingService.Providers.LearnerPaging;
 
@@ -11,6 +12,8 @@ namespace ESFA.DC.ILR.FundingService.Modules
     {
         protected override void Load(ContainerBuilder containerBuilder)
         {
+            containerBuilder.RegisterType<FundingTaskProvider>().As<IFundingTaskProvider>();
+
             containerBuilder.RegisterType<ALBDtoProvider>().Keyed<IFundingDtoProvider>(ILRContextKeys.FundingTaskALB).InstancePerLifetimeScope();
             containerBuilder.RegisterType<FM25DtoProvider>().Keyed<IFundingDtoProvider>(ILRContextKeys.FundingTaskFM25).InstancePerLifetimeScope();
             containerBuilder.RegisterType<FM35DtoProvider>().Keyed<IFundingDtoProvider>(ILRContextKeys.FundingTaskFM35).InstancePerLifetimeScope();

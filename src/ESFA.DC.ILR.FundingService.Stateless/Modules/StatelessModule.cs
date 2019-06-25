@@ -40,8 +40,6 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             containerBuilder.RegisterType<DateTimeProvider.DateTimeProvider>().As<IDateTimeProvider>();
 
             containerBuilder.RegisterType<FundingServiceContext>().As<IFundingServiceContext>().InstancePerLifetimeScope();
-
-            containerBuilder.RegisterType<FundingTaskProvider>().As<IFundingTaskProvider>().InstancePerLifetimeScope();
         }
     }
 }
