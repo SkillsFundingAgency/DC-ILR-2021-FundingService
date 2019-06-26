@@ -16,6 +16,7 @@ using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
 using ExecutionContext = ESFA.DC.Logging.ExecutionContext;
 using ESFA.DC.ILR.FundingService.Dto.Model;
+using ESFA.DC.ILR.FundingService.Service.Interfaces;
 
 namespace ESFA.DC.ILR.FundingService.FM70Actor
 {

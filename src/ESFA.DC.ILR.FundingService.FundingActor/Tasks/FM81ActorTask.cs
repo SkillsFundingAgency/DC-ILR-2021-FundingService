@@ -14,7 +14,7 @@ using ESFA.DC.Serialization.Interfaces;
 
 namespace ESFA.DC.ILR.FundingService.FundingActor.Tasks
 {
-    public class FM81ActorTask : IActorTask
+    public class FM81ActorTask : IFundingTask
     {
         private readonly IJsonSerializationService _jsonSerializationService;
         private readonly ILogger _logger;

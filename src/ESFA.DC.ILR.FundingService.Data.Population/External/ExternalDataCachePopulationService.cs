@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.Data.External;
+using ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Interfaces;
@@ -54,7 +55,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
                 FCSContractAllocations = _fcsMapperService.MapFCSContractAllocations(referenceDataRoot.FCSContractAllocations),
 
-                AECLatestInYearEarningHistory = _appsEarningsHistoryMapperService.MapAppsEarningsHistories(referenceDataRoot.AppsEarningsHistories),
+                AECLatestInYearEarningHistory = _appsEarningsHistoryMapperService.MapAppsEarningsHistories(referenceDataRoot.AppsEarningsHistories)
+                ?? new Dictionary<long, IReadOnlyCollection<AECEarningsHistory>>(),
 
                 Periods = new Periods(),
             };

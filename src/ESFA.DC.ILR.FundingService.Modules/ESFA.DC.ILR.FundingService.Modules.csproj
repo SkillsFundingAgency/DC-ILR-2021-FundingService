@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.2" />
+    <PackageReference Include="ESFA.DC.ILR.1920.Constants" Version="0.1.7-beta0001" />
     <PackageReference Include="ESFA.DC.JobContextManager" Version="0.2.9-beta0001" />
     <PackageReference Include="ESFA.DC.Logging" Version="0.1.4-beta0001" />
     <PackageReference Include="ESFA.DC.Serialization.Json" Version="0.1.6-beta0001" />
@@ -31,6 +32,19 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALB.Service\ESFA.DC.ILR.FundingService.ALB.Service.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Data.Population\ESFA.DC.ILR.FundingService.Data.Population.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Orchestrators\ESFA.DC.ILR.FundingService.Orchestrators.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Service\ESFA.DC.ILR.FundingService.Service.csproj" />
+    <ProjectReference Include="..\FM25\ESFA.DC.ILR.FundingService.FM25.Service\ESFA.DC.ILR.FundingService.FM25.Service.csproj" />
+    <ProjectReference Include="..\FM35\ESFA.DC.ILR.FundingService.FM35.Service\ESFA.DC.ILR.FundingService.FM35.Service.csproj" />
+    <ProjectReference Include="..\FM36\ESFA.DC.ILR.FundingService.FM36.Service\ESFA.DC.ILR.FundingService.FM36.Service.csproj" />
+    <ProjectReference Include="..\FM70\ESFA.DC.ILR.FundingService.FM70.Service\ESFA.DC.ILR.FundingService.FM70.Service.csproj" />
+    <ProjectReference Include="..\FM81\ESFA.DC.ILR.FundingService.FM81.Service\ESFA.DC.ILR.FundingService.FM81.Service.csproj" />
+    <ProjectReference Include="..\OPA\ESFA.DC.OPA.Service\ESFA.DC.OPA.Service.csproj" />
   </ItemGroup>
 
 </Project>
