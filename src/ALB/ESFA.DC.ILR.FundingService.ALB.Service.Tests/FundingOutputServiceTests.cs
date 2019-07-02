@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
-using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Interface;
@@ -80,8 +79,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                     { "ALBSupportPayment", Attribute(false, "1.0") },
                     { "AreaUpliftBalPayment", Attribute(false, "1.0") },
                     { "AreaUpliftOnProgPayment", Attribute(false, "1.0") },
-                    { "LearnDelCarLearnPilotOnProgPayment", Attribute(false, "1.0") },
-                    { "LearnDelCarLearnPilotBalPayment", Attribute(false, "1.0") }
                 }
             };
 
@@ -132,7 +129,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             var achieved = false;
             var actualNumInstalm = 1;
             var advLoan = false;
-            var applicDate = new DateTime(2018, 09, 01);
+            var applicDate = new DateTime(2019, 09, 01);
             var applicProgWeightFact = "1.0";
             var albCode = "1.0";
             var albSupportPayment = "1.0";
@@ -143,15 +140,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             var fundLine = "1.0";
             var fundStart = false;
 
-            var learnDelApplicLARSCarPilFundSubRate = 1.0m;
-            var learnDelApplicSubsidyPilotAreaCode = "1.0";
-            var learnDelCarLearnPilotAimValue = 1.0m;
-            var learnDelCarLearnPilotInstalAmount = 1.0m;
-            var learnDelCarLearnPilotOnProgPayment = "1.0m";
-            var learnDelCarLearnPilotBalPayment = "1.0m";
-            var learnDelEligCareerLearnPilot = false;
-
-            var liabilityDate = new DateTime(2018, 09, 01);
+            var liabilityDate = new DateTime(2019, 09, 01);
             var loanBursAreaUplift = false;
             var loanBursSupp = false;
             var outstndNumOnProgInstalm = 1;
@@ -176,14 +165,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "FundLine")).Returns(fundLine);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "FundStart")).Returns(fundStart);
 
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LearnDelApplicLARSCarPilFundSubRate")).Returns(learnDelApplicLARSCarPilFundSubRate);
-            dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "LearnDelApplicSubsidyPilotAreaCode")).Returns(learnDelApplicSubsidyPilotAreaCode);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LearnDelCarLearnPilotAimValue")).Returns(learnDelCarLearnPilotAimValue);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LearnDelCarLearnPilotInstalAmount")).Returns(learnDelCarLearnPilotInstalAmount);
-            dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "LearnDelCarLearnPilotOnProgPayment")).Returns(learnDelCarLearnPilotOnProgPayment);
-            dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "LearnDelCarLearnPilotBalPayment")).Returns(learnDelCarLearnPilotBalPayment);
-            dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "LearnDelEligCareerLearnPilot")).Returns(learnDelEligCareerLearnPilot);
-
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "LiabilityDate")).Returns(liabilityDate);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "LoanBursAreaUplift")).Returns(loanBursAreaUplift);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "LoanBursSupp")).Returns(loanBursSupp);
@@ -204,11 +185,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             learningDelivery.AreaCostInstalment.Should().Be(areaCostInstalment);
             learningDelivery.FundLine.Should().Be(fundLine);
             learningDelivery.FundStart.Should().Be(fundStart);
-            learningDelivery.LearnDelApplicLARSCarPilFundSubRate.Should().Be(learnDelApplicLARSCarPilFundSubRate);
-            learningDelivery.LearnDelApplicSubsidyPilotAreaCode.Should().Be(learnDelApplicSubsidyPilotAreaCode);
-            learningDelivery.LearnDelCarLearnPilotAimValue.Should().Be(learnDelCarLearnPilotAimValue);
-            learningDelivery.LearnDelCarLearnPilotInstalAmount.Should().Be(learnDelCarLearnPilotInstalAmount);
-            learningDelivery.LearnDelEligCareerLearnPilot.Should().Be(learnDelEligCareerLearnPilot);
             learningDelivery.LiabilityDate.Should().Be(liabilityDate);
             learningDelivery.LoanBursAreaUplift.Should().Be(loanBursAreaUplift);
             learningDelivery.LoanBursSupp.Should().Be(loanBursSupp);
@@ -262,7 +238,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                     { "Achieved", Attribute(false, "1.0") },
                     { "ActualNumInstalm", Attribute(false, "1.0") },
                     { "AdvLoan", Attribute(false, "1.0") },
-                    { "ApplicFactDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "ApplicFactDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
                     { "ApplicProgWeightFact", Attribute(false, "1.0") },
                     { "ALBCode", Attribute(false, "1.0") },
                     { "ALBSupportPayment", Attribute(false, "1.0") },
@@ -272,14 +248,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                     { "AreaCostInstalment", Attribute(false, "1.0") },
                     { "FundLine", Attribute(false, "1.0") },
                     { "FundStart", Attribute(false, "1.0") },
-                    { "LearnDelApplicLARSCarPilFundSubRate", Attribute(false, "1.0") },
-                    { "LearnDelApplicSubsidyPilotAreaCode", Attribute(false, "1.0") },
-                    { "LearnDelCarLearnPilotAimValue", Attribute(false, "1.0") },
-                    { "LearnDelCarLearnPilotInstalAmount", Attribute(false, "1.0") },
-                    { "LearnDelCarLearnPilotOnProgPayment", Attribute(false, "1.0") },
-                    { "LearnDelCarLearnPilotBalPayment", Attribute(false, "1.0") },
-                    { "LearnDelEligCareerLearnPilot", Attribute(false, "1.0") },
-                    { "LiabilityDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "LiabilityDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
                     { "LoanBursAreaUplift", Attribute(false, "1.0") },
                     { "LoanBursSupp", Attribute(false, "1.0") },
                     { "OutstndNumOnProgInstalm", Attribute(false, "1.0") },
@@ -308,7 +277,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                     { "Achieved", Attribute(false, "1.0") },
                     { "ActualNumInstalm", Attribute(false, "1.0") },
                     { "AdvLoan", Attribute(false, "1.0") },
-                    { "ApplicFactDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "ApplicFactDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
                     { "ApplicProgWeightFact", Attribute(false, "1.0") },
                     { "ALBCode", Attribute(false, "1.0") },
                     { "ALBSupportPayment", Attribute(true, "1.0") },
@@ -318,14 +287,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                     { "AreaCostInstalment", Attribute(false, "1.0") },
                     { "FundLine", Attribute(false, "1.0") },
                     { "FundStart", Attribute(false, "1.0") },
-                    { "LearnDelApplicLARSCarPilFundSubRate", Attribute(false, "1.0") },
-                    { "LearnDelApplicSubsidyPilotAreaCode", Attribute(false, "1.0") },
-                    { "LearnDelCarLearnPilotAimValue", Attribute(false, "1.0") },
-                    { "LearnDelCarLearnPilotInstalAmount", Attribute(false, "1.0") },
-                    { "LearnDelCarLearnPilotOnProgPayment", Attribute(false, "1.0") },
-                    { "LearnDelCarLearnPilotBalPayment", Attribute(false, "1.0") },
                     { "LearnDelEligCareerLearnPilot", Attribute(false, "1.0") },
-                    { "LiabilityDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "LiabilityDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
                     { "LoanBursAreaUplift", Attribute(false, "1.0") },
                     { "LoanBursSupp", Attribute(false, "1.0") },
                     { "OutstndNumOnProgInstalm", Attribute(false, "1.0") },
@@ -402,18 +365,18 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
 
             IEnumerable<TemporalValueItem> cps = new List<TemporalValueItem>
             {
-                 new TemporalValueItem(new DateTime(2018, 08, 01), value, null),
-                 new TemporalValueItem(new DateTime(2018, 09, 01), value, null),
-                 new TemporalValueItem(new DateTime(2018, 10, 01), value, null),
-                 new TemporalValueItem(new DateTime(2018, 11, 01), value, null),
-                 new TemporalValueItem(new DateTime(2018, 12, 01), value, null),
-                 new TemporalValueItem(new DateTime(2019, 01, 01), value, null),
-                 new TemporalValueItem(new DateTime(2019, 02, 01), value, null),
-                 new TemporalValueItem(new DateTime(2019, 03, 01), value, null),
-                 new TemporalValueItem(new DateTime(2019, 04, 01), value, null),
-                 new TemporalValueItem(new DateTime(2019, 05, 01), value, null),
-                 new TemporalValueItem(new DateTime(2019, 06, 01), value, null),
-                 new TemporalValueItem(new DateTime(2019, 07, 01), value, null),
+                 new TemporalValueItem(new DateTime(2019, 08, 01), value, null),
+                 new TemporalValueItem(new DateTime(2019, 09, 01), value, null),
+                 new TemporalValueItem(new DateTime(2019, 10, 01), value, null),
+                 new TemporalValueItem(new DateTime(2019, 11, 01), value, null),
+                 new TemporalValueItem(new DateTime(2019, 12, 01), value, null),
+                 new TemporalValueItem(new DateTime(2020, 01, 01), value, null),
+                 new TemporalValueItem(new DateTime(2020, 02, 01), value, null),
+                 new TemporalValueItem(new DateTime(2020, 03, 01), value, null),
+                 new TemporalValueItem(new DateTime(2020, 04, 01), value, null),
+                 new TemporalValueItem(new DateTime(2020, 05, 01), value, null),
+                 new TemporalValueItem(new DateTime(2020, 06, 01), value, null),
+                 new TemporalValueItem(new DateTime(2020, 07, 01), value, null),
             };
 
             changePoints.AddRange(cps);
@@ -457,8 +420,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                 TestLearningDeliveryPeriodisedAttributesData("ALBSupportPayment", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("AreaUpliftBalPayment", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("AreaUpliftOnProgPayment", 1.0m),
-                TestLearningDeliveryPeriodisedAttributesData("LearnDelCarLearnPilotOnProgPayment", 1.0m),
-                TestLearningDeliveryPeriodisedAttributesData("LearnDelCarLearnPilotBalPayment", 1.0m),
             };
         }
 

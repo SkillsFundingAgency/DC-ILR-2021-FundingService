@@ -105,19 +105,21 @@
     <Compile Include="RulebaseInterfaceTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\ESFA.DC.ILR.FundingService.ALB.Service\Rulebase\Loans Bursary 19_20.zip">
+      <Link>Rulebase\Loans Bursary 19_20.zip</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\ESFA.DC.ILR.FundingService.ALB.Service\Rulebase\XSRC\Inputs.xsrc">
+      <Link>Rulebase\XSRC\Inputs.xsrc</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="app.config" />
     <None Include="ESFA.DC.ILR.FundingService.ALB.Service.Tests.ruleset" />
     <None Include="packages.config" />
-    <Content Include="Rulebase\Loans Bursary 18_19.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Rulebase\XSRC\Inputs.xsrc">
+    <Content Include="RulebaseMasterFiles\Loans Bursary 19_20.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="RulebaseMasterFiles\XSRC\Inputs.xsrc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="RulebaseMasterFiles\Loans Bursary 18_19.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
