@@ -23,7 +23,8 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.2" />
-    <PackageReference Include="ESFA.DC.ILR.1920.Constants" Version="0.1.7-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.1920.Constants" Version="0.1.8-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR1920.ReferenceDataService.Model" Version="0.0.115" />
     <PackageReference Include="ESFA.DC.JobContextManager" Version="0.2.9-beta0001" />
     <PackageReference Include="ESFA.DC.Logging" Version="0.1.4-beta0001" />
     <PackageReference Include="ESFA.DC.Serialization.Json" Version="0.1.6-beta0001" />
