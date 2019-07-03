@@ -2,7 +2,6 @@
 {
     public static class Attributes
     {
-        public const int FundModel_81 = 81;
         public const int FundModel_99 = 99;
 
         // Entity
@@ -12,8 +11,6 @@
         public const string EntityLearningDeliveryFAM = "LearningDeliveryFAM";
         public const string EntityLearningDeliverySFA_PostcodeAreaCost = "SFA_PostcodeAreaCost";
         public const string EntityLearningDeliveryLARS_Funding = "LearningDeliveryLARS_Funding";
-        public const string EntityLearningDeliverySubsidyPilotPostcodeArea = "SubsidyPilotPostcodeArea";
-        public const string EntityLearningDeliveryLARS_CareerLearningPilot = "LARS_CareerLearningPilot";
 
         // Global
         public const string LARSVersion = "LARSVersion";
@@ -33,12 +30,6 @@
         public const string LearnDelFundModel = "LearnDelFundModel";
         public const string LearnPlanEndDate = "LearnPlanEndDate";
         public const string LearnStartDate = "LearnStartDate";
-        public const string LrnDelFAM_ADL = "LrnDelFAM_ADL";
-        public const string LrnDelFAM_LDM1 = "LrnDelFAM_LDM1";
-        public const string LrnDelFAM_LDM2 = "LrnDelFAM_LDM2";
-        public const string LrnDelFAM_LDM3 = "LrnDelFAM_LDM3";
-        public const string LrnDelFAM_LDM4 = "LrnDelFAM_LDM4";
-        public const string LrnDelFAM_RES = "LrnDelFAM_RES";
         public const string NotionalNVQLevelv2 = "NotionalNVQLevelv2";
         public const string OrigLearnStartDate = "OrigLearnStartDate";
         public const string OtherFundAdj = "OtherFundAdj";
@@ -95,16 +86,5 @@
         public const string LARSFundEffectiveTo = "LARSFundEffectiveTo";
         public const string LARSFundWeightedRate = "LARSFundWeightedRate";
         public const string LARSFundWeightingFactor = "LARSFundWeightingFactor";
-
-        // SubsidyPilotPostcodeArea
-        public const string SubsidyPilotAreaCode = "SubsidyPilotAreaCode";
-        public const string SubsidyPilotEffectiveFrom = "SubsidyPilotEffectiveFrom";
-        public const string SubsidyPilotEffectiveTo = "SubsidyPilotEffectiveTo";
-
-        // LARS_CareerLearningPilot
-        public const string LearnDelLARSCarPilFundAreaCode = "LearnDelLARSCarPilFundAreaCode";
-        public const string LearnDelLARSCarPilFundEffToDate = "LearnDelLARSCarPilFundEffToDate";
-        public const string LearnDelLARSCarPilFundEffFromDate = "LearnDelLARSCarPilFundEffFromDate";
-        public const string LearnDelLARSCarPilFundSubsidyRate = "LearnDelLARSCarPilFundSubsidyRate";
     }
 }

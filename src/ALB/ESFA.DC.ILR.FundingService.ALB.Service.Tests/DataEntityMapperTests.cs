@@ -8,7 +8,6 @@ using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Dto.Model;
-using ESFA.DC.ILR.Tests.Model;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -74,8 +73,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                         FundingCategory = "Matrix",
                         RateWeighted = 1.0m,
                         WeightingFactor = "G",
-                        EffectiveFrom = new DateTime(2018, 1, 1),
-                        EffectiveTo = new DateTime(2019, 1, 1),
+                        EffectiveFrom = new DateTime(2019, 1, 1),
+                        EffectiveTo = new DateTime(2020, 1, 1),
                     }
                 },
                 LARSCareerLearningPilots = new List<LARSCareerLearningPilot>
@@ -84,8 +83,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                     {
                         AreaCode = "DelLocPostcode",
                         SubsidyRate = 1.2m,
-                        EffectiveFrom = new DateTime(2018, 1, 1),
-                        EffectiveTo = new DateTime(2019, 1, 1)
+                        EffectiveFrom = new DateTime(2019, 1, 1),
+                        EffectiveTo = new DateTime(2020, 1, 1)
                     }
                 }
             };
@@ -95,8 +94,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                 new SfaAreaCost
                 {
                     Postcode = "DelLocPostcode",
-                    EffectiveFrom = new DateTime(2018, 1, 1),
-                    EffectiveTo = new DateTime(2019, 1, 1),
+                    EffectiveFrom = new DateTime(2019, 1, 1),
+                    EffectiveTo = new DateTime(2020, 1, 1),
                     AreaCostFactor = 1.2m
                 }
             };
@@ -106,8 +105,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                 new CareerLearningPilot
                 {
                     Postcode = "DelLocPostcode",
-                    EffectiveFrom = new DateTime(2018, 1, 1),
-                    EffectiveTo = new DateTime(2019, 1, 1),
+                    EffectiveFrom = new DateTime(2019, 1, 1),
+                    EffectiveTo = new DateTime(2020, 1, 1),
                     AreaCode = "AreaCode"
                 }
             };
@@ -120,7 +119,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
 
             larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learnAimRef)).Returns(larsLearningDelivery);
             postcodeReferenceDataServiceMock.Setup(o => o.SFAAreaCostsForPostcode(delLocPostCode)).Returns(sfaAreaCost);
-            postcodeReferenceDataServiceMock.Setup(o => o.CareerLearningPilotsForPostcode(delLocPostCode)).Returns(subsidyPilotPostcodeArea);
 
             var dataEntities = NewService(larsReferenceDataServiceMock.Object, postcodeReferenceDataServiceMock.Object).MapTo(ukprn, learnerDtos);
 
@@ -256,18 +254,12 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                 FundModel = 4,
                 LearnActEndDate = new DateTime(2017, 1, 1),
                 LearnAimRef = "LearnAimRef",
-                LearnPlanEndDate = new DateTime(2018, 1, 1),
-                LearnStartDate = new DateTime(2019, 1, 1),
-                OrigLearnStartDate = new DateTime(2019, 1, 1),
+                LearnPlanEndDate = new DateTime(2019, 1, 1),
+                LearnStartDate = new DateTime(2020, 1, 1),
+                OrigLearnStartDate = new DateTime(2020, 1, 1),
                 OtherFundAdj = 5,
                 Outcome = 6,
                 PriorLearnFundAdj = 7,
-                LrnDelFAM_ADL = "ADL",
-                LrnDelFAM_LDM1 = "LDM1",
-                LrnDelFAM_LDM2 = "LDM2",
-                LrnDelFAM_LDM3 = "LDM3",
-                LrnDelFAM_LDM4 = "LDM4",
-                LrnDelFAM_RES = "RES",
                 LearningDeliveryFAMs = new List<LearningDeliveryFAM>()
                 {
                     new LearningDeliveryFAM() { LearnDelFAMType = "ADL", LearnDelFAMCode = "ADL" },
@@ -294,8 +286,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                         FundingCategory = "Matrix",
                         RateWeighted = 1.0m,
                         WeightingFactor = "G",
-                        EffectiveFrom = new DateTime(2018, 1, 1),
-                        EffectiveTo = new DateTime(2019, 1, 1),
+                        EffectiveFrom = new DateTime(2019, 1, 1),
+                        EffectiveTo = new DateTime(2020, 1, 1),
                     }
                 },
                 LARSCareerLearningPilots = new List<LARSCareerLearningPilot>
@@ -304,8 +296,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                     {
                         AreaCode = "DelLocPostcode",
                         SubsidyRate = 1.2m,
-                        EffectiveFrom = new DateTime(2018, 1, 1),
-                        EffectiveTo = new DateTime(2019, 1, 1)
+                        EffectiveFrom = new DateTime(2019, 1, 1),
+                        EffectiveTo = new DateTime(2020, 1, 1)
                     }
                 }
             };
@@ -315,8 +307,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                 new SfaAreaCost
                 {
                     Postcode = "DelLocPostcode",
-                    EffectiveFrom = new DateTime(2018, 1, 1),
-                    EffectiveTo = new DateTime(2019, 1, 1),
+                    EffectiveFrom = new DateTime(2019, 1, 1),
+                    EffectiveTo = new DateTime(2020, 1, 1),
                     AreaCostFactor = 1.2m
                 }
             };
@@ -326,8 +318,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                 new CareerLearningPilot
                 {
                     Postcode = "DelLocPostcode",
-                    EffectiveFrom = new DateTime(2018, 1, 1),
-                    EffectiveTo = new DateTime(2019, 1, 1),
+                    EffectiveFrom = new DateTime(2019, 1, 1),
+                    EffectiveTo = new DateTime(2020, 1, 1),
                     AreaCode = "AreaCode"
                 }
             };
@@ -337,12 +329,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
 
             larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
             postcodeReferenceDataServiceMock.Setup(o => o.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode)).Returns(sfaAreaCost);
-            postcodeReferenceDataServiceMock.Setup(o => o.CareerLearningPilotsForPostcode(learningDelivery.DelLocPostCode)).Returns(subsidyPilotPostcodeArea);
 
             var dataEntity = NewService(larsReferenceDataServiceMock.Object, postcodeReferenceDataServiceMock.Object).BuildLearningDeliveryDataEntity(learningDelivery);
 
             dataEntity.EntityName.Should().Be("LearningDelivery");
-            dataEntity.Attributes.Should().HaveCount(19);
+            dataEntity.Attributes.Should().HaveCount(13);
             dataEntity.Attributes["AimSeqNumber"].Value.Should().Be(learningDelivery.AimSeqNumber);
             dataEntity.Attributes["CompStatus"].Value.Should().Be(learningDelivery.CompStatus);
             dataEntity.Attributes["LearnActEndDate"].Value.Should().Be(learningDelivery.LearnActEndDate);
@@ -350,12 +341,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             dataEntity.Attributes["LearnDelFundModel"].Value.Should().Be(learningDelivery.FundModel);
             dataEntity.Attributes["LearnPlanEndDate"].Value.Should().Be(learningDelivery.LearnPlanEndDate);
             dataEntity.Attributes["LearnStartDate"].Value.Should().Be(learningDelivery.LearnStartDate);
-            dataEntity.Attributes["LrnDelFAM_ADL"].Value.Should().Be("ADL");
-            dataEntity.Attributes["LrnDelFAM_LDM1"].Value.Should().Be("LDM1");
-            dataEntity.Attributes["LrnDelFAM_LDM2"].Value.Should().Be("LDM2");
-            dataEntity.Attributes["LrnDelFAM_LDM3"].Value.Should().Be("LDM3");
-            dataEntity.Attributes["LrnDelFAM_LDM4"].Value.Should().Be("LDM4");
-            dataEntity.Attributes["LrnDelFAM_RES"].Value.Should().Be("RES");
             dataEntity.Attributes["NotionalNVQLevelv2"].Value.Should().Be(larsLearningDelivery.NotionalNVQLevelv2);
             dataEntity.Attributes["OrigLearnStartDate"].Value.Should().Be(learningDelivery.OrigLearnStartDate);
             dataEntity.Attributes["OtherFundAdj"].Value.Should().Be(learningDelivery.OtherFundAdj);
@@ -384,53 +369,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
         }
 
         [Fact]
-        public void BuildLARSCareerLearningPilot()
-        {
-            var larsCareerLearningPilot = new LARSCareerLearningPilot
-            {
-                AreaCode = "AreaCode",
-                EffectiveFrom = new DateTime(2018, 1, 1),
-                EffectiveTo = new DateTime(2019, 1, 1),
-                SubsidyRate = 1.0m
-            };
-
-            var dataEntity = NewService().BuildLARSCareerLearningPilot(larsCareerLearningPilot);
-
-            dataEntity.EntityName.Should().Be("LARS_CareerLearningPilot");
-            dataEntity.Attributes.Should().HaveCount(4);
-            dataEntity.Attributes["LearnDelLARSCarPilFundAreaCode"].Value.Should().Be(larsCareerLearningPilot.AreaCode);
-            dataEntity.Attributes["LearnDelLARSCarPilFundEffFromDate"].Value.Should().Be(larsCareerLearningPilot.EffectiveFrom);
-            dataEntity.Attributes["LearnDelLARSCarPilFundEffToDate"].Value.Should().Be(larsCareerLearningPilot.EffectiveTo);
-            dataEntity.Attributes["LearnDelLARSCarPilFundSubsidyRate"].Value.Should().Be(larsCareerLearningPilot.SubsidyRate);
-        }
-
-        [Fact]
-        public void BuildSubsidyPilotPostcodeArea()
-        {
-            var careerLearningPilot = new CareerLearningPilot
-            {
-                AreaCode = "AreaCode",
-                EffectiveFrom = new DateTime(2018, 1, 1),
-                EffectiveTo = new DateTime(2019, 1, 1),
-            };
-
-            var dataEntity = NewService().BuildSubsidyPilotPostcodeArea(careerLearningPilot);
-
-            dataEntity.EntityName.Should().Be("SubsidyPilotPostcodeArea");
-            dataEntity.Attributes.Should().HaveCount(3);
-            dataEntity.Attributes["SubsidyPilotAreaCode"].Value.Should().Be(careerLearningPilot.AreaCode);
-            dataEntity.Attributes["SubsidyPilotEffectiveFrom"].Value.Should().Be(careerLearningPilot.EffectiveFrom);
-            dataEntity.Attributes["SubsidyPilotEffectiveTo"].Value.Should().Be(careerLearningPilot.EffectiveTo);
-        }
-
-        [Fact]
         public void BuildLARSFunding()
         {
             var larsFunding = new LARSFunding
             {
                 FundingCategory = "FundingCategory",
-                EffectiveFrom = new DateTime(2018, 1, 1),
-                EffectiveTo = new DateTime(2019, 1, 1),
+                EffectiveFrom = new DateTime(2019, 1, 1),
+                EffectiveTo = new DateTime(2020, 1, 1),
                 RateWeighted = 1.0m,
                 WeightingFactor = "G"
             };
@@ -452,8 +397,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             var sfaAreaCost = new SfaAreaCost
             {
                 AreaCostFactor = 1.2m,
-                EffectiveFrom = new DateTime(2018, 1, 1),
-                EffectiveTo = new DateTime(2019, 1, 1),
+                EffectiveFrom = new DateTime(2019, 1, 1),
+                EffectiveTo = new DateTime(2020, 1, 1),
             };
 
             var dataEntity = NewService().BuildSFAPostcodeAreaCost(sfaAreaCost);

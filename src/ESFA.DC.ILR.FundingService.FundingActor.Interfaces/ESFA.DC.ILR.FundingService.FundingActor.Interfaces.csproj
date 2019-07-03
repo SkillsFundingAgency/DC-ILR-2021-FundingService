@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ESFA.DC.ILR.1920.Model" Version="0.1.2-beta0001" />
-    <PackageReference Include="ESFA.DC.ILR.1920.Model.Interface" Version="0.1.0-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.1920.Model" Version="0.1.8-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.1920.Model.Interface" Version="0.1.4-beta0001" />
     <PackageReference Include="Microsoft.ServiceFabric.Actors" Version="3.3.664" />
   </ItemGroup>
 

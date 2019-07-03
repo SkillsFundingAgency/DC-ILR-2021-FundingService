@@ -15,8 +15,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
 {
     public class DataEntityMapper : IDataEntityMapper<ALBLearnerDto>
     {
-        private readonly HashSet<int> _fundModels = new HashSet<int> { Attributes.FundModel_81, Attributes.FundModel_99 };
-
         private readonly ILARSReferenceDataService _larsReferenceDataService;
         private readonly IPostcodesReferenceDataService _postcodesReferenceDataService;
 
@@ -31,7 +29,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
             var global = BuildGlobal(ukprn);
 
             var entities = inputModels?
-                .Where(l => l.LearningDeliveries.Any(ld => _fundModels.Contains(ld.FundModel)))
+                .Where(l => l.LearningDeliveries.Any(ld => ld.FundModel == Attributes.FundModel_99))
                 .Select(l => BuildGlobalDataEntity(l, global)) ?? new List<IDataEntity>();
 
             return entities.Any() ? entities : new List<IDataEntity> { BuildDefaultGlobalDataEntity(global) };
@@ -75,7 +73,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
                 Children =
                     (learner
                         .LearningDeliveries?
-                        .Where(ld => _fundModels.Contains(ld.FundModel))
+                        .Where(ld => ld.FundModel == Attributes.FundModel_99)
                         .Select(BuildLearningDeliveryDataEntity) ?? new List<IDataEntity>())
                         .ToList()
             };
@@ -85,7 +83,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
         {
             var larsLearningDelivery = _larsReferenceDataService.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef);
             var sfaPostCodeAreaCost = _postcodesReferenceDataService.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode);
-            var subsidyPilotPostcodeArea = _postcodesReferenceDataService.CareerLearningPilotsForPostcode(learningDelivery.DelLocPostCode);
 
             return new DataEntity(Attributes.EntityLearningDelivery)
             {
@@ -98,12 +95,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
                     { Attributes.LearnDelFundModel, new AttributeData(learningDelivery.FundModel) },
                     { Attributes.LearnPlanEndDate, new AttributeData(learningDelivery.LearnPlanEndDate) },
                     { Attributes.LearnStartDate, new AttributeData(learningDelivery.LearnStartDate) },
-                    { Attributes.LrnDelFAM_ADL, new AttributeData(learningDelivery.LrnDelFAM_ADL) },
-                    { Attributes.LrnDelFAM_LDM1, new AttributeData(learningDelivery.LrnDelFAM_LDM1) },
-                    { Attributes.LrnDelFAM_LDM2, new AttributeData(learningDelivery.LrnDelFAM_LDM2) },
-                    { Attributes.LrnDelFAM_LDM3, new AttributeData(learningDelivery.LrnDelFAM_LDM3) },
-                    { Attributes.LrnDelFAM_LDM4, new AttributeData(learningDelivery.LrnDelFAM_LDM4) },
-                    { Attributes.LrnDelFAM_RES, new AttributeData(learningDelivery.LrnDelFAM_RES) },
                     { Attributes.NotionalNVQLevelv2, new AttributeData(larsLearningDelivery.NotionalNVQLevelv2) },
                     { Attributes.OrigLearnStartDate, new AttributeData(learningDelivery.OrigLearnStartDate) },
                     { Attributes.OtherFundAdj, new AttributeData(learningDelivery.OtherFundAdj) },
@@ -116,10 +107,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
                             .LearningDeliveryFAMs?
                             .Select(BuildLearningDeliveryFAM) ?? new List<IDataEntity>())
                             .Union(
-                                   larsLearningDelivery?
-                                    .LARSCareerLearningPilots?
-                                    .Select(BuildLARSCareerLearningPilot) ?? new List<IDataEntity>())
-                            .Union(
                                     larsLearningDelivery?
                                     .LARSFundings?
                                     .Select(BuildLARSFunding) ?? new List<IDataEntity>())
@@ -127,10 +114,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
                                    _postcodesReferenceDataService?
                                     .SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode)
                                     .Select(BuildSFAPostcodeAreaCost) ?? new List<IDataEntity>())
-                             .Union(
-                                   _postcodesReferenceDataService?
-                                    .CareerLearningPilotsForPostcode(learningDelivery.DelLocPostCode)
-                                    .Select(BuildSubsidyPilotPostcodeArea) ?? new List<IDataEntity>())
                             .ToList()
             };
         }
@@ -145,20 +128,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
                     { Attributes.LearnDelFAMDateTo, new AttributeData(learningDeliveryFAM.LearnDelFAMDateTo) },
                     { Attributes.LearnDelFAMDateFrom, new AttributeData(learningDeliveryFAM.LearnDelFAMDateFrom) },
                     { Attributes.LearnDelFAMType, new AttributeData(learningDeliveryFAM.LearnDelFAMType) },
-                }
-            };
-        }
-
-        public IDataEntity BuildLARSCareerLearningPilot(LARSCareerLearningPilot larsCareerLearningPilot)
-        {
-            return new DataEntity(Attributes.EntityLearningDeliveryLARS_CareerLearningPilot)
-            {
-                Attributes = new Dictionary<string, IAttributeData>()
-                {
-                    { Attributes.LearnDelLARSCarPilFundAreaCode, new AttributeData(larsCareerLearningPilot.AreaCode) },
-                    { Attributes.LearnDelLARSCarPilFundEffFromDate, new AttributeData(larsCareerLearningPilot.EffectiveFrom) },
-                    { Attributes.LearnDelLARSCarPilFundEffToDate, new AttributeData(larsCareerLearningPilot.EffectiveTo) },
-                    { Attributes.LearnDelLARSCarPilFundSubsidyRate, new AttributeData(larsCareerLearningPilot.SubsidyRate) },
                 }
             };
         }
@@ -187,19 +156,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
                     { Attributes.AreaCosFactor, new AttributeData(sfaAreaCost.AreaCostFactor) },
                     { Attributes.AreaCosEffectiveFrom, new AttributeData(sfaAreaCost.EffectiveFrom) },
                     { Attributes.AreaCosEffectiveTo, new AttributeData(sfaAreaCost.EffectiveTo) },
-                }
-            };
-        }
-
-        public IDataEntity BuildSubsidyPilotPostcodeArea(CareerLearningPilot larsCareerLearningPilot)
-        {
-            return new DataEntity(Attributes.EntityLearningDeliverySubsidyPilotPostcodeArea)
-            {
-                Attributes = new Dictionary<string, IAttributeData>()
-                {
-                    { Attributes.SubsidyPilotAreaCode, new AttributeData(larsCareerLearningPilot.AreaCode) },
-                    { Attributes.SubsidyPilotEffectiveFrom, new AttributeData(larsCareerLearningPilot.EffectiveFrom) },
-                    { Attributes.SubsidyPilotEffectiveTo, new AttributeData(larsCareerLearningPilot.EffectiveTo) },
                 }
             };
         }

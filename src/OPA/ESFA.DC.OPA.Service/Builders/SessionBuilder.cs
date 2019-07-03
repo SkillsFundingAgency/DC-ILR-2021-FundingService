@@ -1,33 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Interface.Builders;
 using Oracle.Determinations.Engine;
 using Oracle.Determinations.Engine.Local.Temporal;
-using Oracle.Determinations.Masquerade.IO;
 using Oracle.Determinations.Masquerade.Util;
 
 namespace ESFA.DC.OPA.Service.Builders
 {
     public class SessionBuilder : ISessionBuilder
     {
-        internal bool RulebaseInitialised { get; set; }
-
-        internal Oracle.Determinations.Engine.Rulebase Rulebase { get; set; }
-
-        public Session CreateOPASession(Stream rulebaseStream, IDataEntity globalEntity)
+        public Session ProcessOPASession(Session session, IDataEntity globalEntity)
         {
-            if (!RulebaseInitialised)
-            {
-                InputStream stream = new InputStreamAdapter(rulebaseStream);
-                Rulebase = Engine.INSTANCE.GetRulebase(stream);
-                RulebaseInitialised = true;
-            }
-
-            Session session = Engine.INSTANCE.CreateSession(Rulebase);
-
             var inputGlobalInstance = session.GetGlobalEntityInstance();
 
             MapGlobalDataEntityToOpa(globalEntity, session, inputGlobalInstance);

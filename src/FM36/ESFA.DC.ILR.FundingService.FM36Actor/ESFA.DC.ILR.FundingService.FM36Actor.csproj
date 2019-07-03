@@ -58,11 +58,11 @@
     <Reference Include="ESFA.DC.Auditing.Interface, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ESFA.DC.Auditing.Interface.0.2.0-beta0001\lib\netstandard2.0\ESFA.DC.Auditing.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ILR.Model, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.ILR.1920.Model.0.1.2-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.dll</HintPath>
+    <Reference Include="ESFA.DC.ILR.Model, Version=0.1.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ESFA.DC.ILR.1920.Model.0.1.8-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ESFA.DC.ILR.1920.Model.Interface.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
+    <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ESFA.DC.ILR.1920.Model.Interface.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.JobContext.Interface, Version=0.2.8.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ESFA.DC.JobContext.Interface.0.2.8-beta0001\lib\netstandard2.0\ESFA.DC.JobContext.Interface.dll</HintPath>
@@ -301,6 +301,10 @@
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Interfaces\ESFA.DC.ILR.FundingService.Interfaces.csproj">
       <Project>{81FA550D-DD5E-4F5B-AC66-1DCA51824E9C}</Project>
       <Name>ESFA.DC.ILR.FundingService.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Modules\ESFA.DC.ILR.FundingService.Modules.csproj">
+      <Project>{79748ECD-E5D4-4D1E-BE10-32588B2F625C}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Modules</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Service\ESFA.DC.ILR.FundingService.Service.csproj">
       <Project>{652FF283-3708-4DCA-A45E-81297B8BA8A7}</Project>

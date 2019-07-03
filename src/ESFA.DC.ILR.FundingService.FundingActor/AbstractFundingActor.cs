@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Autofac;
-using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
@@ -38,12 +39,12 @@ namespace ESFA.DC.ILR.FundingService.FundingActor
                 FCSContractAllocations = deserialzedCache.FCSContractAllocations,
                 LargeEmployers = deserialzedCache.LargeEmployers,
                 LARSCurrentVersion = deserialzedCache.LARSCurrentVersion,
-                LARSLearningDelivery = deserialzedCache.LARSLearningDelivery.ToCaseInsensitiveDictionary(),
+                LARSLearningDelivery = deserialzedCache.LARSLearningDelivery.ToDictionary(k => k.Key, v => v.Value, StringComparer.OrdinalIgnoreCase),
                 LARSStandards = deserialzedCache.LARSStandards,
                 OrgFunding = deserialzedCache.OrgFunding,
                 OrgVersion = deserialzedCache.OrgVersion,
                 PostcodeCurrentVersion = deserialzedCache.PostcodeCurrentVersion,
-                PostcodeRoots = deserialzedCache.PostcodeRoots.ToCaseInsensitiveDictionary(),
+                PostcodeRoots = deserialzedCache.PostcodeRoots.ToDictionary(k => k.Key, v => v.Value, StringComparer.OrdinalIgnoreCase),
                 Periods = deserialzedCache.Periods,
             };
         }
