@@ -117,77 +117,77 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         [Fact]
         public void LearningDeliveryDataFromDataEntity()
         {
-           var actualDaysIL = 1;
-           var actualNumInstalm = 2;
-           var adjStartDate = new DateTime(2018, 8, 1);
-           var ageAtProgStart = 3;
-           var aimSeqNumber = 1;
-           var aimType = 1;
-           var appAdjLearnStartDate = new DateTime(2018, 8, 1);
-           var appAdjLearnStartDateMatchPathway = new DateTime(2018, 8, 1);
-           var applicCompDate = new DateTime(2018, 8, 1);
-           var combinedAdjProp = 1.0m;
-           var completed = false;
-           var compStatus = 1;
-           var firstIncentiveThresholdDate = new DateTime(2018, 8, 1);
-           var frameworkCommonComponent = 20;
-           var fundStart = false;
-           var fworkCode = 10;
-           var ldApplic1618FrameworkUpliftBalancingValue = 1.0m;
-           var ldApplic1618FrameworkUpliftCompElement = 1.0m;
-           var ldApplic1618FRameworkUpliftCompletionValue = 1.0m;
-           var ldApplic1618FrameworkUpliftMonthInstalVal = 1.0m;
-           var ldApplic1618FrameworkUpliftPrevEarnings = 1.0m;
-           var ldApplic1618FrameworkUpliftPrevEarningsStage1 = 1.0m;
-           var ldApplic1618FrameworkUpliftRemainingAmount = 1.0m;
-           var ldApplic1618FrameworkUpliftTotalActEarnings = 1.0m;
-           var learnAimRef = "LearnAimRef";
-           var learnActEndDate = new DateTime(2018, 8, 1);
-           var learnDel1618AtStart = false;
-           var learnDelAppAccDaysIL = 1;
-           var learnDelApplicDisadvAmount = 1.0m;
-           var learnDelApplicEmp1618Incentive = 1.0m;
-           var learnDelApplicEmpDate = new DateTime(2018, 8, 1);
-           var learnDelApplicProv1618FrameworkUplift = 1.0m;
-           var learnDelApplicProv1618Incentive = 1.0m;
-           var learnDelAppPrevAccDaysIL = 4;
-           var learnDelDaysIL = 5;
-           var learnDelDisadAmount = 1.0m;
-           var learnDelEligDisadvPayment = false;
-           var learnDelEmpIdFirstAdditionalPaymentThreshold = 20;
-           var learnDelEmpIdSecondAdditionalPaymentThreshold = 30;
-           var learnDelHistDaysThisApp = 6;
-           var learnDelHistProgEarnings = 1.0m;
-           var learnDelInitialFundLineType = "LearnDelInitialFundLineType";
-           var learnDelMathEng = false;
-           var learnDelProgEarliestACT2Date = new DateTime(2018, 8, 1);
-           var learnDelNonLevyProcured = false;
-           var learnDelApplicCareLeaverIncentive = 1.0m;
-           var learnDelHistDaysCareLeavers = 7;
-           var learnDelAccDaysILCareLeavers = 8;
-           var learnDelPrevAccDaysILCareLeavers = 9;
-           var learnDelLearnerAddPayThresholdDate = new DateTime(2018, 8, 1);
-           var learnDelRedCode = 10;
-           var learnDelRedStartDate = new DateTime(2018, 8, 1);
-           var learnPlanEndDate = new DateTime(2018, 8, 1);
-           var learnStartDate = new DateTime(2018, 8, 1);
-           var lrnDelFAM_EEF = "1";
-           var lrnDelFAM_LDM1 = "1";
-           var lrnDelFAM_LDM2 = "1";
-           var lrnDelFAM_LDM3 = "1";
-           var lrnDelFAM_LDM4 = "1";
-           var mathEngAimValue = 1.0m;
-           var outstandNumOnProgInstalm = 11;
-           var origLearnStartDate = new DateTime(2018, 8, 1);
-           var otherFundAdj = 0;
-           var plannedNumOnProgInstalm = 12;
-           var plannedTotalDaysIL = 13;
-           var priorLearnFundAdj = 0;
-           var progType = 14;
-           var pwayCode = 15;
-           var secondIncentiveThresholdDate = new DateTime(2018, 8, 1);
-           var stdCode = 16;
-           var thresholdDays = 12;
+            var actualDaysIL = 1;
+            var actualNumInstalm = 2;
+            var adjStartDate = new DateTime(2018, 8, 1);
+            var ageAtProgStart = 3;
+            var aimSeqNumber = 1;
+            var aimType = 1;
+            var appAdjLearnStartDate = new DateTime(2018, 8, 1);
+            var appAdjLearnStartDateMatchPathway = new DateTime(2018, 8, 1);
+            var applicCompDate = new DateTime(2018, 8, 1);
+            var combinedAdjProp = 1.0m;
+            var completed = false;
+            var compStatus = 1;
+            var firstIncentiveThresholdDate = new DateTime(2018, 8, 1);
+            var frameworkCommonComponent = 20;
+            var fundStart = false;
+            var fworkCode = 10;
+            var ldApplic1618FrameworkUpliftBalancingValue = 1.0m;
+            var ldApplic1618FrameworkUpliftCompElement = 1.0m;
+            var ldApplic1618FRameworkUpliftCompletionValue = 1.0m;
+            var ldApplic1618FrameworkUpliftMonthInstalVal = 1.0m;
+            var ldApplic1618FrameworkUpliftPrevEarnings = 1.0m;
+            var ldApplic1618FrameworkUpliftPrevEarningsStage1 = 1.0m;
+            var ldApplic1618FrameworkUpliftRemainingAmount = 1.0m;
+            var ldApplic1618FrameworkUpliftTotalActEarnings = 1.0m;
+            var learnAimRef = "LearnAimRef";
+            var learnActEndDate = new DateTime(2018, 8, 1);
+            var learnDel1618AtStart = false;
+            var learnDelAppAccDaysIL = 1;
+            var learnDelApplicDisadvAmount = 1.0m;
+            var learnDelApplicEmp1618Incentive = 1.0m;
+            var learnDelApplicEmpDate = new DateTime(2018, 8, 1);
+            var learnDelApplicProv1618FrameworkUplift = 1.0m;
+            var learnDelApplicProv1618Incentive = 1.0m;
+            var learnDelAppPrevAccDaysIL = 4;
+            var learnDelDaysIL = 5;
+            var learnDelDisadAmount = 1.0m;
+            var learnDelEligDisadvPayment = false;
+            var learnDelEmpIdFirstAdditionalPaymentThreshold = 20;
+            var learnDelEmpIdSecondAdditionalPaymentThreshold = 30;
+            var learnDelHistDaysThisApp = 6;
+            var learnDelHistProgEarnings = 1.0m;
+            var learnDelInitialFundLineType = "LearnDelInitialFundLineType";
+            var learnDelMathEng = false;
+            var learnDelProgEarliestACT2Date = new DateTime(2018, 8, 1);
+            var learnDelNonLevyProcured = false;
+            var learnDelApplicCareLeaverIncentive = 1.0m;
+            var learnDelHistDaysCareLeavers = 7;
+            var learnDelAccDaysILCareLeavers = 8;
+            var learnDelPrevAccDaysILCareLeavers = 9;
+            var learnDelLearnerAddPayThresholdDate = new DateTime(2018, 8, 1);
+            var learnDelRedCode = 10;
+            var learnDelRedStartDate = new DateTime(2018, 8, 1);
+            var learnPlanEndDate = new DateTime(2018, 8, 1);
+            var learnStartDate = new DateTime(2018, 8, 1);
+            var lrnDelFAM_EEF = "1";
+            var lrnDelFAM_LDM1 = "1";
+            var lrnDelFAM_LDM2 = "1";
+            var lrnDelFAM_LDM3 = "1";
+            var lrnDelFAM_LDM4 = "1";
+            var mathEngAimValue = 1.0m;
+            var outstandNumOnProgInstalm = 11;
+            var origLearnStartDate = new DateTime(2018, 8, 1);
+            var otherFundAdj = 0;
+            var plannedNumOnProgInstalm = 12;
+            var plannedTotalDaysIL = 13;
+            var priorLearnFundAdj = 0;
+            var progType = 14;
+            var pwayCode = 15;
+            var secondIncentiveThresholdDate = new DateTime(2018, 8, 1);
+            var stdCode = 16;
+            var thresholdDays = 12;
 
             var dataEntity = new DataEntity(string.Empty);
 
@@ -329,26 +329,12 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         public void LearningDeliveryPeriodisedAttributeData_Correct()
         {
             var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
-            var internalDataCacheMock = new Mock<IInternalDataCache>();
-
-            internalDataCacheMock.Setup(p => p.Period1).Returns(new DateTime(2018, 8, 1));
-            internalDataCacheMock.Setup(p => p.Period2).Returns(new DateTime(2018, 9, 1));
-            internalDataCacheMock.Setup(p => p.Period3).Returns(new DateTime(2018, 10, 1));
-            internalDataCacheMock.Setup(p => p.Period4).Returns(new DateTime(2018, 11, 1));
-            internalDataCacheMock.Setup(p => p.Period5).Returns(new DateTime(2018, 12, 1));
-            internalDataCacheMock.Setup(p => p.Period6).Returns(new DateTime(2019, 1, 1));
-            internalDataCacheMock.Setup(p => p.Period7).Returns(new DateTime(2019, 2, 1));
-            internalDataCacheMock.Setup(p => p.Period8).Returns(new DateTime(2019, 3, 1));
-            internalDataCacheMock.Setup(p => p.Period9).Returns(new DateTime(2019, 4, 1));
-            internalDataCacheMock.Setup(p => p.Period10).Returns(new DateTime(2019, 5, 1));
-            internalDataCacheMock.Setup(p => p.Period11).Returns(new DateTime(2019, 6, 1));
-            internalDataCacheMock.Setup(p => p.Period12).Returns(new DateTime(2019, 7, 1));
 
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(It.IsAny<object>())).Returns(1.0m);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValueForPeriod(It.IsAny<IAttributeData>(), It.IsAny<DateTime>())).Returns(1.0m);
 
             var learningDeliveryPeriodisedAttributeData =
-                NewService(internalDataCacheMock.Object, dataEntityAttributeServiceMock.Object).LearningDeliveryPeriodisedValues(TestLearningDeliveryEntity(null).Single());
+                NewService(dataEntityAttributeServiceMock.Object).LearningDeliveryPeriodisedValues(TestLearningDeliveryEntity(null).Single());
 
             var expectedLearningDeliveryPeriodisedAttributeData = TestLearningDeliveryPeriodisedAttributesDataArray();
 
@@ -626,26 +612,12 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         public void PriceEpisodePeriodisedAttributeData_Correct()
         {
             var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
-            var internalDataCacheMock = new Mock<IInternalDataCache>();
-
-            internalDataCacheMock.Setup(p => p.Period1).Returns(new DateTime(2018, 8, 1));
-            internalDataCacheMock.Setup(p => p.Period2).Returns(new DateTime(2018, 9, 1));
-            internalDataCacheMock.Setup(p => p.Period3).Returns(new DateTime(2018, 10, 1));
-            internalDataCacheMock.Setup(p => p.Period4).Returns(new DateTime(2018, 11, 1));
-            internalDataCacheMock.Setup(p => p.Period5).Returns(new DateTime(2018, 12, 1));
-            internalDataCacheMock.Setup(p => p.Period6).Returns(new DateTime(2019, 1, 1));
-            internalDataCacheMock.Setup(p => p.Period7).Returns(new DateTime(2019, 2, 1));
-            internalDataCacheMock.Setup(p => p.Period8).Returns(new DateTime(2019, 3, 1));
-            internalDataCacheMock.Setup(p => p.Period9).Returns(new DateTime(2019, 4, 1));
-            internalDataCacheMock.Setup(p => p.Period10).Returns(new DateTime(2019, 5, 1));
-            internalDataCacheMock.Setup(p => p.Period11).Returns(new DateTime(2019, 6, 1));
-            internalDataCacheMock.Setup(p => p.Period12).Returns(new DateTime(2019, 7, 1));
 
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(It.IsAny<object>())).Returns(1.0m);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValueForPeriod(It.IsAny<IAttributeData>(), It.IsAny<DateTime>())).Returns(1.0m);
 
             var priceEpisodePeriodisedAttributeData =
-                NewService(internalDataCacheMock.Object, dataEntityAttributeServiceMock.Object).PriceEpisodePeriodisedValues(TestPriceEpisodeEntity(null).Single());
+                NewService(dataEntityAttributeServiceMock.Object).PriceEpisodePeriodisedValues(TestPriceEpisodeEntity(null).Single());
 
             var expectedPriceEpisodePeriodisedAttributeData = TestPriceEpisodePeriodisedAttributesDataArray();
 
@@ -657,9 +629,9 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         {
             var appIdentifierOutput = "Id";
             var appProgCompletedInTheYearOutput = false;
-            var BalancingProgAimPaymentsInTheYearOutput = 1.0m;
-            var CompletionProgAimPaymentsInTheYearOutput = 1.0m;
-            var OnProgProgAimPaymentsInTheYearOutput = 1.0m;
+            var balancingProgAimPaymentsInTheYearOutput = 1.0m;
+            var completionProgAimPaymentsInTheYearOutput = 1.0m;
+            var onProgProgAimPaymentsInTheYearOutput = 1.0m;
             var historicDaysInYearOutput = 1;
             var historicEffectiveTNPStartDateOutput = new DateTime(2018, 8, 1);
             var historicEmpIdEndWithinYearOutput = 2;
@@ -690,15 +662,15 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
 
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "AppIdentifierOutput")).Returns(appIdentifierOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "AppProgCompletedInTheYearOutput")).Returns(appProgCompletedInTheYearOutput);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "HistoricBalancingProgAimPaymentsInTheYear")).Returns(BalancingProgAimPaymentsInTheYearOutput);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "HistoricCompletionProgAimPaymentsInTheYear")).Returns(CompletionProgAimPaymentsInTheYearOutput);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "HistoricBalancingProgAimPaymentsInTheYear")).Returns(balancingProgAimPaymentsInTheYearOutput);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "HistoricCompletionProgAimPaymentsInTheYear")).Returns(completionProgAimPaymentsInTheYearOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "HistoricDaysInYearOutput")).Returns(historicDaysInYearOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "HistoricEffectiveTNPStartDateOutput")).Returns(historicEffectiveTNPStartDateOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "HistoricEmpIdEndWithinYearOutput")).Returns(historicEmpIdEndWithinYearOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "HistoricEmpIdStartWithinYearOutput")).Returns(historicEmpIdStartWithinYearOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "HistoricFworkCodeOutput")).Returns(historicFworkCodeOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "HistoricLearner1618AtStartOutput")).Returns(historicLearner1618AtStartOutput);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "HistoricOnProgProgAimPaymentsInTheYear")).Returns(OnProgProgAimPaymentsInTheYearOutput);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "HistoricOnProgProgAimPaymentsInTheYear")).Returns(onProgProgAimPaymentsInTheYearOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "HistoricPMRAmountOutput")).Returns(historicPMRAmountOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "HistoricProgrammeStartDateIgnorePathwayOutput")).Returns(historicProgrammeStartDateIgnorePathwayOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "HistoricProgrammeStartDateMatchPathwayOutput")).Returns(historicProgrammeStartDateMatchPathwayOutput);
@@ -721,15 +693,15 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
 
             historicEarningOutput.AppIdentifierOutput.Should().Be(appIdentifierOutput);
             historicEarningOutput.AppProgCompletedInTheYearOutput.Should().Be(appProgCompletedInTheYearOutput);
-            historicEarningOutput.BalancingProgAimPaymentsInTheYear.Should().Be(BalancingProgAimPaymentsInTheYearOutput);
-            historicEarningOutput.CompletionProgAimPaymentsInTheYear.Should().Be(CompletionProgAimPaymentsInTheYearOutput);
+            historicEarningOutput.BalancingProgAimPaymentsInTheYear.Should().Be(balancingProgAimPaymentsInTheYearOutput);
+            historicEarningOutput.CompletionProgAimPaymentsInTheYear.Should().Be(completionProgAimPaymentsInTheYearOutput);
             historicEarningOutput.HistoricDaysInYearOutput.Should().Be(historicDaysInYearOutput);
             historicEarningOutput.HistoricEffectiveTNPStartDateOutput.Should().Be(historicEffectiveTNPStartDateOutput);
             historicEarningOutput.HistoricEmpIdEndWithinYearOutput.Should().Be(historicEmpIdEndWithinYearOutput);
             historicEarningOutput.HistoricEmpIdStartWithinYearOutput.Should().Be(historicEmpIdStartWithinYearOutput);
             historicEarningOutput.HistoricFworkCodeOutput.Should().Be(historicFworkCodeOutput);
             historicEarningOutput.HistoricLearner1618AtStartOutput.Should().Be(historicLearner1618AtStartOutput);
-            historicEarningOutput.OnProgProgAimPaymentsInTheYear.Should().Be(OnProgProgAimPaymentsInTheYearOutput);
+            historicEarningOutput.OnProgProgAimPaymentsInTheYear.Should().Be(onProgProgAimPaymentsInTheYearOutput);
             historicEarningOutput.HistoricPMRAmountOutput.Should().Be(historicPMRAmountOutput);
             historicEarningOutput.HistoricProgrammeStartDateIgnorePathwayOutput.Should().Be(historicProgrammeStartDateIgnorePathwayOutput);
             historicEarningOutput.HistoricProgrammeStartDateMatchPathwayOutput.Should().Be(historicProgrammeStartDateMatchPathwayOutput);
@@ -1111,9 +1083,9 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             };
         }
 
-        private FundingOutputService NewService(IInternalDataCache internalDataCache = null, IDataEntityAttributeService dataEntityAttributeService = null)
+        private FundingOutputService NewService(IDataEntityAttributeService dataEntityAttributeService = null)
         {
-            return new FundingOutputService(internalDataCache, dataEntityAttributeService);
+            return new FundingOutputService(dataEntityAttributeService);
         }
     }
 }

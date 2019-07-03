@@ -1,25 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
-using ESFA.DC.ILR.FundingService.Data.External;
-using ESFA.DC.ILR.FundingService.Data.File;
+using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Data.Interface;
-using ESFA.DC.ILR.FundingService.Data.Internal;
 using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FM36Actor.Interfaces;
+using ESFA.DC.ILR.FundingService.FundingActor;
+using ESFA.DC.ILR.FundingService.FundingActor.Constants;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
-using ESFA.DC.ILR.FundingService.Stateless.Models;
-using ESFA.DC.ILR.Model;
-using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
 using ExecutionContext = ESFA.DC.Logging.ExecutionContext;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 
 namespace ESFA.DC.ILR.FundingService.FM36Actor
 {
@@ -32,7 +28,7 @@ namespace ESFA.DC.ILR.FundingService.FM36Actor
         {
         }
 
-        public async Task<string> Process(FundingActorDto actorModel, CancellationToken cancellationToken)
+        public async Task<string> Process(FundingDto actorModel, CancellationToken cancellationToken)
         {
             FM36Global results = RunFunding(actorModel, cancellationToken);
             actorModel = null;
@@ -43,7 +39,7 @@ namespace ESFA.DC.ILR.FundingService.FM36Actor
             return BuildFundingOutput(results);
         }
 
-        private FM36Global RunFunding(FundingActorDto actorModel, CancellationToken cancellationToken)
+        private FM36Global RunFunding(FundingDto actorModel, CancellationToken cancellationToken)
         {
             if (ExecutionContext is ExecutionContext executionContextObj)
             {
@@ -54,8 +50,6 @@ namespace ESFA.DC.ILR.FundingService.FM36Actor
             ILogger logger = LifetimeScope.Resolve<ILogger>();
 
             IExternalDataCache externalDataCache;
-            IInternalDataCache internalDataCache;
-            IFileDataCache fileDataCache;
             FM36Global results;
 
             try
@@ -63,8 +57,6 @@ namespace ESFA.DC.ILR.FundingService.FM36Actor
                 logger.LogDebug($"{nameof(FM36Actor)} {ActorId} {GC.GetGeneration(actorModel)} starting");
 
                 externalDataCache = BuildExternalDataCache(actorModel.ExternalDataCache);
-                internalDataCache = BuildInternalDataCache(actorModel.InternalDataCache);
-                fileDataCache = BuildFileDataCache(actorModel.FileDataCache);
 
                 logger.LogDebug($"{nameof(FM36Actor)} {ActorId} {GC.GetGeneration(actorModel)} finished getting input data");
 
@@ -80,8 +72,6 @@ namespace ESFA.DC.ILR.FundingService.FM36Actor
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
                 c.RegisterInstance(externalDataCache).As<IExternalDataCache>();
-                c.RegisterInstance(internalDataCache).As<IInternalDataCache>();
-                c.RegisterInstance(fileDataCache).As<IFileDataCache>();
             }))
             {
                 var executionContext = (ExecutionContext)childLifetimeScope.Resolve<IExecutionContext>();
@@ -94,17 +84,13 @@ namespace ESFA.DC.ILR.FundingService.FM36Actor
                     jobLogger.LogDebug(
                         $"{nameof(FM36Actor)} {ActorId} {GC.GetGeneration(actorModel)} started processing");
 
-            
+                    IFundingService<FM36LearnerDto, FM36Global> fundingService =
+                        childLifetimeScope.Resolve<IFundingService<FM36LearnerDto, FM36Global>>();
 
-                    IFundingService<ILearner, FM36Global> fundingService =
-                        childLifetimeScope.Resolve<IFundingService<ILearner, FM36Global>>();
+                    var learners = BuildLearners<FM36LearnerDto>(actorModel.ValidLearners);
 
-                    var learners = BuildLearners(actorModel.ValidLearners);
-
-                    results = fundingService.ProcessFunding(learners, cancellationToken);
-
-                    jobLogger.LogDebug(
-                        $"{nameof(FM36Actor)} {ActorId} {GC.GetGeneration(actorModel)} completed processing");
+                    results = fundingService.ProcessFunding(actorModel.UKPRN, learners, cancellationToken);
+                    jobLogger.LogDebug($"{nameof(FM36Actor)} {ActorId} {GC.GetGeneration(actorModel)} completed processing");
                 }
                 catch (Exception ex)
                 {
@@ -115,8 +101,6 @@ namespace ESFA.DC.ILR.FundingService.FM36Actor
             }
 
             externalDataCache = null;
-            internalDataCache = null;
-            fileDataCache = null;
 
             return results;
         }

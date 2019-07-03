@@ -5,7 +5,6 @@ using Autofac.Integration.ServiceFabric;
 using ESFA.DC.ILR.FundingService.Config;
 using ESFA.DC.ILR.FundingService.Config.Interfaces;
 using ESFA.DC.ILR.FundingService.FM70Actor.Modules;
-using ESFA.DC.ILR.FundingService.Modules;
 using ESFA.DC.ServiceFabric.Helpers;
 using Microsoft.ServiceFabric.Actors.Runtime;
 
@@ -31,7 +30,7 @@ namespace ESFA.DC.ILR.FundingService.FM70Actor
                 using (var container = builder.Build())
                 {
                     // Not sure why this is being resolved here, to review
-                    //  var ss = container.Resolve<IFundingService<ILearner, FM35FundingOutputs>>();
+                    //  var ss = container.Resolve<IFundingService<FM70LearnerDto, FM35FundingOutputs>>();
                     Thread.Sleep(Timeout.Infinite);
                 }
             }
@@ -53,7 +52,6 @@ namespace ESFA.DC.ILR.FundingService.FM70Actor
             var loggerConfig = configHelper.GetSectionValues<LoggerConfig>("LoggerSection");
 
             containerBuilder.RegisterInstance(loggerConfig).As<ILoggerConfig>().SingleInstance();
-            containerBuilder.RegisterModule<LoggerModule>();
 
             // register serialization
             return containerBuilder;

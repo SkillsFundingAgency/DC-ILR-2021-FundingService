@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,14 +6,12 @@ using Autofac;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.ALBActor.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.External;
-using ESFA.DC.ILR.FundingService.Data.File;
 using ESFA.DC.ILR.FundingService.Data.Interface;
-using ESFA.DC.ILR.FundingService.Data.Internal;
+using ESFA.DC.ILR.FundingService.Dto;
+using ESFA.DC.ILR.FundingService.Dto.Model;
+using ESFA.DC.ILR.FundingService.FundingActor;
+using ESFA.DC.ILR.FundingService.FundingActor.Constants;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.ILR.FundingService.ServiceFabric.Common;
-using ESFA.DC.ILR.FundingService.Stateless.Models;
-using ESFA.DC.ILR.Model;
-using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
 using Microsoft.ServiceFabric.Actors;
@@ -32,7 +29,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
         {
         }
 
-        public async Task<string> Process(FundingActorDto actorModel, CancellationToken cancellationToken)
+        public async Task<string> Process(FundingDto actorModel, CancellationToken cancellationToken)
         {
             ALBGlobal results = RunFunding(actorModel, cancellationToken);
             actorModel = null;
@@ -43,7 +40,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
             return BuildFundingOutput(results);
         }
 
-        private ALBGlobal RunFunding(FundingActorDto actorModel, CancellationToken cancellationToken)
+        private ALBGlobal RunFunding(FundingDto actorModel, CancellationToken cancellationToken)
         {
             if (ExecutionContext is ExecutionContext executionContextObj)
             {
@@ -54,8 +51,6 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
             ILogger logger = LifetimeScope.Resolve<ILogger>();
 
             ExternalDataCache externalDataCache;
-            InternalDataCache internalDataCache;
-            FileDataCache fileDataCache;
             ALBGlobal results;
 
             try
@@ -63,8 +58,6 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                 logger.LogDebug($"{nameof(ALBActor)} {ActorId} {GC.GetGeneration(actorModel)} starting");
 
                 externalDataCache = BuildExternalDataCache(actorModel.ExternalDataCache);
-                internalDataCache = BuildInternalDataCache(actorModel.InternalDataCache);
-                fileDataCache = BuildFileDataCache(actorModel.FileDataCache);
 
                 logger.LogDebug($"{nameof(ALBActor)} {ActorId} {GC.GetGeneration(actorModel)} finished getting input data");
 
@@ -80,8 +73,6 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
             using (var childLifetimeScope = LifetimeScope.BeginLifetimeScope(c =>
             {
                 c.RegisterInstance(externalDataCache).As<IExternalDataCache>();
-                c.RegisterInstance(internalDataCache).As<IInternalDataCache>();
-                c.RegisterInstance(fileDataCache).As<IFileDataCache>();
             }))
             {
                 ExecutionContext executionContext = (ExecutionContext)childLifetimeScope.Resolve<IExecutionContext>();
@@ -92,12 +83,11 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                 try
                 {
                     jobLogger.LogDebug($"{nameof(ALBActor)} {ActorId} {GC.GetGeneration(actorModel)} started processing");
-                    IFundingService<ILearner, ALBGlobal> fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, ALBGlobal>>();
+                    IFundingService<ALBLearnerDto, ALBGlobal> fundingService = childLifetimeScope.Resolve<IFundingService<ALBLearnerDto, ALBGlobal>>();
 
-                    var learners = BuildLearners(actorModel.ValidLearners);
+                    var learners = BuildLearners<ALBLearnerDto>(actorModel.ValidLearners);
 
-                    results = fundingService.ProcessFunding(learners, cancellationToken);
-
+                    results = fundingService.ProcessFunding(actorModel.UKPRN, learners, cancellationToken);
                     jobLogger.LogDebug($"{nameof(ALBActor)} {ActorId} {GC.GetGeneration(actorModel)} completed processing");
                 }
                 catch (Exception ex)
@@ -109,8 +99,6 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
             }
 
             externalDataCache = null;
-            internalDataCache = null;
-            fileDataCache = null;
 
             return results;
         }

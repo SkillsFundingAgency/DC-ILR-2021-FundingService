@@ -5,7 +5,6 @@ using Autofac.Integration.ServiceFabric;
 using ESFA.DC.ILR.FundingService.Config;
 using ESFA.DC.ILR.FundingService.Config.Interfaces;
 using ESFA.DC.ILR.FundingService.FM35Actor.Modules;
-using ESFA.DC.ILR.FundingService.Modules;
 using ESFA.DC.ServiceFabric.Helpers;
 using Microsoft.ServiceFabric.Actors.Runtime;
 
@@ -25,13 +24,13 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
                 builder.RegisterServiceFabricSupport();
                 builder.RegisterActor<FM35Actor>(settings: new ActorServiceSettings
                 {
-                    ActorGarbageCollectionSettings = new ActorGarbageCollectionSettings(30, 30)
+                    ActorGarbageCollectionSettings = new ActorGarbageCollectionSettings(30, 30),
                 });
 
                 using (var container = builder.Build())
                 {
                     // Not sure why this is being resolved here, to review
-                  //  var ss = container.Resolve<IFundingService<ILearner, FM35FundingOutputs>>();
+                    //  var ss = container.Resolve<IFundingService<FM35LearnerDto, FM35FundingOutputs>>();
                     Thread.Sleep(Timeout.Infinite);
                 }
             }
@@ -53,7 +52,6 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
             var loggerConfig = configHelper.GetSectionValues<LoggerConfig>("LoggerSection");
 
             containerBuilder.RegisterInstance(loggerConfig).As<ILoggerConfig>().SingleInstance();
-            containerBuilder.RegisterModule<LoggerModule>();
 
             // register serialization
             return containerBuilder;

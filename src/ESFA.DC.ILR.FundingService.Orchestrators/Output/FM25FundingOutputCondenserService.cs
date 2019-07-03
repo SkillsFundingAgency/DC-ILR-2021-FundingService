@@ -3,7 +3,7 @@ using System.Linq;
 using ESFA.DC.ILR.FundingService.FM25.Model.Output;
 using ESFA.DC.ILR.FundingService.Interfaces;
 
-namespace ESFA.DC.ILR.FundingService.FM25.Service.Output
+namespace ESFA.DC.ILR.FundingService.Orchestrators.Output
 {
     public class FM25FundingOutputCondenserService : IFundingOutputCondenserService<FM25Global>
     {

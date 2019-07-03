@@ -32,7 +32,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.OrgFunding)
-                .Returns(new Dictionary<long, IEnumerable<OrgFunding>>
+                .Returns(new Dictionary<int, IReadOnlyCollection<OrgFunding>>
                 {
                     { ukprn, orgFundings },
                 });
@@ -45,7 +45,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         {
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
-            referenceDataCacheMock.SetupGet(rdc => rdc.OrgFunding).Returns(new Dictionary<long, IEnumerable<OrgFunding>>
+            referenceDataCacheMock.SetupGet(rdc => rdc.OrgFunding).Returns(new Dictionary<int, IReadOnlyCollection<OrgFunding>>
             {
                 { 1234, null },
             });

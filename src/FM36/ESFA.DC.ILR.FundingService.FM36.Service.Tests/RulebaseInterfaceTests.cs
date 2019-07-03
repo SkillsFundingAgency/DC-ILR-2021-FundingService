@@ -10,11 +10,10 @@ using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
-using ESFA.DC.ILR.FundingService.Data.File.Interface;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM36.Service.Constants;
 using ESFA.DC.ILR.FundingService.FM36.Service.Input;
 using ESFA.DC.ILR.FundingService.FM36.Service.Model;
-using ESFA.DC.ILR.Tests.Model;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.XSRC.Model.Interface.XSRCEntity;
@@ -408,75 +407,126 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
 
         public IDataEntity GetDataEntityMapperEntity()
         {
-            var larsRefererenceDataServiceMock = new Mock<ILARSReferenceDataService>();
+            var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
             var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
             var appsEarningsHistoryReferenceDataServiceMock = new Mock<IAppsEarningsHistoryReferenceDataService>();
-            var fileDataServiceMock = new Mock<IFileDataService>();
 
-            var learner = new TestLearner
+            var learner = new FM36LearnerDto
             {
                 LearnRefNumber = "Learner1",
-                ULN = 1234567890,
                 PostcodePrior = "Postcode",
-                LearnerEmploymentStatuses = new List<TestLearnerEmploymentStatus>
+                ULN = 1234567890,
+                LearnerEmploymentStatuses = new List<LearnerEmploymentStatus>
                 {
-                    new TestLearnerEmploymentStatus
+                    new LearnerEmploymentStatus
                     {
+                        EmpId = 10,
                         AgreeId = "1",
                         DateEmpStatApp = new DateTime(2018, 8, 1),
-                        EmpStat = 2
-                    }
+                        EmpStat = 2,
+                        SEM = 1
+                    },
                 },
-                LearningDeliveries = new List<TestLearningDelivery>
+                LearningDeliveries = new List<LearningDelivery>
                 {
-                    new TestLearningDelivery
+                    new LearningDelivery
                     {
                         LearnAimRef = "1",
                         AimSeqNumber = 2,
                         AimType = 3,
                         CompStatus = 4,
+                        PwayCode = 5,
+                        ProgType = 6,
+                        FworkCode = 7,
                         FundModel = 36,
-                        PwayCodeNullable = 5,
-                        ProgTypeNullable = 6,
-                        FworkCodeNullable = 7,
-                        StdCodeNullable = 8,
+                        StdCode = 8,
                         LearnStartDate = new DateTime(2018, 8, 1),
                         LearnPlanEndDate = new DateTime(2019, 8, 1),
-                        LearningDeliveryFAMs = new List<TestLearningDeliveryFAM>
+                        DelLocPostCode = "Postcode",
+                        LearningDeliveryFAMs = new List<LearningDeliveryFAM>
                         {
-                            new TestLearningDeliveryFAM()
+                            new LearningDeliveryFAM()
                         },
-                        AppFinRecords = new List<TestAppFinRecord>
+                        AppFinRecords = new List<AppFinRecord>
                         {
-                            new TestAppFinRecord()
+                            new AppFinRecord()
                         }
+                    },
+                },
+            };
+
+            var frameworks = new List<LARSFramework>
+            {
+                new LARSFramework
+                {
+                    EffectiveFromNullable = new DateTime(2018, 1, 1),
+                    EffectiveTo = new DateTime(2019, 1, 1),
+                    FworkCode = 7,
+                    ProgType = 6,
+                    PwayCode = 5,
+                    LARSFrameworkAim = new LARSFrameworkAim
+                    {
+                        EffectiveFrom = new DateTime(2018, 1, 1),
+                        EffectiveTo = new DateTime(2019, 1, 1),
+                        FrameworkComponentType = 1,
+                    },
+                    LARSFrameworkApprenticeshipFundings = new List<LARSFrameworkApprenticeshipFunding>
+                    {
+                        new LARSFrameworkApprenticeshipFunding()
+                    },
+                    LARSFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>
+                    {
+                        new LARSFrameworkCommonComponent()
+                    }
+                },
+                new LARSFramework
+                {
+                    EffectiveFromNullable = new DateTime(2018, 1, 1),
+                    EffectiveTo = new DateTime(2019, 1, 1),
+                    FworkCode = 9,
+                    ProgType = 9,
+                    PwayCode = 5,
+                    LARSFrameworkAim = new LARSFrameworkAim
+                    {
+                        EffectiveFrom = new DateTime(2018, 1, 1),
+                        EffectiveTo = new DateTime(2019, 1, 1),
+                        FrameworkComponentType = 1,
                     }
                 }
             };
 
-            var larsLearningDelivery = new LARSLearningDelivery();
-
-            var larsFunding = new List<LARSFunding>
+            var larsLearningDelivery = new LARSLearningDelivery
             {
-                new LARSFunding()
+                LARSFundings = new List<LARSFunding>
+                {
+                    new LARSFunding()
+                },
+                LARSFrameworks = frameworks
+            };
+
+            var larsStandards = new LARSStandard
+            {
+                LARSStandardApprenticeshipFundings = new List<LARSStandardApprenticeshipFunding>
+                {
+                    new LARSStandardApprenticeshipFunding()
+                },
+                LARSStandardCommonComponents = new List<LARSStandardCommonComponent>
+                {
+                    new LARSStandardCommonComponent()
+                }
             };
 
             var learningDelivery = learner.LearningDeliveries.First();
 
-            larsRefererenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
-            larsRefererenceDataServiceMock.Setup(l => l.LARSFundingsForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsFunding);
-            larsRefererenceDataServiceMock.Setup(l => l.LARSStandardApprenticeshipFunding(learningDelivery.StdCodeNullable, learningDelivery.ProgTypeNullable)).Returns(new List<LARSStandardApprenticeshipFunding> { new LARSStandardApprenticeshipFunding() });
-            larsRefererenceDataServiceMock.Setup(l => l.LARSFrameworkApprenticeshipFunding(learningDelivery.FworkCodeNullable, learningDelivery.ProgTypeNullable, learningDelivery.PwayCodeNullable)).Returns(new List<LARSFrameworkApprenticeshipFunding> { new LARSFrameworkApprenticeshipFunding() });
-            larsRefererenceDataServiceMock.Setup(l => l.LARSFrameworkCommonComponent(learningDelivery.LearnAimRef, learningDelivery.FworkCodeNullable, learningDelivery.ProgTypeNullable, learningDelivery.PwayCodeNullable)).Returns(new List<LARSFrameworkCommonComponent> { new LARSFrameworkCommonComponent() });
-            larsRefererenceDataServiceMock.Setup(l => l.LARSStandardCommonComponent(learningDelivery.StdCodeNullable)).Returns(new List<LARSStandardCommonComponent> { new LARSStandardCommonComponent() });
+            larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
+            larsReferenceDataServiceMock.Setup(l => l.LARSStandardForStandardCode(learningDelivery.StdCode)).Returns(larsStandards);
             postcodesReferenceDataServiceMock.Setup(p => p.DASDisadvantagesForPostcode(learner.PostcodePrior)).Returns(new List<DasDisadvantage> { new DasDisadvantage() });
             appsEarningsHistoryReferenceDataServiceMock.Setup(a => a.AECEarningsHistory(learner.ULN)).Returns(new List<AECEarningsHistory> { new AECEarningsHistory() });
 
             return new DataEntityMapper(
-                larsRefererenceDataServiceMock.Object,
+                larsReferenceDataServiceMock.Object,
                 postcodesReferenceDataServiceMock.Object,
-                appsEarningsHistoryReferenceDataServiceMock.Object,
-                fileDataServiceMock.Object).BuildGlobalDataEntity(learner, new Global());
+                appsEarningsHistoryReferenceDataServiceMock.Object).BuildGlobalDataEntity(learner, new Global());
         }
 
         public string GetRulebaseVersion(string folderName)

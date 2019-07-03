@@ -4,6 +4,10 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	<TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
+	<PackageId>ESFA.DC.ILR1819.FundingService.ALB.FundingOutput.Model</PackageId>
+	<Authors>DC</Authors>
+	<Company>ESFA</Company>
+	<Product>ESFA.DC.ILR1819.FundingService.ALB.FundingOutput.Model</Product>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -15,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
 	   <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>

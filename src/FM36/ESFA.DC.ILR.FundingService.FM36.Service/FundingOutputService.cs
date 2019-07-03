@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FM36.Service.Constants;
 using ESFA.DC.ILR.FundingService.Interfaces;
@@ -13,14 +13,14 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
 {
     public class FundingOutputService : IOutputService<FM36Global>
     {
-        private readonly IInternalDataCache _internalDataCache;
         private readonly IDataEntityAttributeService _dataEntityAttributeService;
 
-        public FundingOutputService(IInternalDataCache internalDataCache, IDataEntityAttributeService dataEntityAttributeService)
+        public FundingOutputService(IDataEntityAttributeService dataEntityAttributeService)
         {
-            _internalDataCache = internalDataCache;
             _dataEntityAttributeService = dataEntityAttributeService;
         }
+
+        private Periods Periods => new Periods();
 
         public FM36Global ProcessFundingOutputs(IEnumerable<IDataEntity> dataEntities)
         {
@@ -215,18 +215,18 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                     learningDeliveryPeriodisedAttributeList.Add(new LearningDeliveryPeriodisedValues
                     {
                         AttributeName = attribute,
-                        Period1 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period1),
-                        Period2 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period2),
-                        Period3 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period3),
-                        Period4 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period4),
-                        Period5 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period5),
-                        Period6 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period6),
-                        Period7 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period7),
-                        Period8 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period8),
-                        Period9 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period9),
-                        Period10 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period10),
-                        Period11 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period11),
-                        Period12 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period12),
+                        Period1 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period1),
+                        Period2 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period2),
+                        Period3 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period3),
+                        Period4 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period4),
+                        Period5 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period5),
+                        Period6 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period6),
+                        Period7 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period7),
+                        Period8 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period8),
+                        Period9 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period9),
+                        Period10 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period10),
+                        Period11 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period11),
+                        Period12 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period12),
                     });
                 }
             }
@@ -277,18 +277,18 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                     learningDeliveryPeriodisedAttributeList.Add(new LearningDeliveryPeriodisedTextValues
                     {
                         AttributeName = attribute,
-                        Period1 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period1),
-                        Period2 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period2),
-                        Period3 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period3),
-                        Period4 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period4),
-                        Period5 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period5),
-                        Period6 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period6),
-                        Period7 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period7),
-                        Period8 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period8),
-                        Period9 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period9),
-                        Period10 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period10),
-                        Period11 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period11),
-                        Period12 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period12),
+                        Period1 = GetPeriodAttributeStringValue(attributeValue, Periods.Period1),
+                        Period2 = GetPeriodAttributeStringValue(attributeValue, Periods.Period2),
+                        Period3 = GetPeriodAttributeStringValue(attributeValue, Periods.Period3),
+                        Period4 = GetPeriodAttributeStringValue(attributeValue, Periods.Period4),
+                        Period5 = GetPeriodAttributeStringValue(attributeValue, Periods.Period5),
+                        Period6 = GetPeriodAttributeStringValue(attributeValue, Periods.Period6),
+                        Period7 = GetPeriodAttributeStringValue(attributeValue, Periods.Period7),
+                        Period8 = GetPeriodAttributeStringValue(attributeValue, Periods.Period8),
+                        Period9 = GetPeriodAttributeStringValue(attributeValue, Periods.Period9),
+                        Period10 = GetPeriodAttributeStringValue(attributeValue, Periods.Period10),
+                        Period11 = GetPeriodAttributeStringValue(attributeValue, Periods.Period11),
+                        Period12 = GetPeriodAttributeStringValue(attributeValue, Periods.Period12),
                     });
                 }
             }
@@ -430,18 +430,18 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                     priceEpisodePeriodisedAttributeList.Add(new PriceEpisodePeriodisedValues
                     {
                         AttributeName = attribute,
-                        Period1 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period1),
-                        Period2 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period2),
-                        Period3 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period3),
-                        Period4 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period4),
-                        Period5 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period5),
-                        Period6 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period6),
-                        Period7 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period7),
-                        Period8 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period8),
-                        Period9 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period9),
-                        Period10 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period10),
-                        Period11 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period11),
-                        Period12 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period12),
+                        Period1 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period1),
+                        Period2 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period2),
+                        Period3 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period3),
+                        Period4 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period4),
+                        Period5 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period5),
+                        Period6 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period6),
+                        Period7 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period7),
+                        Period8 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period8),
+                        Period9 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period9),
+                        Period10 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period10),
+                        Period11 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period11),
+                        Period12 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, Periods.Period12),
                     });
                 }
             }

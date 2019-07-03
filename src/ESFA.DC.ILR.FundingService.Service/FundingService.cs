@@ -20,9 +20,9 @@ namespace ESFA.DC.ILR.FundingService.Service
             _fundingOutputService = fundingOutputService;
         }
 
-        public TOut ProcessFunding(IEnumerable<TIn> learnerList, CancellationToken cancellationToken)
+        public TOut ProcessFunding(int ukprn, IEnumerable<TIn> learnerList, CancellationToken cancellationToken)
         {
-            IEnumerable<IDataEntity> inputDataEntities = _dataEntityMapper.MapTo(learnerList);
+            IEnumerable<IDataEntity> inputDataEntities = _dataEntityMapper.MapTo(ukprn, learnerList);
 
             cancellationToken.ThrowIfCancellationRequested();
 

@@ -1,90 +1,63 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
-using ESFA.DC.ILR.FundingService.Dto.Interfaces;
+using ESFA.DC.ILR.FundingService.Interfaces;
+using ESFA.DC.ILR.ReferenceDataService.Model;
 
 namespace ESFA.DC.ILR.FundingService.Data.Population.External
 {
     public class ExternalDataCachePopulationService : IExternalDataCachePopulationService
     {
-        private readonly IExternalDataCache _externalDataCache;
-        private readonly IAppsEarningsHistoryDataRetrievalService _appsEarningsHistoryDataRetrievalService;
-        private readonly IFCSDataRetrievalService _fcsDataRetrievalService;
-        private readonly IPostcodesDataRetrievalService _postcodesDataRetrievalService;
-        private readonly ILargeEmployersDataRetrievalService _largeEmployersDataRetrievalService;
-        private readonly ILARSDataRetrievalService _larsDataRetrievalService;
-        private readonly IOrganisationDataRetrievalService _organisationDataRetrievalService;
-        private readonly IFundingServiceDto _fundingServiceDto;
+        private readonly IPostcodesMapperService _postcodesMapperService;
+        private readonly IOrganisationsMapperService _organisationsMapperService;
+        private readonly ILargeEmployersMapperService _largeEmployersMapperService;
+        private readonly IAppsEarningsHistoryMapperService _appsEarningsHistoryMapperService;
+        private readonly IFCSMapperService _fcsMapperService;
+        private readonly ILARSMapperService _larsMapperService;
 
         public ExternalDataCachePopulationService(
-            IExternalDataCache externalDataCache,
-            IAppsEarningsHistoryDataRetrievalService appsEarningsHistoryDataRetrievalService,
-            IFCSDataRetrievalService fcsDataRetrievalService,
-            IPostcodesDataRetrievalService postcodesDataRetrievalService,
-            ILargeEmployersDataRetrievalService largeEmployersDataRetrievalService,
-            ILARSDataRetrievalService larsDataRetrievalService,
-            IOrganisationDataRetrievalService organisationDataRetrievalService,
-            IFundingServiceDto fundingServiceDto)
+            IPostcodesMapperService postcodesMapperService,
+            IOrganisationsMapperService organisationsMapperService,
+            ILargeEmployersMapperService largeEmployersMapperService,
+            IAppsEarningsHistoryMapperService appsEarningsHistoryMapperService,
+            IFCSMapperService fcsMapperService,
+            ILARSMapperService larsMapperService)
         {
-            _externalDataCache = externalDataCache;
-            _appsEarningsHistoryDataRetrievalService = appsEarningsHistoryDataRetrievalService;
-            _fcsDataRetrievalService = fcsDataRetrievalService;
-            _postcodesDataRetrievalService = postcodesDataRetrievalService;
-            _largeEmployersDataRetrievalService = largeEmployersDataRetrievalService;
-            _larsDataRetrievalService = larsDataRetrievalService;
-            _organisationDataRetrievalService = organisationDataRetrievalService;
-            _fundingServiceDto = fundingServiceDto;
+            _postcodesMapperService = postcodesMapperService;
+            _organisationsMapperService = organisationsMapperService;
+            _largeEmployersMapperService = largeEmployersMapperService;
+            _appsEarningsHistoryMapperService = appsEarningsHistoryMapperService;
+            _fcsMapperService = fcsMapperService;
+            _larsMapperService = larsMapperService;
         }
 
-        public async Task PopulateAsync(CancellationToken cancellationToken)
+        public IExternalDataCache PopulateAsync(ReferenceDataRoot referenceDataRoot, CancellationToken cancellationToken)
         {
-            var providerUKPRN = _fundingServiceDto.Message.LearningProviderEntity.UKPRN;
+            return new ExternalDataCache
+            {
+                LARSCurrentVersion = referenceDataRoot.MetaDatas.ReferenceDataVersions.LarsVersion.Version,
+                LARSLearningDelivery = _larsMapperService.MapLARSLearningDeliveries(referenceDataRoot.LARSLearningDeliveries),
+                LARSStandards = _larsMapperService.MapLARSStandards(referenceDataRoot.LARSStandards),
 
-            var uniquePostcodes = _postcodesDataRetrievalService.UniquePostcodes(_fundingServiceDto.Message).ToCaseInsensitiveHashSet();
-            var learnAimRefs = _larsDataRetrievalService.UniqueLearnAimRefs(_fundingServiceDto.Message).ToCaseInsensitiveHashSet();
-            var standardCodes = _larsDataRetrievalService.UniqueStandardCodes(_fundingServiceDto.Message).ToList();
-            var frameworks = _larsDataRetrievalService.UniqueFrameworkCommonComponents(_fundingServiceDto.Message);
-            var apprenticeshipFundingStandards = _larsDataRetrievalService.UniqueApprenticeshipFundingStandards(_fundingServiceDto.Message);
-            var apprenticeshipFundingFrameworks = _larsDataRetrievalService.UniqueApprenticeshipFundingFrameworks(_fundingServiceDto.Message);
+                PostcodeRoots = _postcodesMapperService.MapPostcodes(referenceDataRoot.Postcodes),
+                PostcodeCurrentVersion = referenceDataRoot.MetaDatas.ReferenceDataVersions.PostcodesVersion.Version,
 
-            var uniqueEmployerIds = _largeEmployersDataRetrievalService.UniqueEmployerIds(_fundingServiceDto.Message).ToList();
+                OrgVersion = referenceDataRoot.MetaDatas.ReferenceDataVersions.OrganisationsVersion.Version,
+                OrgFunding = _organisationsMapperService.MapOrgFundings(referenceDataRoot.Organisations),
 
-            var ukprns = new List<long>() { providerUKPRN };
+                LargeEmployers = _largeEmployersMapperService.MapLargeEmployers(referenceDataRoot.Employers),
 
-            var uniqueFM36Learners = _appsEarningsHistoryDataRetrievalService.UniqueFM36Learners(_fundingServiceDto.Message);
+                FCSContractAllocations = _fcsMapperService.MapFCSContractAllocations(referenceDataRoot.FCSContractAllocations),
 
-            var conRefNumbers = _fcsDataRetrievalService.UniqueConRefNumbers(_fundingServiceDto.Message).ToCaseInsensitiveHashSet();
+                AECLatestInYearEarningHistory = _appsEarningsHistoryMapperService.MapAppsEarningsHistories(referenceDataRoot.AppsEarningsHistories),
 
-            var referenceDataCache = (ExternalDataCache)_externalDataCache;
-
-            referenceDataCache.LARSCurrentVersion = _larsDataRetrievalService.CurrentVersion();
-            referenceDataCache.LARSAnnualValue = _larsDataRetrievalService.LARSAnnualValuesForLearnAimRefs(learnAimRefs);
-            referenceDataCache.LARSLearningDelivery = _larsDataRetrievalService.LARSLearningDeliveriesForLearnAimRefs(learnAimRefs);
-            referenceDataCache.LARSLearningDeliveryCategory = _larsDataRetrievalService.LARSLearningDeliveryCategoriesForLearnAimRefs(learnAimRefs);
-            referenceDataCache.LARSFrameworkAims = _larsDataRetrievalService.LARSFrameworkAimsForLearnAimRefs(learnAimRefs);
-            referenceDataCache.LARSFunding = _larsDataRetrievalService.LARSFundingsForLearnAimRefs(learnAimRefs);
-            referenceDataCache.LARSStandardCommonComponent = _larsDataRetrievalService.LARSStandardCommonComponentForStandardCode(standardCodes);
-            referenceDataCache.LARSFrameworkCommonComponent = _larsDataRetrievalService.LARSFrameworkCommonComponentForLearnAimRefs(frameworks);
-            referenceDataCache.LARSApprenticeshipFundingStandards = _larsDataRetrievalService.LARSApprenticeshipFundingStandards(apprenticeshipFundingStandards);
-            referenceDataCache.LARSApprenticeshipFundingFrameworks = _larsDataRetrievalService.LARSApprenticeshipFundingFrameworks(apprenticeshipFundingFrameworks);
-            referenceDataCache.LARSStandardFundings = _larsDataRetrievalService.LARSStandardFundingForStandardCodes(standardCodes);
-
-            referenceDataCache.PostcodeRoots = _postcodesDataRetrievalService.PostcodeRootsForPostcodes(uniquePostcodes);
-            referenceDataCache.PostcodeCurrentVersion = _postcodesDataRetrievalService.CurrentVersion();
-
-            referenceDataCache.OrgVersion = _organisationDataRetrievalService.CurrentVersion();
-            referenceDataCache.OrgFunding = _organisationDataRetrievalService.OrgFundingsForUkprns(ukprns);
-
-            referenceDataCache.LargeEmployers = _largeEmployersDataRetrievalService.LargeEmployersForEmployerIds(uniqueEmployerIds);
-
-            referenceDataCache.FCSContractAllocations = _fcsDataRetrievalService.FCSContractsForUKPRN(providerUKPRN, conRefNumbers);
-
-            referenceDataCache.AECLatestInYearEarningHistory = _appsEarningsHistoryDataRetrievalService.AppsEarningsHistoryForLearners(providerUKPRN, uniqueFM36Learners);
+                Periods = new Periods(),
+            };
         }
     }
 }

@@ -5,11 +5,12 @@ using Autofac;
 using Autofac.Integration.ServiceFabric;
 using ESFA.DC.ILR.FundingService.Config;
 using ESFA.DC.ILR.FundingService.Config.Interfaces;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM25.Model.Output;
 using ESFA.DC.ILR.FundingService.FM25Actor.Modules;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.ILR.FundingService.Modules;
 using ESFA.DC.ILR.Model.Interface;
+using ESFA.DC.ServiceFabric.Common.Modules;
 using ESFA.DC.ServiceFabric.Helpers;
 using Microsoft.ServiceFabric.Actors.Runtime;
 
@@ -35,8 +36,8 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
                 using (var container = builder.Build())
                 {
                     // Not sure why this is being resolved here, to review
-                    var fm25 = container.Resolve<IFundingService<ILearner, IEnumerable<FM25Global>>>();
-                    var actor = container.Resolve<IFundingService<FM25Global, IEnumerable<PeriodisationGlobal>>>();
+                    //var fm25 = container.Resolve<IFundingService<FM25LearnerDto, IEnumerable<FM25Global>>>();
+                    //var actor = container.Resolve<IFundingService<FM25Global, IEnumerable<PeriodisationGlobal>>>();
                     Thread.Sleep(Timeout.Infinite);
                 }
             }
@@ -58,7 +59,6 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
             var loggerConfig = configHelper.GetSectionValues<LoggerConfig>("LoggerSection");
 
             containerBuilder.RegisterInstance(loggerConfig).As<ILoggerConfig>().SingleInstance();
-            containerBuilder.RegisterModule<LoggerModule>();
 
             // register serialization
             return containerBuilder;

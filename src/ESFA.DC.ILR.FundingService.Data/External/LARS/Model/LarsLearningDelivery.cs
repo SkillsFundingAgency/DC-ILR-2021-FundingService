@@ -28,10 +28,16 @@ namespace ESFA.DC.ILR.FundingService.Data.External.LARS.Model
 
         public decimal? SectorSubjectAreaTier2 { get; set; }
 
-        public IEnumerable<LARSValidity> LARSValidities { get; set; }
+        public IReadOnlyCollection<LARSCareerLearningPilot> LARSCareerLearningPilots { get; set; }
 
-        public IEnumerable<LARSCareerLearningPilot> LARSCareerLearningPilot { get; set; }
+        public IReadOnlyCollection<LARSAnnualValue> LARSAnnualValues { get; set; }
 
-        public IEnumerable<LARSFunding> LARSFunding { get; set; }
+        public IReadOnlyCollection<LARSFramework> LARSFrameworks { get; set; }
+
+        public IReadOnlyCollection<LARSFunding> LARSFundings { get; set; }
+
+        public IReadOnlyCollection<LARSLearningDeliveryCategory> LARSLearningDeliveryCategories { get; set; }
+       
+        public IReadOnlyCollection<LARSValidity> LARSValidities { get; set; }
     }
 }

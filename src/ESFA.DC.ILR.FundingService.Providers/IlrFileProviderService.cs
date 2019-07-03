@@ -1,45 +1,32 @@
-﻿using System;
-using System.IO;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.FileService.Interface;
+using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers.Interfaces;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
-using ESFA.DC.IO.Interfaces;
-using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
 
 namespace ESFA.DC.ILR.FundingService.Providers
 {
-    public class IlrFileProviderService : IIlrFileProviderService
+    public class IlrFileProviderService : IFileProviderService<IMessage>
     {
-        private readonly IStreamableKeyValuePersistenceService _blobStoragePersistenceService;
+        private readonly IFileService _fileService;
         private readonly IXmlSerializationService _xmlSerializationService;
-        private readonly ILogger _logger;
 
-        public IlrFileProviderService(IStreamableKeyValuePersistenceService blobStoragePersistenceService, IXmlSerializationService xmlSerializationService, ILogger logger)
+        public IlrFileProviderService(IFileService fileService, IXmlSerializationService xmlSerializationService)
         {
-            _blobStoragePersistenceService = blobStoragePersistenceService;
+            _fileService = fileService;
             _xmlSerializationService = xmlSerializationService;
-            _logger = logger;
         }
 
-        public async Task<IMessage> Provide(string fileName)
+        public async Task<IMessage> ProvideAsync(IFundingServiceContext fundingServiceContext, CancellationToken cancellationToken)
         {
-            Message message = null;
+            Message message;
 
-            try
+            using (var fileStream = await _fileService.OpenReadStreamAsync(fundingServiceContext.FileReference, fundingServiceContext.Container, cancellationToken))
             {
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    await _blobStoragePersistenceService.GetAsync(fileName, ms).ConfigureAwait(false);
-                    ms.Seek(0, SeekOrigin.Begin);
-                    message = _xmlSerializationService.Deserialize<Message>(ms);
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Failed to retrieve and deserialise ILR file {fileName}", ex);
-                throw;
+                message = _xmlSerializationService.Deserialize<Message>(fileStream);
             }
 
             return message;

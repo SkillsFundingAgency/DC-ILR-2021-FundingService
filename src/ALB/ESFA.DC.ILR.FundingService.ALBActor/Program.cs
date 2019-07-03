@@ -5,11 +5,8 @@ using Autofac.Integration.ServiceFabric;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.Config;
 using ESFA.DC.ILR.FundingService.Config.Interfaces;
+using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.ILR.FundingService.Modules;
-using ESFA.DC.ILR.Model.Interface;
-using ESFA.DC.Serialization.Interfaces;
-using ESFA.DC.Serialization.Json;
 using ESFA.DC.ServiceFabric.Helpers;
 using Microsoft.ServiceFabric.Actors.Runtime;
 using ActorFundingALBModule = ESFA.DC.ILR.FundingService.ALBActor.Modules.ActorFundingALBModule;
@@ -33,13 +30,13 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                 // Register the actor service.
                 builder.RegisterActor<ALBActor>(settings: new ActorServiceSettings
                 {
-                    ActorGarbageCollectionSettings = new ActorGarbageCollectionSettings(30, 30)
+                    ActorGarbageCollectionSettings = new ActorGarbageCollectionSettings(30, 30),
                 });
 
                 using (var container = builder.Build())
                 {
                     // Not sure why this is being resolved here, to review
-                    var ss = container.Resolve<IFundingService<ILearner, ALBGlobal>>();
+                    //var ss = container.Resolve<IFundingService<ALBLearnerDto, ALBGlobal>>();
                     Thread.Sleep(Timeout.Infinite);
                 }
             }
@@ -61,7 +58,6 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
             var loggerConfig = configHelper.GetSectionValues<LoggerConfig>("LoggerSection");
 
             containerBuilder.RegisterInstance(loggerConfig).As<ILoggerConfig>().SingleInstance();
-            containerBuilder.RegisterModule<LoggerModule>();
 
             return containerBuilder;
         }

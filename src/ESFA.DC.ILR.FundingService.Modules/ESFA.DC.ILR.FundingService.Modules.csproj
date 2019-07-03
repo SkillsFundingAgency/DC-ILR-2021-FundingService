@@ -22,28 +22,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.8.1" />
-    <PackageReference Include="ESFA.DC.Data.AppsEarningsHistory.Model" Version="0.1.1-beta0001" />
-    <PackageReference Include="ESFA.DC.Data.LargeEmployer.Model" Version="0.1.2-beta0001" />
-    <PackageReference Include="ESFA.DC.Data.LARS.Model" Version="0.1.4-beta0001" />
-    <PackageReference Include="ESFA.DC.Data.Organisations.Model" Version="0.1.5-beta0001" />
-    <PackageReference Include="ESFA.DC.Data.Postcodes.Model" Version="0.1.3-beta0001" />
-    <PackageReference Include="ESFA.DC.ILR.1819.Model" Version="0.1.5-beta0001" />
-    <PackageReference Include="ESFA.DC.JobContextManager" Version="0.2.6-beta0001" />
-    <PackageReference Include="ESFA.DC.Logging" Version="0.1.3-beta0001" />
-    <PackageReference Include="ESFA.DC.ReferenceData.FCS.Model" Version="0.1.76" />
-    <PackageReference Include="ESFA.DC.Serialization.Json" Version="0.1.5-beta0001" />
-    <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.5-beta0001" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Config\ESFA.DC.ILR.FundingService.Config.csproj" />
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Data.Population\ESFA.DC.ILR.FundingService.Data.Population.csproj" />
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Interfaces\ESFA.DC.ILR.FundingService.Interfaces.csproj" />
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Orchestrators\ESFA.DC.ILR.FundingService.Orchestrators.csproj" />
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Providers\ESFA.DC.ILR.FundingService.Providers.csproj" />
-    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Stateless.Models\ESFA.DC.ILR.FundingService.Stateless.Models.csproj" />
+    <PackageReference Include="Autofac" Version="4.9.2" />
+    <PackageReference Include="ESFA.DC.JobContextManager" Version="0.2.9-beta0001" />
+    <PackageReference Include="ESFA.DC.Logging" Version="0.1.4-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Json" Version="0.1.6-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.6-beta0001" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

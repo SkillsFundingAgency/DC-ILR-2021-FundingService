@@ -27,6 +27,7 @@
   <Resources>
     <Endpoints>
       <Endpoint Name="FM25ActorServiceEndpointV2" />
+      <Endpoint Name="FM25EndpointV2" />
       <Endpoint Name="FM25ActorServiceReplicatorEndpoint" />
     </Endpoints>
   </Resources>
