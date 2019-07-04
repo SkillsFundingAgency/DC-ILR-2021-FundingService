@@ -13,16 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Rulebase\FM35 Funding Calc 18_19.zip" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Rulebase\FM35 Funding Calc 18_19.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="ESFA.DC.ILR.1920.Model" Version="0.1.8-beta0001" />
     <PackageReference Include="ESFA.DC.ILR.1920.Model.Interface" Version="0.1.4-beta0001" />
     <PackageReference Include="ESFA.DC.IO.Interfaces" Version="0.1.18-beta0001" />
@@ -41,12 +31,6 @@
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model\ESFA.DC.OPA.Model.csproj" />
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service.Interface\ESFA.DC.OPA.Service.Interface.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Rulebase\XSRC\Inputs.xsrc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

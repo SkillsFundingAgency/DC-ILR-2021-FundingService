@@ -90,6 +90,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
         public IDataEntity BuildLearnerDataEntity(FM35LearnerDto learner)
         {
             var sfaPostDisadvantage = _postcodesReferenceDataService.SFADisadvantagesForPostcode(learner.PostcodePrior);
+            var campusIdentifiers = _organisationReferenceDataService.org
 
             return new DataEntity(Attributes.EntityLearner)
             {
@@ -106,6 +107,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                         .Union(
                             learner.LearnerEmploymentStatuses?
                             .Select(BuildLearnerEmploymentStatus) ?? new List<IDataEntity>())
+                        .Union(
+                            sfaPostDisadvantage?
+                            .Select(BuildSFAPostcodeDisadvantage) ?? new List<IDataEntity>())
                         .Union(
                             sfaPostDisadvantage?
                             .Select(BuildSFAPostcodeDisadvantage) ?? new List<IDataEntity>())
@@ -157,13 +161,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                     { Attributes.LearnActEndDate, new AttributeData(learningDelivery.LearnActEndDate) },
                     { Attributes.LearnPlanEndDate, new AttributeData(learningDelivery.LearnPlanEndDate) },
                     { Attributes.LearnStartDate, new AttributeData(learningDelivery.LearnStartDate) },
-                    { Attributes.LrnDelFAM_EEF, new AttributeData(learningDelivery.LrnDelFAM_EEF) },
-                    { Attributes.LrnDelFAM_LDM1, new AttributeData(learningDelivery.LrnDelFAM_LDM1) },
-                    { Attributes.LrnDelFAM_LDM2, new AttributeData(learningDelivery.LrnDelFAM_LDM2) },
-                    { Attributes.LrnDelFAM_LDM3, new AttributeData(learningDelivery.LrnDelFAM_LDM3) },
-                    { Attributes.LrnDelFAM_LDM4, new AttributeData(learningDelivery.LrnDelFAM_LDM4) },
-                    { Attributes.LrnDelFAM_FFI, new AttributeData(learningDelivery.LrnDelFAM_FFI) },
-                    { Attributes.LrnDelFAM_RES, new AttributeData(learningDelivery.LrnDelFAM_RES) },
                     { Attributes.OrigLearnStartDate, new AttributeData(learningDelivery.OrigLearnStartDate) },
                     { Attributes.OtherFundAdj, new AttributeData(learningDelivery.OtherFundAdj) },
                     { Attributes.Outcome, new AttributeData(learningDelivery.Outcome) },
