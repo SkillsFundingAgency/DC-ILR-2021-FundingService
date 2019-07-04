@@ -28,7 +28,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             var orgVersion = "OrgVersion";
             var postcodeDisadvantageVersion = "PostcodeDisadvantageVersion";
             var rulebaseVersion = "RulebaseVersion";
-
             var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
 
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "UKPRN")).Returns(ukprn);
@@ -111,7 +110,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             var largeEmployerFM35Fctr = 1;
             var largeEmployerID = 1;
             var largeEmployerStatusDate = new DateTime(2018, 09, 01);
-            var lrnDelFundOrgCode = "Code";
+            var learnDelFundOrgCode = "Code";
             var lTRCUpliftFctr = 1;
             var nonGovCont = 1;
             var oLASSCustody = false;
@@ -189,7 +188,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LargeEmployerFM35Fctr")).Returns(largeEmployerFM35Fctr);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "LargeEmployerID")).Returns(largeEmployerID);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "LargeEmployerStatusDate")).Returns(largeEmployerStatusDate);
-            dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "LrnDelFundOrgCode")).Returns(lrnDelFundOrgCode);
+            dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "LearnDelFundOrgCode")).Returns(learnDelFundOrgCode);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LTRCUpliftFctr")).Returns(lTRCUpliftFctr);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "NonGovCont")).Returns(nonGovCont);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "OLASSCustody")).Returns(oLASSCustody);
@@ -265,7 +264,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             learningDelivery.LargeEmployerFM35Fctr.Should().Be(largeEmployerFM35Fctr);
             learningDelivery.LargeEmployerID.Should().Be(largeEmployerID);
             learningDelivery.LargeEmployerStatusDate.Should().Be(largeEmployerStatusDate);
-            learningDelivery.LrnDelFundOrgCode.Should().Be(lrnDelFundOrgCode);
+            learningDelivery.LearnDelFundOrgCode.Should().Be(learnDelFundOrgCode);
             learningDelivery.LTRCUpliftFctr.Should().Be(lTRCUpliftFctr);
             learningDelivery.NonGovCont.Should().Be(nonGovCont);
             learningDelivery.OLASSCustody.Should().Be(oLASSCustody);
