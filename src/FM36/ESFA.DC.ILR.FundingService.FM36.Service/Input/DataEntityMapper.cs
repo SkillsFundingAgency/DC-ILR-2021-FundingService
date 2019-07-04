@@ -123,6 +123,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
                     { Attributes.AimSeqNumber, new AttributeData(learningDelivery.AimSeqNumber) },
+                    { Attributes.AchDate, new AttributeData(learningDelivery.AchDate) },
                     { Attributes.AimType, new AttributeData(learningDelivery.AimType) },
                     { Attributes.CompStatus, new AttributeData(learningDelivery.CompStatus) },
                     { Attributes.FrameworkCommonComponent, new AttributeData(larsLearningDelivery.FrameworkCommonComponent) },
@@ -131,11 +132,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
                     { Attributes.LearnActEndDate, new AttributeData(learningDelivery.LearnActEndDate) },
                     { Attributes.LearnPlanEndDate, new AttributeData(learningDelivery.LearnPlanEndDate) },
                     { Attributes.LearnStartDate, new AttributeData(learningDelivery.LearnStartDate) },
-                    { Attributes.LrnDelFAM_EEF, new AttributeData(learningDelivery.LrnDelFAM_EEF) },
-                    { Attributes.LrnDelFAM_LDM1, new AttributeData(learningDelivery.LrnDelFAM_LDM1) },
-                    { Attributes.LrnDelFAM_LDM2, new AttributeData(learningDelivery.LrnDelFAM_LDM2) },
-                    { Attributes.LrnDelFAM_LDM3, new AttributeData(learningDelivery.LrnDelFAM_LDM3) },
-                    { Attributes.LrnDelFAM_LDM4, new AttributeData(learningDelivery.LrnDelFAM_LDM4) },
                     { Attributes.OrigLearnStartDate, new AttributeData(learningDelivery.OrigLearnStartDate) },
                     { Attributes.OtherFundAdj, new AttributeData(learningDelivery.OtherFundAdj) },
                     { Attributes.PriorLearnFundAdj, new AttributeData(learningDelivery.PriorLearnFundAdj) },

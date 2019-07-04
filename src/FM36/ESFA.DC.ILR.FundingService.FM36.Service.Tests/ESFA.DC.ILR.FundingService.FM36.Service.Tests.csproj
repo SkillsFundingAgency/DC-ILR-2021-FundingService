@@ -102,27 +102,23 @@
     <Compile Include="RulebaseInterfaceTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\ESFA.DC.ILR.FundingService.FM36.Service\Rulebase\Apprenticeships Earnings Calc 19_20.zip">
+      <Link>Rulebase\Apprenticeships Earnings Calc 19_20.zip</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\ESFA.DC.ILR.FundingService.FM36.Service\Rulebase\XSRC\Inputs.xsrc">
+      <Link>Rulebase\XSRC\Inputs.xsrc</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="app.config" />
     <None Include="ESFA.DC.ILR.FundingService.FM36.Service.Tests.ruleset" />
-    <Content Include="Rulebase\Apprenticeships Earnings Calc 18_19.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Rulebase\XSRC\Inputs.xsrc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="RulebaseMasterFiles\Apprenticeships Earnings Calc 18_19.zip">
+    <None Include="packages.config" />
+    <Content Include="RulebaseMasterFiles\Apprenticeships Earnings Calc 19_20.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="RulebaseMasterFiles\XSRC\Inputs.xsrc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="packages.config" />
-    <None Include="RulebaseMasterFiles\XSRC\Interim.xsrc" />
-    <None Include="RulebaseMasterFiles\XSRC\Outputs.xsrc" />
-    <None Include="RulebaseMasterFiles\XSRC\Parameters.xsrc" />
-    <None Include="Rulebase\XSRC\Interim.xsrc" />
-    <None Include="Rulebase\XSRC\Outputs.xsrc" />
-    <None Include="Rulebase\XSRC\Parameters.xsrc" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
@@ -174,6 +170,7 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -57,11 +57,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                     ProgType = ld.ProgTypeNullable,
                     PwayCode = ld.PwayCodeNullable,
                     StdCode = ld.StdCodeNullable,
-                    LrnDelFAM_EEF = ldFams[l.LearnRefNumber][ld.AimSeqNumber].EEF,
-                    LrnDelFAM_LDM1 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM1,
-                    LrnDelFAM_LDM2 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM2,
-                    LrnDelFAM_LDM3 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM3,
-                    LrnDelFAM_LDM4 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM4,
                     AppFinRecords = ld.AppFinRecords?.Select(af => new AppFinRecord
                     {
                         AFinAmount = af.AFinAmount,

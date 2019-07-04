@@ -30,7 +30,7 @@
         public const string RulebaseVersion = "RulebaseVersion";
 
         // Global Values
-        public const string YearValue = "1819";
+        public const string YearValue = "1920";
         public const string CollectionPeriodValue = "DefaultPeriod";
         public const string Period1 = "R01";
         public const string Period2 = "R02";
@@ -53,6 +53,7 @@
         public const string PMUKPRN = "PMUKPRN";
 
         // LearningDelivery
+        public const string AchDate = "AchDate";
         public const string ActualDaysIL = "ActualDaysIL";
         public const string ActualNumInstalm = "ActualNumInstalm";
         public const string AdjStartDate = "AdjStartDate";

@@ -216,10 +216,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                         ProgType = 25,
                         PwayCode = 1,
                         StdCode = 1,
-                        LrnDelFAM_EEF = "1",
-                        LrnDelFAM_LDM1 = "1",
-                        LrnDelFAM_LDM2 = "2",
-                        LrnDelFAM_LDM3 = "3",
                         LearningDeliveryFAMs = new List<LearningDeliveryFAM>
                         {
                             new LearningDeliveryFAM
