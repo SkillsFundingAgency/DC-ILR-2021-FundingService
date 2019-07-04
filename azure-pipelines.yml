@@ -12,6 +12,7 @@ variables:
   BuildPlatform: 'Any CPU'
   BuildPlatformX64: 'x64'  
   ServiceFabricApplicationParametersFolder: 'src\ESFA.DC.ILR.FundingService\ApplicationParameters'
+  NugetFilter: 'ESFA.DC.ILR.1920.FundingService'
 
 pool:
   name: DCT
