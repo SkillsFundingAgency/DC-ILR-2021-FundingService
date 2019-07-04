@@ -6,7 +6,7 @@
     <PackageId>ESFA.DC.ILR.1920.FundingService.FM36.FundingOutput.Model</PackageId>
     <Authors>DC</Authors>
     <Company>ESFA</Company>
-    <Product>ESFA.DC.ILR.1920n .FundingService.FM36.FundingOutput.Model</Product>
+    <Product>ESFA.DC.ILR.1920.FundingService.FM36.FundingOutput.Model</Product>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

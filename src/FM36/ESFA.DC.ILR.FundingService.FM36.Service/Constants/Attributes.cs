@@ -318,7 +318,7 @@
         public const string PriceEpisode1618FUBalValue = "PriceEpisode1618FUBalValue";
         public const string PriceEpisodeApplic1618FrameworkUpliftCompElement = "PriceEpisodeApplic1618FrameworkUpliftCompElement";
         public const string PriceEpisode1618FrameworkUpliftTotPrevEarnings = "PriceEpisode1618FrameworkUpliftTotPrevEarnings";
-        public const string PriceEpisode1618FrameworkUpliftRemainingAmount = "PriceEpisode1618FrameworkUpliftRemainingAmount";
+        public const string PriceEpisode1618FrameworkUpliftRemainingAmount = "PriceEpisodeLD1618FrameworkUpliftRemainingAmount";
         public const string PriceEpisode1618FUMonthInstValue = "PriceEpisode1618FUMonthInstValue";
         public const string PriceEpisode1618FUTotEarnings = "PriceEpisode1618FUTotEarnings";
 
