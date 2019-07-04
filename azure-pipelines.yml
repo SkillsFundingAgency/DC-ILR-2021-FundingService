@@ -118,7 +118,7 @@ steps:
   inputs:
     SourceFolder: '$(build.sourcesdirectory)\src'
     Contents: |
-     **\*$(BuildConfiguration)*\*.nupkg
+     **\*$(BuildConfiguration)*\*.1920.FundingService.*.nupkg
      !**\packages\**
      !**\bin\x64\**
     TargetFolder: '$(build.artifactstagingdirectory)\Nuget\Packages'
@@ -197,7 +197,7 @@ steps:
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: NugetPackages'
-  enabled: False
+  enabled: True
   inputs:
     ArtifactName: NugetPackages
     PathtoPublish: '$(build.artifactstagingdirectory)\Nuget'
