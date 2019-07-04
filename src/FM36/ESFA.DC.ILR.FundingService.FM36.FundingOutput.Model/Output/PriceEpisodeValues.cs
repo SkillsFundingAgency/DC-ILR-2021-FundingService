@@ -14,6 +14,20 @@ namespace ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output
 
         public decimal? TNP4 { get; set; }
 
+        public DateTime? PriceEpisodeActualEndDateIncEPA { get; set; }
+
+        public decimal? PriceEpisode1618FUBalValue { get; set; }
+
+        public decimal? PriceEpisodeApplic1618FrameworkUpliftCompElement { get; set; }
+
+        public decimal? PriceEpisode1618FrameworkUpliftTotPrevEarnings { get; set; }
+
+        public decimal? PriceEpisode1618FrameworkUpliftRemainingAmount { get; set; }
+
+        public decimal? PriceEpisode1618FUMonthInstValue { get; set; }
+
+        public decimal? PriceEpisode1618FUTotEarnings { get; set; }
+
         public decimal? PriceEpisodeUpperBandLimit { get; set; }
 
         public DateTime? PriceEpisodePlannedEndDate { get; set; }

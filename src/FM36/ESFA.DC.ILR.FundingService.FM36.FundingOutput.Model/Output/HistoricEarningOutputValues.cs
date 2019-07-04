@@ -8,10 +8,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output
 
         public bool? AppProgCompletedInTheYearOutput { get; set; }
 
-        public decimal? BalancingProgAimPaymentsInTheYear { get; set; }
-
-        public decimal? CompletionProgAimPaymentsInTheYear { get; set; }
-
         public int? HistoricDaysInYearOutput { get; set; }
 
         public DateTime? HistoricEffectiveTNPStartDateOutput { get; set; }
@@ -23,8 +19,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output
         public int? HistoricFworkCodeOutput { get; set; }
 
         public bool? HistoricLearner1618AtStartOutput { get; set; }
-
-        public decimal? OnProgProgAimPaymentsInTheYear { get; set; }
 
         public decimal? HistoricPMRAmountOutput { get; set; }
 
