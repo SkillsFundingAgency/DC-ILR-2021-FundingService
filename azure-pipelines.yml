@@ -12,7 +12,6 @@ variables:
   BuildPlatform: 'Any CPU'
   BuildPlatformX64: 'x64'  
   ServiceFabricApplicationParametersFolder: 'src\ESFA.DC.ILR.FundingService\ApplicationParameters'
-  NugetFilter: 'ESFA.DC.ILR.1920.FundingService'
 
 pool:
   name: DCT
@@ -119,7 +118,7 @@ steps:
   inputs:
     SourceFolder: '$(build.sourcesdirectory)\src'
     Contents: |
-     **\*$(BuildConfiguration)*\*.nupkg
+     **\*$(BuildConfiguration)*\*.1920.FundingService.*.nupkg
      !**\packages\**
      !**\bin\x64\**
     TargetFolder: '$(build.artifactstagingdirectory)\Nuget\Packages'
