@@ -125,6 +125,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
                 LargeEmployerFM35Fctr = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.LargeEmployerFM35Fctr),
                 LargeEmployerID = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.LargeEmployerID),
                 LargeEmployerStatusDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.LargeEmployerStatusDate),
+                LrnDelFundOrgCode = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.LrnDelFundOrgCode),
                 LTRCUpliftFctr = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.LTRCUpliftFctr),
                 NonGovCont = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.NonGovCont),
                 OLASSCustody = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, Attributes.OLASSCustody),

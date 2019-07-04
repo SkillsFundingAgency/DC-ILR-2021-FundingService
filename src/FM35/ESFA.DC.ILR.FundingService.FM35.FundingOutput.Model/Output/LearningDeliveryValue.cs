@@ -94,6 +94,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Output
 
         public DateTime? LargeEmployerStatusDate { get; set; }
 
+        public string LrnDelFundOrgCode { get; set; }
+
         public decimal? LTRCUpliftFctr { get; set; }
 
         public decimal? NonGovCont { get; set; }
