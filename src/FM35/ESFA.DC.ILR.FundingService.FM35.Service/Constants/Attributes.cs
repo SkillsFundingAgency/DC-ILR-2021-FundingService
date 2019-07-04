@@ -152,7 +152,7 @@
         public const string LargeEmployerFM35Fctr = "LargeEmployerFM35Fctr";
         public const string LargeEmployerID = "LargeEmployerID";
         public const string LargeEmployerStatusDate = "LargeEmployerStatusDate";
-        public const string LrnDelFundOrgCode = "LrnDelFundOrgCode";
+        public const string LearnDelFundOrgCode = "LearnDelFundOrgCode";
         public const string LTRCUpliftFctr = "LTRCUpliftFctr";
         public const string NonGovCont = "NonGovCont";
         public const string OLASSCustody = "OLASSCustody";
