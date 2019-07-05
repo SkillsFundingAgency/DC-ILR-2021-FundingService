@@ -90,7 +90,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
         public IDataEntity BuildLearnerDataEntity(FM35LearnerDto learner)
         {
             var sfaPostDisadvantage = _postcodesReferenceDataService.SFADisadvantagesForPostcode(learner.PostcodePrior);
-            var campusIdentifiers = _organisationReferenceDataService.org
+            var specialistResources = _organisationReferenceDataService.SepcialistResourcesForCampusIdentifider(learner.CampId);
 
             return new DataEntity(Attributes.EntityLearner)
             {
@@ -111,8 +111,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                             sfaPostDisadvantage?
                             .Select(BuildSFAPostcodeDisadvantage) ?? new List<IDataEntity>())
                         .Union(
-                            sfaPostDisadvantage?
-                            .Select(BuildSFAPostcodeDisadvantage) ?? new List<IDataEntity>())
+                            specialistResources?
+                            .Select(BuildSpecialistResources) ?? new List<IDataEntity>())
                         .ToList()
             };
         }
@@ -244,6 +244,19 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                     { Attributes.DisUplift, new AttributeData(sfaDisadvantage.Uplift) },
                     { Attributes.DisUpEffectiveFrom, new AttributeData(sfaDisadvantage.EffectiveFrom) },
                     { Attributes.DisUpEffectiveTo, new AttributeData(sfaDisadvantage.EffectiveTo) }
+                }
+            };
+        }
+
+        public IDataEntity BuildSpecialistResources(CampusIdentifierSpecResource campusIdentifierSpecResource)
+        {
+            return new DataEntity(Attributes.EntityCampusIdentifiers)
+            {
+                Attributes = new Dictionary<string, IAttributeData>()
+                {
+                    { Attributes.CampIdSpecialistResources, new AttributeData(campusIdentifierSpecResource.SpecialistResources) },
+                    { Attributes.CampIdEffectiveFrom, new AttributeData(campusIdentifierSpecResource.EffectiveFrom) },
+                    { Attributes.CampIdEffectiveTo, new AttributeData(campusIdentifierSpecResource.EffectiveTo) }
                 }
             };
         }

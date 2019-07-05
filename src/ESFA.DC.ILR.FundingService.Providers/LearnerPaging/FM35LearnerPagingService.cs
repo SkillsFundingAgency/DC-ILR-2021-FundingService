@@ -27,6 +27,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
             return learners.Select(l => new FM35LearnerDto
             {
                 LearnRefNumber = l.LearnRefNumber,
+                CampId = l.CampId,
                 DateOfBirth = l.DateOfBirthNullable,
                 PostcodePrior = l.PostcodePrior,
                 LearnerEmploymentStatuses = l.LearnerEmploymentStatuses?.Select(les => new LearnerEmploymentStatus

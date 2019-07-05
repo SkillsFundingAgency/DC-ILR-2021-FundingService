@@ -99,17 +99,23 @@
     <Compile Include="RulebaseInterfaceTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\ESFA.DC.ILR.FundingService.FM35.Service\Rulebase\FM35 Funding Calc 19_20.zip">
+    <Content Include="..\ESFA.DC.ILR.FundingService.FM35.Service\Rulebase\FM35 Funding Calc 19_20.zip">
       <Link>Rulebase\FM35 Funding Calc 19_20.zip</Link>
-    </None>
-    <None Include="..\ESFA.DC.ILR.FundingService.FM35.Service\Rulebase\XSRC\Inputs.xsrc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\ESFA.DC.ILR.FundingService.FM35.Service\Rulebase\XSRC\Inputs.xsrc">
       <Link>Rulebase\XSRC\Inputs.xsrc</Link>
-    </None>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="app.config" />
     <None Include="ESFA.DC.ILR.FundingService.FM35.Service.Tests.ruleset" />
     <None Include="packages.config" />
-    <None Include="RulebaseMasterFiles\FM35 Funding Calc 19_20.zip" />
-    <None Include="RulebaseMasterFiles\XSRC\Inputs.xsrc" />
+    <Content Include="RulebaseMasterFiles\FM35 Funding Calc 19_20.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RulebaseMasterFiles\XSRC\Inputs.xsrc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />

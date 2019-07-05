@@ -320,10 +320,13 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             };
 
             var postcodesRefererenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
+            var organisationsDataServiceMock = new Mock<IOrganisationReferenceDataService>();
 
             postcodesRefererenceDataServiceMock.Setup(l => l.SFADisadvantagesForPostcode(It.IsAny<string>())).Returns(new List<SfaDisadvantage>());
+            organisationsDataServiceMock.Setup(l => l.SepcialistResourcesForCampusIdentifider(It.IsAny<string>())).Returns(new List<CampusIdentifierSpecResource>());
 
             var dataEntity = NewService(
+                organisationReferenceDataService: organisationsDataServiceMock.Object,
                 postcodesReferenceDataService: postcodesRefererenceDataServiceMock.Object)
                 .BuildLearnerDataEntity(learner);
 
