@@ -71,6 +71,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                     new MessageLearner
                     {
                         LearnRefNumber = "Learner_1",
+                        CampId = "CampId1",
                         DateOfBirthSpecified = true,
                         DateOfBirth = new DateTime(1990, 8, 1),
                         PostcodePrior = "Postcode",
@@ -178,6 +179,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
             var expectedDto = new FM35LearnerDto
             {
                 LearnRefNumber = "Learner_1",
+                CampId = "CampId1",
                 DateOfBirth = new DateTime(1990, 8, 1),
                 PostcodePrior = "Postcode",
                 LearnerEmploymentStatuses = new List<LearnerEmploymentStatus>
@@ -212,12 +214,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                         PriorLearnFundAdj = 5,
                         ProgType = 25,
                         PwayCode = 1,
-                        LrnDelFAM_EEF = "1",
-                        LrnDelFAM_FFI = "1",
-                        LrnDelFAM_RES = "1",
-                        LrnDelFAM_LDM1 = "1",
-                        LrnDelFAM_LDM2 = "2",
-                        LrnDelFAM_LDM3 = "3",
                         LearningDeliveryFAMs = new List<LearningDeliveryFAM>
                         {
                             new LearningDeliveryFAM

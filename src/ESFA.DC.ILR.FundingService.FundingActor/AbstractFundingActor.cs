@@ -43,6 +43,7 @@ namespace ESFA.DC.ILR.FundingService.FundingActor
                 LARSStandards = deserialzedCache.LARSStandards,
                 OrgFunding = deserialzedCache.OrgFunding,
                 OrgVersion = deserialzedCache.OrgVersion,
+                CampusIdentifierSpecResources = deserialzedCache.CampusIdentifierSpecResources.ToDictionary(k => k.Key, v => v.Value, StringComparer.OrdinalIgnoreCase),
                 PostcodeCurrentVersion = deserialzedCache.PostcodeCurrentVersion,
                 PostcodeRoots = deserialzedCache.PostcodeRoots.ToDictionary(k => k.Key, v => v.Value, StringComparer.OrdinalIgnoreCase),
                 Periods = deserialzedCache.Periods,

@@ -18,9 +18,10 @@
         public const string EntityLearningDeliveryLARS_AnnualValue = "LearningDeliveryAnnualValue";
         public const string EntityLearningDeliveryLARS_Category = "LearningDeliveryLARSCategory";
         public const string EntityLearningDeliveryLARS_Funding = "LearningDeliveryLARS_Funding";
+        public const string EntityCampusIdentifiers = "Camps_Identifiers_Reference_DataFunding";
 
         // Global Values
-        public const string YearValue = "1819";
+        public const string YearValue = "1920";
         public const string CollectionPeriodValue = "DefaultPeriod";
         public const string Period1 = "R01";
         public const string Period2 = "R02";
@@ -84,28 +85,12 @@
         public const string LearnActEndDate = "LearnActEndDate";
         public const string LearnPlanEndDate = "LearnPlanEndDate";
         public const string LearnStartDate = "LearnStartDate";
-        public const string LrnDelFAM_EEF = "LrnDelFAM_EEF";
-        public const string LrnDelFAM_LDM1 = "LrnDelFAM_LDM1";
-        public const string LrnDelFAM_LDM2 = "LrnDelFAM_LDM2";
-        public const string LrnDelFAM_LDM3 = "LrnDelFAM_LDM3";
-        public const string LrnDelFAM_LDM4 = "LrnDelFAM_LDM4";
-        public const string LrnDelFAM_FFI = "LrnDelFAM_FFI";
-        public const string LrnDelFAM_RES = "LrnDelFAM_RES";
         public const string OrigLearnStartDate = "OrigLearnStartDate";
         public const string OtherFundAdj = "OtherFundAdj";
         public const string Outcome = "Outcome";
         public const string PriorLearnFundAdj = "PriorLearnFundAdj";
         public const string ProgType = "ProgType";
         public const string PwayCode = "PwayCode";
-
-        public const string LearningDeliveryFAMTypeEEF = "EEF";
-        public const string LearningDeliveryFAMTypeFFI = "FFI";
-        public const string LearningDeliveryFAMTypeRES = "RES";
-        public const string LearningDeliveryFAMTypeLDM = "LDM";
-        public const string LearningDeliveryFAMTypeLDM1 = "LDM1";
-        public const string LearningDeliveryFAMTypeLDM2 = "LDM2";
-        public const string LearningDeliveryFAMTypeLDM3 = "LDM3";
-        public const string LearningDeliveryFAMTypeLDM4 = "LDM4";
 
         public const string AchApplicDate = "AchApplicDate";
         public const string Achieved = "Achieved";
@@ -227,5 +212,10 @@
         public const string AreaCosEffectiveFrom = "AreaCosEffectiveFrom";
         public const string AreaCosEffectiveTo = "AreaCosEffectiveTo";
         public const string AreaCosFactor = "AreaCosFactor";
+
+        // Campus IDentifier SPec Resources
+        public const string CampIdSpecialistResources = "SpecialistResources";
+        public const string CampIdEffectiveFrom = "EffectiveFrom";
+        public const string CampIdEffectiveTo = "EffectiveTo";
     }
 }

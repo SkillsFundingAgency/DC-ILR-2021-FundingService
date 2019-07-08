@@ -145,11 +145,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                         OtherFundAdj = 3,
                         Outcome = 4,
                         PriorLearnFundAdj = 5,
-                        LrnDelFAM_ADL = "1",
-                        LrnDelFAM_RES = "1",
-                        LrnDelFAM_LDM1 = "1",
-                        LrnDelFAM_LDM2 = "2",
-                        LrnDelFAM_LDM3 = "3",
                         LearningDeliveryFAMs = new List<LearningDeliveryFAM>
                         {
                             new LearningDeliveryFAM
