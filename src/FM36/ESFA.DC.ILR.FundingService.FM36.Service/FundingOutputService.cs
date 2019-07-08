@@ -336,7 +336,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 PriceEpisodeRemainingAmountWithinUpperLimit = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.PriceEpisodeRemainingAmountWithinUpperLimit),
                 PriceEpisodeCappedRemainingTNPAmount = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.PriceEpisodeCappedRemainingTNPAmount),
                 PriceEpisodeExpectedTotalMonthlyValue = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.PriceEpisodeExpectedTotalMonthlyValue),
-                PriceEpisodeAimSeqNumber = _dataEntityAttributeService.GetLongAttributeValue(dataEntity, Attributes.PriceEpisodeAimSeqNumber),
+                PriceEpisodeAimSeqNumber = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.PriceEpisodeAimSeqNumber),
                 PriceEpisodeFirstDisadvantagePayment = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.PriceEpisodeFirstDisadvantagePayment),
                 PriceEpisodeSecondDisadvantagePayment = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.PriceEpisodeSecondDisadvantagePayment),
                 PriceEpisodeApplic1618FrameworkUpliftBalancing = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.PriceEpisodeApplic1618FrameworkUpliftBalancing),
