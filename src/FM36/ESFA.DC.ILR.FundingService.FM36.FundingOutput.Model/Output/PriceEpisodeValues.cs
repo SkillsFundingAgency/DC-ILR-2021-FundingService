@@ -70,7 +70,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output
 
         public decimal? PriceEpisodeExpectedTotalMonthlyValue { get; set; }
 
-        public long? PriceEpisodeAimSeqNumber { get; set; }
+        public int? PriceEpisodeAimSeqNumber { get; set; }
 
         public decimal? PriceEpisodeFirstDisadvantagePayment { get; set; }
 
