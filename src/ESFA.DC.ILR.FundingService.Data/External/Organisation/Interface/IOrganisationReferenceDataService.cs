@@ -9,6 +9,6 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface
 
         IEnumerable<OrgFunding> OrganisationFundingForUKPRN(int ukprn);
 
-        IEnumerable<CampusIdentifierSpecResource> SepcialistResourcesForCampusIdentifider(string campId);
+        IEnumerable<CampusIdentifierSpecResource> SpecialistResourcesForCampusIdentifier(string campId);
     }
 }

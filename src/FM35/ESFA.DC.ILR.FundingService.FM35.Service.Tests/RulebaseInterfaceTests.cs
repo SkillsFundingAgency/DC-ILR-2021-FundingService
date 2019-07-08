@@ -471,7 +471,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
             organisationRefererenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(It.IsAny<int>()))
                 .Returns(new List<OrgFunding> { new OrgFunding { OrgFundFactType = Attributes.OrgFundFactorTypeAdultSkills } });
-            organisationRefererenceDataServiceMock.Setup(o => o.SepcialistResourcesForCampusIdentifider(It.IsAny<string>()))
+            organisationRefererenceDataServiceMock.Setup(o => o.SpecialistResourcesForCampusIdentifier(It.IsAny<string>()))
                 .Returns(new List<CampusIdentifierSpecResource> { new CampusIdentifierSpecResource { SpecialistResources = "Y", EffectiveFrom = new DateTime(2020, 8, 1) } });
             postcodesReferenceDataServiceMock.Setup(p => p.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode)).Returns(new List<SfaAreaCost> { new SfaAreaCost() });
             postcodesReferenceDataServiceMock.Setup(p => p.SFADisadvantagesForPostcode(learner.PostcodePrior)).Returns(new List<SfaDisadvantage> { new SfaDisadvantage() });

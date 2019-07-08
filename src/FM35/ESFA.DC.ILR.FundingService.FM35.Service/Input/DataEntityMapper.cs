@@ -90,7 +90,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
         public IDataEntity BuildLearnerDataEntity(FM35LearnerDto learner)
         {
             var sfaPostDisadvantage = _postcodesReferenceDataService.SFADisadvantagesForPostcode(learner.PostcodePrior);
-            var specialistResources = _organisationReferenceDataService.SepcialistResourcesForCampusIdentifider(learner.CampId);
+            var specialistResources = _organisationReferenceDataService.SpecialistResourcesForCampusIdentifier(learner.CampId);
 
             return new DataEntity(Attributes.EntityLearner)
             {

@@ -323,7 +323,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             var organisationsDataServiceMock = new Mock<IOrganisationReferenceDataService>();
 
             postcodesRefererenceDataServiceMock.Setup(l => l.SFADisadvantagesForPostcode(It.IsAny<string>())).Returns(new List<SfaDisadvantage>());
-            organisationsDataServiceMock.Setup(l => l.SepcialistResourcesForCampusIdentifider(It.IsAny<string>())).Returns(new List<CampusIdentifierSpecResource>());
+            organisationsDataServiceMock.Setup(l => l.SpecialistResourcesForCampusIdentifier(It.IsAny<string>())).Returns(new List<CampusIdentifierSpecResource>());
 
             var dataEntity = NewService(
                 organisationReferenceDataService: organisationsDataServiceMock.Object,
