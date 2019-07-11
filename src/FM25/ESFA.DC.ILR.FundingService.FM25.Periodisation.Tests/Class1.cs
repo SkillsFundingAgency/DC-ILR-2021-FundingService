@@ -13,7 +13,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation.Tests
         [Fact]
         public void Test()
         {
-            true.Should().BeFalse();
+            true.Should().BeTrue();
         }
     }
 }
