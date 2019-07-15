@@ -28,9 +28,14 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Organisation
 
         public IEnumerable<CampusIdentifierSpecResource> SpecialistResourcesForCampusIdentifier(string campId)
         {
-            _referenceDataCache.CampusIdentifierSpecResources.TryGetValue(campId, out IReadOnlyCollection<CampusIdentifierSpecResource> campusIdentifierSpecResources);
+            if (campId != null)
+            {
+                _referenceDataCache.CampusIdentifierSpecResources.TryGetValue(campId, out IReadOnlyCollection<CampusIdentifierSpecResource> campusIdentifierSpecResources);
 
-            return campusIdentifierSpecResources ?? new List<CampusIdentifierSpecResource>();
+                return campusIdentifierSpecResources ?? new List<CampusIdentifierSpecResource>();
+            }
+
+            return new List<CampusIdentifierSpecResource>();
         }
     }
 }
