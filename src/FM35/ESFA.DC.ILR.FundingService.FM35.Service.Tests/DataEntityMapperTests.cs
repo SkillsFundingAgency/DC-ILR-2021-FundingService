@@ -519,6 +519,25 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
         }
 
         [Fact]
+        public void BuildCampusIdentifierSpecResource()
+        {
+            var campusIdentifierSpecResource = new CampusIdentifierSpecResource
+            {
+                CampusIdentifier = "Id",
+                EffectiveFrom = new DateTime(2019, 1, 1),
+                SpecialistResources = "Y",
+            };
+
+            var dataEntity = NewService().BuildSpecialistResources(campusIdentifierSpecResource);
+
+            dataEntity.EntityName.Should().Be("Camps_Identifiers_Reference_DataFunding");
+            dataEntity.Attributes.Should().HaveCount(3);
+            dataEntity.Attributes["EffectiveFrom"].Value.Should().Be(campusIdentifierSpecResource.EffectiveFrom);
+            dataEntity.Attributes["EffectiveTo"].Value.Should().Be(campusIdentifierSpecResource.EffectiveTo);
+            dataEntity.Attributes["SpecialistResources"].Value.Should().Be(campusIdentifierSpecResource.SpecialistResources);
+        }
+
+        [Fact]
         public void BuildLargeEmployer()
         {
             var largeEmployer = new LargeEmployers
