@@ -8,7 +8,7 @@ using Xunit;
 
 namespace ESFA.DC.ILR.FundingService.FM25.Periodisation.Tests
 {
-    public class Class1
+    public class FM25PeriodisationFundingServiceTests
     {
         [Fact]
         public void Test()
