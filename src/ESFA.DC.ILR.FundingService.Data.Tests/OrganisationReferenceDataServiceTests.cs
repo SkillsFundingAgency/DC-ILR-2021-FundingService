@@ -53,6 +53,42 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             NewService(referenceDataCacheMock.Object).OrganisationFundingForUKPRN(5678).Should().BeEmpty();
         }
 
+        [Fact]
+        public void SpecialistResourcesForCampusIdentifier()
+        {
+            var campId = "Id1234";
+
+            var specResources = new List<CampusIdentifierSpecResource>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.CampusIdentifierSpecResources)
+                .Returns(new Dictionary<string, IReadOnlyCollection<CampusIdentifierSpecResource>>
+                {
+                    { campId, specResources },
+                });
+
+            NewService(referenceDataCacheMock.Object).SpecialistResourcesForCampusIdentifier(campId).Should().BeSameAs(specResources);
+        }
+
+        [Fact]
+        public void SpecialistResourcesForCampusIdentifier_NotExists()
+        {
+            var campId = "Id1234";
+
+            var specResources = new List<CampusIdentifierSpecResource>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.CampusIdentifierSpecResources)
+                .Returns(new Dictionary<string, IReadOnlyCollection<CampusIdentifierSpecResource>>
+                {
+                    { campId, specResources },
+                });
+
+            NewService(referenceDataCacheMock.Object).SpecialistResourcesForCampusIdentifier("Id5678").Should().BeEmpty();
+        }
+
         private OrganisationReferenceDataService NewService(IExternalDataCache referenceDataCache = null)
         {
             return new OrganisationReferenceDataService(referenceDataCache);
