@@ -20,6 +20,7 @@ namespace ESFA.DC.ILR.FundingService.Modules.FundingModules
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterModule<AbstractFundingModule>();
             builder.RegisterType<FM70RulebaseProvider>().As<IRulebaseStreamProvider<FM70LearnerDto>>();
             builder.RegisterType<SessionFactory<FM70LearnerDto>>().As<ISessionFactory<FM70LearnerDto>>().InstancePerLifetimeScope();
             builder.RegisterType<OPAService<FM70LearnerDto>>().As<IOPAService<FM70LearnerDto>>().InstancePerLifetimeScope();

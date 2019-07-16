@@ -13,8 +13,6 @@ using ESFA.DC.OPA.Service.Builders;
 using ESFA.DC.OPA.Service.Interface;
 using ESFA.DC.OPA.Service.Interface.Builders;
 using ESFA.DC.OPA.Service.Interface.Rulebase;
-using ESFA.DC.Serialization.Interfaces;
-using ESFA.DC.Serialization.Json;
 
 namespace ESFA.DC.ILR.FundingService.Modules.FundingModules
 {
@@ -22,6 +20,7 @@ namespace ESFA.DC.ILR.FundingService.Modules.FundingModules
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterModule<AbstractFundingModule>();
             builder.RegisterType<ALBRulebaseProvider>().As<IRulebaseStreamProvider<ALBLearnerDto>>().InstancePerLifetimeScope();
             builder.RegisterType<SessionFactory<ALBLearnerDto>>().As<ISessionFactory<ALBLearnerDto>>().InstancePerLifetimeScope();
             builder.RegisterType<OPAService<ALBLearnerDto>>().As<IOPAService<ALBLearnerDto>>().InstancePerLifetimeScope();

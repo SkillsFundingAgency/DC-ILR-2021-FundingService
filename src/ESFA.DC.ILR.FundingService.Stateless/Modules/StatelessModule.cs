@@ -34,6 +34,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             containerBuilder.RegisterModule<CondenserModule>();
             containerBuilder.RegisterModule<DataCacheModule>();
             containerBuilder.RegisterModule<ProviderModule>();
+            containerBuilder.RegisterModule<SerializationModule>();
             containerBuilder.RegisterModule<StatelessActorModule>();
 
             // register MessageHandler
