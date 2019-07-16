@@ -100,17 +100,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                 }
             };
 
-            var subsidyPilotPostcodeArea = new List<CareerLearningPilot>
-            {
-                new CareerLearningPilot
-                {
-                    Postcode = "DelLocPostcode",
-                    EffectiveFrom = new DateTime(2019, 1, 1),
-                    EffectiveTo = new DateTime(2020, 1, 1),
-                    AreaCode = "AreaCode"
-                }
-            };
-
             var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
             var postcodeReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
 
@@ -310,17 +299,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                     EffectiveFrom = new DateTime(2019, 1, 1),
                     EffectiveTo = new DateTime(2020, 1, 1),
                     AreaCostFactor = 1.2m
-                }
-            };
-
-            var subsidyPilotPostcodeArea = new List<CareerLearningPilot>
-            {
-                new CareerLearningPilot
-                {
-                    Postcode = "DelLocPostcode",
-                    EffectiveFrom = new DateTime(2019, 1, 1),
-                    EffectiveTo = new DateTime(2020, 1, 1),
-                    AreaCode = "AreaCode"
                 }
             };
 
