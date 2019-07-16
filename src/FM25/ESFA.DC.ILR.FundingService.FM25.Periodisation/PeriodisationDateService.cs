@@ -11,83 +11,79 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation
 {
     public class PeriodisationDateService : IPeriodisationDateService
     {
-        public DateTime? GetPeriodisationStartDate(FM25Learner learner)
+        public DateTime GetPeriodisationStartDate(FM25Learner learner)
         {
-            if (IsLearnerTrainee(learner.FundLine))
-                return (learner.LearnerStartDate > DateConstants.academicYearStartDate) ? learner.LearnerStartDate : DateConstants.academicYearStartDate;
-            else
-                return DateConstants.academicYearStartDate;
-        }
-
-        public DateTime? GetPeriodisationEndDate(FM25Learner learner, bool learnerIsTrainee)
-        {
-            if (learnerIsTrainee && learner.LearnerPlanEndDate > DateConstants.academicYearStartDate && learner.LearnerActEndDate != null)
+            if (new PeriodisationService().IsLearnerTrainee(learner.FundLine))
             {
-                return new[] { learner.LearnerPlanEndDate, learner.LearnerActEndDate, DateConstants.academicYearEndDate }.Min();
-            }
-            else if (learnerIsTrainee && learner.LearnerPlanEndDate > DateConstants.academicYearStartDate && learner.LearnerActEndDate == null)
-            {
-                return new[] { learner.LearnerPlanEndDate, DateConstants.academicYearEndDate }.Min();
-            }
-            else if (learnerIsTrainee && learner.LearnerPlanEndDate < DateConstants.academicYearStartDate && learner.LearnerActEndDate != null)
-            {
-                return learner.LearnerActEndDate;
-            }
-            else if (learnerIsTrainee && learner.LearnerPlanEndDate < DateConstants.academicYearStartDate && learner.LearnerActEndDate == null)
-            {
-                return DateConstants.academicYearEndDate;
+                return (learner.LearnerStartDate.Value > DateConstants.AcademicYearStartDate) ? learner.LearnerStartDate.Value : DateConstants.AcademicYearStartDate;
             }
             else
             {
-                return DateConstants.academicYearEndDate;
+                return DateConstants.AcademicYearStartDate;
             }
         }
 
-        public int GetMonthsBetweenDatesIgnoringDaysInclusive(DateTime? periodisationStartDate, DateTime? periodisationEndDate)
+        public DateTime GetPeriodisationEndDate(FM25Learner learner, bool learnerIsTrainee)
         {
-            return ((periodisationEndDate.Value.Year - periodisationStartDate.Value.Year) * 12) + periodisationEndDate.Value.Month - periodisationStartDate.Value.Month + 1;
-        }
-
-        public LearnerPeriodisedValues GetPeriodisedValues(FM25Learner learner)
-        {
-            var periodisationStartDate = GetPeriodisationStartDate(learner);
-            var periodisationEndDate = GetPeriodisationEndDate(learner, IsLearnerTrainee(learner.FundLine));
-            var learnerPeriods = GetMonthsBetweenDatesIgnoringDaysInclusive(periodisationStartDate, periodisationEndDate);
-            var periodisationStartDateBeginningofMonth = new DateTime(periodisationStartDate.Value.Year, periodisationStartDate.Value.Month, 1);
-            var periodisationEndDateEndofMonth = new DateTime(periodisationEndDate.Value.Year, periodisationEndDate.Value.Month, DateTime.DaysInMonth(periodisationEndDate.Value.Year, periodisationEndDate.Value.Month));
-            decimal?[] values = new decimal?[12];
-            for (var month = 0; month<=11; month++)
+            if(learnerIsTrainee)
             {
-                var monthToCheck = DateConstants.academicYearStartDate.AddMonths(month);
-                if(IsLearnerTrainee(learner.FundLine) && monthToCheck >= periodisationStartDateBeginningofMonth && monthToCheck <= periodisationEndDateEndofMonth)
+                if(learner.LearnerActEndDate.HasValue)
                 {
-                    values[month] = learner.OnProgPayment / learnerPeriods;
+                    if (learner.LearnerPlanEndDate.Value > DateConstants.AcademicYearStartDate)
+                    {
+                        return new[] { learner.LearnerPlanEndDate.Value, learner.LearnerActEndDate.Value, DateConstants.AcademicYearEndDate }.Min();
+                    }
+                    else
+                    {
+                        return learner.LearnerActEndDate.Value;
+                    }
                 }
                 else
                 {
-                    values[month] = 0;
+                    if (learner.LearnerPlanEndDate > DateConstants.AcademicYearStartDate)
+                    {
+                        return new[] { learner.LearnerPlanEndDate.Value, DateConstants.AcademicYearEndDate }.Min();
+                    }
+                    else
+                    {
+                        return DateConstants.AcademicYearEndDate;
+                    }
                 }
             }
-
-            return new LearnerPeriodisedValues()
+            else
             {
-                AttributeName = Attributes.LnrOnProgPay,
-                LearnRefNumber = learner.LearnRefNumber,
-                Period1 = values[0],
-                Period2 = values[1],
-                Period3 = values[2],
-                Period4 = values[3],
-                Period5 = values[4],
-                Period6 = values[5],
-                Period7 = values[6],
-                Period8 = values[7],
-                Period9 = values[8],
-                Period10 = values[9],
-                Period11 = values[10],
-                Period12 = values[11],
-            };
+                return DateConstants.AcademicYearEndDate;
+            }
         }
 
-        public bool IsLearnerTrainee(string fundLine) => fundLine == FundingLineConstants.traineeship19Plus || fundLine == FundingLineConstants.traineeship1618;
+        public int GetMonthsBetweenDatesIgnoringDaysInclusive(DateTime periodisationStartDate, DateTime periodisationEndDate)
+        {
+            var yearMonths = (periodisationEndDate.Year - periodisationStartDate.Year) * 12;
+            var months = periodisationEndDate.Month - periodisationStartDate.Month;
+
+            return yearMonths + months + 1;
+        }
+
+        private readonly IReadOnlyDictionary<int, int> _periodToMonthLookup = new Dictionary<int, int>()
+        {
+            [1] = 6,
+            [2] = 7,
+            [3] = 8,
+            [4] = 9,
+            [5] = 10,
+            [6] = 11,
+            [7] = 12,
+            [8] = 1,
+            [9] = 2,
+            [10] = 3,
+            [11] = 4,
+            [12] = 5
+        };
+
+        public int PeriodFromDate(DateTime date)
+        {
+            return _periodToMonthLookup[date.Month];
+        }
+
     }
 }

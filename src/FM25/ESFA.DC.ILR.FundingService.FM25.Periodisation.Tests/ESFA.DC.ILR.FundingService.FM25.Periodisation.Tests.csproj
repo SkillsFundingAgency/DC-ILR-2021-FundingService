@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="FM25PeriodisationFundingServiceTests.cs" />
     <Compile Include="PeriodisationDateServiceTests.cs" />
+    <Compile Include="PeriodisationServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -13,29 +13,6 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation.Tests
 {
     public class PeriodisationDateServiceTests
     {
-        // Learner is Trainee Tests
-        [Theory]
-        [InlineData("19+ Traineeships (Adult Funded)")]
-        [InlineData("16-18 Traineeships (Adult Funded)")]
-        public void IsTraineeTrueLiterals(string fundLine)
-        {
-            NewService().IsLearnerTrainee(fundLine).Should().BeTrue();
-        }
-
-        [Theory]
-        [InlineData(FundingLineConstants.traineeship1618)]
-        [InlineData(FundingLineConstants.traineeship19Plus)]
-        public void IsTraineeTrueConstants(string fundLine)
-        {
-            NewService().IsLearnerTrainee(fundLine).Should().BeTrue();
-        }
-
-        [Fact]
-        public void IsTraineeFalse()
-        {
-            NewService().IsLearnerTrainee("NotAnApprentice").Should().BeFalse();
-        }
-
         // Periodisation Start Date Test
         [Theory]
         [InlineData("2018-07-01","2019-08-01", "19+ Traineeships (Adult Funded)")]
@@ -51,7 +28,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation.Tests
             var learner = new FM25Learner();
             learner.LearnerStartDate = DateTime.Parse(learnStartDate);
             learner.FundLine = fundLine;
-            NewService().GetPeriodisationStartDate(learner).Should().Be(DateTime.Parse(expectedResult));
+            PeriodisationDateService().GetPeriodisationStartDate(learner).Should().Be(DateTime.Parse(expectedResult));
         }
 
         // Periodisation End Date Test
@@ -73,7 +50,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation.Tests
             var learner = new FM25Learner();
             learner.LearnerPlanEndDate = DateTime.Parse(learnPlannedEndDate);
             learner.LearnerActEndDate = (learnActEndDate==null)?(DateTime?)null:DateTime.Parse(learnActEndDate);
-            NewService().GetPeriodisationEndDate(learner, learnerIsTrainee).Should().Be(DateTime.Parse(expectedResult));
+            PeriodisationDateService().GetPeriodisationEndDate(learner, learnerIsTrainee).Should().Be(DateTime.Parse(expectedResult));
         }
 
         // Periods In Learning Test
@@ -93,53 +70,33 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation.Tests
         [InlineData("2019-09-15", "2019-09-16", 1)]
         public void GetPeriodsInLearningTest(string periodisationStartDate, string periodisationEndDate, int expectedResult)
         {
-            NewService().GetMonthsBetweenDatesIgnoringDaysInclusive(DateTime.Parse(periodisationStartDate), DateTime.Parse(periodisationEndDate)).Should().Be(expectedResult);
+            PeriodisationDateService().GetMonthsBetweenDatesIgnoringDaysInclusive(DateTime.Parse(periodisationStartDate), DateTime.Parse(periodisationEndDate)).Should().Be(expectedResult);
         }
 
-        // Get Periodised Values Test
+
+        // Period from Date Test
         [Theory]
-        [InlineData("2019-08-01", "2020-07-31", "2020-07-31", "16-18 Traineeships (Adult Funded)", 72, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6)]
-        [InlineData("2019-09-15", "2019-10-16", "2019-10-16", "16-18 Traineeships (Adult Funded)", 84, 0, 42, 42, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
-        [InlineData("2018-09-15", "2022-10-16", "2022-10-16", "16-18 Traineeships (Adult Funded)", 84, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7)]
-        [InlineData("2020-07-31", "2022-10-16", "2022-10-16", "16-18 Traineeships (Adult Funded)", 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 84)]
-        [InlineData("2019-08-01", "2020-07-31", "2020-07-31", "19+ Traineeships (Adult Funded)", 72, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6)]
-        [InlineData("2019-09-15", "2019-10-16", "2019-10-16", "19+ Traineeships (Adult Funded)", 84, 0, 42, 42, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
-        [InlineData("2018-09-15", "2022-10-16", "2022-10-16", "19+ Traineeships (Adult Funded)", 84, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7)]
-        [InlineData("2020-07-31", "2022-10-16", "2022-10-16", "19+ Traineeships (Adult Funded)", 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 84)]
-        [InlineData("2018-09-15", "2022-10-16", "2022-10-16", "16-18 Apprenticeship", 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
-        public void GetPeriodisedValuesTestFullMonths(string learnerStartDate, string learnerPlannedEndDate, string learnerActEndDate, string fundLine, decimal totalFunding, decimal p1, decimal p2, decimal p3, decimal p4, decimal p5, decimal p6, decimal p7, decimal p8, decimal p9, decimal p10, decimal p11, decimal p12)
+        [InlineData("2019-08-01", 1)]
+        [InlineData("2019-09-04", 2)]
+        [InlineData("2020-10-02", 3)]
+        [InlineData("2019-11-03", 4)]
+        [InlineData("2019-12-01", 5)]
+        [InlineData("2019-01-18", 6)]
+        [InlineData("2019-02-01", 7)]
+        [InlineData("2019-03-09", 8)]
+        [InlineData("2019-04-09", 9)]
+        [InlineData("2019-05-01", 10)]
+        [InlineData("2019-06-01", 11)]
+        [InlineData("2019-07-01", 12)]
+        public void PeriodFromDateTest(string periodisationStartDate, int expectedResult)
         {
-            var learner = new FM25Learner()
-            {
-                LearnerStartDate = DateTime.Parse(learnerStartDate),
-                LearnerPlanEndDate = DateTime.Parse(learnerPlannedEndDate),
-                LearnerActEndDate = DateTime.Parse(learnerActEndDate),
-                OnProgPayment = totalFunding,
-                FundLine = fundLine
-            };
-
-            var result = NewService().GetPeriodisedValues(learner);
-            result.Period1.Should().Be(p1);
-            result.Period2.Should().Be(p2);
-            result.Period3.Should().Be(p3);
-            result.Period4.Should().Be(p4);
-            result.Period5.Should().Be(p5);
-            result.Period6.Should().Be(p6);
-            result.Period7.Should().Be(p7);
-            result.Period8.Should().Be(p8);
-            result.Period9.Should().Be(p9);
-            result.Period10.Should().Be(p10);
-            result.Period11.Should().Be(p11);
-            result.Period12.Should().Be(p12);
+            PeriodisationDateService().PeriodFromDate(DateTime.Parse(periodisationStartDate)).Should().Be(expectedResult);
         }
 
-
-
-
-
-        private PeriodisationDateService NewService()
+        private PeriodisationDateService PeriodisationDateService()
         {
             return new PeriodisationDateService();
         }
+
     }
 }
