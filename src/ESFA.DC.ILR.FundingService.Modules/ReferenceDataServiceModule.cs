@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory;
 using ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.FCS;
@@ -26,7 +25,6 @@ namespace ESFA.DC.ILR.FundingService.Modules
             containerBuilder.RegisterType<PostcodesReferenceDataService>().As<IPostcodesReferenceDataService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<AppsEarningsHistoryReferenceDataService>().As<IAppsEarningsHistoryReferenceDataService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<FCSReferenceDataService>().As<IFCSReferenceDataService>().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<ExternalDataCache>().As<IExternalDataCache>().InstancePerLifetimeScope();
         }
     }
 }

@@ -11,6 +11,8 @@ using ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Modules;
 using ESFA.DC.ILR.FundingService.Modules.FundingModules;
+using ESFA.DC.ILR.FundingService.Orchestrators;
+using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 
 namespace ESFA.DC.ILR.FundingService.Desktop.Modules
 {
@@ -22,6 +24,11 @@ namespace ESFA.DC.ILR.FundingService.Desktop.Modules
             var outputKey = "outputKey";
 
             containerBuilder.RegisterModule<BaseModule>();
+            containerBuilder.RegisterModule<CondenserModule>();
+            containerBuilder.RegisterModule<DataCacheModule>();
+            containerBuilder.RegisterModule<ProviderModule>();
+
+            containerBuilder.RegisterType<FundingOrchestrationService>().As<IFundingOrchestrationService>();
 
             containerBuilder.RegisterModule<ALBModule>();
            // containerBuilder.RegisterModule<FM25Module>();

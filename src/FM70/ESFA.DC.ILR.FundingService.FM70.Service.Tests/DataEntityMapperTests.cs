@@ -104,17 +104,6 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
                 }
             };
 
-            var subsidyPilotPostcodeArea = new List<CareerLearningPilot>
-            {
-                new CareerLearningPilot
-                {
-                    Postcode = "DelLocPostcode",
-                    EffectiveFrom = new DateTime(2018, 1, 1),
-                    EffectiveTo = new DateTime(2019, 1, 1),
-                    AreaCode = "AreaCode"
-                }
-            };
-
             var fcsContract = new List<FCSContractAllocation>
             {
                 new FCSContractAllocation

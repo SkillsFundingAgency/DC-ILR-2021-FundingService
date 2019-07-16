@@ -4,7 +4,10 @@ using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers;
 using ESFA.DC.ILR.FundingService.Providers.Dtos;
+using ESFA.DC.ILR.FundingService.Providers.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers.LearnerPaging;
+using ESFA.DC.ILR.Model.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Model;
 
 namespace ESFA.DC.ILR.FundingService.Modules
 {
@@ -27,6 +30,9 @@ namespace ESFA.DC.ILR.FundingService.Modules
             containerBuilder.RegisterType<FM36LearnerPagingService>().As<ILearnerPagingService<FM36LearnerDto>>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<FM70LearnerPagingService>().As<ILearnerPagingService<FM70LearnerDto>>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<FM81LearnerPagingService>().As<ILearnerPagingService<FM81LearnerDto>>().InstancePerLifetimeScope();
+
+            containerBuilder.RegisterType<IlrFileProviderService>().As<IFileProviderService<IMessage>>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<IlrReferenceDataProviderService>().As<IFileProviderService<ReferenceDataRoot>>().InstancePerLifetimeScope();
         }
     }
 }

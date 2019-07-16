@@ -5,6 +5,7 @@ using ESFA.DC.ILR.FundingService.ALB.Service.Input;
 using ESFA.DC.ILR.FundingService.ALB.Service.Rulebase;
 using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.Interfaces;
+using ESFA.DC.ILR.FundingService.Orchestrators.Output;
 using ESFA.DC.ILR.FundingService.Service;
 using ESFA.DC.ILR.FundingService.Service.Interfaces;
 using ESFA.DC.OPA.Service;
@@ -19,12 +20,14 @@ namespace ESFA.DC.ILR.FundingService.Modules.FundingModules
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterModule<AbstractFundingModule>();
             builder.RegisterType<ALBRulebaseProvider>().As<IRulebaseStreamProvider<ALBLearnerDto>>().InstancePerLifetimeScope();
             builder.RegisterType<SessionFactory<ALBLearnerDto>>().As<ISessionFactory<ALBLearnerDto>>().InstancePerLifetimeScope();
             builder.RegisterType<OPAService<ALBLearnerDto>>().As<IOPAService<ALBLearnerDto>>().InstancePerLifetimeScope();
             builder.RegisterType<DataEntityMapper>().As<IDataEntityMapper<ALBLearnerDto>>().InstancePerLifetimeScope();
             builder.RegisterType<FundingOutputService>().As<IOutputService<ALBGlobal>>().InstancePerLifetimeScope();
             builder.RegisterType<FundingService<ALBLearnerDto, ALBGlobal>>().As<IFundingService<ALBLearnerDto, ALBGlobal>>().InstancePerLifetimeScope();
+            builder.RegisterType<ALBFundingOutputCondenserService>().As<IFundingOutputCondenserService<ALBGlobal>>().InstancePerLifetimeScope();
         }
     }
 }

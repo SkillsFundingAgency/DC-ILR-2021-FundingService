@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Organisation.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
@@ -28,9 +29,14 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Organisation
 
         public IEnumerable<CampusIdentifierSpecResource> SpecialistResourcesForCampusIdentifier(string campId)
         {
-            _referenceDataCache.CampusIdentifierSpecResources.TryGetValue(campId, out IReadOnlyCollection<CampusIdentifierSpecResource> campusIdentifierSpecResources);
+            if (campId != null)
+            {
+                _referenceDataCache.CampusIdentifierSpecResources.TryGetValue(campId, out IReadOnlyCollection<CampusIdentifierSpecResource> campusIdentifierSpecResources);
 
-            return campusIdentifierSpecResources ?? new List<CampusIdentifierSpecResource>();
+                return campusIdentifierSpecResources ?? Enumerable.Empty<CampusIdentifierSpecResource>();
+            }
+
+            return Enumerable.Empty<CampusIdentifierSpecResource>();
         }
     }
 }
