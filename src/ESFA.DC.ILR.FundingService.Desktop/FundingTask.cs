@@ -60,7 +60,9 @@ namespace ESFA.DC.ILR.FundingService.Desktop
             IEnumerable<TOut> results = taskList.Select(t => t.Result);
             var output = _fundingOutputCondenserService.Condense(results);
 
-            await _filePersistanceService.PersistAsync(_outputKey, fundingServiceContext.Container, output, cancellationToken).ConfigureAwait(false);
+            fundingServiceContext.FundingOutputKeys.TryGetValue(_outputKey, out var outputFileName);
+
+            await _filePersistanceService.PersistAsync(outputFileName, fundingServiceContext.Container, output, cancellationToken).ConfigureAwait(false);
 
             _logger.LogDebug($"Persisted {_taskName} results - {stopWatch.ElapsedMilliseconds}");
         }
