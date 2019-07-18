@@ -14,7 +14,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
 
         public IEnumerable<IEnumerable<MessageLearner>> BuildPages(int fundModelFilter, IEnumerable<ILearner> learners)
         {
-            var pagedLearners = learners.Where(l => l.LearningDeliveries.Any(ld => fundModelFilter == ld.FundModel)).ToList().Cast<MessageLearner>();
+            var pagedLearners = learners?.Where(l => l.LearningDeliveries.Any(ld => fundModelFilter == ld.FundModel)).ToList().Cast<MessageLearner>() ?? Enumerable.Empty<MessageLearner>();
 
             return SplitList(pagedLearners, PageSize);
         }
