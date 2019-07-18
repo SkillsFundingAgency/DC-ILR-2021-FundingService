@@ -58,6 +58,20 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
         }
 
         [Fact]
+        public void ProvideDtos_NoLearners()
+        {
+            IMessage message = new Message
+            {
+                LearningProvider = new MessageLearningProvider
+                {
+                    UKPRN = 12345678
+                },
+            };
+
+            NewService().ProvideDtos(70, message).Should().HaveCount(0);
+        }
+
+        [Fact]
         public void ProvideDtos_DtoAsExpected()
         {
             IMessage message = new Message

@@ -10,7 +10,7 @@ using Xunit;
 
 namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
 {
-    public class ALBLearnerPagingServiceTests
+    public class ALBLearnerPagingServiceTests : AbstractLearnerPagingServiceTests
     {
         [Fact]
         public void ProvideDtos()
@@ -21,11 +21,26 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                 {
                     UKPRN = 12345678
                 },
-                Learner = BuildLearners(10).ToArray(),
+                Learner = BuildLearners(10, 99).ToArray(),
             };
 
             NewService().ProvideDtos(99, message).Should().HaveCount(1);
         }
+
+        [Fact]
+        public void ProvideDtos_NoLearners()
+        {
+            IMessage message = new Message
+            {
+                LearningProvider = new MessageLearningProvider
+                {
+                    UKPRN = 12345678
+                },
+            };
+
+            NewService().ProvideDtos(99, message).Should().HaveCount(0);
+        }
+
 
         [Fact]
         public void ProvideDtos_MultiplePages()
@@ -36,7 +51,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                 {
                     UKPRN = 12345678
                 },
-                Learner = BuildLearners(1600).ToArray(),
+                Learner = BuildLearners(1600, 99).ToArray(),
             };
 
             NewService().ProvideDtos(99, message).Should().HaveCount(4);
@@ -51,7 +66,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                 {
                     UKPRN = 12345678
                 },
-                Learner = BuildLearners(10).ToArray(),
+                Learner = BuildLearners(10, 99).ToArray(),
             };
 
             NewService().ProvideDtos(1, message).Should().HaveCount(0);
@@ -245,30 +260,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
             };
 
             NewService().ProvideDtos(99, message).First().Should().BeEquivalentTo(expectedDto);
-        }
-
-        private IEnumerable<MessageLearner> BuildLearners(int numberOfLearners)
-        {
-            var learners = new List<MessageLearner>();
-
-            while (learners.Count() < numberOfLearners)
-            {
-                learners.Add(
-                    new MessageLearner
-                    {
-                        LearnRefNumber = "Learner_" + learners.Count().ToString(),
-                        LearningDelivery = new MessageLearnerLearningDelivery[]
-                        {
-                            new MessageLearnerLearningDelivery
-                            {
-                                LearnAimRef = "AimRef",
-                                FundModel = 99
-                            }
-                        }
-                    });
-            }
-
-            return learners;
         }
 
         private ALBLearnerPagingService NewService()
