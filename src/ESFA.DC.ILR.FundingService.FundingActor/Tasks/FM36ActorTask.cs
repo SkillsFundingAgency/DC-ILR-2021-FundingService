@@ -74,7 +74,7 @@ namespace ESFA.DC.ILR.FundingService.FundingActor.Tasks
 
             stopWatch.Restart();
 
-            var output = _fundingOutputCondenserService.Condense(results);
+            var output = _fundingOutputCondenserService.Condense(results, fundingServiceContext.Ukprn, fundingServiceContext.Year);
 
             await _filePersistanceService.PersistAsync(fundingServiceContext.FundingFm36OutputKey, fundingServiceContext.Container, output, cancellationToken).ConfigureAwait(false);
 

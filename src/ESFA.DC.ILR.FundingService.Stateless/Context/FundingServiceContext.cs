@@ -46,5 +46,9 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Context
         public string FundingFm70OutputKey => _jobContextMessage.KeyValuePairs[ILRContextKeys.FundingFm70Output].ToString();
 
         public string FundingFm81OutputKey => _jobContextMessage.KeyValuePairs[ILRContextKeys.FundingFm81Output].ToString();
+
+        public int Ukprn => int.Parse(_jobContextMessage.KeyValuePairs[ILRContextKeys.Ukprn].ToString());
+
+        public string Year => _jobContextMessage.KeyValuePairs[ILRContextKeys.CollectionYear].ToString();
     }
 }

@@ -57,8 +57,8 @@ namespace ESFA.DC.ILR.FundingService.Desktop
 
             await Task.WhenAll(taskList).ConfigureAwait(false);
 
-            IEnumerable<TOut> results = taskList.Select(t => t.Result);
-            var output = _fundingOutputCondenserService.Condense(results);
+            IEnumerable<TOut> results = taskList.Select(t => t.Result) ?? Enumerable.Empty<TOut>();
+            var output = _fundingOutputCondenserService.Condense(results, fundingServiceContext.Ukprn, fundingServiceContext.Year);
 
             fundingServiceContext.FundingOutputKeys.TryGetValue(_outputKey, out var outputFileName);
 
