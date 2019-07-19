@@ -47,6 +47,10 @@ namespace ESFA.DC.ILR.FundingService.Desktop.Context
 
         public long JobId => 0;
 
+        public int Ukprn => int.Parse(_desktopContext.KeyValuePairs[ILRContextKeys.Ukprn].ToString());
+
+        public string Year => _desktopContext.KeyValuePairs[ILRContextKeys.CollectionYear].ToString();
+
         private string[] GetFundingTasks()
         {
             var fundingTasks = new List<string>

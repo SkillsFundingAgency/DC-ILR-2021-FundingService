@@ -58,7 +58,7 @@ namespace ESFA.DC.ILR.FundingService.FundingActor.Tasks
 
             await Task.WhenAll(taskList).ConfigureAwait(false);
 
-            IEnumerable<FM25Global> results = taskList.Select(t => _jsonSerializationService.Deserialize<FM25Global>(t.Result));
+            IEnumerable<FM25Global> results = taskList.Select(t => _jsonSerializationService.Deserialize<FM25Global>(t.Result)) ?? Enumerable.Empty<FM25Global>();
 
             _logger.LogDebug($"Completed {taskList.Count} {_actorName} Actors - {stopWatch.ElapsedMilliseconds}");
 
@@ -74,7 +74,7 @@ namespace ESFA.DC.ILR.FundingService.FundingActor.Tasks
 
             stopWatch.Restart();
 
-            var output = _fundingOutputCondenserService.Condense(results);
+            var output = _fundingOutputCondenserService.Condense(results, fundingServiceContext.Ukprn, fundingServiceContext.Year);
 
             await _filePersistanceService.PersistAsync(fundingServiceContext.FundingFm25OutputKey, fundingServiceContext.Container, output, cancellationToken).ConfigureAwait(false);
 

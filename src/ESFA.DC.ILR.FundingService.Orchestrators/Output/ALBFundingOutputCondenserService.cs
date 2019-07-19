@@ -7,7 +7,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Output
 {
     public class ALBFundingOutputCondenserService : IFundingOutputCondenserService<ALBGlobal>
     {
-        public ALBGlobal Condense(IEnumerable<ALBGlobal> fundingOutputs)
+        public ALBGlobal Condense(IEnumerable<ALBGlobal> fundingOutputs, int ukprn, string year)
         {
             var firstOutput = fundingOutputs.FirstOrDefault();
 
@@ -18,7 +18,10 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Output
                 return firstOutput;
             }
 
-            return new ALBGlobal();
+            return new ALBGlobal
+            {
+                UKPRN = ukprn
+            };
         }
     }
 }

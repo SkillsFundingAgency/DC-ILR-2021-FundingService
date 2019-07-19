@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.Orchestrators.Output;
 using FluentAssertions;
@@ -53,7 +54,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests.CondenserServiceTests
                 globalThree,
             };
 
-            var fundingOutput = NewService().Condense(fundingOutputs);
+            var fundingOutput = NewService().Condense(fundingOutputs, 1, "1920");
 
             fundingOutput.Should().Be(globalOne);
             fundingOutput.Learners.Should().HaveCount(6);
@@ -63,9 +64,21 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests.CondenserServiceTests
         [Fact]
         public void Condense_Null()
         {
-            Action action = () => NewService().Condense(null);
+            Action action = () => NewService().Condense(null, 1, "1920");
 
             action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void Condense_EmptyCollection()
+        {
+            var global = new FM36Global
+            {
+                UKPRN = 1,
+                Year = "1920"
+            };
+
+            NewService().Condense(Enumerable.Empty<FM36Global>(), 1, "1920").Should().BeEquivalentTo(global);
         }
 
         [Fact]
@@ -93,7 +106,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests.CondenserServiceTests
                 globalThree,
             };
 
-            var fundingOutput = NewService().Condense(fundingOutputs);
+            var fundingOutput = NewService().Condense(fundingOutputs, 1, "1920");
 
             fundingOutput.Should().Be(globalOne);
             fundingOutput.Learners.Should().BeEmpty();
@@ -137,7 +150,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests.CondenserServiceTests
                 globalThree,
             };
 
-            var fundingOutput = NewService().Condense(fundingOutputs);
+            var fundingOutput = NewService().Condense(fundingOutputs, 1, "1920");
 
             fundingOutput.Should().Be(globalOne);
             fundingOutput.Learners.Should().HaveCount(4);

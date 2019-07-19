@@ -6,6 +6,10 @@ namespace ESFA.DC.ILR.FundingService.Interfaces
     {
         long JobId { get; }
 
+        int Ukprn { get; }
+
+        string Year { get; }
+
         string FileReference { get; }
 
         string Container { get; }

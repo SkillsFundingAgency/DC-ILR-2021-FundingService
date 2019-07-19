@@ -7,7 +7,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Output
 {
     public class FM36FundingOutputCondenserService : IFundingOutputCondenserService<FM36Global>
     {
-        public FM36Global Condense(IEnumerable<FM36Global> fundingOutputs)
+        public FM36Global Condense(IEnumerable<FM36Global> fundingOutputs, int ukprn, string year)
         {
             var firstOutput = fundingOutputs.FirstOrDefault();
 
@@ -18,7 +18,11 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Output
                 return firstOutput;
             }
 
-            return new FM36Global();
+            return new FM36Global
+            {
+                UKPRN = ukprn,
+                Year = year,
+            };
         }
     }
 }
