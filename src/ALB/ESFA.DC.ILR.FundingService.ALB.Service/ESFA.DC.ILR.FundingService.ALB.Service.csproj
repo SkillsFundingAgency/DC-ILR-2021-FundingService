@@ -18,9 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Rulebase\Loans Bursary 19_20.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Rulebase\Loans Bursary 19_20.zip" />
   </ItemGroup>
 
   <ItemGroup>

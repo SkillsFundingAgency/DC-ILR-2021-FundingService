@@ -20,6 +20,8 @@ namespace ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.Output
 
         public DateTime? AdjProgStartDate { get; set; }
 
+        public DateTime? AdjStartDate { get; set; }
+
         public int? AgeStandardStart { get; set; }
 
         public DateTime? ApplicFundValDate { get; set; }
@@ -89,6 +91,8 @@ namespace ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.Output
         public int? SmallBusStatusFirstDayStandard { get; set; }
 
         public int? SmallBusStatusThreshold { get; set; }
+
+        public DateTime? SmallBusThresholdDate { get; set; }
 
         public decimal? YoungAppApplicVal { get; set; }
 

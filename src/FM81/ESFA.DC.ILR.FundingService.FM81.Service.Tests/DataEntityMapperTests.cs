@@ -74,8 +74,8 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
                         FundingCategory = "Matrix",
                         RateWeighted = 1.0m,
                         WeightingFactor = "G",
-                        EffectiveFrom = new DateTime(2018, 1, 1),
-                        EffectiveTo = new DateTime(2019, 1, 1),
+                        EffectiveFrom = new DateTime(2020, 1, 1),
+                        EffectiveTo = new DateTime(2020, 1, 1),
                     }
                 },
                 LARSCareerLearningPilots = new List<LARSCareerLearningPilot>
@@ -84,8 +84,8 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
                     {
                         AreaCode = "DelLocPostcode",
                         SubsidyRate = 1.2m,
-                        EffectiveFrom = new DateTime(2018, 1, 1),
-                        EffectiveTo = new DateTime(2019, 1, 1)
+                        EffectiveFrom = new DateTime(2020, 1, 1),
+                        EffectiveTo = new DateTime(2020, 1, 1)
                     }
                 }
             };
@@ -218,7 +218,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
         {
             var learnerEmploymentStatus = new LearnerEmploymentStatus
             {
-                DateEmpStatApp = new DateTime(2018, 1, 1),
+                DateEmpStatApp = new DateTime(2020, 1, 1),
                 EmpId = 1,
                 EmpStat = 2,
                 SEM = 3
@@ -248,22 +248,13 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
                 FworkCode = 5,
                 LearnActEndDate = new DateTime(2017, 1, 1),
                 LearnAimRef = "LearnAimRef",
-                LearnPlanEndDate = new DateTime(2018, 1, 1),
-                LearnStartDate = new DateTime(2019, 1, 1),
-                OrigLearnStartDate = new DateTime(2019, 1, 1),
+                LearnPlanEndDate = new DateTime(2020, 1, 1),
+                LearnStartDate = new DateTime(2020, 1, 1),
+                OrigLearnStartDate = new DateTime(2020, 1, 1),
                 OtherFundAdj = 6,
                 Outcome = 7,
                 PriorLearnFundAdj = 8,
                 StdCode = 9,
-                LrnDelFAM_LDM1 = "LDM1",
-                LrnDelFAM_LDM2 = "LDM2",
-                LrnDelFAM_LDM3 = "LDM3",
-                LrnDelFAM_LDM4 = "LDM4",
-                LrnDelFAM_EEF = "EEF",
-                LrnDelFAM_RES = "RES",
-                LrnDelFAM_FFI = "FFI",
-                LrnDelFAM_SPP = "SPP",
-                LrnDelFAM_SOF = "SOF",
                 LearningDeliveryFAMs = new List<LearningDeliveryFAM>()
                 {
                     new LearningDeliveryFAM() { LearnDelFAMType = "LDM", LearnDelFAMCode = "LDM1" },
@@ -295,8 +286,8 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
                         FundingCategory = "Matrix",
                         RateWeighted = 1.0m,
                         WeightingFactor = "G",
-                        EffectiveFrom = new DateTime(2018, 1, 1),
-                        EffectiveTo = new DateTime(2019, 1, 1),
+                        EffectiveFrom = new DateTime(2020, 1, 1),
+                        EffectiveTo = new DateTime(2020, 1, 1),
                     },
                 },
             };
@@ -316,7 +307,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
                 .BuildLearningDeliveryDataEntity(learningDelivery);
 
             dataEntity.EntityName.Should().Be("LearningDelivery");
-            dataEntity.Attributes.Should().HaveCount(25);
+            dataEntity.Attributes.Should().HaveCount(16);
             dataEntity.Attributes["AchDate"].Value.Should().Be(learningDelivery.AchDate);
             dataEntity.Attributes["AimSeqNumber"].Value.Should().Be(learningDelivery.AimSeqNumber);
             dataEntity.Attributes["AimType"].Value.Should().Be(learningDelivery.AimType);
@@ -326,15 +317,6 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             dataEntity.Attributes["LearnActEndDate"].Value.Should().Be(learningDelivery.LearnActEndDate);
             dataEntity.Attributes["LearnPlanEndDate"].Value.Should().Be(learningDelivery.LearnPlanEndDate);
             dataEntity.Attributes["LearnStartDate"].Value.Should().Be(learningDelivery.LearnStartDate);
-            dataEntity.Attributes["LrnDelFAM_EEF"].Value.Should().Be("EEF");
-            dataEntity.Attributes["LrnDelFAM_FFI"].Value.Should().Be("FFI");
-            dataEntity.Attributes["LrnDelFAM_LDM1"].Value.Should().Be("LDM1");
-            dataEntity.Attributes["LrnDelFAM_LDM2"].Value.Should().Be("LDM2");
-            dataEntity.Attributes["LrnDelFAM_LDM3"].Value.Should().Be("LDM3");
-            dataEntity.Attributes["LrnDelFAM_LDM4"].Value.Should().Be("LDM4");
-            dataEntity.Attributes["LrnDelFAM_RES"].Value.Should().Be("RES");
-            dataEntity.Attributes["LrnDelFAM_SOF"].Value.Should().Be("SOF");
-            dataEntity.Attributes["LrnDelFAM_SPP"].Value.Should().Be("SPP");
             dataEntity.Attributes["OrigLearnStartDate"].Value.Should().Be(learningDelivery.OrigLearnStartDate);
             dataEntity.Attributes["OtherFundAdj"].Value.Should().Be(learningDelivery.OtherFundAdj);
             dataEntity.Attributes["Outcome"].Value.Should().Be(learningDelivery.Outcome);
@@ -370,7 +352,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             {
                 AFinCode = 1,
                 AFinAmount = 2,
-                AFinDate = new DateTime(2018, 8, 1),
+                AFinDate = new DateTime(2020, 8, 1),
                 AFinType = "Type"
             };
 
@@ -392,8 +374,8 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             var larsStandardCommonComponent = new LARSStandardCommonComponent
             {
                 CommonComponent = 1,
-                EffectiveFrom = new DateTime(2018, 1, 1),
-                EffectiveTo = new DateTime(2019, 1, 1)
+                EffectiveFrom = new DateTime(2020, 1, 1),
+                EffectiveTo = new DateTime(2020, 1, 1)
             };
 
             var dataEntity = NewService().BuildLARSStandardCommonComponent(larsStandardCommonComponent, stdCode);
@@ -412,8 +394,8 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             var larsStandardFunding = new LARSStandardFunding
             {
                 FundableWithoutEmployer = "Fundable",
-                EffectiveFrom = new DateTime(2018, 1, 1),
-                EffectiveTo = new DateTime(2019, 1, 1),
+                EffectiveFrom = new DateTime(2020, 1, 1),
+                EffectiveTo = new DateTime(2020, 1, 1),
                 AchievementIncentive = 1,
                 SixteenToEighteenIncentive = 2,
                 CoreGovContributionCap = 1.0m,
