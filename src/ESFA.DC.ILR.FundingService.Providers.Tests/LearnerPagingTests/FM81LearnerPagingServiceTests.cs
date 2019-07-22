@@ -95,7 +95,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                                 EmpIdSpecified = true,
                                 EmpId = 1,
                                 AgreeId = "AgreeId",
-                                DateEmpStatApp = new DateTime(2019, 8, 1),
+                                DateEmpStatApp = new DateTime(2020, 8, 1),
                                 EmpStat = 2, 
                                 EmploymentStatusMonitoring = new MessageLearnerLearnerEmploymentStatusEmploymentStatusMonitoring[]
                                 {
@@ -117,7 +117,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                             new MessageLearnerLearningDelivery
                             {
                                 AchDateSpecified = true,
-                                AchDate = new DateTime(2018, 8, 1),
+                                AchDate = new DateTime(2019, 8, 1),
                                 AimType = 1,
                                 LearnAimRef = "AimRef",
                                 FundModel = 81,
@@ -125,11 +125,11 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                                 CompStatus = 2,
                                 DelLocPostCode = "DelLocPostCode",
                                 LearnActEndDateSpecified = true,
-                                LearnActEndDate = new DateTime(2018, 8, 1),
-                                LearnPlanEndDate = new DateTime(2018, 8, 1),
-                                LearnStartDate = new DateTime(2018, 8, 1),
+                                LearnActEndDate = new DateTime(2019, 8, 1),
+                                LearnPlanEndDate = new DateTime(2019, 8, 1),
+                                LearnStartDate = new DateTime(2019, 8, 1),
                                 OrigLearnStartDateSpecified = true,
-                                OrigLearnStartDate = new DateTime(2018, 8, 1),
+                                OrigLearnStartDate = new DateTime(2019, 8, 1),
                                 OtherFundAdjSpecified = true,
                                 OtherFundAdj = 3,
                                 OutcomeSpecified = true,
@@ -191,14 +191,14 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                                     {
                                         AFinAmount = 1,
                                         AFinCode = 1,
-                                        AFinDate = new DateTime(2018, 8, 1),
+                                        AFinDate = new DateTime(2019, 8, 1),
                                         AFinType = "PMR"
                                     },
                                     new MessageLearnerLearningDeliveryAppFinRecord
                                     {
                                         AFinAmount = 1,
                                         AFinCode = 1,
-                                        AFinDate = new DateTime(2018, 8, 1),
+                                        AFinDate = new DateTime(2019, 8, 1),
                                         AFinType = "TNP"
                                     }
                                 }
@@ -217,7 +217,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                     new LearnerEmploymentStatus
                     {
                         EmpId = 1,
-                        DateEmpStatApp = new DateTime(2019, 8, 1),
+                        DateEmpStatApp = new DateTime(2020, 8, 1),
                         EmpStat = 2,
                         SEM = 1
                     }
@@ -226,30 +226,22 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                 {
                     new LearningDelivery
                     {
-                        AchDate = new DateTime(2018, 8, 1),
+                        AchDate = new DateTime(2019, 8, 1),
                         AimType = 1,
                         LearnAimRef = "AimRef",
                         FundModel = 81,
                         AimSeqNumber = 1,
                         CompStatus = 2,
-                        LearnActEndDate = new DateTime(2018, 8, 1),
-                        LearnPlanEndDate = new DateTime(2018, 8, 1),
-                        LearnStartDate = new DateTime(2018, 8, 1),
-                        OrigLearnStartDate = new DateTime(2018, 8, 1),
+                        LearnActEndDate = new DateTime(2019, 8, 1),
+                        LearnPlanEndDate = new DateTime(2019, 8, 1),
+                        LearnStartDate = new DateTime(2019, 8, 1),
+                        OrigLearnStartDate = new DateTime(2019, 8, 1),
                         OtherFundAdj = 3,
                         Outcome = 4,
                         PriorLearnFundAdj = 5,
                         ProgType = 25,
                         StdCode = 1,
                         WithdrawReason = 1,
-                        LrnDelFAM_EEF = "1",
-                        LrnDelFAM_FFI = "1",
-                        LrnDelFAM_RES = "1",
-                        LrnDelFAM_SOF = "1",
-                        LrnDelFAM_SPP = "1",
-                        LrnDelFAM_LDM1 = "1",
-                        LrnDelFAM_LDM2 = "2",
-                        LrnDelFAM_LDM3 = "3",
                         LearningDeliveryFAMs = new List<LearningDeliveryFAM>
                         {
                             new LearningDeliveryFAM
@@ -299,14 +291,14 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                             {
                                 AFinAmount = 1,
                                 AFinCode = 1,
-                                AFinDate = new DateTime(2018, 8, 1),
+                                AFinDate = new DateTime(2019, 8, 1),
                                 AFinType = "PMR"
                             },
                             new AppFinRecord
                             {
                                 AFinAmount = 1,
                                 AFinCode = 1,
-                                AFinDate = new DateTime(2018, 8, 1),
+                                AFinDate = new DateTime(2019, 8, 1),
                                 AFinType = "TNP"
                             }
                         }
@@ -340,7 +332,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                                 EmpIdSpecified = true,
                                 EmpId = 1,
                                 AgreeId = "AgreeId",
-                                DateEmpStatApp = new DateTime(2019, 8, 1),
+                                DateEmpStatApp = new DateTime(2020, 8, 1),
                                 EmpStat = 2,
                                 EmploymentStatusMonitoring = new MessageLearnerLearnerEmploymentStatusEmploymentStatusMonitoring[]
                                 {
@@ -362,7 +354,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                             new MessageLearnerLearningDelivery
                             {
                                 AchDateSpecified = true,
-                                AchDate = new DateTime(2018, 8, 1),
+                                AchDate = new DateTime(2019, 8, 1),
                                 AimType = 1,
                                 LearnAimRef = "AimRef",
                                 FundModel = 81,
@@ -370,11 +362,11 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                                 CompStatus = 2,
                                 DelLocPostCode = "DelLocPostCode",
                                 LearnActEndDateSpecified = true,
-                                LearnActEndDate = new DateTime(2018, 8, 1),
-                                LearnPlanEndDate = new DateTime(2018, 8, 1),
-                                LearnStartDate = new DateTime(2018, 8, 1),
+                                LearnActEndDate = new DateTime(2019, 8, 1),
+                                LearnPlanEndDate = new DateTime(2019, 8, 1),
+                                LearnStartDate = new DateTime(2019, 8, 1),
                                 OrigLearnStartDateSpecified = true,
-                                OrigLearnStartDate = new DateTime(2018, 8, 1),
+                                OrigLearnStartDate = new DateTime(2019, 8, 1),
                                 OtherFundAdjSpecified = true,
                                 OtherFundAdj = 3,
                                 OutcomeSpecified = true,
@@ -393,14 +385,14 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                                     {
                                         AFinAmount = 1,
                                         AFinCode = 1,
-                                        AFinDate = new DateTime(2018, 8, 1),
+                                        AFinDate = new DateTime(2019, 8, 1),
                                         AFinType = "PMR"
                                     },
                                     new MessageLearnerLearningDeliveryAppFinRecord
                                     {
                                         AFinAmount = 1,
                                         AFinCode = 1,
-                                        AFinDate = new DateTime(2018, 8, 1),
+                                        AFinDate = new DateTime(2019, 8, 1),
                                         AFinType = "TNP"
                                     }
                                 }
@@ -419,7 +411,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                     new LearnerEmploymentStatus
                     {
                         EmpId = 1,
-                        DateEmpStatApp = new DateTime(2019, 8, 1),
+                        DateEmpStatApp = new DateTime(2020, 8, 1),
                         EmpStat = 2,
                         SEM = 1
                     }
@@ -428,16 +420,16 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                 {
                     new LearningDelivery
                     {
-                        AchDate = new DateTime(2018, 8, 1),
+                        AchDate = new DateTime(2019, 8, 1),
                         AimType = 1,
                         LearnAimRef = "AimRef",
                         FundModel = 81,
                         AimSeqNumber = 1,
                         CompStatus = 2,
-                        LearnActEndDate = new DateTime(2018, 8, 1),
-                        LearnPlanEndDate = new DateTime(2018, 8, 1),
-                        LearnStartDate = new DateTime(2018, 8, 1),
-                        OrigLearnStartDate = new DateTime(2018, 8, 1),
+                        LearnActEndDate = new DateTime(2019, 8, 1),
+                        LearnPlanEndDate = new DateTime(2019, 8, 1),
+                        LearnStartDate = new DateTime(2019, 8, 1),
+                        OrigLearnStartDate = new DateTime(2019, 8, 1),
                         OtherFundAdj = 3,
                         Outcome = 4,
                         PriorLearnFundAdj = 5,
@@ -450,14 +442,14 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                             {
                                 AFinAmount = 1,
                                 AFinCode = 1,
-                                AFinDate = new DateTime(2018, 8, 1),
+                                AFinDate = new DateTime(2019, 8, 1),
                                 AFinType = "PMR"
                             },
                             new AppFinRecord
                             {
                                 AFinAmount = 1,
                                 AFinCode = 1,
-                                AFinDate = new DateTime(2018, 8, 1),
+                                AFinDate = new DateTime(2019, 8, 1),
                                 AFinType = "TNP"
                             }
                         }

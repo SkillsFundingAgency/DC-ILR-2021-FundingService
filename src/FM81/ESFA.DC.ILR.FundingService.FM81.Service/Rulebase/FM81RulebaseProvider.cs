@@ -8,7 +8,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Rulebase
 {
     public class FM81RulebaseProvider : IRulebaseStreamProvider<FM81LearnerDto>
     {
-        private const string RulebaseName = @"Trailblazer Funding Calc 18_19";
+        private const string RulebaseName = @"Trailblazer Funding Calc 19_20";
 
         public Stream GetStream()
         {

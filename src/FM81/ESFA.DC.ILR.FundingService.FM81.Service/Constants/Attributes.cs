@@ -23,7 +23,7 @@
         public const string RulebaseVersion = "RulebaseVersion";
 
         // Global Values
-        public const string CurFundYrValue = "1819";
+        public const string CurFundYrValue = "1920";
         public const string CollectionPeriodValue = "DefaultPeriod";
         public const string Period1 = "R01";
         public const string Period2 = "R02";
@@ -52,15 +52,6 @@
         public const string LearnActEndDate = "LearnActEndDate";
         public const string LearnPlanEndDate = "LearnPlanEndDate";
         public const string LearnStartDate = "LearnStartDate";
-        public const string LrnDelFAM_EEF = "LrnDelFAM_EEF";
-        public const string LrnDelFAM_FFI = "LrnDelFAM_FFI";
-        public const string LrnDelFAM_LDM1 = "LrnDelFAM_LDM1";
-        public const string LrnDelFAM_LDM2 = "LrnDelFAM_LDM2";
-        public const string LrnDelFAM_LDM3 = "LrnDelFAM_LDM3";
-        public const string LrnDelFAM_LDM4 = "LrnDelFAM_LDM4";
-        public const string LrnDelFAM_RES = "LrnDelFAM_RES";
-        public const string LrnDelFAM_SOF = "LrnDelFAM_SOF";
-        public const string LrnDelFAM_SPP = "LrnDelFAM_SPP";
         public const string OrigLearnStartDate = "OrigLearnStartDate";
         public const string OtherFundAdj = "OtherFundAdj";
         public const string Outcome = "Outcome";

@@ -23,8 +23,8 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
 {
     public class RulebaseInterfaceTests
     {
-        public const string AcademicYear = "1819";
-        public const string RulebaseName = "Trailblazer Funding Calc 18_19";
+        public const string AcademicYear = "1920";
+        public const string RulebaseName = "Trailblazer Funding Calc 19_20";
         public const string RulebaseFolder = "Rulebase";
         public const string RulebaseMasterFolder = "RulebaseMasterFiles";
         public const string XsrcName = "Input";
@@ -185,15 +185,6 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
                 Attributes.LearnActEndDate,
                 Attributes.LearnPlanEndDate,
                 Attributes.LearnStartDate,
-                Attributes.LrnDelFAM_EEF,
-                Attributes.LrnDelFAM_FFI,
-                Attributes.LrnDelFAM_LDM1,
-                Attributes.LrnDelFAM_LDM2,
-                Attributes.LrnDelFAM_LDM3,
-                Attributes.LrnDelFAM_LDM4,
-                Attributes.LrnDelFAM_RES,
-                Attributes.LrnDelFAM_SOF,
-                Attributes.LrnDelFAM_SPP,
                 Attributes.OrigLearnStartDate,
                 Attributes.OtherFundAdj,
                 Attributes.Outcome,
@@ -357,7 +348,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
                     {
                         EmpId = 10,
                         AgreeId = "1",
-                        DateEmpStatApp = new DateTime(2018, 8, 1),
+                        DateEmpStatApp = new DateTime(2019, 8, 1),
                         EmpStat = 2,
                     },
                 },
@@ -374,8 +365,8 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
                         FworkCode = 7,
                         FundModel = 81,
                         StdCode = 8,
-                        LearnStartDate = new DateTime(2018, 8, 1),
-                        LearnPlanEndDate = new DateTime(2019, 8, 1),
+                        LearnStartDate = new DateTime(2019, 8, 1),
+                        LearnPlanEndDate = new DateTime(2020, 8, 1),
                         DelLocPostCode = "Postcode",
                         LearningDeliveryFAMs = new List<LearningDeliveryFAM>
                         {

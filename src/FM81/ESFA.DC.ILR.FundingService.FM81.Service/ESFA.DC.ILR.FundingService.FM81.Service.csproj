@@ -13,17 +13,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Rulebase\Trailblazer Funding Calc 18_19.zip" />
+    <None Remove="Rulebase\Trailblazer Funding Calc 19_20.zip" />
     <None Remove="Rulebase\XSRC\Input.xsrc" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Rulebase\Trailblazer Funding Calc 18_19.zip">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
     <Content Include="Rulebase\XSRC\Input.xsrc">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Rulebase\Trailblazer Funding Calc 19_20.zip" />
   </ItemGroup>
 
   <ItemGroup>
