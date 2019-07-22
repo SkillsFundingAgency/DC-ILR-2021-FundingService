@@ -115,19 +115,18 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
                     { Attributes.LearnAimRef, new AttributeData(learningDelivery.LearnAimRef) },
                     { Attributes.LearnPlanEndDate, new AttributeData(learningDelivery.LearnPlanEndDate) },
                     { Attributes.LearnStartDate, new AttributeData(learningDelivery.LearnStartDate) },
-                    { Attributes.LrnDelFAM_LDM1, new AttributeData(learningDelivery.LrnDelFAM_LDM1) },
-                    { Attributes.LrnDelFAM_LDM2, new AttributeData(learningDelivery.LrnDelFAM_LDM2) },
-                    { Attributes.LrnDelFAM_LDM3, new AttributeData(learningDelivery.LrnDelFAM_LDM3) },
-                    { Attributes.LrnDelFAM_LDM4, new AttributeData(learningDelivery.LrnDelFAM_LDM4) },
-                    { Attributes.LrnDelFAM_RES, new AttributeData(learningDelivery.LrnDelFAM_RES) },
                     { Attributes.OrigLearnStartDate, new AttributeData(learningDelivery.OrigLearnStartDate) },
                     { Attributes.OtherFundAdj, new AttributeData(learningDelivery.OtherFundAdj) },
                     { Attributes.Outcome, new AttributeData(learningDelivery.Outcome) },
                     { Attributes.PriorLearnFundAdj, new AttributeData(learningDelivery.PriorLearnFundAdj) },
                 },
                 Children = (
-                            larsLearningDelivery?
-                            .LARSAnnualValues?
+                            learningDelivery?
+                                    .LearningDeliveryFAMs?
+                                    .Select(BuildLearningDeliveryFAM) ?? new List<IDataEntity>())
+                            .Union(
+                                    larsLearningDelivery?
+                                    .LARSAnnualValues?
                                    .Select(BuildLARSAnnualValue) ?? new List<IDataEntity>())
                             .Union(
                                    sfaAreaCost?
@@ -140,6 +139,20 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
                                     esfData?
                                     .Select(BuildEsfDataEntity) ?? new List<IDataEntity>())
                             .ToList()
+            };
+        }
+
+        public IDataEntity BuildLearningDeliveryFAM(LearningDeliveryFAM learningDeliveryFAM)
+        {
+            return new DataEntity(Attributes.EntityLearningDeliveryFAM)
+            {
+                Attributes = new Dictionary<string, IAttributeData>()
+                {
+                    { Attributes.LearnDelFAMCode, new AttributeData(learningDeliveryFAM.LearnDelFAMCode) },
+                    { Attributes.LearnDelFAMDateTo, new AttributeData(learningDeliveryFAM.LearnDelFAMDateTo) },
+                    { Attributes.LearnDelFAMDateFrom, new AttributeData(learningDeliveryFAM.LearnDelFAMDateFrom) },
+                    { Attributes.LearnDelFAMType, new AttributeData(learningDeliveryFAM.LearnDelFAMType) },
+                }
             };
         }
 

@@ -8,6 +8,8 @@
         <props>
           <prop name="PassThrough">True</prop>
           <prop name="KeySequence">1</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
         </props>
       </attribute>
     </entity>
@@ -16,6 +18,10 @@
         <text>
           <base>the learner's date of birth</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
       <attribute name="p26" type="text" public-name="LearnRefNumber">
         <text>
@@ -24,6 +30,8 @@
         <props>
           <prop name="KeySequence">1</prop>
           <prop name="Size">12</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
         </props>
       </attribute>
     </entity>
@@ -37,6 +45,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">31/07/2016</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
         </props>
       </attribute>
       <attribute name="p5" type="date" public-name="LearnPlanEndDate">
@@ -48,6 +58,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">31/07/2016</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
         </props>
       </attribute>
       <attribute name="p6" type="date" public-name="OrigLearnStartDate">
@@ -59,12 +71,18 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">01/08/2015</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
         </props>
       </attribute>
       <attribute name="p7" type="text" public-name="LearnAimRef">
         <text>
           <base>the learning delivery's learning aim reference</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
       <attribute name="p8" type="number" public-name="CompStatus">
         <text>
@@ -74,6 +92,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">1</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
         </props>
       </attribute>
       <attribute name="p9" type="number" public-name="Outcome">
@@ -84,17 +104,27 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">1</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
         </props>
       </attribute>
       <attribute name="p10" type="text" public-name="GenreCode">
         <text>
           <base>the learning delivery's genre code</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
       <attribute name="p18" type="text" public-name="ConRefNumber">
         <text>
           <base>the learning delivery's contract reference number</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
       <attribute name="p28" type="date" public-name="LearnStartDate">
         <text>
@@ -105,6 +135,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">01/08/2015</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
         </props>
       </attribute>
       <attribute name="p30" type="number" public-name="AimSeqNumber">
@@ -113,47 +145,36 @@
         </text>
         <props>
           <prop name="KeySequence">1</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
         </props>
       </attribute>
       <attribute name="p45" type="date" public-name="AchDate">
         <text>
           <base>the learning delivery's achievement date</base>
         </text>
-      </attribute>
-      <attribute name="p46" type="text" public-name="LrnDelFAM_LDM4">
-        <text>
-          <base>the learning delivery's LDM 4 FAM code</base>
-        </text>
-      </attribute>
-      <attribute name="p47" type="text" public-name="LrnDelFAM_LDM1">
-        <text>
-          <base>the learning delivery's LDM 1 FAM code</base>
-        </text>
-      </attribute>
-      <attribute name="p48" type="text" public-name="LrnDelFAM_LDM2">
-        <text>
-          <base>the learning delivery's LDM 2 FAM code</base>
-        </text>
-      </attribute>
-      <attribute name="p49" type="text" public-name="LrnDelFAM_LDM3">
-        <text>
-          <base>the learning delivery's LDM 3 FAM code</base>
-        </text>
-      </attribute>
-      <attribute name="p50" type="number" public-name="LrnDelFAM_RES">
-        <text>
-          <base>the learning delivery's RES FAM code</base>
-        </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
       <attribute name="p51" type="number" public-name="PriorLearnFundAdj">
         <text>
           <base>the learning delivery's funding adjustment for prior learning</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
       <attribute name="p52" type="number" public-name="OtherFundAdj">
         <text>
           <base>the learning delivery's other funding adjustment</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
       <attribute name="p58" type="number" public-name="AddHours">
         <text>
@@ -163,6 +184,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">10</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
         </props>
       </attribute>
       <attribute name="p60" type="number" public-name="CalcMethod">
@@ -172,6 +195,8 @@
         <props>
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
         </props>
       </attribute>
     </entity>
@@ -182,27 +207,45 @@
         </text>
         <props>
           <prop name="PassThrough">True</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
         </props>
       </attribute>
       <attribute name="p12" type="text" public-name="ESFDeliverableCode">
         <text>
           <base>the ESF data deliverable code</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
       <attribute name="p41" type="number" public-name="ESFDataPremiumFactor">
         <text>
           <base>the ESF data learning rate premium factor</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
       <attribute name="p42" type="date" public-name="EffectiveContractStartDate">
         <text>
           <base>the ESF data's effective contract allocation start date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
       <attribute name="p43" type="date" public-name="EffectiveContractEndDate">
         <text>
           <base>the ESF data's effective contract allocation end date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
     </entity>
     <entity id="destinationandprogression" name="the destination and progression" containment-relationship-id="destinationandprogressions" containment-parent-id="learner" public-id="DPOutcome">
@@ -213,6 +256,8 @@
         <props>
           <prop name="KeySequence">2</prop>
           <prop name="Size">30</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
         </props>
       </attribute>
       <attribute name="p22" type="number" public-name="OutCode">
@@ -221,12 +266,18 @@
         </text>
         <props>
           <prop name="KeySequence">1</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
         </props>
       </attribute>
       <attribute name="p23" type="date" public-name="OutEndDate">
         <text>
           <base>the destination and progression's outcome end date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
       <attribute name="p24" type="date" public-name="OutStartDate">
         <text>
@@ -235,12 +286,18 @@
         <props>
           <prop name="PassThrough">True</prop>
           <prop name="KeySequence">3</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
         </props>
       </attribute>
       <attribute name="p25" type="date" public-name="OutCollDate">
         <text>
           <base>the destination and progression's outcome collection date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
     </entity>
     <entity id="learningdeliverylarsfunding" name="the learning delivery LARS funding" containment-relationship-id="learningdeliveryslarsfundings" containment-parent-id="learningdelivery" public-id="LearningDeliveryLARSFunding">
@@ -248,21 +305,37 @@
         <text>
           <base>the learning delivery LARS funding's category</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
       <attribute name="p35" type="date" public-name="LARSFundingEffectiveTo">
         <text>
           <base>the learning delivery LARS funding's effective to date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
       <attribute name="p36" type="date" public-name="LARSFundingEffectiveFrom">
         <text>
           <base>the learning delivery LARS funding's effective from date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
       <attribute name="p37" type="currency" public-name="LARSFundingWeightedRate">
         <text>
           <base>the learning delivery LARS funding's weighted rate</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
     </entity>
     <entity id="learningdeliveryannualvalue" name="the learning delivery annual value" containment-relationship-id="learningdeliverysannualvalues" containment-parent-id="learningdelivery" public-id="LearningDeliveryAnnualValue">
@@ -270,16 +343,28 @@
         <text>
           <base>the learning delivery annual value's basic skills type code</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
       <attribute name="p56" type="date" public-name="LearnDelAnnValDateFrom">
         <text>
           <base>the learning delivery annual value's effective from date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
       <attribute name="p57" type="date" public-name="LearnDelAnnValDateTo">
         <text>
           <base>the learning delivery annual value's effective to date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
     </entity>
     <entity id="learningdeliverypostcodeareacostreferencedata" name="the learning delivery postcode area cost reference data" containment-relationship-id="learningdeliveryspostcodeareacostreferencedata" containment-parent-id="learningdelivery" public-id="SFA_PostcodeAreaCost">
@@ -287,16 +372,28 @@
         <text>
           <base>the learning delivery postcode area cost reference data's effective from date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
       <attribute name="p63" type="date" public-name="AreaCosEffectiveTo">
         <text>
           <base>the learning delivery postcode area cost reference data's effective to date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
       <attribute name="p64" type="number" public-name="AreaCosFactor">
         <text>
           <base>the learning delivery postcode area cost reference data's area cost factor</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
     </entity>
     <entity id="learneremploymentstatus" name="the learner employment status" identifying-attribute-name="EMPStat" identifying-attribute-text="the learner employment status" containment-relationship-id="learnersemploymentstatuses" containment-parent-id="learner" public-id="LearnerEmploymentStatus">
@@ -304,11 +401,59 @@
         <text>
           <base>the learner employment status's date applies</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
       <attribute name="p67" type="number" public-name="EMPStat">
         <text>
           <base>the learner employment status</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
+      </attribute>
+    </entity>
+    <entity id="learningdeliveryfam" name="the learning delivery FAM" containment-relationship-id="learningdeliverysfams" containment-parent-id="learningdelivery" public-id="LearningDeliveryFAM">
+      <attribute name="p69" type="text" public-name="LearnDelFAMCode">
+        <text>
+          <base>the learning delivery FAM's code</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Version">1920.02.02</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
+      </attribute>
+      <attribute name="p70" type="date" public-name="LearnDelFAMDateFrom">
+        <text>
+          <base>the learning delivery FAM's date applies from</base>
+        </text>
+        <props>
+          <prop name="Version">1920.02.02</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
+      </attribute>
+      <attribute name="p71" type="date" public-name="LearnDelFAMDateTo">
+        <text>
+          <base>the learning delivery FAM's date applies to</base>
+        </text>
+        <props>
+          <prop name="Version">1920.02.02</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
+      </attribute>
+      <attribute name="p72" type="text" public-name="LearnDelFAMType">
+        <text>
+          <base>the learning delivery FAM's type</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Version">1920.02.02</prop>
+          <prop name="Date">08-04-2019</prop>
+        </props>
       </attribute>
     </entity>
   </entities>
@@ -321,6 +466,7 @@
     <relationship source="learningdelivery" target="learningdeliveryannualvalue" text="the learning delivery's annual values" relationship-id="learningdeliverysannualvalues" reverse-relationship-id="learningdelivery_learningdeliverysannualvalues_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
     <relationship source="learningdelivery" target="learningdeliverypostcodeareacostreferencedata" text="the learning delivery's postcode area cost reference data" relationship-id="learningdeliveryspostcodeareacostreferencedata" reverse-relationship-id="learningdelivery_learningdeliveryspostcodeareacostreferencedata_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
     <relationship source="learner" target="learneremploymentstatus" text="the learner's employment statuses" relationship-id="learnersemploymentstatuses" reverse-relationship-id="learner_learnersemploymentstatuses_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learningdelivery" target="learningdeliveryfam" text="the learning delivery's FAMs" relationship-id="learningdeliverysfams" reverse-relationship-id="learningdelivery_learningdeliverysfams_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
   </relationships>
   <rules />
   <interactive-items>

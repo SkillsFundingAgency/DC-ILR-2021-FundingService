@@ -111,27 +111,23 @@
     <Compile Include="RulebaseInterfaceTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\ESFA.DC.ILR.FundingService.FM70.Service\Rulebase\ESF 1920 Funding Calc.zip">
+      <Link>Rulebase\ESF 1920 Funding Calc.zip</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\ESFA.DC.ILR.FundingService.FM70.Service\Rulebase\XSRC\Input.xsrc">
+      <Link>Rulebase\XSRC\Input.xsrc</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="App.config" />
     <None Include="ESFA.DC.ILR.FundingService.FM70.Service.Tests.ruleset" />
     <None Include="packages.config" />
-    <Content Include="Rulebase\ESF 1819 Funding Calc.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Rulebase\XSRC\Input.xsrc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="RulebaseMasterFiles\ESF 1819 Funding Calc.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="RulebaseMasterFiles\XSRC\Input.xsrc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="RulebaseMasterFiles\XSRC\Interim.xsrc" />
-    <None Include="RulebaseMasterFiles\XSRC\Output.xsrc" />
-    <None Include="RulebaseMasterFiles\XSRC\Parameters.xsrc" />
-    <None Include="Rulebase\XSRC\Interim.xsrc" />
-    <None Include="Rulebase\XSRC\Output.xsrc" />
-    <None Include="Rulebase\XSRC\Parameters.xsrc" />
+    <Content Include="RulebaseMasterFiles\ESF 1920 Funding Calc.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
