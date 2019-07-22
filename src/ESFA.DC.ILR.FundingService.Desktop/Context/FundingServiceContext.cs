@@ -42,7 +42,7 @@ namespace ESFA.DC.ILR.FundingService.Desktop.Context
            { ILRContextKeys.FundingFm35Output, _desktopContext.KeyValuePairs[ILRContextKeys.FundingFm35Output].ToString() },
            { ILRContextKeys.FundingFm36Output, _desktopContext.KeyValuePairs[ILRContextKeys.FundingFm36Output].ToString() },
            //{ ILRContextKeys.FundingFm70Output, _desktopContext.KeyValuePairs[ILRContextKeys.FundingFm70Output].ToString() },
-           //{ ILRContextKeys.FundingFm81Output, _desktopContext.KeyValuePairs[ILRContextKeys.FundingFm81Output].ToString() },
+           { ILRContextKeys.FundingFm81Output, _desktopContext.KeyValuePairs[ILRContextKeys.FundingFm81Output].ToString() },
         };
 
         public long JobId => 0;
