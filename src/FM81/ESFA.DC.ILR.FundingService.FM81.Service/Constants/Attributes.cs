@@ -77,6 +77,7 @@
         public const string ActualDaysIL = "ActualDaysIL";
         public const string ActualNumInstalm = "ActualNumInstalm";
         public const string AdjProgStartDate = "AdjProgStartDate";
+        public const string AdjStartDate = "AdjStartDate";
         public const string AgeStandardStart = "AgeStandardStart";
         public const string ApplicFundValDate = "ApplicFundValDate";
         public const string CombinedAdjProp = "CombinedAdjProp";
@@ -112,6 +113,7 @@
         public const string SmallBusPayment = "SmallBusPayment";
         public const string SmallBusStatusFirstDayStandard = "SmallBusStatusFirstDayStandard";
         public const string SmallBusStatusThreshold = "SmallBusStatusThreshold";
+        public const string SmallBusThresholdDate = "SmallBusThresholdDate";
         public const string YoungAppApplicVal = "YoungAppApplicVal";
         public const string YoungAppEligible = "YoungAppEligible";
         public const string YoungAppFirstPayment = "YoungAppFirstPayment";
