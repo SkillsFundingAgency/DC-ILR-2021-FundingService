@@ -32,9 +32,9 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
         {
             var acadMonthPayment = 1;
             var fundLine = "FundLine";
-            var learnerActEndDate = new DateTime(2017, 1, 1);
-            var learnerPlanEndDate = new DateTime(2018, 1, 1);
-            var learnerStartDate = new DateTime(2019, 1, 1);
+            var learnerActEndDate = new DateTime(2018, 1, 1);
+            var learnerPlanEndDate = new DateTime(2019, 1, 1);
+            var learnerStartDate = new DateTime(2020, 1, 1);
             var learnRefNumber = "LearnRefNumber";
             var onProgPayment = 1.0m;
 

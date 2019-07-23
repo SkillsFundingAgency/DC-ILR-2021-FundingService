@@ -25,7 +25,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
         private IEnumerable<FM70LearnerDto> BuildDtos(IEnumerable<ILearner> learners, IEnumerable<ILearnerDestinationAndProgression> learnerDestinationAndProgressions)
         {
             var learnerDPOutcomes = BuildLearnerDPOutcomeDictionary(learnerDestinationAndProgressions);
-            var ldFams = BuildLearningDeliveryFAMDictionary(learners);
 
             return learners.Select(l => new FM70LearnerDto
             {

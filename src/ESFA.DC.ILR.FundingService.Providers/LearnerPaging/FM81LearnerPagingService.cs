@@ -22,8 +22,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
 
         private IEnumerable<FM81LearnerDto> BuildDtos(IEnumerable<ILearner> learners)
         {
-            var ldFams = BuildLearningDeliveryFAMDictionary(learners);
-
             return learners.Select(l => new FM81LearnerDto
             {
                 LearnRefNumber = l.LearnRefNumber,

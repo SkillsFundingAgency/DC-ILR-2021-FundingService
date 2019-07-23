@@ -67,8 +67,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
             return learners;
         }
 
-
-
         private AbstractLearnerPagingService NewService()
         {
             return new AbstractLearnerPagingService();

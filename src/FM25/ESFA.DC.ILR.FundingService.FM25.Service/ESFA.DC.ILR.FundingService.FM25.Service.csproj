@@ -14,16 +14,14 @@
 
   <ItemGroup>
     <None Remove="Rulebase\FM25Periodisation\FM25 Periodisation.zip" />
-    <None Remove="Rulebase\FM25\FM25 Funding Calc 18_19.zip" />
+    <None Remove="Rulebase\FM25\FM25 Funding Calc 19_20.zip" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Rulebase\FM25Periodisation\FM25 Periodisation.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Rulebase\FM25\FM25 Funding Calc 18_19.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Rulebase\FM25\FM25 Funding Calc 19_20.zip" />
   </ItemGroup>
 
   <ItemGroup>

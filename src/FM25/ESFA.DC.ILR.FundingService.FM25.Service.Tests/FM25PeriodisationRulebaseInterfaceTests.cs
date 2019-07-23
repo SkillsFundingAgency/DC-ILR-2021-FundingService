@@ -18,7 +18,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
 {
     public class FM25PeriodisationRulebaseInterfaceTests
     {
-        public const string AcademicYear = "1819";
+        public const string AcademicYear = "1920";
         public const string RulebaseName = "FM25 Periodisation";
         public const string RulebaseFolder = "Rulebase\\FM25Periodisation";
         public const string RulebaseMasterFolder = "RulebaseMasterFiles\\FM25Periodisation";

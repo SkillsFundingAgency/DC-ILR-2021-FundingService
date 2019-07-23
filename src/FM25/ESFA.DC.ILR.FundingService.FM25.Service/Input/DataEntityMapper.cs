@@ -18,7 +18,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
     public class DataEntityMapper : IDataEntityMapper<FM25LearnerDto>
     {
         private readonly int _fundModel = Attributes.FundModel_25;
-        private readonly DateTime _orgFundingAppliesFrom = new DateTime(2018, 8, 1);
+        private readonly DateTime _orgFundingAppliesFrom = new DateTime(2019, 8, 1);
 
         private readonly ILARSReferenceDataService _larsReferenceDataService;
         private readonly IOrganisationReferenceDataService _organisationReferenceDataService;
@@ -58,6 +58,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { Attributes.ProgrammeWeighting, new AttributeData(global.ProgrammeWeighting) },
                     { Attributes.RetentionFactor, new AttributeData(global.RetentionFactor) },
                     { Attributes.SpecialistResources, new AttributeData(global.SpecialistResources) },
+                    { Attributes.SpecialistCampIDPCW, new AttributeData(global.SpecialistCampIDPCW) },                    
                     { Attributes.UKPRN, new AttributeData(global.UKPRN) }
                 },
                 Children = learner != null ? new List<IDataEntity>() { BuildLearnerDataEntity(learner) } : new List<IDataEntity>()
@@ -138,20 +139,33 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { Attributes.LearnAimRefType, new AttributeData(larsLearningDelivery.LearnAimRefType) },
                     { Attributes.LearnPlanEndDate, new AttributeData(learningDelivery.LearnPlanEndDate) },
                     { Attributes.LearnStartDate, new AttributeData(learningDelivery.LearnStartDate) },
-                    { Attributes.LrnDelFAM_SOF, new AttributeData(learningDelivery.LrnDelFAM_SOF) },
-                    { Attributes.LrnDelFAM_LDM1, new AttributeData(learningDelivery.LrnDelFAM_LDM1) },
-                    { Attributes.LrnDelFAM_LDM2, new AttributeData(learningDelivery.LrnDelFAM_LDM2) },
-                    { Attributes.LrnDelFAM_LDM3, new AttributeData(learningDelivery.LrnDelFAM_LDM3) },
-                    { Attributes.LrnDelFAM_LDM4, new AttributeData(learningDelivery.LrnDelFAM_LDM4) },
                     { Attributes.ProgType, new AttributeData(learningDelivery.ProgType) },
                     { Attributes.SectorSubjectAreaTier2, new AttributeData(larsLearningDelivery.SectorSubjectAreaTier2) },
                     { Attributes.WithdrawReason, new AttributeData(learningDelivery.WithdrawReason) },
                 },
-                Children = larsLearningDelivery?
-                        .LARSValidities?
-                        .Select(BuildLearningDeliveryLARSValidity)
-                        .ToList()
-                    ?? new List<IDataEntity>()
+                Children = (
+                            learningDelivery?
+                            .LearningDeliveryFAMs?
+                            .Select(BuildLearningDeliveryFAM) ?? new List<IDataEntity>())
+                            .Union(
+                                    larsLearningDelivery?
+                                    .LARSValidities?
+                                    .Select(BuildLearningDeliveryLARSValidity) ?? new List<IDataEntity>())
+                            .ToList()
+            };
+        }
+
+        public IDataEntity BuildLearningDeliveryFAM(LearningDeliveryFAM learningDeliveryFAM)
+        {
+            return new DataEntity(Attributes.EntityLearningDeliveryFAM)
+            {
+                Attributes = new Dictionary<string, IAttributeData>()
+                {
+                    { Attributes.LearnDelFAMCode, new AttributeData(learningDeliveryFAM.LearnDelFAMCode) },
+                    { Attributes.LearnDelFAMDateTo, new AttributeData(learningDeliveryFAM.LearnDelFAMDateTo) },
+                    { Attributes.LearnDelFAMDateFrom, new AttributeData(learningDeliveryFAM.LearnDelFAMDateFrom) },
+                    { Attributes.LearnDelFAMType, new AttributeData(learningDeliveryFAM.LearnDelFAMType) },
+                }
             };
         }
 
@@ -182,7 +196,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
 
         public Global BuildGlobal(int ukprn)
         {
-            var orgFundings = _organisationReferenceDataService.OrganisationFundingForUKPRN(ukprn).Where(f => f.OrgFundFactType == Attributes.OrgFundFactorTypeEFA1619).ToList();
+            var orgFundings = _organisationReferenceDataService.OrganisationFundingForUKPRN(ukprn)
+                .Where(f => f.OrgFundFactType == Attributes.OrgFundFactorTypeEFA1619).ToList();
 
             return new Global()
             {
@@ -195,6 +210,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                 ProgrammeWeighting = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == _orgFundingAppliesFrom && f.OrgFundFactor == Attributes.OrgFundFactorHistoriProgCostWeigting)?.OrgFundFactValue,
                 RetentionFactor = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == _orgFundingAppliesFrom && f.OrgFundFactor == Attributes.OrgFundFactorHistoricRetention)?.OrgFundFactValue,
                 SpecialistResources = orgFundings.FirstOrDefault(f => f.OrgFundFactor == Attributes.OrgFundFactorSpecialistResources)?.OrgFundFactValue == "1" ? true : false,
+                SpecialistCampIDPCW = "N",
                 UKPRN = ukprn
             };
         }

@@ -231,10 +231,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                         LearnStartDate = new DateTime(2018, 8, 1),
                         ProgType = 1,
                         WithdrawReason = 1,
-                        LrnDelFAM_SOF = "1",
-                        LrnDelFAM_LDM1 = "1",
-                        LrnDelFAM_LDM2 = "2",
-                        LrnDelFAM_LDM3 = "3",
                         LearningDeliveryFAMs = new List<LearningDeliveryFAM>
                         {
                             new LearningDeliveryFAM
