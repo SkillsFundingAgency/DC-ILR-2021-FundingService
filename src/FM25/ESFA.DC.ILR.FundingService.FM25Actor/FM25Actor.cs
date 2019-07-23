@@ -108,7 +108,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
 
                     using (var fundingServiceLifetimeScope = childLifetimeScope.BeginLifetimeScope(c =>
                     {
-                        c.RegisterInstance(new FM25PeriodisationRulebaseProvider()).As<IRulebaseStreamProvider<FM25LearnerDto>>();
+                        c.RegisterInstance(new FM25PeriodisationRulebaseProvider()).As<IRulebaseStreamProvider<FM25Global>>();
                     }))
                     {
                         jobLogger.LogDebug("FM25 Periodisation Rulebase Starting");

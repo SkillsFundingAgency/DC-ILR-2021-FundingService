@@ -52,7 +52,7 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Postcodes
 
             return
                 postcodeRoot?
-                .EfaDisadvantages
+                .EfaDisadvantages?
                 .OrderByDescending(ef => ef.EffectiveFrom)
                 .Select(u => u.Uplift)
                 .FirstOrDefault();
