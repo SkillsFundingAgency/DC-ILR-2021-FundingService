@@ -38,7 +38,7 @@ namespace ESFA.DC.ILR.FundingService.Desktop.Context
         public IReadOnlyDictionary<string, string> FundingOutputKeys => new Dictionary<string, string>
         {
            { ILRContextKeys.FundingAlbOutput, _desktopContext.KeyValuePairs[ILRContextKeys.FundingAlbOutput].ToString() },
-           //{ ILRContextKeys.FundingFm25Output, _desktopContext.KeyValuePairs[ILRContextKeys.FundingFm25Output].ToString() },
+           { ILRContextKeys.FundingFm25Output, _desktopContext.KeyValuePairs[ILRContextKeys.FundingFm25Output].ToString() },
            { ILRContextKeys.FundingFm35Output, _desktopContext.KeyValuePairs[ILRContextKeys.FundingFm35Output].ToString() },
            { ILRContextKeys.FundingFm36Output, _desktopContext.KeyValuePairs[ILRContextKeys.FundingFm36Output].ToString() },
            { ILRContextKeys.FundingFm70Output, _desktopContext.KeyValuePairs[ILRContextKeys.FundingFm70Output].ToString() },

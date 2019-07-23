@@ -27,8 +27,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
 {
     public class FM25RulebaseInterfaceTests
     {
-        public const string AcademicYear = "1819";
-        public const string RulebaseName = "FM25 Funding Calc 18_19";
+        public const string AcademicYear = "1920";
+        public const string RulebaseName = "FM25 Funding Calc 19_20";
         public const string RulebaseFolder = "Rulebase\\FM25";
         public const string RulebaseMasterFolder = "RulebaseMasterFiles\\FM25";
         public const string XsrcName = "Inputs";
@@ -164,6 +164,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 Attributes.EntityGlobal,
                 Attributes.EntityLearner,
                 Attributes.EntityLearningDelivery,
+                Attributes.EntityLearningDeliveryFAM,
                 Attributes.EntityDPOutcome,
                 Attributes.EntityLearningDeliveryLARSValidity,
             };
@@ -182,6 +183,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 Attributes.ProgrammeWeighting,
                 Attributes.RetentionFactor,
                 Attributes.SpecialistResources,
+                Attributes.SpecialistCampIDPCW,
                 Attributes.UKPRN,
                 Attributes.DateOfBirth,
                 Attributes.EngGrade,
@@ -209,11 +211,6 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 Attributes.LearnAimRefType,
                 Attributes.LearnPlanEndDate,
                 Attributes.LearnStartDate,
-                Attributes.LrnDelFAM_SOF,
-                Attributes.LrnDelFAM_LDM1,
-                Attributes.LrnDelFAM_LDM2,
-                Attributes.LrnDelFAM_LDM3,
-                Attributes.LrnDelFAM_LDM4,
                 Attributes.ProgType,
                 Attributes.SectorSubjectAreaTier2,
                 Attributes.WithdrawReason,
@@ -222,6 +219,10 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 Attributes.ValidityCategory,
                 Attributes.ValidityLastNewStartDate,
                 Attributes.ValidityStartDate,
+                Attributes.LearnDelFAMType,
+                Attributes.LearnDelFAMCode,
+                Attributes.LearnDelFAMDateFrom,
+                Attributes.LearnDelFAMDateTo
             };
         }
 
@@ -368,8 +369,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                         FworkCode = 7,
                         FundModel = 25,
                         StdCode = 8,
-                        LearnStartDate = new DateTime(2018, 8, 1),
-                        LearnPlanEndDate = new DateTime(2019, 8, 1),
+                        LearnStartDate = new DateTime(2019, 8, 1),
+                        LearnPlanEndDate = new DateTime(2020, 8, 1),
                         DelLocPostCode = "Postcode",
                         LearningDeliveryFAMs = new List<LearningDeliveryFAM>
                         {
