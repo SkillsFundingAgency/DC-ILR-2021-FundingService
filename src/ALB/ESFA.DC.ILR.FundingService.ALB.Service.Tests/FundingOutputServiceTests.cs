@@ -287,7 +287,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                     { "AreaCostInstalment", Attribute(false, "1.0") },
                     { "FundLine", Attribute(false, "1.0") },
                     { "FundStart", Attribute(false, "1.0") },
-                    { "LearnDelEligCareerLearnPilot", Attribute(false, "1.0") },
                     { "LiabilityDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
                     { "LoanBursAreaUplift", Attribute(false, "1.0") },
                     { "LoanBursSupp", Attribute(false, "1.0") },

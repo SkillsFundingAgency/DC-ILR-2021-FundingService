@@ -35,7 +35,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                     EFACOFType = ld.EFACOFType,
                     SectorSubjectAreaTier2 = ld.SectorSubjectAreaTier2,
                     LARSAnnualValues = ld.LARSAnnualValues?.Select(LARSAnnualValueFromEntity).ToList(),
-                    LARSCareerLearningPilots = ld.LARSCareerLearningPilots?.Select(LARSCareerLearningPilotFromEntity).ToList(),
                     LARSLearningDeliveryCategories = ld.LARSLearningDeliveryCategories?.Select(LARSLearningDeliveryCategoryFromEntity).ToList(),
                     LARSFrameworks = ld.LARSFrameworks?.Select(LARSFrameworkFromEntity).ToList(),
                     LARSFundings = ld.LARSFundings?.Select(LARSFundingFromEntity).ToList(),
@@ -64,17 +63,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             return new Data.External.LARS.Model.LARSAnnualValue()
             {
                 BasicSkillsType = entity.BasicSkillsType,
-                EffectiveFrom = entity.EffectiveFrom,
-                EffectiveTo = entity.EffectiveTo,
-            };
-        }
-
-        private Data.External.LARS.Model.LARSCareerLearningPilot LARSCareerLearningPilotFromEntity(LARSCareerLearningPilot entity)
-        {
-            return new Data.External.LARS.Model.LARSCareerLearningPilot()
-            {
-                AreaCode = entity.AreaCode,
-                SubsidyRate = entity.SubsidyRate,
                 EffectiveFrom = entity.EffectiveFrom,
                 EffectiveTo = entity.EffectiveTo,
             };

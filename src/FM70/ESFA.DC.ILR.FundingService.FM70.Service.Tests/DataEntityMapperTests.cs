@@ -80,16 +80,6 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
                         EffectiveFrom = new DateTime(2019, 1, 1),
                         EffectiveTo = new DateTime(2020, 1, 1),
                     }
-                },
-                LARSCareerLearningPilots = new List<LARSCareerLearningPilot>
-                {
-                    new LARSCareerLearningPilot
-                    {
-                        AreaCode = "DelLocPostcode",
-                        SubsidyRate = 1.2m,
-                        EffectiveFrom = new DateTime(2019, 1, 1),
-                        EffectiveTo = new DateTime(2020, 1, 1)
-                    }
                 }
             };
 
