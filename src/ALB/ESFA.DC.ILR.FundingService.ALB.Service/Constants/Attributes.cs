@@ -46,11 +46,6 @@
         public const string AreaCostInstalment = "AreaCostInstalment";
         public const string FundLine = "FundLine";
         public const string FundStart = "FundStart";
-        public const string LearnDelApplicLARSCarPilFundSubRate = "LearnDelApplicLARSCarPilFundSubRate";
-        public const string LearnDelApplicSubsidyPilotAreaCode = "LearnDelApplicSubsidyPilotAreaCode";
-        public const string LearnDelCarLearnPilotAimValue = "LearnDelCarLearnPilotAimValue";
-        public const string LearnDelCarLearnPilotInstalAmount = "LearnDelCarLearnPilotInstalAmount";
-        public const string LearnDelEligCareerLearnPilot = "LearnDelEligCareerLearnPilot";
         public const string LiabilityDate = "LiabilityDate";
         public const string LoanBursAreaUplift = "LoanBursAreaUplift";
         public const string LoanBursSupp = "LoanBursSupp";
@@ -62,8 +57,6 @@
         public const string ALBSupportPayment = "ALBSupportPayment";
         public const string AreaUpliftBalPayment = "AreaUpliftBalPayment";
         public const string AreaUpliftOnProgPayment = "AreaUpliftOnProgPayment";
-        public const string LearnDelCarLearnPilotOnProgPayment = "LearnDelCarLearnPilotOnProgPayment";
-        public const string LearnDelCarLearnPilotBalPayment = "LearnDelCarLearnPilotBalPayment";
 
         // LearningDeliveryFAM
         public const string LearnDelFAMCode = "LearnDelFAMCode";
