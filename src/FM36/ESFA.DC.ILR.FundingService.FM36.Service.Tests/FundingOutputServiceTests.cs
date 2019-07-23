@@ -22,7 +22,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
 
             var ukprn = 1;
             var larsVersion = "LARSVersion";
-            var year = "1819";
+            var year = "1920";
             var rulebaseVersion = "RulebaseVersion";
 
             var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();

@@ -28,8 +28,8 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
 {
     public class RulebaseInterfaceTests
     {
-        public const string AcademicYear = "1819";
-        public const string RulebaseName = "ESF 1819 Funding Calc";
+        public const string AcademicYear = "1920";
+        public const string RulebaseName = "ESF 1920 Funding Calc";
         public const string RulebaseFolder = "Rulebase";
         public const string RulebaseMasterFolder = "RulebaseMasterFiles";
         public const string XsrcName = "Input";
@@ -140,10 +140,8 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
             var xsrcEntities = GetXSRCEntity(RulebaseFolder).GlobalEntity;
             var dateEntityMapperEntities = GetDataEntityMapperEntity();
 
-            var t = GetAttributeList(dateEntityMapperEntities).OrderBy(a => a);
-            var y = GetAttributeList(xsrcEntities).OrderBy(a => a);
-
-            t.Should().BeEquivalentTo(y);
+            GetAttributeList(dateEntityMapperEntities).OrderBy(a => a)
+                .Should().BeEquivalentTo(GetAttributeList(xsrcEntities).OrderBy(a => a));
         }
 
         [Fact]
@@ -170,6 +168,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
                 Attributes.EntityDPOutcome,
                 Attributes.EntityLearnerEmploymentStatus,
                 Attributes.EntityLearningDelivery,
+                Attributes.EntityLearningDeliveryFAM,
                 Attributes.EntityESFData,
                 Attributes.EntityLearningDeliverySFA_PostcodeAreaCost,
                 Attributes.EntityLearningDeliveryLARSFunding,
@@ -195,11 +194,6 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
                 Attributes.LearnAimRef,
                 Attributes.LearnPlanEndDate,
                 Attributes.LearnStartDate,
-                Attributes.LrnDelFAM_LDM1,
-                Attributes.LrnDelFAM_LDM2,
-                Attributes.LrnDelFAM_LDM3,
-                Attributes.LrnDelFAM_LDM4,
-                Attributes.LrnDelFAM_RES,
                 Attributes.OrigLearnStartDate,
                 Attributes.OtherFundAdj,
                 Attributes.Outcome,
@@ -226,6 +220,10 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
                 Attributes.ESFDataPremiumFactor,
                 Attributes.EffectiveContractStartDate,
                 Attributes.EffectiveContractEndDate,
+                Attributes.LearnDelFAMType,
+                Attributes.LearnDelFAMCode,
+                Attributes.LearnDelFAMDateFrom,
+                Attributes.LearnDelFAMDateTo
             };
         }
 
@@ -361,7 +359,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
                     {
                         EmpId = 10,
                         AgreeId = "1",
-                        DateEmpStatApp = new DateTime(2018, 8, 1),
+                        DateEmpStatApp = new DateTime(2019, 8, 1),
                         EmpStat = 2,
                     },
                 },
@@ -379,12 +377,17 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
                         FworkCode = 7,
                         FundModel = 70,
                         StdCode = 8,
-                        LearnStartDate = new DateTime(2018, 8, 1),
-                        LearnPlanEndDate = new DateTime(2019, 8, 1),
+                        LearnStartDate = new DateTime(2019, 8, 1),
+                        LearnPlanEndDate = new DateTime(2020, 8, 1),
                         DelLocPostCode = "Postcode",
                         LearningDeliveryFAMs = new List<LearningDeliveryFAM>
                         {
-                            new LearningDeliveryFAM()
+                            new LearningDeliveryFAM
+                            {
+                                LearnDelFAMCode = "1",
+                                LearnDelFAMType = "RES",
+                                LearnDelFAMDateFrom = new DateTime(2019, 8, 1)
+                            }
                         },
                     },
                 },

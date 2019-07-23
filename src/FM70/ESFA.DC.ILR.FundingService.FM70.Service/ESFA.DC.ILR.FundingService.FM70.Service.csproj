@@ -13,13 +13,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Rulebase\ESF 1819 Funding Calc.zip" />
+    <None Remove="Rulebase\ESF 1920 Funding Calc.zip" />
     <None Remove="Rulebase\XSRC\Input.xsrc" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Rulebase\ESF 1819 Funding Calc.zip" />
     <Content Include="Rulebase\XSRC\Input.xsrc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Rulebase\ESF 1920 Funding Calc.zip">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

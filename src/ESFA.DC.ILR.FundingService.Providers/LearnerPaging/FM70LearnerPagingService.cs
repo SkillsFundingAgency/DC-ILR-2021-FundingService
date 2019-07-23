@@ -55,11 +55,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                     OtherFundAdj = ld.OtherFundAdjNullable,
                     Outcome = ld.OutcomeNullable,
                     PriorLearnFundAdj = ld.PriorLearnFundAdjNullable,
-                    LrnDelFAM_RES = ldFams[l.LearnRefNumber][ld.AimSeqNumber].RES,
-                    LrnDelFAM_LDM1 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM1,
-                    LrnDelFAM_LDM2 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM2,
-                    LrnDelFAM_LDM3 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM3,
-                    LrnDelFAM_LDM4 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM4,
                 }).ToList()
             });
         }

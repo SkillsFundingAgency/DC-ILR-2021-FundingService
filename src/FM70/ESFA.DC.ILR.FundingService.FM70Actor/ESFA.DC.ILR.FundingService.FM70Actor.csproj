@@ -269,7 +269,6 @@
     </None>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <EmbeddedResource Include="Resources\ESF 1819 Funding Calc.zip" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Config\ESFA.DC.ILR.FundingService.Config.csproj">
