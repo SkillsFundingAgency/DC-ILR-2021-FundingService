@@ -40,7 +40,7 @@ namespace ESFA.DC.ILR.FundingService.Modules.FundingModules
             builder.RegisterType<FundingService<FM25LearnerDto, IEnumerable<FM25Global>>>().As<IFundingService<FM25LearnerDto, IEnumerable<FM25Global>>>().InstancePerLifetimeScope();
             builder.RegisterType<FundingService<FM25Global, IEnumerable<PeriodisationGlobal>>>().As<IFundingService<FM25Global, IEnumerable<PeriodisationGlobal>>>().InstancePerLifetimeScope();
 
-            builder.RegisterType<FM25FundingOutputCondenserService>().As<IFundingOutputCondenserService<FM25Global>>().InstancePerLifetimeScope();
+            builder.RegisterType<FM25FundingOutputCondenserService>().As<IFM25FundingOutputCondenserService<FM25Global, PeriodisationGlobal>>().InstancePerLifetimeScope();
         }
     }
 }

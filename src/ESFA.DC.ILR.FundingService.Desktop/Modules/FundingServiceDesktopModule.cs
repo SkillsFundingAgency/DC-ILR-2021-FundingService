@@ -3,7 +3,9 @@ using Autofac;
 using Autofac.Core;
 using ESFA.DC.ILR.Constants;
 using ESFA.DC.ILR.FundingService.ALB.FundingOutput.Model.Output;
+using ESFA.DC.ILR.FundingService.Desktop.Tasks;
 using ESFA.DC.ILR.FundingService.Dto.Model;
+using ESFA.DC.ILR.FundingService.FM25.Model.Output;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output;
 using ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model.Output;
@@ -31,7 +33,7 @@ namespace ESFA.DC.ILR.FundingService.Desktop.Modules
             containerBuilder.RegisterType<FundingOrchestrationService>().As<IFundingOrchestrationService>();
 
             containerBuilder.RegisterModule<ALBModule>();
-           // containerBuilder.RegisterModule<FM25Module>();
+            containerBuilder.RegisterModule<FM25Module>();
             containerBuilder.RegisterModule<FM35Module>();
             containerBuilder.RegisterModule<FM36Module>();
             containerBuilder.RegisterModule<FM70Module>();
@@ -44,12 +46,12 @@ namespace ESFA.DC.ILR.FundingService.Desktop.Modules
                    new NamedParameter(outputKey, ILRContextKeys.FundingAlbOutput),
                 }).InstancePerLifetimeScope();
 
-            //containerBuilder.RegisterType<FundingTask<FM25LearnerDto, FM25Global>>().Keyed<IFundingTask>(ILRContextKeys.FundingTaskFM25)
-            //    .WithParameters(new List<Parameter>
-            //    {
-            //       new NamedParameter(taskName, ILRContextKeys.FundingTaskFM25),
-            //       new NamedParameter(outputKey, ILRContextKeys.FundingFm25Output),
-            //    }).InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FM25FundingTask<FM25LearnerDto, FM25Global, PeriodisationGlobal>>().Keyed<IFundingTask>(ILRContextKeys.FundingTaskFM25)
+                .WithParameters(new List<Parameter>
+                {
+                   new NamedParameter(taskName, ILRContextKeys.FundingTaskFM25),
+                   new NamedParameter(outputKey, ILRContextKeys.FundingFm25Output),
+                }).InstancePerLifetimeScope();
 
             containerBuilder.RegisterType<FundingTask<FM35LearnerDto, FM35Global>>().Keyed<IFundingTask>(ILRContextKeys.FundingTaskFM35)
                 .WithParameters(new List<Parameter>
@@ -65,7 +67,7 @@ namespace ESFA.DC.ILR.FundingService.Desktop.Modules
                    new NamedParameter(outputKey, ILRContextKeys.FundingFm36Output),
                 }).InstancePerLifetimeScope();
 
-            containerBuilder.RegisterType<FundingTask<FM70LearnerDto, FM70Global>>().Keyed<IFundingTask>(ILRContextKeys.FundingTaskFM70)
+            containerBuilder.RegisterType<FM70FundingTask<FM70LearnerDto, FM70Global>>().Keyed<IFundingTask>(ILRContextKeys.FundingTaskFM70)
                 .WithParameters(new List<Parameter>
                 {
                    new NamedParameter(taskName, ILRContextKeys.FundingTaskFM70),

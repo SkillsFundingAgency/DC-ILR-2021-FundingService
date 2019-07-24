@@ -41,7 +41,7 @@ namespace ESFA.DC.ILR.FundingService.FundingActor.Tests.TaskTests
             var jsonSerializationServiceMock = new Mock<IJsonSerializationService>();
             var fundingActorProviderMock = new Mock<IActorProvider<IFM25Actor>>();
             var filePersistanceServiceMock = new Mock<IFilePersistanceService>();
-            var fundingOutputCondenserServiceMock = new Mock<IFundingOutputCondenserService<FM25Global>>();
+            var fundingOutputCondenserServiceMock = new Mock<IFM25FundingOutputCondenserService<FM25Global, PeriodisationGlobal>>();
             var loggerMock = new Mock<ILogger>();
 
             FM25Actor.Setup(a => a.Process(fundingActorDtos.FirstOrDefault(), cancellationToken)).Returns(() => Task<string>.Factory.StartNew(() => "string"));
@@ -70,7 +70,7 @@ namespace ESFA.DC.ILR.FundingService.FundingActor.Tests.TaskTests
            IJsonSerializationService jsonSerializationService = null,
            IActorProvider<IFM25Actor> fundingActorProvider = null,
            IFilePersistanceService filePersistanceService = null,
-           IFundingOutputCondenserService<FM25Global> fundingOutputCondenserService = null,
+           IFM25FundingOutputCondenserService<FM25Global, PeriodisationGlobal> fundingOutputCondenserService = null,
            ILogger logger = null,
            string actorName = null)
         {
