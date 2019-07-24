@@ -11,30 +11,33 @@ using ESFA.DC.ILR.FundingService.Service.Interfaces;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
 
-namespace ESFA.DC.ILR.FundingService.Desktop
+namespace ESFA.DC.ILR.FundingService.Desktop.Tasks
 {
-    public class FundingTask<Tin, TOut> : IFundingTask
+    public class FM25FundingTask<Tin, TOut, TPeriodsationOut> : IFundingTask
     {
         private readonly IJsonSerializationService _jsonSerializationService;
         private readonly ILogger _logger;
         private readonly IFilePersistanceService _filePersistanceService;
-        private readonly IFundingService<Tin, TOut> _fundingService;
-        private readonly IFundingOutputCondenserService<TOut> _fundingOutputCondenserService;
+        private readonly IFundingService<Tin, IEnumerable<TOut>> _fundingServiceFM25;
+        private readonly IFundingService<TOut, IEnumerable<TPeriodsationOut>> _fundingServiceFM25Periodisation;
+        private readonly IFM25FundingOutputCondenserService<TOut, TPeriodsationOut> _fundingOutputCondenserService;
         private readonly string _taskName;
         private readonly string _outputKey;
 
-        public FundingTask(
+        public FM25FundingTask(
             IJsonSerializationService jsonSerializationService,
             IFilePersistanceService filePersistanceService,
-            IFundingService<Tin, TOut> fundingService,
-            IFundingOutputCondenserService<TOut> fundingOutputCondenserService,
+            IFundingService<Tin, IEnumerable<TOut>> fundingServiceFM25,
+            IFundingService<TOut, IEnumerable<TPeriodsationOut>> fundingServiceFM25Periodisation,
+            IFM25FundingOutputCondenserService<TOut, TPeriodsationOut> fundingOutputCondenserService,
             ILogger logger,
             string taskName,
             string outputKey)
         {
             _jsonSerializationService = jsonSerializationService;
             _filePersistanceService = filePersistanceService;
-            _fundingService = fundingService;
+            _fundingServiceFM25 = fundingServiceFM25;
+            _fundingServiceFM25Periodisation = fundingServiceFM25Periodisation;
             _fundingOutputCondenserService = fundingOutputCondenserService;
             _logger = logger;
             _taskName = taskName;
@@ -74,13 +77,15 @@ namespace ESFA.DC.ILR.FundingService.Desktop
 
         private TOut RunFunding(FundingDto fundingDto, CancellationToken cancellationToken)
         {
-            TOut results;
+            IEnumerable<TOut> fm25Results;
+            IEnumerable<TPeriodsationOut> fm25PeriodisationResults;
 
             try
             {
                 var learners = BuildLearners<Tin>(fundingDto.ValidLearners);
 
-                results = _fundingService.ProcessFunding(fundingDto.UKPRN, learners, cancellationToken);
+                fm25Results = _fundingServiceFM25.ProcessFunding(fundingDto.UKPRN, learners, cancellationToken).ToList();
+                fm25PeriodisationResults = _fundingServiceFM25Periodisation.ProcessFunding(fundingDto.UKPRN, fm25Results, cancellationToken).ToList();
             }
             catch (Exception ex)
             {
@@ -88,7 +93,7 @@ namespace ESFA.DC.ILR.FundingService.Desktop
                 throw;
             }
 
-            return results;
+            return _fundingOutputCondenserService.CondensePeriodisationResults(fm25Results, fm25PeriodisationResults);
         }
 
         private List<T> BuildLearners<T>(string serializedLearners)

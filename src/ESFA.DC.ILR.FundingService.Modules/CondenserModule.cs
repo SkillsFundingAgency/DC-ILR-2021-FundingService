@@ -19,7 +19,7 @@ namespace ESFA.DC.ILR.FundingService.Modules
             containerBuilder.RegisterType<FM35FundingOutputCondenserService>().As<IFundingOutputCondenserService<FM35Global>>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<FM36FundingOutputCondenserService>().As<IFundingOutputCondenserService<FM36Global>>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<ALBFundingOutputCondenserService>().As<IFundingOutputCondenserService<ALBGlobal>>().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<FM25FundingOutputCondenserService>().As<IFundingOutputCondenserService<FM25Global>>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FM25FundingOutputCondenserService>().As<IFM25FundingOutputCondenserService<FM25Global, PeriodisationGlobal>>().InstancePerLifetimeScope();
         }
     }
 }
