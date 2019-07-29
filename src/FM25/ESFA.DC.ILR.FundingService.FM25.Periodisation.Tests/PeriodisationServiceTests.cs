@@ -52,7 +52,12 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation.Tests
         [InlineData("16-18 Traineeships (Adult Funded)")]
         public void IsTraineeTrueLiterals(string fundLine)
         {
-            PeriodisationService().IsLearnerTrainee(fundLine).Should().BeTrue();
+            var learner = new FM25Learner()
+            {
+                FundLine = fundLine
+            };
+
+            PeriodisationService().IsLearnerTrainee(learner).Should().BeTrue();
         }
 
         [Theory]
@@ -60,13 +65,23 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation.Tests
         [InlineData(FundingLineConstants.Traineeship19Plus)]
         public void IsTraineeTrueConstants(string fundLine)
         {
-            PeriodisationService().IsLearnerTrainee(fundLine).Should().BeTrue();
+            var learner = new FM25Learner()
+            {
+                FundLine = fundLine
+            };
+
+            PeriodisationService().IsLearnerTrainee(learner).Should().BeTrue();
         }
 
         [Fact]
         public void IsTraineeFalse()
         {
-            PeriodisationService().IsLearnerTrainee("NotAnApprentice").Should().BeFalse();
+            var learner = new FM25Learner()
+            {
+                FundLine = "NotAnApprentice"
+            };
+
+            PeriodisationService().IsLearnerTrainee(learner).Should().BeFalse();
         }
 
         [Fact]

@@ -33,7 +33,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation
 
         public DateTime GetPeriodisationStartDate(FM25Learner learner)
         {
-            if (_periodisationService.IsLearnerTrainee(learner.FundLine))
+            if (_periodisationService.IsLearnerTrainee(learner))
             {
                 return learner.LearnerStartDate > DateConstants.AcademicYearStartDate ? learner.LearnerStartDate.Value : DateConstants.AcademicYearStartDate;
             }

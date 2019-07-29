@@ -27,7 +27,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation.Tests
             learner.FundLine = fundLine;
 
             var periodisationServiceMock = new Mock<IPeriodisationService>();
-            periodisationServiceMock.Setup(pds => pds.IsLearnerTrainee(fundLine)).Returns(expectedMock);
+            periodisationServiceMock.Setup(pds => pds.IsLearnerTrainee(learner)).Returns(expectedMock);
 
             PeriodisationDateService(periodisationServiceMock.Object).GetPeriodisationStartDate(learner).Should().Be(DateTime.Parse(expectedResult));
         }

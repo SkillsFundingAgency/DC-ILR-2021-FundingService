@@ -6,7 +6,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation.Interfaces
     {
         decimal[] GetPeriodisedValues(FM25Learner learner);
 
-        bool IsLearnerTrainee(string fundLine);
+        bool IsLearnerTrainee(FM25Learner learner);
 
         decimal[] GetMonthlyValues();
     }

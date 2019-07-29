@@ -40,7 +40,6 @@
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Data.Population\ESFA.DC.ILR.FundingService.Data.Population.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Orchestrators\ESFA.DC.ILR.FundingService.Orchestrators.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Service\ESFA.DC.ILR.FundingService.Service.csproj" />
-    <ProjectReference Include="..\FM25\ESFA.DC.ILR.FundingService.FM25.Periodisation\ESFA.DC.ILR.FundingService.FM25.Periodisation.csproj" />
     <ProjectReference Include="..\FM25\ESFA.DC.ILR.FundingService.FM25.Service\ESFA.DC.ILR.FundingService.FM25.Service.csproj" />
     <ProjectReference Include="..\FM35\ESFA.DC.ILR.FundingService.FM35.Service\ESFA.DC.ILR.FundingService.FM35.Service.csproj" />
     <ProjectReference Include="..\FM36\ESFA.DC.ILR.FundingService.FM36.Service\ESFA.DC.ILR.FundingService.FM36.Service.csproj" />

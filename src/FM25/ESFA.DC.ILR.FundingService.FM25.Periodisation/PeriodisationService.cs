@@ -16,11 +16,11 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation
         public decimal[] GetPeriodisedValues(FM25Learner learner)
         {
             var periodisationStartDate = _periodisationDateService.GetPeriodisationStartDate(learner);
-            var periodisationEndDate = _periodisationDateService.GetPeriodisationEndDate(learner, IsLearnerTrainee(learner.FundLine));
+            var periodisationEndDate = _periodisationDateService.GetPeriodisationEndDate(learner, IsLearnerTrainee(learner));
             var learnerPeriods = _periodisationDateService.GetMonthsBetweenDatesIgnoringDaysInclusive(periodisationStartDate, periodisationEndDate);
             var values = GetMonthlyValues();
 
-            if(IsLearnerTrainee(learner.FundLine))
+            if(IsLearnerTrainee(learner))
             {
                 var monthlyPayment = learner.OnProgPayment.Value / learnerPeriods;
                 var startPeriod = _periodisationDateService.PeriodFromDate(periodisationStartDate);
@@ -35,7 +35,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation
             return values;
         }
 
-        public bool IsLearnerTrainee(string fundLine) => fundLine == FundingLineConstants.Traineeship19Plus || fundLine == FundingLineConstants.Traineeship1618;
+        public bool IsLearnerTrainee(FM25Learner learner) => learner.FundLine == FundingLineConstants.Traineeship19Plus || learner.FundLine == FundingLineConstants.Traineeship1618;
 
         public decimal[] GetMonthlyValues() => new decimal[12] { 0M, 0M, 0M, 0M, 0M, 0M, 0M, 0M, 0M, 0M, 0M, 0M };
     }

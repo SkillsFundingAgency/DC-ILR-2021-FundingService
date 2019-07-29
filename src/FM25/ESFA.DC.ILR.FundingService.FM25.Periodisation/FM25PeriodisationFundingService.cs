@@ -16,15 +16,13 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation
 
         public IEnumerable<PeriodisationGlobal> ProcessFunding(int ukprn, IEnumerable<FM25Global> inputList, CancellationToken cancellationToken)
         {
-            var result = new List<PeriodisationGlobal>();
-
             foreach (var global in inputList)
             {
                 foreach (var learner in global.Learners)
                 {
                     var periods = _periodisationService.GetPeriodisedValues(learner);
 
-                    result.Add(new PeriodisationGlobal()
+                    yield return new PeriodisationGlobal()
                     {
                         UKPRN = ukprn,
                         LearnerPeriodisedValues = new List<LearnerPeriodisedValues>()
@@ -46,11 +44,9 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation
                                 Period12 = periods[11]
                             }
                         }
-                    });
+                    };
                 }
             }
-
-            return result;
         }
     }
 }
