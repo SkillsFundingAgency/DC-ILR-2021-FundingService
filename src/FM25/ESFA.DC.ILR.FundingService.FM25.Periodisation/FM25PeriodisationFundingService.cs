@@ -7,14 +7,17 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation
 {
     public class FM25PeriodisationFundingService : IFundingService<FM25Global, IEnumerable<PeriodisationGlobal>>
     {
-        private IPeriodisationService _periodisationService;
-        private FM25PeriodisationFundingService(IPeriodisationService periodisationService)
+        private readonly IPeriodisationService _periodisationService;
+
+        public FM25PeriodisationFundingService(IPeriodisationService periodisationService)
         {
             _periodisationService = periodisationService;
         }
+
         public IEnumerable<PeriodisationGlobal> ProcessFunding(int ukprn, IEnumerable<FM25Global> inputList, CancellationToken cancellationToken)
         {
             var result = new List<PeriodisationGlobal>();
+
             foreach (var global in inputList)
             {
                 foreach (var learner in global.Learners)

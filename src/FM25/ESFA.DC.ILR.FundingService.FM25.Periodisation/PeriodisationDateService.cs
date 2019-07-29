@@ -3,67 +3,13 @@ using ESFA.DC.ILR.FundingService.FM25.Periodisation.Constants;
 using ESFA.DC.ILR.FundingService.FM25.Periodisation.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-using ESFA.DC.ILR.FundingService.FM25.Service.Constants;
 
 namespace ESFA.DC.ILR.FundingService.FM25.Periodisation
 {
     public class PeriodisationDateService : IPeriodisationDateService
     {
-        public DateTime GetPeriodisationStartDate(FM25Learner learner)
-        {
-            if (new PeriodisationService().IsLearnerTrainee(learner.FundLine))
-            {
-                return (learner.LearnerStartDate.Value > DateConstants.AcademicYearStartDate) ? learner.LearnerStartDate.Value : DateConstants.AcademicYearStartDate;
-            }
-            else
-            {
-                return DateConstants.AcademicYearStartDate;
-            }
-        }
-
-        public DateTime GetPeriodisationEndDate(FM25Learner learner, bool learnerIsTrainee)
-        {
-            if(learnerIsTrainee)
-            {
-                if(learner.LearnerActEndDate.HasValue)
-                {
-                    if (learner.LearnerPlanEndDate.Value > DateConstants.AcademicYearStartDate)
-                    {
-                        return new[] { learner.LearnerPlanEndDate.Value, learner.LearnerActEndDate.Value, DateConstants.AcademicYearEndDate }.Min();
-                    }
-                    else
-                    {
-                        return learner.LearnerActEndDate.Value;
-                    }
-                }
-                else
-                {
-                    if (learner.LearnerPlanEndDate > DateConstants.AcademicYearStartDate)
-                    {
-                        return new[] { learner.LearnerPlanEndDate.Value, DateConstants.AcademicYearEndDate }.Min();
-                    }
-                    else
-                    {
-                        return DateConstants.AcademicYearEndDate;
-                    }
-                }
-            }
-            else
-            {
-                return DateConstants.AcademicYearEndDate;
-            }
-        }
-
-        public int GetMonthsBetweenDatesIgnoringDaysInclusive(DateTime periodisationStartDate, DateTime periodisationEndDate)
-        {
-            var yearMonths = (periodisationEndDate.Year - periodisationStartDate.Year) * 12;
-            var months = periodisationEndDate.Month - periodisationStartDate.Month;
-
-            return yearMonths + months + 1;
-        }
-
+        private readonly IPeriodisationService _periodisationService;
         private readonly IReadOnlyDictionary<int, int> _periodToMonthLookup = new Dictionary<int, int>()
         {
             [1] = 6,
@@ -80,10 +26,44 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation
             [12] = 5
         };
 
+        public PeriodisationDateService(IPeriodisationService periodisationService)
+        {
+            _periodisationService = periodisationService;
+        }
+
+        public DateTime GetPeriodisationStartDate(FM25Learner learner)
+        {
+            if (_periodisationService.IsLearnerTrainee(learner.FundLine))
+            {
+                return learner.LearnerStartDate > DateConstants.AcademicYearStartDate ? learner.LearnerStartDate.Value : DateConstants.AcademicYearStartDate;
+            }
+
+            return DateConstants.AcademicYearStartDate;
+        }
+
+        public DateTime GetPeriodisationEndDate(FM25Learner learner, bool learnerIsTrainee)
+        {
+            if (!learnerIsTrainee) return DateConstants.AcademicYearEndDate;
+
+            if(learner.LearnerActEndDate.HasValue)
+            {
+                return learner.LearnerPlanEndDate > DateConstants.AcademicYearStartDate ? new[] { learner.LearnerPlanEndDate.Value, learner.LearnerActEndDate.Value, DateConstants.AcademicYearEndDate }.Min() : learner.LearnerActEndDate.Value;
+            }
+
+            return learner.LearnerPlanEndDate > DateConstants.AcademicYearStartDate ? new[] { learner.LearnerPlanEndDate.Value, DateConstants.AcademicYearEndDate }.Min() : DateConstants.AcademicYearEndDate;
+        }
+
+        public int GetMonthsBetweenDatesIgnoringDaysInclusive(DateTime periodisationStartDate, DateTime periodisationEndDate)
+        {
+            var yearMonths = (periodisationEndDate.Year - periodisationStartDate.Year) * 12;
+            var months = periodisationEndDate.Month - periodisationStartDate.Month;
+
+            return yearMonths + months + 1;
+        }
+
         public int PeriodFromDate(DateTime date)
         {
             return _periodToMonthLookup[date.Month];
         }
-
     }
 }

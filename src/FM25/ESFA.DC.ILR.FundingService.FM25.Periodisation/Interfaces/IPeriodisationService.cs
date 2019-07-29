@@ -2,7 +2,7 @@
 
 namespace ESFA.DC.ILR.FundingService.FM25.Periodisation.Interfaces
 {
-    interface IPeriodisationService
+    public interface IPeriodisationService
     {
         decimal[] GetPeriodisedValues(FM25Learner learner);
 

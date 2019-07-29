@@ -1,37 +1,37 @@
 ﻿using FluentAssertions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
-using ESFA.DC.ILR.FundingService.FM25.Periodisation.Constants;
 using ESFA.DC.ILR.FundingService.FM25.Model.Output;
+using ESFA.DC.ILR.FundingService.FM25.Periodisation.Interfaces;
+using Moq;
 
 
 namespace ESFA.DC.ILR.FundingService.FM25.Periodisation.Tests
 {
     public class PeriodisationDateServiceTests
     {
-        // Periodisation Start Date Test
+
         [Theory]
-        [InlineData("2018-07-01","2019-08-01", "19+ Traineeships (Adult Funded)")]
-        [InlineData("2019-08-01", "2019-08-01", "16-18 Traineeships (Adult Funded)")]
-        [InlineData("2019-12-01", "2019-12-01", "19+ Traineeships (Adult Funded)")]
-        [InlineData("2020-12-01", "2020-12-01", "16-18 Traineeships (Adult Funded)")]
-        [InlineData("2018-07-01", "2019-08-01", "Apprenticeship")]
-        [InlineData("2019-08-01", "2019-08-01", "")]
-        [InlineData("2019-12-01", "2019-08-01", "Trailblazer")]
-        [InlineData("2020-12-01", "2019-08-01", "16-18 AEB Learner")]
-        public void GetPeriodisationStartDateTest(string learnStartDate, string expectedResult, string fundLine)
+        [InlineData("2018-07-01","2019-08-01", "19+ Traineeships (Adult Funded)", true)]
+        [InlineData("2019-08-01", "2019-08-01", "16-18 Traineeships (Adult Funded)", true)]
+        [InlineData("2019-12-01", "2019-12-01", "19+ Traineeships (Adult Funded)", true)]
+        [InlineData("2020-12-01", "2020-12-01", "16-18 Traineeships (Adult Funded)", true)]
+        [InlineData("2018-07-01", "2019-08-01", "Apprenticeship", false)]
+        [InlineData("2019-08-01", "2019-08-01", "", false)]
+        [InlineData("2019-12-01", "2019-08-01", "Trailblazer", false)]
+        [InlineData("2020-12-01", "2019-08-01", "16-18 AEB Learner", false)]
+        public void GetPeriodisationStartDateTest(string learnStartDate, string expectedResult, string fundLine, bool expectedMock)
         {
             var learner = new FM25Learner();
             learner.LearnerStartDate = DateTime.Parse(learnStartDate);
             learner.FundLine = fundLine;
-            PeriodisationDateService().GetPeriodisationStartDate(learner).Should().Be(DateTime.Parse(expectedResult));
+
+            var periodisationServiceMock = new Mock<IPeriodisationService>();
+            periodisationServiceMock.Setup(pds => pds.IsLearnerTrainee(fundLine)).Returns(expectedMock);
+
+            PeriodisationDateService(periodisationServiceMock.Object).GetPeriodisationStartDate(learner).Should().Be(DateTime.Parse(expectedResult));
         }
 
-        // Periodisation End Date Test
         [Theory]
         [InlineData(true, "2018-07-01", "2018-08-01", "2018-08-01")]
         [InlineData(true, "2018-08-01", "2019-08-01", "2019-08-01")]
@@ -53,7 +53,6 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation.Tests
             PeriodisationDateService().GetPeriodisationEndDate(learner, learnerIsTrainee).Should().Be(DateTime.Parse(expectedResult));
         }
 
-        // Periods In Learning Test
         [Theory]
         [InlineData("2019-08-01", "2019-08-01", 1)]
         [InlineData("2019-08-01", "2019-09-15", 2)]
@@ -74,7 +73,6 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation.Tests
         }
 
 
-        // Period from Date Test
         [Theory]
         [InlineData("2019-08-01", 1)]
         [InlineData("2019-09-04", 2)]
@@ -93,9 +91,9 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation.Tests
             PeriodisationDateService().PeriodFromDate(DateTime.Parse(periodisationStartDate)).Should().Be(expectedResult);
         }
 
-        private PeriodisationDateService PeriodisationDateService()
+        private PeriodisationDateService PeriodisationDateService(IPeriodisationService periodisationService = null)
         {
-            return new PeriodisationDateService();
+            return new PeriodisationDateService(periodisationService);
         }
 
     }

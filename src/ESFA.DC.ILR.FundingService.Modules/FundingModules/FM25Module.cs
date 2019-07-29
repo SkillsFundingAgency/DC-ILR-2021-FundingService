@@ -2,6 +2,7 @@
 using Autofac;
 using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM25.Model.Output;
+using ESFA.DC.ILR.FundingService.FM25.Periodisation;
 using ESFA.DC.ILR.FundingService.FM25.Service.Input;
 using ESFA.DC.ILR.FundingService.FM25.Service.Output;
 using ESFA.DC.ILR.FundingService.FM25.Service.Rulebase;
@@ -28,6 +29,10 @@ namespace ESFA.DC.ILR.FundingService.Modules.FundingModules
             builder.RegisterType<FundingOutputService>().As<IOutputService<FM25Global>>().InstancePerLifetimeScope();
             builder.RegisterType<PeriodisationOutputService>().As<IOutputService<IEnumerable<PeriodisationGlobal>>>().InstancePerLifetimeScope();
             builder.RegisterType<FundingService<FM25LearnerDto, FM25Global>>().As<IFundingService<FM25LearnerDto, FM25Global>>().InstancePerLifetimeScope();
+
+            builder.RegisterType<FM25PeriodisationFundingService>().As<FM25.Periodisation.Interfaces.IFundingService<FM25Global, IEnumerable<PeriodisationGlobal>>>().InstancePerLifetimeScope();
+            builder.RegisterType<PeriodisationService>().As<FM25.Periodisation.Interfaces.IPeriodisationService>().InstancePerLifetimeScope();
+            builder.RegisterType<PeriodisationDateService>().As<FM25.Periodisation.Interfaces.IPeriodisationDateService>().InstancePerLifetimeScope();
         }
     }
 }

@@ -3,23 +3,17 @@ using System;
 using FluentAssertions;
 using Xunit;
 using ESFA.DC.ILR.FundingService.FM25.Periodisation.Constants;
+using ESFA.DC.ILR.FundingService.FM25.Periodisation.Interfaces;
+using Moq;
 
 namespace ESFA.DC.ILR.FundingService.FM25.Periodisation.Tests
 {
     public class PeriodisationServiceTests
     {
-        // Get Periodised Values Test
+
         [Theory]
-        //[InlineData("2019-08-01", "2020-07-31", "2020-07-31", "16-18 Traineeships (Adult Funded)", 72, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6)]
-        [InlineData("2019-09-15", "2019-10-16", "2019-10-16", "16-18 Traineeships (Adult Funded)", 84, 0, 42, 42, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
-        //[InlineData("2018-09-15", "2022-10-16", "2022-10-16", "16-18 Traineeships (Adult Funded)", 84, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7)]
-        //[InlineData("2020-07-31", "2022-10-16", "2022-10-16", "16-18 Traineeships (Adult Funded)", 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 84)]
-        //[InlineData("2019-08-01", "2020-07-31", "2020-07-31", "19+ Traineeships (Adult Funded)", 72, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6)]
-        //[InlineData("2019-09-15", "2019-10-16", "2019-10-16", "19+ Traineeships (Adult Funded)", 84, 0, 42, 42, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
-        //[InlineData("2018-09-15", "2022-10-16", "2022-10-16", "19+ Traineeships (Adult Funded)", 84, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7)]
-        //[InlineData("2020-07-31", "2022-10-16", "2022-10-16", "19+ Traineeships (Adult Funded)", 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 84)]
-        //[InlineData("2018-09-15", "2022-10-16", "2022-10-16", "16-18 Apprenticeship", 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
-        public void GetPeriodisedValuesTestFullMonths(string learnerStartDate, string learnerPlannedEndDate, string learnerActEndDate, string fundLine, decimal totalFunding, decimal p1, decimal p2, decimal p3, decimal p4, decimal p5, decimal p6, decimal p7, decimal p8, decimal p9, decimal p10, decimal p11, decimal p12)
+        [InlineData("2019-09-15", "2019-10-16", "2019-10-16", "16-18 Traineeships (Adult Funded)", true, 2, 2, 3, 84, 0, 42, 42, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
+        public void GetPeriodisedValuesTestFullMonths(string learnerStartDate, string learnerPlannedEndDate, string learnerActEndDate, string fundLine, bool learnerIsTrainee, int monthsBetweenDatesMock, int periodFromStartDateMock, int periodFromEndDateMock, decimal totalFunding, decimal p1, decimal p2, decimal p3, decimal p4, decimal p5, decimal p6, decimal p7, decimal p8, decimal p9, decimal p10, decimal p11, decimal p12)
         {
             var learner = new FM25Learner()
             {
@@ -30,7 +24,15 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation.Tests
                 FundLine = fundLine
             };
 
-            var result = PeriodisationService().GetPeriodisedValues(learner);
+            var periodisationDateServiceMock = new Mock<IPeriodisationDateService>();
+            periodisationDateServiceMock.Setup(pds => pds.GetPeriodisationStartDate(learner)).Returns(learner.LearnerStartDate.Value);
+            periodisationDateServiceMock.Setup(pds => pds.GetPeriodisationEndDate(learner, learnerIsTrainee)).Returns(learner.LearnerActEndDate.Value);
+            periodisationDateServiceMock.Setup(pds => pds.GetMonthsBetweenDatesIgnoringDaysInclusive(learner.LearnerStartDate.Value, learner.LearnerActEndDate.Value)).Returns(monthsBetweenDatesMock);
+            periodisationDateServiceMock.Setup(pds => pds.PeriodFromDate(learner.LearnerStartDate.Value)).Returns(periodFromStartDateMock);
+            periodisationDateServiceMock.Setup(pds => pds.PeriodFromDate(learner.LearnerActEndDate.Value)).Returns(periodFromEndDateMock);
+
+
+            var result = PeriodisationService(periodisationDateServiceMock.Object).GetPeriodisedValues(learner);
             result[0].Should().Be(p1);
             result[1].Should().Be(p2);
             result[2].Should().Be(p3);
@@ -45,7 +47,6 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation.Tests
             result[11].Should().Be(p12);
         }
 
-        // Learner is Trainee Tests
         [Theory]
         [InlineData("19+ Traineeships (Adult Funded)")]
         [InlineData("16-18 Traineeships (Adult Funded)")]
@@ -86,16 +87,16 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation.Tests
             monthlyValues[11].Should().Be(0M);
         }
 
+        [Fact]
         public void GetMonthlyValuesSizeTest()
         {
             PeriodisationService().GetMonthlyValues().IsFixedSize.Should().BeTrue();
             PeriodisationService().GetMonthlyValues().Length.Should().Be(12);
         }
 
-
-        private PeriodisationService PeriodisationService()
+        private PeriodisationService PeriodisationService(IPeriodisationDateService periodisationDateService = null)
         {
-            return new PeriodisationService();
+            return new PeriodisationService(periodisationDateService);
         }
     }
 }
