@@ -1,9 +1,10 @@
 ﻿using Autofac;
 using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.FileService.Config;
-using ESFA.DC.ILR.FundingService.FundingActor;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Modules;
+using ESFA.DC.ILR.FundingService.Orchestrators;
+using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
 using ESFA.DC.ILR.FundingService.Stateless.Config;
 using ESFA.DC.ILR.FundingService.Stateless.Context;
 using ESFA.DC.ILR.FundingService.Stateless.Handlers;
@@ -30,6 +31,9 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             containerBuilder.RegisterModule(new IOModule(azureStorageFileServiceConfiguration, ioConfiguration));
 
             containerBuilder.RegisterModule<BaseModule>();
+            containerBuilder.RegisterModule<CondenserModule>();
+            containerBuilder.RegisterModule<DataCacheModule>();
+            containerBuilder.RegisterModule<ProviderModule>();
             containerBuilder.RegisterModule<SerializationModule>();
             containerBuilder.RegisterModule<StatelessActorModule>();
 
@@ -40,6 +44,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             containerBuilder.RegisterType<DateTimeProvider.DateTimeProvider>().As<IDateTimeProvider>();
 
             containerBuilder.RegisterType<FundingServiceContext>().As<IFundingServiceContext>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FundingOrchestrationService>().As<IFundingOrchestrationService>();
         }
     }
 }

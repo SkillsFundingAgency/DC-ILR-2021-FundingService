@@ -5,6 +5,7 @@ using ESFA.DC.ILR.FundingService.FM35.Service;
 using ESFA.DC.ILR.FundingService.FM35.Service.Input;
 using ESFA.DC.ILR.FundingService.FM35.Service.Rulebase;
 using ESFA.DC.ILR.FundingService.Interfaces;
+using ESFA.DC.ILR.FundingService.Orchestrators.Output;
 using ESFA.DC.ILR.FundingService.Service;
 using ESFA.DC.ILR.FundingService.Service.Interfaces;
 using ESFA.DC.OPA.Service;
@@ -19,12 +20,14 @@ namespace ESFA.DC.ILR.FundingService.Modules.FundingModules
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterModule<AbstractFundingModule>();
             builder.RegisterType<FM35RulebaseProvider>().As<IRulebaseStreamProvider<FM35LearnerDto>>();
             builder.RegisterType<SessionFactory<FM35LearnerDto>>().As<ISessionFactory<FM35LearnerDto>>().InstancePerLifetimeScope();
             builder.RegisterType<OPAService<FM35LearnerDto>>().As<IOPAService<FM35LearnerDto>>().InstancePerLifetimeScope();
             builder.RegisterType<DataEntityMapper>().As<IDataEntityMapper<FM35LearnerDto>>().InstancePerLifetimeScope();
             builder.RegisterType<FundingOutputService>().As<IOutputService<FM35Global>>().InstancePerLifetimeScope();
             builder.RegisterType<FundingService<FM35LearnerDto, FM35Global>>().As<IFundingService<FM35LearnerDto, FM35Global>>().InstancePerLifetimeScope();
+            builder.RegisterType<FM35FundingOutputCondenserService>().As<IFundingOutputCondenserService<FM35Global>>().InstancePerLifetimeScope();
         }
     }
 }

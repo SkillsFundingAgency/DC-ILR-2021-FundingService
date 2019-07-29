@@ -68,6 +68,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             var actualDaysIL = 1;
             var actualNumInstalm = 1;
             var adjProgStartDate = new DateTime(2018, 09, 01);
+            var adjStartDate = new DateTime(2018, 09, 01);
             var ageStandardStart = 1;
             var applicFundValDate = new DateTime(2018, 09, 01);
             var combinedAdjProp = 1.0m;
@@ -103,6 +104,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             var smallBusPayment = 1.0m;
             var smallBusStatusFirstDayStandard = 1;
             var smallBusStatusThreshold = 1;
+            var smallBusThresholdDate = new DateTime(2018, 09, 01);
             var youngAppApplicVal = 1.0m;
             var youngAppEligible = true;
             var youngAppFirstPayment = 1.0m;
@@ -123,6 +125,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "ActualDaysIL")).Returns(actualDaysIL);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "ActualNumInstalm")).Returns(actualNumInstalm);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "AdjProgStartDate")).Returns(adjProgStartDate);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "AdjStartDate")).Returns(adjStartDate);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "AgeStandardStart")).Returns(ageStandardStart);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "ApplicFundValDate")).Returns(applicFundValDate);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "CombinedAdjProp")).Returns(combinedAdjProp);
@@ -158,6 +161,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "SmallBusPayment")).Returns(smallBusPayment);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "SmallBusStatusFirstDayStandard")).Returns(smallBusStatusFirstDayStandard);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "SmallBusStatusThreshold")).Returns(smallBusStatusThreshold);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "SmallBusThresholdDate")).Returns(smallBusThresholdDate);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "YoungAppApplicVal")).Returns(youngAppApplicVal);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "YoungAppEligible")).Returns(youngAppEligible);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "YoungAppFirstPayment")).Returns(youngAppFirstPayment);
@@ -169,7 +173,6 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             var learningDelivery = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).LearningDeliveryAttributeData(dataEntity);
 
             learningDelivery.AchApplicDate.Should().Be(achApplicDate);
-            learningDelivery.AchApplicDate.Should().Be(achApplicDate);
             learningDelivery.AchEligible.Should().Be(achEligible);
             learningDelivery.Achieved.Should().Be(achieved);
             learningDelivery.AchievementApplicVal.Should().Be(achievementApplicVal);
@@ -177,6 +180,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             learningDelivery.ActualDaysIL.Should().Be(actualDaysIL);
             learningDelivery.ActualNumInstalm.Should().Be(actualNumInstalm);
             learningDelivery.AdjProgStartDate.Should().Be(adjProgStartDate);
+            learningDelivery.AdjStartDate.Should().Be(adjStartDate);
             learningDelivery.AgeStandardStart.Should().Be(ageStandardStart);
             learningDelivery.ApplicFundValDate.Should().Be(applicFundValDate);
             learningDelivery.CombinedAdjProp.Should().Be(combinedAdjProp);
@@ -212,6 +216,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
             learningDelivery.SmallBusPayment.Should().Be(smallBusPayment);
             learningDelivery.SmallBusStatusFirstDayStandard.Should().Be(smallBusStatusFirstDayStandard);
             learningDelivery.SmallBusStatusThreshold.Should().Be(smallBusStatusThreshold);
+            learningDelivery.SmallBusThresholdDate.Should().Be(smallBusThresholdDate);
             learningDelivery.YoungAppApplicVal.Should().Be(youngAppApplicVal);
             learningDelivery.YoungAppEligible.Should().Be(youngAppEligible);
             learningDelivery.YoungAppFirstPayment.Should().Be(youngAppFirstPayment);
@@ -300,6 +305,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
                     { "ActualDaysIL", Attribute(false, "1.0") },
                     { "ActualNumInstalm", Attribute(false, "1.0") },
                     { "AdjProgStartDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "AdjStartDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
                     { "AgeStandardStart", Attribute(false, "1.0") },
                     { "ApplicFundValDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
                     { "CombinedAdjProp", Attribute(false, "1.0") },
@@ -335,6 +341,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
                     { "SmallBusPayment", Attribute(false, "1.0") },
                     { "SmallBusStatusFirstDayStandard", Attribute(false, "1.0") },
                     { "SmallBusStatusThreshold", Attribute(false, "1.0") },
+                    { "SmallBusThresholdDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
                     { "YoungAppEligible", Attribute(false, "1.0") },
                     { "YoungAppFirstPayment", Attribute(false, "1.0") },
                     { "YoungAppFirstThresholdDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
@@ -392,6 +399,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
                     { "ActualDaysIL", Attribute(false, "1.0") },
                     { "ActualNumInstalm", Attribute(false, "1.0") },
                     { "AdjProgStartDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "AdjStartDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
                     { "AgeStandardStart", Attribute(false, "1.0") },
                     { "ApplicFundValDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
                     { "CombinedAdjProp", Attribute(false, "1.0") },
@@ -427,6 +435,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
                     { "SmallBusPayment", Attribute(false, "1.0") },
                     { "SmallBusStatusFirstDayStandard", Attribute(false, "1.0") },
                     { "SmallBusStatusThreshold", Attribute(false, "1.0") },
+                    { "SmallBusThresholdDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
                     { "YoungAppEligible", Attribute(false, "1.0") },
                     { "YoungAppFirstPayment", Attribute(true, "1.0") },
                     { "YoungAppFirstThresholdDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
@@ -469,13 +478,13 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Tests
                  new TemporalValueItem(new DateTime(2018, 10, 01), value, null),
                  new TemporalValueItem(new DateTime(2018, 11, 01), value, null),
                  new TemporalValueItem(new DateTime(2018, 12, 01), value, null),
-                 new TemporalValueItem(new DateTime(2019, 01, 01), value, null),
-                 new TemporalValueItem(new DateTime(2019, 02, 01), value, null),
-                 new TemporalValueItem(new DateTime(2019, 03, 01), value, null),
-                 new TemporalValueItem(new DateTime(2019, 04, 01), value, null),
-                 new TemporalValueItem(new DateTime(2019, 05, 01), value, null),
-                 new TemporalValueItem(new DateTime(2019, 06, 01), value, null),
-                 new TemporalValueItem(new DateTime(2019, 07, 01), value, null),
+                 new TemporalValueItem(new DateTime(2020, 01, 01), value, null),
+                 new TemporalValueItem(new DateTime(2020, 02, 01), value, null),
+                 new TemporalValueItem(new DateTime(2020, 03, 01), value, null),
+                 new TemporalValueItem(new DateTime(2020, 04, 01), value, null),
+                 new TemporalValueItem(new DateTime(2020, 05, 01), value, null),
+                 new TemporalValueItem(new DateTime(2020, 06, 01), value, null),
+                 new TemporalValueItem(new DateTime(2020, 07, 01), value, null),
             };
 
             changePoints.AddRange(cps);

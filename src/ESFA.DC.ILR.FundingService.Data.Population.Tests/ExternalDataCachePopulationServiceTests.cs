@@ -60,7 +60,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             var sfaDisadvantages = new Dictionary<string, IEnumerable<SfaDisadvantage>>();
             var dasDisadvantages = new Dictionary<string, IEnumerable<DasDisadvantage>>();
             var efaDisadvantages = new Dictionary<string, IEnumerable<EfaDisadvantage>>();
-            var careerLearningPilots = new Dictionary<string, IEnumerable<CareerLearningPilot>>();
             var postcodeRoots = new Dictionary<string, PostcodeRoot>();
 
             postcodesMapperServiceMock.Setup(p => p.MapPostcodes(It.IsAny<IReadOnlyCollection<ReferenceDataService.Model.Postcodes.Postcode>>())).Returns(postcodeRoots);

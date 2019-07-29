@@ -108,15 +108,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                     new PostcodeRoot
                     {
                         Postcode = "PostCode1",
-                        CareerLearningPilots = new List<CareerLearningPilot>
-                        {
-                            new CareerLearningPilot
-                            {
-                                Postcode = "PostCode1",
-                                AreaCode = "AreaCode1",
-                                EffectiveFrom = new DateTime(2018, 8, 1)
-                            }
-                        },
                         DasDisadvantages = new List<DasDisadvantage>
                         {
                             new DasDisadvantage

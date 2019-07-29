@@ -423,16 +423,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                         EffectiveTo = new DateTime(2020, 1, 1),
                     },
                 },
-                LARSCareerLearningPilots = new List<LARSCareerLearningPilot>
-                {
-                    new LARSCareerLearningPilot
-                    {
-                        AreaCode = "DelLocPostcode",
-                        SubsidyRate = 1.2m,
-                        EffectiveFrom = new DateTime(2019, 1, 1),
-                        EffectiveTo = new DateTime(2020, 1, 1),
-                    },
-                },
                 LARSAnnualValues = new List<LARSAnnualValue>
                 {
                     new LARSAnnualValue()
@@ -516,6 +506,25 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             dataEntity.Attributes.Should().HaveCount(2);
             dataEntity.Attributes["DateEmpStatApp"].Value.Should().Be(learnerEmploymentStatus.DateEmpStatApp);
             dataEntity.Attributes["EmpId"].Value.Should().Be(learnerEmploymentStatus.EmpId);
+        }
+
+        [Fact]
+        public void BuildCampusIdentifierSpecResource()
+        {
+            var campusIdentifierSpecResource = new CampusIdentifierSpecResource
+            {
+                CampusIdentifier = "Id",
+                EffectiveFrom = new DateTime(2019, 1, 1),
+                SpecialistResources = "Y",
+            };
+
+            var dataEntity = NewService().BuildSpecialistResources(campusIdentifierSpecResource);
+
+            dataEntity.EntityName.Should().Be("Camps_Identifiers_Reference_DataFunding");
+            dataEntity.Attributes.Should().HaveCount(3);
+            dataEntity.Attributes["EffectiveFrom"].Value.Should().Be(campusIdentifierSpecResource.EffectiveFrom);
+            dataEntity.Attributes["EffectiveTo"].Value.Should().Be(campusIdentifierSpecResource.EffectiveTo);
+            dataEntity.Attributes["SpecialistResources"].Value.Should().Be(campusIdentifierSpecResource.SpecialistResources);
         }
 
         [Fact]

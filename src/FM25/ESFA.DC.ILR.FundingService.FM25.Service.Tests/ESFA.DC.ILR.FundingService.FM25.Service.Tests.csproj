@@ -107,50 +107,37 @@
     <Compile Include="FM25RulebaseInterfaceTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\ESFA.DC.ILR.FundingService.FM25.Service\Rulebase\FM25\FM25 Funding Calc 19_20.zip">
+      <Link>Rulebase\FM25\FM25 Funding Calc 19_20.zip</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\ESFA.DC.ILR.FundingService.FM25.Service\Rulebase\FM25\XSRC\Inputs.xsrc">
+      <Link>Rulebase\FM25\XSRC\Inputs.xsrc</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="..\ESFA.DC.ILR.FundingService.FM25.Service\Rulebase\FM25Periodisation\FM25 Periodisation.zip">
+      <Link>Rulebase\FM25Periodisation\FM25 Periodisation.zip</Link>
+    </None>
+    <None Include="..\ESFA.DC.ILR.FundingService.FM25.Service\Rulebase\FM25Periodisation\XSRC\Inputs.xsrc">
+      <Link>Rulebase\FM25Periodisation\XSRC\Inputs.xsrc</Link>
+    </None>
     <None Include="app.config" />
     <None Include="ESFA.DC.ILR.FundingService.FM25.Service.Tests.ruleset">
       <SubType>Designer</SubType>
     </None>
-    <EmbeddedResource Include="FM25 Funding Calc 18_19.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
     <None Include="packages.config" />
-    <Content Include="Rulebase\FM25\FM25 Funding Calc 18_19.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Rulebase\FM25Periodisation\FM25 Periodisation.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="RulebaseMasterFiles\FM25\FM25 Funding Calc 18_19.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="RulebaseMasterFiles\FM25Periodisation\FM25 Periodisation.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="RulebaseMasterFiles\FM25Periodisation\XSRC\Inputs.xsrc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="RulebaseMasterFiles\FM25Periodisation\XSRC\Interim.xsrc" />
-    <None Include="RulebaseMasterFiles\FM25Periodisation\XSRC\Outputs.xsrc" />
-    <None Include="RulebaseMasterFiles\FM25Periodisation\XSRC\Parameters.xsrc" />
     <Content Include="RulebaseMasterFiles\FM25\XSRC\Inputs.xsrc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="RulebaseMasterFiles\FM25\XSRC\Interim.xsrc" />
-    <None Include="RulebaseMasterFiles\FM25\XSRC\Outputs.xsrc" />
-    <None Include="RulebaseMasterFiles\FM25\XSRC\Parameters.xsrc" />
-    <Content Include="Rulebase\FM25Periodisation\XSRC\Inputs.xsrc">
+    <Content Include="RulebaseMasterFiles\FM25\FM25 Funding Calc 19_20.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Rulebase\FM25Periodisation\XSRC\Interim.xsrc" />
-    <None Include="Rulebase\FM25Periodisation\XSRC\Outputs.xsrc" />
-    <None Include="Rulebase\FM25Periodisation\XSRC\Parameters.xsrc" />
-    <Content Include="Rulebase\FM25\XSRC\Inputs.xsrc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Include="Rulebase\FM25\XSRC\Interim.xsrc" />
-    <None Include="Rulebase\FM25\XSRC\Outputs.xsrc" />
-    <None Include="Rulebase\FM25\XSRC\Parameters.xsrc" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
@@ -202,6 +189,7 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

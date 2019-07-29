@@ -307,11 +307,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 ProgType = 9,
                 PwayCode = 10,
                 StdCode = 11,
-                LrnDelFAM_LDM1 = "LDM1",
-                LrnDelFAM_LDM2 = "LDM2",
-                LrnDelFAM_LDM3 = "LDM3",
-                LrnDelFAM_LDM4 = "LDM4",
-                LrnDelFAM_EEF = "EEF",
                 LearningDeliveryFAMs = new List<LearningDeliveryFAM>()
                 {
                     new LearningDeliveryFAM() { LearnDelFAMType = "EEF", LearnDelFAMCode = "EEF" },
@@ -342,16 +337,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                         EffectiveTo = new DateTime(2020, 1, 1),
                     }
                 },
-                LARSCareerLearningPilots = new List<LARSCareerLearningPilot>
-                {
-                    new LARSCareerLearningPilot
-                    {
-                        AreaCode = "DelLocPostcode",
-                        SubsidyRate = 1.2m,
-                        EffectiveFrom = new DateTime(2019, 1, 1),
-                        EffectiveTo = new DateTime(2020, 1, 1)
-                    }
-                }
             };
 
             var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();

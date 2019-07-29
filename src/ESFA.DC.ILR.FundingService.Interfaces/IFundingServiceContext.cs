@@ -1,8 +1,14 @@
-﻿namespace ESFA.DC.ILR.FundingService.Interfaces
+﻿using System.Collections.Generic;
+
+namespace ESFA.DC.ILR.FundingService.Interfaces
 {
     public interface IFundingServiceContext
     {
         long JobId { get; }
+
+        int Ukprn { get; }
+
+        string Year { get; }
 
         string FileReference { get; }
 
@@ -11,6 +17,8 @@
         string IlrReferenceDataKey { get; }
 
         string[] TaskKeys { get; }
+
+        IReadOnlyDictionary<string, string> FundingOutputKeys { get; }
 
         string FundingALBOutputKey { get; }
 

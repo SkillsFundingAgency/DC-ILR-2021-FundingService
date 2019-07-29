@@ -360,10 +360,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
 
             var larsLearningDelivery = new LARSLearningDelivery
             {
-                LARSCareerLearningPilots = new List<LARSCareerLearningPilot>
-                {
-                    new LARSCareerLearningPilot()
-                },
                 LARSFundings = larsFunding
             };
 

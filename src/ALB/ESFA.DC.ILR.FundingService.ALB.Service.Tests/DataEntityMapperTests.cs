@@ -77,16 +77,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                         EffectiveTo = new DateTime(2020, 1, 1),
                     }
                 },
-                LARSCareerLearningPilots = new List<LARSCareerLearningPilot>
-                {
-                    new LARSCareerLearningPilot
-                    {
-                        AreaCode = "DelLocPostcode",
-                        SubsidyRate = 1.2m,
-                        EffectiveFrom = new DateTime(2019, 1, 1),
-                        EffectiveTo = new DateTime(2020, 1, 1)
-                    }
-                }
             };
 
             var sfaAreaCost = new List<SfaAreaCost>
@@ -97,17 +87,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                     EffectiveFrom = new DateTime(2019, 1, 1),
                     EffectiveTo = new DateTime(2020, 1, 1),
                     AreaCostFactor = 1.2m
-                }
-            };
-
-            var subsidyPilotPostcodeArea = new List<CareerLearningPilot>
-            {
-                new CareerLearningPilot
-                {
-                    Postcode = "DelLocPostcode",
-                    EffectiveFrom = new DateTime(2019, 1, 1),
-                    EffectiveTo = new DateTime(2020, 1, 1),
-                    AreaCode = "AreaCode"
                 }
             };
 
@@ -290,16 +269,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                         EffectiveTo = new DateTime(2020, 1, 1),
                     }
                 },
-                LARSCareerLearningPilots = new List<LARSCareerLearningPilot>
-                {
-                    new LARSCareerLearningPilot
-                    {
-                        AreaCode = "DelLocPostcode",
-                        SubsidyRate = 1.2m,
-                        EffectiveFrom = new DateTime(2019, 1, 1),
-                        EffectiveTo = new DateTime(2020, 1, 1)
-                    }
-                }
             };
 
             var sfaAreaCost = new List<SfaAreaCost>
@@ -310,17 +279,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                     EffectiveFrom = new DateTime(2019, 1, 1),
                     EffectiveTo = new DateTime(2020, 1, 1),
                     AreaCostFactor = 1.2m
-                }
-            };
-
-            var subsidyPilotPostcodeArea = new List<CareerLearningPilot>
-            {
-                new CareerLearningPilot
-                {
-                    Postcode = "DelLocPostcode",
-                    EffectiveFrom = new DateTime(2019, 1, 1),
-                    EffectiveTo = new DateTime(2020, 1, 1),
-                    AreaCode = "AreaCode"
                 }
             };
 

@@ -54,9 +54,9 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             var coreAimSeqNumber = 6;
             var fullTimeEquiv = 2.4m;
             var fundLine = "FundLine";
-            var learnerActEndDate = new DateTime(2017, 1, 1);
-            var learnerPlanEndDate = new DateTime(2018, 1, 1);
-            var learnerStartDate = new DateTime(2019, 1, 1);
+            var learnerActEndDate = new DateTime(2018, 1, 1);
+            var learnerPlanEndDate = new DateTime(2019, 1, 1);
+            var learnerStartDate = new DateTime(2020, 1, 1);
             var natRate = 1.4m;
             var onProgPayment = 1.5m;
             var plannedDaysILCurrYear = 3;

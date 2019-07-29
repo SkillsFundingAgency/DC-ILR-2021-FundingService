@@ -4,6 +4,6 @@ namespace ESFA.DC.ILR.FundingService.Interfaces
 {
     public interface IFundingOutputCondenserService<T>
     {
-        T Condense(IEnumerable<T> fundingOutputs);
+        T Condense(IEnumerable<T> fundingOutputs, int ukprn, string year);
     }
 }

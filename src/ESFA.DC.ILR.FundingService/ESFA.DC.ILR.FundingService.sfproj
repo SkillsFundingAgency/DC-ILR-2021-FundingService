@@ -34,6 +34,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ALB\ESFA.DC.ILR.FundingService.ALBActor\ESFA.DC.ILR.FundingService.ALBActor.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Stateless\ESFA.DC.ILR.FundingService.Stateless.csproj" />
+    <ProjectReference Include="..\FM25\ESFA.DC.ILR.FundingService.FM25Actor\ESFA.DC.ILR.FundingService.FM25Actor.csproj" />
     <ProjectReference Include="..\FM35\ESFA.DC.ILR.FundingService.FM35Actor\ESFA.DC.ILR.FundingService.FM35Actor.csproj" />
     <ProjectReference Include="..\FM36\ESFA.DC.ILR.FundingService.FM36Actor\ESFA.DC.ILR.FundingService.FM36Actor.csproj" />
     <ProjectReference Include="..\FM70\ESFA.DC.ILR.FundingService.FM70Actor\ESFA.DC.ILR.FundingService.FM70Actor.csproj" />

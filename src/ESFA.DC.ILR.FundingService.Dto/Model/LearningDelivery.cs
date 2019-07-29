@@ -43,26 +43,6 @@ namespace ESFA.DC.ILR.FundingService.Dto.Model
 
         public DateTime? OrigLearnStartDate { get; set; }
 
-        public string LrnDelFAM_ADL { get; set; }
-
-        public string LrnDelFAM_EEF { get; set; }
-
-        public string LrnDelFAM_LDM1 { get; set; }
-
-        public string LrnDelFAM_LDM2 { get; set; }
-
-        public string LrnDelFAM_LDM3 { get; set; }
-
-        public string LrnDelFAM_LDM4 { get; set; }
-
-        public string LrnDelFAM_FFI { get; set; }
-
-        public string LrnDelFAM_RES { get; set; }
-
-        public string LrnDelFAM_SOF { get; set; }
-
-        public string LrnDelFAM_SPP { get; set; }
-
         public int? OtherFundAdj { get; set; }
 
         public int? Outcome { get; set; }
