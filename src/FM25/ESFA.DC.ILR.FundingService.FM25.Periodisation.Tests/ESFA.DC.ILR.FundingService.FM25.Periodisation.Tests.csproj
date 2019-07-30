@@ -76,7 +76,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="FM25PeriodisationFundingServiceTests.cs" />
+    <Compile Include="PeriodisationDateServiceTests.cs" />
+    <Compile Include="PeriodisationServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +88,10 @@
     <Analyzer Include="..\..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM25.Model\ESFA.DC.ILR.FundingService.FM25.Model.csproj">
+      <Project>{3215BE00-4548-4D0F-A38E-77974B44E49E}</Project>
+      <Name>ESFA.DC.ILR.FundingService.FM25.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM25.Periodisation\ESFA.DC.ILR.FundingService.FM25.Periodisation.csproj">
       <Project>{540d1a40-d07b-476f-8acb-2767ecf3e06d}</Project>
       <Name>ESFA.DC.ILR.FundingService.FM25.Periodisation</Name>
