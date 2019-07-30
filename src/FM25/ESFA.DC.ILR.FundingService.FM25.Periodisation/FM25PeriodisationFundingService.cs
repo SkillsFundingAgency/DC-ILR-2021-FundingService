@@ -1,6 +1,7 @@
 ﻿using ESFA.DC.ILR.FundingService.FM25.Model.Output;
 using ESFA.DC.ILR.FundingService.FM25.Periodisation.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace ESFA.DC.ILR.FundingService.FM25.Periodisation
@@ -20,7 +21,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation
             {
                 foreach (var learner in global.Learners)
                 {
-                    var periods = _periodisationService.GetPeriodisedValues(learner);
+                    var periods = _periodisationService.GetPeriodisedValues(learner).ToArray();
 
                     yield return new PeriodisationGlobal()
                     {

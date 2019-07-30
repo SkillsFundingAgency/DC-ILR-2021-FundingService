@@ -1,5 +1,6 @@
 ﻿using ESFA.DC.ILR.FundingService.FM25.Model.Output;
 using System;
+using System.Linq;
 using FluentAssertions;
 using Xunit;
 using ESFA.DC.ILR.FundingService.FM25.Periodisation.Constants;
@@ -32,7 +33,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation.Tests
             periodisationDateServiceMock.Setup(pds => pds.PeriodFromDate(learner.LearnerActEndDate.Value)).Returns(periodFromEndDateMock);
 
 
-            var result = PeriodisationService(periodisationDateServiceMock.Object).GetPeriodisedValues(learner);
+            var result = PeriodisationService(periodisationDateServiceMock.Object).GetPeriodisedValues(learner).ToArray();
             result[0].Should().Be(p1);
             result[1].Should().Be(p2);
             result[2].Should().Be(p3);
@@ -82,31 +83,6 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation.Tests
             };
 
             PeriodisationService().IsLearnerTrainee(learner).Should().BeFalse();
-        }
-
-        [Fact]
-        public void GetMonthlyValuesTest()
-        {
-            var monthlyValues = PeriodisationService().GetMonthlyValues();
-            monthlyValues[0].Should().Be(0M);
-            monthlyValues[1].Should().Be(0M);
-            monthlyValues[2].Should().Be(0M);
-            monthlyValues[3].Should().Be(0M);
-            monthlyValues[4].Should().Be(0M);
-            monthlyValues[5].Should().Be(0M);
-            monthlyValues[6].Should().Be(0M);
-            monthlyValues[7].Should().Be(0M);
-            monthlyValues[8].Should().Be(0M);
-            monthlyValues[9].Should().Be(0M);
-            monthlyValues[10].Should().Be(0M);
-            monthlyValues[11].Should().Be(0M);
-        }
-
-        [Fact]
-        public void GetMonthlyValuesSizeTest()
-        {
-            PeriodisationService().GetMonthlyValues().IsFixedSize.Should().BeTrue();
-            PeriodisationService().GetMonthlyValues().Length.Should().Be(12);
         }
 
         private PeriodisationService PeriodisationService(IPeriodisationDateService periodisationDateService = null)
