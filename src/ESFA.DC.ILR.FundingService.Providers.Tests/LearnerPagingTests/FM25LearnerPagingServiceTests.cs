@@ -85,6 +85,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                     new MessageLearner
                     {
                         LearnRefNumber = "Learner_1",
+                        CampId = "CampID",
                         DateOfBirthSpecified = true,
                         DateOfBirth = new DateTime(1990, 8, 1),
                         EngGrade = "1",
@@ -193,6 +194,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
             {
                 LearnRefNumber = "Learner_1",
                 DateOfBirth = new DateTime(1990, 8, 1),
+                CampId = "CampID",
                 EngGrade = "1",
                 MathGrade = "2",
                 PlanEEPHours = 1,
