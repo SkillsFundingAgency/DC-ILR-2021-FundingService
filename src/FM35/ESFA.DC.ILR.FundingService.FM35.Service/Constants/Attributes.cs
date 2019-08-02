@@ -213,7 +213,7 @@
         public const string AreaCosEffectiveTo = "AreaCosEffectiveTo";
         public const string AreaCosFactor = "AreaCosFactor";
 
-        // Campus IDentifier SPec Resources
+        // Campus Identifier Spec Resources
         public const string CampIdSpecialistResources = "SpecialistResources";
         public const string CampIdEffectiveFrom = "EffectiveFrom";
         public const string CampIdEffectiveTo = "EffectiveTo";

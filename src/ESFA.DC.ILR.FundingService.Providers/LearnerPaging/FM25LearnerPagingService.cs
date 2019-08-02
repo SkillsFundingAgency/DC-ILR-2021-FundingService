@@ -32,6 +32,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
             {
                 LearnRefNumber = l.LearnRefNumber,
                 DateOfBirth = l.DateOfBirthNullable,
+                CampId = l.CampId,
                 EngGrade = l.EngGrade,
                 MathGrade = l.MathGrade,
                 PlanEEPHours = l.PlanEEPHoursNullable,

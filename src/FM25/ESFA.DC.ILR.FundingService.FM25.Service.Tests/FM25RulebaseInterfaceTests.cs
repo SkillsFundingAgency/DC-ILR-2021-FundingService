@@ -167,6 +167,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 Attributes.EntityLearningDeliveryFAM,
                 Attributes.EntityDPOutcome,
                 Attributes.EntityLearningDeliveryLARSValidity,
+                Attributes.EntityCampusIdentifiers,
             };
         }
 
@@ -183,7 +184,6 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 Attributes.ProgrammeWeighting,
                 Attributes.RetentionFactor,
                 Attributes.SpecialistResources,
-                Attributes.SpecialistCampIDPCW,
                 Attributes.UKPRN,
                 Attributes.DateOfBirth,
                 Attributes.EngGrade,
@@ -222,7 +222,10 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 Attributes.LearnDelFAMType,
                 Attributes.LearnDelFAMCode,
                 Attributes.LearnDelFAMDateFrom,
-                Attributes.LearnDelFAMDateTo
+                Attributes.LearnDelFAMDateTo,
+                Attributes.CampIdSpecialistResources,
+                Attributes.CampIdEffectiveFrom,
+                Attributes.CampIdEffectiveTo,
             };
         }
 
@@ -400,6 +403,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
 
             larsRefererenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
             organisationRefererenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(It.IsAny<int>())).Returns(new List<OrgFunding> { new OrgFunding() });
+            organisationRefererenceDataServiceMock.Setup(o => o.SpecialistResourcesForCampusIdentifier(It.IsAny<string>())).Returns(new List<CampusIdentifierSpecResource> { new CampusIdentifierSpecResource() });
             postcodesReferenceDataServiceMock.Setup(p => p.LatestEFADisadvantagesUpliftForPostcode(learner.Postcode)).Returns(1.0m);
 
             return new DataEntityMapper(

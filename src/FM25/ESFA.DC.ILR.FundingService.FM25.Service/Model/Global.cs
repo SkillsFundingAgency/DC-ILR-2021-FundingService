@@ -20,8 +20,6 @@
 
         public bool SpecialistResources { get; set; }
 
-        public string SpecialistCampIDPCW { get; set; }
-
         public int UKPRN { get; set; }
     }
 }
