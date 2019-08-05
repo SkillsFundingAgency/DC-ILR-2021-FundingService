@@ -4,6 +4,7 @@ using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
+using ESFA.DC.ILR.FundingService.Data.External.Organisation.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM25.Service.Constants;
@@ -57,8 +58,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { Attributes.PostcodeDisadvantageVersion, new AttributeData(global.PostcodesVersion) },
                     { Attributes.ProgrammeWeighting, new AttributeData(global.ProgrammeWeighting) },
                     { Attributes.RetentionFactor, new AttributeData(global.RetentionFactor) },
-                    { Attributes.SpecialistResources, new AttributeData(global.SpecialistResources) },
-                    { Attributes.SpecialistCampIDPCW, new AttributeData(global.SpecialistCampIDPCW) },                    
+                    { Attributes.SpecialistResources, new AttributeData(global.SpecialistResources) },              
                     { Attributes.UKPRN, new AttributeData(global.UKPRN) }
                 },
                 Children = learner != null ? new List<IDataEntity>() { BuildLearnerDataEntity(learner) } : new List<IDataEntity>()
@@ -88,6 +88,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
         public IDataEntity BuildLearnerDataEntity(FM25LearnerDto learner)
         {
             var efaDisadvantageUplift = _postcodesReferenceDataService.LatestEFADisadvantagesUpliftForPostcode(learner.Postcode);
+            var specialistResources = _organisationReferenceDataService.SpecialistResourcesForCampusIdentifier(learner.CampId);
 
             return new DataEntity(Attributes.EntityLearner)
             {
@@ -114,7 +115,10 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                         .Select(BuildLearningDeliveryDataEntity) ?? new List<IDataEntity>())
                         .Union(
                             learner.DPOutcomes?
-                                .Select(BuildDPOutcome) ?? new List<IDataEntity>())
+                            .Select(BuildDPOutcome) ?? new List<IDataEntity>())
+                        .Union(
+                            specialistResources?
+                            .Select(BuildSpecialistResources) ?? new List<IDataEntity>())
                         .ToList()
             };
         }
@@ -194,6 +198,19 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
             };
         }
 
+        public IDataEntity BuildSpecialistResources(CampusIdentifierSpecResource campusIdentifierSpecResource)
+        {
+            return new DataEntity(Attributes.EntityCampusIdentifiers)
+            {
+                Attributes = new Dictionary<string, IAttributeData>()
+                {
+                    { Attributes.CampIdSpecialistResources, new AttributeData(campusIdentifierSpecResource.SpecialistResources) },
+                    { Attributes.CampIdEffectiveFrom, new AttributeData(campusIdentifierSpecResource.EffectiveFrom) },
+                    { Attributes.CampIdEffectiveTo, new AttributeData(campusIdentifierSpecResource.EffectiveTo) }
+                }
+            };
+        }
+
         public Global BuildGlobal(int ukprn)
         {
             var orgFundings = _organisationReferenceDataService.OrganisationFundingForUKPRN(ukprn)
@@ -210,7 +227,6 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                 ProgrammeWeighting = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == _orgFundingAppliesFrom && f.OrgFundFactor == Attributes.OrgFundFactorHistoriProgCostWeigting)?.OrgFundFactValue,
                 RetentionFactor = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == _orgFundingAppliesFrom && f.OrgFundFactor == Attributes.OrgFundFactorHistoricRetention)?.OrgFundFactValue,
                 SpecialistResources = orgFundings.FirstOrDefault(f => f.OrgFundFactor == Attributes.OrgFundFactorSpecialistResources)?.OrgFundFactValue == "1" ? true : false,
-                SpecialistCampIDPCW = "N",
                 UKPRN = ukprn
             };
         }

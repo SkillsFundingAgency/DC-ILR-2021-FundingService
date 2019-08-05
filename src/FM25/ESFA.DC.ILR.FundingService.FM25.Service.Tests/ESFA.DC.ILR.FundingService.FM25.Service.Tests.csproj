@@ -132,9 +132,9 @@
     <Content Include="RulebaseMasterFiles\FM25Periodisation\XSRC\Inputs.xsrc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="RulebaseMasterFiles\FM25\XSRC\Inputs.xsrc">
+    <None Include="RulebaseMasterFiles\FM25\XSRC\Inputs.xsrc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Content Include="RulebaseMasterFiles\FM25\FM25 Funding Calc 19_20.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

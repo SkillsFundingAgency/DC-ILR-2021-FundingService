@@ -360,10 +360,15 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             };
 
             var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
+            var organisationsDataServiceMock = new Mock<IOrganisationReferenceDataService>();
 
             postcodesReferenceDataServiceMock.Setup(p => p.LatestEFADisadvantagesUpliftForPostcode(learner.Postcode)).Returns(efaDisadvatageTwo.Uplift);
+            organisationsDataServiceMock.Setup(l => l.SpecialistResourcesForCampusIdentifier(It.IsAny<string>())).Returns(new List<CampusIdentifierSpecResource>());
 
-            var dataEntity = NewService(postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object).BuildLearnerDataEntity(learner);
+            var dataEntity = NewService(
+                organisationReferenceDataService: organisationsDataServiceMock.Object,
+                postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object)
+                .BuildLearnerDataEntity(learner);
 
             dataEntity.EntityName.Should().Be("Learner");
             dataEntity.Attributes.Should().HaveCount(14);
@@ -396,10 +401,15 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             decimal? efaDisadvantagesUplift = null;
 
             var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
+            var organisationsDataServiceMock = new Mock<IOrganisationReferenceDataService>();
 
             postcodesReferenceDataServiceMock.Setup(p => p.LatestEFADisadvantagesUpliftForPostcode(learner.Postcode)).Returns(efaDisadvantagesUplift);
+            organisationsDataServiceMock.Setup(l => l.SpecialistResourcesForCampusIdentifier(It.IsAny<string>())).Returns(new List<CampusIdentifierSpecResource>());
 
-            var dataEntity = NewService(postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object).BuildLearnerDataEntity(learner);
+            var dataEntity = NewService(
+                organisationReferenceDataService: organisationsDataServiceMock.Object,
+                postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object)
+                .BuildLearnerDataEntity(learner);
 
             dataEntity.Attributes["PostcodeDisadvantageUplift"].Value.Should().BeNull();
         }
@@ -418,14 +428,13 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 ProgrammeWeighting = "ProgrammeWeighting",
                 RetentionFactor = "RetentionFactor",
                 SpecialistResources = true,
-                SpecialistCampIDPCW = "SpecialistCampIDPCW",
                 UKPRN = 1234
             };
 
             var dataEntity = NewService().BuildGlobalDataEntity(null, global);
 
             dataEntity.EntityName.Should().Be("global");
-            dataEntity.Attributes.Should().HaveCount(11);
+            dataEntity.Attributes.Should().HaveCount(10);
             dataEntity.Attributes["AreaCostFactor1618"].Value.Should().Be(global.AreaCostFactor1618);
             dataEntity.Attributes["DisadvantageProportion"].Value.Should().Be(global.DisadvantageProportion);
             dataEntity.Attributes["HistoricLargeProgrammeProportion"].Value.Should().Be(global.HistoricLargeProgrammeProportion);
@@ -435,7 +444,6 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             dataEntity.Attributes["ProgrammeWeighting"].Value.Should().Be(global.ProgrammeWeighting);
             dataEntity.Attributes["RetentionFactor"].Value.Should().Be(global.RetentionFactor);
             dataEntity.Attributes["SpecialistResources"].Value.Should().Be(global.SpecialistResources);
-            dataEntity.Attributes["SpecialistCampIDPCW"].Value.Should().Be(global.SpecialistCampIDPCW);
             dataEntity.Attributes["UKPRN"].Value.Should().Be(global.UKPRN);
 
             dataEntity.Children.Should().HaveCount(0);
@@ -523,6 +531,25 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             global.RetentionFactor.Should().Be(null);
             global.SpecialistResources.Should().Be(false);
             global.UKPRN.Should().Be(ukprn);
+        }
+
+        [Fact]
+        public void BuildCampusIdentifierSpecResource()
+        {
+            var campusIdentifierSpecResource = new CampusIdentifierSpecResource
+            {
+                CampusIdentifier = "Id",
+                EffectiveFrom = new DateTime(2019, 1, 1),
+                SpecialistResources = "Y",
+            };
+
+            var dataEntity = NewService().BuildSpecialistResources(campusIdentifierSpecResource);
+
+            dataEntity.EntityName.Should().Be("Camps_Identifiers_Reference_DataFunding");
+            dataEntity.Attributes.Should().HaveCount(3);
+            dataEntity.Attributes["EffectiveFrom"].Value.Should().Be(campusIdentifierSpecResource.EffectiveFrom);
+            dataEntity.Attributes["EffectiveTo"].Value.Should().Be(campusIdentifierSpecResource.EffectiveTo);
+            dataEntity.Attributes["CampusFundingSpecialistResources"].Value.Should().Be(campusIdentifierSpecResource.SpecialistResources);
         }
 
         [Fact]

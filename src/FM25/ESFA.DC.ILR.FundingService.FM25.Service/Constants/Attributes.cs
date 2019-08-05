@@ -12,6 +12,7 @@
         public const string EntityLearningDeliveryFAM = "LearningDeliveryFAM";
         public const string EntityDPOutcome = "DPOutcome";
         public const string EntityLearningDeliveryLARSValidity = "LearningDeliveryLARSValidity";
+        public const string EntityCampusIdentifiers = "Camps_Identifiers_Reference_DataFunding";
 
         // Global
         public const string AreaCostFactor1618 = "AreaCostFactor1618";
@@ -24,7 +25,6 @@
         public const string RetentionFactor = "RetentionFactor";
         public const string RulebaseVersion = "RulebaseVersion";
         public const string SpecialistResources = "SpecialistResources";
-        public const string SpecialistCampIDPCW = "SpecialistCampIDPCW";
         public const string UKPRN = "UKPRN";
 
         public const string OrgFundFactorTypeEFA1619 = "EFA 16-19";
@@ -123,6 +123,11 @@
         public const string ValidityCategory = "ValidityCategory";
         public const string ValidityLastNewStartDate = "ValidityLastNewStartDate";
         public const string ValidityStartDate = "ValidityStartDate";
+
+        // Campus Identifier Spec Resources
+        public const string CampIdSpecialistResources = "CampusFundingSpecialistResources";
+        public const string CampIdEffectiveFrom = "EffectiveFrom";
+        public const string CampIdEffectiveTo = "EffectiveTo";
 
         // FAM Types
         public const string ECF = "ECF";

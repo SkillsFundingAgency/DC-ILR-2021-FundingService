@@ -59,15 +59,6 @@
           <prop name="Date">19-03-2019</prop>
         </props>
       </attribute>
-      <attribute name="p447" type="text" public-name="SpecialistCampIDPCW">
-        <text>
-          <base>the provider's Specialist CampID Programme Cost Weighting</base>
-        </text>
-        <props>
-          <prop name="Version">1920.02.02</prop>
-          <prop name="Date">28-03-2019</prop>
-        </props>
-      </attribute>
       <attribute name="p448" type="text" public-name="LARSVersion">
         <text>
           <base>the LARS reference data version</base>
@@ -495,6 +486,23 @@
         </props>
       </attribute>
     </entity>
+    <entity id="campusfunding" name="the campus funding" containment-relationship-id="campusfundingforthelearner" containment-parent-id="learner" public-id="Camps_Identifiers_Reference_DataFunding">
+      <attribute name="p457" type="date" public-name="EffectiveFrom">
+        <text>
+          <base>the campus funding's effective from date</base>
+        </text>
+      </attribute>
+      <attribute name="p458" type="date" public-name="EffectiveTo">
+        <text>
+          <base>the campus funding's effective to date</base>
+        </text>
+      </attribute>
+      <attribute name="p459" type="text" public-name="CampusFundingSpecialistResources">
+        <text>
+          <base>the campus funding's specialist resources</base>
+        </text>
+      </attribute>
+    </entity>
   </entities>
   <rules />
   <interactive-items>
@@ -511,6 +519,7 @@
     <relationship source="learner" target="learnerdestinationandprogressionoutcome" text="the learners destination and progression outcomes" relationship-id="learnersdestinationandprogressionoutcomes" reverse-relationship-id="learnerdestinationandprogressionoutcomesassociatedwiththelearner" reverse-text="the learner destination and progression outcomes associated with the learner" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
     <relationship source="learner" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learner's ESFA 16-19 traineeship programme aims" relationship-id="learnersesfa1619traineeshipprogrammeaims" reverse-relationship-id="learner_learnersesfa1619traineeshipprogrammeaims_rev" reverse-text="" type="ManyToMany" is-computed="false" />
     <relationship source="learningdelivery" target="learningdeliveryfam" text="the learning delivery FAMs" relationship-id="learningdeliveryfams" reverse-relationship-id="learningdeliveryassociatedwiththelearningdeliveryfam" reverse-text="the learning delivery associated with the learning delivery FAM" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learner" target="campusfunding" text="the campus funding for the learner" relationship-id="campusfundingforthelearner" reverse-relationship-id="campusfundingslearner" reverse-text="the campus funding's learner" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
   </relationships>
   <rule-folders />
 </root>
