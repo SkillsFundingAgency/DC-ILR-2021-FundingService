@@ -111,8 +111,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Input
                                     .LARSFundings?
                                     .Select(BuildLARSFunding) ?? new List<IDataEntity>())
                              .Union(
-                                   _postcodesReferenceDataService?
-                                    .SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode)
+                                    sfaPostCodeAreaCost?
                                     .Select(BuildSFAPostcodeAreaCost) ?? new List<IDataEntity>())
                             .ToList()
             };

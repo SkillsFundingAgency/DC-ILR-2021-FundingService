@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory.Model;
 using ESFA.DC.ILR.FundingService.Data.External.FCS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Model;
@@ -31,5 +32,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Interface
         IDictionary<long, IReadOnlyCollection<AECEarningsHistory>> AECLatestInYearEarningHistory { get; }
 
         IReadOnlyCollection<FCSContractAllocation> FCSContractAllocations { get; }
+
+        Periods Periods { get; set; }
     }
 }
