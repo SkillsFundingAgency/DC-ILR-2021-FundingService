@@ -1,7 +1,10 @@
-﻿using System.Threading;
+﻿using System;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using ESFA.DC.ILR.Desktop.Interface;
+using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Desktop.Context;
@@ -28,7 +31,7 @@ namespace ESFA.DC.ILR.FundingService.Desktop
             using (var cacheLifetimeScope = _lifeTimeScope.BeginLifetimeScope())
             {
                 var refereceData = await cacheLifetimeScope.Resolve<IFileProviderService<ReferenceDataRoot>>().ProvideAsync(fundingServiceContext, cancellationToken);
-                var externalDataCache = cacheLifetimeScope.Resolve<IExternalDataCachePopulationService>().PopulateAsync(refereceData, cancellationToken);
+                var externalDataCache = BuildExternalDataCache(cacheLifetimeScope.Resolve<IExternalDataCachePopulationService>().PopulateAsync(refereceData, cancellationToken));
 
                 using (var orchestratorLifetimeScope = cacheLifetimeScope.BeginLifetimeScope(c =>
                     c.RegisterInstance(externalDataCache).As<IExternalDataCache>()))
@@ -41,6 +44,25 @@ namespace ESFA.DC.ILR.FundingService.Desktop
             }
 
             return desktopContext;
+        }
+
+        public IExternalDataCache BuildExternalDataCache(IExternalDataCache externalCache)
+        {
+            return new ExternalDataCache
+            {
+                AECLatestInYearEarningHistory = externalCache.AECLatestInYearEarningHistory,
+                FCSContractAllocations = externalCache.FCSContractAllocations,
+                LargeEmployers = externalCache.LargeEmployers,
+                LARSCurrentVersion = externalCache.LARSCurrentVersion,
+                LARSLearningDelivery = externalCache.LARSLearningDelivery.ToDictionary(k => k.Key, v => v.Value, StringComparer.OrdinalIgnoreCase),
+                LARSStandards = externalCache.LARSStandards,
+                OrgFunding = externalCache.OrgFunding,
+                OrgVersion = externalCache.OrgVersion,
+                CampusIdentifierSpecResources = externalCache.CampusIdentifierSpecResources.ToDictionary(k => k.Key, v => v.Value, StringComparer.OrdinalIgnoreCase),
+                PostcodeCurrentVersion = externalCache.PostcodeCurrentVersion,
+                PostcodeRoots = externalCache.PostcodeRoots.ToDictionary(k => k.Key, v => v.Value, StringComparer.OrdinalIgnoreCase),
+                Periods = externalCache.Periods,
+            };
         }
     }
 }
