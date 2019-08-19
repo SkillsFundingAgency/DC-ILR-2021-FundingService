@@ -41,6 +41,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                 LearningDeliveries = l.LearningDeliveries?.Select(ld => new LearningDelivery
                 {
                     AimSeqNumber = ld.AimSeqNumber,
+                    AchDate = ld.AchDateNullable,
                     AimType = ld.AimType,
                     CompStatus = ld.CompStatus,
                     FundModel = ld.FundModel,
