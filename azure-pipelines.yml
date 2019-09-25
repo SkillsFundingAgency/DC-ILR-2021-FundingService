@@ -173,6 +173,8 @@ steps:
   displayName: 'VsTest - testAssemblies'
   enabled: false
   inputs:
+    runInParallel: true
+    codeCoverageEnabled: true
     testAssemblyVer2: |
      **\*tests.dll
      !**\*Database.Tests*\**
