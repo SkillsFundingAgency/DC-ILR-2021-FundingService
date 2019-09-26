@@ -46,9 +46,9 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
                 {
                     ReferenceDataVersions = new ReferenceDataService.Model.MetaData.ReferenceDataVersion
                     {
-                        LarsVersion = new ReferenceDataService.Model.MetaData.ReferenceDataVersions.LarsVersion("LarsVersion"),
-                        OrganisationsVersion = new ReferenceDataService.Model.MetaData.ReferenceDataVersions.OrganisationsVersion("OrganisationVersion"),
-                        PostcodesVersion = new ReferenceDataService.Model.MetaData.ReferenceDataVersions.PostcodesVersion("PostcodesVersion"),
+                        LarsVersion = new ReferenceDataService.Model.MetaData.ReferenceDataVersions.LarsVersion { Version = "LarsVersion" },
+                        OrganisationsVersion = new ReferenceDataService.Model.MetaData.ReferenceDataVersions.OrganisationsVersion { Version = "OrganisationVersion" },
+                        PostcodesVersion = new ReferenceDataService.Model.MetaData.ReferenceDataVersions.PostcodesVersion { Version = "PostcodesVersion" },
                     }
                 }
             };
