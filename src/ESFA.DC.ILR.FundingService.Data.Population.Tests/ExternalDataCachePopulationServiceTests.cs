@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.Data.External;
@@ -12,6 +13,7 @@ using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.External;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.FundingService.Interfaces;
+using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.CollectionDates;
 using ESFA.DC.ILR.Tests.Model;
 using FluentAssertions;
 using Moq;
@@ -49,6 +51,24 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
                         LarsVersion = new ReferenceDataService.Model.MetaData.ReferenceDataVersions.LarsVersion { Version = "LarsVersion" },
                         OrganisationsVersion = new ReferenceDataService.Model.MetaData.ReferenceDataVersions.OrganisationsVersion { Version = "OrganisationVersion" },
                         PostcodesVersion = new ReferenceDataService.Model.MetaData.ReferenceDataVersions.PostcodesVersion { Version = "PostcodesVersion" },
+                    },
+                    CollectionDates = new IlrCollectionDates
+                    {
+                        CensusDates = new List<CensusDate>
+                        {
+                            new CensusDate { Period = 1, Start = new DateTime(2019, 8, 1) },
+                            new CensusDate { Period = 2, Start = new DateTime(2019, 9, 1) },
+                            new CensusDate { Period = 3, Start = new DateTime(2019, 10, 1) },
+                            new CensusDate { Period = 4, Start = new DateTime(2019, 11, 1) },
+                            new CensusDate { Period = 5, Start = new DateTime(2019, 12, 1) },
+                            new CensusDate { Period = 6, Start = new DateTime(2020, 1, 1) },
+                            new CensusDate { Period = 7, Start = new DateTime(2020, 2, 1) },
+                            new CensusDate { Period = 8, Start = new DateTime(2020, 3, 1) },
+                            new CensusDate { Period = 9, Start = new DateTime(2020, 4, 1) },
+                            new CensusDate { Period = 10, Start = new DateTime(2020, 5, 1) },
+                            new CensusDate { Period = 11, Start = new DateTime(2020, 6, 1) },
+                            new CensusDate { Period = 12, Start = new DateTime(2020, 7, 1) },
+                        }
                     }
                 }
             };
@@ -101,7 +121,29 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
 
             fcsMapperServiceMock.Setup(f => f.MapFCSContractAllocations(It.IsAny<IReadOnlyCollection<ReferenceDataService.Model.FCS.FcsContractAllocation>>())).Returns(fcsContractAllocations).Verifiable();
 
+            var metaDataMapperServiceMock = new Mock<IMetaDataMapperService>();
+
+            var periods = new Periods
+            {
+                Period1 = new DateTime(2019, 8, 1),
+                Period2 = new DateTime(2019, 9, 1),
+                Period3 = new DateTime(2019, 10, 1),
+                Period4 = new DateTime(2019, 11, 1),
+                Period5 = new DateTime(2019, 12, 1),
+                Period6 = new DateTime(2020, 1, 1),
+                Period7 = new DateTime(2020, 2, 1),
+                Period8 = new DateTime(2020, 3, 1),
+                Period9 = new DateTime(2020, 4, 1),
+                Period10 = new DateTime(2020, 5, 1),
+                Period11 = new DateTime(2020, 6, 1),
+                Period12 = new DateTime(2020, 7, 1),
+            };
+
+            metaDataMapperServiceMock.Setup(mm => mm.BuildPeriods(referenceData.MetaDatas)).Returns(periods).Verifiable();
+            metaDataMapperServiceMock.Setup(mm => mm.GetReferenceDataVersions(referenceData.MetaDatas)).Returns(referenceData.MetaDatas.ReferenceDataVersions).Verifiable();
+
             var externalDataCache = NewService(
+                metaDataMapperServiceMock.Object,
                 postcodesMapperServiceMock.Object,
                 organisationsMapperServiceMock.Object,
                 largeEmployersMapperServiceMock.Object,
@@ -116,6 +158,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             organisationsMapperServiceMock.VerifyAll();
             appsEarningsHistoryMapperServiceMock.VerifyAll();
             fcsMapperServiceMock.VerifyAll();
+            metaDataMapperServiceMock.VerifyAll();
 
             externalDataCache.PostcodeCurrentVersion.Should().Be(postcodesCurrentVersion);
             externalDataCache.PostcodeRoots.Should().BeSameAs(postcodeRoots);
@@ -128,9 +171,12 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
 
             externalDataCache.OrgVersion.Should().Be(organisationCurrentVersion);
             externalDataCache.OrgFunding.Should().BeSameAs(orgFundings);
+
+            externalDataCache.Periods.Should().BeEquivalentTo(periods);
         }
 
         private ExternalDataCachePopulationService NewService(
+            IMetaDataMapperService metaDataMapperService = null,
             IPostcodesMapperService postcodesMapperService = null,
             IOrganisationsMapperService organisationsMapperService = null,
             ILargeEmployersMapperService largeEmployersMapperService = null,
@@ -139,6 +185,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
             ILARSMapperService larsMapperService = null)
         {
             return new ExternalDataCachePopulationService(
+                metaDataMapperService,
                 postcodesMapperService,
                 organisationsMapperService,
                 largeEmployersMapperService,
