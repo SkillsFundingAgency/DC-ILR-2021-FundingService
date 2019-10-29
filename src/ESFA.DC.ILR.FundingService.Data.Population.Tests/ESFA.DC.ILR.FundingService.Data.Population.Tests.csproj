@@ -106,6 +106,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="External\MetaDataMapperServiceTests.cs" />
     <Compile Include="External\AppsEarningsHistoryDataRetrievalServiceTests.cs" />
     <Compile Include="External\LARSMapperServiceTests.cs" />
     <Compile Include="External\LargeEmployersMapperServiceTests.cs" />

@@ -14,6 +14,7 @@ namespace ESFA.DC.ILR.FundingService.Modules
 
             containerBuilder.RegisterType<ExternalDataCachePopulationService>().As<IExternalDataCachePopulationService>().InstancePerLifetimeScope();
 
+            containerBuilder.RegisterType<MetaDataMapperService>().As<IMetaDataMapperService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<PostcodesMapperService>().As<IPostcodesMapperService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<OrganisationsMapperService>().As<IOrganisationsMapperService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<LargeEmployersMapperService>().As<ILargeEmployersMapperService>().InstancePerLifetimeScope();

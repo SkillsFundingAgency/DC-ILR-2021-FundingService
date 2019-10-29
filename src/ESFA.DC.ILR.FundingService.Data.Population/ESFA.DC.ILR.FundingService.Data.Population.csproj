@@ -110,6 +110,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="External\MetaDataMapperService.cs" />
     <Compile Include="External\LARSMapperService.cs" />
     <Compile Include="External\LargeEmployersMapperService.cs" />
     <Compile Include="External\AppsEarningsHistoryMapperService.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Interface\ILargeEmployersMapperService.cs" />
     <Compile Include="Interface\IAppsEarningsHistoryMapperService.cs" />
     <Compile Include="Interface\IExternalDataCachePopulationService.cs" />
+    <Compile Include="Interface\IMetaDataMapperService.cs" />
     <Compile Include="Interface\IOrganisationsMapperService.cs" />
     <Compile Include="Interface\ILARSMapperService.cs" />
     <Compile Include="Interface\IPostcodesMapperService.cs" />
