@@ -113,10 +113,10 @@
     <None Include="app.config" />
     <None Include="ESFA.DC.ILR.FundingService.FM36.Service.Tests.ruleset" />
     <None Include="packages.config" />
-    <Content Include="RulebaseMasterFiles\Apprenticeships Earnings Calc 19_20.zip">
+    <Content Include="RulebaseMasterFiles\XSRC\Inputs.xsrc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="RulebaseMasterFiles\XSRC\Inputs.xsrc">
+    <Content Include="RulebaseMasterFiles\Apprenticeships Earnings Calc 19_20.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
