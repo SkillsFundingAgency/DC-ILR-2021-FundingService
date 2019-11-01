@@ -77,6 +77,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CollectionPeriodDataServiceTests.cs" />
     <Compile Include="FCSReferenceDataServiceTests.cs" />
     <Compile Include="LargeEmployerReferenceDataServiceTests.cs" />
     <Compile Include="LARSReferenceDataServiceTests.cs" />

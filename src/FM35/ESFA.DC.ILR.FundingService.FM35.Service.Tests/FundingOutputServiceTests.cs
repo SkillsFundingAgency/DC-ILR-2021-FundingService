@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Data.External.CollectionPeriod.Interface;
+using ESFA.DC.ILR.FundingService.Data.External.CollectionPeriod.Model;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Output;
-using ESFA.DC.ILR.FundingService.FM35.Service;
-using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Interface;
@@ -635,7 +634,26 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
 
         private FundingOutputService NewService(IDataEntityAttributeService dataEntityAttributeService = null)
         {
-            return new FundingOutputService(dataEntityAttributeService);
+            var collectionPeriodDataServiceMock = new Mock<ICollectionPeriodDataService>();
+
+            collectionPeriodDataServiceMock.Setup(sm => sm.CollectionPeriods()).Returns(
+                 new Periods
+                 {
+                     Period1 = new DateTime(2019, 8, 1),
+                     Period2 = new DateTime(2019, 9, 1),
+                     Period3 = new DateTime(2019, 10, 1),
+                     Period4 = new DateTime(2019, 11, 1),
+                     Period5 = new DateTime(2019, 12, 1),
+                     Period6 = new DateTime(2020, 1, 1),
+                     Period7 = new DateTime(2020, 2, 1),
+                     Period8 = new DateTime(2020, 3, 1),
+                     Period9 = new DateTime(2020, 4, 1),
+                     Period10 = new DateTime(2020, 5, 1),
+                     Period11 = new DateTime(2020, 6, 1),
+                     Period12 = new DateTime(2020, 7, 1),
+                 });
+
+            return new FundingOutputService(collectionPeriodDataServiceMock.Object, dataEntityAttributeService);
         }
     }
 }
