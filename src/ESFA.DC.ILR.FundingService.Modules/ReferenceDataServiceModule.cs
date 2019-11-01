@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory;
 using ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory.Interface;
+using ESFA.DC.ILR.FundingService.Data.External.CollectionPeriod;
+using ESFA.DC.ILR.FundingService.Data.External.CollectionPeriod.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.FCS;
 using ESFA.DC.ILR.FundingService.Data.External.FCS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer;
@@ -11,7 +13,6 @@ using ESFA.DC.ILR.FundingService.Data.External.Organisation;
 using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
-using ESFA.DC.ILR.FundingService.Data.Interface;
 
 namespace ESFA.DC.ILR.FundingService.Modules
 {
@@ -25,6 +26,7 @@ namespace ESFA.DC.ILR.FundingService.Modules
             containerBuilder.RegisterType<PostcodesReferenceDataService>().As<IPostcodesReferenceDataService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<AppsEarningsHistoryReferenceDataService>().As<IAppsEarningsHistoryReferenceDataService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<FCSReferenceDataService>().As<IFCSReferenceDataService>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<CollectionPeriodDataService>().As<ICollectionPeriodDataService>().InstancePerLifetimeScope();
         }
     }
 }

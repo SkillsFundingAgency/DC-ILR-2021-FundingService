@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ESFA.DC.ILR.FundingService.Data.External
+namespace ESFA.DC.ILR.FundingService.Data.External.CollectionPeriod.Model
 {
     public class Periods
     {
