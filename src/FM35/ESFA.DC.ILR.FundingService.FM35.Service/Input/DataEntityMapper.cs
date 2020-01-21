@@ -51,7 +51,12 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
 
         public IDataEntity BuildGlobalDataEntity(FM35LearnerDto learner, Global global)
         {
-            var orgFunding = _organisationReferenceDataService.OrganisationFundingForUKPRN(global.UKPRN).Where(f => f.OrgFundFactType == Attributes.OrgFundFactorTypeAdultSkills).ToList();
+            var orgFunding = _organisationReferenceDataService.OrganisationFundingForUKPRN(global.UKPRN)
+                .Where(f => f.OrgFundFactType == Attributes.OrgFundFactorTypeAdultSkills);
+
+            var orgDataEntities = orgFunding.Any() ?
+                    orgFunding?.Select(BuildOrgFundingDataEntity).ToList() :
+                    new List<IDataEntity> { new DataEntity(Attributes.EntityOrgFunding) };
 
             return new DataEntity(Attributes.EntityGlobal)
             {
@@ -65,10 +70,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                 Children =
                     learner != null ?
                      new List<IDataEntity> { BuildLearnerDataEntity(learner) }
-                     .Union(
-                         orgFunding?
-                         .Select(BuildOrgFundingDataEntity) ?? new List<IDataEntity>())
-                         .ToList()
+                     .Union(orgDataEntities).ToList()
                      : new List<IDataEntity>()
             };
         }

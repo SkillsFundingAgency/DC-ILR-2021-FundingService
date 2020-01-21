@@ -19,7 +19,7 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Organisation
         {
             _referenceDataCache.OrgFunding.TryGetValue(ukprn, out IReadOnlyCollection<OrgFunding> orgFunding);
 
-            return orgFunding?? new List<OrgFunding>();
+            return orgFunding ?? Enumerable.Empty<OrgFunding>();
         }
 
         public string OrganisationVersion()
