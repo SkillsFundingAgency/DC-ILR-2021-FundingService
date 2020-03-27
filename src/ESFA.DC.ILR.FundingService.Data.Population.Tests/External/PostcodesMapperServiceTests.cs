@@ -19,14 +19,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                 new ReferenceDataService.Model.Postcodes.Postcode
                 {
                      PostCode = "PostCode1",
-                     CareerLearningPilots = new List<ReferenceDataService.Model.Postcodes.CareerLearningPilot>
-                     {
-                         new ReferenceDataService.Model.Postcodes.CareerLearningPilot
-                         {
-                            AreaCode = "AreaCode1",
-                            EffectiveFrom = new DateTime(2018, 8, 1)
-                         }
-                     },
                      DasDisadvantages = new List<ReferenceDataService.Model.Postcodes.DasDisadvantage>
                      {
                          new ReferenceDataService.Model.Postcodes.DasDisadvantage
@@ -108,15 +100,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                     new PostcodeRoot
                     {
                         Postcode = "PostCode1",
-                        CareerLearningPilots = new List<CareerLearningPilot>
-                        {
-                            new CareerLearningPilot
-                            {
-                                Postcode = "PostCode1",
-                                AreaCode = "AreaCode1",
-                                EffectiveFrom = new DateTime(2018, 8, 1)
-                            }
-                        },
                         DasDisadvantages = new List<DasDisadvantage>
                         {
                             new DasDisadvantage

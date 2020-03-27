@@ -10,6 +10,8 @@
           <prop name="PassThrough">True</prop>
           <prop name="KeySequence">1</prop>
           <prop name="Size">8</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p495" type="text" public-name="LARSVersion">
@@ -19,6 +21,8 @@
         <props>
           <prop name="PassThrough">True</prop>
           <prop name="Size">100</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
         </props>
       </attribute>
     </entity>
@@ -28,6 +32,10 @@
           <base>the learner's date of birth</base>
           <parse />
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p301" type="text" public-name="LearnRefNumber">
         <text>
@@ -38,6 +46,8 @@
           <prop name="PassThrough">True</prop>
           <prop name="KeySequence">1</prop>
           <prop name="Size">12</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
         </props>
       </attribute>
       <props>
@@ -50,12 +60,20 @@
           <base>the learning delivery's learning planned end date</base>
           <parse />
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p12" type="date" public-name="LearnStartDate">
         <text>
           <base>the learning delivery's learning start date</base>
           <parse />
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p19" type="number" public-name="AimSeqNumber">
         <text>
@@ -65,6 +83,8 @@
           <prop name="PassThrough">True</prop>
           <prop name="KeySequence">1</prop>
           <prop name="Size">2</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p21" type="number" public-name="AimType">
@@ -72,97 +92,101 @@
           <base>the learning delivery's aim type</base>
           <parse />
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p24" type="number" public-name="CompStatus">
         <text>
           <base>the learning delivery's completion status</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p268" type="date" public-name="OrigLearnStartDate">
         <text>
           <base>the learning delivery's original learning start date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p288" type="date" public-name="LearnActEndDate">
         <text>
           <base>the learning delivery's learning actual end date</base>
           <parse />
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p478" type="date" public-name="AchDate">
         <text>
           <base>the learning delivery's achievement date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p479" type="number" public-name="FrameworkCommonComponent">
         <text>
           <base>the learning delivery's common component</base>
         </text>
-      </attribute>
-      <attribute name="p481" type="number" public-name="LrnDelFAM_LDM1">
-        <text>
-          <base>the learning delivery's LDM 1 FAM code</base>
-        </text>
-      </attribute>
-      <attribute name="p482" type="number" public-name="LrnDelFAM_RES">
-        <text>
-          <base>the learning delivery's RES FAM code</base>
-        </text>
-      </attribute>
-      <attribute name="p483" type="number" public-name="LrnDelFAM_LDM2">
-        <text>
-          <base>the learning delivery's LDM 2 FAM code</base>
-        </text>
-      </attribute>
-      <attribute name="p484" type="number" public-name="LrnDelFAM_LDM3">
-        <text>
-          <base>the learning delivery's LDM 3 FAM code</base>
-        </text>
-      </attribute>
-      <attribute name="p485" type="number" public-name="LrnDelFAM_LDM4">
-        <text>
-          <base>the learning delivery's LDM 4 FAM code</base>
-        </text>
-      </attribute>
-      <attribute name="p486" type="number" public-name="LrnDelFAM_SPP">
-        <text>
-          <base>the learning delivery's SPP FAM code</base>
-        </text>
-      </attribute>
-      <attribute name="p487" type="number" public-name="LrnDelFAM_SOF">
-        <text>
-          <base>the learning delivery's SOF FAM code</base>
-        </text>
-      </attribute>
-      <attribute name="p488" type="number" public-name="LrnDelFAM_FFI">
-        <text>
-          <base>the learning delivery's FFI FAM code</base>
-        </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p490" type="number" public-name="OtherFundAdj">
         <text>
           <base>the learning delivery's other funding adjustment</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p491" type="number" public-name="Outcome">
         <text>
           <base>the learning delivery's outcome</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p492" type="number" public-name="PriorLearnFundAdj">
         <text>
           <base>the learning delivery's adjustment for prior learning</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p493" type="number" public-name="ProgType">
         <text>
           <base>the learning delivery's programme type</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p494" type="number" public-name="WithdrawReason">
         <text>
           <base>the learning delivery's withdrawal reason</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p497" type="text" public-name="LearnAimRef">
         <text>
@@ -171,17 +195,18 @@
         <props>
           <prop name="PassThrough">True</prop>
           <prop name="Size">8</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p498" type="number" public-name="STDCode">
         <text>
           <base>the learning delivery's standard code</base>
         </text>
-      </attribute>
-      <attribute name="p504" type="number" public-name="LrnDelFAM_EEF">
-        <text>
-          <base>the learning delivery's EEF FAM code</base>
-        </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
     </entity>
     <entity id="apprenticeshipfinancialrecord" name="the apprenticeship financial record" containment-relationship-id="learningdeliverysapprenticeshipfinancialrecords" containment-parent-id="learningdelivery" public-id="ApprenticeshipFinancialRecord">
@@ -191,6 +216,10 @@
           <parse>
           </parse>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p469" type="date" public-name="AFinDate">
         <text>
@@ -198,6 +227,10 @@
           <parse>
           </parse>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p470" type="text" public-name="AFinType">
         <text>
@@ -205,6 +238,10 @@
           <parse>
           </parse>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p472" type="number" public-name="AFinCode">
         <text>
@@ -212,6 +249,10 @@
           <parse>
           </parse>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
     </entity>
     <entity id="learningdeliveryfam" name="the learning delivery FAM" containment-relationship-id="learningdeliverysfams" containment-parent-id="learningdelivery" public-id="LearningDeliveryFAM">
@@ -221,6 +262,10 @@
           <parse>
           </parse>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p2" type="text" public-name="LearnDelFAMType">
         <text>
@@ -228,16 +273,28 @@
           <parse>
           </parse>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p307" type="date" public-name="LearnDelFAMDateFrom">
         <text>
           <base>the learning delivery FAM's date applies from</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p308" type="date" public-name="LearnDelFAMDateTo">
         <text>
           <base>the learning delivery FAM's date applies to</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
     </entity>
     <entity id="learneremploymentstatus" name="the learner employment status" containment-relationship-id="learnersemploymentstatuses" containment-parent-id="learner" public-id="LearnerEmploymentStatus" identifying-attribute-name="EMPStat" identifying-attribute-text="the learner employment status">
@@ -245,21 +302,37 @@
         <text>
           <base>the learner employment status's date applies</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p323" type="number" public-name="EmpStatMon_SEM">
         <text>
           <base>the learner employment status's SEM code</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p477" type="number" public-name="EmpId">
         <text>
           <base>the learner employment status's employer identifier</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p505" type="number" public-name="EMPStat">
         <text>
           <base>the learner employment status</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
     </entity>
     <entity id="standardcommoncomponent" name="the standard common component" identifying-attribute-name="LARSCommonComponent" identifying-attribute-text="the standard common component" containment-relationship-id="learningdeliverysstandardcommoncomponents" containment-parent-id="learningdelivery" public-id="LARS_StandardCommonComponent">
@@ -267,21 +340,37 @@
         <text>
           <base>the standard common component's standard code</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p501" type="number" public-name="LARSCommonComponent">
         <text>
           <base>the standard common component</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p502" type="date" public-name="LARSEffectiveFrom">
         <text>
           <base>the standard common component's effective from date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p503" type="date" public-name="LARSEffectiveTo">
         <text>
           <base>the standard common component's effective to date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
     </entity>
     <entity id="larsstandardfunding" name="LARS standard funding" containment-relationship-id="larsstandardfundingsforthelearningdelivery" containment-parent-id="learningdelivery" public-id="LARS_StandardFunding">
@@ -289,11 +378,19 @@
         <text>
           <base>the LARS standard funding's achievement incentive amount</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p517" type="currency" public-name="SFCoreGovContCap">
         <text>
           <base>the LARS standard funding's core government contribution cap</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p518" type="currency" public-name="SFSmallBusIncentive">
         <text>
@@ -301,27 +398,45 @@
         </text>
         <props>
           <prop name="Temporal">true</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p519" type="currency" public-name="SF1618Incentive">
         <text>
           <base>the LARS standard funding's 16 to 18 incentive amount</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p520" type="date" public-name="SFEffectiveFromDate">
         <text>
           <base>the LARS standard funding's effective from date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p521" type="date" public-name="SFEffectiveToDate">
         <text>
           <base>the LARS standard funding's effective to date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p525" type="text" public-name="FundableWithoutEmployer">
         <text>
           <base>the learning delivery's standard's employer fundabilty indicator</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">10-01-2019</prop>
+        </props>
       </attribute>
     </entity>
   </entities>

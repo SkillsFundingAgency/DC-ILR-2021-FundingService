@@ -7,6 +7,8 @@ namespace ESFA.DC.ILR.FundingService.Dto.Model
     {
         public string LearnRefNumber { get; set; }
 
+        public string CampId { get; set; }
+
         public DateTime? DateOfBirth { get; set; }
 
         public string PostcodePrior { get; set; }

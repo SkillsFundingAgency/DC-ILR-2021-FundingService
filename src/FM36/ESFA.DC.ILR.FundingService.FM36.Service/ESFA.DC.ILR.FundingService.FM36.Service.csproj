@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <None Remove="ESFA.DC.ILR.FundingService.FM36.Service.ruleset" />
-    <None Remove="Rulebase\Apprenticeships Earnings Calc 18_19.zip" />
+    <None Remove="Rulebase\Apprenticeships Earnings Calc 19_20.zip" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,12 +24,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Rulebase\Apprenticeships Earnings Calc 18_19.zip" />
+    <EmbeddedResource Include="Rulebase\Apprenticeships Earnings Calc 19_20.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ESFA.DC.ILR.1920.Model" Version="0.1.2-beta0001" />
-    <PackageReference Include="ESFA.DC.ILR.1920.Model.Interface" Version="0.1.0-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.1920.Model" Version="0.1.8-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.1920.Model.Interface" Version="0.1.4-beta0001" />
     <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.6-beta0001" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
@@ -43,12 +45,6 @@
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model\ESFA.DC.OPA.Model.csproj" />
     <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service.Interface\ESFA.DC.OPA.Service.Interface.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Rulebase\XSRC\Inputs.xsrc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

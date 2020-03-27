@@ -58,6 +58,21 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
         }
 
         [Fact]
+        public void ProvideDtos_NoLearners()
+        {
+            IMessage message = new Message
+            {
+                LearningProvider = new MessageLearningProvider
+                {
+                    UKPRN = 12345678
+                },
+            };
+
+            NewService().ProvideDtos(36, message).Should().HaveCount(0);
+        }
+
+
+        [Fact]
         public void ProvideDtos_DtoAsExpected()
         {
             IMessage message = new Message
@@ -216,10 +231,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                         ProgType = 25,
                         PwayCode = 1,
                         StdCode = 1,
-                        LrnDelFAM_EEF = "1",
-                        LrnDelFAM_LDM1 = "1",
-                        LrnDelFAM_LDM2 = "2",
-                        LrnDelFAM_LDM3 = "3",
                         LearningDeliveryFAMs = new List<LearningDeliveryFAM>
                         {
                             new LearningDeliveryFAM

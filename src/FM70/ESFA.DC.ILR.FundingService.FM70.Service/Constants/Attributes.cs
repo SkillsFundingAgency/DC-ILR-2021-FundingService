@@ -11,6 +11,7 @@
         public const string EntityDPOutcome = "DPOutcome";
         public const string EntityLearnerEmploymentStatus = "LearnerEmploymentStatus";
         public const string EntityLearningDelivery = "LearningDelivery";
+        public const string EntityLearningDeliveryFAM = "LearningDeliveryFAM";
         public const string EntityLearningDeliveryDeliverable = "LearningDeliveryDeliverable";
 
         public const string EntityESFData = "ESFData";
@@ -19,7 +20,7 @@
         public const string EntityLearningDeliverySFA_PostcodeAreaCost = "SFA_PostcodeAreaCost";
 
         // Global Values
-        public const string YearValue = "1819";
+        public const string YearValue = "1920";
         public const string CollectionPeriodValue = "DefaultPeriod";
         public const string Period1 = "R01";
         public const string Period2 = "R02";
@@ -71,22 +72,10 @@
         public const string LearnAimRef = "LearnAimRef";
         public const string LearnPlanEndDate = "LearnPlanEndDate";
         public const string LearnStartDate = "LearnStartDate";
-        public const string LrnDelFAM_LDM1 = "LrnDelFAM_LDM1";
-        public const string LrnDelFAM_LDM2 = "LrnDelFAM_LDM2";
-        public const string LrnDelFAM_LDM3 = "LrnDelFAM_LDM3";
-        public const string LrnDelFAM_LDM4 = "LrnDelFAM_LDM4";
-        public const string LrnDelFAM_RES = "LrnDelFAM_RES";
         public const string OrigLearnStartDate = "OrigLearnStartDate";
         public const string OtherFundAdj = "OtherFundAdj";
         public const string Outcome = "Outcome";
         public const string PriorLearnFundAdj = "PriorLearnFundAdj";
-
-        public const string LearningDeliveryFAMTypeRES = "RES";
-        public const string LearningDeliveryFAMTypeLDM = "LDM";
-        public const string LearningDeliveryFAMTypeLDM1 = "LDM1";
-        public const string LearningDeliveryFAMTypeLDM2 = "LDM2";
-        public const string LearningDeliveryFAMTypeLDM3 = "LDM3";
-        public const string LearningDeliveryFAMTypeLDM4 = "LDM4";
 
         public const string Achieved = "Achieved";
         public const string AddProgCostElig = "AddProgCostElig";
@@ -117,6 +106,12 @@
         public const string ProgressionEarnings = "ProgressionEarnings";
         public const string ReportingVolume = "ReportingVolume";
         public const string StartEarnings = "StartEarnings";
+
+        // LearningDeliveryFAM
+        public const string LearnDelFAMCode = "LearnDelFAMCode";
+        public const string LearnDelFAMDateFrom = "LearnDelFAMDateFrom";
+        public const string LearnDelFAMDateTo = "LearnDelFAMDateTo";
+        public const string LearnDelFAMType = "LearnDelFAMType";
 
         // ESFData
         public const string UnitCost = "UnitCost";

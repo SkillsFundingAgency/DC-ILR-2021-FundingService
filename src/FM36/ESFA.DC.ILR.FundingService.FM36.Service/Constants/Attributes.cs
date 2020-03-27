@@ -30,7 +30,7 @@
         public const string RulebaseVersion = "RulebaseVersion";
 
         // Global Values
-        public const string YearValue = "1819";
+        public const string YearValue = "1920";
         public const string CollectionPeriodValue = "DefaultPeriod";
         public const string Period1 = "R01";
         public const string Period2 = "R02";
@@ -53,6 +53,7 @@
         public const string PMUKPRN = "PMUKPRN";
 
         // LearningDelivery
+        public const string AchDate = "AchDate";
         public const string ActualDaysIL = "ActualDaysIL";
         public const string ActualNumInstalm = "ActualNumInstalm";
         public const string AdjStartDate = "AdjStartDate";
@@ -313,19 +314,23 @@
         public const string PriceEpisodeRedStartDate = "PriceEpisodeRedStartDate";
         public const string PriceEpisodeRedStatusCode = "PriceEpisodeRedStatusCode";
         public const string PriceEpisodeLearnerAdditionalPayment = "PriceEpisodeLearnerAdditionalPayment";
+        public const string PriceEpisodeActualEndDateIncEPA = "PriceEpisodeActualEndDateIncEPA";
+        public const string PriceEpisode1618FUBalValue = "PriceEpisode1618FUBalValue";
+        public const string PriceEpisodeApplic1618FrameworkUpliftCompElement = "PriceEpisodeApplic1618FrameworkUpliftCompElement";
+        public const string PriceEpisode1618FrameworkUpliftTotPrevEarnings = "PriceEpisode1618FrameworkUpliftTotPrevEarnings";
+        public const string PriceEpisode1618FrameworkUpliftRemainingAmount = "PriceEpisode1618FrameworkUpliftRemainingAmount";
+        public const string PriceEpisode1618FUMonthInstValue = "PriceEpisode1618FUMonthInstValue";
+        public const string PriceEpisode1618FUTotEarnings = "PriceEpisode1618FUTotEarnings";
 
         // Apprenticeship Historic Earnings Output
         public const string AppIdentifierOutput = "AppIdentifierOutput";
         public const string AppProgCompletedInTheYearOutput = "AppProgCompletedInTheYearOutput";
-        public const string HistoricBalancingProgAimPaymentsInTheYear = "HistoricBalancingProgAimPaymentsInTheYear";
-        public const string HistoricCompletionProgAimPaymentsInTheYear = "HistoricCompletionProgAimPaymentsInTheYear";
         public const string HistoricDaysInYearOutput = "HistoricDaysInYearOutput";
         public const string HistoricEffectiveTNPStartDateOutput = "HistoricEffectiveTNPStartDateOutput";
         public const string HistoricEmpIdEndWithinYearOutput = "HistoricEmpIdEndWithinYearOutput";
         public const string HistoricEmpIdStartWithinYearOutput = "HistoricEmpIdStartWithinYearOutput";
         public const string HistoricFworkCodeOutput = "HistoricFworkCodeOutput";
         public const string HistoricLearner1618AtStartOutput = "HistoricLearner1618AtStartOutput";
-        public const string HistoricOnProgProgAimPaymentsInTheYear = "HistoricOnProgProgAimPaymentsInTheYear";
         public const string HistoricPMRAmountOutput = "HistoricPMRAmountOutput";
         public const string HistoricProgrammeStartDateIgnorePathwayOutput = "HistoricProgrammeStartDateIgnorePathwayOutput";
         public const string HistoricProgrammeStartDateMatchPathwayOutput = "HistoricProgrammeStartDateMatchPathwayOutput";

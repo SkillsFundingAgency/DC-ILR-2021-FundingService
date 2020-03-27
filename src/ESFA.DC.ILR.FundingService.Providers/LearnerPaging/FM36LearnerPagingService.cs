@@ -22,8 +22,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
 
         private IEnumerable<FM36LearnerDto> BuildDtos(IEnumerable<ILearner> learners)
         {
-            var ldFams = BuildLearningDeliveryFAMDictionary(learners);
-
             return learners.Select(l => new FM36LearnerDto
             {
                 LearnRefNumber = l.LearnRefNumber,
@@ -43,6 +41,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                 LearningDeliveries = l.LearningDeliveries?.Select(ld => new LearningDelivery
                 {
                     AimSeqNumber = ld.AimSeqNumber,
+                    AchDate = ld.AchDateNullable,
                     AimType = ld.AimType,
                     CompStatus = ld.CompStatus,
                     FundModel = ld.FundModel,
@@ -57,11 +56,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                     ProgType = ld.ProgTypeNullable,
                     PwayCode = ld.PwayCodeNullable,
                     StdCode = ld.StdCodeNullable,
-                    LrnDelFAM_EEF = ldFams[l.LearnRefNumber][ld.AimSeqNumber].EEF,
-                    LrnDelFAM_LDM1 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM1,
-                    LrnDelFAM_LDM2 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM2,
-                    LrnDelFAM_LDM3 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM3,
-                    LrnDelFAM_LDM4 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM4,
                     AppFinRecords = ld.AppFinRecords?.Select(af => new AppFinRecord
                     {
                         AFinAmount = af.AFinAmount,

@@ -58,6 +58,20 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
         }
 
         [Fact]
+        public void ProvideDtos_NoLearners()
+        {
+            IMessage message = new Message
+            {
+                LearningProvider = new MessageLearningProvider
+                {
+                    UKPRN = 12345678
+                },
+            };
+
+            NewService().ProvideDtos(25, message).Should().HaveCount(0);
+        }
+
+        [Fact]
         public void ProvideDtos_DtoAsExpected()
         {
             IMessage message = new Message
@@ -71,6 +85,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                     new MessageLearner
                     {
                         LearnRefNumber = "Learner_1",
+                        CampId = "CampID",
                         DateOfBirthSpecified = true,
                         DateOfBirth = new DateTime(1990, 8, 1),
                         EngGrade = "1",
@@ -179,6 +194,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
             {
                 LearnRefNumber = "Learner_1",
                 DateOfBirth = new DateTime(1990, 8, 1),
+                CampId = "CampID",
                 EngGrade = "1",
                 MathGrade = "2",
                 PlanEEPHours = 1,
@@ -217,10 +233,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                         LearnStartDate = new DateTime(2018, 8, 1),
                         ProgType = 1,
                         WithdrawReason = 1,
-                        LrnDelFAM_SOF = "1",
-                        LrnDelFAM_LDM1 = "1",
-                        LrnDelFAM_LDM2 = "2",
-                        LrnDelFAM_LDM3 = "3",
                         LearningDeliveryFAMs = new List<LearningDeliveryFAM>
                         {
                             new LearningDeliveryFAM

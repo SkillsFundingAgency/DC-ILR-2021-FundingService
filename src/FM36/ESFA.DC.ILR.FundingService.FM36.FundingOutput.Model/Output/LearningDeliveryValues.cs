@@ -28,20 +28,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output
 
         public int? FworkCode { get; set; }
 
-        public decimal? LDApplic1618FrameworkUpliftBalancingValue { get; set; }
-
-        public decimal? LDApplic1618FrameworkUpliftCompElement { get; set; }
-
-        public decimal? LDApplic1618FRameworkUpliftCompletionValue { get; set; }
-
-        public decimal? LDApplic1618FrameworkUpliftMonthInstalVal { get; set; }
-
-        public decimal? LDApplic1618FrameworkUpliftPrevEarnings { get; set; }
-
-        public decimal? LDApplic1618FrameworkUpliftPrevEarningsStage1 { get; set; }
-
-        public decimal? LDApplic1618FrameworkUpliftRemainingAmount { get; set; }
-
         public decimal? LDApplic1618FrameworkUpliftTotalActEarnings { get; set; }
 
         public string LearnAimRef { get; set; }

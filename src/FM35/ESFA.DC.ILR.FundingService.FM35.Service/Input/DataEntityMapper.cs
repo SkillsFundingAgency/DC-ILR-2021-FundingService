@@ -51,7 +51,12 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
 
         public IDataEntity BuildGlobalDataEntity(FM35LearnerDto learner, Global global)
         {
-            var orgFunding = _organisationReferenceDataService.OrganisationFundingForUKPRN(global.UKPRN).Where(f => f.OrgFundFactType == Attributes.OrgFundFactorTypeAdultSkills).ToList();
+            var orgFunding = _organisationReferenceDataService.OrganisationFundingForUKPRN(global.UKPRN)
+                .Where(f => f.OrgFundFactType == Attributes.OrgFundFactorTypeAdultSkills);
+
+            var orgDataEntities = orgFunding.Any() ?
+                    orgFunding?.Select(BuildOrgFundingDataEntity).ToList() :
+                    new List<IDataEntity> { new DataEntity(Attributes.EntityOrgFunding) };
 
             return new DataEntity(Attributes.EntityGlobal)
             {
@@ -65,10 +70,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                 Children =
                     learner != null ?
                      new List<IDataEntity> { BuildLearnerDataEntity(learner) }
-                     .Union(
-                         orgFunding?
-                         .Select(BuildOrgFundingDataEntity) ?? new List<IDataEntity>())
-                         .ToList()
+                     .Union(orgDataEntities).ToList()
                      : new List<IDataEntity>()
             };
         }
@@ -90,6 +92,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
         public IDataEntity BuildLearnerDataEntity(FM35LearnerDto learner)
         {
             var sfaPostDisadvantage = _postcodesReferenceDataService.SFADisadvantagesForPostcode(learner.PostcodePrior);
+            var specialistResources = _organisationReferenceDataService.SpecialistResourcesForCampusIdentifier(learner.CampId);
 
             return new DataEntity(Attributes.EntityLearner)
             {
@@ -109,6 +112,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                         .Union(
                             sfaPostDisadvantage?
                             .Select(BuildSFAPostcodeDisadvantage) ?? new List<IDataEntity>())
+                        .Union(
+                            specialistResources?
+                            .Select(BuildSpecialistResources) ?? new List<IDataEntity>())
                         .ToList()
             };
         }
@@ -157,13 +163,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                     { Attributes.LearnActEndDate, new AttributeData(learningDelivery.LearnActEndDate) },
                     { Attributes.LearnPlanEndDate, new AttributeData(learningDelivery.LearnPlanEndDate) },
                     { Attributes.LearnStartDate, new AttributeData(learningDelivery.LearnStartDate) },
-                    { Attributes.LrnDelFAM_EEF, new AttributeData(learningDelivery.LrnDelFAM_EEF) },
-                    { Attributes.LrnDelFAM_LDM1, new AttributeData(learningDelivery.LrnDelFAM_LDM1) },
-                    { Attributes.LrnDelFAM_LDM2, new AttributeData(learningDelivery.LrnDelFAM_LDM2) },
-                    { Attributes.LrnDelFAM_LDM3, new AttributeData(learningDelivery.LrnDelFAM_LDM3) },
-                    { Attributes.LrnDelFAM_LDM4, new AttributeData(learningDelivery.LrnDelFAM_LDM4) },
-                    { Attributes.LrnDelFAM_FFI, new AttributeData(learningDelivery.LrnDelFAM_FFI) },
-                    { Attributes.LrnDelFAM_RES, new AttributeData(learningDelivery.LrnDelFAM_RES) },
                     { Attributes.OrigLearnStartDate, new AttributeData(learningDelivery.OrigLearnStartDate) },
                     { Attributes.OtherFundAdj, new AttributeData(learningDelivery.OtherFundAdj) },
                     { Attributes.Outcome, new AttributeData(learningDelivery.Outcome) },
@@ -247,6 +246,19 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                     { Attributes.DisUplift, new AttributeData(sfaDisadvantage.Uplift) },
                     { Attributes.DisUpEffectiveFrom, new AttributeData(sfaDisadvantage.EffectiveFrom) },
                     { Attributes.DisUpEffectiveTo, new AttributeData(sfaDisadvantage.EffectiveTo) }
+                }
+            };
+        }
+
+        public IDataEntity BuildSpecialistResources(CampusIdentifierSpecResource campusIdentifierSpecResource)
+        {
+            return new DataEntity(Attributes.EntityCampusIdentifiers)
+            {
+                Attributes = new Dictionary<string, IAttributeData>()
+                {
+                    { Attributes.CampIdSpecialistResources, new AttributeData(campusIdentifierSpecResource.SpecialistResources) },
+                    { Attributes.CampIdEffectiveFrom, new AttributeData(campusIdentifierSpecResource.EffectiveFrom) },
+                    { Attributes.CampIdEffectiveTo, new AttributeData(campusIdentifierSpecResource.EffectiveTo) }
                 }
             };
         }

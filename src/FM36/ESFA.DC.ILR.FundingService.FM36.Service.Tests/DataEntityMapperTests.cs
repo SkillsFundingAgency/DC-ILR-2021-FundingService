@@ -27,7 +27,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             var stdCode = 1;
 
             var larsVersion = "1.0.0";
-            var year = "1819";
+            var year = "1920";
             var collectionPeriod = "DefaultPeriod";
 
             var global = new Global
@@ -85,8 +85,8 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                         FundingCategory = "Matrix",
                         RateWeighted = 1.0m,
                         WeightingFactor = "G",
-                        EffectiveFrom = new DateTime(2018, 1, 1),
-                        EffectiveTo = new DateTime(2019, 1, 1),
+                        EffectiveFrom = new DateTime(2019, 1, 1),
+                        EffectiveTo = new DateTime(2020, 1, 1),
                     }
                 }
             };
@@ -101,8 +101,8 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 new DasDisadvantage
                 {
                     Postcode = "DelLocPostcode",
-                    EffectiveFrom = new DateTime(2018, 1, 1),
-                    EffectiveTo = new DateTime(2019, 1, 1),
+                    EffectiveFrom = new DateTime(2019, 1, 1),
+                    EffectiveTo = new DateTime(2020, 1, 1),
                     Uplift = 1.2m
                 }
             };
@@ -133,7 +133,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         {
             var ukprn = 1;
             var larsVersion = "1.0.0";
-            var year = "1819";
+            var year = "1920";
             var collectionPeriod = "DefaultPeriod";
 
             var global = new Global
@@ -166,7 +166,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         {
             var ukprn = 1;
             var larsVersion = "1.0.0";
-            var year = "1819";
+            var year = "1920";
             var collectionPeriod = "DefaultPeriod";
 
             var global = new Global
@@ -235,7 +235,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         {
             var larsCurrentVersion = "1.0.0";
             var collectionPeriod = "DefaultPeriod";
-            var year = "1819";
+            var year = "1920";
             var ukprn = 1234;
 
             var larsRefererenceDataServiceMock = new Mock<ILARSReferenceDataService>();
@@ -290,27 +290,23 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             var learningDelivery = new LearningDelivery()
             {
                 AimSeqNumber = 1,
+                AchDate = new DateTime(2019, 8, 1),
                 AimType = 2,
                 CompStatus = 3,
                 DelLocPostCode = "DelLocPostcode",
                 FundModel = 4,
                 FworkCode = 5,
-                LearnActEndDate = new DateTime(2017, 1, 1),
+                LearnActEndDate = new DateTime(2018, 1, 1),
                 LearnAimRef = "LearnAimRef",
-                LearnPlanEndDate = new DateTime(2018, 1, 1),
-                LearnStartDate = new DateTime(2019, 1, 1),
-                OrigLearnStartDate = new DateTime(2019, 1, 1),
+                LearnPlanEndDate = new DateTime(2019, 1, 1),
+                LearnStartDate = new DateTime(2020, 1, 1),
+                OrigLearnStartDate = new DateTime(2020, 1, 1),
                 OtherFundAdj = 6,
                 Outcome = 7,
                 PriorLearnFundAdj = 8,
                 ProgType = 9,
                 PwayCode = 10,
                 StdCode = 11,
-                LrnDelFAM_LDM1 = "LDM1",
-                LrnDelFAM_LDM2 = "LDM2",
-                LrnDelFAM_LDM3 = "LDM3",
-                LrnDelFAM_LDM4 = "LDM4",
-                LrnDelFAM_EEF = "EEF",
                 LearningDeliveryFAMs = new List<LearningDeliveryFAM>()
                 {
                     new LearningDeliveryFAM() { LearnDelFAMType = "EEF", LearnDelFAMCode = "EEF" },
@@ -337,20 +333,10 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                         FundingCategory = "Matrix",
                         RateWeighted = 1.0m,
                         WeightingFactor = "G",
-                        EffectiveFrom = new DateTime(2018, 1, 1),
-                        EffectiveTo = new DateTime(2019, 1, 1),
+                        EffectiveFrom = new DateTime(2019, 1, 1),
+                        EffectiveTo = new DateTime(2020, 1, 1),
                     }
                 },
-                LARSCareerLearningPilots = new List<LARSCareerLearningPilot>
-                {
-                    new LARSCareerLearningPilot
-                    {
-                        AreaCode = "DelLocPostcode",
-                        SubsidyRate = 1.2m,
-                        EffectiveFrom = new DateTime(2018, 1, 1),
-                        EffectiveTo = new DateTime(2019, 1, 1)
-                    }
-                }
             };
 
             var larsReferenceDataServiceMock = new Mock<ILARSReferenceDataService>();
@@ -360,8 +346,9 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             var dataEntity = NewService(larsReferenceDataServiceMock.Object).BuildLearningDeliveryDataEntity(learningDelivery);
 
             dataEntity.EntityName.Should().Be("LearningDelivery");
-            dataEntity.Attributes.Should().HaveCount(20);
+            dataEntity.Attributes.Should().HaveCount(16);
             dataEntity.Attributes["AimSeqNumber"].Value.Should().Be(learningDelivery.AimSeqNumber);
+            dataEntity.Attributes["AchDate"].Value.Should().Be(learningDelivery.AchDate);
             dataEntity.Attributes["AimType"].Value.Should().Be(learningDelivery.AimType);
             dataEntity.Attributes["CompStatus"].Value.Should().Be(learningDelivery.CompStatus);
             dataEntity.Attributes["FrameworkCommonComponent"].Value.Should().Be(2);
@@ -370,11 +357,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             dataEntity.Attributes["LearnActEndDate"].Value.Should().Be(learningDelivery.LearnActEndDate);
             dataEntity.Attributes["LearnPlanEndDate"].Value.Should().Be(learningDelivery.LearnPlanEndDate);
             dataEntity.Attributes["LearnStartDate"].Value.Should().Be(learningDelivery.LearnStartDate);
-            dataEntity.Attributes["LrnDelFAM_EEF"].Value.Should().Be("EEF");
-            dataEntity.Attributes["LrnDelFAM_LDM1"].Value.Should().Be("LDM1");
-            dataEntity.Attributes["LrnDelFAM_LDM2"].Value.Should().Be("LDM2");
-            dataEntity.Attributes["LrnDelFAM_LDM3"].Value.Should().Be("LDM3");
-            dataEntity.Attributes["LrnDelFAM_LDM4"].Value.Should().Be("LDM4");
             dataEntity.Attributes["OrigLearnStartDate"].Value.Should().Be(learningDelivery.OrigLearnStartDate);
             dataEntity.Attributes["OtherFundAdj"].Value.Should().Be(learningDelivery.OtherFundAdj);
             dataEntity.Attributes["PriorLearnFundAdj"].Value.Should().Be(learningDelivery.PriorLearnFundAdj);
@@ -408,7 +390,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             var learnerEmploymentStatus = new LearnerEmploymentStatus
             {
                 AgreeId = "Id",
-                DateEmpStatApp = new DateTime(2018, 1, 1),
+                DateEmpStatApp = new DateTime(2019, 1, 1),
                 EmpId = 1,
                 EmpStat = 2,
                 SEM = 3
@@ -431,8 +413,8 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             var dasDisadvantage = new DasDisadvantage
             {
                 Uplift = 1.2m,
-                EffectiveFrom = new DateTime(2018, 1, 1),
-                EffectiveTo = new DateTime(2018, 1, 1)
+                EffectiveFrom = new DateTime(2019, 1, 1),
+                EffectiveTo = new DateTime(2019, 1, 1)
             };
 
             var dataEntity = NewService().BuildDASPostcodeDisadvantage(dasDisadvantage);
@@ -453,15 +435,15 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 AppProgCompletedInTheYearInput = false,
                 DaysInYear = 1,
                 CollectionReturnCode = "1",
-                CollectionYear = "1819",
-                HistoricEffectiveTNPStartDateInput = new DateTime(2018, 8, 1),
+                CollectionYear = "1920",
+                HistoricEffectiveTNPStartDateInput = new DateTime(2019, 8, 1),
                 HistoricEmpIdEndWithinYear = 2,
                 HistoricEmpIdStartWithinYear = 3,
                 FworkCode = 4,
                 HistoricLearner1618StartInput = false,
                 HistoricPMRAmount = 1.0m,
-                ProgrammeStartDateIgnorePathway = new DateTime(2018, 8, 1),
-                ProgrammeStartDateMatchPathway = new DateTime(2018, 8, 1),
+                ProgrammeStartDateIgnorePathway = new DateTime(2019, 8, 1),
+                ProgrammeStartDateMatchPathway = new DateTime(2019, 8, 1),
                 ProgType = 5,
                 PwayCode = 6,
                 STDCode = 7,
@@ -473,10 +455,10 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 TotalProgAimPaymentsInTheYear = 1.0m,
                 ULN = 1234567890,
                 UKPRN = 12345678,
-                UptoEndDate = new DateTime(2018, 8, 1),
+                UptoEndDate = new DateTime(2019, 8, 1),
                 HistoricVirtualTNP3EndOfTheYearInput = 1.0m,
                 HistoricVirtualTNP4EndOfTheYearInput = 1.0m,
-                HistoricLearnDelProgEarliestACT2DateInput = new DateTime(2018, 8, 1),
+                HistoricLearnDelProgEarliestACT2DateInput = new DateTime(2019, 8, 1),
             };
 
             var dataEntity = NewService().BuildApprenticeshipsEarningsHistory(appsHistory);
@@ -520,7 +502,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             {
                 AFinCode = 1,
                 AFinAmount = 2,
-                AFinDate = new DateTime(2018, 8, 1),
+                AFinDate = new DateTime(2019, 8, 1),
                 AFinType = "Type"
             };
 
@@ -543,7 +525,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 SixteenToEighteenProviderAdditionalPayment = 2.0m,
                 SixteenToEighteenFrameworkUplift = 3.0m,
                 CareLeaverAdditionalPayment = 4.0m,
-                EffectiveFrom = new DateTime(2018, 8, 1),
+                EffectiveFrom = new DateTime(2019, 8, 1),
                 FundingCategory = "Type",
                 MaxEmployerLevyCap = 5.0m,
                 ReservedValue2 = 6.0m,
@@ -575,7 +557,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 SixteenToEighteenProviderAdditionalPayment = 2.0m,
                 SixteenToEighteenFrameworkUplift = 3.0m,
                 CareLeaverAdditionalPayment = 4.0m,
-                EffectiveFrom = new DateTime(2018, 8, 1),
+                EffectiveFrom = new DateTime(2019, 8, 1),
                 FundingCategory = "Type",
                 MaxEmployerLevyCap = 5.0m,
                 ReservedValue2 = 6.0m,
@@ -604,7 +586,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             var larsFCC = new LARSFrameworkCommonComponent
             {
                 CommonComponent = 1,
-                EffectiveFrom = new DateTime(2018, 8, 1)
+                EffectiveFrom = new DateTime(2019, 8, 1)
             };
 
             var dataEntity = NewService().BuildLARSFrameworkCommonComponent(larsFCC);
@@ -622,7 +604,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             var larsSCC = new LARSStandardCommonComponent
             {
                 CommonComponent = 1,
-                EffectiveFrom = new DateTime(2018, 8, 1)
+                EffectiveFrom = new DateTime(2019, 8, 1)
             };
 
             var dataEntity = NewService().BuildLARSStandardCommonComponent(larsSCC);
@@ -640,8 +622,8 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             var larsFunding = new LARSFunding
             {
                 FundingCategory = "FundingCategory",
-                EffectiveFrom = new DateTime(2018, 1, 1),
-                EffectiveTo = new DateTime(2019, 1, 1),
+                EffectiveFrom = new DateTime(2019, 1, 1),
+                EffectiveTo = new DateTime(2020, 1, 1),
                 RateWeighted = 1.0m,
                 WeightingFactor = "G"
             };

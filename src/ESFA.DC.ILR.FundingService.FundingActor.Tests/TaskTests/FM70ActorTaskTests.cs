@@ -27,6 +27,8 @@ namespace ESFA.DC.ILR.FundingService.FundingActor.Tests.TaskTests
             fundingServiceContextMock.Setup(f => f.JobId).Returns(1);
             fundingServiceContextMock.Setup(f => f.Container).Returns("Container");
             fundingServiceContextMock.Setup(f => f.FundingFm36OutputKey).Returns("Key");
+            fundingServiceContextMock.Setup(f => f.Ukprn).Returns(12345678);
+            fundingServiceContextMock.Setup(f => f.Year).Returns("1920");
 
             IEnumerable<FundingDto> fundingActorDtos = new List<FundingDto>
             {
@@ -46,7 +48,10 @@ namespace ESFA.DC.ILR.FundingService.FundingActor.Tests.TaskTests
             jsonSerializationServiceMock.Setup(sm => sm.Deserialize<FM70Global>(It.IsAny<string>())).Returns(new FM70Global()).Verifiable();
             fundingActorProviderMock.Setup(pm => pm.Provide()).Returns(FM70Actor.Object).Verifiable();
             filePersistanceServiceMock.Setup(sm => sm.PersistAsync(fundingServiceContextMock.Object.FundingFm70OutputKey, fundingServiceContextMock.Object.Container, condenserOutput, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
-            fundingOutputCondenserServiceMock.Setup(sm => sm.Condense(It.IsAny<IEnumerable<FM70Global>>())).Returns(condenserOutput).Verifiable();
+            fundingOutputCondenserServiceMock.Setup(sm => sm.Condense(
+                It.IsAny<IEnumerable<FM70Global>>(),
+                fundingServiceContextMock.Object.Ukprn,
+                fundingServiceContextMock.Object.Year)).Returns(condenserOutput).Verifiable();
 
             await NewTask(
                 jsonSerializationServiceMock.Object,

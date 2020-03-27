@@ -29,8 +29,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
 {
     public class RulebaseInterfaceTests
     {
-        public const string AcademicYear = "1819";
-        public const string RulebaseName = "FM35 Funding Calc 18_19";
+        public const string AcademicYear = "1920";
+        public const string RulebaseName = "FM35 Funding Calc 19_20";
         public const string RulebaseFolder = "Rulebase";
         public const string RulebaseMasterFolder = "RulebaseMasterFiles";
         public const string XsrcName = "Inputs";
@@ -175,6 +175,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 Attributes.EntityLearningDeliveryLARS_AnnualValue,
                 Attributes.EntityLearningDeliveryLARS_Category,
                 Attributes.EntityLearningDeliveryLARS_Funding,
+                Attributes.EntityCampusIdentifiers,
             };
         }
 
@@ -207,13 +208,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 Attributes.LearnActEndDate,
                 Attributes.LearnPlanEndDate,
                 Attributes.LearnStartDate,
-                Attributes.LrnDelFAM_EEF,
-                Attributes.LrnDelFAM_LDM1,
-                Attributes.LrnDelFAM_LDM2,
-                Attributes.LrnDelFAM_LDM3,
-                Attributes.LrnDelFAM_LDM4,
-                Attributes.LrnDelFAM_FFI,
-                Attributes.LrnDelFAM_RES,
                 Attributes.OrigLearnStartDate,
                 Attributes.OtherFundAdj,
                 Attributes.Outcome,
@@ -246,6 +240,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 Attributes.AreaCosFactor,
                 Attributes.AreaCosEffectiveFrom,
                 Attributes.AreaCosEffectiveTo,
+                Attributes.CampIdSpecialistResources,
+                Attributes.CampIdEffectiveFrom,
+                Attributes.CampIdEffectiveTo
             };
         }
 
@@ -383,7 +380,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                     {
                         EmpId = 10,
                         AgreeId = "1",
-                        DateEmpStatApp = new DateTime(2018, 8, 1),
+                        DateEmpStatApp = new DateTime(2019, 8, 1),
                         EmpStat = 2,
                     },
                 },
@@ -400,8 +397,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                         FworkCode = 7,
                         FundModel = 35,
                         StdCode = 8,
-                        LearnStartDate = new DateTime(2018, 8, 1),
-                        LearnPlanEndDate = new DateTime(2019, 8, 1),
+                        LearnStartDate = new DateTime(2019, 8, 1),
+                        LearnPlanEndDate = new DateTime(2020, 8, 1),
                         DelLocPostCode = "Postcode",
                         LearningDeliveryFAMs = new List<LearningDeliveryFAM>
                         {
@@ -415,15 +412,15 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             {
                 new LARSFramework
                 {
-                    EffectiveFromNullable = new DateTime(2018, 1, 1),
-                    EffectiveTo = new DateTime(2019, 1, 1),
+                    EffectiveFromNullable = new DateTime(2019, 1, 1),
+                    EffectiveTo = new DateTime(2020, 1, 1),
                     FworkCode = 7,
                     ProgType = 6,
                     PwayCode = 5,
                     LARSFrameworkAim = new LARSFrameworkAim
                     {
-                        EffectiveFrom = new DateTime(2018, 1, 1),
-                        EffectiveTo = new DateTime(2019, 1, 1),
+                        EffectiveFrom = new DateTime(2019, 1, 1),
+                        EffectiveTo = new DateTime(2020, 1, 1),
                         FrameworkComponentType = 1,
                     },
                     LARSFrameworkApprenticeshipFundings = new List<LARSFrameworkApprenticeshipFunding>
@@ -437,15 +434,15 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 },
                 new LARSFramework
                 {
-                    EffectiveFromNullable = new DateTime(2018, 1, 1),
-                    EffectiveTo = new DateTime(2019, 1, 1),
+                    EffectiveFromNullable = new DateTime(2019, 1, 1),
+                    EffectiveTo = new DateTime(2020, 1, 1),
                     FworkCode = 9,
                     ProgType = 9,
                     PwayCode = 5,
                     LARSFrameworkAim = new LARSFrameworkAim
                     {
-                        EffectiveFrom = new DateTime(2018, 1, 1),
-                        EffectiveTo = new DateTime(2019, 1, 1),
+                        EffectiveFrom = new DateTime(2019, 1, 1),
+                        EffectiveTo = new DateTime(2020, 1, 1),
                         FrameworkComponentType = 1,
                     }
                 }
@@ -472,7 +469,10 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
 
             largeEmployersRefererenceDataServiceMock.Setup(l => l.LargeEmployersforEmpID(It.IsAny<int>())).Returns(new List<LargeEmployers> { new LargeEmployers() });
             larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
-            organisationRefererenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(It.IsAny<int>())).Returns(new List<OrgFunding> { new OrgFunding { OrgFundFactType = Attributes.OrgFundFactorTypeAdultSkills } });
+            organisationRefererenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(It.IsAny<int>()))
+                .Returns(new List<OrgFunding> { new OrgFunding { OrgFundFactType = Attributes.OrgFundFactorTypeAdultSkills } });
+            organisationRefererenceDataServiceMock.Setup(o => o.SpecialistResourcesForCampusIdentifier(It.IsAny<string>()))
+                .Returns(new List<CampusIdentifierSpecResource> { new CampusIdentifierSpecResource { SpecialistResources = "Y", EffectiveFrom = new DateTime(2020, 8, 1) } });
             postcodesReferenceDataServiceMock.Setup(p => p.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode)).Returns(new List<SfaAreaCost> { new SfaAreaCost() });
             postcodesReferenceDataServiceMock.Setup(p => p.SFADisadvantagesForPostcode(learner.PostcodePrior)).Returns(new List<SfaDisadvantage> { new SfaDisadvantage() });
 

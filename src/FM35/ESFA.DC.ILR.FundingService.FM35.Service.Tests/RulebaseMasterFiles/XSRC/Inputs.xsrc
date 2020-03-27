@@ -8,6 +8,8 @@
         <props>
           <prop name="PassThrough">True</prop>
           <prop name="Size">100</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p324" type="text" public-name="OrgVersion">
@@ -17,6 +19,8 @@
         <props>
           <prop name="PassThrough">True</prop>
           <prop name="Size">100</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p325" type="text" public-name="PostcodeDisadvantageVersion">
@@ -26,6 +30,8 @@
         <props>
           <prop name="PassThrough">True</prop>
           <prop name="Size">50</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p326" type="text" public-name="UKPRN">
@@ -36,6 +42,8 @@
           <prop name="PassThrough">True</prop>
           <prop name="KeySequence">1</prop>
           <prop name="Size">8</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
     </entity>
@@ -48,6 +56,8 @@
         <props>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">01/08/2013</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p321" type="text" public-name="LearnRefNumber">
@@ -55,10 +65,13 @@
           <base>the learner's learner reference number</base>
         </text>
         <props>
+          <prop name="PassThrough">True</prop>
           <prop name="KeySequence">1</prop>
           <prop name="Size">12</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">LearnRef</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
     </entity>
@@ -72,6 +85,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">01/08/2015</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p11" type="date" public-name="LearnPlanEndDate">
@@ -83,6 +98,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">31/07/2016</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p12" type="date" public-name="LearnStartDate">
@@ -94,6 +111,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">01/08/2015</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p19" type="number" public-name="AimSeqNumber">
@@ -101,10 +120,13 @@
           <base>the learning delivery's aim sequence number</base>
         </text>
         <props>
+          <prop name="PassThrough">True</prop>
           <prop name="KeySequence">1</prop>
           <prop name="Size">2</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">2</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p21" type="number" public-name="AimType">
@@ -116,6 +138,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">1</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p24" type="number" public-name="CompStatus">
@@ -126,6 +150,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">1</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p250" type="number" public-name="EmpOutcome">
@@ -136,6 +162,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">10</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p252" type="number" public-name="FworkCode">
@@ -147,6 +175,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">450</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p253" type="number" public-name="ProgType">
@@ -158,6 +188,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">2</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p255" type="number" public-name="FrameworkComponentType">
@@ -168,6 +200,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">14</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p260" type="number" public-name="Outcome">
@@ -178,6 +212,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">1</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p264" type="number" public-name="PwayCode">
@@ -189,6 +225,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">1</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p268" type="date" public-name="OrigLearnStartDate">
@@ -199,6 +237,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">01/08/2013</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p283" type="number" public-name="OtherFundAdj">
@@ -209,6 +249,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">75</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p284" type="number" public-name="PriorLearnFundAdj">
@@ -219,6 +261,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">75</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p288" type="date" public-name="LearnActEndDate">
@@ -230,6 +274,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">31/07/2016</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p299" type="number" public-name="FrameworkCommonComponent">
@@ -240,76 +286,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">14</prop>
-        </props>
-      </attribute>
-      <attribute name="p309" type="number" public-name="LrnDelFAM_LDM1">
-        <text>
-          <base>the learning delivery's LDM 1 FAM code</base>
-        </text>
-        <props>
-          <prop name="PassThrough">False</prop>
-          <prop name="Temporal">False</prop>
-          <prop name="IntegrationTestValue">123</prop>
-        </props>
-      </attribute>
-      <attribute name="p310" type="number" public-name="LrnDelFAM_LDM2">
-        <text>
-          <base>the learning delivery's LDM 2 FAM code</base>
-        </text>
-        <props>
-          <prop name="PassThrough">False</prop>
-          <prop name="Temporal">False</prop>
-          <prop name="IntegrationTestValue">123</prop>
-        </props>
-      </attribute>
-      <attribute name="p311" type="number" public-name="LrnDelFAM_LDM3">
-        <text>
-          <base>the learning delivery's LDM 3 FAM code</base>
-        </text>
-        <props>
-          <prop name="PassThrough">False</prop>
-          <prop name="Temporal">False</prop>
-          <prop name="IntegrationTestValue">123</prop>
-        </props>
-      </attribute>
-      <attribute name="p312" type="number" public-name="LrnDelFAM_LDM4">
-        <text>
-          <base>the learning delivery's LDM 4 FAM code</base>
-        </text>
-        <props>
-          <prop name="PassThrough">False</prop>
-          <prop name="Temporal">False</prop>
-          <prop name="IntegrationTestValue">123</prop>
-        </props>
-      </attribute>
-      <attribute name="p314" type="number" public-name="LrnDelFAM_FFI">
-        <text>
-          <base>the learning delivery's FFI FAM code</base>
-        </text>
-        <props>
-          <prop name="PassThrough">False</prop>
-          <prop name="Temporal">False</prop>
-          <prop name="IntegrationTestValue">1</prop>
-        </props>
-      </attribute>
-      <attribute name="p315" type="number" public-name="LrnDelFAM_RES">
-        <text>
-          <base>the learning delivery's RES FAM code</base>
-        </text>
-        <props>
-          <prop name="PassThrough">False</prop>
-          <prop name="Temporal">False</prop>
-          <prop name="IntegrationTestValue">1</prop>
-        </props>
-      </attribute>
-      <attribute name="p316" type="number" public-name="LrnDelFAM_EEF">
-        <text>
-          <base>the learning delivery's EEF FAM code</base>
-        </text>
-        <props>
-          <prop name="PassThrough">False</prop>
-          <prop name="Temporal">False</prop>
-          <prop name="IntegrationTestValue">1</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p320" type="number" public-name="AddHours">
@@ -320,6 +298,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">10</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p322" type="number" public-name="EnglPrscID">
@@ -331,12 +311,18 @@
           <prop name="Temporal">False</prop>
           <prop name="UncertainDerivation">null</prop>
           <prop name="IntegrationTestValue">1</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p333" type="text" public-name="EnglandFEHEStatus">
         <text>
           <base>the learning delivery's England FE HE status</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
     </entity>
     <entity id="learningdeliveryfam" name="the learning delivery FAM" containment-relationship-id="learningdeliverysfams" containment-parent-id="learningdelivery" public-id="LearningDeliveryFAM">
@@ -346,6 +332,10 @@
           <parse>
           </parse>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p2" type="text" public-name="LearnDelFAMType">
         <text>
@@ -353,16 +343,28 @@
           <parse>
           </parse>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p307" type="date" public-name="LearnDelFAMDateFrom">
         <text>
           <base>the learning delivery FAM's date applies from</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p308" type="date" public-name="LearnDelFAMDateTo">
         <text>
           <base>the learning delivery FAM's date applies to</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
     </entity>
     <entity id="learneremploymentstatus" name="the learner employment status" containment-relationship-id="learnersemploymentstatuses" containment-parent-id="learner" public-id="LearnerEmploymentStatus">
@@ -374,6 +376,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">123</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
       <attribute name="p241" type="date" public-name="DateEmpStatApp">
@@ -384,6 +388,8 @@
           <prop name="PassThrough">False</prop>
           <prop name="Temporal">False</prop>
           <prop name="IntegrationTestValue">01/08/2013</prop>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
         </props>
       </attribute>
     </entity>
@@ -394,6 +400,10 @@
           <parse>
           </parse>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p331" type="date" public-name="LearnDelCatDateFrom">
         <text>
@@ -401,6 +411,10 @@
           <parse>
           </parse>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p332" type="date" public-name="LearnDelCatDateTo">
         <text>
@@ -408,6 +422,10 @@
           <parse>
           </parse>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
     </entity>
     <entity id="learningdeliveryannualvalue" name="the learning delivery annual value" containment-relationship-id="learningdeliverysannualvalues" containment-parent-id="learningdelivery" public-id="LearningDeliveryAnnualValue">
@@ -415,16 +433,28 @@
         <text>
           <base>the learning delivery annual value's effective from date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p336" type="date" public-name="LearnDelAnnValDateTo">
         <text>
           <base>the learning delivery annual value's effective to date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p337" type="number" public-name="LearnDelAnnValBasicSkillsTypeCode">
         <text>
           <base>the learning delivery annual value's basic skills type code</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
     </entity>
     <entity id="learneremploymentstatuslargeemployerreferencedata" name="the learner employment status large employer reference data" containment-relationship-id="learneremploymentstatusslargeemployerreferencedata" containment-parent-id="learneremploymentstatus" public-id="LargeEmployerReferenceData">
@@ -432,11 +462,19 @@
         <text>
           <base>the learner employment status large employer reference data's effective to date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p341" type="date" public-name="LargeEmpEffectiveFrom">
         <text>
           <base>the learner employment status large employer reference data's effective from date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
     </entity>
     <entity id="learningdeliverylarsfunding" name="the learning delivery LARS funding" containment-relationship-id="learningdeliveryslarsfundingrates" containment-parent-id="learningdelivery" public-id="LearningDeliveryLARS_Funding">
@@ -444,40 +482,68 @@
         <text>
           <base>the learning delivery's LARS funding category</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p344" type="date" public-name="LARSFundEffectiveTo">
         <text>
           <base>the learning delivery's LARS funding effective to date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p345" type="date" public-name="LARSFundEffectiveFrom">
         <text>
           <base>the learning delivery's LARS funding effective from date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p346" type="currency" public-name="LARSFundWeightedRate">
         <text>
           <base>the learning delivery's LARS funding weighted rate</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p347" type="currency" public-name="LARSFundUnweightedRate">
         <text>
           <base>the learning delivery's LARS funding unweighted rate</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p348" type="text" public-name="LARSFundWeightingFactor">
         <text>
           <base>the learning delivery's LARS funding weighting factor</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
     </entity>
-    <entity id="organisationalfunding" name="the organisational  funding" containment-relationship-id="organisationalfundingreferencedata" containment-parent-id="global" public-id="OrgFunding">
+    <entity id="organisationalfunding" name="the organisational funding" containment-relationship-id="organisationalfundingreferencedata" containment-parent-id="global" public-id="OrgFunding">
       <attribute name="p350" type="date" public-name="OrgFundEffectiveTo">
         <text>
-          <base>the organisational  funding's effective to date</base>
+          <base>the organisational funding's effective to date</base>
           <parse>
           </parse>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p351" type="date" public-name="OrgFundEffectiveFrom">
         <text>
@@ -485,27 +551,43 @@
           <parse>
           </parse>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p352" type="text" public-name="OrgFundFactor">
         <text>
-          <base>the organisational  funding's funding factor</base>
+          <base>the organisational funding's funding factor</base>
           <parse>
           </parse>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p353" type="text" public-name="OrgFundFactValue">
         <text>
-          <base>the organisational  funding's funding factor value</base>
+          <base>the organisational funding's funding factor value</base>
           <parse>
           </parse>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p354" type="text" public-name="OrgFundFactType">
         <text>
-          <base>the organisational  funding's funding factor type</base>
+          <base>the organisational funding's funding factor type</base>
           <parse>
           </parse>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
     </entity>
     <entity id="learnerpostcodedisadvantageupliftreferencedata" name="the learner postcode disadvantage uplift reference data" containment-relationship-id="learnerspostcodedisadvantageupliftreferencedata" containment-parent-id="learner" public-id="SFA_PostcodeDisadvantage">
@@ -513,16 +595,28 @@
         <text>
           <base>the learner postcode disadvantage uplift reference data's effective to date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p359" type="date" public-name="DisUpEffectiveFrom">
         <text>
           <base>the learner postcode disadvantage uplift reference data's effective from</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p361" type="number" public-name="DisUplift">
         <text>
           <base>the learner postcode disadvantage uplift reference data's Uplift</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
     </entity>
     <entity id="learningdeliverypostcodeareacostreferencedata" name="the learning delivery postcode area cost reference data" containment-relationship-id="learningdeliveryspostcodeareacostreferencedata" containment-parent-id="learningdelivery" public-id="SFA_PostcodeAreaCost">
@@ -530,16 +624,57 @@
         <text>
           <base>the learning delivery postcode area cost reference data's effective to date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p363" type="date" public-name="AreaCosEffectiveFrom">
         <text>
           <base>the learning delivery postcode area cost reference data's effective from date</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
       </attribute>
       <attribute name="p364" type="number" public-name="AreaCosFactor">
         <text>
           <base>the learning delivery postcode area cost reference data's area cost factor</base>
         </text>
+        <props>
+          <prop name="Version">1920.01.01</prop>
+          <prop name="Date">28-01-2019</prop>
+        </props>
+      </attribute>
+    </entity>
+    <entity id="campusfunding" name="the campus funding" containment-relationship-id="campusfundingforthelearner" containment-parent-id="learner" public-id="Camps_Identifiers_Reference_DataFunding">
+      <attribute name="p367" type="text" public-name="SpecialistResources">
+        <text>
+          <base>the campus funding's specialist resources</base>
+        </text>
+        <props>
+          <prop name="Version">1920.03.03</prop>
+          <prop name="Date">03-06-2019</prop>
+        </props>
+      </attribute>
+      <attribute name="p368" type="date" public-name="EffectiveTo">
+        <text>
+          <base>the campus funding's effective to date</base>
+        </text>
+        <props>
+          <prop name="Version">1920.02.02</prop>
+          <prop name="Date">07-05-2019</prop>
+        </props>
+      </attribute>
+      <attribute name="p369" type="date" public-name="EffectiveFrom">
+        <text>
+          <base>the campus funding's effective from date</base>
+        </text>
+        <props>
+          <prop name="Version">1920.02.02</prop>
+          <prop name="Date">07-05-2019</prop>
+        </props>
       </attribute>
     </entity>
   </entities>
@@ -565,13 +700,14 @@
     <relationship source="learningdelivery" target="learningdeliverylarsfunding" text="the learning delivery's LARS funding rates" relationship-id="learningdeliveryslarsfundingrates" reverse-relationship-id="learningdelivery_learningdeliveryslarsfundingrates_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
     <relationship source="learner" target="learnerpostcodedisadvantageupliftreferencedata" text="the learner's postcode disadvantage uplift reference data" relationship-id="learnerspostcodedisadvantageupliftreferencedata" reverse-relationship-id="learner_learnerspostcodedisadvantageupliftreferencedata_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
     <relationship source="learningdelivery" target="learningdeliverypostcodeareacostreferencedata" text="the learning delivery's postcode area cost reference data" relationship-id="learningdeliveryspostcodeareacostreferencedata" reverse-relationship-id="learningdelivery_learningdeliveryspostcodeareacostreferencedata_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
-    <relationship source="global" target="organisationalfunding" text="the organisational  funding reference data" relationship-id="organisationalfundingreferencedata" reverse-relationship-id="global_organisationalfundingreferencedata_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
     <relationship source="learningdelivery" target="learneremploymentstatus" is-containment="false" public-id="" reverse-public-id="" text="the Apprenticeship programme aim's latest applicable employment statuses" relationship-id="apprenticeshipprogrammeaimslatestapplicableemploymentstatuses" reverse-relationship-id="latestemploymentstatusesapplicabletotheapprenticeshipprogrammeaim" reverse-text="the latest employment statuses applicable to the apprenticeship programme aim" type="ManyToMany" is-computed="false" />
     <relationship source="learningdelivery" target="learningdeliverylarsfunding" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's LARS Funding ADULT_LR funding categories" relationship-id="learningdeliveryslarsfundingadultlrfundingcategories" reverse-relationship-id="learningdelivery_learningdeliveryslarsfundingadultlrfundingcategories_rev" reverse-text="" type="ManyToMany" is-computed="false" />
     <relationship source="learningdelivery" target="learningdeliverylarsfunding" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's LARS Funding ER App funding categories" relationship-id="learningdeliveryslarsfundingerappfundingcategories" reverse-relationship-id="learningdelivery_learningdeliveryslarsfundingerappfundingcategories_rev" reverse-text="" type="ManyToMany" is-computed="false" />
     <relationship source="learningdelivery" target="learningdeliverylarsfunding" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's LARS Funding ER Other funding categories" relationship-id="learningdeliveryslarsfundingerotherfundingcategories" reverse-relationship-id="learningdelivery_learningdeliveryslarsfundingerotherfundingcategories_rev" reverse-text="" type="ManyToMany" is-computed="false" />
     <relationship source="learningdelivery" target="learningdeliverylarsfunding" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's LARS Funding Matrix funding categories" relationship-id="learningdeliveryslarsfundingmatrixfundingcategories" reverse-relationship-id="learningdelivery_learningdeliveryslarsfundingmatrixfundingcategories_rev" reverse-text="" type="ManyToMany" is-computed="false" />
     <relationship source="learningdelivery" target="learningdeliverylarsfunding" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's LARS Funding OLASS  funding categories" relationship-id="learningdeliveryslarsfundingolassfundingcategories" reverse-relationship-id="learningdelivery_learningdeliveryslarsfundingolassfundingcategories_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="global" target="organisationalfunding" text="the organisational funding reference data" relationship-id="organisationalfundingreferencedata" reverse-relationship-id="global_organisationalfundingreferencedata_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learner" target="campusfunding" text="the campus funding for the learner" relationship-id="campusfundingforthelearner" reverse-relationship-id="learner_campusfundingforthelearner_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
   </relationships>
   <rule-folders />
 </root>

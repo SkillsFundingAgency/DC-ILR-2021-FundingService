@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory.Model;
+using ESFA.DC.ILR.FundingService.Data.External.CollectionPeriod.Model;
 using ESFA.DC.ILR.FundingService.Data.External.FCS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
@@ -10,8 +12,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Interface
 {
     public interface IExternalDataCache
     {
-        //IDictionary<string, IEnumerable<LARSFunding>> LARSFunding { get; }
-
         IDictionary<string, LARSLearningDelivery> LARSLearningDelivery { get; }
 
         IDictionary<int, LARSStandard> LARSStandards { get; }
@@ -22,30 +22,18 @@ namespace ESFA.DC.ILR.FundingService.Data.Interface
 
         string PostcodeCurrentVersion { get; }
 
-        //IDictionary<string, IEnumerable<LARSAnnualValue>> LARSAnnualValue { get; }
-
-        //IDictionary<int, IEnumerable<LARSStandardCommonComponent>> LARSStandardCommonComponent { get; }
-
-        //IEnumerable<LARSFrameworkCommonComponent> LARSFrameworkCommonComponent { get; }
-
-        //IEnumerable<LARSStandardApprenticeshipFunding> LARSApprenticeshipFundingStandards { get; }
-
-        //IEnumerable<LARSFrameworkApprenticeshipFunding> LARSApprenticeshipFundingFrameworks { get; }
-
-        //IDictionary<string, IEnumerable<LARSFrameworkAims>> LARSFrameworkAims { get; }
-
-        //IDictionary<string, IEnumerable<LARSLearningDeliveryCategory>> LARSLearningDeliveryCategory { get; }
-
-        //IDictionary<int, IEnumerable<LARSStandardFunding>> LARSStandardFundings { get; }
-
         string OrgVersion { get; }
 
         IDictionary<int, IReadOnlyCollection<OrgFunding>> OrgFunding { get; }
+
+        IDictionary<string, IReadOnlyCollection<CampusIdentifierSpecResource>> CampusIdentifierSpecResources { get;}
 
         IDictionary<int, IReadOnlyCollection<LargeEmployers>> LargeEmployers { get; }
 
         IDictionary<long, IReadOnlyCollection<AECEarningsHistory>> AECLatestInYearEarningHistory { get; }
 
         IReadOnlyCollection<FCSContractAllocation> FCSContractAllocations { get; }
+
+        Periods Periods { get; set; }
     }
 }

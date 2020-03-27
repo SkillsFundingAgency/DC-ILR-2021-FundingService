@@ -25,8 +25,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
 {
     public class RulebaseInterfaceTests
     {
-        public const string AcademicYear = "1819";
-        public const string RulebaseName = "Loans Bursary 18_19";
+        public const string AcademicYear = "1920";
+        public const string RulebaseName = "Loans Bursary 19_20";
         public const string RulebaseFolder = "Rulebase";
         public const string RulebaseMasterFolder = "RulebaseMasterFiles";
         public const string XsrcName = "Inputs";
@@ -165,8 +165,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                 Attributes.EntityLearningDeliveryFAM,
                 Attributes.EntityLearningDeliverySFA_PostcodeAreaCost,
                 Attributes.EntityLearningDeliveryLARS_Funding,
-                Attributes.EntityLearningDeliverySubsidyPilotPostcodeArea,
-                Attributes.EntityLearningDeliveryLARS_CareerLearningPilot,
             };
         }
 
@@ -185,12 +183,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                 Attributes.LearnDelFundModel,
                 Attributes.LearnPlanEndDate,
                 Attributes.LearnStartDate,
-                Attributes.LrnDelFAM_ADL,
-                Attributes.LrnDelFAM_LDM1,
-                Attributes.LrnDelFAM_LDM2,
-                Attributes.LrnDelFAM_LDM3,
-                Attributes.LrnDelFAM_LDM4,
-                Attributes.LrnDelFAM_RES,
                 Attributes.NotionalNVQLevelv2,
                 Attributes.OrigLearnStartDate,
                 Attributes.OtherFundAdj,
@@ -204,18 +196,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                 Attributes.AreaCosFactor,
                 Attributes.AreaCosEffectiveFrom,
                 Attributes.AreaCosEffectiveTo,
-                Attributes.SubsidyPilotAreaCode,
-                Attributes.SubsidyPilotEffectiveFrom,
-                Attributes.SubsidyPilotEffectiveTo,
                 Attributes.LARSFundCategory,
                 Attributes.LARSFundEffectiveFrom,
                 Attributes.LARSFundEffectiveTo,
                 Attributes.LARSFundWeightedRate,
                 Attributes.LARSFundWeightingFactor,
-                Attributes.LearnDelLARSCarPilFundAreaCode,
-                Attributes.LearnDelLARSCarPilFundEffToDate,
-                Attributes.LearnDelLARSCarPilFundEffFromDate,
-                Attributes.LearnDelLARSCarPilFundSubsidyRate
             };
         }
 
@@ -357,8 +342,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                         FworkCode = 7,
                         FundModel = 99,
                         StdCode = 8,
-                        LearnStartDate = new DateTime(2018, 8, 1),
-                        LearnPlanEndDate = new DateTime(2019, 8, 1),
+                        LearnStartDate = new DateTime(2019, 8, 1),
+                        LearnPlanEndDate = new DateTime(2020, 8, 1),
                         DelLocPostCode = "Postcode",
                         LearningDeliveryFAMs = new List<LearningDeliveryFAM>
                         {
@@ -375,10 +360,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
 
             var larsLearningDelivery = new LARSLearningDelivery
             {
-                LARSCareerLearningPilots = new List<LARSCareerLearningPilot>
-                {
-                    new LARSCareerLearningPilot()
-                },
                 LARSFundings = larsFunding
             };
 
@@ -386,7 +367,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
 
             larsRefererenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
             postcodesReferenceDataServiceMock.Setup(p => p.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode)).Returns(new List<SfaAreaCost> { new SfaAreaCost() });
-            postcodesReferenceDataServiceMock.Setup(p => p.CareerLearningPilotsForPostcode(learningDelivery.DelLocPostCode)).Returns(new List<CareerLearningPilot> { new CareerLearningPilot() });
 
             return new DataEntityMapper(
                 larsRefererenceDataServiceMock.Object,

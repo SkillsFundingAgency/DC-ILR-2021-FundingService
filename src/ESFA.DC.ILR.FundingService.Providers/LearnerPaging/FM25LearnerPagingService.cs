@@ -27,12 +27,12 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
         {
             var learnerDPOutcomes = BuildLearnerDPOutcomeDictionary(learnerDestinationAndProgressions);
             var learnerFams = BuildLearnerFAMDictionary(learners);
-            var ldFams = BuildLearningDeliveryFAMDictionary(learners);
 
             return learners.Select(l => new FM25LearnerDto
             {
                 LearnRefNumber = l.LearnRefNumber,
                 DateOfBirth = l.DateOfBirthNullable,
+                CampId = l.CampId,
                 EngGrade = l.EngGrade,
                 MathGrade = l.MathGrade,
                 PlanEEPHours = l.PlanEEPHoursNullable,
@@ -58,11 +58,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                     LearnStartDate = ld.LearnStartDate,
                     ProgType = ld.ProgTypeNullable,
                     WithdrawReason = ld.WithdrawReasonNullable,
-                    LrnDelFAM_SOF = ldFams[l.LearnRefNumber][ld.AimSeqNumber].SOF,
-                    LrnDelFAM_LDM1 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM1,
-                    LrnDelFAM_LDM2 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM2,
-                    LrnDelFAM_LDM3 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM3,
-                    LrnDelFAM_LDM4 = ldFams[l.LearnRefNumber][ld.AimSeqNumber].LDM4,
                     LearningDeliveryFAMs = ld.LearningDeliveryFAMs?.Select(ldf => new LearningDeliveryFAM
                     {
                         LearnDelFAMCode = ldf.LearnDelFAMCode,

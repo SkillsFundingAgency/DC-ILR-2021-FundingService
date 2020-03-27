@@ -9,8 +9,10 @@
         public const string EntityLearner = "Learner";
         public const string EntityLearnerPeriodisedValues = "LearnerPeriodisedValues";
         public const string EntityLearningDelivery = "LearningDelivery";
+        public const string EntityLearningDeliveryFAM = "LearningDeliveryFAM";
         public const string EntityDPOutcome = "DPOutcome";
         public const string EntityLearningDeliveryLARSValidity = "LearningDeliveryLARSValidity";
+        public const string EntityCampusIdentifiers = "Camps_Identifiers_Reference_DataFunding";
 
         // Global
         public const string AreaCostFactor1618 = "AreaCostFactor1618";
@@ -103,14 +105,15 @@
         public const string LearnAimRefType = "LearnAimRefType";
         public const string LearnPlanEndDate = "LearnPlanEndDate";
         public const string LearnStartDate = "LearnStartDate";
-        public const string LrnDelFAM_SOF = "LrnDelFAM_SOF";
-        public const string LrnDelFAM_LDM1 = "LrnDelFAM_LDM1";
-        public const string LrnDelFAM_LDM2 = "LrnDelFAM_LDM2";
-        public const string LrnDelFAM_LDM3 = "LrnDelFAM_LDM3";
-        public const string LrnDelFAM_LDM4 = "LrnDelFAM_LDM4";
         public const string ProgType = "ProgType";
         public const string SectorSubjectAreaTier2 = "SectorSubjectAreaTier2";
         public const string WithdrawReason = "WithdrawReason";
+
+        // LearningDeliveryFAM
+        public const string LearnDelFAMCode = "LearnDelFAMCode";
+        public const string LearnDelFAMDateFrom = "LearnDelFAMDateFrom";
+        public const string LearnDelFAMDateTo = "LearnDelFAMDateTo";
+        public const string LearnDelFAMType = "LearnDelFAMType";
 
         // DP Outcome
         public const string OutCode = "OutCode";
@@ -121,13 +124,16 @@
         public const string ValidityLastNewStartDate = "ValidityLastNewStartDate";
         public const string ValidityStartDate = "ValidityStartDate";
 
+        // Campus Identifier Spec Resources
+        public const string CampIdSpecialistResources = "CampusFundingSpecialistResources";
+        public const string CampIdEffectiveFrom = "EffectiveFrom";
+        public const string CampIdEffectiveTo = "EffectiveTo";
+
         // FAM Types
         public const string ECF = "ECF";
         public const string EHC = "EHC";
         public const string HNS = "HNS";
         public const string MCF = "MCF";
         public const string EDF = "EDF";
-        public const string LDM = "LDM";
-        public const string SOF = "SOF";
     }
 }

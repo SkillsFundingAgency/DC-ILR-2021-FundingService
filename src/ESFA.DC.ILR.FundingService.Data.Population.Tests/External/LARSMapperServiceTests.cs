@@ -26,16 +26,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                                 EffectiveFrom = new DateTime(2018, 8, 1)
                             }
                         },
-                        LARSCareerLearningPilots = new List<Data.External.LARS.Model.LARSCareerLearningPilot>
-                        {
-                            new Data.External.LARS.Model.LARSCareerLearningPilot
-                            {
-                                AreaCode = "AreaCode",
-                                SubsidyRate = 1.0m,
-                                EffectiveFrom = new DateTime(2018, 8, 1),
-                                EffectiveTo = new DateTime(2018, 8, 2)
-                            }
-                        },
                         LARSFundings = new List<Data.External.LARS.Model.LARSFunding>
                         {
                             new Data.External.LARS.Model.LARSFunding
@@ -120,16 +110,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                                 BasicSkillsType = 1,
                                 EffectiveFrom = new DateTime(2018, 8, 1)
                             }
-                    },
-                    LARSCareerLearningPilots = new List<ReferenceDataService.Model.LARS.LARSCareerLearningPilot>
-                    {
-                        new ReferenceDataService.Model.LARS.LARSCareerLearningPilot
-                        {
-                            AreaCode = "AreaCode",
-                            SubsidyRate = 1.0m,
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = new DateTime(2018, 8, 2)
-                        }
                     },
                     LARSFundings = new List<ReferenceDataService.Model.LARS.LARSFunding>
                     {

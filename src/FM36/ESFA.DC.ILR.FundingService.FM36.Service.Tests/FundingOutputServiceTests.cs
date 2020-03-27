@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Data.External.CollectionPeriod.Interface;
+using ESFA.DC.ILR.FundingService.Data.External.CollectionPeriod.Model;
 using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Interface;
 using FluentAssertions;
 using Moq;
-using Oracle.Determinations.Masquerade.Util;
 using Xunit;
 
 namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
@@ -22,7 +22,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
 
             var ukprn = 1;
             var larsVersion = "LARSVersion";
-            var year = "1819";
+            var year = "1920";
             var rulebaseVersion = "RulebaseVersion";
 
             var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
@@ -133,13 +133,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             var frameworkCommonComponent = 20;
             var fundStart = false;
             var fworkCode = 10;
-            var ldApplic1618FrameworkUpliftBalancingValue = 1.0m;
-            var ldApplic1618FrameworkUpliftCompElement = 1.0m;
-            var ldApplic1618FRameworkUpliftCompletionValue = 1.0m;
-            var ldApplic1618FrameworkUpliftMonthInstalVal = 1.0m;
-            var ldApplic1618FrameworkUpliftPrevEarnings = 1.0m;
-            var ldApplic1618FrameworkUpliftPrevEarningsStage1 = 1.0m;
-            var ldApplic1618FrameworkUpliftRemainingAmount = 1.0m;
             var ldApplic1618FrameworkUpliftTotalActEarnings = 1.0m;
             var learnAimRef = "LearnAimRef";
             var learnActEndDate = new DateTime(2018, 8, 1);
@@ -209,13 +202,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "FrameworkCommonComponent")).Returns(frameworkCommonComponent);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "FundStart")).Returns(fundStart);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "FworkCode")).Returns(fworkCode);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LDApplic1618FrameworkUpliftBalancingValue")).Returns(ldApplic1618FrameworkUpliftBalancingValue);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LDApplic1618FrameworkUpliftCompElement")).Returns(ldApplic1618FrameworkUpliftCompElement);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LDApplic1618FRameworkUpliftCompletionValue")).Returns(ldApplic1618FRameworkUpliftCompletionValue);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LDApplic1618FrameworkUpliftMonthInstalVal")).Returns(ldApplic1618FrameworkUpliftMonthInstalVal);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LDApplic1618FrameworkUpliftPrevEarnings")).Returns(ldApplic1618FrameworkUpliftPrevEarnings);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LDApplic1618FrameworkUpliftPrevEarningsStage1")).Returns(ldApplic1618FrameworkUpliftPrevEarningsStage1);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LDApplic1618FrameworkUpliftRemainingAmount")).Returns(ldApplic1618FrameworkUpliftRemainingAmount);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LDApplic1618FrameworkUpliftTotalActEarnings")).Returns(ldApplic1618FrameworkUpliftTotalActEarnings);
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "LearnAimRef")).Returns(learnAimRef);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "LearnActEndDate")).Returns(learnActEndDate);
@@ -279,13 +265,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             learningDelivery.FirstIncentiveThresholdDate.Should().Be(firstIncentiveThresholdDate);
             learningDelivery.FundStart.Should().Be(fundStart);
             learningDelivery.FworkCode.Should().Be(fworkCode);
-            learningDelivery.LDApplic1618FrameworkUpliftBalancingValue.Should().Be(ldApplic1618FrameworkUpliftBalancingValue);
-            learningDelivery.LDApplic1618FrameworkUpliftCompElement.Should().Be(ldApplic1618FrameworkUpliftCompElement);
-            learningDelivery.LDApplic1618FRameworkUpliftCompletionValue.Should().Be(ldApplic1618FRameworkUpliftCompletionValue);
-            learningDelivery.LDApplic1618FrameworkUpliftMonthInstalVal.Should().Be(ldApplic1618FrameworkUpliftMonthInstalVal);
-            learningDelivery.LDApplic1618FrameworkUpliftPrevEarnings.Should().Be(ldApplic1618FrameworkUpliftPrevEarnings);
-            learningDelivery.LDApplic1618FrameworkUpliftPrevEarningsStage1.Should().Be(ldApplic1618FrameworkUpliftPrevEarningsStage1);
-            learningDelivery.LDApplic1618FrameworkUpliftRemainingAmount.Should().Be(ldApplic1618FrameworkUpliftRemainingAmount);
             learningDelivery.LDApplic1618FrameworkUpliftTotalActEarnings.Should().Be(ldApplic1618FrameworkUpliftTotalActEarnings);
             learningDelivery.LearnAimRef.Should().Be(learnAimRef);
             learningDelivery.LearnDel1618AtStart.Should().Be(learnDel1618AtStart);
@@ -442,6 +421,13 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             var priceEpisodeUpperBandLimit = 1.0m;
             var priceEpisodePlannedEndDate = new DateTime(2018, 8, 1);
             var priceEpisodeActualEndDate = new DateTime(2018, 8, 1);
+            var priceEpisodeActualEndDateIncEPA = new DateTime(2018, 8, 1);
+            var priceEpisode1618FUBalValue = 1.0m;
+            var priceEpisodeApplic1618FrameworkUpliftCompElement = 1.0m;
+            var priceEpisode1618FrameworkUpliftTotPrevEarnings = 1.0m;
+            var priceEpisode1618FrameworkUpliftRemainingAmount = 1.0m;
+            var priceEpisode1618FUMonthInstValue = 1.0m;
+            var priceEpisode1618FUTotEarnings = 1.0m;
             var priceEpisodeTotalTNPPrice = 1.0m;
             var priceEpisodeUpperLimitAdjustment = 1.0m;
             var priceEpisodePlannedInstalments = 1;
@@ -502,6 +488,13 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "PriceEpisodeUpperBandLimit")).Returns(priceEpisodeUpperBandLimit);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "PriceEpisodePlannedEndDate")).Returns(priceEpisodePlannedEndDate);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "PriceEpisodeActualEndDate")).Returns(priceEpisodeActualEndDate);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "PriceEpisodeActualEndDateIncEPA")).Returns(priceEpisodeActualEndDateIncEPA);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "PriceEpisode1618FUBalValue")).Returns(priceEpisode1618FUBalValue);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "PriceEpisodeApplic1618FrameworkUpliftCompElement")).Returns(priceEpisodeApplic1618FrameworkUpliftCompElement);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "PriceEpisode1618FrameworkUpliftTotPrevEarnings")).Returns(priceEpisode1618FrameworkUpliftTotPrevEarnings);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "PriceEpisode1618FrameworkUpliftRemainingAmount")).Returns(priceEpisode1618FrameworkUpliftRemainingAmount);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "PriceEpisode1618FUMonthInstValue")).Returns(priceEpisode1618FUMonthInstValue);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "PriceEpisode1618FUTotEarnings")).Returns(priceEpisode1618FUTotEarnings);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "PriceEpisodeTotalTNPPrice")).Returns(priceEpisodeTotalTNPPrice);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "PriceEpisodeUpperLimitAdjustment")).Returns(priceEpisodeUpperLimitAdjustment);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "PriceEpisodePlannedInstalments")).Returns(priceEpisodePlannedInstalments);
@@ -629,9 +622,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         {
             var appIdentifierOutput = "Id";
             var appProgCompletedInTheYearOutput = false;
-            var balancingProgAimPaymentsInTheYearOutput = 1.0m;
-            var completionProgAimPaymentsInTheYearOutput = 1.0m;
-            var onProgProgAimPaymentsInTheYearOutput = 1.0m;
             var historicDaysInYearOutput = 1;
             var historicEffectiveTNPStartDateOutput = new DateTime(2018, 8, 1);
             var historicEmpIdEndWithinYearOutput = 2;
@@ -662,15 +652,12 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
 
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "AppIdentifierOutput")).Returns(appIdentifierOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "AppProgCompletedInTheYearOutput")).Returns(appProgCompletedInTheYearOutput);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "HistoricBalancingProgAimPaymentsInTheYear")).Returns(balancingProgAimPaymentsInTheYearOutput);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "HistoricCompletionProgAimPaymentsInTheYear")).Returns(completionProgAimPaymentsInTheYearOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "HistoricDaysInYearOutput")).Returns(historicDaysInYearOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "HistoricEffectiveTNPStartDateOutput")).Returns(historicEffectiveTNPStartDateOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "HistoricEmpIdEndWithinYearOutput")).Returns(historicEmpIdEndWithinYearOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "HistoricEmpIdStartWithinYearOutput")).Returns(historicEmpIdStartWithinYearOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "HistoricFworkCodeOutput")).Returns(historicFworkCodeOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "HistoricLearner1618AtStartOutput")).Returns(historicLearner1618AtStartOutput);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "HistoricOnProgProgAimPaymentsInTheYear")).Returns(onProgProgAimPaymentsInTheYearOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "HistoricPMRAmountOutput")).Returns(historicPMRAmountOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "HistoricProgrammeStartDateIgnorePathwayOutput")).Returns(historicProgrammeStartDateIgnorePathwayOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "HistoricProgrammeStartDateMatchPathwayOutput")).Returns(historicProgrammeStartDateMatchPathwayOutput);
@@ -693,15 +680,12 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
 
             historicEarningOutput.AppIdentifierOutput.Should().Be(appIdentifierOutput);
             historicEarningOutput.AppProgCompletedInTheYearOutput.Should().Be(appProgCompletedInTheYearOutput);
-            historicEarningOutput.BalancingProgAimPaymentsInTheYear.Should().Be(balancingProgAimPaymentsInTheYearOutput);
-            historicEarningOutput.CompletionProgAimPaymentsInTheYear.Should().Be(completionProgAimPaymentsInTheYearOutput);
             historicEarningOutput.HistoricDaysInYearOutput.Should().Be(historicDaysInYearOutput);
             historicEarningOutput.HistoricEffectiveTNPStartDateOutput.Should().Be(historicEffectiveTNPStartDateOutput);
             historicEarningOutput.HistoricEmpIdEndWithinYearOutput.Should().Be(historicEmpIdEndWithinYearOutput);
             historicEarningOutput.HistoricEmpIdStartWithinYearOutput.Should().Be(historicEmpIdStartWithinYearOutput);
             historicEarningOutput.HistoricFworkCodeOutput.Should().Be(historicFworkCodeOutput);
             historicEarningOutput.HistoricLearner1618AtStartOutput.Should().Be(historicLearner1618AtStartOutput);
-            historicEarningOutput.OnProgProgAimPaymentsInTheYear.Should().Be(onProgProgAimPaymentsInTheYearOutput);
             historicEarningOutput.HistoricPMRAmountOutput.Should().Be(historicPMRAmountOutput);
             historicEarningOutput.HistoricProgrammeStartDateIgnorePathwayOutput.Should().Be(historicProgrammeStartDateIgnorePathwayOutput);
             historicEarningOutput.HistoricProgrammeStartDateMatchPathwayOutput.Should().Be(historicProgrammeStartDateMatchPathwayOutput);
@@ -1085,7 +1069,26 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
 
         private FundingOutputService NewService(IDataEntityAttributeService dataEntityAttributeService = null)
         {
-            return new FundingOutputService(dataEntityAttributeService);
+            var collectionPeriodDataServiceMock = new Mock<ICollectionPeriodDataService>();
+
+            collectionPeriodDataServiceMock.Setup(sm => sm.CollectionPeriods()).Returns(
+                 new Periods
+                 {
+                     Period1 = new DateTime(2019, 8, 1),
+                     Period2 = new DateTime(2019, 9, 1),
+                     Period3 = new DateTime(2019, 10, 1),
+                     Period4 = new DateTime(2019, 11, 1),
+                     Period5 = new DateTime(2019, 12, 1),
+                     Period6 = new DateTime(2020, 1, 1),
+                     Period7 = new DateTime(2020, 2, 1),
+                     Period8 = new DateTime(2020, 3, 1),
+                     Period9 = new DateTime(2020, 4, 1),
+                     Period10 = new DateTime(2020, 5, 1),
+                     Period11 = new DateTime(2020, 6, 1),
+                     Period12 = new DateTime(2020, 7, 1),
+                 });
+
+            return new FundingOutputService(collectionPeriodDataServiceMock.Object, dataEntityAttributeService);
         }
     }
 }

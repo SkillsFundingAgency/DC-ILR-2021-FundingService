@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ESFA.DC.ILR.FundingService.Data.Interface;
+using ESFA.DC.ILR.FundingService.Data.External.CollectionPeriod.Interface;
+using ESFA.DC.ILR.FundingService.Data.External.CollectionPeriod.Model;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Output;
-using ESFA.DC.ILR.FundingService.FM35.Service;
-using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Interface;
@@ -28,7 +27,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             var orgVersion = "OrgVersion";
             var postcodeDisadvantageVersion = "PostcodeDisadvantageVersion";
             var rulebaseVersion = "RulebaseVersion";
-
             var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
 
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "UKPRN")).Returns(ukprn);
@@ -66,7 +64,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
         [Fact]
         public void LearningDeliveryFromDataEntity()
         {
-            var achApplicDate = new DateTime(2018, 09, 01);
+            var achApplicDate = new DateTime(2019, 09, 01);
             var achieved = false;
             var achieveElement = 1;
             var achievePayElig = false;
@@ -76,21 +74,21 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             var actualNumInstalm = 1;
             var actualNumInstalmPreTrans = 1;
             var actualNumInstalmTrans = 1;
-            var adjLearnStartDate = new DateTime(2018, 09, 01);
+            var adjLearnStartDate = new DateTime(2019, 09, 01);
             var adltLearnResp = false;
             var ageAimStart = 1;
             var aimValue = 1.0m;
-            var appAdjLearnStartDate = new DateTime(2018, 09, 01);
+            var appAdjLearnStartDate = new DateTime(2019, 09, 01);
             var appAgeFact = 1.6m;
             var appATAGTA = false;
             var appCompetency = false;
             var appFuncSkill = false;
             var appFuncSkill1618AdjFact = 1.0m;
             var appKnowl = false;
-            var appLearnStartDate = new DateTime(2018, 09, 01);
-            var applicEmpFactDate = new DateTime(2018, 09, 01);
-            var applicFactDate = new DateTime(2018, 09, 01);
-            var applicFundRateDate = new DateTime(2018, 09, 01);
+            var appLearnStartDate = new DateTime(2019, 09, 01);
+            var applicEmpFactDate = new DateTime(2019, 09, 01);
+            var applicFactDate = new DateTime(2019, 09, 01);
+            var applicFundRateDate = new DateTime(2019, 09, 01);
             var applicProgWeightFact = "1.0";
             var applicUnweightFundRate = 1;
             var applicWeightFundRate = 1;
@@ -110,7 +108,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             var fundStart = false;
             var largeEmployerFM35Fctr = 1;
             var largeEmployerID = 1;
-            var largeEmployerStatusDate = new DateTime(2018, 09, 01);
+            var largeEmployerStatusDate = new DateTime(2019, 09, 01);
+            var learnDelFundOrgCode = "Code";
             var lTRCUpliftFctr = 1;
             var nonGovCont = 1;
             var oLASSCustody = false;
@@ -131,7 +130,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             var thresholdDays = 1;
             var traineeship = false;
             var trans = false;
-            var trnAdjLearnStartDate = new DateTime(2018, 09, 01);
+            var trnAdjLearnStartDate = new DateTime(2019, 09, 01);
             var trnWorkPlaceAim = false;
             var trnWorkPrepAim = false;
             var unWeightedRateFromESOL = 1;
@@ -188,6 +187,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LargeEmployerFM35Fctr")).Returns(largeEmployerFM35Fctr);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "LargeEmployerID")).Returns(largeEmployerID);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "LargeEmployerStatusDate")).Returns(largeEmployerStatusDate);
+            dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "LearnDelFundOrgCode")).Returns(learnDelFundOrgCode);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LTRCUpliftFctr")).Returns(lTRCUpliftFctr);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "NonGovCont")).Returns(nonGovCont);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "OLASSCustody")).Returns(oLASSCustody);
@@ -263,6 +263,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             learningDelivery.LargeEmployerFM35Fctr.Should().Be(largeEmployerFM35Fctr);
             learningDelivery.LargeEmployerID.Should().Be(largeEmployerID);
             learningDelivery.LargeEmployerStatusDate.Should().Be(largeEmployerStatusDate);
+            learningDelivery.LearnDelFundOrgCode.Should().Be(learnDelFundOrgCode);
             learningDelivery.LTRCUpliftFctr.Should().Be(lTRCUpliftFctr);
             learningDelivery.NonGovCont.Should().Be(nonGovCont);
             learningDelivery.OLASSCustody.Should().Be(oLASSCustody);
@@ -340,7 +341,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 Attributes = new Dictionary<string, IAttributeData>
                 {
                     { "AimSeqNumber", Attribute(false, "1.0") },
-                    { "AchApplicDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "AchApplicDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
                     { "Achieved", Attribute(false, "1.0") },
                     { "AchieveElement", Attribute(false, "1.0") },
                     { "AchievePayElig", Attribute(false, "1.0") },
@@ -350,21 +351,21 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                     { "ActualNumInstalm", Attribute(false, "1.0") },
                     { "ActualNumInstalmPreTrans", Attribute(false, "1.0") },
                     { "ActualNumInstalmTrans", Attribute(false, "1.0") },
-                    { "AdjLearnStartDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "AdjLearnStartDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
                     { "AdltLearnResp", Attribute(false, "1.0") },
                     { "AgeAimStart", Attribute(false, "1.0") },
                     { "AimValue", Attribute(false, "1.0") },
-                    { "AppAdjLearnStartDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "AppAdjLearnStartDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
                     { "AppAgeFact", Attribute(false, "1.0") },
                     { "AppATAGTA", Attribute(false, "1.0") },
                     { "AppCompetency", Attribute(false, "1.0") },
                     { "AppFuncSkill", Attribute(false, "1.0") },
                     { "AppFuncSkill1618AdjFact", Attribute(false, "1.0") },
                     { "AppKnowl", Attribute(false, "1.0") },
-                    { "AppLearnStartDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
-                    { "ApplicEmpFactDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
-                    { "ApplicFactDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
-                    { "ApplicFundRateDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "AppLearnStartDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
+                    { "ApplicEmpFactDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
+                    { "ApplicFactDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
+                    { "ApplicFundRateDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
                     { "ApplicProgWeightFact", Attribute(false, "1.0") },
                     { "ApplicUnweightFundRate", Attribute(false, "1.0") },
                     { "ApplicWeightFundRate", Attribute(false, "1.0") },
@@ -384,7 +385,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                     { "FundStart", Attribute(false, "1.0") },
                     { "LargeEmployerFM35Fctr", Attribute(false, "1.0") },
                     { "LargeEmployerID", Attribute(false, "1.0") },
-                    { "LargeEmployerStatusDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "LargeEmployerStatusDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
                     { "LTRCUpliftFctr", Attribute(false, "1.0") },
                     { "NonGovCont", Attribute(false, "1.0") },
                     { "OLASSCustody", Attribute(false, "1.0") },
@@ -405,7 +406,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                     { "ThresholdDays", Attribute(false, "1.0") },
                     { "Traineeship", Attribute(false, "1.0") },
                     { "Trans", Attribute(false, "1.0") },
-                    { "TrnAdjLearnStartDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "TrnAdjLearnStartDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
                     { "TrnWorkPlaceAim", Attribute(false, "1.0") },
                     { "TrnWorkPrepAim", Attribute(false, "1.0") },
                     { "UnWeightedRateFromESOL", Attribute(false, "1.0") },
@@ -449,7 +450,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 Attributes = new Dictionary<string, IAttributeData>
                 {
                     { "AimSeqNumber", Attribute(false, "1.0") },
-                    { "AchApplicDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "AchApplicDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
                     { "Achieved", Attribute(false, "1.0") },
                     { "AchieveElement", Attribute(false, "1.0") },
                     { "AchievePayElig", Attribute(false, "1.0") },
@@ -459,21 +460,21 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                     { "ActualNumInstalm", Attribute(false, "1.0") },
                     { "ActualNumInstalmPreTrans", Attribute(false, "1.0") },
                     { "ActualNumInstalmTrans", Attribute(false, "1.0") },
-                    { "AdjLearnStartDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "AdjLearnStartDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
                     { "AdltLearnResp", Attribute(false, "1.0") },
                     { "AgeAimStart", Attribute(false, "1.0") },
                     { "AimValue", Attribute(false, "1.0") },
-                    { "AppAdjLearnStartDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "AppAdjLearnStartDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
                     { "AppAgeFact", Attribute(false, "1.0") },
                     { "AppATAGTA", Attribute(false, "1.0") },
                     { "AppCompetency", Attribute(false, "1.0") },
                     { "AppFuncSkill", Attribute(false, "1.0") },
                     { "AppFuncSkill1618AdjFact", Attribute(false, "1.0") },
                     { "AppKnowl", Attribute(false, "1.0") },
-                    { "AppLearnStartDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
-                    { "ApplicEmpFactDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
-                    { "ApplicFactDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
-                    { "ApplicFundRateDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "AppLearnStartDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
+                    { "ApplicEmpFactDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
+                    { "ApplicFactDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
+                    { "ApplicFundRateDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
                     { "ApplicProgWeightFact", Attribute(false, "1.0") },
                     { "ApplicUnweightFundRate", Attribute(false, "1.0") },
                     { "ApplicWeightFundRate", Attribute(false, "1.0") },
@@ -493,7 +494,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                     { "FundStart", Attribute(false, "1.0") },
                     { "LargeEmployerFM35Fctr", Attribute(false, "1.0") },
                     { "LargeEmployerID", Attribute(false, "1.0") },
-                    { "LargeEmployerStatusDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "LargeEmployerStatusDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
                     { "LTRCUpliftFctr", Attribute(false, "1.0") },
                     { "NonGovCont", Attribute(false, "1.0") },
                     { "OLASSCustody", Attribute(false, "1.0") },
@@ -514,7 +515,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                     { "ThresholdDays", Attribute(false, "1.0") },
                     { "Traineeship", Attribute(false, "1.0") },
                     { "Trans", Attribute(false, "1.0") },
-                    { "TrnAdjLearnStartDate", Attribute(false, new Date(new DateTime(2018, 09, 01))) },
+                    { "TrnAdjLearnStartDate", Attribute(false, new Date(new DateTime(2019, 09, 01))) },
                     { "TrnWorkPlaceAim", Attribute(false, "1.0") },
                     { "TrnWorkPrepAim", Attribute(false, "1.0") },
                     { "UnWeightedRateFromESOL", Attribute(false, "1.0") },
@@ -567,18 +568,18 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
 
             IEnumerable<TemporalValueItem> cps = new List<TemporalValueItem>
             {
-                 new TemporalValueItem(new DateTime(2018, 08, 01), value, null),
-                 new TemporalValueItem(new DateTime(2018, 09, 01), value, null),
-                 new TemporalValueItem(new DateTime(2018, 10, 01), value, null),
-                 new TemporalValueItem(new DateTime(2018, 11, 01), value, null),
-                 new TemporalValueItem(new DateTime(2018, 12, 01), value, null),
-                 new TemporalValueItem(new DateTime(2019, 01, 01), value, null),
-                 new TemporalValueItem(new DateTime(2019, 02, 01), value, null),
-                 new TemporalValueItem(new DateTime(2019, 03, 01), value, null),
-                 new TemporalValueItem(new DateTime(2019, 04, 01), value, null),
-                 new TemporalValueItem(new DateTime(2019, 05, 01), value, null),
-                 new TemporalValueItem(new DateTime(2019, 06, 01), value, null),
-                 new TemporalValueItem(new DateTime(2019, 07, 01), value, null),
+                 new TemporalValueItem(new DateTime(2019, 08, 01), value, null),
+                 new TemporalValueItem(new DateTime(2019, 09, 01), value, null),
+                 new TemporalValueItem(new DateTime(2019, 10, 01), value, null),
+                 new TemporalValueItem(new DateTime(2019, 11, 01), value, null),
+                 new TemporalValueItem(new DateTime(2019, 12, 01), value, null),
+                 new TemporalValueItem(new DateTime(2020, 01, 01), value, null),
+                 new TemporalValueItem(new DateTime(2020, 02, 01), value, null),
+                 new TemporalValueItem(new DateTime(2020, 03, 01), value, null),
+                 new TemporalValueItem(new DateTime(2020, 04, 01), value, null),
+                 new TemporalValueItem(new DateTime(2020, 05, 01), value, null),
+                 new TemporalValueItem(new DateTime(2020, 06, 01), value, null),
+                 new TemporalValueItem(new DateTime(2020, 07, 01), value, null),
             };
 
             changePoints.AddRange(cps);
@@ -633,7 +634,26 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
 
         private FundingOutputService NewService(IDataEntityAttributeService dataEntityAttributeService = null)
         {
-            return new FundingOutputService(dataEntityAttributeService);
+            var collectionPeriodDataServiceMock = new Mock<ICollectionPeriodDataService>();
+
+            collectionPeriodDataServiceMock.Setup(sm => sm.CollectionPeriods()).Returns(
+                 new Periods
+                 {
+                     Period1 = new DateTime(2019, 8, 1),
+                     Period2 = new DateTime(2019, 9, 1),
+                     Period3 = new DateTime(2019, 10, 1),
+                     Period4 = new DateTime(2019, 11, 1),
+                     Period5 = new DateTime(2019, 12, 1),
+                     Period6 = new DateTime(2020, 1, 1),
+                     Period7 = new DateTime(2020, 2, 1),
+                     Period8 = new DateTime(2020, 3, 1),
+                     Period9 = new DateTime(2020, 4, 1),
+                     Period10 = new DateTime(2020, 5, 1),
+                     Period11 = new DateTime(2020, 6, 1),
+                     Period12 = new DateTime(2020, 7, 1),
+                 });
+
+            return new FundingOutputService(collectionPeriodDataServiceMock.Object, dataEntityAttributeService);
         }
     }
 }

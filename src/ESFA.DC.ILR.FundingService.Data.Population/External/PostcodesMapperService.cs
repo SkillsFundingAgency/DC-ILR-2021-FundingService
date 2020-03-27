@@ -21,23 +21,11 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 p => new PostcodeRoot
                 {
                     Postcode = p.PostCode,
-                    CareerLearningPilots = p.CareerLearningPilots?.Select(clp => MapCareerLearningPilot(clp, p.PostCode)).ToList(),
                     DasDisadvantages = p.DasDisadvantages?.Select(dd => MapDasDisadvantage(dd, p.PostCode)).ToList(),
                     EfaDisadvantages = p.EfaDisadvantages?.Select(ed => MapEfaDisadvantage(ed, p.PostCode)).ToList(),
                     SfaAreaCosts = p.SfaAreaCosts?.Select(sa => MapSfaAreaCost(sa, p.PostCode)).ToList(),
                     SfaDisadvantages = p.SfaDisadvantages?.Select(sd => MapSfaDisadvantage(sd, p.PostCode)).ToList(),
                 }, StringComparer.OrdinalIgnoreCase);
-        }
-
-        private Data.External.Postcodes.Model.CareerLearningPilot MapCareerLearningPilot(ReferenceDataService.Model.Postcodes.CareerLearningPilot careerLearningPilot, string postcode)
-        {
-            return new Data.External.Postcodes.Model.CareerLearningPilot
-            {
-                Postcode = postcode,
-                AreaCode = careerLearningPilot.AreaCode,
-                EffectiveFrom = careerLearningPilot.EffectiveFrom,
-                EffectiveTo = careerLearningPilot.EffectiveTo
-            };
         }
 
         private Data.External.Postcodes.Model.DasDisadvantage MapDasDisadvantage(ReferenceDataService.Model.Postcodes.DasDisadvantage dasDisadvantage, string postcode)

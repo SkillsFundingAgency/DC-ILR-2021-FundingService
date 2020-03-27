@@ -6,6 +6,6 @@ namespace ESFA.DC.OPA.Service.Interface.Builders
 {
     public interface ISessionBuilder
     {
-        Session CreateOPASession(Stream rulebaseStream, IDataEntity globalEntity);
+        Session ProcessOPASession(Session session, IDataEntity globalEntity);
     }
 }

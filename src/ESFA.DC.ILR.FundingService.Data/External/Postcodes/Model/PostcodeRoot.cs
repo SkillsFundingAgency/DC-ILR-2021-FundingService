@@ -6,8 +6,6 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model
     {
         public string Postcode { get; set; }
 
-        public IReadOnlyCollection<CareerLearningPilot> CareerLearningPilots { get; set; }
-
         public IReadOnlyCollection<DasDisadvantage> DasDisadvantages { get; set; }
 
         public IReadOnlyCollection<EfaDisadvantage> EfaDisadvantages { get; set; }

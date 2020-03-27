@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory.Model;
+using ESFA.DC.ILR.FundingService.Data.External.CollectionPeriod.Model;
 using ESFA.DC.ILR.FundingService.Data.External.FCS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
@@ -24,6 +25,8 @@ namespace ESFA.DC.ILR.FundingService.Data.External
         public string OrgVersion { get; set; }
 
         public IDictionary<int, IReadOnlyCollection<OrgFunding>> OrgFunding { get; set; }
+
+        public IDictionary<string, IReadOnlyCollection<CampusIdentifierSpecResource>> CampusIdentifierSpecResources { get; set; }
 
         public IDictionary<int, IReadOnlyCollection<LargeEmployers>> LargeEmployers { get; set; }
 

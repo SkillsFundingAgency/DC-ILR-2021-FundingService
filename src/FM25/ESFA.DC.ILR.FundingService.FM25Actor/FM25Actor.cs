@@ -9,13 +9,14 @@ using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Dto;
 using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM25.Model.Output;
+using ESFA.DC.ILR.FundingService.FM25.Service.Rulebase;
 using ESFA.DC.ILR.FundingService.FM25Actor.Interfaces;
 using ESFA.DC.ILR.FundingService.FundingActor;
 using ESFA.DC.ILR.FundingService.FundingActor.Constants;
 using ESFA.DC.ILR.FundingService.Interfaces;
+using ESFA.DC.ILR.FundingService.Service.Interfaces;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.OPA.Service.Interface.Rulebase;
-using ESFA.DC.OPA.Service.Rulebase;
 using ESFA.DC.Serialization.Interfaces;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
@@ -92,7 +93,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
 
                     using (var fundingServiceLifetimeScope = childLifetimeScope.BeginLifetimeScope(c =>
                     {
-                        c.RegisterInstance(new RulebaseProvider("FM25 Funding Calc 18_19")).As<IRulebaseProvider>();
+                        c.RegisterInstance(new FM25RulebaseProvider()).As<IRulebaseStreamProvider<FM25LearnerDto>>();
                     }))
                     {
                         jobLogger.LogDebug("FM25 Rulebase Starting");
@@ -108,7 +109,7 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
 
                     using (var fundingServiceLifetimeScope = childLifetimeScope.BeginLifetimeScope(c =>
                     {
-                        c.RegisterInstance(new RulebaseProvider("FM25 Periodisation")).As<IRulebaseProvider>();
+                        c.RegisterInstance(new FM25PeriodisationRulebaseProvider()).As<IRulebaseStreamProvider<FM25Global>>();
                     }))
                     {
                         jobLogger.LogDebug("FM25 Periodisation Rulebase Starting");
@@ -118,11 +119,13 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
                         fm25PeriodisationResults = periodisationService.ProcessFunding(actorModel.UKPRN, fm25Results, cancellationToken).ToList();
 
                         jobLogger.LogDebug("FM25 Periodisation Rulebase Finishing");
+
+                        IFM25FundingOutputCondenserService<FM25Global, PeriodisationGlobal> condenser = fundingServiceLifetimeScope.Resolve<IFM25FundingOutputCondenserService<FM25Global, PeriodisationGlobal>>();
+
+                        condensedResults = condenser.CondensePeriodisationResults(fm25Results, fm25PeriodisationResults);
                     }
 
                     jobLogger.LogDebug($"{nameof(FM25Actor)} {ActorId} {GC.GetGeneration(actorModel)} completed processing");
-
-                    condensedResults = CondenseResults(fm25Results, fm25PeriodisationResults);
                 }
                 catch (Exception ex)
                 {
@@ -135,36 +138,6 @@ namespace ESFA.DC.ILR.FundingService.FM25Actor
             externalDataCache = null;
 
             return condensedResults;
-        }
-
-        private FM25Global CondenseResults(IEnumerable<FM25Global> globals, IEnumerable<PeriodisationGlobal> periodisationGlobals)
-        {
-            var first = globals.FirstOrDefault();
-
-            var emptyLearnerPeriodsList = new List<LearnerPeriod>();
-            var emptyLearnerPeriodisedValuesList = new List<LearnerPeriodisedValues>();
-
-            if (first != null)
-            {
-                var learners = globals.SelectMany(g => g.Learners).ToList();
-                var learnerPeriodsDictionary = periodisationGlobals.SelectMany(pg => pg.LearnerPeriods).GroupBy(lp => lp.LearnRefNumber).ToDictionary(lp => lp.Key, lp => lp.ToList());
-                var learnerPeriodisedValuesDictionary = periodisationGlobals.SelectMany(pg => pg.LearnerPeriodisedValues).GroupBy(lp => lp.LearnRefNumber).ToDictionary(lp => lp.Key, lp => lp.ToList());
-
-                foreach (var learner in learners)
-                {
-                    learnerPeriodsDictionary.TryGetValue(learner.LearnRefNumber, out var matchingLearnerPeriods);
-                    learnerPeriodisedValuesDictionary.TryGetValue(learner.LearnRefNumber, out var matchinglearnerPeriodisedValues);
-
-                    learner.LearnerPeriods = matchingLearnerPeriods ?? emptyLearnerPeriodsList;
-                    learner.LearnerPeriodisedValues = matchinglearnerPeriodisedValues ?? emptyLearnerPeriodisedValuesList;
-                }
-
-                first.Learners = learners;
-
-                return first;
-            }
-
-            return new FM25Global();
         }
     }
 }

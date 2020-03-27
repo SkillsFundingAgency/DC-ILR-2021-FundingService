@@ -1,15 +1,15 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Interface;
 using ESFA.DC.OPA.Service.Interface.Builders;
-using ESFA.DC.OPA.Service.Interface.Rulebase;
 using Oracle.Determinations.Engine;
 using Oracle.Determinations.Masquerade.IO;
 
 namespace ESFA.DC.OPA.Service
 {
-    public class OPAService : IOPAService
+    public class OPAService<T> : IOPAService<T>
     {
         // Produce XDS Files.
         // Set ProduceXDS to true to produce XDS input.
@@ -21,15 +21,15 @@ namespace ESFA.DC.OPA.Service
         private const string XDSFolder = "C:\\XdsOutput\\";
         private const string LearnRefNumberAttribute = "LearnRefNumber";
 
+        private readonly ISessionFactory<T> _sessionFactory;
         private readonly ISessionBuilder _sessionBuilder;
         private readonly IOPADataEntityBuilder _dataEntityBuilder;
-        private readonly IRulebaseProvider _rulebaseProvider;
 
-        public OPAService(ISessionBuilder sessionBuilder, IOPADataEntityBuilder dataEntityBuilder, IRulebaseProvider rulebaseProvider)
+        public OPAService(ISessionFactory<T> sessionFactory, ISessionBuilder sessionBuilder, IOPADataEntityBuilder dataEntityBuilder)
         {
+            _sessionFactory = sessionFactory;
             _sessionBuilder = sessionBuilder;
             _dataEntityBuilder = dataEntityBuilder;
-            _rulebaseProvider = rulebaseProvider;
         }
 
         internal bool XDSDirectorySetup { get; set; }
@@ -38,12 +38,9 @@ namespace ESFA.DC.OPA.Service
 
         public IDataEntity ExecuteSession(IDataEntity globalEntity)
         {
-            Session session;
+            var sessionInstance = _sessionFactory.CreateSession();
 
-            using (Stream stream = _rulebaseProvider.GetStream())
-            {
-                session = _sessionBuilder.CreateOPASession(stream, globalEntity);
-            }
+            var session = _sessionBuilder.ProcessOPASession(sessionInstance, globalEntity);
 
             // XDS PRE
             if (ProduceXDS)

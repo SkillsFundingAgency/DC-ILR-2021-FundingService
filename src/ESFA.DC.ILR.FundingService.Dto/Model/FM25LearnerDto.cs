@@ -9,6 +9,8 @@ namespace ESFA.DC.ILR.FundingService.Dto.Model
 
         public DateTime? DateOfBirth { get; set; }
 
+        public string CampId { get; set; }
+
         public string Postcode { get; set; }
 
         public string EngGrade { get; set; }
