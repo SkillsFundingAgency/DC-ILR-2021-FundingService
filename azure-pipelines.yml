@@ -35,8 +35,8 @@ stages:
            Copy-Item "$($ApplicationParametersFolder.FullName)\Cloud.xml" "$($ApplicationParametersFolder.FullName)\Local.1Node.xml" -Force;
            Copy-Item "$($ApplicationParametersFolder.FullName)\Cloud.xml" "$($ApplicationParametersFolder.FullName)\Local.5Node.xml" -Force;
  
-      workingDirectory: '$(ServiceFabricApplicationParametersFolder)'
-      displayName: 'Generate Fake Config Files'
+      workingDirectory: '$(build.sourcesdirectory)\src'
+      displayName: 'Generate Fake Application Parameters Node Config Files'
 
     - task: DotNetCoreInstaller@0
       displayName: 'Use .NET Core sdk $(DotNet>Core.Version)'
