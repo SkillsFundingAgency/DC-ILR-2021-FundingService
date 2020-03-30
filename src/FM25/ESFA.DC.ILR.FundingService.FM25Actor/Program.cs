@@ -9,7 +9,6 @@ using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM25.Model.Output;
 using ESFA.DC.ILR.FundingService.FM25Actor.Modules;
 using ESFA.DC.ILR.FundingService.Interfaces;
-using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.ServiceFabric.Common.Modules;
 using ESFA.DC.ServiceFabric.Helpers;
 using Microsoft.ServiceFabric.Actors.Runtime;
