@@ -45,6 +45,8 @@ namespace ESFA.DC.ILR.FundingService.Dto.Model
 
         public int? OtherFundAdj { get; set; }
 
+        public int? OtjActHours { get; set; }
+
         public int? Outcome { get; set; }
 
         public int? PriorLearnFundAdj { get; set; }

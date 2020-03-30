@@ -417,7 +417,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                     new LearnerEmploymentStatus
                     {
                         EmpId = 10,
-                        AgreeId = "1",
                         DateEmpStatApp = new DateTime(2018, 8, 1),
                         EmpStat = 2,
                         SEM = 1

@@ -204,7 +204,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                 {
                     new LearnerEmploymentStatus
                     {
-                        AgreeId = "AgreeId",
                         EmpId = 1,
                         DateEmpStatApp = new DateTime(2019, 8, 1),
                         EmpStat = 2,
@@ -386,7 +385,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                 {
                     new LearnerEmploymentStatus
                     {
-                        AgreeId = "AgreeId",
                         EmpId = 1,
                         DateEmpStatApp = new DateTime(2019, 8, 1),
                         EmpStat = 2,

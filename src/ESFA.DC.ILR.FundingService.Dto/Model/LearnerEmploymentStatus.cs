@@ -10,8 +10,6 @@ namespace ESFA.DC.ILR.FundingService.Dto.Model
 
         public DateTime DateEmpStatApp { get; set; }
 
-        public string AgreeId { get; set; }
-
         public int EmpStat { get; set; }
 
         public int? SEM { get; set; }
