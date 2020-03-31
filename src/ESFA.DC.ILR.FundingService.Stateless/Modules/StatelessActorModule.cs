@@ -37,8 +37,6 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
             containerBuilder.RegisterInstance(new ActorProvider<IFM25Actor>(ActorServiceNameConstants.FM25)).As<IActorProvider<IFM25Actor>>();
 
             containerBuilder.RegisterType<ExecutionContext>().As<IExecutionContext>();
-
-            //containerBuilder.RegisterAssemblyTypes(ThisAssembly).Where(s => s.IsAssignableTo<IMapper>).AsImplementedInterfaces
         }
     }
 }
