@@ -12,17 +12,10 @@
     <Parameter Name="AuditMaxConcurrentCalls" Value="" />
     <Parameter Name="LoggerConnectionString" Value="" />
   </Section>
-
   <Section Name="LoggerSection">
     <Parameter Name="LoggerConnectionstring" Value="" />
   </Section>
-
   <Section Name="AzureStorageFileServiceConfiguration">
     <Parameter Name="ConnectionString" Value="" />
-  </Section>
-  <Section Name="IOConfiguration">
-    <Parameter Name="ConnectionString" Value="" />
-    <Parameter Name="ContainerName" Value="" />
-  </Section>
-  
+  </Section>  
 </Settings>

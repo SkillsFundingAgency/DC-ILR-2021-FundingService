@@ -32,7 +32,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                 ULN = l.ULN,
                 LearnerEmploymentStatuses = l.LearnerEmploymentStatuses?.Select(les => new LearnerEmploymentStatus
                 {
-                    AgreeId = les.AgreeId,
                     DateEmpStatApp = les.DateEmpStatApp,
                     EmpId = les.EmpIdNullable,
                     EmpStat = les.EmpStat,

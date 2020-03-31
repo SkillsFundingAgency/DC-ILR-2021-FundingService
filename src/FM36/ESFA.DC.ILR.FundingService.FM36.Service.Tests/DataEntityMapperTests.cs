@@ -389,7 +389,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         {
             var learnerEmploymentStatus = new LearnerEmploymentStatus
             {
-                AgreeId = "Id",
                 DateEmpStatApp = new DateTime(2019, 1, 1),
                 EmpId = 1,
                 EmpStat = 2,
@@ -400,7 +399,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
 
             dataEntity.EntityName.Should().Be("LearnerEmploymentStatus");
             dataEntity.Attributes.Should().HaveCount(5);
-            dataEntity.Attributes["AgreeId"].Value.Should().Be(learnerEmploymentStatus.AgreeId);
+            dataEntity.Attributes["AgreeId"].Value.Should().Be("AgreeIdPlaceHolder");
             dataEntity.Attributes["DateEmpStatApp"].Value.Should().Be(learnerEmploymentStatus.DateEmpStatApp);
             dataEntity.Attributes["EmpId"].Value.Should().Be(learnerEmploymentStatus.EmpId);
             dataEntity.Attributes["EMPStat"].Value.Should().Be(learnerEmploymentStatus.EmpStat);

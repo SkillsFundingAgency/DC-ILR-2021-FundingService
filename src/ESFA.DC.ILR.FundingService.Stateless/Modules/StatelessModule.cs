@@ -5,7 +5,6 @@ using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Modules;
 using ESFA.DC.ILR.FundingService.Orchestrators;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
-using ESFA.DC.ILR.FundingService.Stateless.Config;
 using ESFA.DC.ILR.FundingService.Stateless.Context;
 using ESFA.DC.ILR.FundingService.Stateless.Handlers;
 using ESFA.DC.JobContextManager;
@@ -25,10 +24,9 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Modules
 
             var statelessServiceConfiguration = serviceFabricConfigurationService.GetConfigSectionAsStatelessServiceConfiguration();
             var azureStorageFileServiceConfiguration = serviceFabricConfigurationService.GetConfigSectionAs<AzureStorageFileServiceConfiguration>("AzureStorageFileServiceConfiguration");
-            var ioConfiguration = serviceFabricConfigurationService.GetConfigSectionAs<IOConfiguration>("IOConfiguration");
 
             containerBuilder.RegisterModule(new StatelessServiceModule(statelessServiceConfiguration));
-            containerBuilder.RegisterModule(new IOModule(azureStorageFileServiceConfiguration, ioConfiguration));
+            containerBuilder.RegisterModule(new IOModule(azureStorageFileServiceConfiguration));
 
             containerBuilder.RegisterModule<BaseModule>();
             containerBuilder.RegisterModule<CondenserModule>();

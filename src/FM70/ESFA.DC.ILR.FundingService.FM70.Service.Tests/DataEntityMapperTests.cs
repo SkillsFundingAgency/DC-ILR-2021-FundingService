@@ -211,7 +211,6 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
         {
             var learnerEmploymentStatus = new LearnerEmploymentStatus
             {
-                AgreeId = "Id",
                 DateEmpStatApp = new DateTime(2019, 1, 1),
                 EmpId = 1,
                 EmpStat = 2,

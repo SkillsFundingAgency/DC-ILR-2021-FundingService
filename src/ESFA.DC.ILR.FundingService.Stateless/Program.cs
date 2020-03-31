@@ -21,7 +21,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless
 
                 builder.RegisterServiceFabricSupport();
 
-                builder.RegisterStatelessService<ServiceFabric.Common.Stateless>("ESFA.DC.ILR1920.FundingService.StatelessType");
+                builder.RegisterStatelessService<ServiceFabric.Common.Stateless>("ESFA.DC.ILR2021.FundingService.StatelessType");
 
                 using (var container = builder.Build())
                 {
