@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Rulebase\Trailblazer Funding Calc 19_20.zip" />
+    <None Remove="Rulebase\Trailblazer Funding Calc 20_21.zip" />
     <None Remove="Rulebase\XSRC\Input.xsrc" />
   </ItemGroup>
 
@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Rulebase\Trailblazer Funding Calc 19_20.zip" />
+    <EmbeddedResource Include="Rulebase\Trailblazer Funding Calc 20_21.zip" />
   </ItemGroup>
 
   <ItemGroup>

@@ -99,12 +99,12 @@
     <Compile Include="RulebaseInterfaceTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\ESFA.DC.ILR.FundingService.FM81.Service\Rulebase\Trailblazer Funding Calc 19_20.zip">
-      <Link>Rulebase\Trailblazer Funding Calc 19_20.zip</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\ESFA.DC.ILR.FundingService.FM81.Service\Rulebase\XSRC\Input.xsrc">
       <Link>Rulebase\XSRC\Input.xsrc</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\ESFA.DC.ILR.FundingService.FM81.Service\Rulebase\Trailblazer Funding Calc 20_21.zip">
+      <Link>Rulebase\Trailblazer Funding Calc 20_21.zip</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="app.config" />
@@ -113,7 +113,7 @@
     <Content Include="RulebaseMasterFiles\XSRC\Input.xsrc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="RulebaseMasterFiles\Trailblazer Funding Calc 19_20.zip">
+    <Content Include="RulebaseMasterFiles\Trailblazer Funding Calc 20_21.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
