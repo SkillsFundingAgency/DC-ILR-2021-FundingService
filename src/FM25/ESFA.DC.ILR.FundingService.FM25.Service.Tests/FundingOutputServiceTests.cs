@@ -69,6 +69,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             var retentNew = 2.1m;
             var startFund = true;
             var thresholdDays = 8;
+            var tLevelStudent = true;
 
             var dataEntity = new DataEntity(null);
 
@@ -100,6 +101,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "RetentNew")).Returns(retentNew);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "StartFund")).Returns(startFund);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "ThresholdDays")).Returns(thresholdDays);
+            dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "TLevelStudent")).Returns(tLevelStudent);
 
             var learner = NewService(dataEntityAttributeServiceMock.Object).MapLearner(dataEntity);
 
@@ -129,6 +131,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             learner.RetentNew.Should().Be(retentNew);
             learner.StartFund.Should().Be(startFund);
             learner.ThresholdDays.Should().Be(thresholdDays);
+            learner.TLevelStudent.Should().Be(tLevelStudent);
         }
 
         private FundingOutputService NewService(IDataEntityAttributeService dataEntityAttributeService = null)

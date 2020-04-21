@@ -75,6 +75,7 @@
         public const string RetentNew = "RetentNew";
         public const string StartFund = "StartFund";
         public const string ThresholdDays = "ThresholdDays";
+        public const string TLevelStudent = "TLevelStudent";
         public const string ULN = "ULN";
 
         // Learner Periodised Values
