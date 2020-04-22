@@ -26,8 +26,8 @@
 
   <ItemGroup>
     <PackageReference Include="ESFA.DC.ILR.2021.Model" Version="0.1.1-beta0001" />
-    <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.6-beta0001" />
-    <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.6-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.35-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.36-beta0001" />
   </ItemGroup>
 
   <ItemGroup>

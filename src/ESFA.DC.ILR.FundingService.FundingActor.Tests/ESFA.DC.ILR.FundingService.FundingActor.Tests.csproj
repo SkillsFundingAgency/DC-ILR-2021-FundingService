@@ -54,8 +54,8 @@
     <Reference Include="ESFA.DC.JobStatus.Interface, Version=0.2.8.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.JobStatus.Interface.0.2.8-beta0001\lib\netstandard2.0\ESFA.DC.JobStatus.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.Logging.Interfaces, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Logging.Interfaces.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.Logging.Interfaces.dll</HintPath>
+    <Reference Include="ESFA.DC.Logging.Interfaces, Version=0.1.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.Logging.Interfaces.0.1.10-beta0001\lib\netstandard2.0\ESFA.DC.Logging.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.Mapping.Interface, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Mapping.Interface.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.Mapping.Interface.dll</HintPath>
@@ -63,8 +63,8 @@
     <Reference Include="ESFA.DC.Queueing.Interface, Version=0.1.14.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Queueing.Interface.0.1.14-beta0001\lib\netstandard2.0\ESFA.DC.Queueing.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.Serialization.Interfaces, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Serialization.Interfaces.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Interfaces.dll</HintPath>
+    <Reference Include="ESFA.DC.Serialization.Interfaces, Version=0.1.35.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.Serialization.Interfaces.0.1.35-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="FluentAssertions, Version=5.9.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.5.9.0\lib\net45\FluentAssertions.dll</HintPath>
