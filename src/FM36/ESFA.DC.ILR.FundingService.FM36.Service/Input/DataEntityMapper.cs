@@ -50,13 +50,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
         {
             return new DataEntity(Attributes.EntityGlobal)
             {
-                Attributes = new Dictionary<string, IAttributeData>()
-                {
-                    { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
-                    { Attributes.Year, new AttributeData(global.Year) },
-                    { Attributes.CollectionPeriod, new AttributeData(global.CollectionPeriod) },
-                    { Attributes.UKPRN, new AttributeData(global.UKPRN) }
-                },
+                Attributes = BuildGlobalAttributes(global),
                 Children = learner != null ? new List<IDataEntity>() { BuildLearnerDataEntity(learner) } : new List<IDataEntity>()
             };
         }
@@ -65,13 +59,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
         {
             return new DataEntity(Attributes.EntityGlobal)
             {
-                Attributes = new Dictionary<string, IAttributeData>()
-                {
-                    { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
-                    { Attributes.Year, new AttributeData(global.Year) },
-                    { Attributes.CollectionPeriod, new AttributeData(global.CollectionPeriod) },
-                    { Attributes.UKPRN, new AttributeData(global.UKPRN) }
-                }
+                Attributes = BuildGlobalAttributes(global)
             };
         }
 
@@ -353,11 +341,19 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
             {
                 LARSVersion = _larsReferenceDataService.LARSCurrentVersion(),
                 Year = Attributes.YearValue,
-
-                // ToDo: implement AcademicYear service over InternalCache for "CollectionPeriod" to calculate value.
-                // This attribute is not used by rulebase at present 10/09/18.
                 CollectionPeriod = Attributes.CollectionPeriodValue,
                 UKPRN = ukprn
+            };
+        }
+
+        private IDictionary<string, IAttributeData> BuildGlobalAttributes(Global global)
+        {
+            return new Dictionary<string, IAttributeData>
+            {
+                { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
+                { Attributes.Year, new AttributeData(global.Year) },
+                { Attributes.CollectionPeriod, new AttributeData(global.CollectionPeriod) },
+                { Attributes.UKPRN, new AttributeData(global.UKPRN) }
             };
         }
     }

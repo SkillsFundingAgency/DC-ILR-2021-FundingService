@@ -48,10 +48,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
         {
            return new DataEntity(Attributes.EntityGlobal)
             {
-                Attributes = new Dictionary<string, IAttributeData>()
-                {
-                    { Attributes.UKPRN, new AttributeData(global.UKPRN) }
-                },
+                Attributes = BuildGlobalAttributes(global),
                 Children =
                     learner != null ? new List<IDataEntity> { BuildLearnerDataEntity(learner) } : new List<IDataEntity>()
             };
@@ -61,10 +58,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
         {
             return new DataEntity(Attributes.EntityGlobal)
             {
-                Attributes = new Dictionary<string, IAttributeData>()
-                {
-                    { Attributes.UKPRN, new AttributeData(global.UKPRN) }
-                },
+                Attributes = BuildGlobalAttributes(global)
             };
         }
 
@@ -257,6 +251,14 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
                 CalcMethod = e.CalcMethod,
                 ESFDeliverableCode = cd.ExternalDeliverableCode,
             }));
+        }
+
+        private IDictionary<string, IAttributeData> BuildGlobalAttributes(Global global)
+        {
+            return new Dictionary<string, IAttributeData>
+            {
+                { Attributes.UKPRN, new AttributeData(global.UKPRN) }
+            };
         }
     }
 }

@@ -28,10 +28,10 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
         private readonly IPostcodesReferenceDataService _postcodesReferenceDataService;
 
         public DataEntityMapper(
-                    ILargeEmployersReferenceDataService largeEmployersReferenceDataService,
-                    ILARSReferenceDataService larsReferenceDataService,
-                    IOrganisationReferenceDataService organisationReferenceDataService,
-                    IPostcodesReferenceDataService postcodesReferenceDataService)
+            ILargeEmployersReferenceDataService largeEmployersReferenceDataService,
+            ILARSReferenceDataService larsReferenceDataService,
+            IOrganisationReferenceDataService organisationReferenceDataService,
+            IPostcodesReferenceDataService postcodesReferenceDataService)
         {
             _largeEmployersReferenceDataService = largeEmployersReferenceDataService;
             _larsReferenceDataService = larsReferenceDataService;
@@ -61,13 +61,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
 
             return new DataEntity(Attributes.EntityGlobal)
             {
-                Attributes = new Dictionary<string, IAttributeData>()
-                {
-                    { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
-                    { Attributes.OrgVersion, new AttributeData(global.OrgVersion) },
-                    { Attributes.PostcodeDisadvantageVersion, new AttributeData(global.PostcodeDisadvantageVersion) },
-                    { Attributes.UKPRN, new AttributeData(global.UKPRN) }
-                },
+                Attributes = BuildGlobalAttributes(global),
                 Children =
                     learner != null ?
                      new List<IDataEntity> { BuildLearnerDataEntity(learner) }
@@ -80,13 +74,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
         {
             return new DataEntity(Attributes.EntityGlobal)
             {
-                Attributes = new Dictionary<string, IAttributeData>()
-                {
-                    { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
-                    { Attributes.OrgVersion, new AttributeData(global.OrgVersion) },
-                    { Attributes.PostcodeDisadvantageVersion, new AttributeData(global.PostcodeDisadvantageVersion) },
-                    { Attributes.UKPRN, new AttributeData(global.UKPRN) }
-                }
+                Attributes = BuildGlobalAttributes(global)
             };
         }
 
@@ -327,6 +315,17 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                 OrgVersion = _organisationReferenceDataService.OrganisationVersion(),
                 PostcodeDisadvantageVersion = _postcodesReferenceDataService.PostcodesCurrentVersion(),
                 UKPRN = ukprn
+            };
+        }
+
+        private IDictionary<string, IAttributeData> BuildGlobalAttributes(Global global)
+        {
+            return new Dictionary<string, IAttributeData>
+            {
+                 { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
+                 { Attributes.OrgVersion, new AttributeData(global.OrgVersion) },
+                 { Attributes.PostcodeDisadvantageVersion, new AttributeData(global.PostcodeDisadvantageVersion) },
+                 { Attributes.UKPRN, new AttributeData(global.UKPRN) }
             };
         }
     }
