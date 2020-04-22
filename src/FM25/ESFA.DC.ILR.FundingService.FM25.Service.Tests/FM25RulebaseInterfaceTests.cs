@@ -13,7 +13,6 @@ using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM25.Service.Constants;
 using ESFA.DC.ILR.FundingService.FM25.Service.Input;
 using ESFA.DC.ILR.FundingService.FM25.Service.Model;
-using ESFA.DC.ILR.Model;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.XSRC.Model.Interface.XSRCEntity;
@@ -27,8 +26,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
 {
     public class FM25RulebaseInterfaceTests
     {
-        public const string AcademicYear = "1920";
-        public const string RulebaseName = "FM25 Funding Calc 19_20";
+        public const string AcademicYear = "2021";
+        public const string RulebaseName = "FM25 Funding Calc 20_21";
         public const string RulebaseFolder = "Rulebase\\FM25";
         public const string RulebaseMasterFolder = "RulebaseMasterFiles\\FM25";
         public const string XsrcName = "Inputs";
@@ -183,6 +182,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 Attributes.PostcodeDisadvantageVersion,
                 Attributes.ProgrammeWeighting,
                 Attributes.RetentionFactor,
+                Attributes.Level3ProgMathsAndEnglishProportion,
                 Attributes.SpecialistResources,
                 Attributes.UKPRN,
                 Attributes.DateOfBirth,
@@ -205,12 +205,15 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 Attributes.CompStatus,
                 Attributes.EFACOFType,
                 Attributes.FundModel,
+                Attributes.GuidedLearningHours,
                 Attributes.LearnActEndDate,
                 Attributes.LearnAimRef,
                 Attributes.LearnAimRefTitle,
                 Attributes.LearnAimRefType,
                 Attributes.LearnPlanEndDate,
                 Attributes.LearnStartDate,
+                Attributes.NotionalNVQLevel,
+                Attributes.PHours,
                 Attributes.ProgType,
                 Attributes.SectorSubjectAreaTier2,
                 Attributes.WithdrawReason,

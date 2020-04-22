@@ -56,6 +56,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                     LearnActEndDate = ld.LearnActEndDateNullable,
                     LearnPlanEndDate = ld.LearnPlanEndDate,
                     LearnStartDate = ld.LearnStartDate,
+                    PHours = ld.PHoursNullable,
                     ProgType = ld.ProgTypeNullable,
                     WithdrawReason = ld.WithdrawReasonNullable,
                     LearningDeliveryFAMs = ld.LearningDeliveryFAMs?.Select(ldf => new LearningDeliveryFAM

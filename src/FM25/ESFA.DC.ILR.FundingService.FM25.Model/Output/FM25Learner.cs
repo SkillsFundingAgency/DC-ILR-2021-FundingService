@@ -33,6 +33,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Model.Output
         public bool? StartFund { get; set; }
         public int? ThresholdDays { get; set; }
         public bool? TLevelStudent { get; set; }
+        public decimal? PrvHistL3ProgMathEngProp { get; set; }
+
         public List<LearnerPeriod> LearnerPeriods { get; set; }
 
         public List<LearnerPeriodisedValues> LearnerPeriodisedValues { get; set; }

@@ -137,6 +137,8 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                                 LearnActEndDate = new DateTime(2018, 8, 1),
                                 LearnPlanEndDate = new DateTime(2018, 8, 1),
                                 LearnStartDate = new DateTime(2018, 8, 1),
+                                PHoursSpecified = true, 
+                                PHours = 1,
                                 ProgTypeSpecified = true, 
                                 ProgType = 1,
                                 WithdrawReasonSpecified = true, 
@@ -231,6 +233,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                         LearnActEndDate = new DateTime(2018, 8, 1),
                         LearnPlanEndDate = new DateTime(2018, 8, 1),
                         LearnStartDate = new DateTime(2018, 8, 1),
+                        PHours = 1,
                         ProgType = 1,
                         WithdrawReason = 1,
                         LearningDeliveryFAMs = new List<LearningDeliveryFAM>

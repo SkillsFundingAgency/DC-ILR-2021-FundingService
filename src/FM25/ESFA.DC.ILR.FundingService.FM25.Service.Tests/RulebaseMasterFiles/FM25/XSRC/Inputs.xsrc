@@ -105,6 +105,11 @@
           <prop name="Date">19-03-2019</prop>
         </props>
       </attribute>
+      <attribute name="p460" type="number" public-name="Level3ProgMathsandEnglishProportion">
+        <text>
+          <base>the provider's L3 maths and English proportion</base>
+        </text>
+      </attribute>
     </entity>
     <entity id="learner" name="the learner" public-id="Learner" containment-relationship-id="learners" containment-parent-id="global">
       <attribute name="p132" type="number" public-name="PlanEEPHours">
@@ -396,6 +401,21 @@
           <prop name="Date">19-03-2019</prop>
         </props>
       </attribute>
+      <attribute name="p461" type="number" public-name="NotionalNVQLevel">
+        <text>
+          <base>the learning delivery's notional NVQ level</base>
+        </text>
+      </attribute>
+      <attribute name="p462" type="number" public-name="GuidedLearningHours">
+        <text>
+          <base>the learning delivery's guided learning hours</base>
+        </text>
+      </attribute>
+      <attribute name="p463" type="number" public-name="PHours">
+        <text>
+          <base>the learning delivery's planned hours</base>
+        </text>
+      </attribute>
     </entity>
     <entity id="learningdeliverylarsvalidity" name="the learning delivery LARS validity" containment-relationship-id="learningdeliveryslarsvalidities" containment-parent-id="learningdelivery" public-id="LearningDeliveryLARSValidity">
       <attribute name="p407" type="text" public-name="ValidityCategory">
@@ -513,13 +533,14 @@
   <relationships>
     <relationship source="global" target="learner" text="the learners" relationship-id="learners" reverse-text="" reverse-relationship-id="global_learners_rev" type="OneToMany" is-computed="false" is-containment="true" />
     <relationship source="learner" target="learningdelivery" text="the learner's learning deliveries" relationship-id="learnerslearningdeliveries" reverse-text="the learner associated with the learning delivery" reverse-relationship-id="learnerassociatedwiththelearningdelivery" type="OneToMany" is-computed="false" is-containment="true" />
-    <relationship source="learner" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learner's core aims" relationship-id="learnerscoreaims" reverse-relationship-id="learnerassociatedwiththecoreaim" reverse-text="the learner associated with the core aim" type="ManyToMany" is-computed="false" />
     <relationship source="learningdelivery" target="learningdeliverylarsvalidity" text="the learning delivery's LARS validities" relationship-id="learningdeliveryslarsvalidities" reverse-relationship-id="learningdeliveryassociatedwiththelearningdeliverylarsvalidity" reverse-text="the learning delivery associated with the learning delivery LARS validity" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
-    <relationship source="learner" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learner's ESFA learning deliveries" relationship-id="learnersesfalearningdeliveries" reverse-relationship-id="learnerassociatedwiththeesfalearningdelivery" reverse-text="the learner associated with the ESFA learning delivery" type="ManyToMany" is-computed="false" />
     <relationship source="learner" target="learnerdestinationandprogressionoutcome" text="the learners destination and progression outcomes" relationship-id="learnersdestinationandprogressionoutcomes" reverse-relationship-id="learnerdestinationandprogressionoutcomesassociatedwiththelearner" reverse-text="the learner destination and progression outcomes associated with the learner" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
     <relationship source="learner" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learner's ESFA 16-19 traineeship programme aims" relationship-id="learnersesfa1619traineeshipprogrammeaims" reverse-relationship-id="learner_learnersesfa1619traineeshipprogrammeaims_rev" reverse-text="" type="ManyToMany" is-computed="false" />
     <relationship source="learningdelivery" target="learningdeliveryfam" text="the learning delivery FAMs" relationship-id="learningdeliveryfams" reverse-relationship-id="learningdeliveryassociatedwiththelearningdeliveryfam" reverse-text="the learning delivery associated with the learning delivery FAM" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
     <relationship source="learner" target="campusfunding" text="the campus funding for the learner" relationship-id="campusfundingforthelearner" reverse-relationship-id="campusfundingslearner" reverse-text="the campus funding's learner" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learner" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learner's core aims" relationship-id="learnerscoreaims" reverse-relationship-id="learner_learnerscoreaims_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="learner" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learner's ESFA 16-19 learning deliveries" relationship-id="learnersesfa1619learningdeliveries" reverse-relationship-id="learner_learnersesfa1619learningdeliveries_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="learner" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learner's ESFA 16-19 T level programme aims" relationship-id="learnersesfa1619tlevelprogrammeaims" reverse-relationship-id="learner_learnersesfa1619tlevelprogrammeaims_rev" reverse-text="" type="ManyToMany" is-computed="false" />
   </relationships>
   <rule-folders />
 </root>

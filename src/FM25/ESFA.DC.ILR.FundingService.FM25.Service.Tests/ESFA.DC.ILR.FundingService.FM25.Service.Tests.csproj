@@ -104,10 +104,6 @@
     <Compile Include="FM25RulebaseInterfaceTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\ESFA.DC.ILR.FundingService.FM25.Service\Rulebase\FM25\FM25 Funding Calc 19_20.zip">
-      <Link>Rulebase\FM25\FM25 Funding Calc 19_20.zip</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\ESFA.DC.ILR.FundingService.FM25.Service\Rulebase\FM25\XSRC\Inputs.xsrc">
       <Link>Rulebase\FM25\XSRC\Inputs.xsrc</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -118,6 +114,10 @@
     <None Include="..\ESFA.DC.ILR.FundingService.FM25.Service\Rulebase\FM25Periodisation\XSRC\Inputs.xsrc">
       <Link>Rulebase\FM25Periodisation\XSRC\Inputs.xsrc</Link>
     </None>
+    <Content Include="..\ESFA.DC.ILR.FundingService.FM25.Service\Rulebase\FM25\FM25 Funding Calc 20_21.zip">
+      <Link>Rulebase\FM25\FM25 Funding Calc 20_21.zip</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="app.config" />
     <None Include="ESFA.DC.ILR.FundingService.FM25.Service.Tests.ruleset">
       <SubType>Designer</SubType>
@@ -126,15 +126,15 @@
     <Content Include="RulebaseMasterFiles\FM25Periodisation\FM25 Periodisation.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="RulebaseMasterFiles\FM25Periodisation\XSRC\Inputs.xsrc">
+    <None Include="RulebaseMasterFiles\FM25Periodisation\XSRC\Inputs.xsrc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="RulebaseMasterFiles\FM25\FM25 Funding Calc 20_21.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="RulebaseMasterFiles\FM25\XSRC\Inputs.xsrc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="RulebaseMasterFiles\FM25\FM25 Funding Calc 19_20.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />

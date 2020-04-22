@@ -25,6 +25,7 @@
         public const string RetentionFactor = "RetentionFactor";
         public const string RulebaseVersion = "RulebaseVersion";
         public const string SpecialistResources = "SpecialistResources";
+        public const string Level3ProgMathsAndEnglishProportion = "Level3ProgMathsandEnglishProportion";
         public const string UKPRN = "UKPRN";
 
         public const string OrgFundFactorTypeEFA1619 = "EFA 16-19";
@@ -34,6 +35,7 @@
         public const string OrgFundFactorHistoriProgCostWeigting = "HISTORIC PROGRAMME COST WEIGHTING FACTOR";
         public const string OrgFundFactorHistoricRetention = "HISTORIC RETENTION FACTOR";
         public const string OrgFundFactorSpecialistResources = "SPECIALIST RESOURCES";
+        public const string OrgFundFactorLevel3ProgMathsAndEnglishProportion = "HISTORIC LEVEL 3 PROGRAMME MATHS AND ENGLISH PROPORTION";
 
         // Learner
         public const string LearnRefNumber = "LearnRefNumber";
@@ -70,6 +72,7 @@
         public const string ProgWeightNew = "ProgWeightNew";
         public const string PrvDisadvPropnHist = "PrvDisadvPropnHist";
         public const string PrvHistLrgProgPropn = "PrvHistLrgProgPropn";
+        public const string PrvHistL3ProgMathEngProp = "PrvHistL3ProgMathEngProp";
         public const string PrvRetentFactHist = "PrvRetentFactHist";
         public const string RateBand = "RateBand";
         public const string RetentNew = "RetentNew";
@@ -100,12 +103,15 @@
         public const string CompStatus = "CompStatus";
         public const string EFACOFType = "EFACOFType";
         public const string FundModel = "FundModel";
+        public const string GuidedLearningHours = "GuidedLearningHours";        
         public const string LearnActEndDate = "LearnActEndDate";
         public const string LearnAimRef = "LearnAimRef";
         public const string LearnAimRefTitle = "LearnAimRefTitle";
         public const string LearnAimRefType = "LearnAimRefType";
         public const string LearnPlanEndDate = "LearnPlanEndDate";
         public const string LearnStartDate = "LearnStartDate";
+        public const string PHours = "PHours";
+        public const string NotionalNVQLevel = "NotionalNVQLevel";
         public const string ProgType = "ProgType";
         public const string SectorSubjectAreaTier2 = "SectorSubjectAreaTier2";
         public const string WithdrawReason = "WithdrawReason";
