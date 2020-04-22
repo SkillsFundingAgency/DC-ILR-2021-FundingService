@@ -40,11 +40,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Input
         {
             return new DataEntity(Attributes.EntityGlobal)
             {
-                Attributes = new Dictionary<string, IAttributeData>()
-                {
-                    { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
-                    { Attributes.UKPRN, new AttributeData(global.UKPRN) }
-                },
+                Attributes = BuildGlobalAttributes(global),
                 Children = learner != null ? new List<IDataEntity>() { BuildLearnerDataEntity(learner) } : new List<IDataEntity>()
             };
         }
@@ -53,11 +49,7 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Input
         {
             return new DataEntity(Attributes.EntityGlobal)
             {
-                Attributes = new Dictionary<string, IAttributeData>()
-                {
-                    { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
-                    { Attributes.UKPRN, new AttributeData(global.UKPRN) }
-                }
+                Attributes = BuildGlobalAttributes(global)
             };
         }
 
@@ -207,6 +199,15 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Input
             {
                 LARSVersion = _larsReferenceDataService.LARSCurrentVersion(),
                 UKPRN = ukprn
+            };
+        }
+
+        private IDictionary<string, IAttributeData> BuildGlobalAttributes(Global global)
+        {
+            return new Dictionary<string, IAttributeData>
+            {
+                { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
+                { Attributes.UKPRN, new AttributeData(global.UKPRN) }
             };
         }
     }

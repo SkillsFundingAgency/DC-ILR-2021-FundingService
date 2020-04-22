@@ -12,6 +12,8 @@ namespace ESFA.DC.ILR.FundingService.Data.External.LARS.Model
 
         public string LearningDeliveryGenre { get; set; }
 
+        public string NotionalNVQLevel { get; set; }
+
         public string NotionalNVQLevelv2 { get; set; }
 
         public int? RegulatedCreditValue { get; set; }
@@ -25,6 +27,8 @@ namespace ESFA.DC.ILR.FundingService.Data.External.LARS.Model
         public string AwardOrgCode { get; set; }
 
         public int? EFACOFType { get; set; }
+
+        public int? GuidedLearningHours { get; set; }
 
         public decimal? SectorSubjectAreaTier2 { get; set; }
 

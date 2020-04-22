@@ -105,6 +105,10 @@
     <Analyzer Include="..\..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Dto\ESFA.DC.ILR.FundingService.Dto.csproj">
+      <Project>{2813A893-D574-4CCE-8D1C-4B6D84FA0915}</Project>
+      <Name>ESFA.DC.ILR.FundingService.Dto</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.OPA.Model.Interface\ESFA.DC.OPA.Model.Interface.csproj">
       <Project>{7C69290E-B03C-490B-9821-04E2B0B9CDF7}</Project>
       <Name>ESFA.DC.OPA.Model.Interface</Name>

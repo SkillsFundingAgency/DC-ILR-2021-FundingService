@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Model;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
@@ -27,10 +28,10 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
         private readonly IPostcodesReferenceDataService _postcodesReferenceDataService;
 
         public DataEntityMapper(
-                    ILargeEmployersReferenceDataService largeEmployersReferenceDataService,
-                    ILARSReferenceDataService larsReferenceDataService,
-                    IOrganisationReferenceDataService organisationReferenceDataService,
-                    IPostcodesReferenceDataService postcodesReferenceDataService)
+            ILargeEmployersReferenceDataService largeEmployersReferenceDataService,
+            ILARSReferenceDataService larsReferenceDataService,
+            IOrganisationReferenceDataService organisationReferenceDataService,
+            IPostcodesReferenceDataService postcodesReferenceDataService)
         {
             _largeEmployersReferenceDataService = largeEmployersReferenceDataService;
             _larsReferenceDataService = larsReferenceDataService;
@@ -52,7 +53,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
         public IDataEntity BuildGlobalDataEntity(FM35LearnerDto learner, Global global)
         {
             var orgFunding = _organisationReferenceDataService.OrganisationFundingForUKPRN(global.UKPRN)
-                .Where(f => f.OrgFundFactType == Attributes.OrgFundFactorTypeAdultSkills);
+                .Where(f => f.OrgFundFactType.CaseInsensitiveEquals(Attributes.OrgFundFactorTypeAdultSkills));
 
             var orgDataEntities = orgFunding.Any() ?
                     orgFunding?.Select(BuildOrgFundingDataEntity).ToList() :
@@ -60,13 +61,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
 
             return new DataEntity(Attributes.EntityGlobal)
             {
-                Attributes = new Dictionary<string, IAttributeData>()
-                {
-                    { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
-                    { Attributes.OrgVersion, new AttributeData(global.OrgVersion) },
-                    { Attributes.PostcodeDisadvantageVersion, new AttributeData(global.PostcodeDisadvantageVersion) },
-                    { Attributes.UKPRN, new AttributeData(global.UKPRN) }
-                },
+                Attributes = BuildGlobalAttributes(global),
                 Children =
                     learner != null ?
                      new List<IDataEntity> { BuildLearnerDataEntity(learner) }
@@ -79,13 +74,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
         {
             return new DataEntity(Attributes.EntityGlobal)
             {
-                Attributes = new Dictionary<string, IAttributeData>()
-                {
-                    { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
-                    { Attributes.OrgVersion, new AttributeData(global.OrgVersion) },
-                    { Attributes.PostcodeDisadvantageVersion, new AttributeData(global.PostcodeDisadvantageVersion) },
-                    { Attributes.UKPRN, new AttributeData(global.UKPRN) }
-                }
+                Attributes = BuildGlobalAttributes(global)
             };
         }
 
@@ -326,6 +315,17 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                 OrgVersion = _organisationReferenceDataService.OrganisationVersion(),
                 PostcodeDisadvantageVersion = _postcodesReferenceDataService.PostcodesCurrentVersion(),
                 UKPRN = ukprn
+            };
+        }
+
+        private IDictionary<string, IAttributeData> BuildGlobalAttributes(Global global)
+        {
+            return new Dictionary<string, IAttributeData>
+            {
+                 { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
+                 { Attributes.OrgVersion, new AttributeData(global.OrgVersion) },
+                 { Attributes.PostcodeDisadvantageVersion, new AttributeData(global.PostcodeDisadvantageVersion) },
+                 { Attributes.UKPRN, new AttributeData(global.UKPRN) }
             };
         }
     }

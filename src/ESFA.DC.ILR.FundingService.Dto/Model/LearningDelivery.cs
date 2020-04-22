@@ -49,6 +49,8 @@ namespace ESFA.DC.ILR.FundingService.Dto.Model
 
         public int? Outcome { get; set; }
 
+        public int? PHours { get; set; }
+
         public int? PriorLearnFundAdj { get; set; }
 
         public int? ProgType { get; set; }

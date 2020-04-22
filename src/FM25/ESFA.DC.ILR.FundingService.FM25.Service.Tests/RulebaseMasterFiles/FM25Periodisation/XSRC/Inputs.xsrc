@@ -10,8 +10,8 @@
           <prop name="PassThrough">True</prop>
           <prop name="KeySequence">1</prop>
           <prop name="Size">8</prop>
-          <prop name="Version">1920.01.01</prop>
-          <prop name="Date">28-02-2019</prop>
+          <prop name="Version">2021.01.01</prop>
+          <prop name="Date">22-04-2020</prop>
         </props>
       </attribute>
     </entity>
@@ -24,8 +24,8 @@
           <prop name="PassThrough">True</prop>
           <prop name="KeySequence">1</prop>
           <prop name="Size">12</prop>
-          <prop name="Version">1920.01.01</prop>
-          <prop name="Date">28-02-2019</prop>
+          <prop name="Version">2021.01.01</prop>
+          <prop name="Date">22-04-2020</prop>
         </props>
       </attribute>
       <attribute name="p433" type="currency" public-name="OnProgPayment">
@@ -33,8 +33,8 @@
           <base>the learner's on-programme funding</base>
         </text>
         <props>
-          <prop name="Version">1920.01.01</prop>
-          <prop name="Date">28-02-2019</prop>
+          <prop name="Version">2021.01.01</prop>
+          <prop name="Date">22-04-2020</prop>
         </props>
       </attribute>
       <attribute name="p434" type="date" public-name="LearnerStartDate">
@@ -42,8 +42,8 @@
           <base>the learner's start date</base>
         </text>
         <props>
-          <prop name="Version">1920.01.01</prop>
-          <prop name="Date">28-02-2019</prop>
+          <prop name="Version">2021.01.01</prop>
+          <prop name="Date">22-04-2020</prop>
         </props>
       </attribute>
       <attribute name="p435" type="text" public-name="FundLine">
@@ -51,8 +51,8 @@
           <base>the learner's funding line type</base>
         </text>
         <props>
-          <prop name="Version">1920.01.01</prop>
-          <prop name="Date">28-02-2019</prop>
+          <prop name="Version">2021.01.01</prop>
+          <prop name="Date">22-04-2020</prop>
         </props>
       </attribute>
       <attribute name="p436" type="number" public-name="AcadMonthPayment">
@@ -60,8 +60,8 @@
           <base>the learner's payment period</base>
         </text>
         <props>
-          <prop name="Version">1920.01.01</prop>
-          <prop name="Date">28-02-2019</prop>
+          <prop name="Version">2021.01.01</prop>
+          <prop name="Date">22-04-2020</prop>
         </props>
       </attribute>
       <attribute name="p437" type="date" public-name="LearnerActEndDate">
@@ -69,8 +69,8 @@
           <base>the learner's actual end date</base>
         </text>
         <props>
-          <prop name="Version">1920.01.01</prop>
-          <prop name="Date">28-02-2019</prop>
+          <prop name="Version">2021.01.01</prop>
+          <prop name="Date">22-04-2020</prop>
         </props>
       </attribute>
       <attribute name="p438" type="date" public-name="LearnerPlanEndDate">
@@ -78,8 +78,8 @@
           <base>the learner's planned end date</base>
         </text>
         <props>
-          <prop name="Version">1920.01.01</prop>
-          <prop name="Date">28-02-2019</prop>
+          <prop name="Version">2021.01.01</prop>
+          <prop name="Date">22-04-2020</prop>
         </props>
       </attribute>
     </entity>

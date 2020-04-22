@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers.Constants;
@@ -35,7 +36,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                     DateEmpStatApp = les.DateEmpStatApp,
                     EmpId = les.EmpIdNullable,
                     EmpStat = les.EmpStat,
-                    SEM = les.EmploymentStatusMonitorings?.Where(e => e.ESMType == LearnerPagingConstants.LearnerEmploymentStatusSEM).Select(e => (int?)e.ESMCode).FirstOrDefault()
+                    SEM = les.EmploymentStatusMonitorings?.Where(e => e.ESMType.CaseInsensitiveEquals(LearnerPagingConstants.LearnerEmploymentStatusSEM)).Select(e => (int?)e.ESMCode).FirstOrDefault()
                 }).ToList(),
                 LearningDeliveries = l.LearningDeliveries?.Select(ld => new LearningDelivery
                 {
