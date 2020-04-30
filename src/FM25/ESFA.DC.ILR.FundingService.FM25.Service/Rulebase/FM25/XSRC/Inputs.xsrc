@@ -401,11 +401,6 @@
           <prop name="Date">19-03-2019</prop>
         </props>
       </attribute>
-      <attribute name="p461" type="number" public-name="NotionalNVQLevel">
-        <text>
-          <base>the learning delivery's notional NVQ level</base>
-        </text>
-      </attribute>
       <attribute name="p462" type="number" public-name="GuidedLearningHours">
         <text>
           <base>the learning delivery's guided learning hours</base>
@@ -414,6 +409,11 @@
       <attribute name="p463" type="number" public-name="PHours">
         <text>
           <base>the learning delivery's planned hours</base>
+        </text>
+      </attribute>
+      <attribute name="p465" type="text" public-name="NotionalNVQLevel">
+        <text>
+          <base>the learning delivery's notional NVQ level</base>
         </text>
       </attribute>
     </entity>
