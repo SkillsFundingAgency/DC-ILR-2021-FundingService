@@ -54,7 +54,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests.CondenserServiceTests
                 globalThree,
             };
 
-            var fundingOutput = NewService().Condense(fundingOutputs, 1, "1920");
+            var fundingOutput = NewService().Condense(fundingOutputs, 1, "2021");
 
             fundingOutput.Should().Be(globalOne);
             fundingOutput.Learners.Should().HaveCount(6);
@@ -64,7 +64,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests.CondenserServiceTests
         [Fact]
         public void Condense_Null()
         {
-            Action action = () => NewService().Condense(null, 1, "1920");
+            Action action = () => NewService().Condense(null, 1, "2021");
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -75,10 +75,10 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests.CondenserServiceTests
             var global = new FM81Global
             {
                 UKPRN = 1,
-                CurFundYr = "1920"
+                CurFundYr = "2021"
             };
 
-            NewService().Condense(Enumerable.Empty<FM81Global>(), 1, "1920").Should().BeEquivalentTo(global);
+            NewService().Condense(Enumerable.Empty<FM81Global>(), 1, "2021").Should().BeEquivalentTo(global);
         }
 
         [Fact]
@@ -106,7 +106,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests.CondenserServiceTests
                 globalThree,
             };
 
-            var fundingOutput = NewService().Condense(fundingOutputs, 1, "1920");
+            var fundingOutput = NewService().Condense(fundingOutputs, 1, "2021");
 
             fundingOutput.Should().Be(globalOne);
             fundingOutput.Learners.Should().BeEmpty();
@@ -150,7 +150,7 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Tests.CondenserServiceTests
                 globalThree,
             };
 
-            var fundingOutput = NewService().Condense(fundingOutputs, 1, "1920");
+            var fundingOutput = NewService().Condense(fundingOutputs, 1, "2021");
 
             fundingOutput.Should().Be(globalOne);
             fundingOutput.Learners.Should().HaveCount(4);
