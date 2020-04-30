@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Rulebase\ESF 1920 Funding Calc.zip" />
+    <None Remove="Rulebase\ESF 2021 Funding Calc.zip" />
     <None Remove="Rulebase\XSRC\Input.xsrc" />
   </ItemGroup>
 
@@ -22,9 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Rulebase\ESF 1920 Funding Calc.zip">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Rulebase\ESF 2021 Funding Calc.zip" />
   </ItemGroup>
 
   <ItemGroup>
