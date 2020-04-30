@@ -25,8 +25,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
 {
     public class RulebaseInterfaceTests
     {
-        public const string AcademicYear = "1920";
-        public const string RulebaseName = "Loans Bursary 19_20";
+        public const string AcademicYear = "2021";
+        public const string RulebaseName = "Loans Bursary 20_21";
         public const string RulebaseFolder = "Rulebase";
         public const string RulebaseMasterFolder = "RulebaseMasterFiles";
         public const string XsrcName = "Inputs";

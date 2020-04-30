@@ -14,15 +14,15 @@
 
   <ItemGroup>
     <None Remove="Rulebase\ALBInputs.xsrc" />
-    <None Remove="Rulebase\Loans Bursary 19_20.zip" />
+    <None Remove="Rulebase\Loans Bursary 20_21.zip" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Rulebase\Loans Bursary 19_20.zip" />
+    <EmbeddedResource Include="Rulebase\Loans Bursary 20_21.zip" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ESFA.DC.ILR.2021.Model" Version="0.1.1-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.2021.Model" Version="0.1.2-beta0001" />
     <PackageReference Include="ESFA.DC.IO.Interfaces" Version="0.1.35-beta0001" />
     <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.35-beta0001" />
     <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.36-beta0001" />
