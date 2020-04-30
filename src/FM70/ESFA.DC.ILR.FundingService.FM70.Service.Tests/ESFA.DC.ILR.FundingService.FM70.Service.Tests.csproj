@@ -108,12 +108,12 @@
     <Compile Include="RulebaseInterfaceTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\ESFA.DC.ILR.FundingService.FM70.Service\Rulebase\ESF 1920 Funding Calc.zip">
-      <Link>Rulebase\ESF 1920 Funding Calc.zip</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\ESFA.DC.ILR.FundingService.FM70.Service\Rulebase\XSRC\Input.xsrc">
       <Link>Rulebase\XSRC\Input.xsrc</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\ESFA.DC.ILR.FundingService.FM70.Service\Rulebase\ESF 2021 Funding Calc.zip">
+      <Link>Rulebase\ESF 2021 Funding Calc.zip</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="App.config" />
@@ -122,7 +122,7 @@
     <Content Include="RulebaseMasterFiles\XSRC\Input.xsrc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="RulebaseMasterFiles\ESF 1920 Funding Calc.zip">
+    <Content Include="RulebaseMasterFiles\ESF 2021 Funding Calc.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

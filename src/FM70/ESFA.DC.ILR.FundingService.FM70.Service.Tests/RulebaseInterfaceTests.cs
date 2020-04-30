@@ -28,8 +28,8 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
 {
     public class RulebaseInterfaceTests
     {
-        public const string AcademicYear = "1920";
-        public const string RulebaseName = "ESF 1920 Funding Calc";
+        public const string AcademicYear = "2021";
+        public const string RulebaseName = "ESF 2021 Funding Calc";
         public const string RulebaseFolder = "Rulebase";
         public const string RulebaseMasterFolder = "RulebaseMasterFiles";
         public const string XsrcName = "Input";
