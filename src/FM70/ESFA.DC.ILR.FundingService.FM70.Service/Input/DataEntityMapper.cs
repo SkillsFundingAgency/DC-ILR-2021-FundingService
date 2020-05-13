@@ -39,19 +39,24 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
             var entities = inputModels?
                 .Where(l => l.LearningDeliveries
                 .Any(ld => _fundModel == ld.FundModel))
-                .Select(l => BuildGlobalDataEntity(l, global)) ?? new List<IDataEntity>();
+                .Select(l => BuildGlobalDataEntity(l, global)) ?? Enumerable.Empty<IDataEntity>();
 
             return entities.Any() ? entities : new List<IDataEntity> { BuildDefaultGlobalDataEntity(global) };
         }
 
         public IDataEntity BuildGlobalDataEntity(FM70LearnerDto learner, Global global)
         {
-           return new DataEntity(Attributes.EntityGlobal)
+            var entity = new DataEntity(Attributes.EntityGlobal)
             {
-                Attributes = BuildGlobalAttributes(global),
-                Children =
-                    learner != null ? new List<IDataEntity> { BuildLearnerDataEntity(learner) } : new List<IDataEntity>()
+                Attributes = BuildGlobalAttributes(global)
             };
+
+            if (learner != null)
+            {
+                entity.AddChild(BuildLearnerDataEntity(learner));
+            }
+
+            return entity;
         }
 
         public IDataEntity BuildDefaultGlobalDataEntity(Global global)
@@ -64,26 +69,24 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
 
         public IDataEntity BuildLearnerDataEntity(FM70LearnerDto learner)
         {
-            return new DataEntity(Attributes.EntityLearner)
+            var learnerEmploymentStatusEntities = learner.LearnerEmploymentStatuses?.Select(BuildLearnerEmploymentStatus) ?? Enumerable.Empty<IDataEntity>();
+            var learningDeliveryEntities = learner.LearningDeliveries?.Where(ld => ld.FundModel == _fundModel).Select(BuildLearningDeliveryDataEntity) ?? Enumerable.Empty<IDataEntity>();
+            var dpOutcomesEntities = learner.DPOutcomes?.Select(BuildDPOutcome) ?? Enumerable.Empty<IDataEntity>();
+
+            var entity = new DataEntity(Attributes.EntityLearner)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
                     { Attributes.LearnRefNumber, new AttributeData(learner.LearnRefNumber) },
                     { Attributes.DateOfBirth, new AttributeData(learner.DateOfBirth) },
-                },
-                Children =
-                    (learner
-                        .LearningDeliveries?
-                        .Where(ld => ld.FundModel == _fundModel)
-                        .Select(BuildLearningDeliveryDataEntity) ?? new List<IDataEntity>())
-                        .Union(
-                            learner.LearnerEmploymentStatuses?
-                            .Select(BuildLearnerEmploymentStatus) ?? new List<IDataEntity>())
-                        .Union(
-                            learner.DPOutcomes?
-                            .Select(BuildDPOutcomes) ?? new List<IDataEntity>())
-                        .ToList()
+                }
             };
+
+            entity.AddChildren(learningDeliveryEntities);
+            entity.AddChildren(learnerEmploymentStatusEntities);
+            entity.AddChildren(dpOutcomesEntities);
+
+            return entity;
         }
 
         public IDataEntity BuildLearningDeliveryDataEntity(LearningDelivery learningDelivery)
@@ -94,7 +97,13 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
             var fcsContractData = _fcsDataReferenceDataService.FcsContractsForConRef(learningDelivery.ConRefNumber);
             var esfData = BuildEsfDataFromContract(fcsContractData);
 
-            return new DataEntity(Attributes.EntityLearningDelivery)
+            var learningDeliveryFamsEntities = learningDelivery?.LearningDeliveryFAMs?.Select(BuildLearningDeliveryFAM) ?? Enumerable.Empty<IDataEntity>();
+            var larsAnnualValueEntities = larsLearningDelivery?.LARSAnnualValues?.Select(BuildLARSAnnualValue) ?? Enumerable.Empty<IDataEntity>();
+            var sfaAreaCostEntities = sfaAreaCost?.Select(BuildSFAAreaCost) ?? Enumerable.Empty<IDataEntity>();
+            var larsFundingEntities = larsLearningDelivery?.LARSFundings?.Select(BuildLARSFunding) ?? Enumerable.Empty<IDataEntity>();
+            var esfEntities = esfData?.Select(BuildEsfDataEntity) ?? Enumerable.Empty<IDataEntity>();
+
+            var entity = new DataEntity(Attributes.EntityLearningDelivery)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
@@ -113,27 +122,16 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
                     { Attributes.OtherFundAdj, new AttributeData(learningDelivery.OtherFundAdj) },
                     { Attributes.Outcome, new AttributeData(learningDelivery.Outcome) },
                     { Attributes.PriorLearnFundAdj, new AttributeData(learningDelivery.PriorLearnFundAdj) },
-                },
-                Children = (
-                            learningDelivery?
-                                    .LearningDeliveryFAMs?
-                                    .Select(BuildLearningDeliveryFAM) ?? new List<IDataEntity>())
-                            .Union(
-                                    larsLearningDelivery?
-                                    .LARSAnnualValues?
-                                   .Select(BuildLARSAnnualValue) ?? new List<IDataEntity>())
-                            .Union(
-                                   sfaAreaCost?
-                                   .Select(BuildSFAAreaCost) ?? new List<IDataEntity>())
-                            .Union(
-                                    larsLearningDelivery?
-                                    .LARSFundings?
-                                   .Select(BuildLARSFunding) ?? new List<IDataEntity>())
-                             .Union(
-                                    esfData?
-                                    .Select(BuildEsfDataEntity) ?? new List<IDataEntity>())
-                            .ToList()
+                }
             };
+
+            entity.AddChildren(learningDeliveryFamsEntities);
+            entity.AddChildren(larsAnnualValueEntities);
+            entity.AddChildren(sfaAreaCostEntities);
+            entity.AddChildren(esfEntities);
+            entity.AddChildren(larsFundingEntities);
+
+            return entity;
         }
 
         public IDataEntity BuildLearningDeliveryFAM(LearningDeliveryFAM learningDeliveryFAM)
@@ -162,7 +160,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Input
             };
         }
 
-        public IDataEntity BuildDPOutcomes(DPOutcome dpOutcome)
+        public IDataEntity BuildDPOutcome(DPOutcome dpOutcome)
         {
             return new DataEntity(Attributes.EntityDPOutcome)
             {

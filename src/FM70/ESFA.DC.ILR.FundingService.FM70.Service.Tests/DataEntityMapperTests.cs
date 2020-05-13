@@ -235,7 +235,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Tests
                 OutStartDate = new DateTime(2019, 1, 1),
             };
 
-            var dataEntity = NewService().BuildDPOutcomes(dpOutcome);
+            var dataEntity = NewService().BuildDPOutcome(dpOutcome);
 
             dataEntity.EntityName.Should().Be("DPOutcome");
             dataEntity.Attributes.Should().HaveCount(5);
