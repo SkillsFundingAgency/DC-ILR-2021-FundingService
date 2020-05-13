@@ -133,6 +133,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                 && lf.PwayCode == learningDelivery.PwayCode).FirstOrDefault();
 
             var sfaAreaCost = _postcodesReferenceDataService.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode);
+            var postcodeSpecialistResources = _postcodesReferenceDataService.SpecialistResourcesForPostcode(learningDelivery.DelLocPostCode);
 
             return new DataEntity(Attributes.EntityLearningDelivery)
             {
@@ -149,6 +150,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                     { Attributes.FworkCode, new AttributeData(learningDelivery.FworkCode) },
                     { Attributes.FrameworkCommonComponent, new AttributeData(larsLearningDelivery.FrameworkCommonComponent) },
                     { Attributes.FrameworkComponentType, new AttributeData(larsFramework?.LARSFrameworkAim?.FrameworkComponentType) },
+                    { Attributes.FundModel, new AttributeData(learningDelivery.FundModel) },
                     { Attributes.LearnActEndDate, new AttributeData(learningDelivery.LearnActEndDate) },
                     { Attributes.LearnPlanEndDate, new AttributeData(learningDelivery.LearnPlanEndDate) },
                     { Attributes.LearnStartDate, new AttributeData(learningDelivery.LearnStartDate) },
@@ -174,6 +176,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                             .Union(
                                    sfaAreaCost?
                                    .Select(BuildSFAAreaCost) ?? new List<IDataEntity>())
+                            .Union(
+                                   postcodeSpecialistResources?
+                                   .Select(BuildPostcodeSpecialistResource) ?? new List<IDataEntity>())
                             .Union(
                                    larsLearningDelivery?
                                    .LARSFundings?
@@ -303,6 +308,19 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                     { Attributes.AreaCosFactor, new AttributeData(sfaAreaCost.AreaCostFactor) },
                     { Attributes.AreaCosEffectiveFrom, new AttributeData(sfaAreaCost.EffectiveFrom) },
                     { Attributes.AreaCosEffectiveTo, new AttributeData(sfaAreaCost.EffectiveTo) },
+                }
+            };
+        }
+
+        public IDataEntity BuildPostcodeSpecialistResource(PostcodeSpecialistResource specResource)
+        {
+            return new DataEntity(Attributes.EntityPostcodeSpecialistResources)
+            {
+                Attributes = new Dictionary<string, IAttributeData>()
+                {
+                    { Attributes.PostcodeSpecResSpecialistResources, new AttributeData(specResource.SpecialistResources) },
+                    { Attributes.PostcodeSpecResEffectiveFrom, new AttributeData(specResource.EffectiveFrom) },
+                    { Attributes.PostcodeSpecResEffectiveTo, new AttributeData(specResource.EffectiveTo) },
                 }
             };
         }

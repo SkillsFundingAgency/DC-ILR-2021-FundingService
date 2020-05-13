@@ -13,11 +13,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Rulebase\FM35 Funding Calc 19_20.zip" />
+    <None Remove="Rulebase\FM35 Funding Calc 20_21.zip" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Rulebase\FM35 Funding Calc 19_20.zip" />
+    <EmbeddedResource Include="Rulebase\FM35 Funding Calc 20_21.zip" />
   </ItemGroup>
 
   <ItemGroup>
