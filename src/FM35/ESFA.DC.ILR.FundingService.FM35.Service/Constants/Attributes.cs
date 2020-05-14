@@ -19,9 +19,10 @@
         public const string EntityLearningDeliveryLARS_Category = "LearningDeliveryLARSCategory";
         public const string EntityLearningDeliveryLARS_Funding = "LearningDeliveryLARS_Funding";
         public const string EntityCampusIdentifiers = "Camps_Identifiers_Reference_DataFunding";
+        public const string EntityPostcodeSpecialistResources = "Postcode_Specialist_Resource_RefData";
 
         // Global Values
-        public const string YearValue = "1920";
+        public const string YearValue = "2021";
         public const string CollectionPeriodValue = "DefaultPeriod";
         public const string Period1 = "R01";
         public const string Period2 = "R02";
@@ -82,6 +83,7 @@
         public const string FworkCode = "FworkCode";
         public const string FrameworkCommonComponent = "FrameworkCommonComponent";
         public const string FrameworkComponentType = "FrameworkComponentType";
+        public const string FundModel = "FundModel";
         public const string LearnActEndDate = "LearnActEndDate";
         public const string LearnPlanEndDate = "LearnPlanEndDate";
         public const string LearnStartDate = "LearnStartDate";
@@ -217,5 +219,10 @@
         public const string CampIdSpecialistResources = "SpecialistResources";
         public const string CampIdEffectiveFrom = "EffectiveFrom";
         public const string CampIdEffectiveTo = "EffectiveTo";
+
+        // Postcode Specialist Resources
+        public const string PostcodeSpecResSpecialistResources = "PostcodeSpecResSpecialistResources";
+        public const string PostcodeSpecResEffectiveFrom = "PostcodeSpecResEffectiveFrom";
+        public const string PostcodeSpecResEffectiveTo = "PostcodeSpecResEffectiveTo";
     }
 }

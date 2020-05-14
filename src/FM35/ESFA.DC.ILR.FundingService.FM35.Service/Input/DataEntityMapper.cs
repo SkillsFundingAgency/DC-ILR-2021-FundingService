@@ -45,7 +45,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
 
             var entities = inputModels?
                 .Where(l => l.LearningDeliveries.Any(ld => ld.FundModel == _fundModel))
-                .Select(l => BuildGlobalDataEntity(l, global)) ?? new List<IDataEntity>();
+                .Select(l => BuildGlobalDataEntity(l, global)) ?? Enumerable.Empty<IDataEntity>();
 
             return entities.Any() ? entities : new List<IDataEntity> { BuildDefaultGlobalDataEntity(global) };
         }
@@ -55,19 +55,20 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
             var orgFunding = _organisationReferenceDataService.OrganisationFundingForUKPRN(global.UKPRN)
                 .Where(f => f.OrgFundFactType.CaseInsensitiveEquals(Attributes.OrgFundFactorTypeAdultSkills));
 
-            var orgDataEntities = orgFunding.Any() ?
-                    orgFunding?.Select(BuildOrgFundingDataEntity).ToList() :
-                    new List<IDataEntity> { new DataEntity(Attributes.EntityOrgFunding) };
+            var orgDataEntities = orgFunding.Any() ? orgFunding?.Select(BuildOrgFundingDataEntity).ToList() : new List<IDataEntity> { new DataEntity(Attributes.EntityOrgFunding) };
 
-            return new DataEntity(Attributes.EntityGlobal)
+            var entity = new DataEntity(Attributes.EntityGlobal)
             {
-                Attributes = BuildGlobalAttributes(global),
-                Children =
-                    learner != null ?
-                     new List<IDataEntity> { BuildLearnerDataEntity(learner) }
-                     .Union(orgDataEntities).ToList()
-                     : new List<IDataEntity>()
+                Attributes = BuildGlobalAttributes(global)
             };
+
+            if (learner != null)
+            {
+                entity.AddChild(BuildLearnerDataEntity(learner));
+                entity.AddChildren(orgDataEntities);
+            }
+
+            return entity;
         }
 
         public IDataEntity BuildDefaultGlobalDataEntity(Global global)
@@ -83,29 +84,26 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
             var sfaPostDisadvantage = _postcodesReferenceDataService.SFADisadvantagesForPostcode(learner.PostcodePrior);
             var specialistResources = _organisationReferenceDataService.SpecialistResourcesForCampusIdentifier(learner.CampId);
 
-            return new DataEntity(Attributes.EntityLearner)
+            var learnerEmploymentStatusEntities = learner.LearnerEmploymentStatuses?.Select(BuildLearnerEmploymentStatus) ?? Enumerable.Empty<IDataEntity>();
+            var learningDeliveryEntities = learner.LearningDeliveries?.Where(ld => ld.FundModel == _fundModel).Select(BuildLearningDeliveryDataEntity) ?? Enumerable.Empty<IDataEntity>();
+            var sfaPostDisadvantageEntities = sfaPostDisadvantage?.Select(BuildSFAPostcodeDisadvantage) ?? Enumerable.Empty<IDataEntity>();
+            var specialistResourcesEntities = specialistResources?.Select(BuildSpecialistResources) ?? Enumerable.Empty<IDataEntity>();
+
+            var entity = new DataEntity(Attributes.EntityLearner)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
                     { Attributes.LearnRefNumber, new AttributeData(learner.LearnRefNumber) },
                     { Attributes.DateOfBirth, new AttributeData(learner.DateOfBirth) },
-                },
-                Children =
-                    (learner
-                        .LearningDeliveries?
-                        .Where(ld => ld.FundModel == _fundModel)
-                        .Select(BuildLearningDeliveryDataEntity) ?? new List<IDataEntity>())
-                        .Union(
-                            learner.LearnerEmploymentStatuses?
-                            .Select(BuildLearnerEmploymentStatus) ?? new List<IDataEntity>())
-                        .Union(
-                            sfaPostDisadvantage?
-                            .Select(BuildSFAPostcodeDisadvantage) ?? new List<IDataEntity>())
-                        .Union(
-                            specialistResources?
-                            .Select(BuildSpecialistResources) ?? new List<IDataEntity>())
-                        .ToList()
+                }
             };
+
+            entity.AddChildren(learningDeliveryEntities);
+            entity.AddChildren(learnerEmploymentStatusEntities);
+            entity.AddChildren(sfaPostDisadvantageEntities);
+            entity.AddChildren(specialistResourcesEntities);
+
+            return entity;
         }
 
         public IDataEntity BuildOrgFundingDataEntity(OrgFunding orgFunding)
@@ -133,8 +131,16 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                 && lf.PwayCode == learningDelivery.PwayCode).FirstOrDefault();
 
             var sfaAreaCost = _postcodesReferenceDataService.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode);
+            var postcodeSpecialistResources = _postcodesReferenceDataService.SpecialistResourcesForPostcode(learningDelivery.DelLocPostCode);
 
-            return new DataEntity(Attributes.EntityLearningDelivery)
+            var learningDeliveryFamsEntities = learningDelivery?.LearningDeliveryFAMs?.Select(BuildLearningDeliveryFAM) ?? Enumerable.Empty<IDataEntity>();
+            var larsAnnualValueEntities = larsLearningDelivery?.LARSAnnualValues?.Select(BuildLARSAnnualValue) ?? Enumerable.Empty<IDataEntity>();
+            var larsLearningDeliveryCategoryEntities = larsLearningDelivery?.LARSLearningDeliveryCategories?.Select(BuildLARSLearningDeliveryCategories) ?? Enumerable.Empty<IDataEntity>();
+            var sfaAreaCostEntities = sfaAreaCost?.Select(BuildSFAAreaCost) ?? Enumerable.Empty<IDataEntity>();
+            var specialistResourceEntities = postcodeSpecialistResources?.Select(BuildPostcodeSpecialistResource) ?? Enumerable.Empty<IDataEntity>();
+            var larsFundingEntities = larsLearningDelivery?.LARSFundings?.Select(BuildLARSFunding) ?? Enumerable.Empty<IDataEntity>();
+
+            var entity = new DataEntity(Attributes.EntityLearningDelivery)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
@@ -149,6 +155,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                     { Attributes.FworkCode, new AttributeData(learningDelivery.FworkCode) },
                     { Attributes.FrameworkCommonComponent, new AttributeData(larsLearningDelivery.FrameworkCommonComponent) },
                     { Attributes.FrameworkComponentType, new AttributeData(larsFramework?.LARSFrameworkAim?.FrameworkComponentType) },
+                    { Attributes.FundModel, new AttributeData(learningDelivery.FundModel) },
                     { Attributes.LearnActEndDate, new AttributeData(learningDelivery.LearnActEndDate) },
                     { Attributes.LearnPlanEndDate, new AttributeData(learningDelivery.LearnPlanEndDate) },
                     { Attributes.LearnStartDate, new AttributeData(learningDelivery.LearnStartDate) },
@@ -158,28 +165,17 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                     { Attributes.PriorLearnFundAdj, new AttributeData(learningDelivery.PriorLearnFundAdj) },
                     { Attributes.ProgType, new AttributeData(learningDelivery.ProgType) },
                     { Attributes.PwayCode, new AttributeData(learningDelivery.PwayCode) }
-                },
-                Children = (
-                            learningDelivery?
-                            .LearningDeliveryFAMs?
-                            .Select(BuildLearningDeliveryFAM) ?? new List<IDataEntity>())
-                            .Union(
-                                   larsLearningDelivery?
-                                   .LARSAnnualValues?
-                                   .Select(BuildLARSAnnualValue) ?? new List<IDataEntity>())
-                            .Union(
-                                   larsLearningDelivery?
-                                   .LARSLearningDeliveryCategories?
-                                   .Select(BuildLARSLearningDeliveryCategories) ?? new List<IDataEntity>())
-                            .Union(
-                                   sfaAreaCost?
-                                   .Select(BuildSFAAreaCost) ?? new List<IDataEntity>())
-                            .Union(
-                                   larsLearningDelivery?
-                                   .LARSFundings?
-                                   .Select(BuildLARSFunding) ?? new List<IDataEntity>())
-                            .ToList()
+                }
             };
+
+            entity.AddChildren(learningDeliveryFamsEntities);
+            entity.AddChildren(larsAnnualValueEntities);
+            entity.AddChildren(larsLearningDeliveryCategoryEntities);
+            entity.AddChildren(sfaAreaCostEntities);
+            entity.AddChildren(specialistResourceEntities);
+            entity.AddChildren(larsFundingEntities);
+
+            return entity;
         }
 
         public IDataEntity BuildLearningDeliveryFAM(LearningDeliveryFAM learningDeliveryFAM)
@@ -303,6 +299,19 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                     { Attributes.AreaCosFactor, new AttributeData(sfaAreaCost.AreaCostFactor) },
                     { Attributes.AreaCosEffectiveFrom, new AttributeData(sfaAreaCost.EffectiveFrom) },
                     { Attributes.AreaCosEffectiveTo, new AttributeData(sfaAreaCost.EffectiveTo) },
+                }
+            };
+        }
+
+        public IDataEntity BuildPostcodeSpecialistResource(PostcodeSpecialistResource specResource)
+        {
+            return new DataEntity(Attributes.EntityPostcodeSpecialistResources)
+            {
+                Attributes = new Dictionary<string, IAttributeData>()
+                {
+                    { Attributes.PostcodeSpecResSpecialistResources, new AttributeData(specResource.SpecialistResources) },
+                    { Attributes.PostcodeSpecResEffectiveFrom, new AttributeData(specResource.EffectiveFrom) },
+                    { Attributes.PostcodeSpecResEffectiveTo, new AttributeData(specResource.EffectiveTo) },
                 }
             };
         }

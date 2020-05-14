@@ -24,7 +24,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             result.OrganisationsVersion.Version.Should().Be("1");
             result.Employers.Version.Should().Be("1");
             result.CoFVersion.Version.Should().Be("1");
-            result.EasUploadDateTime.UploadDateTime.Should().Be(new DateTime(2019, 8, 1));
+            result.EasFileDetails.FileName.Should().Be("EAS.csv");
+            result.EasFileDetails.UploadDateTime.Should().Be(new DateTime(2019, 8, 1));
         }
 
         [Fact]
@@ -60,7 +61,11 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                 OrganisationsVersion = new OrganisationsVersion { Version = "1" },
                 Employers = new EmployersVersion { Version = "1" },
                 CoFVersion = new CoFVersion { Version = "1" },
-                EasUploadDateTime = new EasUploadDateTime { UploadDateTime = new DateTime(2019, 8, 1) },
+                EasFileDetails = new EasFileDetails
+                {
+                    FileName = "EAS.csv",
+                    UploadDateTime = new DateTime(2019, 8, 1)
+                },
             },
             CollectionDates = new IlrCollectionDates
             {

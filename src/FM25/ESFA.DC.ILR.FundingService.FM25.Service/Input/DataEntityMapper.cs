@@ -39,18 +39,24 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
             var entities = inputModels?
                 .Where(l => l.LearningDeliveries
                 .Any(ld => ld.FundModel == _fundModel))
-                .Select(l => BuildGlobalDataEntity(l, global)) ?? new List<IDataEntity>();
+                .Select(l => BuildGlobalDataEntity(l, global)) ?? Enumerable.Empty<IDataEntity>();
 
             return entities.Any() ? entities : new List<IDataEntity> { BuildDefaultGlobalDataEntity(global) };
         }
 
         public IDataEntity BuildGlobalDataEntity(FM25LearnerDto learner, Global global)
         {
-            return new DataEntity(Attributes.EntityGlobal)
+            var entity = new DataEntity(Attributes.EntityGlobal)
             {
-                Attributes = BuildGlobalAttributes(global),
-                Children = learner != null ? new List<IDataEntity>() { BuildLearnerDataEntity(learner) } : new List<IDataEntity>()
+                Attributes = BuildGlobalAttributes(global)
             };
+
+            if (learner != null)
+            {
+                entity.AddChild(BuildLearnerDataEntity(learner));
+            }
+
+            return entity;
         }
 
         public IDataEntity BuildDefaultGlobalDataEntity(Global global)
@@ -66,7 +72,11 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
             var efaDisadvantageUplift = _postcodesReferenceDataService.LatestEFADisadvantagesUpliftForPostcode(learner.Postcode);
             var specialistResources = _organisationReferenceDataService.SpecialistResourcesForCampusIdentifier(learner.CampId);
 
-            return new DataEntity(Attributes.EntityLearner)
+            var specialistResourcesEntities = specialistResources?.Select(BuildSpecialistResources) ?? Enumerable.Empty<IDataEntity>();
+            var dpOutcomesEntities = learner.DPOutcomes?.Select(BuildDPOutcome) ?? Enumerable.Empty<IDataEntity>();
+            var learningDeliveryEntities = learner.LearningDeliveries?.Select(BuildLearningDeliveryDataEntity) ?? Enumerable.Empty<IDataEntity>();
+
+            var entity = new DataEntity(Attributes.EntityLearner)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
@@ -84,26 +94,24 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { Attributes.PlanLearnHours, new AttributeData(learner.PlanLearnHours) },
                     { Attributes.PostcodeDisadvantageUplift, new AttributeData(efaDisadvantageUplift) },
                     { Attributes.ULN, new AttributeData(learner.ULN) },
-                },
-                Children =
-                    (learner
-                        .LearningDeliveries?
-                        .Select(BuildLearningDeliveryDataEntity) ?? new List<IDataEntity>())
-                        .Union(
-                            learner.DPOutcomes?
-                            .Select(BuildDPOutcome) ?? new List<IDataEntity>())
-                        .Union(
-                            specialistResources?
-                            .Select(BuildSpecialistResources) ?? new List<IDataEntity>())
-                        .ToList()
+                }
             };
+
+            entity.AddChildren(specialistResourcesEntities);
+            entity.AddChildren(dpOutcomesEntities);
+            entity.AddChildren(learningDeliveryEntities);
+
+            return entity;
         }
 
         public IDataEntity BuildLearningDeliveryDataEntity(LearningDelivery learningDelivery)
         {
             var larsLearningDelivery = _larsReferenceDataService.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef);
 
-            return new DataEntity(Attributes.EntityLearningDelivery)
+            var learningDeliveryFamsEntities = learningDelivery?.LearningDeliveryFAMs?.Select(BuildLearningDeliveryFAM) ?? Enumerable.Empty<IDataEntity>();
+            var larsValidityEntities = larsLearningDelivery?.LARSValidities?.Select(BuildLearningDeliveryLARSValidity) ?? Enumerable.Empty<IDataEntity>();
+
+            var entity = new DataEntity(Attributes.EntityLearningDelivery)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
@@ -125,17 +133,13 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { Attributes.ProgType, new AttributeData(learningDelivery.ProgType) },
                     { Attributes.SectorSubjectAreaTier2, new AttributeData(larsLearningDelivery.SectorSubjectAreaTier2) },
                     { Attributes.WithdrawReason, new AttributeData(learningDelivery.WithdrawReason) },
-                },
-                Children = (
-                            learningDelivery?
-                            .LearningDeliveryFAMs?
-                            .Select(BuildLearningDeliveryFAM) ?? new List<IDataEntity>())
-                            .Union(
-                                    larsLearningDelivery?
-                                    .LARSValidities?
-                                    .Select(BuildLearningDeliveryLARSValidity) ?? new List<IDataEntity>())
-                            .ToList()
+                },      
             };
+
+            entity.AddChildren(learningDeliveryFamsEntities);
+            entity.AddChildren(larsValidityEntities);
+
+            return entity;
         }
 
         public IDataEntity BuildLearningDeliveryFAM(LearningDeliveryFAM learningDeliveryFAM)

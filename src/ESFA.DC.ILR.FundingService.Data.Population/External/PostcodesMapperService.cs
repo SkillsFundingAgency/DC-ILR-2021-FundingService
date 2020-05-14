@@ -25,6 +25,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                     EfaDisadvantages = p.EfaDisadvantages?.Select(ed => MapEfaDisadvantage(ed, p.PostCode)).ToList(),
                     SfaAreaCosts = p.SfaAreaCosts?.Select(sa => MapSfaAreaCost(sa, p.PostCode)).ToList(),
                     SfaDisadvantages = p.SfaDisadvantages?.Select(sd => MapSfaDisadvantage(sd, p.PostCode)).ToList(),
+                    SpecialistResources = p.PostcodeSpecialistResources?.Select(sd => MapSpecialistResources(sd, p.PostCode)).ToList(),
                 }, StringComparer.OrdinalIgnoreCase);
         }
 
@@ -69,6 +70,17 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 Uplift = sfaDisadvantage.Uplift,
                 EffectiveFrom = sfaDisadvantage.EffectiveFrom,
                 EffectiveTo = sfaDisadvantage.EffectiveTo
+            };
+        }
+
+        private Data.External.Postcodes.Model.PostcodeSpecialistResource MapSpecialistResources(ReferenceDataService.Model.Postcodes.PostcodeSpecialistResource specResource, string postcode)
+        {
+            return new Data.External.Postcodes.Model.PostcodeSpecialistResource
+            {
+                Postcode = postcode,
+                SpecialistResources = specResource.SpecialistResources,
+                EffectiveFrom = specResource.EffectiveFrom,
+                EffectiveTo = specResource.EffectiveTo
             };
         }
     }

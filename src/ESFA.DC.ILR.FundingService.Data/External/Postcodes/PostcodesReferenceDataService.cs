@@ -13,6 +13,7 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Postcodes
         private readonly IEnumerable<DasDisadvantage> _emptyDasDisadvantage = new List<DasDisadvantage>();
         private readonly IEnumerable<SfaDisadvantage> _emptySfaDisadvantage = new List<SfaDisadvantage>();
         private readonly IEnumerable<EfaDisadvantage> _emptyEfaDisadvantage = new List<EfaDisadvantage>();
+        private readonly IEnumerable<PostcodeSpecialistResource> _emptySpecialistResources = new List<PostcodeSpecialistResource>();
 
         public PostcodesReferenceDataService(IExternalDataCache referenceDataCache)
         {
@@ -56,6 +57,13 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Postcodes
                 .OrderByDescending(ef => ef.EffectiveFrom)
                 .Select(u => u.Uplift)
                 .FirstOrDefault();
+        }
+
+        public IEnumerable<PostcodeSpecialistResource> SpecialistResourcesForPostcode(string postcode)
+        {
+            _referenceDataCache.PostcodeRoots.TryGetValue(postcode, out PostcodeRoot postcodeRoot);
+
+            return postcodeRoot?.SpecialistResources ?? _emptySpecialistResources;
         }
     }
 }

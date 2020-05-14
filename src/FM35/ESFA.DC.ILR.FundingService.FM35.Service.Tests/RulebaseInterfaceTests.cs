@@ -29,8 +29,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
 {
     public class RulebaseInterfaceTests
     {
-        public const string AcademicYear = "1920";
-        public const string RulebaseName = "FM35 Funding Calc 19_20";
+        public const string AcademicYear = "2021";
+        public const string RulebaseName = "FM35 Funding Calc 20_21";
         public const string RulebaseFolder = "Rulebase";
         public const string RulebaseMasterFolder = "RulebaseMasterFiles";
         public const string XsrcName = "Inputs";
@@ -176,6 +176,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 Attributes.EntityLearningDeliveryLARS_Category,
                 Attributes.EntityLearningDeliveryLARS_Funding,
                 Attributes.EntityCampusIdentifiers,
+                Attributes.EntityPostcodeSpecialistResources,
             };
         }
 
@@ -205,6 +206,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 Attributes.FworkCode,
                 Attributes.FrameworkCommonComponent,
                 Attributes.FrameworkComponentType,
+                Attributes.FundModel,
                 Attributes.LearnActEndDate,
                 Attributes.LearnPlanEndDate,
                 Attributes.LearnStartDate,
@@ -242,7 +244,10 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 Attributes.AreaCosEffectiveTo,
                 Attributes.CampIdSpecialistResources,
                 Attributes.CampIdEffectiveFrom,
-                Attributes.CampIdEffectiveTo
+                Attributes.CampIdEffectiveTo,
+                Attributes.PostcodeSpecResSpecialistResources,
+                Attributes.PostcodeSpecResEffectiveFrom,
+                Attributes.PostcodeSpecResEffectiveTo
             };
         }
 
@@ -474,6 +479,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 .Returns(new List<CampusIdentifierSpecResource> { new CampusIdentifierSpecResource { SpecialistResources = "Y", EffectiveFrom = new DateTime(2020, 8, 1) } });
             postcodesReferenceDataServiceMock.Setup(p => p.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode)).Returns(new List<SfaAreaCost> { new SfaAreaCost() });
             postcodesReferenceDataServiceMock.Setup(p => p.SFADisadvantagesForPostcode(learner.PostcodePrior)).Returns(new List<SfaDisadvantage> { new SfaDisadvantage() });
+            postcodesReferenceDataServiceMock.Setup(p => p.SpecialistResourcesForPostcode(learningDelivery.DelLocPostCode)).Returns(new List<PostcodeSpecialistResource> { new PostcodeSpecialistResource() });
 
             return new DataEntityMapper(
                 largeEmployersRefererenceDataServiceMock.Object,
