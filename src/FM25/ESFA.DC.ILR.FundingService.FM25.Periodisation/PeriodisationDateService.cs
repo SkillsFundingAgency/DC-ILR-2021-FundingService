@@ -1,4 +1,5 @@
-﻿using ESFA.DC.ILR.FundingService.FM25.Model.Output;
+﻿using ESFA.DC.ILR.FundingService.Data.Constants;
+using ESFA.DC.ILR.FundingService.FM25.Model.Output;
 using ESFA.DC.ILR.FundingService.FM25.Periodisation.Constants;
 using ESFA.DC.ILR.FundingService.FM25.Periodisation.Interfaces;
 using System;
@@ -35,22 +36,22 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation
         {
             if (_periodisationService.IsLearnerTrainee(learner))
             {
-                return learner.LearnerStartDate > DateConstants.AcademicYearStartDate ? learner.LearnerStartDate.Value : DateConstants.AcademicYearStartDate;
+                return learner.LearnerStartDate > AcademicYearConstants.YearStartDate ? learner.LearnerStartDate.Value : AcademicYearConstants.YearStartDate;
             }
 
-            return DateConstants.AcademicYearStartDate;
+            return AcademicYearConstants.YearStartDate;
         }
 
         public DateTime GetPeriodisationEndDate(FM25Learner learner, bool learnerIsTrainee)
         {
-            if (!learnerIsTrainee) return DateConstants.AcademicYearEndDate;
+            if (!learnerIsTrainee) return AcademicYearConstants.YearEndDate;
 
             if(learner.LearnerActEndDate.HasValue)
             {
-                return learner.LearnerPlanEndDate > DateConstants.AcademicYearStartDate ? new[] { learner.LearnerPlanEndDate.Value, learner.LearnerActEndDate.Value, DateConstants.AcademicYearEndDate }.Min() : learner.LearnerActEndDate.Value;
+                return learner.LearnerPlanEndDate > AcademicYearConstants.YearStartDate ? new[] { learner.LearnerPlanEndDate.Value, learner.LearnerActEndDate.Value, AcademicYearConstants.YearEndDate }.Min() : learner.LearnerActEndDate.Value;
             }
 
-            return learner.LearnerPlanEndDate > DateConstants.AcademicYearStartDate ? new[] { learner.LearnerPlanEndDate.Value, DateConstants.AcademicYearEndDate }.Min() : DateConstants.AcademicYearEndDate;
+            return learner.LearnerPlanEndDate > AcademicYearConstants.YearStartDate ? new[] { learner.LearnerPlanEndDate.Value, AcademicYearConstants.YearEndDate }.Min() : AcademicYearConstants.YearEndDate;
         }
 
         public int GetMonthsBetweenDatesIgnoringDaysInclusive(DateTime periodisationStartDate, DateTime periodisationEndDate)

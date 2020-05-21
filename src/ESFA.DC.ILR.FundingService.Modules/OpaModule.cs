@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using ESFA.DC.ILR.FundingService.Data.Constants;
 using ESFA.DC.OPA.Service;
 using ESFA.DC.OPA.Service.Builders;
 using ESFA.DC.OPA.Service.Interface;
@@ -12,7 +13,7 @@ namespace ESFA.DC.ILR.FundingService.Modules
         {
             containerBuilder.RegisterType<DataEntityAttributeService>().As<IDataEntityAttributeService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<SessionBuilder>().As<ISessionBuilder>().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<OPADataEntityBuilder>().As<IOPADataEntityBuilder>().WithParameter("yearStartDate", new System.DateTime(2020, 8, 1)).InstancePerLifetimeScope();
+            containerBuilder.RegisterType<OPADataEntityBuilder>().As<IOPADataEntityBuilder>().WithParameter("yearStartDate", AcademicYearConstants.YearStartDate).InstancePerLifetimeScope();
         }
     }
 }
