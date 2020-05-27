@@ -13,7 +13,5 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model
         public IReadOnlyCollection<SfaAreaCost> SfaAreaCosts { get; set; }
 
         public IReadOnlyCollection<SfaDisadvantage> SfaDisadvantages { get; set; }
-
-        public IReadOnlyCollection<PostcodeSpecialistResource> SpecialistResources { get; set; }
     }
 }

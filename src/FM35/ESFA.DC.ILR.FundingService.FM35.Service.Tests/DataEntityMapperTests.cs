@@ -130,7 +130,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learnAimRef)).Returns(larsLearningDelivery);
             orgReferenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(global.UKPRN)).Returns(new List<OrgFunding> { new OrgFunding() });
             postcodesReferenceDataServiceMock.Setup(o => o.SFADisadvantagesForPostcode(postcodePrior)).Returns(new List<SfaDisadvantage>());
-            postcodesReferenceDataServiceMock.Setup(o => o.SpecialistResourcesForPostcode(delLocPostcode)).Returns(new List<PostcodeSpecialistResource>());
 
             var dataEntities = NewService(
                 largeEmployersReferenceDataServiceMock.Object,
@@ -442,7 +441,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
 
             larsReferenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
             postcodesReferenceDataServiceMock.Setup(p => p.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode)).Returns(new List<SfaAreaCost> { new SfaAreaCost() });
-            postcodesReferenceDataServiceMock.Setup(p => p.SpecialistResourcesForPostcode(learningDelivery.DelLocPostCode)).Returns(new List<PostcodeSpecialistResource> { new PostcodeSpecialistResource() });
 
             var dataEntity = NewService(
                 larsReferenceDataService: larsReferenceDataServiceMock.Object,

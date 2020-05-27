@@ -52,6 +52,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 OrgVersion = referenceDataVersions.OrganisationsVersion.Version,
                 OrgFunding = _organisationsMapperService.MapOrgFundings(referenceDataRoot.Organisations),
                 CampusIdentifierSpecResources = _organisationsMapperService.MapCampusIdentifiers(referenceDataRoot.Organisations),
+                PostcodeSpecResources = _organisationsMapperService.MapPostcodeSpecialistResources(referenceDataRoot.Organisations),
 
                 LargeEmployers = _largeEmployersMapperService.MapLargeEmployers(referenceDataRoot.Employers),
 

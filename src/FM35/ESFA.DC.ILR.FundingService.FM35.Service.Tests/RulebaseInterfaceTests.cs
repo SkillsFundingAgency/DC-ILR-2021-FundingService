@@ -479,7 +479,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 .Returns(new List<CampusIdentifierSpecResource> { new CampusIdentifierSpecResource { SpecialistResources = "Y", EffectiveFrom = new DateTime(2020, 8, 1) } });
             postcodesReferenceDataServiceMock.Setup(p => p.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode)).Returns(new List<SfaAreaCost> { new SfaAreaCost() });
             postcodesReferenceDataServiceMock.Setup(p => p.SFADisadvantagesForPostcode(learner.PostcodePrior)).Returns(new List<SfaDisadvantage> { new SfaDisadvantage() });
-            postcodesReferenceDataServiceMock.Setup(p => p.SpecialistResourcesForPostcode(learningDelivery.DelLocPostCode)).Returns(new List<PostcodeSpecialistResource> { new PostcodeSpecialistResource() });
 
             return new DataEntityMapper(
                 largeEmployersRefererenceDataServiceMock.Object,

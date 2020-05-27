@@ -55,7 +55,10 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
             var orgFunding = _organisationReferenceDataService.OrganisationFundingForUKPRN(global.UKPRN)
                 .Where(f => f.OrgFundFactType.CaseInsensitiveEquals(Attributes.OrgFundFactorTypeAdultSkills));
 
+            var postcodeSpecialistResources = _organisationReferenceDataService.PostcodeSpecialistResourcesForUkprn(global.UKPRN).ToList();
+
             var orgDataEntities = orgFunding.Any() ? orgFunding?.Select(BuildOrgFundingDataEntity).ToList() : new List<IDataEntity> { new DataEntity(Attributes.EntityOrgFunding) };
+            var specialistResourceEntities = postcodeSpecialistResources?.Select(BuildPostcodeSpecialistResource) ?? Enumerable.Empty<IDataEntity>();
 
             var entity = new DataEntity(Attributes.EntityGlobal)
             {
@@ -66,6 +69,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
             {
                 entity.AddChild(BuildLearnerDataEntity(learner));
                 entity.AddChildren(orgDataEntities);
+                entity.AddChildren(specialistResourceEntities);
             }
 
             return entity;
@@ -131,13 +135,11 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                 && lf.PwayCode == learningDelivery.PwayCode).FirstOrDefault();
 
             var sfaAreaCost = _postcodesReferenceDataService.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode);
-            var postcodeSpecialistResources = _postcodesReferenceDataService.SpecialistResourcesForPostcode(learningDelivery.DelLocPostCode);
 
             var learningDeliveryFamsEntities = learningDelivery?.LearningDeliveryFAMs?.Select(BuildLearningDeliveryFAM) ?? Enumerable.Empty<IDataEntity>();
             var larsAnnualValueEntities = larsLearningDelivery?.LARSAnnualValues?.Select(BuildLARSAnnualValue) ?? Enumerable.Empty<IDataEntity>();
             var larsLearningDeliveryCategoryEntities = larsLearningDelivery?.LARSLearningDeliveryCategories?.Select(BuildLARSLearningDeliveryCategories) ?? Enumerable.Empty<IDataEntity>();
             var sfaAreaCostEntities = sfaAreaCost?.Select(BuildSFAAreaCost) ?? Enumerable.Empty<IDataEntity>();
-            var specialistResourceEntities = postcodeSpecialistResources?.Select(BuildPostcodeSpecialistResource) ?? Enumerable.Empty<IDataEntity>();
             var larsFundingEntities = larsLearningDelivery?.LARSFundings?.Select(BuildLARSFunding) ?? Enumerable.Empty<IDataEntity>();
 
             var entity = new DataEntity(Attributes.EntityLearningDelivery)
@@ -172,7 +174,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
             entity.AddChildren(larsAnnualValueEntities);
             entity.AddChildren(larsLearningDeliveryCategoryEntities);
             entity.AddChildren(sfaAreaCostEntities);
-            entity.AddChildren(specialistResourceEntities);
             entity.AddChildren(larsFundingEntities);
 
             return entity;
@@ -309,6 +310,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
+                    { Attributes.PostcodeSpecResPostcode, new AttributeData(specResource.Postcode) },
                     { Attributes.PostcodeSpecResSpecialistResources, new AttributeData(specResource.SpecialistResources) },
                     { Attributes.PostcodeSpecResEffectiveFrom, new AttributeData(specResource.EffectiveFrom) },
                     { Attributes.PostcodeSpecResEffectiveTo, new AttributeData(specResource.EffectiveTo) },

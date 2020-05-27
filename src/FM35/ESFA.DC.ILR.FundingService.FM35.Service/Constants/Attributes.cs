@@ -221,6 +221,7 @@
         public const string CampIdEffectiveTo = "EffectiveTo";
 
         // Postcode Specialist Resources
+        public const string PostcodeSpecResPostcode = "PostcodeSpecResPostcode";
         public const string PostcodeSpecResSpecialistResources = "PostcodeSpecResSpecialistResources";
         public const string PostcodeSpecResEffectiveFrom = "PostcodeSpecResEffectiveFrom";
         public const string PostcodeSpecResEffectiveTo = "PostcodeSpecResEffectiveTo";

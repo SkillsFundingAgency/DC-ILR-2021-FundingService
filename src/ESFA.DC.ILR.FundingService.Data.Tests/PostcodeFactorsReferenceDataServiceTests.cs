@@ -207,37 +207,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             NewService(referenceDataCacheMock.Object).LatestEFADisadvantagesUpliftForPostcode("notPostcode").Should().BeNull();
         }
 
-        [Fact]
-        public void SpecialistResourcesForPostcode()
-        {
-            var postcode = "postcode";
-            var specialistResources = new List<PostcodeSpecialistResource>();
-
-            var referenceDataCacheMock = new Mock<IExternalDataCache>();
-
-            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeRoots)
-                .Returns(new Dictionary<string, PostcodeRoot>()
-                {
-                    { postcode, new PostcodeRoot() { SpecialistResources = specialistResources } }
-                });
-
-            NewService(referenceDataCacheMock.Object).SpecialistResourcesForPostcode(postcode).Should().BeSameAs(specialistResources);
-        }
-
-        [Fact]
-        public void SpecialistResourcesForPostcode_NotExists()
-        {
-            var referenceDataCacheMock = new Mock<IExternalDataCache>();
-
-            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeRoots)
-                .Returns(new Dictionary<string, PostcodeRoot>()
-                {
-                    { "postcode", null }
-                });
-
-            NewService(referenceDataCacheMock.Object).SpecialistResourcesForPostcode("notPostcode").Should().BeEmpty();
-        }
-
         private PostcodesReferenceDataService NewService(IExternalDataCache referenceDataCache = null)
         {
             return new PostcodesReferenceDataService(referenceDataCache);
