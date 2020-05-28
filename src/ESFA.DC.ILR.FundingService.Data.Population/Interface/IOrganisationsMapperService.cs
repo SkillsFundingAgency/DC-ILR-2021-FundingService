@@ -9,5 +9,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Interface
         IDictionary<int, IReadOnlyCollection<OrgFunding>> MapOrgFundings(IReadOnlyCollection<Organisation> organisations);
 
         IDictionary<string, IReadOnlyCollection<CampusIdentifierSpecResource>> MapCampusIdentifiers(IReadOnlyCollection<Organisation> organisations);
+
+        IDictionary<int, IReadOnlyCollection<PostcodeSpecialistResource>> MapPostcodeSpecialistResources(IReadOnlyCollection<Organisation> organisations);
     }
 }

@@ -28,6 +28,8 @@ namespace ESFA.DC.ILR.FundingService.Data.External
 
         public IDictionary<string, IReadOnlyCollection<CampusIdentifierSpecResource>> CampusIdentifierSpecResources { get; set; }
 
+        public IDictionary<int, IReadOnlyCollection<PostcodeSpecialistResource>> PostcodeSpecResources { get; set; }
+
         public IDictionary<int, IReadOnlyCollection<LargeEmployers>> LargeEmployers { get; set; }
 
         public IDictionary<long, IReadOnlyCollection<AECEarningsHistory>> AECLatestInYearEarningHistory { get; set; }

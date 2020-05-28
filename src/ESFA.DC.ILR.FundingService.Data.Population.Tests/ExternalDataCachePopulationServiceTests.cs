@@ -101,9 +101,12 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
 
             var organisationCurrentVersion = "OrganisationVersion";
             var orgFundings = new Dictionary<int, IReadOnlyCollection<OrgFunding>>();
+            var postcodeSpecialistResources = new Dictionary<int, IReadOnlyCollection<PostcodeSpecialistResource>>();
 
             organisationsMapperServiceMock.Setup(o => o.MapOrgFundings(
                 It.IsAny<IReadOnlyCollection<ReferenceDataService.Model.Organisations.Organisation>>())).Returns(orgFundings).Verifiable();
+            organisationsMapperServiceMock.Setup(o => o.MapPostcodeSpecialistResources(
+                It.IsAny<IReadOnlyCollection<ReferenceDataService.Model.Organisations.Organisation>>())).Returns(postcodeSpecialistResources).Verifiable();
 
             var appsEarningsHistoryMapperServiceMock = new Mock<IAppsEarningsHistoryMapperService>();
 
@@ -169,6 +172,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
 
             externalDataCache.OrgVersion.Should().Be(organisationCurrentVersion);
             externalDataCache.OrgFunding.Should().BeSameAs(orgFundings);
+            externalDataCache.PostcodeSpecResources.Should().BeSameAs(postcodeSpecialistResources);
 
             externalDataCache.Periods.Should().BeEquivalentTo(periods);
         }

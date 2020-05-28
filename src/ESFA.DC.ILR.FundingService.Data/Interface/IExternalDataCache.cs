@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory.Model;
 using ESFA.DC.ILR.FundingService.Data.External.CollectionPeriod.Model;
 using ESFA.DC.ILR.FundingService.Data.External.FCS.Model;
@@ -27,6 +26,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Interface
         IDictionary<int, IReadOnlyCollection<OrgFunding>> OrgFunding { get; }
 
         IDictionary<string, IReadOnlyCollection<CampusIdentifierSpecResource>> CampusIdentifierSpecResources { get;}
+
+        IDictionary<int, IReadOnlyCollection<PostcodeSpecialistResource>> PostcodeSpecResources { get; }
 
         IDictionary<int, IReadOnlyCollection<LargeEmployers>> LargeEmployers { get; }
 

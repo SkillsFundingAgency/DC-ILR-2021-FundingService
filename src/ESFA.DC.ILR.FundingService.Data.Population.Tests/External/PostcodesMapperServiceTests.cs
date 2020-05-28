@@ -32,14 +32,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                             EffectiveFrom = new DateTime(2018, 9, 1)
                          }
                      },
-                     PostcodeSpecialistResources = new List<ReferenceDataService.Model.Postcodes.PostcodeSpecialistResource>
-                     {
-                         new ReferenceDataService.Model.Postcodes.PostcodeSpecialistResource
-                         {
-                             SpecialistResources = "Y",
-                             EffectiveFrom = new DateTime(2018, 8, 1)
-                         }
-                     }
                 },
                 new ReferenceDataService.Model.Postcodes.Postcode
                 {
@@ -123,15 +115,6 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                                 EffectiveFrom = new DateTime(2018, 9, 1)
                             }
                         },
-                        SpecialistResources = new List<PostcodeSpecialistResource>
-                        {
-                            new PostcodeSpecialistResource
-                            {
-                                Postcode = "PostCode1",
-                                SpecialistResources = "Y",
-                                EffectiveFrom = new DateTime(2018, 8, 1)
-                            }
-                        }
                     }
                 },
                 {
