@@ -200,6 +200,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 Attributes.AimSeqNumber,
                 Attributes.AimType,
                 Attributes.CompStatus,
+                Attributes.DelLocPostCode,
                 Attributes.EmpOutcome,
                 Attributes.EnglandFEHEStatus,
                 Attributes.EnglPrscID,
@@ -245,6 +246,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 Attributes.CampIdSpecialistResources,
                 Attributes.CampIdEffectiveFrom,
                 Attributes.CampIdEffectiveTo,
+                Attributes.PostcodeSpecResPostcode,
                 Attributes.PostcodeSpecResSpecialistResources,
                 Attributes.PostcodeSpecResEffectiveFrom,
                 Attributes.PostcodeSpecResEffectiveTo
@@ -477,6 +479,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 .Returns(new List<OrgFunding> { new OrgFunding { OrgFundFactType = Attributes.OrgFundFactorTypeAdultSkills } });
             organisationRefererenceDataServiceMock.Setup(o => o.SpecialistResourcesForCampusIdentifier(It.IsAny<string>()))
                 .Returns(new List<CampusIdentifierSpecResource> { new CampusIdentifierSpecResource { SpecialistResources = "Y", EffectiveFrom = new DateTime(2020, 8, 1) } });
+            organisationRefererenceDataServiceMock.Setup(o => o.PostcodeSpecialistResourcesForUkprn(It.IsAny<int>()))
+                .Returns(new List<PostcodeSpecialistResource> { new PostcodeSpecialistResource { SpecialistResources = "Y", EffectiveFrom = new DateTime(2020, 8, 1) } });
             postcodesReferenceDataServiceMock.Setup(p => p.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode)).Returns(new List<SfaAreaCost> { new SfaAreaCost() });
             postcodesReferenceDataServiceMock.Setup(p => p.SFADisadvantagesForPostcode(learner.PostcodePrior)).Returns(new List<SfaDisadvantage> { new SfaDisadvantage() });
 

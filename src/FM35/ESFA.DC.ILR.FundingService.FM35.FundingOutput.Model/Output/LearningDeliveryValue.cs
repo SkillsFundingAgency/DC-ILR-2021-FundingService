@@ -122,6 +122,10 @@ namespace ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Output
 
         public bool? PrscHEAim { get; set; }
 
+        public decimal? ReservedUpliftFactor1 { get; set; }
+
+        public decimal? ReservedUpliftRate1 { get; set; }
+
         public bool? Residential { get; set; }
 
         public bool? Restart { get; set; }

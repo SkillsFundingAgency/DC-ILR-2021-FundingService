@@ -119,10 +119,10 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
             referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeSpecResources)
-                 .Returns(new Dictionary<int, IReadOnlyCollection<PostcodeSpecialistResource>>
-                 {
-                    { 1, new List<PostcodeSpecialistResource>() },
-                 });
+                .Returns(new Dictionary<int, IReadOnlyCollection<PostcodeSpecialistResource>>
+                {
+                   { 1, new List<PostcodeSpecialistResource>() },
+                });
 
             NewService(referenceDataCacheMock.Object).PostcodeSpecialistResourcesForUkprn(2).Should().BeEmpty();
         }

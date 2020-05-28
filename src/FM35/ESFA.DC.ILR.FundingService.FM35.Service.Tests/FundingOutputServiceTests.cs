@@ -124,6 +124,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             var propFundRemainAch = 1;
             var prscHEAim = false;
             var residential = false;
+            var reservedUpliftFactor1 = 10m;
+            var reservedUpliftRate1 = 10m;
             var restart = false;
             var specResUplift = 1;
             var startPropTrans = 1;
@@ -201,6 +203,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "PropFundRemain")).Returns(propFundRemain);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "PropFundRemainAch")).Returns(propFundRemainAch);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "PrscHEAim")).Returns(prscHEAim);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "ReservedUpliftFactor1")).Returns(reservedUpliftFactor1);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "ReservedUpliftRate1")).Returns(reservedUpliftRate1);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "Residential")).Returns(residential);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "Restart")).Returns(restart);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "SpecResUplift")).Returns(specResUplift);
@@ -277,6 +281,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             learningDelivery.PropFundRemain.Should().Be(propFundRemain);
             learningDelivery.PropFundRemainAch.Should().Be(propFundRemainAch);
             learningDelivery.PrscHEAim.Should().Be(prscHEAim);
+            learningDelivery.ReservedUpliftFactor1.Should().Be(reservedUpliftFactor1);
+            learningDelivery.ReservedUpliftRate1.Should().Be(reservedUpliftRate1);
             learningDelivery.Residential.Should().Be(residential);
             learningDelivery.Restart.Should().Be(restart);
             learningDelivery.SpecResUplift.Should().Be(specResUplift);

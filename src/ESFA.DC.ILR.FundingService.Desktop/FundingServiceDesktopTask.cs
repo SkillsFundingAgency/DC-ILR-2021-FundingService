@@ -58,6 +58,7 @@ namespace ESFA.DC.ILR.FundingService.Desktop
                 LARSStandards = externalCache.LARSStandards,
                 OrgFunding = externalCache.OrgFunding,
                 OrgVersion = externalCache.OrgVersion,
+                PostcodeSpecResources = externalCache.PostcodeSpecResources,
                 CampusIdentifierSpecResources = externalCache.CampusIdentifierSpecResources.ToDictionary(k => k.Key, v => v.Value, StringComparer.OrdinalIgnoreCase),
                 PostcodeCurrentVersion = externalCache.PostcodeCurrentVersion,
                 PostcodeRoots = externalCache.PostcodeRoots.ToDictionary(k => k.Key, v => v.Value, StringComparer.OrdinalIgnoreCase),

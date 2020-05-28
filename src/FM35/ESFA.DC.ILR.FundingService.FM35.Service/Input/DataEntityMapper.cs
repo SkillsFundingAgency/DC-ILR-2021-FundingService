@@ -151,6 +151,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
                     { Attributes.AimSeqNumber, new AttributeData(learningDelivery.AimSeqNumber) },
                     { Attributes.AimType, new AttributeData(learningDelivery.AimType) },
                     { Attributes.CompStatus, new AttributeData(learningDelivery.CompStatus) },
+                    { Attributes.DelLocPostCode, new AttributeData(learningDelivery.DelLocPostCode) },
                     { Attributes.EmpOutcome, new AttributeData(learningDelivery.EmpOutcome) },
                     { Attributes.EnglandFEHEStatus, new AttributeData(larsLearningDelivery.EnglandFEHEStatus) },
                     { Attributes.EnglPrscID, new AttributeData(larsLearningDelivery.EnglPrscID) },

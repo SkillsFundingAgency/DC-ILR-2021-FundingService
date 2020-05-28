@@ -77,6 +77,7 @@
         public const string AimSeqNumber = "AimSeqNumber";
         public const string AimType = "AimType";
         public const string CompStatus = "CompStatus";
+        public const string DelLocPostCode = "DelLocPostCode";
         public const string EmpOutcome = "EmpOutcome";
         public const string EnglandFEHEStatus = "EnglandFEHEStatus";
         public const string EnglPrscID = "EnglPrscID";
@@ -153,6 +154,8 @@
         public const string PropFundRemain = "PropFundRemain";
         public const string PropFundRemainAch = "PropFundRemainAch";
         public const string PrscHEAim = "PrscHEAim";
+        public const string ReservedUpliftFactor1 = "ReservedUpliftFactor1";
+        public const string ReservedUpliftRate1 = "ReservedUpliftRate1";
         public const string Residential = "Residential";
         public const string Restart = "Restart";
         public const string SpecResUplift = "SpecResUplift";
