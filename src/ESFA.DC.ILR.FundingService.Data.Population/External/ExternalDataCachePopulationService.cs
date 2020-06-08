@@ -58,8 +58,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
                 FCSContractAllocations = _fcsMapperService.MapFCSContractAllocations(referenceDataRoot.FCSContractAllocations),
 
-                AECLatestInYearEarningHistory = _appsEarningsHistoryMapperService.MapAppsEarningsHistories(referenceDataRoot.AppsEarningsHistories)
-                ?? new Dictionary<long, IReadOnlyCollection<AECEarningsHistory>>(),
+                AECLatestInYearEarningHistory = _appsEarningsHistoryMapperService.MapAppsEarningsHistories(referenceDataRoot.AppsEarningsHistories),
 
                 Periods = _metaDataMapperService.BuildPeriods(referenceDataRoot.MetaDatas)
             };

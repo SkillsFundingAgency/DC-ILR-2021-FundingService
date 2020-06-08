@@ -127,6 +127,17 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             NewService(referenceDataCacheMock.Object).PostcodeSpecialistResourcesForUkprn(2).Should().BeEmpty();
         }
 
+        [Fact]
+        public void PostcodeSpecialistResourcesForUkprn_Null()
+        {
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeSpecResources)
+                .Returns(new Dictionary<int, IReadOnlyCollection<PostcodeSpecialistResource>>());
+
+            NewService(referenceDataCacheMock.Object).PostcodeSpecialistResourcesForUkprn(2).Should().BeEmpty();
+        }
+
         private OrganisationReferenceDataService NewService(IExternalDataCache referenceDataCache = null)
         {
             return new OrganisationReferenceDataService(referenceDataCache);

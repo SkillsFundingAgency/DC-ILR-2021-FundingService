@@ -75,7 +75,13 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         [Fact]
         public void MapOrgFundings_Null()
         {
-            NewService().MapOrgFundings(null).Should().BeNull();
+            NewService().MapOrgFundings(null).Should().BeEquivalentTo(new Dictionary<int, IReadOnlyCollection<OrgFunding>>());
+        }
+
+        [Fact]
+        public void MapOrgFundings_Empty()
+        {
+            NewService().MapOrgFundings(new List<ReferenceDataService.Model.Organisations.Organisation>()).Should().BeEquivalentTo(new Dictionary<int, IReadOnlyCollection<OrgFunding>>());
         }
 
         [Fact]
@@ -175,7 +181,13 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         [Fact]
         public void MapCampusIdentifiers_Null()
         {
-            NewService().MapCampusIdentifiers(null).Should().BeNull();
+            NewService().MapCampusIdentifiers(null).Should().BeEquivalentTo(new Dictionary<string, IReadOnlyCollection<CampusIdentifierSpecResource>>());
+        }
+
+        [Fact]
+        public void MapCampusIdentifiers_Empty()
+        {
+            NewService().MapCampusIdentifiers(new List<ReferenceDataService.Model.Organisations.Organisation>()).Should().BeEquivalentTo(new Dictionary<string, IReadOnlyCollection<CampusIdentifierSpecResource>>());
         }
 
         [Fact]
@@ -278,7 +290,13 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         [Fact]
         public void MapPostcodeSpecialistResources_Null()
         {
-            NewService().MapPostcodeSpecialistResources(null).Should().BeNull();
+            NewService().MapPostcodeSpecialistResources(null).Should().BeEquivalentTo(new Dictionary<int, IReadOnlyCollection<PostcodeSpecialistResource>>());
+        }
+
+        [Fact]
+        public void MapPostcodeSpecialistResources_Empty()
+        {
+            NewService().MapPostcodeSpecialistResources(new List<ReferenceDataService.Model.Organisations.Organisation>()).Should().BeEquivalentTo(new Dictionary<int, IReadOnlyCollection<PostcodeSpecialistResource>>());
         }
 
         private OrganisationsMapperService NewService()

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Model;
 using ESFA.DC.ILR.FundingService.Data.Population.External;
+using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using FluentAssertions;
 using Xunit;
 
@@ -14,44 +15,44 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         {
             var expectedLargeEmployerDictionary = ExpectedLargeEmployerDictionary();
 
-            var employers = new List<ReferenceDataService.Model.Employers.Employer>
+            var employers = new List<Employer>
             {
-                new ReferenceDataService.Model.Employers.Employer
+                new Employer
                 {
                     ERN = 1,
-                    LargeEmployerEffectiveDates = new List<ReferenceDataService.Model.Employers.LargeEmployerEffectiveDates>
+                    LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>
                     {
-                        new ReferenceDataService.Model.Employers.LargeEmployerEffectiveDates
+                        new LargeEmployerEffectiveDates
                         {
                            EffectiveFrom = new DateTime(2018, 8, 1),
                            EffectiveTo = new DateTime(2018, 9, 1)
                         },
-                        new ReferenceDataService.Model.Employers.LargeEmployerEffectiveDates
+                        new LargeEmployerEffectiveDates
                         {
                            EffectiveFrom = new DateTime(2018, 9, 2)
                         },
                     },
                 },
-                new ReferenceDataService.Model.Employers.Employer
+                new Employer
                 {
                     ERN = 2,
-                    LargeEmployerEffectiveDates = new List<ReferenceDataService.Model.Employers.LargeEmployerEffectiveDates>
+                    LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>
                     {
-                        new ReferenceDataService.Model.Employers.LargeEmployerEffectiveDates
+                        new LargeEmployerEffectiveDates
                         {
                            EffectiveFrom = new DateTime(2018, 8, 1)
                         }
                     },
                 },
-                new ReferenceDataService.Model.Employers.Employer
+                new Employer
                 {
                     ERN = 3,
-                    LargeEmployerEffectiveDates = new List<ReferenceDataService.Model.Employers.LargeEmployerEffectiveDates>(),
+                    LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>(),
                 },
-                new ReferenceDataService.Model.Employers.Employer
+                new Employer
                 {
                     ERN = 4,
-                    LargeEmployerEffectiveDates = new List<ReferenceDataService.Model.Employers.LargeEmployerEffectiveDates>(),
+                    LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>(),
                 },
             };
 
@@ -64,7 +65,13 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         [Fact]
         public void MapLargeEmployers_Null()
         {
-            NewService().MapLargeEmployers(null).Should().BeNull();
+            NewService().MapLargeEmployers(null).Should().BeEquivalentTo(new Dictionary<int, IReadOnlyCollection<LargeEmployers>>());
+        }
+
+        [Fact]
+        public void MapLargeEmployers_Empty()
+        {
+            NewService().MapLargeEmployers(new List<Employer>()).Should().BeEquivalentTo(new Dictionary<int, IReadOnlyCollection<LargeEmployers>>());
         }
 
         private IDictionary<int, IReadOnlyCollection<LargeEmployers>> ExpectedLargeEmployerDictionary()
