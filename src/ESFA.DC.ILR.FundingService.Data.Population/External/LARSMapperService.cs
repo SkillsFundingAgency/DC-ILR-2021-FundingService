@@ -41,7 +41,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                     LARSFrameworks = ld.LARSFrameworks?.Select(LARSFrameworkFromEntity).ToList(),
                     LARSFundings = ld.LARSFundings?.Select(LARSFundingFromEntity).ToList(),
                     LARSValidities = ld.LARSValidities?.Select(LARSValidityFromEntity).ToList()
-                });
+                }) ?? new Dictionary<string, LARSLearningDelivery>();
         }
 
         public IDictionary<int, LARSStandard> MapLARSStandards(IReadOnlyCollection<LARSStandardInput> larsStandards)
@@ -57,7 +57,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                     LARSStandardFundings = ls.LARSStandardFundings?.Select(LARSStandardFundingFromEntity).ToList(),
                     LARSStandardApprenticeshipFundings = ls.LARSStandardApprenticeshipFundings?.Select(LARSStandardApprenticeshipFundingFromEntity).ToList(),
                     LARSStandardCommonComponents = ls.LARSStandardCommonComponents?.Select(LARSStandardCommonComponentFromEntity).ToList()
-                });
+                }) ?? new Dictionary<int, LARSStandard>();
         }
 
         private Data.External.LARS.Model.LARSAnnualValue LARSAnnualValueFromEntity(LARSAnnualValue entity)

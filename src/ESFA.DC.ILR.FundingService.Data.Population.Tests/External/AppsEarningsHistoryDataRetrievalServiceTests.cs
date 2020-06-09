@@ -162,7 +162,13 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         [Fact]
         public void AppsEarningsHistoryForLearners_Null()
         {
-            NewService().MapAppsEarningsHistories(null).Should().BeNull();
+            NewService().MapAppsEarningsHistories(null).Should().BeEquivalentTo(new Dictionary<long, IReadOnlyCollection<AECEarningsHistory>>());
+        }
+
+        [Fact]
+        public void AppsEarningsHistoryForLearners_Empty()
+        {
+            NewService().MapAppsEarningsHistories(new List<ApprenticeshipEarningsHistory>()).Should().BeEquivalentTo(new Dictionary<long, IReadOnlyCollection<AECEarningsHistory>>());
         }
 
         private IDictionary<long, IReadOnlyCollection<AECEarningsHistory>> ExpectedAppsEarnings()

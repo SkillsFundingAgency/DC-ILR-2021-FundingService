@@ -18,7 +18,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 .Where(o => o.LargeEmployerEffectiveDates.Any())
                     .ToDictionary(
                     e => e.ERN,
-                    l => l.LargeEmployerEffectiveDates?.Select(le => LargeEmployersFromEntity(le, l.ERN)).ToList() as IReadOnlyCollection<LargeEmployers>);
+                    l => l.LargeEmployerEffectiveDates?.Select(le => LargeEmployersFromEntity(le, l.ERN)).ToList() as IReadOnlyCollection<LargeEmployers>)
+                    ?? new Dictionary<int, IReadOnlyCollection<LargeEmployers>>();
         }
 
         private LargeEmployers LargeEmployersFromEntity(LargeEmployerEffectiveDates entity, int employerId)

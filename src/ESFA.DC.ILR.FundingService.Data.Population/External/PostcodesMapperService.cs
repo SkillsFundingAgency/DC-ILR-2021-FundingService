@@ -25,7 +25,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                     EfaDisadvantages = p.EfaDisadvantages?.Select(ed => MapEfaDisadvantage(ed, p.PostCode)).ToList(),
                     SfaAreaCosts = p.SfaAreaCosts?.Select(sa => MapSfaAreaCost(sa, p.PostCode)).ToList(),
                     SfaDisadvantages = p.SfaDisadvantages?.Select(sd => MapSfaDisadvantage(sd, p.PostCode)).ToList(),
-                }, StringComparer.OrdinalIgnoreCase);
+                }, StringComparer.OrdinalIgnoreCase)
+                ?? new Dictionary<string, PostcodeRoot>();
         }
 
         private Data.External.Postcodes.Model.DasDisadvantage MapDasDisadvantage(ReferenceDataService.Model.Postcodes.DasDisadvantage dasDisadvantage, string postcode)

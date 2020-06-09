@@ -185,7 +185,13 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         [Fact]
         public void MapLARSLearningDeliveries_Null()
         {
-            NewService().MapLARSLearningDeliveries(null).Should().BeNull();
+            NewService().MapLARSLearningDeliveries(null).Should().BeEquivalentTo(new Dictionary<string, Data.External.LARS.Model.LARSLearningDelivery>());
+        }
+
+        [Fact]
+        public void MapLARSLearningDeliveries_Empty()
+        {
+            NewService().MapLARSLearningDeliveries(new List<ReferenceDataService.Model.LARS.LARSLearningDelivery>()).Should().BeEquivalentTo(new Dictionary<string, Data.External.LARS.Model.LARSLearningDelivery>());
         }
 
         [Fact]
@@ -358,7 +364,13 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         [Fact]
         public void MapLARSStandards_Null()
         {
-            NewService().MapLARSStandards(null).Should().BeNull();
+            NewService().MapLARSStandards(null).Should().BeEquivalentTo(new Dictionary<int, Data.External.LARS.Model.LARSStandard>());
+        }
+
+        [Fact]
+        public void MapLARSStandards_Empty()
+        {
+            NewService().MapLARSStandards(new List<ReferenceDataService.Model.LARS.LARSStandard>()).Should().BeEquivalentTo(new Dictionary<int, Data.External.LARS.Model.LARSStandard>());
         }
 
         private LARSMapperService NewService()
