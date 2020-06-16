@@ -167,6 +167,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 Attributes.EntityDPOutcome,
                 Attributes.EntityLearningDeliveryLARSValidity,
                 Attributes.EntityCampusIdentifiers,
+                Attributes.EntityPostcodeSpecialistResources,
             };
         }
 
@@ -203,6 +204,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 Attributes.AimType,
                 Attributes.AwardOrgCode,
                 Attributes.CompStatus,
+                Attributes.DelLocPostCode,
                 Attributes.EFACOFType,
                 Attributes.FundModel,
                 Attributes.GuidedLearningHours,
@@ -229,6 +231,10 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 Attributes.CampIdSpecialistResources,
                 Attributes.CampIdEffectiveFrom,
                 Attributes.CampIdEffectiveTo,
+                Attributes.PostcodeSpecResPostcode,
+                Attributes.PostcodeSpecResSpecialistResources,
+                Attributes.PostcodeSpecResEffectiveFrom,
+                Attributes.PostcodeSpecResEffectiveTo,
             };
         }
 
@@ -407,6 +413,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             larsRefererenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
             organisationRefererenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(It.IsAny<int>())).Returns(new List<OrgFunding> { new OrgFunding() });
             organisationRefererenceDataServiceMock.Setup(o => o.SpecialistResourcesForCampusIdentifier(It.IsAny<string>())).Returns(new List<CampusIdentifierSpecResource> { new CampusIdentifierSpecResource() });
+            organisationRefererenceDataServiceMock.Setup(o => o.PostcodeSpecialistResourcesForUkprn(It.IsAny<int>()))
+                .Returns(new List<PostcodeSpecialistResource> { new PostcodeSpecialistResource { SpecialistResources = "Y", EffectiveFrom = new DateTime(2020, 8, 1) } });
             postcodesReferenceDataServiceMock.Setup(p => p.LatestEFADisadvantagesUpliftForPostcode(learner.Postcode)).Returns(1.0m);
 
             return new DataEntityMapper(

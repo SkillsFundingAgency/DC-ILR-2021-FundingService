@@ -13,6 +13,7 @@
         public const string EntityDPOutcome = "DPOutcome";
         public const string EntityLearningDeliveryLARSValidity = "LearningDeliveryLARSValidity";
         public const string EntityCampusIdentifiers = "Camps_Identifiers_Reference_DataFunding";
+        public const string EntityPostcodeSpecialistResources = "Postcode_Specialist_Resource_RefData";
 
         // Global
         public const string AreaCostFactor1618 = "AreaCostFactor1618";
@@ -101,6 +102,7 @@
         public const string AimType = "AimType";
         public const string AwardOrgCode = "AwardOrgCode";
         public const string CompStatus = "CompStatus";
+        public const string DelLocPostCode = "DelLocPostCode";
         public const string EFACOFType = "EFACOFType";
         public const string FundModel = "FundModel";
         public const string GuidedLearningHours = "GuidedLearningHours";        
@@ -135,6 +137,12 @@
         public const string CampIdSpecialistResources = "CampusFundingSpecialistResources";
         public const string CampIdEffectiveFrom = "EffectiveFrom";
         public const string CampIdEffectiveTo = "EffectiveTo";
+
+        // Postcode Specialist Resources
+        public const string PostcodeSpecResPostcode = "PostcodeSpecResPostcode";
+        public const string PostcodeSpecResSpecialistResources = "PostcodeSpecResSpecialistResources";
+        public const string PostcodeSpecResEffectiveFrom = "PostcodeSpecResEffectiveFrom";
+        public const string PostcodeSpecResEffectiveTo = "PostcodeSpecResEffectiveTo";
 
         // FAM Types
         public const string ECF = "ECF";
