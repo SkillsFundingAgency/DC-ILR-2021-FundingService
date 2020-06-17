@@ -46,6 +46,10 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
 
         public IDataEntity BuildGlobalDataEntity(FM25LearnerDto learner, Global global)
         {
+            var postcodeSpecialistResources = _organisationReferenceDataService.PostcodeSpecialistResourcesForUkprn(global.UKPRN).ToList();
+
+            var specialistResourceEntities = postcodeSpecialistResources?.Select(BuildPostcodeSpecialistResource) ?? Enumerable.Empty<IDataEntity>();
+
             var entity = new DataEntity(Attributes.EntityGlobal)
             {
                 Attributes = BuildGlobalAttributes(global)
@@ -54,6 +58,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
             if (learner != null)
             {
                 entity.AddChild(BuildLearnerDataEntity(learner));
+                entity.AddChildren(specialistResourceEntities);
             }
 
             return entity;
@@ -119,6 +124,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { Attributes.AimType, new AttributeData(learningDelivery.AimType) },
                     { Attributes.AwardOrgCode, new AttributeData(larsLearningDelivery.AwardOrgCode) },
                     { Attributes.CompStatus, new AttributeData(learningDelivery.CompStatus) },
+                    { Attributes.DelLocPostCode, new AttributeData(learningDelivery.DelLocPostCode) },
                     { Attributes.EFACOFType, new AttributeData(larsLearningDelivery.EFACOFType) },
                     { Attributes.FundModel, new AttributeData(learningDelivery.FundModel) },
                     { Attributes.GuidedLearningHours, new AttributeData(larsLearningDelivery.GuidedLearningHours) },
@@ -190,6 +196,20 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { Attributes.CampIdSpecialistResources, new AttributeData(campusIdentifierSpecResource.SpecialistResources) },
                     { Attributes.CampIdEffectiveFrom, new AttributeData(campusIdentifierSpecResource.EffectiveFrom) },
                     { Attributes.CampIdEffectiveTo, new AttributeData(campusIdentifierSpecResource.EffectiveTo) }
+                }
+            };
+        }
+
+        public IDataEntity BuildPostcodeSpecialistResource(PostcodeSpecialistResource specResource)
+        {
+            return new DataEntity(Attributes.EntityPostcodeSpecialistResources)
+            {
+                Attributes = new Dictionary<string, IAttributeData>()
+                {
+                    { Attributes.PostcodeSpecResPostcode, new AttributeData(specResource.Postcode) },
+                    { Attributes.PostcodeSpecResSpecialistResources, new AttributeData(specResource.SpecialistResources) },
+                    { Attributes.PostcodeSpecResEffectiveFrom, new AttributeData(specResource.EffectiveFrom) },
+                    { Attributes.PostcodeSpecResEffectiveTo, new AttributeData(specResource.EffectiveTo) },
                 }
             };
         }

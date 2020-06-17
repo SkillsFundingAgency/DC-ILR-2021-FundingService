@@ -416,6 +416,11 @@
           <base>the learning delivery's notional NVQ level</base>
         </text>
       </attribute>
+      <attribute name="p471" type="text" public-name="DelLocPostCode">
+        <text>
+          <base>the learning delivery's delivery location postcode</base>
+        </text>
+      </attribute>
     </entity>
     <entity id="learningdeliverylarsvalidity" name="the learning delivery LARS validity" containment-relationship-id="learningdeliveryslarsvalidities" containment-parent-id="learningdelivery" public-id="LearningDeliveryLARSValidity">
       <attribute name="p407" type="text" public-name="ValidityCategory">
@@ -523,6 +528,40 @@
         </text>
       </attribute>
     </entity>
+    <entity id="postcodespecialistresourcereferencedata" name="the postcode specialist resource reference data" containment-relationship-id="allinstancesofthepostcodespecialistresourcereferencedata" containment-parent-id="global" public-id="Postcode_Specialist_Resource_RefData">
+      <attribute name="p467" type="date" public-name="PostcodeSpecResEffectiveFrom">
+        <text>
+          <base>the postcode specialist resource reference data's effective from date</base>
+        </text>
+        <props>
+          <prop name="Version">1920.02.02</prop>
+          <prop name="Date">07-05-2019</prop>
+        </props>
+      </attribute>
+      <attribute name="p468" type="date" public-name="PostcodeSpecResEffectiveTo">
+        <text>
+          <base>the postcode specialist resource reference data's effective to date</base>
+        </text>
+        <props>
+          <prop name="Version">1920.02.02</prop>
+          <prop name="Date">07-05-2019</prop>
+        </props>
+      </attribute>
+      <attribute name="p469" type="text" public-name="PostcodeSpecResPostcode">
+        <text>
+          <base>the postcode specialist resource reference data's postcode</base>
+        </text>
+      </attribute>
+      <attribute name="p470" type="text" public-name="PostcodeSpecResSpecialistResources">
+        <text>
+          <base>the postcode specialist resource reference data's specialist resources</base>
+        </text>
+        <props>
+          <prop name="Version">1920.03.03</prop>
+          <prop name="Date">03-06-2019</prop>
+        </props>
+      </attribute>
+    </entity>
   </entities>
   <rules />
   <interactive-items>
@@ -541,6 +580,9 @@
     <relationship source="learner" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learner's core aims" relationship-id="learnerscoreaims" reverse-relationship-id="learner_learnerscoreaims_rev" reverse-text="" type="ManyToMany" is-computed="false" />
     <relationship source="learner" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learner's ESFA 16-19 learning deliveries" relationship-id="learnersesfa1619learningdeliveries" reverse-relationship-id="learner_learnersesfa1619learningdeliveries_rev" reverse-text="" type="ManyToMany" is-computed="false" />
     <relationship source="learner" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learner's ESFA 16-19 T level programme aims" relationship-id="learnersesfa1619tlevelprogrammeaims" reverse-relationship-id="learner_learnersesfa1619tlevelprogrammeaims_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="global" target="postcodespecialistresourcereferencedata" text="all instances of the postcode specialist resource reference data" relationship-id="allinstancesofthepostcodespecialistresourcereferencedata" reverse-relationship-id="global_allinstancesofthepostcodespecialistresourcereferencedata_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learningdelivery" target="postcodespecialistresourcereferencedata" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's postcode specialist resource reference data for delivery location postcode" relationship-id="learningdeliveryspostcodespecialistresourcereferencedatafordeliverylocationpostcode" reverse-relationship-id="learningdelivery_learningdeliveryspostcodespecialistresourcereferencedatafordeliverylocationpostcode_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="learningdelivery" target="postcodespecialistresourcereferencedata" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's postcode specialist resource reference data for applicable start date" relationship-id="learningdeliveryspostcodespecialistresourcereferencedataforapplicablestartdate" reverse-relationship-id="learningdelivery_learningdeliveryspostcodespecialistresourcereferencedataforapplicablestartdate_rev" reverse-text="" type="ManyToMany" is-computed="false" />
   </relationships>
   <rule-folders />
 </root>
