@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <None Remove="ESFA.DC.ILR.FundingService.FM36.Service.ruleset" />
-    <None Remove="Rulebase\Apprenticeships Earnings Calc 19_20.zip" />
+    <None Remove="Rulebase\Apprenticeships Earnings Calc 20_21.zip" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,9 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Rulebase\Apprenticeships Earnings Calc 19_20.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Rulebase\Apprenticeships Earnings Calc 20_21.zip" />
   </ItemGroup>
 
   <ItemGroup>

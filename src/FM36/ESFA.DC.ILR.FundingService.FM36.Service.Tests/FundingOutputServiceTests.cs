@@ -22,7 +22,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
 
             var ukprn = 1;
             var larsVersion = "LARSVersion";
-            var year = "1920";
+            var year = "2021";
             var rulebaseVersion = "RulebaseVersion";
 
             var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
@@ -88,12 +88,11 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                     { "LearnDelSecondProv1618Pay", Attribute(false, "1.0") },
                     { "LearnDelSEMContWaiver", Attribute(false, "1.0") },
                     { "LearnDelSFAContribPct", Attribute(false, "1.0") },
+                    { "LearnDelESFAContribPct", Attribute(false, "1.0") },
                     { "LearnSuppFund", Attribute(false, "1.0") },
                     { "LearnSuppFundCash", Attribute(false, "1.0") },
                     { "MathEngBalPayment", Attribute(false, "1.0") },
-                    { "MathEngBalPct", Attribute(false, "1.0") },
                     { "MathEngOnProgPayment", Attribute(false, "1.0") },
-                    { "MathEngOnProgPct", Attribute(false, "1.0") },
                     { "ProgrammeAimBalPayment", Attribute(false, "1.0") },
                     { "ProgrammeAimCompletionPayment", Attribute(false, "1.0") },
                     { "ProgrammeAimOnProgPayment", Attribute(false, "1.0") },
@@ -381,6 +380,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                     { "PriceEpisodeLSFCash", Attribute(false, "1.0") },
                     { "PriceEpisodeFundLineType", Attribute(false, "1.0") },
                     { "PriceEpisodeSFAContribPct", Attribute(false, "1.0") },
+                    { "PriceEpisodeESFAContribPct", Attribute(false, "1.0") },
                     { "PriceEpisodeLevyNonPayInd", Attribute(false, "1.0") },
                     { "EpisodeEffectiveTNPStartDate", Attribute(false, "1.0") },
                     { "PriceEpisodeFirstAdditionalPaymentThresholdDate", Attribute(false, "1.0") },
@@ -394,7 +394,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                     { "PriceEpisodeCumulativePMRs", Attribute(false, "1.0") },
                     { "PriceEpisodeCompExemCode", Attribute(false, "1.0") },
                     { "PriceEpisodeLearnerAdditionalPaymentThresholdDate", Attribute(false, "1.0") },
-                    { "PriceEpisodeAgreeId", Attribute(false, "1.0") },
                     { "PriceEpisodeRedStartDate", Attribute(false, "1.0") },
                     { "PriceEpisodeRedStatusCode", Attribute(false, "1.0") },
                     { "PriceEpisodeLearnerAdditionalPayment", Attribute(false, "1.0") }
@@ -472,7 +471,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             var priceEpisodeCumulativePMRs = 1.0m;
             var priceEpisodeCompExemCode = 5;
             var priceEpisodeLearnerAdditionalPaymentThresholdDate = new DateTime(2018, 8, 1);
-            var priceEpisodeAgreeId = "Id";
             var priceEpisodeRedStartDate = new DateTime(2018, 8, 1);
             var priceEpisodeRedStatusCode = 6;
 
@@ -539,7 +537,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "PriceEpisodeCumulativePMRs")).Returns(priceEpisodeCumulativePMRs);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "PriceEpisodeCompExemCode")).Returns(priceEpisodeCompExemCode);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "PriceEpisodeLearnerAdditionalPaymentThresholdDate")).Returns(priceEpisodeLearnerAdditionalPaymentThresholdDate);
-            dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "PriceEpisodeAgreeId")).Returns(priceEpisodeAgreeId);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "PriceEpisodeRedStartDate")).Returns(priceEpisodeRedStartDate);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "PriceEpisodeRedStatusCode")).Returns(priceEpisodeRedStatusCode);
 
@@ -596,7 +593,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             priceEpisode.PriceEpisodeCumulativePMRs.Should().Be(priceEpisodeCumulativePMRs);
             priceEpisode.PriceEpisodeCompExemCode.Should().Be(priceEpisodeCompExemCode);
             priceEpisode.PriceEpisodeLearnerAdditionalPaymentThresholdDate.Should().Be(priceEpisodeLearnerAdditionalPaymentThresholdDate);
-            priceEpisode.PriceEpisodeAgreeId.Should().Be(priceEpisodeAgreeId);
             priceEpisode.PriceEpisodeRedStartDate.Should().Be(priceEpisodeRedStartDate);
             priceEpisode.PriceEpisodeRedStatusCode.Should().Be(priceEpisodeRedStatusCode);
         }
@@ -838,12 +834,11 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                     { "LearnDelSecondProv1618Pay", Attribute(false, "1.0") },
                     { "LearnDelSEMContWaiver", Attribute(false, "1.0") },
                     { "LearnDelSFAContribPct", Attribute(false, "1.0") },
+                    { "LearnDelESFAContribPct", Attribute(false, "1.0") },
                     { "LearnSuppFund", Attribute(false, "1.0") },
                     { "LearnSuppFundCash", Attribute(false, "1.0") },
                     { "MathEngBalPayment", Attribute(false, "1.0") },
-                    { "MathEngBalPct", Attribute(false, "1.0") },
                     { "MathEngOnProgPayment", Attribute(false, "1.0") },
-                    { "MathEngOnProgPct", Attribute(false, "1.0") },
                     { "ProgrammeAimBalPayment", Attribute(false, "1.0") },
                     { "ProgrammeAimCompletionPayment", Attribute(false, "1.0") },
                     { "ProgrammeAimOnProgPayment", Attribute(false, "1.0") },
@@ -879,12 +874,11 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 TestLearningDeliveryPeriodisedAttributesData("LearnDelSecondProv1618Pay", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("LearnDelSEMContWaiver", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("LearnDelSFAContribPct", 1.0m),
+                TestLearningDeliveryPeriodisedAttributesData("LearnDelESFAContribPct", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("LearnSuppFund", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("LearnSuppFundCash", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("MathEngBalPayment", 1.0m),
-                TestLearningDeliveryPeriodisedAttributesData("MathEngBalPct", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("MathEngOnProgPayment", 1.0m),
-                TestLearningDeliveryPeriodisedAttributesData("MathEngOnProgPct", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("ProgrammeAimBalPayment", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("ProgrammeAimCompletionPayment", 1.0m),
                 TestLearningDeliveryPeriodisedAttributesData("ProgrammeAimOnProgPayment", 1.0m),
@@ -992,6 +986,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                     { "PriceEpisodeLSFCash", Attribute(false, "1.0") },
                     { "PriceEpisodeFundLineType", Attribute(false, "1.0") },
                     { "PriceEpisodeSFAContribPct", Attribute(true, "1.0") },
+                    { "PriceEpisodeESFAContribPct", Attribute(true, "1.0") },
                     { "PriceEpisodeLevyNonPayInd", Attribute(true, "1.0") },
                     { "EpisodeEffectiveTNPStartDate", Attribute(false, "1.0") },
                     { "PriceEpisodeFirstAdditionalPaymentThresholdDate", Attribute(false, "1.0") },
@@ -1005,7 +1000,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                     { "PriceEpisodeCumulativePMRs", Attribute(false, "1.0") },
                     { "PriceEpisodeCompExemCode", Attribute(false, "1.0") },
                     { "PriceEpisodeLearnerAdditionalPaymentThresholdDate", Attribute(false, "1.0") },
-                    { "PriceEpisodeAgreeId", Attribute(false, "1.0") },
                     { "PriceEpisodeRedStartDate", Attribute(false, "1.0") },
                     { "PriceEpisodeRedStatusCode", Attribute(false, "1.0") },
                     { "PriceEpisodeLearnerAdditionalPayment", Attribute(true, "1.0") }
@@ -1043,6 +1037,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 TestPriceEpisodePeriodisedAttributesData("PriceEpisodeSecondEmp1618Pay", 1.0m),
                 TestPriceEpisodePeriodisedAttributesData("PriceEpisodeSecondProv1618Pay", 1.0m),
                 TestPriceEpisodePeriodisedAttributesData("PriceEpisodeSFAContribPct", 1.0m),
+                TestPriceEpisodePeriodisedAttributesData("PriceEpisodeESFAContribPct", 1.0m),
                 TestPriceEpisodePeriodisedAttributesData("PriceEpisodeTotProgFunding", 1.0m)
             };
         }

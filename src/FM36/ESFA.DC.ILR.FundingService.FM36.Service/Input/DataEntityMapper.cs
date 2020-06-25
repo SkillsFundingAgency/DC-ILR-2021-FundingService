@@ -170,7 +170,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Input
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    { Attributes.AgreeId, new AttributeData("AgreeIdPlaceHolder") },
                     { Attributes.DateEmpStatApp, new AttributeData(learnerEmploymentStatus.DateEmpStatApp) },
                     { Attributes.EmpId, new AttributeData(learnerEmploymentStatus.EmpId) },
                     { Attributes.EMPStat, new AttributeData(learnerEmploymentStatus.EmpStat) },

@@ -8,7 +8,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Rulebase
 {
     public class FM36RulebaseProvider : IRulebaseStreamProvider<FM36LearnerDto>
     {
-        private const string RulebaseName = @"Apprenticeships Earnings Calc 19_20";
+        private const string RulebaseName = @"Apprenticeships Earnings Calc 20_21";
 
         public Stream GetStream()
         {

@@ -99,12 +99,12 @@
     <Compile Include="RulebaseInterfaceTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\ESFA.DC.ILR.FundingService.FM36.Service\Rulebase\Apprenticeships Earnings Calc 19_20.zip">
-      <Link>Rulebase\Apprenticeships Earnings Calc 19_20.zip</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\ESFA.DC.ILR.FundingService.FM36.Service\Rulebase\XSRC\Inputs.xsrc">
       <Link>Rulebase\XSRC\Inputs.xsrc</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\ESFA.DC.ILR.FundingService.FM36.Service\Rulebase\Apprenticeships Earnings Calc 20_21.zip">
+      <Link>Rulebase\Apprenticeships Earnings Calc 20_21.zip</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="app.config" />
@@ -113,7 +113,7 @@
     <Content Include="RulebaseMasterFiles\XSRC\Inputs.xsrc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="RulebaseMasterFiles\Apprenticeships Earnings Calc 19_20.zip">
+    <Content Include="RulebaseMasterFiles\Apprenticeships Earnings Calc 20_21.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

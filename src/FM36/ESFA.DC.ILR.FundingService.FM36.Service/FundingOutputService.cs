@@ -159,12 +159,11 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 Attributes.LearnDelSecondProv1618Pay,
                 Attributes.LearnDelSEMContWaiver,
                 Attributes.LearnDelSFAContribPct,
+                Attributes.LearnDelESFAContribPct,
                 Attributes.LearnSuppFund,
                 Attributes.LearnSuppFundCash,
                 Attributes.MathEngBalPayment,
-                Attributes.MathEngBalPct,
                 Attributes.MathEngOnProgPayment,
-                Attributes.MathEngOnProgPct,
                 Attributes.ProgrammeAimBalPayment,
                 Attributes.ProgrammeAimCompletionPayment,
                 Attributes.ProgrammeAimOnProgPayment,
@@ -362,7 +361,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 PriceEpisodeCumulativePMRs = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.PriceEpisodeCumulativePMRs),
                 PriceEpisodeCompExemCode = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.PriceEpisodeCompExemCode),
                 PriceEpisodeLearnerAdditionalPaymentThresholdDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.PriceEpisodeLearnerAdditionalPaymentThresholdDate),
-                PriceEpisodeAgreeId = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.PriceEpisodeAgreeId),
                 PriceEpisodeRedStartDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.PriceEpisodeRedStartDate),
                 PriceEpisodeRedStatusCode = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.PriceEpisodeRedStatusCode)
             };
@@ -392,6 +390,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 Attributes.PriceEpisodeSecondEmp1618Pay,
                 Attributes.PriceEpisodeSecondProv1618Pay,
                 Attributes.PriceEpisodeSFAContribPct,
+                Attributes.PriceEpisodeESFAContribPct,
                 Attributes.PriceEpisodeTotProgFunding
             };
 
