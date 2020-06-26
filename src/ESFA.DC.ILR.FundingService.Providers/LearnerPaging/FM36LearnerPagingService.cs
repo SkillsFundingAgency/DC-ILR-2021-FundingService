@@ -10,7 +10,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
 {
     public class FM36LearnerPagingService : AbstractLearnerPagingService, ILearnerPagingService<FM36LearnerDto>
     {
-        public IEnumerable<IEnumerable<FM36LearnerDto>> ProvideDtos(int fundModelFilter, IMessage message)
+        public IEnumerable<IEnumerable<FM36LearnerDto>> ProvideDtos(IEnumerable<int> fundModelFilter, IMessage message)
         {
             List<IEnumerable<FM36LearnerDto>> dtos = new List<IEnumerable<FM36LearnerDto>>();
 

@@ -73,7 +73,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.DtoTests
             var learnerPagingServiceMock = new Mock<ILearnerPagingService<FM36LearnerDto>>();
             var jsonSerializationServiceMock = new Mock<IJsonSerializationService>();
 
-            learnerPagingServiceMock.Setup(lpm => lpm.ProvideDtos(36, message)).Returns(learnerPagingReturn);
+            learnerPagingServiceMock.Setup(lpm => lpm.ProvideDtos(new List<int> { 36 }, message)).Returns(learnerPagingReturn);
             jsonSerializationServiceMock.Setup(jsm => jsm.Serialize(It.IsAny<IEnumerable<FM36LearnerDto>>())).Returns(string.Empty);
 
             NewProvider(learnerPagingServiceMock.Object, jsonSerializationServiceMock.Object)

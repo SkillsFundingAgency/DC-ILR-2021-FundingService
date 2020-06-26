@@ -20,7 +20,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
 {
     public class DataEntityMapper : IDataEntityMapper<FM35LearnerDto>
     {
-        private readonly int _fundModel = Attributes.FundModel_35;
+        private readonly HashSet<int> _fundModels = new HashSet<int> { Attributes.FundModel_35, Attributes.FundModel_81 };
 
         private readonly ILargeEmployersReferenceDataService _largeEmployersReferenceDataService;
         private readonly ILARSReferenceDataService _larsReferenceDataService;
@@ -44,7 +44,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
             var global = BuildGlobal(ukprn);
 
             var entities = inputModels?
-                .Where(l => l.LearningDeliveries.Any(ld => ld.FundModel == _fundModel))
+                .Where(l => l.LearningDeliveries.Any(ld => _fundModels.Contains(ld.FundModel)))
                 .Select(l => BuildGlobalDataEntity(l, global)) ?? Enumerable.Empty<IDataEntity>();
 
             return entities.Any() ? entities : new List<IDataEntity> { BuildDefaultGlobalDataEntity(global) };
@@ -89,7 +89,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Input
             var specialistResources = _organisationReferenceDataService.SpecialistResourcesForCampusIdentifier(learner.CampId);
 
             var learnerEmploymentStatusEntities = learner.LearnerEmploymentStatuses?.Select(BuildLearnerEmploymentStatus) ?? Enumerable.Empty<IDataEntity>();
-            var learningDeliveryEntities = learner.LearningDeliveries?.Where(ld => ld.FundModel == _fundModel).Select(BuildLearningDeliveryDataEntity) ?? Enumerable.Empty<IDataEntity>();
+            var learningDeliveryEntities = learner.LearningDeliveries?.Select(BuildLearningDeliveryDataEntity) ?? Enumerable.Empty<IDataEntity>();
             var sfaPostDisadvantageEntities = sfaPostDisadvantage?.Select(BuildSFAPostcodeDisadvantage) ?? Enumerable.Empty<IDataEntity>();
             var specialistResourcesEntities = specialistResources?.Select(BuildSpecialistResources) ?? Enumerable.Empty<IDataEntity>();
 
