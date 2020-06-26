@@ -4,6 +4,7 @@
     {
         // FundModels
         public const int FundModel_35 = 35;
+        public const int FundModel_81 = 81;
 
         // Entity
         public const string EntityGlobal = "global";
