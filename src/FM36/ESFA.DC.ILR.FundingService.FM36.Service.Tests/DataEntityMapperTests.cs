@@ -27,7 +27,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             var stdCode = 1;
 
             var larsVersion = "1.0.0";
-            var year = "1920";
+            var year = "2021";
             var collectionPeriod = "DefaultPeriod";
 
             var global = new Global
@@ -133,7 +133,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         {
             var ukprn = 1;
             var larsVersion = "1.0.0";
-            var year = "1920";
+            var year = "2021";
             var collectionPeriod = "DefaultPeriod";
 
             var global = new Global
@@ -166,7 +166,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         {
             var ukprn = 1;
             var larsVersion = "1.0.0";
-            var year = "1920";
+            var year = "2021";
             var collectionPeriod = "DefaultPeriod";
 
             var global = new Global
@@ -235,7 +235,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         {
             var larsCurrentVersion = "1.0.0";
             var collectionPeriod = "DefaultPeriod";
-            var year = "1920";
+            var year = "2021";
             var ukprn = 1234;
 
             var larsRefererenceDataServiceMock = new Mock<ILARSReferenceDataService>();
@@ -398,8 +398,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             var dataEntity = NewService().BuildLearnerEmploymentStatus(learnerEmploymentStatus);
 
             dataEntity.EntityName.Should().Be("LearnerEmploymentStatus");
-            dataEntity.Attributes.Should().HaveCount(5);
-            dataEntity.Attributes["AgreeId"].Value.Should().Be("AgreeIdPlaceHolder");
+            dataEntity.Attributes.Should().HaveCount(4);
             dataEntity.Attributes["DateEmpStatApp"].Value.Should().Be(learnerEmploymentStatus.DateEmpStatApp);
             dataEntity.Attributes["EmpId"].Value.Should().Be(learnerEmploymentStatus.EmpId);
             dataEntity.Attributes["EMPStat"].Value.Should().Be(learnerEmploymentStatus.EmpStat);
@@ -434,7 +433,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 AppProgCompletedInTheYearInput = false,
                 DaysInYear = 1,
                 CollectionReturnCode = "1",
-                CollectionYear = "1920",
+                CollectionYear = "2021",
                 HistoricEffectiveTNPStartDateInput = new DateTime(2019, 8, 1),
                 HistoricEmpIdEndWithinYear = 2,
                 HistoricEmpIdStartWithinYear = 3,

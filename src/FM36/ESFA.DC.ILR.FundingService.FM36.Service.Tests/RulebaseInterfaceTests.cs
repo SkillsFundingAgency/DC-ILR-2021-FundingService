@@ -27,8 +27,8 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
 {
     public class RulebaseInterfaceTests
     {
-        public const string AcademicYear = "1920";
-        public const string RulebaseName = "Apprenticeships Earnings Calc 19_20";
+        public const string AcademicYear = "2021";
+        public const string RulebaseName = "Apprenticeships Earnings Calc 20_21";
         public const string RulebaseFolder = "Rulebase";
         public const string RulebaseMasterFolder = "RulebaseMasterFiles";
         public const string XsrcName = "Inputs";
@@ -185,7 +185,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                 Attributes.AFinCode,
                 Attributes.AFinDate,
                 Attributes.AFinType,
-                Attributes.AgreeId,
                 Attributes.AimSeqNumber,
                 Attributes.AimType,
                 Attributes.AchDate,

@@ -122,8 +122,6 @@ namespace ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output
 
         public DateTime? PriceEpisodeLearnerAdditionalPaymentThresholdDate { get; set; }
 
-        public string PriceEpisodeAgreeId { get; set; }
-
         public DateTime? PriceEpisodeRedStartDate { get; set; }
 
         public int? PriceEpisodeRedStatusCode { get; set; }
