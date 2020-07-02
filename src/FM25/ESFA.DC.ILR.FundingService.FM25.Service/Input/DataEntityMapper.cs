@@ -20,6 +20,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
     {
         private readonly int _fundModel = Attributes.FundModel_25;
         private readonly DateTime _orgFundingAppliesFrom = new DateTime(2020, 8, 1);
+        private readonly string _tempPostcode = "ZZ99 9ZZ";
 
         private readonly ILARSReferenceDataService _larsReferenceDataService;
         private readonly IOrganisationReferenceDataService _organisationReferenceDataService;
@@ -74,7 +75,9 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
 
         public IDataEntity BuildLearnerDataEntity(FM25LearnerDto learner)
         {
-            var efaDisadvantageUplift = _postcodesReferenceDataService.LatestEFADisadvantagesUpliftForPostcode(learner.Postcode);
+            var disadUpliftPostCode = !learner.Postcode.CaseInsensitiveEquals(_tempPostcode) ? learner.Postcode : learner.PostcodePrior;
+
+            var efaDisadvantageUplift = _postcodesReferenceDataService.LatestEFADisadvantagesUpliftForPostcode(disadUpliftPostCode);
             var specialistResources = _organisationReferenceDataService.SpecialistResourcesForCampusIdentifier(learner.CampId);
 
             var specialistResourcesEntities = specialistResources?.Select(BuildSpecialistResources) ?? Enumerable.Empty<IDataEntity>();

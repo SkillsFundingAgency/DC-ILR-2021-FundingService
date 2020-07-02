@@ -97,6 +97,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                         PlanLearnHoursSpecified = true, 
                         PlanLearnHours = 1,
                         Postcode = "Postcode",
+                        PostcodePrior = "PostcodePrior",
                         ULN = 1000,
                         LearnerFAM = new MessageLearnerLearnerFAM[]
                         {
@@ -204,6 +205,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                 PlanEEPHours = 1,
                 PlanLearnHours = 1,
                 Postcode = "Postcode",
+                PostcodePrior = "PostcodePrior",
                 ULN = 1000,
                 LrnFAM_ECF = 1,
                 LrnFAM_EDF1 = 1,
