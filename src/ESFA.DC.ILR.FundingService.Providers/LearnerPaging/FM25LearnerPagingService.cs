@@ -38,6 +38,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                 PlanEEPHours = l.PlanEEPHoursNullable,
                 PlanLearnHours = l.PlanLearnHoursNullable,
                 Postcode = l.Postcode,
+                PostcodePrior = l.PostcodePrior,
                 ULN = l.ULN,
                 LrnFAM_ECF = learnerFams[l.LearnRefNumber].ECF,
                 LrnFAM_EDF1 = learnerFams[l.LearnRefNumber].EDF1,
