@@ -75,9 +75,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
 
         public IDataEntity BuildLearnerDataEntity(FM25LearnerDto learner)
         {
-            var disadUpliftPostCode = !learner.Postcode.CaseInsensitiveEquals(_tempPostcode) ? learner.Postcode : learner.PostcodePrior;
-
-            var efaDisadvantageUplift = _postcodesReferenceDataService.LatestEFADisadvantagesUpliftForPostcode(disadUpliftPostCode);
+            var efaDisadvantageUplift = _postcodesReferenceDataService.LatestEFADisadvantagesUpliftForPostcode(learner.Postcode);
             var specialistResources = _organisationReferenceDataService.SpecialistResourcesForCampusIdentifier(learner.CampId);
 
             var specialistResourcesEntities = specialistResources?.Select(BuildSpecialistResources) ?? Enumerable.Empty<IDataEntity>();
