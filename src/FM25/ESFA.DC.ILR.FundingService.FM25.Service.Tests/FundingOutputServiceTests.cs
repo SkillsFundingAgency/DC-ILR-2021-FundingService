@@ -70,6 +70,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             var startFund = true;
             var thresholdDays = 8;
             var tLevelStudent = true;
+            var l3MathsEnglish1Year = 10m;
+            var l3MathsEnglish2Year = 20m;
 
             var dataEntity = new DataEntity(null);
 
@@ -102,6 +104,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "StartFund")).Returns(startFund);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "ThresholdDays")).Returns(thresholdDays);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "TLevelStudent")).Returns(tLevelStudent);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "L3MathsEnglish1Year")).Returns(l3MathsEnglish1Year);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "L3MathsEnglish2Year")).Returns(l3MathsEnglish2Year);
 
             var learner = NewService(dataEntityAttributeServiceMock.Object).MapLearner(dataEntity);
 
@@ -132,6 +136,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             learner.StartFund.Should().Be(startFund);
             learner.ThresholdDays.Should().Be(thresholdDays);
             learner.TLevelStudent.Should().Be(tLevelStudent);
+            learner.L3MathsEnglish1Year.Should().Be(l3MathsEnglish1Year);
+            learner.L3MathsEnglish2Year.Should().Be(l3MathsEnglish2Year);
         }
 
         private FundingOutputService NewService(IDataEntityAttributeService dataEntityAttributeService = null)
