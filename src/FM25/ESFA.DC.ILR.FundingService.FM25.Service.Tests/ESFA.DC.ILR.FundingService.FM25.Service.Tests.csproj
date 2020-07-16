@@ -133,7 +133,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="RulebaseMasterFiles\FM25\FM25 Funding Calc 20_21.zip">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="RulebaseMasterFiles\FM25\XSRC\Inputs.xsrc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

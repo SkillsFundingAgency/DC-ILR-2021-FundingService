@@ -81,6 +81,8 @@
         public const string ThresholdDays = "ThresholdDays";
         public const string TLevelStudent = "TLevelStudent";
         public const string ULN = "ULN";
+        public const string L3MathsEnglish1Year = "L3MathsEnglish1Year";
+        public const string L3MathsEnglish2Year = "L3MathsEnglish2Year";
 
         // Learner Periodised Values
         public const string LnrOnProgPay = "LnrOnProgPay";
