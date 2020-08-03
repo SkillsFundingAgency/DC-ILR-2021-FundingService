@@ -40,7 +40,7 @@
     <ProjectReference Include="..\FM70\ESFA.DC.ILR.FundingService.FM70Actor\ESFA.DC.ILR.FundingService.FM70Actor.csproj" />
     <ProjectReference Include="..\FM81\ESFA.DC.ILR.FundingService.FM81Actor\ESFA.DC.ILR.FundingService.FM81Actor.csproj" />
   </ItemGroup>
-   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
   <PropertyGroup>
     <ApplicationProjectTargetsPath>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Service Fabric Tools\Microsoft.VisualStudio.Azure.Fabric.ApplicationProject.targets</ApplicationProjectTargetsPath>
   </PropertyGroup>
