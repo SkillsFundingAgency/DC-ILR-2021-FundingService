@@ -55,14 +55,14 @@
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.2021.Model.Interface.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
+    <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR.2021.Model.Interface.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ILR.ReferenceDataService.Model, Version=0.1.234.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.2021.ReferenceDataService.Model.0.1.234\lib\netstandard2.0\ESFA.DC.ILR.ReferenceDataService.Model.dll</HintPath>
+    <Reference Include="ESFA.DC.ILR.ReferenceDataService.Model, Version=0.3.21.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR.2021.ReferenceDataService.Model.0.3.21\lib\netstandard2.0\ESFA.DC.ILR.ReferenceDataService.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ILR.Tests.Model, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.2021.Tests.Model.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Tests.Model.dll</HintPath>
+    <Reference Include="ESFA.DC.ILR.Tests.Model, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR.2021.Tests.Model.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Tests.Model.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.Logging.Interfaces, Version=0.1.10.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Logging.Interfaces.0.1.10-beta0001\lib\netstandard2.0\ESFA.DC.Logging.Interfaces.dll</HintPath>
