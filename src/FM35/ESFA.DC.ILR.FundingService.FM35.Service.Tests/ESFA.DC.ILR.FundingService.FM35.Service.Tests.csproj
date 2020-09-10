@@ -102,7 +102,7 @@
     </Content>
     <Content Include="..\ESFA.DC.ILR.FundingService.FM35.Service\Rulebase\FM35 Funding Calc 20_21.zip">
       <Link>Rulebase\FM35 Funding Calc 20_21.zip</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="app.config" />
     <None Include="ESFA.DC.ILR.FundingService.FM35.Service.Tests.ruleset" />
