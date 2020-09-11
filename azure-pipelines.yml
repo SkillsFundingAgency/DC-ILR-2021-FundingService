@@ -1,5 +1,5 @@
 
-name: ${{ parameters.VersionNumberMajor }}.${{ parameters.VersionNumberMinor }}.$(Rev:.r)
+name: ${{ parameters.VersionNumberMajor }}.${{ parameters.VersionNumberMinor }}$(Rev:.r)
 #name:  $(GitVersion.NuGetVersion)
 #name: $(GitVersion.SemVer)
 
@@ -22,6 +22,18 @@ parameters:
   type: string
   default: '1'  
   
+- name: VersionNumberMinor
+  displayName: 'Version Number : Minor'
+  type: string
+  default: '1'  
+
+- name: BuildServer
+  displayName: Release or Debug
+  type: string
+  default: Release
+  values:
+  - BuildServer
+  - IsBuildServer
 
 resources:
 - repo: self
@@ -43,7 +55,7 @@ stages:
     pool:
       name: DCT
       demands:
-      - IsBuildServer
+      - ${{ parameters.VersionNumberMajor }}
       - ServiceFabricSDK
 
     steps:
