@@ -16,12 +16,7 @@ parameters:
   displayName: 'Version Number : Major'
   type: string
   default: '0'  
-
-- name: VersionNumberMinor
-  displayName: 'Version Number : Minor'
-  type: string
-  default: '1'  
-  
+ 
 - name: VersionNumberMinor
   displayName: 'Version Number : Minor'
   type: string
