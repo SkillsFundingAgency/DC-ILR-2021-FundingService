@@ -25,7 +25,7 @@ parameters:
 - name: BuildServer
   displayName: Release or Debug
   type: string
-  default: Release
+  default: BuildServer
   values:
   - BuildServer
   - IsBuildServer
