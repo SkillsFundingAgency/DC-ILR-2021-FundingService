@@ -11,11 +11,12 @@ parameters:
   values:
   - Release
   - Debug
-parameters:
+
 - name: VersionNumberMajor
   displayName: 'Version Number : Major'
   type: string
   default: '0'  
+
 - name: VersionNumberMinor
   displayName: 'Version Number : Minor'
   type: string
