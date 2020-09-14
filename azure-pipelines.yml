@@ -22,14 +22,6 @@ parameters:
   type: string
   default: '1'  
 
-- name: BuildServer
-  displayName: Release or Debug
-  type: string
-  default: IsBuildServer
-  values:
-  - BuildServer
-  - IsBuildServer
-
 resources:
 - repo: self
   fetchDepth: 30
