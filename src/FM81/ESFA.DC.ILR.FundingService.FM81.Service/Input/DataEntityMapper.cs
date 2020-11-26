@@ -31,55 +31,53 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Input
             var entities = inputModels?
                 .Where(l => l.LearningDeliveries
                 .Any(ld => _fundModel == ld.FundModel && _progType == ld.ProgType))
-                .Select(l => BuildGlobalDataEntity(l, global)) ?? new List<IDataEntity>();
+                .Select(l => BuildGlobalDataEntity(l, global)) ?? Enumerable.Empty<IDataEntity>();
 
             return entities.Any() ? entities : new List<IDataEntity> { BuildDefaultGlobalDataEntity(global) };
         }
 
         public IDataEntity BuildGlobalDataEntity(FM81LearnerDto learner, Global global)
         {
-            return new DataEntity(Attributes.EntityGlobal)
+            var entity = new DataEntity(Attributes.EntityGlobal)
             {
-                Attributes = new Dictionary<string, IAttributeData>()
-                {
-                    { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
-                    { Attributes.UKPRN, new AttributeData(global.UKPRN) }
-                },
-                Children = learner != null ? new List<IDataEntity>() { BuildLearnerDataEntity(learner) } : new List<IDataEntity>()
+                Attributes = BuildGlobalAttributes(global)
             };
+
+            if (learner != null)
+            {
+                entity.AddChild(BuildLearnerDataEntity(learner));
+            }
+
+            return entity;
         }
 
         public IDataEntity BuildDefaultGlobalDataEntity(Global global)
         {
             return new DataEntity(Attributes.EntityGlobal)
             {
-                Attributes = new Dictionary<string, IAttributeData>()
-                {
-                    { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
-                    { Attributes.UKPRN, new AttributeData(global.UKPRN) }
-                }
+                Attributes = BuildGlobalAttributes(global)
             };
         }
 
         public IDataEntity BuildLearnerDataEntity(FM81LearnerDto learner)
         {
-            return new DataEntity(Attributes.EntityLearner)
+            var learnerEmploymentStatusEntities = learner.LearnerEmploymentStatuses?.Select(BuildLearnerEmploymentStatus) ?? Enumerable.Empty<IDataEntity>();
+            var learningDeliveryEntities = learner.LearningDeliveries?.Where(ld => ld.FundModel == _fundModel && ld.ProgType == _progType)
+                .Select(BuildLearningDeliveryDataEntity) ?? Enumerable.Empty<IDataEntity>();
+
+            var entity = new DataEntity(Attributes.EntityLearner)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
                     { Attributes.LearnRefNumber, new AttributeData(learner.LearnRefNumber) },
                     { Attributes.DateOfBirth, new AttributeData(learner.DateOfBirth) },
-                },
-                Children =
-                    (learner
-                        .LearningDeliveries?
-                        .Where(ld => ld.FundModel == _fundModel && ld.ProgType == _progType)
-                        .Select(BuildLearningDeliveryDataEntity) ?? new List<IDataEntity>())
-                        .Union(
-                            learner.LearnerEmploymentStatuses?
-                            .Select(BuildLearnerEmploymentStatus) ?? new List<IDataEntity>())
-                        .ToList()
+                }
             };
+
+            entity.AddChildren(learningDeliveryEntities);
+            entity.AddChildren(learnerEmploymentStatusEntities);
+
+            return entity;
         }
 
         public IDataEntity BuildLearningDeliveryDataEntity(LearningDelivery learningDelivery)
@@ -87,7 +85,13 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Input
             var larsLearningDelivery = _larsReferenceDataService.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef);
             var larsStandard = _larsReferenceDataService.LARSStandardForStandardCode(learningDelivery.StdCode);
 
-            return new DataEntity(Attributes.EntityLearningDelivery)
+            var learningDeliveryFamsEntities = learningDelivery?.LearningDeliveryFAMs?.Select(BuildLearningDeliveryFAM) ?? Enumerable.Empty<IDataEntity>();
+            var appFinRecordEntities = learningDelivery?.AppFinRecords?.Select(BuildApprenticeshipFinancialRecord) ?? Enumerable.Empty<IDataEntity>();
+            var larsStandardCommonComponentEntities = larsStandard?.LARSStandardCommonComponents?
+                .Select(ls => BuildLARSStandardCommonComponent(ls, larsStandard.StandardCode)) ?? Enumerable.Empty<IDataEntity>();
+            var larsStandardFundingEntities = larsStandard?.LARSStandardFundings?.Select(BuildLARSStandardFunding) ?? Enumerable.Empty<IDataEntity>();
+
+            var entity = new DataEntity(Attributes.EntityLearningDelivery)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
@@ -107,25 +111,15 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Input
                     { Attributes.ProgType, new AttributeData(learningDelivery.ProgType) },
                     { Attributes.STDCode, new AttributeData(learningDelivery.StdCode) },
                     { Attributes.WithdrawReason, new AttributeData(learningDelivery.WithdrawReason) },
-                },
-                Children = (
-                            learningDelivery?
-                            .LearningDeliveryFAMs?
-                            .Select(BuildLearningDeliveryFAM) ?? new List<IDataEntity>())
-                            .Union(
-                                   learningDelivery?
-                                    .AppFinRecords?
-                                    .Select(BuildApprenticeshipFinancialRecord) ?? new List<IDataEntity>())
-                            .Union(
-                                   larsStandard?
-                                   .LARSStandardCommonComponents?
-                                    .Select(ls => BuildLARSStandardCommonComponent(ls, larsStandard.StandardCode)) ?? new List<IDataEntity>())
-                            .Union(
-                                    larsStandard?
-                                    .LARSStandardFundings?
-                                    .Select(BuildLARSStandardFunding) ?? new List<IDataEntity>())
-                            .ToList()
+                }
             };
+
+            entity.AddChildren(learningDeliveryFamsEntities);
+            entity.AddChildren(appFinRecordEntities);
+            entity.AddChildren(larsStandardCommonComponentEntities);
+            entity.AddChildren(larsStandardFundingEntities);
+
+            return entity;
         }
 
         public IDataEntity BuildLearningDeliveryFAM(LearningDeliveryFAM learningDeliveryFAM)
@@ -207,6 +201,15 @@ namespace ESFA.DC.ILR.FundingService.FM81.Service.Input
             {
                 LARSVersion = _larsReferenceDataService.LARSCurrentVersion(),
                 UKPRN = ukprn
+            };
+        }
+
+        private IDictionary<string, IAttributeData> BuildGlobalAttributes(Global global)
+        {
+            return new Dictionary<string, IAttributeData>
+            {
+                { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
+                { Attributes.UKPRN, new AttributeData(global.UKPRN) }
             };
         }
     }

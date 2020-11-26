@@ -12,6 +12,8 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
 {
     public class FM81LearnerPagingServiceTests
     {
+        private HashSet<int> FundModelFilter = new HashSet<int> { 81 };
+
         [Fact]
         public void ProvideDtos()
         {
@@ -24,7 +26,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                 Learner = BuildLearners(10).ToArray(),
             };
 
-            NewService().ProvideDtos(81, message).Should().HaveCount(1);
+            NewService().ProvideDtos(FundModelFilter, message).Should().HaveCount(1);
         }
 
         [Fact]
@@ -39,7 +41,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                 Learner = BuildLearners(1600).ToArray(),
             };
 
-            NewService().ProvideDtos(81, message).Should().HaveCount(4);
+            NewService().ProvideDtos(FundModelFilter, message).Should().HaveCount(4);
         }
 
         [Fact]
@@ -54,9 +56,9 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                 Learner = BuildLearners(10).ToArray(),
             };
 
-            NewService().ProvideDtos(1, message).Should().HaveCount(0);
+            NewService().ProvideDtos(new List<int> { 1 }, message).Should().HaveCount(0);
         }
-
+    
         [Fact]
         public void ProvideDtos_NoLearners()
         {
@@ -68,7 +70,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                 },
             };
 
-            NewService().ProvideDtos(81, message).Should().HaveCount(0);
+            NewService().ProvideDtos(FundModelFilter, message).Should().HaveCount(0);
         }
 
 
@@ -94,7 +96,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                             {
                                 EmpIdSpecified = true,
                                 EmpId = 1,
-                                AgreeId = "AgreeId",
                                 DateEmpStatApp = new DateTime(2020, 8, 1),
                                 EmpStat = 2, 
                                 EmploymentStatusMonitoring = new MessageLearnerLearnerEmploymentStatusEmploymentStatusMonitoring[]
@@ -306,7 +307,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                 }
             };
 
-            NewService().ProvideDtos(81, message).First().Should().BeEquivalentTo(expectedDto);
+            NewService().ProvideDtos(FundModelFilter, message).First().Should().BeEquivalentTo(expectedDto);
         }
 
         [Fact]
@@ -331,7 +332,6 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                             {
                                 EmpIdSpecified = true,
                                 EmpId = 1,
-                                AgreeId = "AgreeId",
                                 DateEmpStatApp = new DateTime(2020, 8, 1),
                                 EmpStat = 2,
                                 EmploymentStatusMonitoring = new MessageLearnerLearnerEmploymentStatusEmploymentStatusMonitoring[]
@@ -457,8 +457,8 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
                 }
             };
 
-            NewService().ProvideDtos(81, message).First().Should().BeEquivalentTo(expectedDto);
-        }
+            NewService().ProvideDtos(new List<int> { 81 }, message).First().Should().BeEquivalentTo(expectedDto);
+        } 
 
         private IEnumerable<MessageLearner> BuildLearners(int numberOfLearners)
         {

@@ -135,6 +135,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__Solution Items", "__Solution Items", "{8A26C870-A5A2-4AA9-944A-9C4A44E761FE}"
 	ProjectSection(SolutionItems) = preProject
 		..\azure-pipelines.yml = ..\azure-pipelines.yml
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.FundingService.FundingActor.Interfaces", "ESFA.DC.ILR.FundingService.FundingActor.Interfaces\ESFA.DC.ILR.FundingService.FundingActor.Interfaces.csproj", "{B2EC7FFE-2E94-422A-BD8B-31C92C74A061}"
@@ -151,7 +152,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.FundingService.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.FundingService.Desktop.Tests", "ESFA.DC.ILR.FundingService.Desktop.Tests\ESFA.DC.ILR.FundingService.Desktop.Tests.csproj", "{DCBFDD47-C908-47B4-A1BD-6E833BCD775D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.FundingService.FM25.Periodisation", "FM25\ESFA.DC.ILR.FundingService.FM25.Periodisation\ESFA.DC.ILR.FundingService.FM25.Periodisation.csproj", "{540D1A40-D07B-476F-8ACB-2767ECF3E06D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.FundingService.FM25.Periodisation", "FM25\ESFA.DC.ILR.FundingService.FM25.Periodisation\ESFA.DC.ILR.FundingService.FM25.Periodisation.csproj", "{540D1A40-D07B-476F-8ACB-2767ECF3E06D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.FundingService.FM25.Periodisation.Tests", "FM25\ESFA.DC.ILR.FundingService.FM25.Periodisation.Tests\ESFA.DC.ILR.FundingService.FM25.Periodisation.Tests.csproj", "{47949C27-6693-4DE1-818D-44F46FDC2EA8}"
 EndProject

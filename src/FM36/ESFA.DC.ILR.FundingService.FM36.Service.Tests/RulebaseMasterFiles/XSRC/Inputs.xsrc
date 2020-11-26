@@ -257,11 +257,6 @@
           <base>the learner employment status's SEM code</base>
         </text>
       </attribute>
-      <attribute name="p613" type="text" public-name="AgreeId">
-        <text>
-          <base>the learner employment status's agreement identifier</base>
-        </text>
-      </attribute>
     </entity>
     <entity id="larsapprenticeshipfundingforstandard" name="the LARS apprenticeship funding for standard" containment-relationship-id="larsapprenticeshipfundingforstandardsforthelearningdelivery" containment-parent-id="learningdelivery" public-id="Standard_LARS_ApprenticshipFunding">
       <attribute name="p528" type="date" public-name="StandardAFEffectiveFrom">
@@ -752,6 +747,7 @@
     <relationship source="learningdelivery" target="historicearninginput" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's applicable historic earning input records for all apprenticeships" relationship-id="learningdeliverysapplicablehistoricearninginputrecordsforallapprenticeships" reverse-relationship-id="learningdelivery_learningdeliverysapplicablehistoricearninginputrecordsforallapprenticeships_rev" reverse-text="" type="ManyToMany" is-computed="false" />
     <relationship source="learningdelivery" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's previous programme aims for all apprenticeships" relationship-id="learningdeliveryspreviousprogrammeaimsforallapprenticeships" reverse-relationship-id="learningdelivery_learningdeliveryspreviousprogrammeaimsforallapprenticeships_rev" reverse-text="" type="ManyToMany" is-computed="false" />
     <relationship source="learningdelivery" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's programme aims for all apprenticeships" relationship-id="learningdeliverysprogrammeaimsforallapprenticeships" reverse-relationship-id="learningdelivery_learningdeliverysprogrammeaimsforallapprenticeships_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="learningdelivery" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's Apprenticeship programme aims matching pathways English maths redundancy" relationship-id="learningdeliverysapprenticeshipprogrammeaimsmatchingpathwaysenglishmathsredundancy" reverse-relationship-id="learningdelivery_learningdeliverysapprenticeshipprogrammeaimsmatchingpathwaysenglishmathsredundancy_rev" reverse-text="" type="ManyToMany" is-computed="false" />
   </relationships>
   <rule-folders />
 </root>

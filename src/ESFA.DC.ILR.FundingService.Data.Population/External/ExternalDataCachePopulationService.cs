@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using ESFA.DC.ILR.FundingService.Data.External;
 using ESFA.DC.ILR.FundingService.Data.External.AppsEarningsHistory.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model;
-using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.CollectionDates;
 
 namespace ESFA.DC.ILR.FundingService.Data.Population.External
 {
@@ -54,13 +52,13 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 OrgVersion = referenceDataVersions.OrganisationsVersion.Version,
                 OrgFunding = _organisationsMapperService.MapOrgFundings(referenceDataRoot.Organisations),
                 CampusIdentifierSpecResources = _organisationsMapperService.MapCampusIdentifiers(referenceDataRoot.Organisations),
+                PostcodeSpecResources = _organisationsMapperService.MapPostcodeSpecialistResources(referenceDataRoot.Organisations),
 
                 LargeEmployers = _largeEmployersMapperService.MapLargeEmployers(referenceDataRoot.Employers),
 
                 FCSContractAllocations = _fcsMapperService.MapFCSContractAllocations(referenceDataRoot.FCSContractAllocations),
 
-                AECLatestInYearEarningHistory = _appsEarningsHistoryMapperService.MapAppsEarningsHistories(referenceDataRoot.AppsEarningsHistories)
-                ?? new Dictionary<long, IReadOnlyCollection<AECEarningsHistory>>(),
+                AECLatestInYearEarningHistory = _appsEarningsHistoryMapperService.MapAppsEarningsHistories(referenceDataRoot.AppsEarningsHistories),
 
                 Periods = _metaDataMapperService.BuildPeriods(referenceDataRoot.MetaDatas)
             };

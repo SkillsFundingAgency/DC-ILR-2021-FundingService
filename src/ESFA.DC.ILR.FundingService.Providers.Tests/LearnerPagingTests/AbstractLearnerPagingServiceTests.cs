@@ -12,18 +12,20 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
 {
     public class AbstractLearnerPagingServiceTests
     {
+        private HashSet<int> FundModelFilter = new HashSet<int> { 99 };
+
         [Fact]
         public void BuildPages()
         {
             var learners = BuildLearners(10, 99).ToArray();
 
-            NewService().BuildPages(99, learners).Should().HaveCount(1);
+            NewService().BuildPages(FundModelFilter, learners).Should().HaveCount(1);
         }
 
         [Fact]
         public void BuildPages_NoLearners()
         {
-            NewService().BuildPages(99, null).Should().HaveCount(0);
+            NewService().BuildPages(FundModelFilter, null).Should().HaveCount(0);
         }
 
 
@@ -32,7 +34,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
         {
             var learners = BuildLearners(1600, 99).ToArray();
 
-            NewService().BuildPages(99, learners).Should().HaveCount(4);
+            NewService().BuildPages(FundModelFilter, learners).Should().HaveCount(4);
         }
 
         [Fact]
@@ -40,7 +42,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Tests.LearnerPagingTests
         {
             var learners = BuildLearners(10, 25).ToArray();
 
-            NewService().BuildPages(99, learners).Should().HaveCount(0);
+            NewService().BuildPages(FundModelFilter, learners).Should().HaveCount(0);
         }
 
         protected IEnumerable<MessageLearner> BuildLearners(int numberOfLearners, int fundModel)

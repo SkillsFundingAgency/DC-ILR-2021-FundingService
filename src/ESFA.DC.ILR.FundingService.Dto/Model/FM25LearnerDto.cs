@@ -13,6 +13,8 @@ namespace ESFA.DC.ILR.FundingService.Dto.Model
 
         public string Postcode { get; set; }
 
+        public string PostcodePrior { get; set; }
+
         public string EngGrade { get; set; }
 
         public string MathGrade { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.FM25.Model.Output;
 using ESFA.DC.ILR.FundingService.FM25.Periodisation.Constants;
 using ESFA.DC.ILR.FundingService.FM25.Periodisation.Interfaces;
@@ -36,7 +37,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Periodisation
             return values;
         }
 
-        public bool IsLearnerTrainee(FM25Learner learner) => learner.FundLine == FundingLineConstants.Traineeship19Plus || learner.FundLine == FundingLineConstants.Traineeship1618;
+        public bool IsLearnerTrainee(FM25Learner learner) => learner.FundLine.CaseInsensitiveEquals(FundingLineConstants.Traineeship19Plus) || learner.FundLine.CaseInsensitiveEquals(FundingLineConstants.Traineeship1618);
 
         private decimal[] GetMonthlyValues() => new decimal[12] { 0M, 0M, 0M, 0M, 0M, 0M, 0M, 0M, 0M, 0M, 0M, 0M };
     }

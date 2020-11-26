@@ -8,7 +8,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Rulebase
 {
     public class ALBRulebaseProvider : IRulebaseStreamProvider<ALBLearnerDto>
     {
-        private const string RulebaseName = @"Loans Bursary 19_20";
+        private const string RulebaseName = @"Loans Bursary 20_21";
 
         public Stream GetStream()
         {

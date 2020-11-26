@@ -140,6 +140,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
                 PropFundRemain = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.PropFundRemain),
                 PropFundRemainAch = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.PropFundRemainAch),
                 PrscHEAim = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, Attributes.PrscHEAim),
+                ReservedUpliftFactor1 = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.ReservedUpliftFactor1),
+                ReservedUpliftRate1 = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.ReservedUpliftRate1),
                 Residential = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, Attributes.Residential),
                 Restart = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, Attributes.Restart),
                 SpecResUplift = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.SpecResUplift),

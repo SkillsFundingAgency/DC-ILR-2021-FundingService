@@ -20,7 +20,7 @@
         public const string EntityLearningDeliverySFA_PostcodeAreaCost = "SFA_PostcodeAreaCost";
 
         // Global Values
-        public const string YearValue = "1920";
+        public const string YearValue = "2021";
         public const string CollectionPeriodValue = "DefaultPeriod";
         public const string Period1 = "R01";
         public const string Period2 = "R02";

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.External.Organisation.Interface;
@@ -9,7 +10,6 @@ using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM25.Service.Constants;
 using ESFA.DC.ILR.FundingService.FM25.Service.Model;
-using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Interface;
@@ -19,7 +19,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
     public class DataEntityMapper : IDataEntityMapper<FM25LearnerDto>
     {
         private readonly int _fundModel = Attributes.FundModel_25;
-        private readonly DateTime _orgFundingAppliesFrom = new DateTime(2019, 8, 1);
+        private readonly DateTime _orgFundingAppliesFrom = new DateTime(2020, 8, 1);
+        private readonly string _tempPostcode = "ZZ99 9ZZ";
 
         private readonly ILARSReferenceDataService _larsReferenceDataService;
         private readonly IOrganisationReferenceDataService _organisationReferenceDataService;
@@ -39,58 +40,53 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
             var entities = inputModels?
                 .Where(l => l.LearningDeliveries
                 .Any(ld => ld.FundModel == _fundModel))
-                .Select(l => BuildGlobalDataEntity(l, global)) ?? new List<IDataEntity>();
+                .Select(l => BuildGlobalDataEntity(l, global)) ?? Enumerable.Empty<IDataEntity>();
 
             return entities.Any() ? entities : new List<IDataEntity> { BuildDefaultGlobalDataEntity(global) };
         }
 
         public IDataEntity BuildGlobalDataEntity(FM25LearnerDto learner, Global global)
         {
-            return new DataEntity(Attributes.EntityGlobal)
+            var postcodeSpecialistResources = _organisationReferenceDataService.PostcodeSpecialistResourcesForUkprn(global.UKPRN).ToList();
+
+            var specialistResourceEntities = postcodeSpecialistResources?.Select(BuildPostcodeSpecialistResource) ?? Enumerable.Empty<IDataEntity>();
+
+            var entity = new DataEntity(Attributes.EntityGlobal)
             {
-                Attributes = new Dictionary<string, IAttributeData>()
-                {
-                    { Attributes.AreaCostFactor1618, new AttributeData(global.AreaCostFactor1618) },
-                    { Attributes.DisadvantageProportion, new AttributeData(global.DisadvantageProportion) },
-                    { Attributes.HistoricLargeProgrammeProportion, new AttributeData(global.HistoricLargeProgrammeProportion) },
-                    { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
-                    { Attributes.OrgVersion, new AttributeData(global.OrgVersion) },
-                    { Attributes.PostcodeDisadvantageVersion, new AttributeData(global.PostcodesVersion) },
-                    { Attributes.ProgrammeWeighting, new AttributeData(global.ProgrammeWeighting) },
-                    { Attributes.RetentionFactor, new AttributeData(global.RetentionFactor) },
-                    { Attributes.SpecialistResources, new AttributeData(global.SpecialistResources) },              
-                    { Attributes.UKPRN, new AttributeData(global.UKPRN) }
-                },
-                Children = learner != null ? new List<IDataEntity>() { BuildLearnerDataEntity(learner) } : new List<IDataEntity>()
+                Attributes = BuildGlobalAttributes(global)
             };
+
+            if (learner != null)
+            {
+                entity.AddChild(BuildLearnerDataEntity(learner));
+                entity.AddChildren(specialistResourceEntities);
+            }
+
+            return entity;
         }
 
         public IDataEntity BuildDefaultGlobalDataEntity(Global global)
         {
             return new DataEntity(Attributes.EntityGlobal)
             {
-                Attributes = new Dictionary<string, IAttributeData>()
-                {
-                    { Attributes.AreaCostFactor1618, new AttributeData(global.AreaCostFactor1618) },
-                    { Attributes.DisadvantageProportion, new AttributeData(global.DisadvantageProportion) },
-                    { Attributes.HistoricLargeProgrammeProportion, new AttributeData(global.HistoricLargeProgrammeProportion) },
-                    { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
-                    { Attributes.OrgVersion, new AttributeData(global.OrgVersion) },
-                    { Attributes.PostcodeDisadvantageVersion, new AttributeData(global.PostcodesVersion) },
-                    { Attributes.ProgrammeWeighting, new AttributeData(global.ProgrammeWeighting) },
-                    { Attributes.RetentionFactor, new AttributeData(global.RetentionFactor) },
-                    { Attributes.SpecialistResources, new AttributeData(global.SpecialistResources) },
-                    { Attributes.UKPRN, new AttributeData(global.UKPRN) }
-                }
+                Attributes = BuildGlobalAttributes(global)
             };
         }
 
         public IDataEntity BuildLearnerDataEntity(FM25LearnerDto learner)
         {
-            var efaDisadvantageUplift = _postcodesReferenceDataService.LatestEFADisadvantagesUpliftForPostcode(learner.Postcode);
+            var postcode = (string.IsNullOrWhiteSpace(learner.PostcodePrior) || learner.PostcodePrior.CaseInsensitiveEquals(_tempPostcode))
+                ? learner.Postcode
+                : learner.PostcodePrior;
+
+            var efaDisadvantageUplift = _postcodesReferenceDataService.LatestEFADisadvantagesUpliftForPostcode(postcode);
             var specialistResources = _organisationReferenceDataService.SpecialistResourcesForCampusIdentifier(learner.CampId);
 
-            return new DataEntity(Attributes.EntityLearner)
+            var specialistResourcesEntities = specialistResources?.Select(BuildSpecialistResources) ?? Enumerable.Empty<IDataEntity>();
+            var dpOutcomesEntities = learner.DPOutcomes?.Select(BuildDPOutcome) ?? Enumerable.Empty<IDataEntity>();
+            var learningDeliveryEntities = learner.LearningDeliveries?.Select(BuildLearningDeliveryDataEntity) ?? Enumerable.Empty<IDataEntity>();
+
+            var entity = new DataEntity(Attributes.EntityLearner)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
@@ -108,26 +104,24 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { Attributes.PlanLearnHours, new AttributeData(learner.PlanLearnHours) },
                     { Attributes.PostcodeDisadvantageUplift, new AttributeData(efaDisadvantageUplift) },
                     { Attributes.ULN, new AttributeData(learner.ULN) },
-                },
-                Children =
-                    (learner
-                        .LearningDeliveries?
-                        .Select(BuildLearningDeliveryDataEntity) ?? new List<IDataEntity>())
-                        .Union(
-                            learner.DPOutcomes?
-                            .Select(BuildDPOutcome) ?? new List<IDataEntity>())
-                        .Union(
-                            specialistResources?
-                            .Select(BuildSpecialistResources) ?? new List<IDataEntity>())
-                        .ToList()
+                }
             };
+
+            entity.AddChildren(specialistResourcesEntities);
+            entity.AddChildren(dpOutcomesEntities);
+            entity.AddChildren(learningDeliveryEntities);
+
+            return entity;
         }
 
         public IDataEntity BuildLearningDeliveryDataEntity(LearningDelivery learningDelivery)
         {
             var larsLearningDelivery = _larsReferenceDataService.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef);
 
-            return new DataEntity(Attributes.EntityLearningDelivery)
+            var learningDeliveryFamsEntities = learningDelivery?.LearningDeliveryFAMs?.Select(BuildLearningDeliveryFAM) ?? Enumerable.Empty<IDataEntity>();
+            var larsValidityEntities = larsLearningDelivery?.LARSValidities?.Select(BuildLearningDeliveryLARSValidity) ?? Enumerable.Empty<IDataEntity>();
+
+            var entity = new DataEntity(Attributes.EntityLearningDelivery)
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
@@ -135,28 +129,28 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { Attributes.AimType, new AttributeData(learningDelivery.AimType) },
                     { Attributes.AwardOrgCode, new AttributeData(larsLearningDelivery.AwardOrgCode) },
                     { Attributes.CompStatus, new AttributeData(learningDelivery.CompStatus) },
+                    { Attributes.DelLocPostCode, new AttributeData(learningDelivery.DelLocPostCode) },
                     { Attributes.EFACOFType, new AttributeData(larsLearningDelivery.EFACOFType) },
                     { Attributes.FundModel, new AttributeData(learningDelivery.FundModel) },
+                    { Attributes.GuidedLearningHours, new AttributeData(larsLearningDelivery.GuidedLearningHours) },
                     { Attributes.LearnActEndDate, new AttributeData(learningDelivery.LearnActEndDate) },
                     { Attributes.LearnAimRef, new AttributeData(learningDelivery.LearnAimRef) },
                     { Attributes.LearnAimRefTitle, new AttributeData(larsLearningDelivery.LearnAimRefTitle) },
                     { Attributes.LearnAimRefType, new AttributeData(larsLearningDelivery.LearnAimRefType) },
                     { Attributes.LearnPlanEndDate, new AttributeData(learningDelivery.LearnPlanEndDate) },
                     { Attributes.LearnStartDate, new AttributeData(learningDelivery.LearnStartDate) },
+                    { Attributes.PHours, new AttributeData(learningDelivery.PHours) },
+                    { Attributes.NotionalNVQLevel, new AttributeData(larsLearningDelivery.NotionalNVQLevel) },
                     { Attributes.ProgType, new AttributeData(learningDelivery.ProgType) },
                     { Attributes.SectorSubjectAreaTier2, new AttributeData(larsLearningDelivery.SectorSubjectAreaTier2) },
                     { Attributes.WithdrawReason, new AttributeData(learningDelivery.WithdrawReason) },
-                },
-                Children = (
-                            learningDelivery?
-                            .LearningDeliveryFAMs?
-                            .Select(BuildLearningDeliveryFAM) ?? new List<IDataEntity>())
-                            .Union(
-                                    larsLearningDelivery?
-                                    .LARSValidities?
-                                    .Select(BuildLearningDeliveryLARSValidity) ?? new List<IDataEntity>())
-                            .ToList()
+                },      
             };
+
+            entity.AddChildren(learningDeliveryFamsEntities);
+            entity.AddChildren(larsValidityEntities);
+
+            return entity;
         }
 
         public IDataEntity BuildLearningDeliveryFAM(LearningDeliveryFAM learningDeliveryFAM)
@@ -211,23 +205,56 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
             };
         }
 
+        public IDataEntity BuildPostcodeSpecialistResource(PostcodeSpecialistResource specResource)
+        {
+            return new DataEntity(Attributes.EntityPostcodeSpecialistResources)
+            {
+                Attributes = new Dictionary<string, IAttributeData>()
+                {
+                    { Attributes.PostcodeSpecResPostcode, new AttributeData(specResource.Postcode) },
+                    { Attributes.PostcodeSpecResSpecialistResources, new AttributeData(specResource.SpecialistResources) },
+                    { Attributes.PostcodeSpecResEffectiveFrom, new AttributeData(specResource.EffectiveFrom) },
+                    { Attributes.PostcodeSpecResEffectiveTo, new AttributeData(specResource.EffectiveTo) },
+                }
+            };
+        }
+
         public Global BuildGlobal(int ukprn)
         {
             var orgFundings = _organisationReferenceDataService.OrganisationFundingForUKPRN(ukprn)
-                .Where(f => f.OrgFundFactType == Attributes.OrgFundFactorTypeEFA1619).ToList();
+                .Where(f => f.OrgFundFactType.CaseInsensitiveEquals(Attributes.OrgFundFactorTypeEFA1619)).ToList();
 
             return new Global()
             {
-                AreaCostFactor1618 = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == _orgFundingAppliesFrom && f.OrgFundFactor == Attributes.OrgFundFactorHistoricAreaCost)?.OrgFundFactValue,
-                DisadvantageProportion = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == _orgFundingAppliesFrom && f.OrgFundFactor == Attributes.OrgFundFactorHistoricDisadvantageFundingProportion)?.OrgFundFactValue,
-                HistoricLargeProgrammeProportion = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == _orgFundingAppliesFrom && f.OrgFundFactor == Attributes.OrgFundFactorHistoricLargeProgProportion)?.OrgFundFactValue,
+                AreaCostFactor1618 = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == _orgFundingAppliesFrom && f.OrgFundFactor.CaseInsensitiveEquals(Attributes.OrgFundFactorHistoricAreaCost))?.OrgFundFactValue,
+                DisadvantageProportion = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == _orgFundingAppliesFrom && f.OrgFundFactor.CaseInsensitiveEquals(Attributes.OrgFundFactorHistoricDisadvantageFundingProportion))?.OrgFundFactValue,
+                HistoricLargeProgrammeProportion = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == _orgFundingAppliesFrom && f.OrgFundFactor.CaseInsensitiveEquals(Attributes.OrgFundFactorHistoricLargeProgProportion))?.OrgFundFactValue,
                 LARSVersion = _larsReferenceDataService.LARSCurrentVersion(),
                 OrgVersion = _organisationReferenceDataService.OrganisationVersion(),
                 PostcodesVersion = _postcodesReferenceDataService.PostcodesCurrentVersion(),
-                ProgrammeWeighting = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == _orgFundingAppliesFrom && f.OrgFundFactor == Attributes.OrgFundFactorHistoriProgCostWeigting)?.OrgFundFactValue,
-                RetentionFactor = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == _orgFundingAppliesFrom && f.OrgFundFactor == Attributes.OrgFundFactorHistoricRetention)?.OrgFundFactValue,
-                SpecialistResources = orgFundings.FirstOrDefault(f => f.OrgFundFactor == Attributes.OrgFundFactorSpecialistResources)?.OrgFundFactValue == "1" ? true : false,
+                ProgrammeWeighting = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == _orgFundingAppliesFrom && f.OrgFundFactor.CaseInsensitiveEquals(Attributes.OrgFundFactorHistoriProgCostWeigting))?.OrgFundFactValue,
+                RetentionFactor = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == _orgFundingAppliesFrom && f.OrgFundFactor.CaseInsensitiveEquals(Attributes.OrgFundFactorHistoricRetention))?.OrgFundFactValue,
+                Level3ProgMathsAndEnglishProportion = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == _orgFundingAppliesFrom && f.OrgFundFactor.CaseInsensitiveEquals(Attributes.OrgFundFactorLevel3ProgMathsAndEnglishProportion))?.OrgFundFactValue,
+                SpecialistResources = orgFundings.FirstOrDefault(f => f.OrgFundFactor.CaseInsensitiveEquals(Attributes.OrgFundFactorSpecialistResources))?.OrgFundFactValue == "1" ? true : false,
                 UKPRN = ukprn
+            };
+        }
+
+        private IDictionary<string, IAttributeData> BuildGlobalAttributes(Global global)
+        {
+            return new Dictionary<string, IAttributeData>
+            {
+                { Attributes.AreaCostFactor1618, new AttributeData(global.AreaCostFactor1618) },
+                { Attributes.DisadvantageProportion, new AttributeData(global.DisadvantageProportion) },
+                { Attributes.HistoricLargeProgrammeProportion, new AttributeData(global.HistoricLargeProgrammeProportion) },
+                { Attributes.LARSVersion, new AttributeData(global.LARSVersion) },
+                { Attributes.OrgVersion, new AttributeData(global.OrgVersion) },
+                { Attributes.PostcodeDisadvantageVersion, new AttributeData(global.PostcodesVersion) },
+                { Attributes.ProgrammeWeighting, new AttributeData(global.ProgrammeWeighting) },
+                { Attributes.RetentionFactor, new AttributeData(global.RetentionFactor) },
+                { Attributes.Level3ProgMathsAndEnglishProportion, new AttributeData(global.Level3ProgMathsAndEnglishProportion) },
+                { Attributes.SpecialistResources, new AttributeData(global.SpecialistResources) },
+                { Attributes.UKPRN, new AttributeData(global.UKPRN) }
             };
         }
     }

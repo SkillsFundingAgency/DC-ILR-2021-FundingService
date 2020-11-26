@@ -38,5 +38,12 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Organisation
 
             return Enumerable.Empty<CampusIdentifierSpecResource>();
         }
+
+        public IEnumerable<PostcodeSpecialistResource> PostcodeSpecialistResourcesForUkprn(int ukprn)
+        {
+            _referenceDataCache.PostcodeSpecResources.TryGetValue(ukprn, out var specResources);
+
+            return specResources ?? Enumerable.Empty<PostcodeSpecialistResource>();
+        }
     }
 }

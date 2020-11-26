@@ -13,18 +13,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Rulebase\FM35 Funding Calc 19_20.zip" />
+    <None Remove="Rulebase\FM35 Funding Calc 20_21.zip" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Rulebase\FM35 Funding Calc 19_20.zip" />
+    <EmbeddedResource Include="Rulebase\FM35 Funding Calc 20_21.zip" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ESFA.DC.ILR.1920.Model" Version="0.1.8-beta0001" />
-    <PackageReference Include="ESFA.DC.ILR.1920.Model.Interface" Version="0.1.4-beta0001" />
-    <PackageReference Include="ESFA.DC.IO.Interfaces" Version="0.1.18-beta0001" />
-    <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.6-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.2021.Model" Version="0.1.6-beta0001" />
+    <PackageReference Include="ESFA.DC.IO.Interfaces" Version="0.1.39-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.39-beta0001" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

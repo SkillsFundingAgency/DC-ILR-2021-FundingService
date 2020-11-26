@@ -9,7 +9,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
 {
     public class FM70LearnerPagingService : AbstractLearnerPagingService, ILearnerPagingService<FM70LearnerDto>
     {
-        public IEnumerable<IEnumerable<FM70LearnerDto>> ProvideDtos(int fundModelFilter, IMessage message)
+        public IEnumerable<IEnumerable<FM70LearnerDto>> ProvideDtos(IEnumerable<int> fundModelFilter, IMessage message)
         {
             var learnerDestinationAndProgressions = message.LearnerDestinationAndProgressions;
 

@@ -105,6 +105,11 @@
           <prop name="Date">19-03-2019</prop>
         </props>
       </attribute>
+      <attribute name="p460" type="number" public-name="Level3ProgMathsandEnglishProportion">
+        <text>
+          <base>the provider's L3 maths and English proportion</base>
+        </text>
+      </attribute>
     </entity>
     <entity id="learner" name="the learner" public-id="Learner" containment-relationship-id="learners" containment-parent-id="global">
       <attribute name="p132" type="number" public-name="PlanEEPHours">
@@ -396,6 +401,26 @@
           <prop name="Date">19-03-2019</prop>
         </props>
       </attribute>
+      <attribute name="p462" type="number" public-name="GuidedLearningHours">
+        <text>
+          <base>the learning delivery's guided learning hours</base>
+        </text>
+      </attribute>
+      <attribute name="p463" type="number" public-name="PHours">
+        <text>
+          <base>the learning delivery's planned hours</base>
+        </text>
+      </attribute>
+      <attribute name="p465" type="text" public-name="NotionalNVQLevel">
+        <text>
+          <base>the learning delivery's notional NVQ level</base>
+        </text>
+      </attribute>
+      <attribute name="p471" type="text" public-name="DelLocPostCode">
+        <text>
+          <base>the learning delivery's delivery location postcode</base>
+        </text>
+      </attribute>
     </entity>
     <entity id="learningdeliverylarsvalidity" name="the learning delivery LARS validity" containment-relationship-id="learningdeliveryslarsvalidities" containment-parent-id="learningdelivery" public-id="LearningDeliveryLARSValidity">
       <attribute name="p407" type="text" public-name="ValidityCategory">
@@ -503,6 +528,40 @@
         </text>
       </attribute>
     </entity>
+    <entity id="postcodespecialistresourcereferencedata" name="the postcode specialist resource reference data" containment-relationship-id="allinstancesofthepostcodespecialistresourcereferencedata" containment-parent-id="global" public-id="Postcode_Specialist_Resource_RefData">
+      <attribute name="p467" type="date" public-name="PostcodeSpecResEffectiveFrom">
+        <text>
+          <base>the postcode specialist resource reference data's effective from date</base>
+        </text>
+        <props>
+          <prop name="Version">1920.02.02</prop>
+          <prop name="Date">07-05-2019</prop>
+        </props>
+      </attribute>
+      <attribute name="p468" type="date" public-name="PostcodeSpecResEffectiveTo">
+        <text>
+          <base>the postcode specialist resource reference data's effective to date</base>
+        </text>
+        <props>
+          <prop name="Version">1920.02.02</prop>
+          <prop name="Date">07-05-2019</prop>
+        </props>
+      </attribute>
+      <attribute name="p469" type="text" public-name="PostcodeSpecResPostcode">
+        <text>
+          <base>the postcode specialist resource reference data's postcode</base>
+        </text>
+      </attribute>
+      <attribute name="p470" type="text" public-name="PostcodeSpecResSpecialistResources">
+        <text>
+          <base>the postcode specialist resource reference data's specialist resources</base>
+        </text>
+        <props>
+          <prop name="Version">1920.03.03</prop>
+          <prop name="Date">03-06-2019</prop>
+        </props>
+      </attribute>
+    </entity>
   </entities>
   <rules />
   <interactive-items>
@@ -513,13 +572,17 @@
   <relationships>
     <relationship source="global" target="learner" text="the learners" relationship-id="learners" reverse-text="" reverse-relationship-id="global_learners_rev" type="OneToMany" is-computed="false" is-containment="true" />
     <relationship source="learner" target="learningdelivery" text="the learner's learning deliveries" relationship-id="learnerslearningdeliveries" reverse-text="the learner associated with the learning delivery" reverse-relationship-id="learnerassociatedwiththelearningdelivery" type="OneToMany" is-computed="false" is-containment="true" />
-    <relationship source="learner" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learner's core aims" relationship-id="learnerscoreaims" reverse-relationship-id="learnerassociatedwiththecoreaim" reverse-text="the learner associated with the core aim" type="ManyToMany" is-computed="false" />
     <relationship source="learningdelivery" target="learningdeliverylarsvalidity" text="the learning delivery's LARS validities" relationship-id="learningdeliveryslarsvalidities" reverse-relationship-id="learningdeliveryassociatedwiththelearningdeliverylarsvalidity" reverse-text="the learning delivery associated with the learning delivery LARS validity" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
-    <relationship source="learner" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learner's ESFA learning deliveries" relationship-id="learnersesfalearningdeliveries" reverse-relationship-id="learnerassociatedwiththeesfalearningdelivery" reverse-text="the learner associated with the ESFA learning delivery" type="ManyToMany" is-computed="false" />
     <relationship source="learner" target="learnerdestinationandprogressionoutcome" text="the learners destination and progression outcomes" relationship-id="learnersdestinationandprogressionoutcomes" reverse-relationship-id="learnerdestinationandprogressionoutcomesassociatedwiththelearner" reverse-text="the learner destination and progression outcomes associated with the learner" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
     <relationship source="learner" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learner's ESFA 16-19 traineeship programme aims" relationship-id="learnersesfa1619traineeshipprogrammeaims" reverse-relationship-id="learner_learnersesfa1619traineeshipprogrammeaims_rev" reverse-text="" type="ManyToMany" is-computed="false" />
     <relationship source="learningdelivery" target="learningdeliveryfam" text="the learning delivery FAMs" relationship-id="learningdeliveryfams" reverse-relationship-id="learningdeliveryassociatedwiththelearningdeliveryfam" reverse-text="the learning delivery associated with the learning delivery FAM" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
     <relationship source="learner" target="campusfunding" text="the campus funding for the learner" relationship-id="campusfundingforthelearner" reverse-relationship-id="campusfundingslearner" reverse-text="the campus funding's learner" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learner" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learner's core aims" relationship-id="learnerscoreaims" reverse-relationship-id="learner_learnerscoreaims_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="learner" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learner's ESFA 16-19 learning deliveries" relationship-id="learnersesfa1619learningdeliveries" reverse-relationship-id="learner_learnersesfa1619learningdeliveries_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="learner" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learner's ESFA 16-19 T level programme aims" relationship-id="learnersesfa1619tlevelprogrammeaims" reverse-relationship-id="learner_learnersesfa1619tlevelprogrammeaims_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="global" target="postcodespecialistresourcereferencedata" text="all instances of the postcode specialist resource reference data" relationship-id="allinstancesofthepostcodespecialistresourcereferencedata" reverse-relationship-id="global_allinstancesofthepostcodespecialistresourcereferencedata_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learningdelivery" target="postcodespecialistresourcereferencedata" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's postcode specialist resource reference data for delivery location postcode" relationship-id="learningdeliveryspostcodespecialistresourcereferencedatafordeliverylocationpostcode" reverse-relationship-id="learningdelivery_learningdeliveryspostcodespecialistresourcereferencedatafordeliverylocationpostcode_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="learningdelivery" target="postcodespecialistresourcereferencedata" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's postcode specialist resource reference data for applicable start date" relationship-id="learningdeliveryspostcodespecialistresourcereferencedataforapplicablestartdate" reverse-relationship-id="learningdelivery_learningdeliveryspostcodespecialistresourcereferencedataforapplicablestartdate_rev" reverse-text="" type="ManyToMany" is-computed="false" />
   </relationships>
   <rule-folders />
 </root>

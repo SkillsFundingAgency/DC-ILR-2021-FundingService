@@ -31,7 +31,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                             Uplift = 2.0m,
                             EffectiveFrom = new DateTime(2018, 9, 1)
                          }
-                     }
+                     },
                 },
                 new ReferenceDataService.Model.Postcodes.Postcode
                 {
@@ -88,7 +88,13 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         [Fact]
         public void MapPostcodes_Null()
         {
-            NewService().MapPostcodes(null).Should().BeNull();
+            NewService().MapPostcodes(null).Should().BeEquivalentTo(new Dictionary<string, PostcodeRoot>());
+        }
+
+        [Fact]
+        public void MapPostcodes_Empty()
+        {
+            NewService().MapPostcodes(new List<ReferenceDataService.Model.Postcodes.Postcode>()).Should().BeEquivalentTo(new Dictionary<string, PostcodeRoot>());
         }
 
         private IDictionary<string, PostcodeRoot> ExpectedPostcodeDictionary()
@@ -114,7 +120,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                                 Uplift = 2.0m,
                                 EffectiveFrom = new DateTime(2018, 9, 1)
                             }
-                        }
+                        },
                     }
                 },
                 {

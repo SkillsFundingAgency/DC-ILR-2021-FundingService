@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.Providers.Constants;
 using ESFA.DC.ILR.Model;
@@ -12,9 +13,9 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
     {
         private const int PageSize = 500;
 
-        public IEnumerable<IEnumerable<MessageLearner>> BuildPages(int fundModelFilter, IEnumerable<ILearner> learners)
+        public IEnumerable<IEnumerable<MessageLearner>> BuildPages(IEnumerable<int> fundModelFilter, IEnumerable<ILearner> learners)
         {
-            var pagedLearners = learners?.Where(l => l.LearningDeliveries.Any(ld => fundModelFilter == ld.FundModel)).ToList().Cast<MessageLearner>() ?? Enumerable.Empty<MessageLearner>();
+            var pagedLearners = learners?.Where(l => l.LearningDeliveries.Any(ld => fundModelFilter.Contains(ld.FundModel))).ToList().Cast<MessageLearner>() ?? Enumerable.Empty<MessageLearner>();
 
             return SplitList(pagedLearners, PageSize);
         }
@@ -57,16 +58,16 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
             {
                 learnerFams = learnerFams.ToList();
 
-                var edfArray = learnerFams.Where(f => f.LearnFAMType == LearnerPagingConstants.LearnerFAMTypeEDF).Select(f => (int?)f.LearnFAMCode).ToArray();
+                var edfArray = learnerFams.Where(f => f.LearnFAMType.CaseInsensitiveEquals(LearnerPagingConstants.LearnerFAMTypeEDF)).Select(f => (int?)f.LearnFAMCode).ToArray();
 
                 Array.Resize(ref edfArray, 2);
 
-                learnerFam.ECF = learnerFams.Where(f => f.LearnFAMType == LearnerPagingConstants.LearnerFAMTypeECF).Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
+                learnerFam.ECF = learnerFams.Where(f => f.LearnFAMType.CaseInsensitiveEquals(LearnerPagingConstants.LearnerFAMTypeECF)).Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
                 learnerFam.EDF1 = edfArray[0];
                 learnerFam.EDF2 = edfArray[1];
-                learnerFam.EHC = learnerFams.Where(f => f.LearnFAMType == LearnerPagingConstants.LearnerFAMTypeEHC).Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
-                learnerFam.HNS = learnerFams.Where(f => f.LearnFAMType == LearnerPagingConstants.LearnerFAMTypeHNS).Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
-                learnerFam.MCF = learnerFams.Where(f => f.LearnFAMType == LearnerPagingConstants.LearnerFAMTypeMCF).Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
+                learnerFam.EHC = learnerFams.Where(f => f.LearnFAMType.CaseInsensitiveEquals(LearnerPagingConstants.LearnerFAMTypeEHC)).Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
+                learnerFam.HNS = learnerFams.Where(f => f.LearnFAMType.CaseInsensitiveEquals(LearnerPagingConstants.LearnerFAMTypeHNS)).Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
+                learnerFam.MCF = learnerFams.Where(f => f.LearnFAMType.CaseInsensitiveEquals(LearnerPagingConstants.LearnerFAMTypeMCF)).Select(f => (int?)f.LearnFAMCode).FirstOrDefault();
             }
 
             return learnerFam;

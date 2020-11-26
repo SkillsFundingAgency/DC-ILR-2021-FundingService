@@ -20,6 +20,8 @@
 
         public bool SpecialistResources { get; set; }
 
+        public string Level3ProgMathsAndEnglishProportion { get; set; }
+
         public int UKPRN { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace ESFA.DC.ILR.FundingService.FM70.Service.Rulebase
 {
     public class FM70RulebaseProvider : IRulebaseStreamProvider<FM70LearnerDto>
     {
-        private const string RulebaseName = @"ESF 1920 Funding Calc";
+        private const string RulebaseName = @"ESF 2021 Funding Calc";
 
         public Stream GetStream()
         {

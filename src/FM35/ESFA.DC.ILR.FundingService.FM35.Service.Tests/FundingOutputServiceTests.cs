@@ -124,6 +124,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             var propFundRemainAch = 1;
             var prscHEAim = false;
             var residential = false;
+            var reservedUpliftFactor1 = 10m;
+            var reservedUpliftRate1 = 10m;
             var restart = false;
             var specResUplift = 1;
             var startPropTrans = 1;
@@ -201,6 +203,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "PropFundRemain")).Returns(propFundRemain);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "PropFundRemainAch")).Returns(propFundRemainAch);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "PrscHEAim")).Returns(prscHEAim);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "ReservedUpliftFactor1")).Returns(reservedUpliftFactor1);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "ReservedUpliftRate1")).Returns(reservedUpliftRate1);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "Residential")).Returns(residential);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "Restart")).Returns(restart);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "SpecResUplift")).Returns(specResUplift);
@@ -277,6 +281,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             learningDelivery.PropFundRemain.Should().Be(propFundRemain);
             learningDelivery.PropFundRemainAch.Should().Be(propFundRemainAch);
             learningDelivery.PrscHEAim.Should().Be(prscHEAim);
+            learningDelivery.ReservedUpliftFactor1.Should().Be(reservedUpliftFactor1);
+            learningDelivery.ReservedUpliftRate1.Should().Be(reservedUpliftRate1);
             learningDelivery.Residential.Should().Be(residential);
             learningDelivery.Restart.Should().Be(restart);
             learningDelivery.SpecResUplift.Should().Be(specResUplift);
@@ -639,18 +645,18 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             collectionPeriodDataServiceMock.Setup(sm => sm.CollectionPeriods()).Returns(
                  new Periods
                  {
-                     Period1 = new DateTime(2019, 8, 1),
-                     Period2 = new DateTime(2019, 9, 1),
-                     Period3 = new DateTime(2019, 10, 1),
-                     Period4 = new DateTime(2019, 11, 1),
-                     Period5 = new DateTime(2019, 12, 1),
-                     Period6 = new DateTime(2020, 1, 1),
-                     Period7 = new DateTime(2020, 2, 1),
-                     Period8 = new DateTime(2020, 3, 1),
-                     Period9 = new DateTime(2020, 4, 1),
-                     Period10 = new DateTime(2020, 5, 1),
-                     Period11 = new DateTime(2020, 6, 1),
-                     Period12 = new DateTime(2020, 7, 1),
+                     Period1 = new DateTime(2020, 8, 1),
+                     Period2 = new DateTime(2020, 9, 1),
+                     Period3 = new DateTime(2020, 10, 1),
+                     Period4 = new DateTime(2020, 11, 1),
+                     Period5 = new DateTime(2020, 12, 1),
+                     Period6 = new DateTime(2021, 1, 1),
+                     Period7 = new DateTime(2021, 2, 1),
+                     Period8 = new DateTime(2021, 3, 1),
+                     Period9 = new DateTime(2021, 4, 1),
+                     Period10 = new DateTime(2021, 5, 1),
+                     Period11 = new DateTime(2021, 6, 1),
+                     Period12 = new DateTime(2021, 7, 1),
                  });
 
             return new FundingOutputService(collectionPeriodDataServiceMock.Object, dataEntityAttributeService);

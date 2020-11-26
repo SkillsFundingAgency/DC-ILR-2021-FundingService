@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Providers.Constants;
@@ -9,7 +10,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
 {
     public class FM36LearnerPagingService : AbstractLearnerPagingService, ILearnerPagingService<FM36LearnerDto>
     {
-        public IEnumerable<IEnumerable<FM36LearnerDto>> ProvideDtos(int fundModelFilter, IMessage message)
+        public IEnumerable<IEnumerable<FM36LearnerDto>> ProvideDtos(IEnumerable<int> fundModelFilter, IMessage message)
         {
             List<IEnumerable<FM36LearnerDto>> dtos = new List<IEnumerable<FM36LearnerDto>>();
 
@@ -32,11 +33,10 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                 ULN = l.ULN,
                 LearnerEmploymentStatuses = l.LearnerEmploymentStatuses?.Select(les => new LearnerEmploymentStatus
                 {
-                    AgreeId = les.AgreeId,
                     DateEmpStatApp = les.DateEmpStatApp,
                     EmpId = les.EmpIdNullable,
                     EmpStat = les.EmpStat,
-                    SEM = les.EmploymentStatusMonitorings?.Where(e => e.ESMType == LearnerPagingConstants.LearnerEmploymentStatusSEM).Select(e => (int?)e.ESMCode).FirstOrDefault()
+                    SEM = les.EmploymentStatusMonitorings?.Where(e => e.ESMType.CaseInsensitiveEquals(LearnerPagingConstants.LearnerEmploymentStatusSEM)).Select(e => (int?)e.ESMCode).FirstOrDefault()
                 }).ToList(),
                 LearningDeliveries = l.LearningDeliveries?.Select(ld => new LearningDelivery
                 {

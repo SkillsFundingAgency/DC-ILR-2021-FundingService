@@ -10,7 +10,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
 {
     public class FM25LearnerPagingService : AbstractLearnerPagingService, ILearnerPagingService<FM25LearnerDto>
     {
-        public IEnumerable<IEnumerable<FM25LearnerDto>> ProvideDtos(int fundModelFilter, IMessage message)
+        public IEnumerable<IEnumerable<FM25LearnerDto>> ProvideDtos(IEnumerable<int> fundModelFilter, IMessage message)
         {
             var learnerDestinationAndProgressions = message.LearnerDestinationAndProgressions;
 
@@ -38,6 +38,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                 PlanEEPHours = l.PlanEEPHoursNullable,
                 PlanLearnHours = l.PlanLearnHoursNullable,
                 Postcode = l.Postcode,
+                PostcodePrior = l.PostcodePrior,
                 ULN = l.ULN,
                 LrnFAM_ECF = learnerFams[l.LearnRefNumber].ECF,
                 LrnFAM_EDF1 = learnerFams[l.LearnRefNumber].EDF1,
@@ -56,6 +57,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.LearnerPaging
                     LearnActEndDate = ld.LearnActEndDateNullable,
                     LearnPlanEndDate = ld.LearnPlanEndDate,
                     LearnStartDate = ld.LearnStartDate,
+                    PHours = ld.PHoursNullable,
                     ProgType = ld.ProgTypeNullable,
                     WithdrawReason = ld.WithdrawReasonNullable,
                     LearningDeliveryFAMs = ld.LearningDeliveryFAMs?.Select(ldf => new LearningDeliveryFAM

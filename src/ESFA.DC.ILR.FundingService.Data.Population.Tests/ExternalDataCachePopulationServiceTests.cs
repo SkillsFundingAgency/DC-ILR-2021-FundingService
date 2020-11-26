@@ -54,18 +54,18 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
                     {
                         CensusDates = new List<CensusDate>
                         {
-                            new CensusDate { Period = 1, Start = new DateTime(2019, 8, 1) },
-                            new CensusDate { Period = 2, Start = new DateTime(2019, 9, 1) },
-                            new CensusDate { Period = 3, Start = new DateTime(2019, 10, 1) },
-                            new CensusDate { Period = 4, Start = new DateTime(2019, 11, 1) },
-                            new CensusDate { Period = 5, Start = new DateTime(2019, 12, 1) },
-                            new CensusDate { Period = 6, Start = new DateTime(2020, 1, 1) },
-                            new CensusDate { Period = 7, Start = new DateTime(2020, 2, 1) },
-                            new CensusDate { Period = 8, Start = new DateTime(2020, 3, 1) },
-                            new CensusDate { Period = 9, Start = new DateTime(2020, 4, 1) },
-                            new CensusDate { Period = 10, Start = new DateTime(2020, 5, 1) },
-                            new CensusDate { Period = 11, Start = new DateTime(2020, 6, 1) },
-                            new CensusDate { Period = 12, Start = new DateTime(2020, 7, 1) },
+                            new CensusDate { Period = 1, Start = new DateTime(2020, 8, 1) },
+                            new CensusDate { Period = 2, Start = new DateTime(2020, 9, 1) },
+                            new CensusDate { Period = 3, Start = new DateTime(2020, 10, 1) },
+                            new CensusDate { Period = 4, Start = new DateTime(2020, 11, 1) },
+                            new CensusDate { Period = 5, Start = new DateTime(2020, 12, 1) },
+                            new CensusDate { Period = 6, Start = new DateTime(2021, 1, 1) },
+                            new CensusDate { Period = 7, Start = new DateTime(2021, 2, 1) },
+                            new CensusDate { Period = 8, Start = new DateTime(2021, 3, 1) },
+                            new CensusDate { Period = 9, Start = new DateTime(2021, 4, 1) },
+                            new CensusDate { Period = 10, Start = new DateTime(2021, 5, 1) },
+                            new CensusDate { Period = 11, Start = new DateTime(2021, 6, 1) },
+                            new CensusDate { Period = 12, Start = new DateTime(2021, 7, 1) },
                         }
                     }
                 }
@@ -101,9 +101,12 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
 
             var organisationCurrentVersion = "OrganisationVersion";
             var orgFundings = new Dictionary<int, IReadOnlyCollection<OrgFunding>>();
+            var postcodeSpecialistResources = new Dictionary<int, IReadOnlyCollection<PostcodeSpecialistResource>>();
 
             organisationsMapperServiceMock.Setup(o => o.MapOrgFundings(
                 It.IsAny<IReadOnlyCollection<ReferenceDataService.Model.Organisations.Organisation>>())).Returns(orgFundings).Verifiable();
+            organisationsMapperServiceMock.Setup(o => o.MapPostcodeSpecialistResources(
+                It.IsAny<IReadOnlyCollection<ReferenceDataService.Model.Organisations.Organisation>>())).Returns(postcodeSpecialistResources).Verifiable();
 
             var appsEarningsHistoryMapperServiceMock = new Mock<IAppsEarningsHistoryMapperService>();
 
@@ -123,18 +126,18 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
 
             var periods = new Periods
             {
-                Period1 = new DateTime(2019, 8, 1),
-                Period2 = new DateTime(2019, 9, 1),
-                Period3 = new DateTime(2019, 10, 1),
-                Period4 = new DateTime(2019, 11, 1),
-                Period5 = new DateTime(2019, 12, 1),
-                Period6 = new DateTime(2020, 1, 1),
-                Period7 = new DateTime(2020, 2, 1),
-                Period8 = new DateTime(2020, 3, 1),
-                Period9 = new DateTime(2020, 4, 1),
-                Period10 = new DateTime(2020, 5, 1),
-                Period11 = new DateTime(2020, 6, 1),
-                Period12 = new DateTime(2020, 7, 1),
+                Period1 = new DateTime(2020, 8, 1),
+                Period2 = new DateTime(2020, 9, 1),
+                Period3 = new DateTime(2020, 10, 1),
+                Period4 = new DateTime(2020, 11, 1),
+                Period5 = new DateTime(2020, 12, 1),
+                Period6 = new DateTime(2021, 1, 1),
+                Period7 = new DateTime(2021, 2, 1),
+                Period8 = new DateTime(2021, 3, 1),
+                Period9 = new DateTime(2021, 4, 1),
+                Period10 = new DateTime(2021, 5, 1),
+                Period11 = new DateTime(2021, 6, 1),
+                Period12 = new DateTime(2021, 7, 1),
             };
 
             metaDataMapperServiceMock.Setup(mm => mm.BuildPeriods(referenceData.MetaDatas)).Returns(periods).Verifiable();
@@ -169,6 +172,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests
 
             externalDataCache.OrgVersion.Should().Be(organisationCurrentVersion);
             externalDataCache.OrgFunding.Should().BeSameAs(orgFundings);
+            externalDataCache.PostcodeSpecResources.Should().BeSameAs(postcodeSpecialistResources);
 
             externalDataCache.Periods.Should().BeEquivalentTo(periods);
         }

@@ -30,7 +30,7 @@
         public const string RulebaseVersion = "RulebaseVersion";
 
         // Global Values
-        public const string YearValue = "1920";
+        public const string YearValue = "2021";
         public const string CollectionPeriodValue = "DefaultPeriod";
         public const string Period1 = "R01";
         public const string Period2 = "R02";
@@ -142,12 +142,11 @@
         public const string LearnDelSecondProv1618Pay = "LearnDelSecondProv1618Pay";
         public const string LearnDelSEMContWaiver = "LearnDelSEMContWaiver";
         public const string LearnDelSFAContribPct = "LearnDelSFAContribPct";
+        public const string LearnDelESFAContribPct = "LearnDelESFAContribPct";
         public const string LearnSuppFund = "LearnSuppFund";
         public const string LearnSuppFundCash = "LearnSuppFundCash";
         public const string MathEngBalPayment = "MathEngBalPayment";
-        public const string MathEngBalPct = "MathEngBalPct";
         public const string MathEngOnProgPayment = "MathEngOnProgPayment";
-        public const string MathEngOnProgPct = "MathEngOnProgPct";
         public const string ProgrammeAimBalPayment = "ProgrammeAimBalPayment";
         public const string ProgrammeAimCompletionPayment = "ProgrammeAimCompletionPayment";
         public const string ProgrammeAimOnProgPayment = "ProgrammeAimOnProgPayment";
@@ -173,7 +172,6 @@
         public const string LearnDelFAMType = "LearnDelFAMType";
 
         // LearnerEmploymentStatus
-        public const string AgreeId = "AgreeId";
         public const string DateEmpStatApp = "DateEmpStatApp";
         public const string EmpId = "EmpId";
         public const string EMPStat = "EMPStat";
@@ -297,6 +295,7 @@
         public const string PriceEpisodeLSFCash = "PriceEpisodeLSFCash";
         public const string PriceEpisodeFundLineType = "PriceEpisodeFundLineType";
         public const string PriceEpisodeSFAContribPct = "PriceEpisodeSFAContribPct";
+        public const string PriceEpisodeESFAContribPct = "PriceEpisodeESFAContribPct";
         public const string PriceEpisodeLevyNonPayInd = "PriceEpisodeLevyNonPayInd";
         public const string EpisodeEffectiveTNPStartDate = "EpisodeEffectiveTNPStartDate";
         public const string PriceEpisodeFirstAdditionalPaymentThresholdDate = "PriceEpisodeFirstAdditionalPaymentThresholdDate";
@@ -310,7 +309,6 @@
         public const string PriceEpisodeCumulativePMRs = "PriceEpisodeCumulativePMRs";
         public const string PriceEpisodeCompExemCode = "PriceEpisodeCompExemCode";
         public const string PriceEpisodeLearnerAdditionalPaymentThresholdDate = "PriceEpisodeLearnerAdditionalPaymentThresholdDate";
-        public const string PriceEpisodeAgreeId = "PriceEpisodeAgreeId";
         public const string PriceEpisodeRedStartDate = "PriceEpisodeRedStartDate";
         public const string PriceEpisodeRedStatusCode = "PriceEpisodeRedStatusCode";
         public const string PriceEpisodeLearnerAdditionalPayment = "PriceEpisodeLearnerAdditionalPayment";

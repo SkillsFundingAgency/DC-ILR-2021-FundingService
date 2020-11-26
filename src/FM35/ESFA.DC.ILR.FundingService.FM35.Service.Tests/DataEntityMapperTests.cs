@@ -29,6 +29,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             var postcodeVersion = "1.0.0";
             var learnAimRef = "LearnAimRef";
             var postcodePrior = "Postcode";
+            var delLocPostcode = "Postcode";
             var empId = 1;
 
             var global = new Global
@@ -57,6 +58,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                         {
                             LearnAimRef = learnAimRef,
                             FundModel = 35,
+                            DelLocPostCode = delLocPostcode
                         }
                     }
                 },
@@ -242,6 +244,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             var postcodesRefererenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
 
             organisationRefererenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(global.UKPRN)).Returns(new List<OrgFunding> { new OrgFunding() });
+            organisationRefererenceDataServiceMock.Setup(o => o.PostcodeSpecialistResourcesForUkprn(global.UKPRN)).Returns(new List<PostcodeSpecialistResource> { new PostcodeSpecialistResource() });
             postcodesRefererenceDataServiceMock.Setup(o => o.SFADisadvantagesForPostcode(learner.PostcodePrior)).Returns(new List<SfaDisadvantage>());
 
             var dataEntity = NewService(
@@ -249,6 +252,8 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 postcodesReferenceDataService: postcodesRefererenceDataServiceMock.Object).BuildGlobalDataEntity(learner, global);
 
             dataEntity.EntityName.Should().Be("global");
+            dataEntity.Children.Should().HaveCount(3);
+            dataEntity.Children.Select(x => x.EntityName).Should().Contain("Learner", "Postcode_Specialist_Resource_RefData", "OrgFunding");
             dataEntity.Attributes.Should().HaveCount(4);
             dataEntity.Attributes["LARSVersion"].Value.Should().Be(global.LARSVersion);
             dataEntity.Attributes["PostcodeDisadvantageVersion"].Value.Should().Be(global.PostcodeDisadvantageVersion);
@@ -445,16 +450,18 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object).BuildLearningDeliveryDataEntity(learningDelivery);
 
             dataEntity.EntityName.Should().Be("LearningDelivery");
-            dataEntity.Attributes.Should().HaveCount(20);
+            dataEntity.Attributes.Should().HaveCount(22);
             dataEntity.Attributes["AchDate"].Value.Should().Be(learningDelivery.AchDate);
             dataEntity.Attributes["AddHours"].Value.Should().Be(learningDelivery.AddHours);
             dataEntity.Attributes["AimSeqNumber"].Value.Should().Be(learningDelivery.AimSeqNumber);
             dataEntity.Attributes["AimType"].Value.Should().Be(learningDelivery.AimType);
             dataEntity.Attributes["CompStatus"].Value.Should().Be(learningDelivery.CompStatus);
+            dataEntity.Attributes["DelLocPostCode"].Value.Should().Be(learningDelivery.DelLocPostCode);
             dataEntity.Attributes["EmpOutcome"].Value.Should().Be(learningDelivery.EmpOutcome);
             dataEntity.Attributes["EnglandFEHEStatus"].Value.Should().Be(larsLearningDelivery.EnglandFEHEStatus);
             dataEntity.Attributes["EnglPrscID"].Value.Should().Be(larsLearningDelivery.EnglPrscID);
             dataEntity.Attributes["FrameworkCommonComponent"].Value.Should().Be(2);
+            dataEntity.Attributes["FundModel"].Value.Should().Be(4);
             dataEntity.Attributes["FworkCode"].Value.Should().Be(learningDelivery.FworkCode);
             dataEntity.Attributes["LearnActEndDate"].Value.Should().Be(learningDelivery.LearnActEndDate);
             dataEntity.Attributes["LearnPlanEndDate"].Value.Should().Be(learningDelivery.LearnPlanEndDate);
@@ -490,7 +497,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
         {
             var learnerEmploymentStatus = new LearnerEmploymentStatus
             {
-                AgreeId = "Id",
                 DateEmpStatApp = new DateTime(2019, 1, 1),
                 EmpId = 1,
                 EmpStat = 2,
@@ -646,6 +652,26 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             dataEntity.Attributes["LearnDelAnnValBasicSkillsTypeCode"].Value.Should().Be(larsAnnualValue.BasicSkillsType);
             dataEntity.Attributes["LearnDelAnnValDateFrom"].Value.Should().Be(larsAnnualValue.EffectiveFrom);
             dataEntity.Attributes["LearnDelAnnValDateTo"].Value.Should().Be(larsAnnualValue.EffectiveTo);
+        }
+
+        [Fact]
+        public void BuildPostcodeSpecialistResource()
+        {
+            var postcodeSpecResource = new PostcodeSpecialistResource
+            {
+                Postcode = "Postcode",
+                EffectiveFrom = new DateTime(2019, 1, 1),
+                SpecialistResources = "Y",
+            };
+
+            var dataEntity = NewService().BuildPostcodeSpecialistResource(postcodeSpecResource);
+
+            dataEntity.EntityName.Should().Be("Postcode_Specialist_Resource_RefData");
+            dataEntity.Attributes.Should().HaveCount(4);
+            dataEntity.Attributes["PostcodeSpecResEffectiveFrom"].Value.Should().Be(postcodeSpecResource.EffectiveFrom);
+            dataEntity.Attributes["PostcodeSpecResEffectiveTo"].Value.Should().Be(postcodeSpecResource.EffectiveTo);
+            dataEntity.Attributes["PostcodeSpecResSpecialistResources"].Value.Should().Be(postcodeSpecResource.SpecialistResources);
+            dataEntity.Attributes["PostcodeSpecResPostcode"].Value.Should().Be(postcodeSpecResource.Postcode);
         }
 
         private DataEntityMapper NewService(

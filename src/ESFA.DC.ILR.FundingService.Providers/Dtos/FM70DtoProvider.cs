@@ -12,7 +12,7 @@ namespace ESFA.DC.ILR.FundingService.Providers.Dtos
 {
     public class FM70DtoProvider : IFundingDtoProvider
     {
-        private readonly int fundModelFilter = 70;
+        private readonly HashSet<int> fundModelFilter = new HashSet<int> { 70 };
 
         private readonly ILearnerPagingService<FM70LearnerDto> _learnerPagingService;
         private readonly IJsonSerializationService _jsonSerializationService;

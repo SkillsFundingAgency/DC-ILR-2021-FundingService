@@ -13,6 +13,7 @@
         public const string EntityDPOutcome = "DPOutcome";
         public const string EntityLearningDeliveryLARSValidity = "LearningDeliveryLARSValidity";
         public const string EntityCampusIdentifiers = "Camps_Identifiers_Reference_DataFunding";
+        public const string EntityPostcodeSpecialistResources = "Postcode_Specialist_Resource_RefData";
 
         // Global
         public const string AreaCostFactor1618 = "AreaCostFactor1618";
@@ -25,6 +26,7 @@
         public const string RetentionFactor = "RetentionFactor";
         public const string RulebaseVersion = "RulebaseVersion";
         public const string SpecialistResources = "SpecialistResources";
+        public const string Level3ProgMathsAndEnglishProportion = "Level3ProgMathsandEnglishProportion";
         public const string UKPRN = "UKPRN";
 
         public const string OrgFundFactorTypeEFA1619 = "EFA 16-19";
@@ -34,6 +36,7 @@
         public const string OrgFundFactorHistoriProgCostWeigting = "HISTORIC PROGRAMME COST WEIGHTING FACTOR";
         public const string OrgFundFactorHistoricRetention = "HISTORIC RETENTION FACTOR";
         public const string OrgFundFactorSpecialistResources = "SPECIALIST RESOURCES";
+        public const string OrgFundFactorLevel3ProgMathsAndEnglishProportion = "HISTORIC LEVEL 3 PROGRAMME MATHS AND ENGLISH PROPORTION";
 
         // Learner
         public const string LearnRefNumber = "LearnRefNumber";
@@ -70,12 +73,16 @@
         public const string ProgWeightNew = "ProgWeightNew";
         public const string PrvDisadvPropnHist = "PrvDisadvPropnHist";
         public const string PrvHistLrgProgPropn = "PrvHistLrgProgPropn";
+        public const string PrvHistL3ProgMathEngProp = "PrvHistL3ProgMathEngProp";
         public const string PrvRetentFactHist = "PrvRetentFactHist";
         public const string RateBand = "RateBand";
         public const string RetentNew = "RetentNew";
         public const string StartFund = "StartFund";
         public const string ThresholdDays = "ThresholdDays";
+        public const string TLevelStudent = "TLevelStudent";
         public const string ULN = "ULN";
+        public const string L3MathsEnglish1Year = "L3MathsEnglish1Year";
+        public const string L3MathsEnglish2Year = "L3MathsEnglish2Year";
 
         // Learner Periodised Values
         public const string LnrOnProgPay = "LnrOnProgPay";
@@ -97,14 +104,18 @@
         public const string AimType = "AimType";
         public const string AwardOrgCode = "AwardOrgCode";
         public const string CompStatus = "CompStatus";
+        public const string DelLocPostCode = "DelLocPostCode";
         public const string EFACOFType = "EFACOFType";
         public const string FundModel = "FundModel";
+        public const string GuidedLearningHours = "GuidedLearningHours";        
         public const string LearnActEndDate = "LearnActEndDate";
         public const string LearnAimRef = "LearnAimRef";
         public const string LearnAimRefTitle = "LearnAimRefTitle";
         public const string LearnAimRefType = "LearnAimRefType";
         public const string LearnPlanEndDate = "LearnPlanEndDate";
         public const string LearnStartDate = "LearnStartDate";
+        public const string PHours = "PHours";
+        public const string NotionalNVQLevel = "NotionalNVQLevel";
         public const string ProgType = "ProgType";
         public const string SectorSubjectAreaTier2 = "SectorSubjectAreaTier2";
         public const string WithdrawReason = "WithdrawReason";
@@ -128,6 +139,12 @@
         public const string CampIdSpecialistResources = "CampusFundingSpecialistResources";
         public const string CampIdEffectiveFrom = "EffectiveFrom";
         public const string CampIdEffectiveTo = "EffectiveTo";
+
+        // Postcode Specialist Resources
+        public const string PostcodeSpecResPostcode = "PostcodeSpecResPostcode";
+        public const string PostcodeSpecResSpecialistResources = "PostcodeSpecResSpecialistResources";
+        public const string PostcodeSpecResEffectiveFrom = "PostcodeSpecResEffectiveFrom";
+        public const string PostcodeSpecResEffectiveTo = "PostcodeSpecResEffectiveTo";
 
         // FAM Types
         public const string ECF = "ECF";

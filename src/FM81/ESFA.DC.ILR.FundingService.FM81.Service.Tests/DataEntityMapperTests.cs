@@ -6,8 +6,6 @@ using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM81.Service.Input;
 using ESFA.DC.ILR.FundingService.FM81.Service.Model;
-using ESFA.DC.ILR.Model;
-using ESFA.DC.ILR.Tests.Model;
 using FluentAssertions;
 using Moq;
 using Xunit;

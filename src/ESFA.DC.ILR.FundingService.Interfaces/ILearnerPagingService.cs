@@ -5,6 +5,6 @@ namespace ESFA.DC.ILR.FundingService.Interfaces
 {
     public interface ILearnerPagingService<T>
     {
-        IEnumerable<IEnumerable<T>> ProvideDtos(int fundModelFilter, IMessage message);
+        IEnumerable<IEnumerable<T>> ProvideDtos(IEnumerable<int> fundModelFilter, IMessage message);
     }
 }

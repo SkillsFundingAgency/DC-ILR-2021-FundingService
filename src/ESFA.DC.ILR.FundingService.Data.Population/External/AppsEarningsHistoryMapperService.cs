@@ -18,7 +18,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 .GroupBy(u => u.ULN)
                     .ToDictionary(
                     k => k.Key,
-                    aec => aec.Select(AppEarningsHstoryFromEntity).ToList() as IReadOnlyCollection<AECEarningsHistory>);
+                    aec => aec.Select(AppEarningsHstoryFromEntity).ToList() as IReadOnlyCollection<AECEarningsHistory>)
+                    ?? new Dictionary<long, IReadOnlyCollection<AECEarningsHistory>>();
         }
 
         private AECEarningsHistory AppEarningsHstoryFromEntity(ApprenticeshipEarningsHistory entity)

@@ -89,6 +89,55 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             NewService(referenceDataCacheMock.Object).SpecialistResourcesForCampusIdentifier("Id5678").Should().BeEmpty();
         }
 
+        [Fact]
+        public void PostcodeSpecialistResourcesForUkprn()
+        {
+            var specialistResources = new List<PostcodeSpecialistResource>
+            {
+                new PostcodeSpecialistResource
+                {
+                    Postcode = "Postcode",
+                    SpecialistResources = "Y",
+                    EffectiveFrom = new System.DateTime(2020, 8, 1)
+                }
+            };
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeSpecResources)
+              .Returns(new Dictionary<int, IReadOnlyCollection<PostcodeSpecialistResource>>
+              {
+                    { 1, specialistResources }
+              });
+
+            NewService(referenceDataCacheMock.Object).PostcodeSpecialistResourcesForUkprn(1).Should().BeSameAs(specialistResources);
+        }
+
+        [Fact]
+        public void PostcodeSpecialistResourcesForUkprn_NotExists()
+        {
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeSpecResources)
+                .Returns(new Dictionary<int, IReadOnlyCollection<PostcodeSpecialistResource>>
+                {
+                   { 1, new List<PostcodeSpecialistResource>() },
+                });
+
+            NewService(referenceDataCacheMock.Object).PostcodeSpecialistResourcesForUkprn(2).Should().BeEmpty();
+        }
+
+        [Fact]
+        public void PostcodeSpecialistResourcesForUkprn_Null()
+        {
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeSpecResources)
+                .Returns(new Dictionary<int, IReadOnlyCollection<PostcodeSpecialistResource>>());
+
+            NewService(referenceDataCacheMock.Object).PostcodeSpecialistResourcesForUkprn(2).Should().BeEmpty();
+        }
+
         private OrganisationReferenceDataService NewService(IExternalDataCache referenceDataCache = null)
         {
             return new OrganisationReferenceDataService(referenceDataCache);

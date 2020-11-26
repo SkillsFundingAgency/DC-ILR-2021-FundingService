@@ -13,7 +13,6 @@ using ESFA.DC.ILR.FundingService.Dto.Model;
 using ESFA.DC.ILR.FundingService.FM25.Service.Constants;
 using ESFA.DC.ILR.FundingService.FM25.Service.Input;
 using ESFA.DC.ILR.FundingService.FM25.Service.Model;
-using ESFA.DC.ILR.Model;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.XSRC.Model.Interface.XSRCEntity;
@@ -27,8 +26,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
 {
     public class FM25RulebaseInterfaceTests
     {
-        public const string AcademicYear = "1920";
-        public const string RulebaseName = "FM25 Funding Calc 19_20";
+        public const string AcademicYear = "2021";
+        public const string RulebaseName = "FM25 Funding Calc 20_21";
         public const string RulebaseFolder = "Rulebase\\FM25";
         public const string RulebaseMasterFolder = "RulebaseMasterFiles\\FM25";
         public const string XsrcName = "Inputs";
@@ -168,6 +167,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 Attributes.EntityDPOutcome,
                 Attributes.EntityLearningDeliveryLARSValidity,
                 Attributes.EntityCampusIdentifiers,
+                Attributes.EntityPostcodeSpecialistResources,
             };
         }
 
@@ -183,6 +183,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 Attributes.PostcodeDisadvantageVersion,
                 Attributes.ProgrammeWeighting,
                 Attributes.RetentionFactor,
+                Attributes.Level3ProgMathsAndEnglishProportion,
                 Attributes.SpecialistResources,
                 Attributes.UKPRN,
                 Attributes.DateOfBirth,
@@ -203,14 +204,18 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 Attributes.AimType,
                 Attributes.AwardOrgCode,
                 Attributes.CompStatus,
+                Attributes.DelLocPostCode,
                 Attributes.EFACOFType,
                 Attributes.FundModel,
+                Attributes.GuidedLearningHours,
                 Attributes.LearnActEndDate,
                 Attributes.LearnAimRef,
                 Attributes.LearnAimRefTitle,
                 Attributes.LearnAimRefType,
                 Attributes.LearnPlanEndDate,
                 Attributes.LearnStartDate,
+                Attributes.NotionalNVQLevel,
+                Attributes.PHours,
                 Attributes.ProgType,
                 Attributes.SectorSubjectAreaTier2,
                 Attributes.WithdrawReason,
@@ -226,6 +231,10 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 Attributes.CampIdSpecialistResources,
                 Attributes.CampIdEffectiveFrom,
                 Attributes.CampIdEffectiveTo,
+                Attributes.PostcodeSpecResPostcode,
+                Attributes.PostcodeSpecResSpecialistResources,
+                Attributes.PostcodeSpecResEffectiveFrom,
+                Attributes.PostcodeSpecResEffectiveTo,
             };
         }
 
@@ -404,6 +413,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             larsRefererenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
             organisationRefererenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(It.IsAny<int>())).Returns(new List<OrgFunding> { new OrgFunding() });
             organisationRefererenceDataServiceMock.Setup(o => o.SpecialistResourcesForCampusIdentifier(It.IsAny<string>())).Returns(new List<CampusIdentifierSpecResource> { new CampusIdentifierSpecResource() });
+            organisationRefererenceDataServiceMock.Setup(o => o.PostcodeSpecialistResourcesForUkprn(It.IsAny<int>()))
+                .Returns(new List<PostcodeSpecialistResource> { new PostcodeSpecialistResource { SpecialistResources = "Y", EffectiveFrom = new DateTime(2020, 8, 1) } });
             postcodesReferenceDataServiceMock.Setup(p => p.LatestEFADisadvantagesUpliftForPostcode(learner.Postcode)).Returns(1.0m);
 
             return new DataEntityMapper(

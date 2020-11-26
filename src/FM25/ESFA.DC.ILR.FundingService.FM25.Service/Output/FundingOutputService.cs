@@ -66,10 +66,14 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Output
                 PrvDisadvPropnHist = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.PrvDisadvPropnHist),
                 PrvHistLrgProgPropn = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.PrvHistLrgProgPropn),
                 PrvRetentFactHist = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.PrvRetentFactHist),
+                PrvHistL3ProgMathEngProp = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.PrvHistL3ProgMathEngProp),
                 RateBand = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.RateBand),
                 RetentNew = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.RetentNew),
                 StartFund = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, Attributes.StartFund),
-                ThresholdDays = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.ThresholdDays)
+                ThresholdDays = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.ThresholdDays),
+                TLevelStudent = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, Attributes.TLevelStudent),
+                L3MathsEnglish1Year = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.L3MathsEnglish1Year),
+                L3MathsEnglish2Year = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.L3MathsEnglish2Year)
             };
         }
     }
